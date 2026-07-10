@@ -58,7 +58,9 @@ inspired by [Conan Exile's Dediciated Server Launcher](https://forums.funcom.com
 - A **New Settings** tab catches anything the launcher doesn't recognize, like a setting a future game update
   adds, so you can still edit it by hand. Most of the time it sits empty.
 - A **Launch Arguments** editor with a live preview of the exact command line the server will start with.
-- An **Advanced** tab for low-level process tuning (priority and CPU affinity) if you know what you're doing.
+- An **Advanced** tab for low-level process tuning. Set the server's Windows **priority** and pin it to
+  specific **CPU cores** (Unreal resets the affinity on launch, so the launcher quietly re-applies yours).
+  Handy if you like to squeeze out performance.
 - The launcher never slips in a third-party `Engine.ini`. Your server runs on its own defaults.
 
 ### Staying out of the way, and keeping records
@@ -112,6 +114,10 @@ inspired by [Conan Exile's Dediciated Server Launcher](https://forums.funcom.com
 > The .NET 10 SDK above is only for building from source.
 
 ## Quick start
+
+> [!NOTE]
+> The first time you run it, Windows may show a blue "Windows protected your PC" box, because the app isn't
+> code-signed. Click **More info**, then **Run anyway**. That's normal for small unsigned apps.
 
 1. Run `PalworldServerLauncher.exe`.
 2. Click **Install** to grab SteamCMD and the server. You only need this the first time.
