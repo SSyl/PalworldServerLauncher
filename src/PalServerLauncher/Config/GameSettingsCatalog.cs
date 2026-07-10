@@ -44,6 +44,8 @@ public enum DocStatus
 /// affordances only: the per-field reset targets this (so the ↺ shows only when the value differs from what
 /// the app wants), and the key is left out of bulk "Reset to defaults". Null = use the game default. Set for
 /// RESTAPIEnabled, which the launcher relies on being on.</param>
+/// <param name="NoServerEffect">True for a key that exists in the ini but does nothing on a dedicated server
+/// (a client / single-player setting, e.g. Difficulty). The editor warns before the user changes it.</param>
 public sealed record GameSetting(
     string Key,
     string Label,
@@ -55,7 +57,8 @@ public sealed record GameSetting(
     double? Max = null,
     bool Secret = false,
     string? AppDefault = null,
-    DocStatus Doc = DocStatus.Documented);
+    DocStatus Doc = DocStatus.Documented,
+    bool NoServerEffect = false);
 
 /// <summary>
 /// Data-driven catalog of PalWorldSettings.ini <c>OptionSettings</c> keys as typed fields. Covers EVERY
@@ -157,7 +160,8 @@ public static class GameSettingsCatalog
 
         // ===================== Features (Gameplay) =====================
         new("Difficulty", "Difficulty", SettingCategory.Gameplay, SettingType.Enum,
-            "Difficulty preset. None applies your individual settings below.", new[] { "None", "Casual", "Normal", "Hard" }),
+            "Client / single-player difficulty preset. It has no effect on a dedicated server, so leave it at None and use the individual settings below (or the Difficulty preset buttons at the top) to set server difficulty.",
+            new[] { "None", "Casual", "Normal", "Hard" }, NoServerEffect: true),
         new("bHardcore", "Hardcore Mode: Permanent Loss of Progress Upon Player Death", SettingCategory.Gameplay, SettingType.Bool,
             "Enable Hardcore. You will not be able to respawn on death."),
         new("bCharacterRecreateInHardcore", "Recreate character (Hardcore)", SettingCategory.Gameplay, SettingType.Bool,

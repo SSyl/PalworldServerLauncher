@@ -63,6 +63,9 @@ public sealed class SettingsDialog : Window
     // Extra (non-catalog) inputs: (key, read-current-value, original-value).
     private readonly List<(string Key, System.Func<string> Read, string Original)> _extraInputs = new();
 
+    // Keys whose "does nothing on a dedicated server" warning has already been shown this dialog session.
+    private readonly HashSet<string> _noEffectWarned = new();
+
     // Text fields (launch args + typed game settings) with character gating, live red, and Save validation.
     private readonly List<ValidatedField> _validated = new();
     private sealed record ValidatedField(string Label, TextBox Box, SettingType Type, double? Min, double? Max, bool Required);
@@ -244,10 +247,29 @@ public sealed class SettingsDialog : Window
         // of bulk "Reset to defaults" so a blanket reset can't disable a feature the launcher relies on.
         var resetTarget = setting.AppDefault ?? dv ?? "";
         var (input, reset) = BuildGameInput(setting, value, resetTarget, gameEnabled);
+        if (setting.NoServerEffect && input is ComboBox noEffectCombo)
+            WarnNoServerEffectOnUse(setting, noEffectCombo);
         // No reset (↺) on secret fields - don't let "Reset to defaults" silently blank a password.
         var offerReset = gameEnabled && !setting.Secret && (setting.AppDefault is not null || hasDefault);
         stack.Children.Add(Row(setting.Label, input, tip, offerReset ? reset : null, setting.Doc,
             includeInBulkReset: setting.AppDefault is null));
+    }
+
+    /// <summary>Warn (once per session) when the user opens a dropdown for a setting that has no effect on a
+    /// dedicated server, e.g. the game's Difficulty key, which is a client / single-player setting.</summary>
+    private void WarnNoServerEffectOnUse(GameSetting setting, ComboBox combo)
+    {
+        combo.DropDownOpened += (_, _) =>
+        {
+            if (!_noEffectWarned.Add(setting.Key))
+                return;
+            combo.IsDropDownOpen = false;
+            // Defer so the modal doesn't open synchronously inside the dropdown-opened event.
+            Dispatcher.BeginInvoke(new System.Action(() => ChoiceDialog.Show(this, "This setting does nothing on a server",
+                $"Heads up: '{setting.Label}' is a client / single-player setting and has no effect on a dedicated "
+                + "server. Changing it here won't change how the server plays. Use the individual settings (or the "
+                + "Difficulty preset buttons at the top of World Settings) to control server difficulty.", "Got it")));
+        };
     }
 
     /// <summary>The difficulty-preset buttons for the World Settings tab (disabled while the server runs).</summary>
