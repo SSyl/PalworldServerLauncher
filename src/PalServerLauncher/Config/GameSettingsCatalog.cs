@@ -25,6 +25,17 @@ public enum SettingType
     Raw,
 }
 
+/// <summary>How well a key is covered by official sources, which drives its UI placement and marker.</summary>
+public enum DocStatus
+{
+    /// <summary>In an official source (config doc, PvP doc, or the in-game "Edit World Settings" screen). No marker.</summary>
+    Documented,
+    /// <summary>Not in official docs but well enough understood to describe. Stays in its category tab with an "undocumented" marker.</summary>
+    Undocumented,
+    /// <summary>Not in official docs and we cannot confidently say what it does. Routed to the Undocumented Settings tab.</summary>
+    Unknown,
+}
+
 /// <summary>
 /// Metadata for one PalWorldSettings.ini <c>OptionSettings</c> key: how to label it, which category
 /// it belongs to, and how to type its value (which drives quoting on write via <see cref="OptionSettingsBlob"/>).
@@ -38,7 +49,8 @@ public sealed record GameSetting(
     IReadOnlyList<string>? Options = null,
     double? Min = null,
     double? Max = null,
-    bool Secret = false);
+    bool Secret = false,
+    DocStatus Doc = DocStatus.Documented);
 
 /// <summary>
 /// Data-driven catalog of PalWorldSettings.ini <c>OptionSettings</c> keys as typed fields. Covers EVERY
@@ -74,7 +86,7 @@ public static class GameSettingsCatalog
         new("ServerPlayerMaxNum", "Max players", SettingCategory.ServerAdmin, SettingType.Int,
             "Maximum number of players who can join the server. The -players launch argument overrides this if set.", Min: 1),
         new("CoopPlayerMaxNum", "CoopPlayerMaxNum", SettingCategory.ServerAdmin, SettingType.Int,
-            "Undocumented. Community guesses a cooperative-play party size, but this may be an internal value that has no effect on a dedicated server.", Min: 1),
+            "Undocumented. Community guesses a cooperative-play party size, but this may be an internal value that has no effect on a dedicated server.", Min: 1, Doc: DocStatus.Unknown),
         new("RESTAPIEnabled", "REST API enabled", SettingCategory.ServerAdmin, SettingType.Bool,
             "Enable the REST API. The launcher needs this for stats, graceful shutdown, and player logging."),
         new("RESTAPIPort", "REST API port", SettingCategory.ServerAdmin, SettingType.Int,
@@ -84,9 +96,9 @@ public static class GameSettingsCatalog
         new("RCONPort", "RCON port", SettingCategory.ServerAdmin, SettingType.Int,
             "Port number used for RCON.", Min: 1, Max: 65535),
         new("bUseAuth", "bUseAuth", SettingCategory.ServerAdmin, SettingType.Bool,
-            "Undocumented. Defaults to True."),
+            "Undocumented. Defaults to True.", Doc: DocStatus.Unknown),
         new("BanListURL", "BanListURL", SettingCategory.ServerAdmin, SettingType.Text,
-            "Undocumented. Likely the ban list the server checks against, but the exact format and behavior are unconfirmed."),
+            "Undocumented. Likely the ban list the server checks against, but the exact format and behavior are unconfirmed.", Doc: DocStatus.Unknown),
         new("bIsUseBackupSaveData", "Built-in save backups", SettingCategory.ServerAdmin, SettingType.Bool,
             "Enable Palworld's own world backups (separate from the launcher's). Enabling this increases disk load."),
         new("AutoSaveSpan", "Auto save interval", SettingCategory.ServerAdmin, SettingType.Float,
@@ -100,9 +112,9 @@ public static class GameSettingsCatalog
         new("LogFormatType", "Log format", SettingCategory.ServerAdmin, SettingType.Enum,
             "Server log file format.", new[] { "Text", "Json" }),
         new("bIsMultiplay", "bIsMultiplay", SettingCategory.ServerAdmin, SettingType.Bool,
-            "Undocumented. Set to False by default."),
+            "Undocumented. Likely the game client's 'Multiplayer: Yes/No' option shown when creating a world, so it has no effect on a dedicated server. False by default.", Doc: DocStatus.Unknown),
         new("Region", "Region", SettingCategory.ServerAdmin, SettingType.Text,
-            "Undocumented. A region code of some kind, but the expected format (NA, US, a number?) and its purpose (matchmaking, server browser, or neither) are both unknown. Blank by default."),
+            "Undocumented. A region code of some kind, but the expected format (NA, US, a number?) and its purpose (matchmaking, server browser, or neither) are both unknown. Blank by default.", Doc: DocStatus.Unknown),
         new("CrossplayPlatforms", "Crossplay platforms", SettingCategory.ServerAdmin, SettingType.Raw,
             "Allowed platforms to connect to the server, as a tuple. Default: (Steam,Xbox,PS5,Mac)."),
         new("PublicIP", "Public IP", SettingCategory.ServerAdmin, SettingType.IpAddress,
@@ -112,7 +124,7 @@ public static class GameSettingsCatalog
         new("bEnableBuildingPlayerUIdDisplay", "Show builder ID on structures", SettingCategory.ServerAdmin, SettingType.Bool,
             "Whether to display the creator's player ID on structures."),
         new("BuildingNameDisplayCacheTTLSeconds", "BuildingNameDisplayCacheTTLSeconds", SettingCategory.ServerAdmin, SettingType.Int,
-            "Undocumented. Likely how long a building's cached display name (see 'Show builder ID on structures') is kept before refreshing (seconds).", Min: 0),
+            "Undocumented. Likely how long a building's cached display name (see 'Show builder ID on structures') is kept before refreshing (seconds).", Min: 0, Doc: DocStatus.Unknown),
 
         // ===================== Performance =====================
         new("BaseCampMaxNum", "Max bases (world)", SettingCategory.Performance, SettingType.Int,
@@ -128,15 +140,15 @@ public static class GameSettingsCatalog
         new("PhysicsActiveDropItemMaxNum", "Maximum Number of Dropped Active Items in a World", SettingCategory.Performance, SettingType.Int,
             "Maximum number of dropped items that can use physics behavior. -1 = No Limit. Increasing this can affect processing load.", Min: -1),
         new("DropItemMaxNum_UNKO", "DropItemMaxNum_UNKO", SettingCategory.Performance, SettingType.Int,
-            "Undocumented. Likely the max number of droppings (UNKO) in the world. Appears to be unused in game.", Min: 0),
+            "Undocumented. Appears unused, likely deadweight or an unimplemented feature.", Min: 0, Doc: DocStatus.Unknown),
         new("ServerReplicatePawnCullDistance", "Pal sync distance", SettingCategory.Performance, SettingType.Float,
             "Pal sync distance from players (cm). Minimum 5000, maximum 15000.", Min: 5000, Max: 15000),
         new("ItemContainerForceMarkDirtyInterval", "Container re-sync interval", SettingCategory.Performance, SettingType.Float,
             "How often to force a re-sync while a container UI is open (seconds).", Min: 0),
         new("MaxGuildsPerFrame", "MaxGuildsPerFrame", SettingCategory.Performance, SettingType.Int,
-            "Undocumented. Likely a per-frame cap on how many guilds the server processes each tick, a performance lever.", Min: 0),
+            "Undocumented. Likely a per-frame cap on how many guilds the server processes each tick, a performance lever.", Min: 0, Doc: DocStatus.Unknown),
         new("PlayerDataPalStorageUpdateCheckTickInterval", "PlayerDataPalStorageUpdateCheckTickInterval", SettingCategory.Performance, SettingType.Float,
-            "Undocumented. Likely how often the server checks player Pal Box/storage data for changes to sync (seconds).", Min: 0),
+            "Undocumented. Likely how often the server checks player Pal Box/storage data for changes to sync (seconds).", Min: 0, Doc: DocStatus.Unknown),
 
         // ===================== Features (Gameplay) =====================
         new("Difficulty", "Difficulty", SettingCategory.Gameplay, SettingType.Enum,
@@ -150,7 +162,7 @@ public static class GameSettingsCatalog
         new("bEnablePlayerToPlayerDamage", "Player-vs-player damage", SettingCategory.Gameplay, SettingType.Bool,
             "Let players harm each other. One of the three settings that together enable PvP."),
         new("bEnableFriendlyFire", "Friendly fire", SettingCategory.Gameplay, SettingType.Bool,
-            "Undocumented. Community says it lets players and their Pals damage members of their own guild."),
+            "Undocumented. Community says it lets players and their Pals damage members of their own guild.", Doc: DocStatus.Undocumented),
         new("bCanPickupOtherGuildDeathPenaltyDrop", "Loot other guilds' drops", SettingCategory.Gameplay, SettingType.Bool,
             "Allow players to pick up the Pals and items dropped by other guilds' players on death."),
         new("bEnableDefenseOtherGuildPlayer", "Base defense vs. other guilds", SettingCategory.Gameplay, SettingType.Bool,
@@ -172,15 +184,15 @@ public static class GameSettingsCatalog
         new("bExistPlayerAfterLogout", "Body stays after logout", SettingCategory.Gameplay, SettingType.Bool,
             "Whether players enter a sleeping state at their current location when logging out."),
         new("bEnableNonLoginPenalty", "bEnableNonLoginPenalty", SettingCategory.Gameplay, SettingType.Bool,
-            "Undocumented. May relate to whether your Pals get debuffs when you haven't logged in. Untested."),
+            "Undocumented. May relate to whether your Pals get debuffs when you haven't logged in. Untested.", Doc: DocStatus.Unknown),
         new("bIsStartLocationSelectByMap", "Choose starting location", SettingCategory.Gameplay, SettingType.Bool,
             "Whether to allow players to choose their starting location."),
         new("bActiveUNKO", "bActiveUNKO", SettingCategory.Gameplay, SettingType.Bool,
-            "Undocumented. May be related to ranch Pal drops (dung), but untested/unknown."),
+            "Undocumented. Appears unused, likely deadweight or an unimplemented feature.", Doc: DocStatus.Unknown),
         new("bEnableAimAssistPad", "Aim assist (controller)", SettingCategory.Gameplay, SettingType.Bool,
             "Aim assist for controllers. Set to False to disable it."),
         new("bEnableAimAssistKeyboard", "Aim assist (keyboard)", SettingCategory.Gameplay, SettingType.Bool,
-            "Enable aim assist for mouse & keyboard."),
+            "Enable aim assist for mouse & keyboard.", Doc: DocStatus.Undocumented),
         new("bAllowEnhanceStat_Attack", "Allow stat points: Attack", SettingCategory.Gameplay, SettingType.Bool,
             "Allow allocating stat points to Attack."),
         new("bAllowEnhanceStat_Health", "Allow stat points: HP", SettingCategory.Gameplay, SettingType.Bool,
@@ -266,7 +278,7 @@ public static class GameSettingsCatalog
         new("EnemyDropItemRate", "Dropped Items Multiplier", SettingCategory.GameBalance, SettingType.Float,
             "Dropped item quantity multiplier.", Min: 0),
         new("DropItemAliveMaxHours", "Dropped item lifetime (hours)", SettingCategory.GameBalance, SettingType.Float,
-            "How long dropped items remain in the world before they despawn (hours). Lowering it helps server cleanup / performance.", Min: 0),
+            "How long dropped items remain in the world before they despawn (hours). Lowering it helps server cleanup / performance.", Min: 0, Doc: DocStatus.Undocumented),
         new("ItemWeightRate", "Item Weight Rate", SettingCategory.GameBalance, SettingType.Float,
             "Item weight multiplier.", Min: 0),
         new("ItemCorruptionMultiplier", "Item Decay Rate Multiplier", SettingCategory.GameBalance, SettingType.Float,
@@ -274,7 +286,7 @@ public static class GameSettingsCatalog
         new("EquipmentDurabilityDamageRate", "Equipment Durability Loss Multiplier", SettingCategory.GameBalance, SettingType.Float,
             "Equipment durability loss multiplier.", Min: 0),
         new("BuildObjectHpRate", "Building HP", SettingCategory.GameBalance, SettingType.Float,
-            "Multiplier for how much health buildings have. 2.0 = double building HP.", Min: 0),
+            "Multiplier for how much health buildings have. 2.0 = double building HP.", Min: 0, Doc: DocStatus.Undocumented),
         new("BuildObjectDamageRate", "Damage to Structure Multiplier", SettingCategory.GameBalance, SettingType.Float,
             "Damage multiplier to buildings.", Min: 0),
         new("BuildObjectDeteriorationDamageRate", "Structure Deterioration Rate", SettingCategory.GameBalance, SettingType.Float,
@@ -305,8 +317,8 @@ public static class GameSettingsCatalog
         new("SupplyDropSpan", "Meteorite/Supplies Drop Interval", SettingCategory.GameBalance, SettingType.Int,
             "Meteorite / supply drop interval (minutes).", Min: 0),
         new("AutoTransferMasterCheckIntervalSeconds", "AutoTransferMasterCheckIntervalSeconds", SettingCategory.GameBalance, SettingType.Float,
-            "Undocumented. Likely how often the server checks whether guild/base ownership should auto-transfer from an inactive master (seconds).", Min: 0),
+            "Undocumented. Likely how often the server checks whether guild/base ownership should auto-transfer from an inactive master (seconds).", Min: 0, Doc: DocStatus.Unknown),
         new("AutoTransferMasterThresholdDays", "AutoTransferMasterThresholdDays", SettingCategory.GameBalance, SettingType.Int,
-            "Undocumented. Likely the days a guild/base master must be inactive before ownership auto-transfers.", Min: 0),
+            "Undocumented. Likely the days a guild/base master must be inactive before ownership auto-transfers.", Min: 0, Doc: DocStatus.Unknown),
     };
 }
