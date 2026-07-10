@@ -2,7 +2,7 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
-## [Unreleased]
+## [0.2.0] - 2026-07-10
 
 ### Added
 - **Palworld 1.0 support.** The settings editor now covers every 1.0 setting, including the new voice-chat,

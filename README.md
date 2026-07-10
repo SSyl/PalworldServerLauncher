@@ -26,10 +26,12 @@ inspired by [Conan Exile's Dediciated Server Launcher](https://forums.funcom.com
   Files** button that has SteamCMD re-verify the whole install.
 
 ### Restarts and recovery
-- **Scheduled restarts** at the times of day you choose. A server that only just came up won't get bounced
-  (there's a minimum-uptime guard), and if nobody's online it skips the in-game countdown and just restarts.
-- **Players get a heads-up.** Before a scheduled or update restart, the server announces it in-game at the
-  marks you set, say 15, 5, and 1 minutes out.
+- **Scheduled restarts** at the times of day you choose. The restart lands right on the scheduled time,
+  whether or not anyone is online. A server that only just came up won't get bounced (there's a
+  minimum-uptime guard).
+- **Players get a heads-up.** Before a scheduled or update restart, the server warns players in-game at the
+  marks you set, say 15, 5, and 1 minutes out. Those warnings are just for players, so they're skipped when
+  nobody's online.
 - **Crash recovery.** If the server crashes, the launcher brings it right back. It also catches a server
   that's technically still running but wedged (the REST API has stopped answering, or the world has stopped
   advancing) and recovers that too. And if the server just keeps dying, a safety cutoff steps in so the
