@@ -106,7 +106,7 @@ public sealed class GameSettingsService
 
         var byKey = GameSettingsCatalog.All.ToDictionary(s => s.Key, StringComparer.OrdinalIgnoreCase);
         var rawEdits = new List<(string Key, string Value)>();
-        var applied = 0;
+        var appliedEdits = new List<(string Key, string Value)>();
         foreach (var (key, value) in edits)
         {
             if (!byKey.TryGetValue(key, out var setting)) // only ever touch keys we know how to type
@@ -114,7 +114,7 @@ public sealed class GameSettingsService
             ApplyTyped(blob, setting, value);
             if (setting.Type == SettingType.Raw)
                 rawEdits.Add((setting.Key, value.Trim()));
-            applied++;
+            appliedEdits.Add((setting.Key, value));
         }
 
         var rendered = blob.Render();
@@ -134,7 +134,9 @@ public sealed class GameSettingsService
         }
 
         File.WriteAllText(SettingsPath, rendered);
-        _logger.Info($"Saved {applied} game setting(s) to PalWorldSettings.ini.");
+        foreach (var (key, value) in appliedEdits)
+            _logger.Info($"Changed: {key} = {value}");
+        _logger.Info($"Saved {appliedEdits.Count} game setting(s) to PalWorldSettings.ini.");
         return true;
     }
 
@@ -209,6 +211,8 @@ public sealed class GameSettingsService
             }
 
         File.WriteAllText(SettingsPath, rendered);
+        foreach (var key in applied)
+            _logger.Info($"Changed: {key} = {edits[key]}");
         _logger.Info($"Saved {applied.Count} extra setting(s) to PalWorldSettings.ini.");
         return true;
     }

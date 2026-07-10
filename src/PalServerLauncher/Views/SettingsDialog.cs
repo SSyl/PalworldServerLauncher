@@ -583,6 +583,18 @@ public sealed class SettingsDialog : Window
         if (gameEdits.Count == 0 && extraEdits.Count == 0)
             return true;
 
+        // Show exactly what will change and let the user confirm before we touch PalWorldSettings.ini.
+        // Cap the list so a big change set (e.g. after Reset to defaults) can't make an oversized dialog;
+        // the full set is written to the General log by the save either way.
+        var changes = gameEdits.Concat(extraEdits).Select(e => $"{e.Key} = {e.Value}").ToList();
+        const int maxShown = 20;
+        var body = string.Join("\n", changes.Take(maxShown));
+        if (changes.Count > maxShown)
+            body += $"\n...and {changes.Count - maxShown} more";
+        if (ChoiceDialog.Show(this, "Confirm save",
+                $"These settings will change:\n\n{body}\n\nSave these changes?", "Save", "Cancel") != 0)
+            return false; // keep the dialog open so the user can review or cancel
+
         if (gameEdits.Count > 0 && !_gameSettings.Save(gameEdits, serverRunning: false, out var badGameKey))
         {
             ShowCorruptError(badGameKey);
