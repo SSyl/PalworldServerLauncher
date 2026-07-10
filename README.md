@@ -159,6 +159,19 @@ The launcher only ever talks to the REST API on `127.0.0.1`, your own machine. Y
 stored locally in `launcher.json` and is never written to the logs. Lock the control bot down to a private
 channel and/or an admin-only role.
 
+## Privacy
+
+The launcher runs on your machine and does not collect, transmit, or phone home any of your data. There is no
+telemetry and no analytics. It makes network connections only to:
+
+- your own server, over `127.0.0.1` (your local machine),
+- Steam, to download SteamCMD and to install or update the server,
+- your own Discord webhook and bot, if you choose to set them up.
+
+Your settings, logs, backups, and any tokens stay on your PC in the launcher's folder. If a future feature
+ever needs to reach an outside service (for example, a port-reachability check that asks an external service
+to try connecting to your server), it will be something you choose to run, and it will be listed here.
+
 ## Command-line options
 
 You can double-click the launcher, or start it from a terminal with a couple of extra options:
