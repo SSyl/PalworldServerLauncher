@@ -8,10 +8,12 @@ using System.Windows.Media;
 namespace PalServerLauncher.Views;
 
 /// <summary>
-/// A masked password/token entry with a Show/Hide reveal toggle, styled to match the dark dialogs. Masked
-/// by default (a <see cref="PasswordBox"/>); the toggle swaps to a plain <see cref="TextBox"/> so the value
-/// can be read or copied - the launcher generates a random admin password, so it must be viewable. The
-/// value is gated to exclude the double-quote / backslash that Palworld's ini string parser can't represent.
+/// A masked password or token entry with a Show/Hide reveal toggle, styled to match the dark dialogs. It is
+/// masked by default (a <see cref="PasswordBox"/>). The toggle swaps to a plain <see cref="TextBox"/> so the
+/// value can be read or copied. The launcher generates a random admin password, so it must be viewable.
+/// The reveal toggle always works, even when the field is not editable (the server is running), so you can
+/// still check a password without stopping the server. Only editing is gated by <c>editable</c>. Typed and
+/// pasted input excludes the double-quote and backslash that Palworld's ini string parser cannot represent.
 /// </summary>
 internal sealed class SecretField
 {
@@ -26,25 +28,28 @@ internal sealed class SecretField
     /// <summary>The control to place in a dialog row.</summary>
     public FrameworkElement Element { get; }
 
-    public SecretField(string value, bool enabled)
+    public SecretField(string value, bool editable)
     {
+        // Masked view: disabled (grayed, non-editable) when not editable, matching the rest of the dialog.
         _masked = new PasswordBox
         {
-            Password = value, IsEnabled = enabled, Background = FieldBg, Foreground = Fg, BorderBrush = FieldBorder,
+            Password = value, IsEnabled = editable, Background = FieldBg, Foreground = Fg, BorderBrush = FieldBorder,
             Padding = new Thickness(4, 3, 4, 3), CaretBrush = Brushes.White, VerticalContentAlignment = VerticalAlignment.Center,
         };
+        // Revealed view: read-only (not disabled) when not editable, so the value stays selectable and copyable.
         _revealed = new TextBox
         {
-            Text = value, IsEnabled = enabled, Visibility = Visibility.Collapsed, Background = FieldBg, Foreground = Fg,
+            Text = value, IsReadOnly = !editable, Visibility = Visibility.Collapsed, Background = FieldBg, Foreground = Fg,
             BorderBrush = FieldBorder, Padding = new Thickness(4, 3, 4, 3), CaretBrush = Brushes.White,
             VerticalContentAlignment = VerticalAlignment.Center,
         };
         GateText(_revealed);
         StripPassword(_masked);
 
+        // Always enabled, even when read-only, so you can reveal a password to view it while the server runs.
         var toggle = new ToggleButton
         {
-            Content = "Show", Width = 52, Margin = new Thickness(6, 0, 0, 0), IsEnabled = enabled, Foreground = Fg,
+            Content = "Show", Width = 52, Margin = new Thickness(6, 0, 0, 0), Foreground = Fg,
             Background = ButtonBg, BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand,
             VerticalAlignment = VerticalAlignment.Stretch, ToolTip = "Show or hide the value",
         };

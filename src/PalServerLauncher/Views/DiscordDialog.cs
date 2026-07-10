@@ -57,7 +57,7 @@ public sealed class DiscordDialog : Window
         stack.Children.Add(Header("Server control bot"));
         _botEnabled = Check("Enable the control bot (slash commands: /status /players /save /backup /update /start /restart /stop)", config.DiscordBotEnabled);
         stack.Children.Add(_botEnabled);
-        _token = new SecretField(config.DiscordBotToken, enabled: true);
+        _token = new SecretField(config.DiscordBotToken, editable: true);
         stack.Children.Add(Row("Bot token (secret)", _token.Element));
         _channelId = Field(config.DiscordCommandChannelId == 0 ? "" : config.DiscordCommandChannelId.ToString(CultureInfo.InvariantCulture));
         DigitsOnly(_channelId);
