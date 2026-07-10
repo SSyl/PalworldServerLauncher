@@ -16,12 +16,8 @@ public enum SettingsSection
 {
     /// <summary>Command-line launch args (our config; apply on next start, always editable).</summary>
     LaunchArgs,
-    /// <summary>PalWorldSettings.ini "Server management" keys.</summary>
-    Admin,
-    /// <summary>PalWorldSettings.ini gameplay keys (Performance + Gameplay + Game balance).</summary>
-    Game,
-    /// <summary>PalWorldSettings.ini keys the catalog doesn't cover (auto-discovered, incl. future game params).</summary>
-    Extra,
+    /// <summary>The tabbed PalWorldSettings.ini editor: World Settings, Admin, and Undocumented tabs.</summary>
+    ServerSettings,
     /// <summary>Low-level process tuning (priority, CPU affinity) - behind a danger-zone warning.</summary>
     Advanced,
 }
@@ -83,69 +79,31 @@ public sealed class SettingsDialog : Window
         Title = section switch
         {
             SettingsSection.LaunchArgs => "Launch Arguments",
-            SettingsSection.Admin => "Admin Settings",
-            SettingsSection.Extra => "New Settings",
             SettingsSection.Advanced => "Advanced Settings",
-            _ => "Game Settings",
+            _ => "Server Settings",
         };
         Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        Width = 660;
+        Width = section == SettingsSection.ServerSettings ? 720 : 660;
         Height = section switch
         {
             SettingsSection.LaunchArgs => 560,
             SettingsSection.Advanced => 440,
-            _ => 680,
+            _ => 720,
         };
         ShowInTaskbar = false;
 
+        if (section == SettingsSection.ServerSettings)
+        {
+            BuildServerSettings();
+            return;
+        }
+
         var stack = new StackPanel { Margin = new Thickness(18) };
-
         if (section == SettingsSection.LaunchArgs)
-        {
             BuildLaunchArgs(stack);
-        }
-        else if (section == SettingsSection.Extra)
-        {
-            BuildExtraSettings(stack);
-        }
-        else if (section == SettingsSection.Advanced)
-        {
-            BuildAdvanced(stack);
-        }
         else
-        {
-            var gameAvailable = _gameSettings.EnsureInitialized();
-            var gameEnabled = gameAvailable && !_serverRunning;
-            var current = gameAvailable ? _gameSettings.Load() : new Dictionary<string, string?>();
-            var defaults = gameAvailable ? _gameSettings.LoadDefaults() : new Dictionary<string, string?>();
-
-            stack.Children.Add(section == SettingsSection.Admin
-                ? DocBlurb("Server management - server name, passwords, player limit, and the REST / RCON APIs. Full reference:",
-                    "https://docs.palworldgame.com/settings-and-operation/configuration#server-management", "Server management docs")
-                : DocBlurb("Gameplay and balance - difficulty, EXP / capture / drop rates, damage multipliers, and world features. Full reference:",
-                    "https://docs.palworldgame.com/settings-and-operation/configuration#features", "Features docs"));
-
-            if (_serverRunning)
-                stack.Children.Add(Banner("The server is running - these settings are read-only. Stop it to edit them."));
-            else if (!gameAvailable)
-                stack.Children.Add(Banner("Game settings unavailable - install the server first (no DefaultPalWorldSettings.ini found)."));
-
-            foreach (var category in CategoriesFor(section))
-            {
-                stack.Children.Add(Header(CategoryLabel(category)));
-                foreach (var setting in GameSettingsCatalog.All.Where(s => s.Category == category))
-                {
-                    var value = current.TryGetValue(setting.Key, out var v) ? v ?? "" : "";
-                    var hasDefault = defaults.TryGetValue(setting.Key, out var dv);
-                    // Tooltip leads with the real ini key (the "true" name) so it's discoverable, then the description.
-                    var tip = string.IsNullOrEmpty(setting.Description) ? setting.Key : $"{setting.Key}\n{setting.Description}";
-                    var (input, reset) = BuildGameInput(setting, value, dv ?? "", gameEnabled);
-                    // No reset (↺) on secret fields - don't let "Reset to defaults" silently blank a password.
-                    stack.Children.Add(Row(setting.Label, input, tip, gameEnabled && hasDefault && !setting.Secret ? reset : null));
-                }
-            }
-        }
+            BuildAdvanced(stack);
 
         var scroll = new ScrollViewer { Content = stack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
 
@@ -162,17 +120,136 @@ public sealed class SettingsDialog : Window
         Content = root;
     }
 
+    /// <summary>
+    /// Build the tabbed PalWorldSettings.ini editor: World Settings + Admin hold the documented (and
+    /// understood-undocumented) keys grouped by category, and the Undocumented tab collects the keys we
+    /// can't confidently explain plus any the catalog doesn't recognise. One Save applies every tab.
+    /// </summary>
+    private void BuildServerSettings()
+    {
+        var gameAvailable = _gameSettings.EnsureInitialized();
+        var gameEnabled = gameAvailable && !_serverRunning;
+        var current = gameAvailable ? _gameSettings.Load() : new Dictionary<string, string?>();
+        var defaults = gameAvailable ? _gameSettings.LoadDefaults() : new Dictionary<string, string?>();
+
+        var world = BuildIniTab(
+            DocBlurb("Gameplay and balance - difficulty, EXP / capture / drop rates, damage multipliers, and world features. Full reference:",
+                "https://docs.palworldgame.com/settings-and-operation/configuration#features", "Features docs"),
+            new[] { SettingCategory.Performance, SettingCategory.Gameplay, SettingCategory.GameBalance },
+            s => s.Doc != DocStatus.Unknown, gameEnabled, current, defaults);
+        var admin = BuildIniTab(
+            DocBlurb("Server management - server name, passwords, player limit, and the REST / RCON APIs. Full reference:",
+                "https://docs.palworldgame.com/settings-and-operation/configuration#server-management", "Server management docs"),
+            new[] { SettingCategory.ServerAdmin },
+            s => s.Doc != DocStatus.Unknown, gameEnabled, current, defaults);
+        var undoc = BuildUndocumentedTab(gameAvailable, gameEnabled, current, defaults);
+
+        var tabs = new TabControl
+        {
+            Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E)),
+            BorderThickness = new Thickness(0),
+        };
+        if (Application.Current?.TryFindResource("DarkTabItem") is Style tabStyle)
+            tabs.ItemContainerStyle = tabStyle;
+        tabs.Items.Add(new TabItem { Header = "World Settings", Content = world });
+        tabs.Items.Add(new TabItem { Header = "Admin", Content = admin });
+        tabs.Items.Add(new TabItem { Header = "Undocumented", Content = undoc });
+
+        var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(18, 10, 18, 14) };
+        if (_resetActions.Count > 0)
+            buttons.Children.Add(MakeButton("Reset to defaults", ResetAll));
+        buttons.Children.Add(MakeButton("Save", OnSave));
+        buttons.Children.Add(MakeButton("Cancel", Close));
+
+        var root = new DockPanel();
+        var bannerText = _serverRunning
+            ? "The server is running - these settings are read-only. Stop it to edit them."
+            : !gameAvailable
+                ? "Game settings unavailable - install the server first (no DefaultPalWorldSettings.ini found)."
+                : null;
+        if (bannerText is not null)
+        {
+            var banner = Banner(bannerText);
+            DockPanel.SetDock(banner, Dock.Top);
+            root.Children.Add(banner);
+        }
+        DockPanel.SetDock(buttons, Dock.Bottom);
+        root.Children.Add(buttons);
+        root.Children.Add(tabs);
+        Content = root;
+    }
+
+    /// <summary>One catalog tab: the doc blurb, then rows for the matching keys grouped by category (headers
+    /// are dropped for a category with no matching rows).</summary>
+    private ScrollViewer BuildIniTab(UIElement blurb, IEnumerable<SettingCategory> categories, Func<GameSetting, bool> filter,
+        bool gameEnabled, IReadOnlyDictionary<string, string?> current, IReadOnlyDictionary<string, string?> defaults)
+    {
+        var stack = new StackPanel { Margin = new Thickness(18) };
+        stack.Children.Add(blurb);
+        foreach (var category in categories)
+        {
+            var settings = GameSettingsCatalog.All.Where(s => s.Category == category && filter(s)).ToList();
+            if (settings.Count == 0)
+                continue;
+            stack.Children.Add(Header(CategoryLabel(category)));
+            foreach (var setting in settings)
+                AddCatalogRow(stack, setting, gameEnabled, current, defaults);
+        }
+        return new ScrollViewer { Content = stack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
+    }
+
+    /// <summary>The Undocumented tab: catalogued keys we can't confidently explain (typed, with a best-guess
+    /// tooltip), then a divider and any keys in the config the catalog doesn't recognise (raw, future-proofing
+    /// against a game update adding params before we catalog them).</summary>
+    private ScrollViewer BuildUndocumentedTab(bool gameAvailable, bool gameEnabled,
+        IReadOnlyDictionary<string, string?> current, IReadOnlyDictionary<string, string?> defaults)
+    {
+        var stack = new StackPanel { Margin = new Thickness(18) };
+        stack.Children.Add(DocBlurb(
+            "Settings the official docs don't cover. Each tooltip has our best guess, but we can't vouch for these - "
+            + "some may be internal or unused. Look them up in the",
+            ConfigDocsUrl, "Palworld configuration reference"));
+
+        stack.Children.Add(Header("Known to the launcher"));
+        foreach (var setting in GameSettingsCatalog.All.Where(s => s.Doc == DocStatus.Unknown))
+            AddCatalogRow(stack, setting, gameEnabled, current, defaults);
+
+        stack.Children.Add(Header("New in your config (not catalogued)"));
+        if (AppendExtras(stack, gameAvailable, gameEnabled) == 0)
+            stack.Children.Add(new TextBlock
+            {
+                Text = "None - every key in your config is catalogued.",
+                Foreground = Fg, Margin = new Thickness(0, 2, 0, 0),
+            });
+
+        return new ScrollViewer { Content = stack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
+    }
+
+    /// <summary>Add one catalog key's row (input built by type, reset when a default exists and it's editable,
+    /// undocumented marker driven by <see cref="GameSetting.Doc"/>).</summary>
+    private void AddCatalogRow(StackPanel stack, GameSetting setting, bool gameEnabled,
+        IReadOnlyDictionary<string, string?> current, IReadOnlyDictionary<string, string?> defaults)
+    {
+        var value = current.TryGetValue(setting.Key, out var v) ? v ?? "" : "";
+        var hasDefault = defaults.TryGetValue(setting.Key, out var dv);
+        // Tooltip leads with the real ini key (the "true" name) so it's discoverable, then the description.
+        var tip = string.IsNullOrEmpty(setting.Description) ? setting.Key : $"{setting.Key}\n{setting.Description}";
+        // An app-preferred default (e.g. RESTAPIEnabled = True) overrides the game default for reset: the ↺
+        // resets toward it (so it only shows when the value differs, i.e. REST is off) and the key is left out
+        // of bulk "Reset to defaults" so a blanket reset can't disable a feature the launcher relies on.
+        var resetTarget = setting.AppDefault ?? dv ?? "";
+        var (input, reset) = BuildGameInput(setting, value, resetTarget, gameEnabled);
+        // No reset (↺) on secret fields - don't let "Reset to defaults" silently blank a password.
+        var offerReset = gameEnabled && !setting.Secret && (setting.AppDefault is not null || hasDefault);
+        stack.Children.Add(Row(setting.Label, input, tip, offerReset ? reset : null, setting.Doc,
+            includeInBulkReset: setting.AppDefault is null));
+    }
+
     public static bool ShowLaunchArgs(Window? owner, LauncherConfig config, GameSettingsService gs, bool serverRunning) =>
         Show(owner, SettingsSection.LaunchArgs, config, gs, serverRunning);
 
-    public static bool ShowAdmin(Window? owner, LauncherConfig config, GameSettingsService gs, bool serverRunning) =>
-        Show(owner, SettingsSection.Admin, config, gs, serverRunning);
-
-    public static bool ShowGame(Window? owner, LauncherConfig config, GameSettingsService gs, bool serverRunning) =>
-        Show(owner, SettingsSection.Game, config, gs, serverRunning);
-
-    public static bool ShowExtra(Window? owner, LauncherConfig config, GameSettingsService gs, bool serverRunning) =>
-        Show(owner, SettingsSection.Extra, config, gs, serverRunning);
+    public static bool ShowServerSettings(Window? owner, LauncherConfig config, GameSettingsService gs, bool serverRunning) =>
+        Show(owner, SettingsSection.ServerSettings, config, gs, serverRunning);
 
     public static bool ShowAdvanced(Window? owner, LauncherConfig config, GameSettingsService gs, bool serverRunning) =>
         Show(owner, SettingsSection.Advanced, config, gs, serverRunning);
@@ -184,10 +261,6 @@ public sealed class SettingsDialog : Window
         return dialog._saved;
     }
 
-    private static IEnumerable<SettingCategory> CategoriesFor(SettingsSection section) => section == SettingsSection.Admin
-        ? new[] { SettingCategory.ServerAdmin }
-        : new[] { SettingCategory.Performance, SettingCategory.Gameplay, SettingCategory.GameBalance };
-
     private void BuildLaunchArgs(StackPanel stack)
     {
         stack.Children.Add(new TextBlock
@@ -195,8 +268,8 @@ public sealed class SettingsDialog : Window
             Text = "The exact command line used to launch the dedicated server (rebuilt live below). Where an "
                  + "argument here and a PalWorldSettings.ini setting control the same thing, the argument wins - a "
                  + "field left blank, 0, or at its default is left off, so the ini value is used instead. Most game "
-                 + "settings have no argument and live only in the ini (edit those under Game Settings / Admin "
-                 + "Settings). Changes take effect on the next start.",
+                 + "settings have no argument and live only in the ini (edit those under Server Settings). Changes "
+                 + "take effect on the next start.",
             Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 10),
         });
 
@@ -401,32 +474,13 @@ public sealed class SettingsDialog : Window
         return false;
     }
 
-    private void BuildExtraSettings(StackPanel stack)
+    /// <summary>Append rows for keys present in the config that the catalog doesn't recognise (edited raw, and
+    /// marked undocumented). Returns how many were added, so the caller can show a placeholder when there are none.</summary>
+    private int AppendExtras(StackPanel stack, bool available, bool enabled)
     {
-        var available = _gameSettings.EnsureInitialized();
-        var enabled = available && !_serverRunning;
-
-        if (_serverRunning)
-            stack.Children.Add(Banner("The server is running - these are read-only. Stop it to edit them."));
-        else if (!available)
-            stack.Children.Add(Banner("Unavailable - install the server first (no config found)."));
-
-        stack.Children.Add(DocBlurb(
-            "Settings found in PalWorldSettings.ini that this launcher has no dedicated editor for (including "
-            + "any the game adds in a future update). Values are edited raw - only change these if you know the "
-            + "format. Look up what each one does in the",
-            ConfigDocsUrl, "Palworld configuration reference"));
-
         var extras = available ? _gameSettings.LoadExtras() : System.Array.Empty<GameSettingsService.ExtraSetting>();
         if (extras.Count == 0)
-        {
-            stack.Children.Add(new TextBlock
-            {
-                Text = "Nothing here - every setting in your config is covered by the other panels.",
-                Foreground = Fg, Margin = new Thickness(0, 4, 0, 0),
-            });
-            return;
-        }
+            return 0;
 
         var defaults = available ? _gameSettings.LoadDefaults() : new Dictionary<string, string?>();
         foreach (var extra in extras)
@@ -443,8 +497,9 @@ public sealed class SettingsDialog : Window
             ResetSpec? reset = enabled && defaults.TryGetValue(extra.Key, out var dv)
                 ? TextReset(box, dv ?? "")
                 : null;
-            stack.Children.Add(Row(extra.Key, box, null, reset));
+            stack.Children.Add(Row(extra.Key, box, null, reset, DocStatus.Unknown));
         }
+        return extras.Count;
     }
 
     private (FrameworkElement Input, ResetSpec Reset) BuildGameInput(GameSetting setting, string value, string defaultValue, bool enabled)
@@ -512,38 +567,39 @@ public sealed class SettingsDialog : Window
             return true;
         }
 
-        if (_section == SettingsSection.Extra)
-        {
-            if (_serverRunning)
-                return true;
-            var edits = _extraInputs.Where(x => x.Read() != x.Original).ToDictionary(x => x.Key, x => x.Read());
-            if (edits.Count == 0 || _gameSettings.SaveExtras(edits, serverRunning: false, out var badKey))
-                return true;
+        // ServerSettings: catalog edits + uncatalogued (extra) edits, only when stopped (the service enforces both).
+        if (_serverRunning)
+            return true;
 
-            ChoiceDialog.Show(this, "Not saved",
-                $"'{badKey}' has a value that would break the config format (a stray comma, quote, or unbalanced "
-                + "parenthesis). Nothing was saved - fix it and try again.", "OK");
+        // Compare catalog keys by typed value, not raw text, so a hand-edited non-canonical value (bHardcore=false,
+        // 1.0 vs 1.000000, enum casing) on a key the user didn't touch isn't rewritten canonical.
+        var gameEdits = _gameInputs
+            .Where(g => !SettingValidator.ValuesEqual(g.Setting.Type, g.Read(), g.Original))
+            .ToDictionary(g => g.Setting.Key, g => g.Read());
+        var extraEdits = _extraInputs
+            .Where(x => x.Read() != x.Original)
+            .ToDictionary(x => x.Key, x => x.Read());
+
+        if (gameEdits.Count == 0 && extraEdits.Count == 0)
+            return true;
+
+        if (gameEdits.Count > 0 && !_gameSettings.Save(gameEdits, serverRunning: false, out var badGameKey))
+        {
+            ShowCorruptError(badGameKey);
             return false;
         }
-
-        // Admin / Game: game settings -> ini (only changed keys, and only when stopped; the service enforces both).
-        if (!_serverRunning)
+        if (extraEdits.Count > 0 && !_gameSettings.SaveExtras(extraEdits, serverRunning: false, out var badExtraKey))
         {
-            // Compare by typed value, not raw text, so a hand-edited non-canonical value (bHardcore=false,
-            // 1.0 vs 1.000000, enum casing) on a key the user didn't touch isn't rewritten canonical.
-            var edits = _gameInputs
-                .Where(g => !SettingValidator.ValuesEqual(g.Setting.Type, g.Read(), g.Original))
-                .ToDictionary(g => g.Setting.Key, g => g.Read());
-            if (edits.Count > 0 && !_gameSettings.Save(edits, serverRunning: false, out var badKey))
-            {
-                ChoiceDialog.Show(this, "Not saved",
-                    $"'{badKey}' has a value that would break the config format (a stray comma, quote, or "
-                    + "unbalanced parenthesis). Nothing was saved - fix it and try again.", "OK");
-                return false;
-            }
+            ShowCorruptError(badExtraKey);
+            return false;
         }
         return true;
     }
+
+    private void ShowCorruptError(string? key) =>
+        ChoiceDialog.Show(this, "Not saved",
+            $"'{key}' has a value that would break the config format (a stray comma, quote, or unbalanced "
+            + "parenthesis). Nothing was saved - fix it and try again.", "OK");
 
     /// <summary>Validate every editable text field; block Save and list the failures if any are invalid.</summary>
     private void OnSave()
@@ -641,14 +697,18 @@ public sealed class SettingsDialog : Window
         }
     }
 
-    private Grid Row(string label, FrameworkElement input, string? tip = null, ResetSpec? reset = null)
+    private Grid Row(string label, FrameworkElement input, string? tip = null, ResetSpec? reset = null, DocStatus doc = DocStatus.Documented, bool includeInBulkReset = true)
     {
         var grid = new Grid { Margin = new Thickness(0, 3, 0, 3) };
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(300) });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
-        var text = new TextBlock { Text = label, Foreground = Fg, VerticalAlignment = VerticalAlignment.Center, TextWrapping = TextWrapping.Wrap };
+        var text = new TextBlock { Foreground = Fg, VerticalAlignment = VerticalAlignment.Center, TextWrapping = TextWrapping.Wrap };
+        text.Inlines.Add(new Run(label));
+        // Flag anything the official docs don't cover, so a plain-language label never reads as authoritative.
+        if (doc != DocStatus.Documented)
+            text.Inlines.Add(new Run("  · undocumented") { Foreground = Muted, FontStyle = FontStyles.Italic });
         if (!string.IsNullOrEmpty(tip))
         {
             text.ToolTip = tip;
@@ -661,7 +721,7 @@ public sealed class SettingsDialog : Window
 
         if (reset is not null)
         {
-            var resetButton = ResetButton(reset);
+            var resetButton = ResetButton(reset, includeInBulkReset);
             Grid.SetColumn(resetButton, 2);
             grid.Children.Add(resetButton);
         }
@@ -689,9 +749,10 @@ public sealed class SettingsDialog : Window
 
     /// <summary>A small "reset to default" (↺) button for one field, shown only while the value differs from
     /// its default; also collected for the "Reset to defaults" button.</summary>
-    private Button ResetButton(ResetSpec spec)
+    private Button ResetButton(ResetSpec spec, bool includeInBulk = true)
     {
-        _resetActions.Add(spec.Reset);
+        if (includeInBulk)
+            _resetActions.Add(spec.Reset);
         var button = new Button
         {
             Content = "↺", Width = 26, Margin = new Thickness(6, 0, 0, 0), Padding = new Thickness(0, 1, 0, 1),

@@ -123,13 +123,8 @@
             <Button DockPanel.Dock="Left" Content="Validate Files" Command="{Binding ValidateFilesCommand}"
                     ToolTip="Full SteamCMD integrity check of the installed files"/>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                <Button Content="Game Settings" Click="OnOpenGameSettings"
-                        ToolTip="Edit gameplay and balance in PalWorldSettings.ini - difficulty, EXP / capture / drop rates, damage, world features."/>
-                <Button Content="Admin Settings" Click="OnOpenAdminSettings"
-                        ToolTip="Edit server management in PalWorldSettings.ini - name, passwords, player cap, and the REST / RCON APIs."/>
-                <Button Content="New Settings" Click="OnOpenExtraSettings" IsEnabled="{Binding HasUnknownSettings}"
-                        ToolTipService.ShowOnDisabled="True"
-                        ToolTip="Settings in your config that the launcher doesn't recognize - normally none. Enables only when a game update adds new settings the launcher hasn't catalogued yet."/>
+                <Button Content="Server Settings" Click="OnOpenServerSettings"
+                        ToolTip="Edit PalWorldSettings.ini in one tabbed editor - World Settings (gameplay and balance), Admin (name, passwords, REST / RCON), and Undocumented (keys the official docs don't cover, plus any a game update adds)."/>
                 <Button Content="Launch Arguments" Click="OnOpenLaunchArgs" Margin="0"
                         ToolTip="Edit the server's command-line arguments - listen port, player cap, performance threads, community listing."/>
             </StackPanel>
@@ -287,33 +282,7 @@
         <!-- Row 4: tabbed logs -->
         <TabControl Grid.Row="4" Background="#1E1E1E" BorderThickness="0" Padding="0,8,0,0">
             <TabControl.Resources>
-                <Style TargetType="TabItem">
-                    <Setter Property="Foreground" Value="#999999"/>
-                    <Setter Property="FontSize" Value="12"/>
-                    <Setter Property="Margin" Value="0,0,3,0"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="TabItem">
-                                <Border BorderThickness="1,0,1,0" BorderBrush="#3A3A3A">
-                                    <Border x:Name="Bd" Background="Transparent" Padding="16,7"
-                                            BorderThickness="0,0,0,2" BorderBrush="Transparent">
-                                        <ContentPresenter ContentSource="Header" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="Bd" Property="BorderBrush" Value="#2D6CDF"/>
-                                        <Setter TargetName="Bd" Property="Background" Value="#141414"/>
-                                        <Setter Property="Foreground" Value="#F0F0F0"/>
-                                    </Trigger>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Foreground" Value="#F0F0F0"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
+                <Style TargetType="TabItem" BasedOn="{StaticResource DarkTabItem}"/>
                 <Style TargetType="ListBox" x:Key="LogListStyle">
                     <Setter Property="Background" Value="#141414"/>
                     <Setter Property="BorderThickness" Value="0"/>

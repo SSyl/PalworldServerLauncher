@@ -40,6 +40,10 @@ public enum DocStatus
 /// Metadata for one PalWorldSettings.ini <c>OptionSettings</c> key: how to label it, which category
 /// it belongs to, and how to type its value (which drives quoting on write via <see cref="OptionSettingsBlob"/>).
 /// </summary>
+/// <param name="AppDefault">The launcher's preferred value, overriding the game default for the reset
+/// affordances only: the per-field reset targets this (so the ↺ shows only when the value differs from what
+/// the app wants), and the key is left out of bulk "Reset to defaults". Null = use the game default. Set for
+/// RESTAPIEnabled, which the launcher relies on being on.</param>
 public sealed record GameSetting(
     string Key,
     string Label,
@@ -50,13 +54,14 @@ public sealed record GameSetting(
     double? Min = null,
     double? Max = null,
     bool Secret = false,
+    string? AppDefault = null,
     DocStatus Doc = DocStatus.Documented);
 
 /// <summary>
 /// Data-driven catalog of PalWorldSettings.ini <c>OptionSettings</c> keys as typed fields. Covers EVERY
 /// key a current default config contains (verified against a real 1.0 DefaultPalWorldSettings.ini), so the
-/// "New Settings" panel - which lists keys the catalog doesn't know - is empty on a normal install and
-/// only lights up when a future game update adds a key we haven't catalogued yet.
+/// "Undocumented" tab's "new in your config" section is empty on a normal install and only lists a key
+/// once a future game update adds one we haven't catalogued yet.
 ///
 /// Labels use the game's own in-game "Edit World Settings" wording for keys that appear there, so they
 /// match what players see. Keys the game screen doesn't expose (server management, and options only a
@@ -74,7 +79,7 @@ public static class GameSettingsCatalog
 {
     public static readonly IReadOnlyList<GameSetting> All = new List<GameSetting>
     {
-        // ===================== Server management (Admin Settings) =====================
+        // ===================== Server management (Admin tab) =====================
         new("ServerName", "Server name", SettingCategory.ServerAdmin, SettingType.Text,
             "Server name."),
         new("ServerDescription", "Description", SettingCategory.ServerAdmin, SettingType.Text,
@@ -88,7 +93,7 @@ public static class GameSettingsCatalog
         new("CoopPlayerMaxNum", "CoopPlayerMaxNum", SettingCategory.ServerAdmin, SettingType.Int,
             "Undocumented. Community guesses a cooperative-play party size, but this may be an internal value that has no effect on a dedicated server.", Min: 1, Doc: DocStatus.Unknown),
         new("RESTAPIEnabled", "REST API enabled", SettingCategory.ServerAdmin, SettingType.Bool,
-            "Enable the REST API. The launcher needs this for stats, graceful shutdown, and player logging."),
+            "Enable the REST API. The launcher needs this for stats, graceful shutdown, and player logging.", AppDefault: "True"),
         new("RESTAPIPort", "REST API port", SettingCategory.ServerAdmin, SettingType.Int,
             "Listening port for the REST API.", Min: 1, Max: 65535),
         new("RCONEnabled", "RCON enabled", SettingCategory.ServerAdmin, SettingType.Bool,

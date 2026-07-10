@@ -20,5 +20,35 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- Dark tab header, shared by the main window's log tabs and the code-built Server Settings dialog
+             (which applies it via ItemContainerStyle since it has no XAML of its own). -->
+        <Style x:Key="DarkTabItem" TargetType="TabItem">
+            <Setter Property="Foreground" Value="#999999"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="0,0,3,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border BorderThickness="1,0,1,0" BorderBrush="#3A3A3A">
+                            <Border x:Name="Bd" Background="Transparent" Padding="16,7"
+                                    BorderThickness="0,0,0,2" BorderBrush="Transparent">
+                                <ContentPresenter ContentSource="Header" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#2D6CDF"/>
+                                <Setter TargetName="Bd" Property="Background" Value="#141414"/>
+                                <Setter Property="Foreground" Value="#F0F0F0"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#F0F0F0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

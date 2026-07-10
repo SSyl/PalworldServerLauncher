@@ -56,10 +56,6 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] private string _nextBackup = "-";
     [ObservableProperty] private string _updateStatus = "-";
 
-    /// <summary>True when the config has keys the catalog doesn't recognise; drives the New Settings button's
-    /// enabled state (grayed unless a game update has added settings the launcher hasn't catalogued yet).</summary>
-    [ObservableProperty] private bool _hasUnknownSettings;
-
     /// <summary>General tab: every line. Server/SteamCmd tabs: only their own channel.</summary>
     public ObservableCollection<string> LogGeneral { get; } = new();
     public ObservableCollection<string> LogServer { get; } = new();
@@ -122,7 +118,6 @@ public partial class MainViewModel : ObservableObject
     {
         var alreadyRunning = _controller.Attach();
         IsInstalled = _controller.IsInstalled;
-        RefreshUnknownSettings();
         _logger.Debug($"Attach complete. Installed={IsInstalled}, alreadyRunning={alreadyRunning}, State={State}");
         return alreadyRunning;
     }
@@ -138,10 +133,6 @@ public partial class MainViewModel : ObservableObject
 
     /// <summary>Enable the REST API with a fresh random admin password (the setup prompt's "Yes").</summary>
     public bool EnableRestApi() => _controller.EnableRestApiWithRandomPassword();
-
-    /// <summary>Recompute whether the config contains keys the catalog doesn't know (drives the New Settings
-    /// button). Cheap file read; called at startup and after an install/update.</summary>
-    public void RefreshUnknownSettings() => HasUnknownSettings = _controller.GameSettings.LoadExtras().Count > 0;
 
     // --- Settings dialog (opened from the View; edits launch args + PalWorldSettings.ini) ---
     public LauncherConfig Config => _config;
@@ -413,7 +404,6 @@ public partial class MainViewModel : ObservableObject
         {
             IsBusy = false;
             IsInstalled = _controller.IsInstalled;
-            RefreshUnknownSettings();
         }
 
         // Only after a genuine first install (not a re-validate / update on an existing one).

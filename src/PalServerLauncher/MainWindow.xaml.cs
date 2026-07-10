@@ -115,8 +115,8 @@ public partial class MainWindow : Window
                 "Enable the REST API? It's what lets the launcher control the server: apply game updates, " +
                 "gracefully save and shut down, schedule restarts and backups, and monitor server health.\n\n" +
                 "If you enable it, the launcher generates the server config now and sets a secure, randomly " +
-                "generated admin password (view or change it later under Admin Settings). You can also skip " +
-                "this and enable it yourself later.",
+                "generated admin password (view or change it later under Server Settings, in the Admin tab). You " +
+                "can also skip this and enable it yourself later.",
                 "Yes, enable it", "Not now");
             if (installChoice == 0)
                 EnableRestAndReport();
@@ -146,10 +146,10 @@ public partial class MainWindow : Window
         ChoiceDialog.Show(this,
             ok ? "REST API enabled" : "Couldn't enable REST",
             ok
-                ? "Done - the REST API is on with a new random admin password (view or change it under Admin " +
-                  "Settings). It takes effect the next time you start the server."
+                ? "Done - the REST API is on with a new random admin password (view or change it under Server " +
+                  "Settings, in the Admin tab). It takes effect the next time you start the server."
                 : "Couldn't write the server config. Make sure the server is installed and stopped, then set " +
-                  "it manually under Admin Settings.",
+                  "it manually under Server Settings, in the Admin tab.",
             "OK");
     }
 
@@ -195,17 +195,11 @@ public partial class MainWindow : Window
             _viewModel.SetBackupTimes(result);
     }
 
-    private void OnOpenGameSettings(object sender, RoutedEventArgs e) =>
-        SettingsDialog.ShowGame(this, _viewModel.Config, _viewModel.GameSettings, _viewModel.IsServerRunning);
-
-    private void OnOpenAdminSettings(object sender, RoutedEventArgs e) =>
-        SettingsDialog.ShowAdmin(this, _viewModel.Config, _viewModel.GameSettings, _viewModel.IsServerRunning);
+    private void OnOpenServerSettings(object sender, RoutedEventArgs e) =>
+        SettingsDialog.ShowServerSettings(this, _viewModel.Config, _viewModel.GameSettings, _viewModel.IsServerRunning);
 
     private void OnOpenLaunchArgs(object sender, RoutedEventArgs e) =>
         SettingsDialog.ShowLaunchArgs(this, _viewModel.Config, _viewModel.GameSettings, _viewModel.IsServerRunning);
-
-    private void OnOpenExtraSettings(object sender, RoutedEventArgs e) =>
-        SettingsDialog.ShowExtra(this, _viewModel.Config, _viewModel.GameSettings, _viewModel.IsServerRunning);
 
     private void OnOpenAdvanced(object sender, RoutedEventArgs e)
     {
