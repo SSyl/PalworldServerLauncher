@@ -76,6 +76,26 @@ inspired by [Conan Exile's Dediciated Server Launcher](https://forums.funcom.com
 
 ---
 
+## Screenshots
+
+**The settings editor.** Every `PalWorldSettings.ini` value, grouped and labeled in plain language.
+
+![Game settings editor](docs/images/app-screenshots/game-settings.png)
+
+**Launch arguments**, with a live preview of the exact command line.
+
+![Launch arguments](docs/images/app-screenshots/launcher-args.png)
+
+**Picking restart and backup times.**
+
+![Restart and backup time picker](docs/images/app-screenshots/schedules.png)
+
+**Customizable in-game restart announcements.**
+
+![Announcements editor](docs/images/app-screenshots/annoucements.png)
+
+---
+
 ## Requirements
 
 - **Windows 10 or 11 (64-bit).**
