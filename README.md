@@ -8,6 +8,8 @@ inspired by [Conan Exile's Dediciated Server Launcher](https://forums.funcom.com
 > [!NOTE]
 > **Status:** pre-release and still a work in progress. Not affiliated with Pocketpair.
 
+![The Palworld Server Launcher main window](docs/images/app-screenshots/main-window.png)
+
 ---
 
 ## What it does
@@ -93,7 +95,7 @@ inspired by [Conan Exile's Dediciated Server Launcher](https://forums.funcom.com
 
 **Customizable in-game restart announcements.**
 
-![Announcements editor](docs/images/app-screenshots/annoucements.png)
+![Announcements editor](docs/images/app-screenshots/announcements.png)
 
 ---
 
