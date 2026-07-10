@@ -56,8 +56,9 @@ public sealed class SettingsDialog : Window
     private TextBox? _commandPreview;
     private string _extraArgsOriginal = "";
 
-    // Game-setting inputs: (setting, read-current-value, original-value).
-    private readonly List<(GameSetting Setting, System.Func<string> Read, string Original)> _gameInputs = new();
+    // Game-setting inputs: (setting, read-current-value, write-value, original-value). Set lets a difficulty
+    // preset push values into the live controls.
+    private readonly List<(GameSetting Setting, System.Func<string> Read, System.Action<string> Set, string Original)> _gameInputs = new();
 
     // Extra (non-catalog) inputs: (key, read-current-value, original-value).
     private readonly List<(string Key, System.Func<string> Read, string Original)> _extraInputs = new();
@@ -136,7 +137,8 @@ public sealed class SettingsDialog : Window
             DocBlurb("Gameplay and balance - difficulty, EXP / capture / drop rates, damage multipliers, and world features. Full reference:",
                 "https://docs.palworldgame.com/settings-and-operation/configuration#features", "Features docs"),
             new[] { SettingCategory.Performance, SettingCategory.Gameplay, SettingCategory.GameBalance },
-            s => s.Doc != DocStatus.Unknown, gameEnabled, current, defaults);
+            s => s.Doc != DocStatus.Unknown, gameEnabled, current, defaults,
+            topExtra: BuildPresetRow(gameEnabled));
         var admin = BuildIniTab(
             DocBlurb("Server management - server name, passwords, player limit, and the REST / RCON APIs. Full reference:",
                 "https://docs.palworldgame.com/settings-and-operation/configuration#server-management", "Server management docs"),
@@ -182,10 +184,13 @@ public sealed class SettingsDialog : Window
     /// <summary>One catalog tab: the doc blurb, then rows for the matching keys grouped by category (headers
     /// are dropped for a category with no matching rows).</summary>
     private ScrollViewer BuildIniTab(UIElement blurb, IEnumerable<SettingCategory> categories, Func<GameSetting, bool> filter,
-        bool gameEnabled, IReadOnlyDictionary<string, string?> current, IReadOnlyDictionary<string, string?> defaults)
+        bool gameEnabled, IReadOnlyDictionary<string, string?> current, IReadOnlyDictionary<string, string?> defaults,
+        UIElement? topExtra = null)
     {
         var stack = new StackPanel { Margin = new Thickness(18) };
         stack.Children.Add(blurb);
+        if (topExtra is not null)
+            stack.Children.Add(topExtra);
         foreach (var category in categories)
         {
             var settings = GameSettingsCatalog.All.Where(s => s.Category == category && filter(s)).ToList();
@@ -243,6 +248,76 @@ public sealed class SettingsDialog : Window
         var offerReset = gameEnabled && !setting.Secret && (setting.AppDefault is not null || hasDefault);
         stack.Children.Add(Row(setting.Label, input, tip, offerReset ? reset : null, setting.Doc,
             includeInBulkReset: setting.AppDefault is null));
+    }
+
+    /// <summary>The difficulty-preset buttons for the World Settings tab (disabled while the server runs).</summary>
+    private UIElement BuildPresetRow(bool enabled)
+    {
+        var panel = new WrapPanel { Margin = new Thickness(0, 0, 0, 4) };
+        panel.Children.Add(new TextBlock
+        {
+            Text = "Difficulty preset:", Foreground = Muted, VerticalAlignment = VerticalAlignment.Center,
+            Margin = new Thickness(0, 0, 8, 0),
+        });
+        foreach (var name in DifficultyPresets.Names)
+        {
+            var presetName = name;
+            var button = MakeButton(presetName, () => ApplyPreset(presetName));
+            button.IsEnabled = enabled;
+            button.Margin = new Thickness(0, 0, 6, 4);
+            panel.Children.Add(button);
+        }
+        return panel;
+    }
+
+    /// <summary>
+    /// Apply a difficulty preset: show what changes versus the current values, and on confirm push them into
+    /// the live fields and save just those keys (each logged to the General tab). Saves directly rather than
+    /// only staging, matching the user-facing "apply and save" flow; other unsaved edits are left as-is.
+    /// </summary>
+    private void ApplyPreset(string presetName)
+    {
+        if (_serverRunning)
+            return; // buttons are disabled while running, but guard anyway
+
+        var defaults = _gameSettings.LoadDefaults();
+        var current = _gameInputs.ToDictionary(g => g.Setting.Key, g => (string?)g.Read(), StringComparer.OrdinalIgnoreCase);
+        var changes = DifficultyPresets.ResolveChanges(presetName, defaults, current);
+
+        if (changes.Count == 0)
+        {
+            ChoiceDialog.Show(this, $"{presetName} preset",
+                $"Your settings already match the {presetName} preset - nothing to change.", "OK");
+            return;
+        }
+
+        var list = string.Join("\n", changes.Select(c => $"{c.Key} = {c.Value}"));
+        var message = "These are the values as of Palworld 1.0. Some settings may have been added or changed since.\n\n"
+            + $"Here are the values that will change for the {presetName} preset:\n\n{list}\n\n"
+            + "Any values not listed above will remain the same.\n\nApply and save these changes?";
+        if (ChoiceDialog.Show(this, $"{presetName} preset", message, "Yes", "No") != 0)
+            return;
+
+        // Push into the live controls and update each Original so the change isn't re-flagged as unsaved.
+        var edits = changes.ToDictionary(c => c.Key, c => c.Value, StringComparer.OrdinalIgnoreCase);
+        for (var i = 0; i < _gameInputs.Count; i++)
+        {
+            if (edits.TryGetValue(_gameInputs[i].Setting.Key, out var val))
+            {
+                var g = _gameInputs[i];
+                g.Set(val);
+                _gameInputs[i] = (g.Setting, g.Read, g.Set, val);
+            }
+        }
+
+        if (!_gameSettings.Save(edits, serverRunning: false, out var badKey))
+        {
+            ShowCorruptError(badKey);
+            return;
+        }
+        _saved = true;
+        ChoiceDialog.Show(this, $"{presetName} preset applied",
+            $"Applied the {presetName} preset. {changes.Count} setting(s) changed and saved.", "OK");
     }
 
     public static bool ShowLaunchArgs(Window? owner, LauncherConfig config, GameSettingsService gs, bool serverRunning) =>
@@ -509,13 +584,13 @@ public sealed class SettingsDialog : Window
             case SettingType.Bool:
             {
                 var box = CheckField(IsTrue(value), enabled);
-                _gameInputs.Add((setting, () => box.IsChecked == true ? "True" : "False", value));
+                _gameInputs.Add((setting, () => box.IsChecked == true ? "True" : "False", s => box.IsChecked = IsTrue(s), value));
                 return (box, CheckReset(box, IsTrue(defaultValue)));
             }
             case SettingType.Enum:
             {
                 var combo = ComboField(setting.Options?.ToArray() ?? new[] { value }, value, enabled);
-                _gameInputs.Add((setting, () => (combo.SelectedItem as string) ?? "", value));
+                _gameInputs.Add((setting, () => (combo.SelectedItem as string) ?? "", s => SelectCombo(combo, s), value));
                 return (combo, ComboReset(combo, defaultValue));
             }
             default:
@@ -523,12 +598,12 @@ public sealed class SettingsDialog : Window
                 if (setting.Secret)
                 {
                     var secret = new SecretField(value, enabled);
-                    _gameInputs.Add((setting, () => secret.Value, value));
+                    _gameInputs.Add((setting, () => secret.Value, s => secret.SetValue(s), value));
                     return (secret.Element, new ResetSpec(
                         () => secret.SetValue(defaultValue), () => secret.Value == defaultValue, cb => secret.OnChanged(cb)));
                 }
                 var box = ValidatedTextField(setting.Label, value, enabled, setting.Type, setting.Min, setting.Max);
-                _gameInputs.Add((setting, () => box.Text, value));
+                _gameInputs.Add((setting, () => box.Text, s => box.Text = s, value));
                 return (box, TextReset(box, defaultValue));
             }
         }
