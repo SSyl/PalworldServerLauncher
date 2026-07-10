@@ -123,6 +123,19 @@
             <Button DockPanel.Dock="Left" Content="Validate Files" Command="{Binding ValidateFilesCommand}"
                     ToolTip="Full SteamCMD integrity check of the installed files"/>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button Content="Discord Bot" Click="OnOpenDiscord" ToolTip="Discord control bot + webhook notifications">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Background" Value="#5865F2"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#4752C4"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
                 <Button Content="Server Settings" Click="OnOpenServerSettings"
                         ToolTip="Edit PalWorldSettings.ini in one tabbed editor - World Settings (gameplay and balance), Admin (name, passwords, REST / RCON), and Undocumented (keys the official docs don't cover, plus any a game update adds)."/>
                 <Button Content="Launch Arguments" Click="OnOpenLaunchArgs" Margin="0"
@@ -250,19 +263,6 @@
                     <WrapPanel>
                         <Button Content="Edit Announcements" Click="OnEditAnnouncements" Margin="0,0,8,4"
                                 ToolTip="Edit the in-game messages players see before a restart."/>
-                        <Button Content="Discord Bot" Click="OnOpenDiscord" Margin="0,0,8,4" ToolTip="Discord control bot + webhook notifications">
-                            <Button.Style>
-                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                    <Setter Property="Background" Value="#5865F2"/>
-                                    <Setter Property="Foreground" Value="White"/>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#4752C4"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
                         <Button Content="Advanced Settings" Click="OnOpenAdvanced" Margin="0,0,0,4" ToolTip="Low-level process tuning (priority, CPU affinity) - advanced users only">
                             <Button.Style>
                                 <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
