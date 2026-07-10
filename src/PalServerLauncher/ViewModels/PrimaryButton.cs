@@ -40,10 +40,10 @@ public static class PrimaryButton
 
         return state switch
         {
-            ServerState.Stopped or ServerState.Backoff => "Start",
+            ServerState.Stopped or ServerState.Backoff => "▶",  // Start (play)
             ServerState.Starting => "Starting…",
             ServerState.Stopping or ServerState.Restarting => "Stopping…",
-            _ => "Stop",
+            _ => "■",  // Stop (running)
         };
     }
 

@@ -92,8 +92,8 @@
 
         <!-- Row 0: action buttons (left) + settings dialogs (right) -->
         <DockPanel Grid.Row="0" LastChildFill="False" Margin="0,0,0,10">
-            <Button DockPanel.Dock="Left" Content="{Binding PrimaryActionText}" Command="{Binding PrimaryActionCommand}" MinWidth="110" FontWeight="SemiBold"
-                    ToolTip="Install the server, or start / stop it once installed. Start checks for an update first (when Update on start is on), then launches.">
+            <Button DockPanel.Dock="Left" Content="{Binding PrimaryActionText}" Command="{Binding PrimaryActionCommand}" MinWidth="46" FontSize="16" FontWeight="SemiBold"
+                    ToolTip="Install the server, or start (▶) / stop (■) it once installed. Start checks for an update first (when Update on start is on), then launches.">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                         <Style.Triggers>
@@ -116,8 +116,8 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button DockPanel.Dock="Left" Content="Restart" Command="{Binding RestartCommand}"
-                    ToolTip="Save and restart the server immediately (no player countdown; scheduled and update restarts warn first)."/>
+            <Button DockPanel.Dock="Left" Content="↻" Command="{Binding RestartCommand}" FontSize="16" MinWidth="40"
+                    ToolTip="Restart now: saves and restarts the server immediately, with no player countdown. Scheduled and update restarts warn players first."/>
             <Button DockPanel.Dock="Left" Content="Check for Update" Click="OnCheckForUpdate" IsEnabled="{Binding CanCheckForUpdate}"
                     ToolTip="Check SteamCMD for a newer build (read-only; works while running)"/>
             <Button DockPanel.Dock="Left" Content="Validate Files" Command="{Binding ValidateFilesCommand}"

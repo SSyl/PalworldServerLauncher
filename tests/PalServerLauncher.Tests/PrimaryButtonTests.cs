@@ -17,7 +17,7 @@ public class PrimaryButtonTests
     public void Installed_and_stopped_shows_Start()
     {
         Assert.Equal(PrimaryActionKind.Start, PrimaryButton.Resolve(true, false, ServerState.Stopped));
-        Assert.Equal("Start", PrimaryButton.Label(true, false, ServerState.Stopped));
+        Assert.Equal("▶", PrimaryButton.Label(true, false, ServerState.Stopped));
     }
 
     [Theory]
@@ -27,7 +27,7 @@ public class PrimaryButtonTests
     public void Running_shows_Stop(ServerState state)
     {
         Assert.Equal(PrimaryActionKind.Stop, PrimaryButton.Resolve(true, false, state));
-        Assert.Equal("Stop", PrimaryButton.Label(true, false, state));
+        Assert.Equal("■", PrimaryButton.Label(true, false, state));
     }
 
     [Theory]
