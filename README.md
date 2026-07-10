@@ -49,16 +49,19 @@ inspired by [Conan Exile's Dediciated Server Launcher](https://forums.funcom.com
 - Players joining and leaving show up in the log as they happen.
 
 ### Settings
-- A full editor for Palworld's `PalWorldSettings.ini`. Every setting is there, labeled in plain language,
-  with its real in-file name and a short note on what it does. The launcher only lets you change settings
-  while the server is stopped, only writes the ones you actually touched, and leaves everything else exactly
-  as it was.
-- Passwords are hidden behind a **show/hide** button, so the admin password the launcher generates for you
-  is still there to read when you need it.
-- A **New Settings** tab catches anything the launcher doesn't recognize, like a setting a future game update
-  adds, so you can still edit it by hand. Most of the time it sits empty.
+- A full editor for Palworld's `PalWorldSettings.ini`, opened as one **Server Settings** window with tabs:
+  **World Settings** (gameplay and balance), **Admin** (server management), and **Undocumented**. Every
+  setting is there, labeled with the game's own in-game wording where it has one, and each tooltip shows the
+  real in-file name plus a short note. The launcher only lets you change settings while the server is stopped,
+  only writes the ones you actually touched, and shows you exactly what will change before it saves.
+- **Difficulty presets.** One click applies a Casual, Normal, Hard, or Hardcore set of values (as of Palworld
+  1.0). It previews what will change first, and switching presets always lands on a clean configuration.
+- **Passwords** are hidden behind a show/hide button, so the admin password the launcher generates for you is
+  still there to read when you need it.
+- The **Undocumented** tab holds the settings the official docs don't cover (with the launcher's best guess in
+  each tooltip), plus anything a future game update adds that the launcher doesn't recognize yet.
 - A **Launch Arguments** editor with a live preview of the exact command line the server will start with.
-- An **Advanced** tab for low-level process tuning. Set the server's Windows **priority** and pin it to
+- An **Advanced** section for low-level process tuning. Set the server's Windows **priority** and pin it to
   specific **CPU cores** (Unreal resets the affinity on launch, so the launcher quietly re-applies yours).
   Handy if you like to squeeze out performance.
 - The launcher never slips in a third-party `Engine.ini`. Your server runs on its own defaults.
@@ -85,9 +88,13 @@ inspired by [Conan Exile's Dediciated Server Launcher](https://forums.funcom.com
 
 ## Screenshots
 
-**The settings editor.** Every `PalWorldSettings.ini` value, grouped and labeled in plain language.
+**The settings editor.** One tabbed window for every `PalWorldSettings.ini` value, labeled with the game's own wording.
 
 ![Game settings editor](docs/images/app-screenshots/game-settings.png)
+
+**Difficulty presets.** Apply a Casual / Normal / Hard / Hardcore set of values, with a preview of exactly what changes.
+
+![Difficulty presets](docs/images/app-screenshots/difficulty-preset.png)
 
 **Launch arguments**, with a live preview of the exact command line.
 
@@ -133,8 +140,8 @@ inspired by [Conan Exile's Dediciated Server Launcher](https://forums.funcom.com
 - The launcher's own settings sit in `launcher.json`, inside a `PalworldServerLauncher` folder next to the
   exe. That folder also holds the server install, your backups, and the logs. You edit these settings right
   in the app.
-- The game's settings live in Palworld's `PalWorldSettings.ini`. Edit them from the launcher (Game, Admin,
-  New Settings, and Launch Arguments) or by hand in the file.
+- The game's settings live in Palworld's `PalWorldSettings.ini`. Edit them from the launcher (Server Settings
+  and Launch Arguments) or by hand in the file.
 
 ## Running more than one server
 
