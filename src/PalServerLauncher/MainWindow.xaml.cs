@@ -15,11 +15,13 @@ namespace PalServerLauncher;
 public partial class MainWindow : Window
 {
     private readonly MainViewModel _viewModel;
+    private readonly Logger _logger;
     private bool _forceClose;
 
     public MainWindow(Logger logger)
     {
         InitializeComponent();
+        _logger = logger;
         _viewModel = new MainViewModel(logger);
         DataContext = _viewModel;
 
@@ -37,6 +39,9 @@ public partial class MainWindow : Window
 
     private async void OnLoaded(object sender, RoutedEventArgs e)
     {
+        // Detect the public IP for the External IP display, in the background (best-effort, never blocks load).
+        _ = _viewModel.RefreshPublicIpAsync();
+
         // Attach() adopts an already-running managed server; if one was found, offer to keep, stop, or exit.
         if (_viewModel.Attach() && !await HandleAlreadyRunningAsync())
             return; // the user chose Exit - the launcher is closing
@@ -219,6 +224,21 @@ public partial class MainWindow : Window
     {
         if (DiscordDialog.Show(this, _viewModel.Config))
             _viewModel.ApplyDiscordSettings();
+    }
+
+    private void OnCheckPorts(object sender, RoutedEventArgs e) =>
+        PortCheckDialog.Show(this, _viewModel.Config, _viewModel.ReadServerSettings(), _viewModel.PublicIp, _logger);
+
+    private void OnToggleIpReveal(object sender, RoutedEventArgs e) =>
+        _viewModel.IsIpRevealed = !_viewModel.IsIpRevealed;
+
+    private void OnCopyConnectionInfo(object sender, RoutedEventArgs e)
+    {
+        var info = _viewModel.ConnectionInfo;
+        if (string.IsNullOrEmpty(info))
+            return;
+        try { Clipboard.SetText(info); }
+        catch (System.Runtime.InteropServices.COMException) { /* clipboard busy - ignore */ }
     }
 
     // Check for Update needs a dialog (the download prompt), so it's orchestrated here in the View.

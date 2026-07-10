@@ -87,6 +87,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -130,16 +131,28 @@
             </StackPanel>
         </DockPanel>
 
-        <!-- Row 1: status + update -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12" VerticalAlignment="Center">
+        <!-- Row 1: external IP + port accessibility (right, under Launch Arguments) -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,12" VerticalAlignment="Center">
+            <TextBlock Text="External IP:" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <TextBlock Text="{Binding PublicIpDisplay}" Style="{StaticResource Value}" VerticalAlignment="Center" MinWidth="140" TextAlignment="Right" Margin="0,0,6,0"/>
+            <Button Click="OnToggleIpReveal" FontFamily="Segoe MDL2 Assets" Content="&#xE7B3;" Padding="9,5" MinWidth="0" Margin="0,0,4,0"
+                    ToolTip="Show or hide your external IP"/>
+            <Button Click="OnCopyConnectionInfo" FontFamily="Segoe MDL2 Assets" Content="&#xE8C8;" Padding="9,5" MinWidth="0" IsEnabled="{Binding CanCopyConnectionInfo}"
+                    ToolTip="Copy your IP:port to the clipboard"/>
+            <Button Content="Port Accessibility" Click="OnCheckPorts" IsEnabled="{Binding CanCheckPorts}" Margin="8,0,0,0"
+                    ToolTip="Check whether your ports are reachable from the internet. The server must be stopped so the launcher can test the ports."/>
+        </StackPanel>
+
+        <!-- Row 2: status + update -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,12" VerticalAlignment="Center">
             <TextBlock Text="Status:" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
             <TextBlock Text="{Binding State}" Style="{StaticResource Value}" FontSize="15" VerticalAlignment="Center" Margin="0,0,24,0"/>
             <TextBlock Text="Update:" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
             <TextBlock Text="{Binding UpdateStatus}" Foreground="#F0F0F0" VerticalAlignment="Center"/>
         </StackPanel>
 
-        <!-- Row 2: compact status tiles -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,14">
+        <!-- Row 3: compact status tiles -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,0,0,14">
             <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="Version" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Version}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="FPS" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Fps}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="Memory" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Memory}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
@@ -148,8 +161,8 @@
             <StackPanel Orientation="Horizontal"><TextBlock Text="Next restart" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding NextRestart}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
         </StackPanel>
 
-        <!-- Row 3: Restarts / Backups / Misc boxes -->
-        <Grid Grid.Row="3" Margin="0,0,0,14">
+        <!-- Row 4: Restarts / Backups / Misc boxes -->
+        <Grid Grid.Row="4" Margin="0,0,0,14">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -279,8 +292,8 @@
             </Border>
         </Grid>
 
-        <!-- Row 4: tabbed logs -->
-        <TabControl Grid.Row="4" Background="#1E1E1E" BorderThickness="0" Padding="0,8,0,0">
+        <!-- Row 5: tabbed logs -->
+        <TabControl Grid.Row="5" Background="#1E1E1E" BorderThickness="0" Padding="0,8,0,0">
             <TabControl.Resources>
                 <Style TargetType="TabItem" BasedOn="{StaticResource DarkTabItem}"/>
                 <Style TargetType="ListBox" x:Key="LogListStyle">
