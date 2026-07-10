@@ -109,7 +109,10 @@ public sealed class ServerController : IDisposable
              + $"**Version:** {info?.Version ?? "?"}\n"
              + $"**Players:** {metrics.CurrentPlayerNum} / {metrics.MaxPlayerNum}\n"
              + $"**FPS:** {metrics.ServerFps}\n"
-             + $"**Uptime:** {uptimeText}";
+             + $"**Frame time:** {metrics.ServerFrameTime:0.##} ms\n"
+             + $"**Uptime:** {uptimeText}\n"
+             + $"**In-game days:** {metrics.Days}\n"
+             + $"**Base camps:** {metrics.BaseCampNum}";
     }
 
     /// <summary>The online-player list for the Discord /players command.</summary>
