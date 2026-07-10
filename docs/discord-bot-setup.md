@@ -30,7 +30,8 @@ into the launcher. As far as we're concerned, the other two are decoys.
 | **Public Key** | General Information page | No |
 | **Bot token** | **Bot** tab | ✅ Yes, this is the one |
 
-> **⚠️ Only the bot token works.** If you paste the Application ID or Public Key into the launcher, the bot
+> [!IMPORTANT]
+> **Only the bot token works.** If you paste the Application ID or Public Key into the launcher, the bot
 > won't connect.
 
 ---
@@ -66,7 +67,8 @@ On the left, click **Installation**.
 
 ![Unticking User Install and setting Install Link to None](images/Installation-tab.png)
 
-> **⚠️ Why do this now?** In step 4 you'll turn off "Public Bot". If you haven't done this step first,
+> [!IMPORTANT]
+> **Why do this now?** In step 4 you'll turn off "Public Bot". If you haven't done this step first,
 > Discord shows an error that says *"Private application cannot have a default authorization link."* Setting
 > Install Link to **None** now avoids that headache. It doesn't stop you from adding the bot to your server,
 > because you'll make your own invite link in step 5.
@@ -83,7 +85,8 @@ step 8.
 
 ![Resetting and copying the bot token](images/bot-token-reset.png)
 
-> **⚠️ Treat the token like a password.** Anyone who has it can control your bot. Discord only shows it once,
+> [!WARNING]
+> **Treat the token like a password.** Anyone who has it can control your bot. Discord only shows it once,
 > and that's fine. If you ever lose it, just click Reset Token again to get a new one. The launcher keeps it
 > on your PC in a file called `launcher.json` and never puts it in any log.
 
@@ -145,7 +148,8 @@ and turn on **Developer Mode**.
 
 ![Right-clicking a channel and choosing Copy Channel ID](images/discord-copy-id.png)
 
-> **🔒 Keep it private.** Anyone who can type in that channel, or who has that role, can control your server.
+> [!WARNING]
+> **Keep it private.** Anyone who can type in that channel, or who has that role, can control your server.
 > Use a private, admins-only channel and/or an admin role.
 
 ## 8. Put it all into the launcher

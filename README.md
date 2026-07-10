@@ -5,6 +5,7 @@ restarts and backs it up on whatever schedule you like, and watches its health, 
 API. It's a native Windows program written in C# / WPF, and the launcher itself is a single `.exe`. Heavily 
 inspired by [Conan Exile's Dediciated Server Launcher](https://forums.funcom.com/t/introducing-the-conan-exiles-dedicated-server-app/21699).
 
+> [!NOTE]
 > **Status:** pre-release and still a work in progress. Not affiliated with Pocketpair.
 
 ---
@@ -102,6 +103,10 @@ inspired by [Conan Exile's Dediciated Server Launcher](https://forums.funcom.com
 - To build it yourself: the **.NET 10 SDK**.
 - Room and bandwidth for the server install. The first SteamCMD download is a few GB.
 
+> [!TIP]
+> The released `.exe` is self-contained, so you don't need to install .NET or any other runtime to run it.
+> The .NET 10 SDK above is only for building from source.
+
 ## Quick start
 
 1. Run `PalServerLauncher.exe`.
@@ -134,13 +139,15 @@ other's server. Just give each server its own ports:
 
 The Steam query port sorts itself out automatically by picking the first free one.
 
-## A note on security
+## Security
 
-Palworld's REST API and RCON aren't built to face the internet, so keep those ports (8212 and 25575) on your
-local network or behind a firewall, and only forward the game ports your players actually need. The launcher
-only ever talks to the REST API on `127.0.0.1`, your own machine. Your Discord bot token is stored locally
-in `launcher.json` and is never written to the logs. Lock the control bot down to a private channel and/or
-an admin-only role.
+> [!WARNING]
+> Palworld's REST API and RCON aren't built to face the internet. Keep those ports (8212 and 25575) on your
+> local network or behind a firewall, and only forward the game ports your players actually need.
+
+The launcher only ever talks to the REST API on `127.0.0.1`, your own machine. Your Discord bot token is
+stored locally in `launcher.json` and is never written to the logs. Lock the control bot down to a private
+channel and/or an admin-only role.
 
 ## Command-line options
 
