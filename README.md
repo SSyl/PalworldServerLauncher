@@ -1,4 +1,6 @@
-# PalServerLauncher
+# Palworld Server Launcher
+
+[![Latest release](https://img.shields.io/github/v/release/SSyl/PalworldServerLauncher?include_prereleases)](https://github.com/SSyl/PalworldServerLauncher/releases/latest) [![License: GPLv3](https://img.shields.io/github/license/SSyl/PalworldServerLauncher)](LICENSE)
 
 A Windows app for running a **Palworld dedicated server**. It installs the server, keeps it up to date,
 restarts and backs it up on whatever schedule you like, and watches its health, all through Palworld's REST
@@ -111,7 +113,7 @@ inspired by [Conan Exile's Dediciated Server Launcher](https://forums.funcom.com
 
 ## Quick start
 
-1. Run `PalServerLauncher.exe`.
+1. Run `PalworldServerLauncher.exe`.
 2. Click **Install** to grab SteamCMD and the server. You only need this the first time.
 3. Click **Start**. The very first launch creates the server's config files.
 4. When the launcher offers, turn on the **REST API**. It can set a secure random admin password for you.
@@ -160,7 +162,7 @@ You can double-click the launcher, or start it from a terminal with a couple of 
   a server from the command line.
 
 ```powershell
-PalServerLauncher.exe --console --debug
+PalworldServerLauncher.exe --console --debug
 ```
 
 ## Building

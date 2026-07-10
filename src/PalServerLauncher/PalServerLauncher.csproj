@@ -12,7 +12,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <RootNamespace>PalServerLauncher</RootNamespace>
-    <AssemblyName>PalServerLauncher</AssemblyName>
+    <AssemblyName>PalworldServerLauncher</AssemblyName>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <!-- Repo-root logo (two levels up from this project) -> embedded as the exe icon. -->
     <ApplicationIcon>..\..\logo.ico</ApplicationIcon>
