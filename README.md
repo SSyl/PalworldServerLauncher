@@ -1,0 +1,159 @@
+# PalServerLauncher
+
+A Windows app for running a **Palworld dedicated server**. It installs the server, keeps it up to date,
+restarts and backs it up on whatever schedule you like, and watches its health, all through Palworld's REST
+API. It's a native Windows program written in C# / WPF, and the launcher itself is a single `.exe`. Heavily 
+inspired by [Conan Exile's Dediciated Server Launcher](https://forums.funcom.com/t/introducing-the-conan-exiles-dedicated-server-app/21699).
+
+> **Status:** pre-release and still a work in progress. Not affiliated with Pocketpair.
+
+---
+
+## What it does
+
+### Install and update
+- Installs SteamCMD and the dedicated server for you. When you hit **Start** it checks for a server update
+  first and then launches (you can turn that off).
+- **Auto-updates when a new build drops.** It watches for a new server build, and when one releases it
+  restarts the server gracefully to apply it. It doesn't care which game version you're on, so it keeps
+  working across 0.x, 1.0, and whatever comes next.
+- A read-only **Check for Update** button that's safe to use while the server is running, plus a **Validate
+  Files** button that has SteamCMD re-verify the whole install.
+
+### Restarts and recovery
+- **Scheduled restarts** at the times of day you choose. A server that only just came up won't get bounced
+  (there's a minimum-uptime guard), and if nobody's online it skips the in-game countdown and just restarts.
+- **Players get a heads-up.** Before a scheduled or update restart, the server announces it in-game at the
+  marks you set, say 15, 5, and 1 minutes out.
+- **Crash recovery.** If the server crashes, the launcher brings it right back. It also catches a server
+  that's technically still running but wedged (the REST API has stopped answering, or the world has stopped
+  advancing) and recovers that too. And if the server just keeps dying, a safety cutoff steps in so the
+  launcher doesn't restart it forever.
+- **Stop** and **Restart** happen the moment you click them.
+
+### Backups
+- Zips up your world save and server config with a timestamp on the filename. It can do this on startup, on
+  shutdown, on a schedule, or any time you click **Backup Now**.
+- When the server is running with the REST API on, it triggers a fresh in-game save first so the backup is
+  actually current. Old automatic backups get tidied up after a set number of days, but anything you made by
+  hand (or dropped into the folder yourself) is left alone.
+
+### Keeping an eye on things
+- Live tiles show FPS, players online, uptime, memory, version, and when the next restart and backup are
+  due, all read from the REST API.
+- Players joining and leaving show up in the log as they happen.
+
+### Settings
+- A full editor for Palworld's `PalWorldSettings.ini`. Every setting is there, labeled in plain language,
+  with its real in-file name and a short note on what it does. The launcher only lets you change settings
+  while the server is stopped, only writes the ones you actually touched, and leaves everything else exactly
+  as it was.
+- Passwords are hidden behind a **show/hide** button, so the admin password the launcher generates for you
+  is still there to read when you need it.
+- A **New Settings** tab catches anything the launcher doesn't recognize, like a setting a future game update
+  adds, so you can still edit it by hand. Most of the time it sits empty.
+- A **Launch Arguments** editor with a live preview of the exact command line the server will start with.
+- An **Advanced** tab for low-level process tuning (priority and CPU affinity) if you know what you're doing.
+- The launcher never slips in a third-party `Engine.ini`. Your server runs on its own defaults.
+
+### Staying out of the way, and keeping records
+- The launcher runs the server quietly in the background, with no extra console window cluttering your
+  screen. If you close the launcher, or it crashes, the server just keeps running, and the launcher picks it
+  back up the next time you open it. If a server is already running when you start the launcher, or still
+  running when you go to close it, the launcher asks what you'd like to do rather than guessing.
+- Everything that happens, from the launcher, from SteamCMD, and from the server's own output, shows up in
+  log tabs inside the app and is saved to a timestamped log file, so there's always a record when something
+  goes sideways. It keeps the last ten. If you'd rather run it from a command line, there are options for
+  more detailed logs or for watching them live in a terminal (see [Command-line options](#command-line-options)).
+
+### Discord (optional)
+- Point it at a channel **webhook** to get a message whenever the server comes up, goes down, updates, or
+  crashes, and when players come and go.
+- There's also a **control bot.** From a locked-down channel, and/or a specific role, you and your admins can
+  run `/status`, `/players`, `/save`, `/backup`, `/update`, `/start`, `/restart`, and `/stop` straight from
+  Discord. Restart and stop ask you to confirm first. There's a step-by-step guide in
+  [docs/discord-bot-setup.md](docs/discord-bot-setup.md).
+
+---
+
+## Requirements
+
+- **Windows 10 or 11 (64-bit).**
+- To build it yourself: the **.NET 10 SDK**.
+- Room and bandwidth for the server install. The first SteamCMD download is a few GB.
+
+## Quick start
+
+1. Run `PalServerLauncher.exe`.
+2. Click **Install** to grab SteamCMD and the server. You only need this the first time.
+3. Click **Start**. The very first launch creates the server's config files.
+4. When the launcher offers, turn on the **REST API**. It can set a secure random admin password for you.
+   The REST API is what makes the stats, graceful restarts, backups, and health checks work. Without it the
+   server still runs, but the launcher can do a lot less, and it has to hard-stop the server instead of
+   shutting it down cleanly.
+5. Optional: turn on **Scheduled restart** and pick your times, set up **Backups**, and connect **Discord**.
+
+## Where things live
+
+- The launcher's own settings sit in `launcher.json`, inside a `PalworldServerLauncher` folder next to the
+  exe. That folder also holds the server install, your backups, and the logs. You edit these settings right
+  in the app.
+- The game's settings live in Palworld's `PalWorldSettings.ini`. Edit them from the launcher (Game, Admin,
+  New Settings, and Launch Arguments) or by hand in the file.
+
+## Running more than one server
+
+Each copy of the exe runs one server, installed in the `PalworldServerLauncher` folder next to it. Want to
+run several on the same machine? Drop a copy of the exe into its own folder for each server. They stay
+completely separate, with their own settings, logs, install, and backups, and neither one ever touches the
+other's server. Just give each server its own ports:
+
+- **Listen port** (`-port`, default 8211), set under **Launch Arguments**.
+- **REST API port** (default 8212) and **RCON port** (default 25575, if you turn it on), set in that
+  server's `PalWorldSettings.ini`.
+
+The Steam query port sorts itself out automatically by picking the first free one.
+
+## A note on security
+
+Palworld's REST API and RCON aren't built to face the internet, so keep those ports (8212 and 25575) on your
+local network or behind a firewall, and only forward the game ports your players actually need. The launcher
+only ever talks to the REST API on `127.0.0.1`, your own machine. Your Discord bot token is stored locally
+in `launcher.json` and is never written to the logs. Lock the control bot down to a private channel and/or
+an admin-only role.
+
+## Command-line options
+
+You can double-click the launcher, or start it from a terminal with a couple of extra options:
+
+- `--debug` (or `--verbose`): write more detailed logs.
+- `--console`: mirror the launcher's logs into the terminal you started it from, handy for keeping an eye on
+  a server from the command line.
+
+```powershell
+PalServerLauncher.exe --console --debug
+```
+
+## Building
+
+From the repository root:
+
+```powershell
+dotnet build
+dotnet test
+dotnet run --project src\PalServerLauncher              # run it
+dotnet publish src\PalServerLauncher -c Release         # build a single self-contained .exe
+```
+
+Pass launcher options after `--`, for example `dotnet run --project src\PalServerLauncher -- --console`.
+
+## Still to come
+
+- Mod support (Steam Workshop and maybe Nexusmods)
+- A headless mode you can drive entirely from the command line (start, stop, status, no window).
+- A system-tray icon, a status bar, and a copy-the-connection-info button.
+- Port/Online Connectivity Checker
+
+## Not affiliated
+
+Not affiliated with or endorsed by Pocketpair. "Palworld" is a trademark of its respective owner.

@@ -1,0 +1,345 @@
+<Window x:Class="PalServerLauncher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PalServerLauncher"
+        xmlns:vm="clr-namespace:PalServerLauncher.ViewModels"
+        mc:Ignorable="d"
+        Title="Palworld Server Launcher" Height="640" Width="1000"
+        Icon="logo.png"
+        Background="#1E1E1E" Foreground="#E0E0E0"
+        FontFamily="Segoe UI" FontSize="13"
+        d:DataContext="{d:DesignInstance Type=vm:MainViewModel}">
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#3A3A3A"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="14,7"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#4A4A4A"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.4"/>
+                    <Setter Property="Cursor" Value="Arrow"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="Caption" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#888888"/>
+            <Setter Property="FontSize" Value="11"/>
+        </Style>
+        <Style x:Key="Value" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#F0F0F0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#333333"/>
+            <Setter Property="Foreground" Value="#F0F0F0"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="4,2"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Titled grouping box -->
+        <Style x:Key="Box" TargetType="Border">
+            <Setter Property="BorderBrush" Value="#3A3A3A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+        </Style>
+        <Style x:Key="BoxHeader" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#C8C8C8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="14">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Row 0: action buttons (left) + settings dialogs (right) -->
+        <DockPanel Grid.Row="0" LastChildFill="False" Margin="0,0,0,10">
+            <Button DockPanel.Dock="Left" Content="{Binding PrimaryActionText}" Command="{Binding PrimaryActionCommand}" MinWidth="110" FontWeight="SemiBold"
+                    ToolTip="Install the server, or start / stop it once installed. Start checks for an update first (when Update on start is on), then launches.">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                            <!-- Color the button by what it does: Install/Start green, Stop red. Busy tints blue
+                                 and is listed last so it wins (PrimaryActionKind is None while busy anyway). -->
+                            <DataTrigger Binding="{Binding PrimaryActionKind}" Value="Install">
+                                <Setter Property="Background" Value="#2E9E4A"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding PrimaryActionKind}" Value="Start">
+                                <Setter Property="Background" Value="#2E9E4A"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding PrimaryActionKind}" Value="Stop">
+                                <Setter Property="Background" Value="#C24238"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                                <Setter Property="Background" Value="#2D6CDF"/>
+                                <Setter Property="Opacity" Value="1"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button DockPanel.Dock="Left" Content="Restart" Command="{Binding RestartCommand}"
+                    ToolTip="Save and restart the server immediately (no player countdown; scheduled and update restarts warn first)."/>
+            <Button DockPanel.Dock="Left" Content="Check for Update" Click="OnCheckForUpdate" IsEnabled="{Binding CanCheckForUpdate}"
+                    ToolTip="Check SteamCMD for a newer build (read-only; works while running)"/>
+            <Button DockPanel.Dock="Left" Content="Validate Files" Command="{Binding ValidateFilesCommand}"
+                    ToolTip="Full SteamCMD integrity check of the installed files"/>
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button Content="Game Settings" Click="OnOpenGameSettings"
+                        ToolTip="Edit gameplay and balance in PalWorldSettings.ini - difficulty, EXP / capture / drop rates, damage, world features."/>
+                <Button Content="Admin Settings" Click="OnOpenAdminSettings"
+                        ToolTip="Edit server management in PalWorldSettings.ini - name, passwords, player cap, and the REST / RCON APIs."/>
+                <Button Content="New Settings" Click="OnOpenExtraSettings" IsEnabled="{Binding HasUnknownSettings}"
+                        ToolTipService.ShowOnDisabled="True"
+                        ToolTip="Settings in your config that the launcher doesn't recognize - normally none. Enables only when a game update adds new settings the launcher hasn't catalogued yet."/>
+                <Button Content="Launch Arguments" Click="OnOpenLaunchArgs" Margin="0"
+                        ToolTip="Edit the server's command-line arguments - listen port, player cap, performance threads, community listing."/>
+            </StackPanel>
+        </DockPanel>
+
+        <!-- Row 1: status + update -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12" VerticalAlignment="Center">
+            <TextBlock Text="Status:" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <TextBlock Text="{Binding State}" Style="{StaticResource Value}" FontSize="15" VerticalAlignment="Center" Margin="0,0,24,0"/>
+            <TextBlock Text="Update:" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <TextBlock Text="{Binding UpdateStatus}" Foreground="#F0F0F0" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Row 2: compact status tiles -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,14">
+            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="Version" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Version}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="FPS" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Fps}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="Memory" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Memory}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="Players" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Players}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="Uptime" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Uptime}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal"><TextBlock Text="Next restart" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding NextRestart}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
+        </StackPanel>
+
+        <!-- Row 3: Restarts / Backups / Misc boxes -->
+        <Grid Grid.Row="3" Margin="0,0,0,14">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Style="{StaticResource Box}">
+                <StackPanel>
+                    <TextBlock Text="Restarts" Style="{StaticResource BoxHeader}"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
+                        <CheckBox Content="Scheduled restart at" IsChecked="{Binding ScheduledRestartEnabled}"
+                                  ToolTip="Automatically restart the server at the times listed. A restart is skipped if the server hasn't been up for the minimum uptime below."/>
+                        <Button Content="{Binding RestartTimesSummary}" Click="OnEditRestartTimes" MinWidth="120" Margin="8,0,0,0" HorizontalContentAlignment="Left" ToolTip="Choose restart times"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
+                        <TextBlock Text="Min uptime before restart" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <TextBox Text="{Binding MinUptimeHours}" Width="40" VerticalAlignment="Center"/>
+                        <TextBlock Text="h" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
+                        <CheckBox Content="Announce restarts" IsChecked="{Binding AnnounceRestartsEnabled}"
+                                  ToolTip="Warn players in-game before a scheduled or update restart, at the minute marks on the right. Skipped when nobody's online."/>
+                        <TextBox Text="{Binding AnnounceLead1}" Width="34" MaxLength="3" VerticalAlignment="Center" Margin="6,0,0,0"
+                                 PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="Minutes before restart to announce (blank = off)"/>
+                        <TextBox Text="{Binding AnnounceLead2}" Width="34" MaxLength="3" VerticalAlignment="Center" Margin="4,0,0,0"
+                                 PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="Minutes before restart to announce (blank = off)"/>
+                        <TextBox Text="{Binding AnnounceLead3}" Width="34" MaxLength="3" VerticalAlignment="Center" Margin="4,0,0,0"
+                                 PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="Minutes before restart to announce (blank = off)"/>
+                        <TextBlock Text="min" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                    </StackPanel>
+                    <CheckBox Content="Validate files on restart" IsChecked="{Binding VerifyOnUpdate}" ToolTip="Add a full integrity pass to the update on Start/restart (slower)"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1" Style="{StaticResource Box}">
+                <StackPanel>
+                    <TextBlock Text="Backups" Style="{StaticResource BoxHeader}"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
+                        <TextBlock Text="Backup on:" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <CheckBox Content="Startup" IsChecked="{Binding BackupOnStartup}"
+                                  ToolTip="Back up when the server starts, before it checks for updates (SteamCMD can overwrite config)."/>
+                        <CheckBox Content="Shutdown" IsChecked="{Binding BackupOnShutdown}" Margin="12,0,0,0"
+                                  ToolTip="Back up when the server stops or restarts (saves the world first)."/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
+                        <CheckBox Content="Scheduled" IsChecked="{Binding ScheduledBackupEnabled}"
+                                  ToolTip="Automatically back up at the times listed on the right, while the server is running."/>
+                        <Button Content="{Binding BackupTimesSummary}" Click="OnEditBackupTimes" MinWidth="90" Margin="6,0,0,0" HorizontalContentAlignment="Left" ToolTip="Choose backup times"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7"
+                                ToolTip="How long to keep automatic backups (startup / shutdown / scheduled). Manual backups and any file you add to the backups folder yourself are never deleted. 0 = keep everything.">
+                        <TextBlock Text="Keep for" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                        <TextBox Text="{Binding BackupRetentionDays}" Width="38" VerticalAlignment="Center"/>
+                        <TextBlock Text="days" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Next backup:" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <TextBlock Text="{Binding NextBackup}" Foreground="#F0F0F0" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <Button Content="Backup Now" Command="{Binding BackupNowCommand}" Margin="0"
+                                ToolTip="Take a manual backup immediately. Saves the world first if the server is running with REST on."/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="2" Style="{StaticResource Box}" Margin="0">
+                <StackPanel>
+                    <TextBlock Text="Misc." Style="{StaticResource BoxHeader}"/>
+                    <CheckBox Content="Auto-update server" IsChecked="{Binding AutoUpdateEnabled}" Margin="0,0,0,7"
+                              ToolTip="Automatically restart the server when a new update is found. The Announce restarts setting adds a delay before restarting if anyone is on the server."/>
+                    <CheckBox Content="Update on start / restart" IsChecked="{Binding UpdateOnStart}" Margin="0,0,0,7"
+                              ToolTip="Run a SteamCMD update check each time the server starts or restarts. Uncheck to never auto-download on start. You can still update explicitly via Check for Update."/>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
+                        <TextBlock Text="Check for update every" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <TextBox Text="{Binding UpdateCheckMinutes}" Width="40" MaxLength="4" VerticalAlignment="Center"
+                                 PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"
+                                 ToolTip="How often to check SteamCMD for a new build while the server is running. Applies on next start."/>
+                        <TextBlock Text="min" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                    </StackPanel>
+                    <CheckBox Content="Hide SteamCMD window" IsChecked="{Binding HideSteamCmdWindow}" Margin="0,0,0,7"
+                              ToolTip="Run SteamCMD in the background instead of opening its own console window. Live progress still appears in the SteamCMD tab."/>
+                    <CheckBox Content="Log Server Status" IsChecked="{Binding LogHealthStats}" Margin="0,0,0,7"
+                              ToolTip="Write a server stats line (FPS, players, uptime, memory) to the log every 30s. Handy when running from a terminal; adds noise to the log otherwise."/>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
+                        <CheckBox Content="Zombie check: restart after" IsChecked="{Binding ZombieCheckEnabled}"
+                                  ToolTip="When the REST API stays unreachable or the world stays frozen for this many checks in a row, restart the server. Turn off if your REST API is flaky and you'd rather it never auto-restart."/>
+                        <TextBox Text="{Binding ZombieFailureThreshold}" Width="34" MaxLength="2" VerticalAlignment="Center" Margin="6,0,0,0"
+                                 PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"
+                                 ToolTip="How many failed health checks in a row before the server is treated as wedged and force-restarted."/>
+                        <TextBlock Text="checks" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,9">
+                        <TextBlock Text="REST check every" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <TextBox Text="{Binding HealthProbeSeconds}" Width="34" MaxLength="3" VerticalAlignment="Center"
+                                 PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"
+                                 ToolTip="How often (seconds) the launcher polls the REST API for status/health. 5-10 is recommended. Going below 5 just hammers the API for no real gain (allowed, but not advised); it won't go below 1. Applies on next start."/>
+                        <TextBlock Text="s" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                    </StackPanel>
+                    <WrapPanel>
+                        <Button Content="Edit Announcements" Click="OnEditAnnouncements" Margin="0,0,8,4"
+                                ToolTip="Edit the in-game messages players see before a restart."/>
+                        <Button Content="Discord Bot" Click="OnOpenDiscord" Margin="0,0,8,4" ToolTip="Discord control bot + webhook notifications">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="Background" Value="#5865F2"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#4752C4"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Content="Advanced Settings" Click="OnOpenAdvanced" Margin="0,0,0,4" ToolTip="Low-level process tuning (priority, CPU affinity) - advanced users only">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#B8860B"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Row 4: tabbed logs -->
+        <TabControl Grid.Row="4" Background="#1E1E1E" BorderThickness="0" Padding="0,8,0,0">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Foreground" Value="#999999"/>
+                    <Setter Property="FontSize" Value="12"/>
+                    <Setter Property="Margin" Value="0,0,3,0"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border BorderThickness="1,0,1,0" BorderBrush="#3A3A3A">
+                                    <Border x:Name="Bd" Background="Transparent" Padding="16,7"
+                                            BorderThickness="0,0,0,2" BorderBrush="Transparent">
+                                        <ContentPresenter ContentSource="Header" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Bd" Property="BorderBrush" Value="#2D6CDF"/>
+                                        <Setter TargetName="Bd" Property="Background" Value="#141414"/>
+                                        <Setter Property="Foreground" Value="#F0F0F0"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="#F0F0F0"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style TargetType="ListBox" x:Key="LogListStyle">
+                    <Setter Property="Background" Value="#141414"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Foreground" Value="#C8C8C8"/>
+                    <Setter Property="FontFamily" Value="Consolas"/>
+                    <Setter Property="FontSize" Value="12"/>
+                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+                    <Setter Property="ItemContainerStyle">
+                        <Setter.Value>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Padding" Value="2,1"/>
+                            </Style>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem Header="General">
+                <ListBox x:Name="GeneralList" ItemsSource="{Binding LogGeneral}" Style="{StaticResource LogListStyle}"/>
+            </TabItem>
+            <TabItem Header="Server Log">
+                <ListBox x:Name="ServerList" ItemsSource="{Binding LogServer}" Style="{StaticResource LogListStyle}"/>
+            </TabItem>
+            <TabItem Header="SteamCMD">
+                <ListBox x:Name="SteamCmdList" ItemsSource="{Binding LogSteamCmd}" Style="{StaticResource LogListStyle}"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

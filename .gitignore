@@ -1,0 +1,48 @@
+# Build output
+bin/
+obj/
+
+# Publish output
+publish/
+*.publishproj
+
+# IDE / editor
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.DotSettings.user
+
+# Visual Studio solution-migration backup
+Backup/
+UpgradeLog*.htm
+
+# Test results
+[Tt]est[Rr]esults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Runtime artifacts the launcher creates next to the exe
+# (also normally under bin/, but ignore at any level to be safe -
+#  launcher.json can contain a Discord webhook; server/ can be multi-GB)
+launcher.json
+launcher-crash.log
+PalworldServerLauncher/
+LauncherLogs/
+logs/
+server/
+steamcmd/
+backups/
+*.log
+
+# Internal engineering notes, kept local but not published to the repo
+HANDOFF.md
+
+# OS cruft
+Thumbs.db
+desktop.ini
+.DS_Store

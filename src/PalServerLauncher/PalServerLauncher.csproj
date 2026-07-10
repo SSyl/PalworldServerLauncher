@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <!-- Runs and publishes 64-bit via this RID (required to read the 64-bit server's MainModule).
+         Platform is left at AnyCPU on purpose: an x64-only <Platforms> makes VS inject an unmappable
+         "Any CPU" solution platform and refuse to load the .slnx. AnyCPU on an x64 OS is 64-bit, and
+         the RID forces 64-bit build/publish output, so the RID alone is enough. -->
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>PalServerLauncher</RootNamespace>
+    <AssemblyName>PalServerLauncher</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- Repo-root logo (two levels up from this project) -> embedded as the exe icon. -->
+    <ApplicationIcon>..\..\logo.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <!-- Same logo as a WPF resource for the running window's title-bar / taskbar icon. -->
+  <ItemGroup>
+    <Resource Include="..\..\logo.png" Link="logo.png" />
+  </ItemGroup>
+
+  <!-- Single-file self-contained publish (used by `dotnet publish`) -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="Discord.Net" Version="3.20.1" />
+  </ItemGroup>
+
+</Project>

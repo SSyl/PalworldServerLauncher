@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/PalServerLauncher/PalServerLauncher.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/PalServerLauncher.Tests/PalServerLauncher.Tests.csproj" />
+  </Folder>
+</Solution>

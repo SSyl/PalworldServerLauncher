@@ -1,0 +1,56 @@
+using System.Windows;
+using System.Windows.Threading;
+using PalServerLauncher.Config;
+using PalServerLauncher.Logging;
+
+namespace PalServerLauncher;
+
+public partial class App : Application
+{
+    private Logger _logger = null!;
+
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        base.OnStartup(e);
+
+        bool HasFlag(params string[] names) =>
+            e.Args.Any(a => names.Any(n => a.Equals(n, StringComparison.OrdinalIgnoreCase)));
+
+        var verbose = HasFlag("--debug", "--verbose", "-debug", "-verbose", "-v");
+
+        // --console mirrors all log output to a terminal (the launching one, or a new window), so the
+        // launcher can be watched from the command line. The GUI window still opens.
+        var console = HasFlag("--console", "-console", "-c") && ConsoleBridge.Enable();
+
+        // Move any legacy data (settings/steamcmd/server/backups/logs sitting next to the exe) into the
+        // PalworldServerLauncher data folder before logging starts, so the exe ends up alone.
+        var migrated = LauncherConfig.MigrateLegacyLayout();
+
+        _logger = new Logger(verbose, echoToConsole: console);
+        if (migrated.Count > 0)
+            _logger.Info($"Moved existing data into {LauncherConfig.DataRoot}: {string.Join(", ", migrated)}");
+
+        // Without these, any unhandled exception (e.g. inside an async command) silently closes the window.
+        DispatcherUnhandledException += OnDispatcherUnhandledException;
+        AppDomain.CurrentDomain.UnhandledException += (_, args) =>
+        {
+            if (args.ExceptionObject is Exception ex) _logger.Error("Unhandled AppDomain exception", ex);
+        };
+        TaskScheduler.UnobservedTaskException += (_, args) =>
+        {
+            _logger.Error("Unobserved task exception", args.Exception);
+            args.SetObserved();
+        };
+
+        new MainWindow(_logger).Show();
+    }
+
+    private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+    {
+        _logger.Error("Unhandled UI exception", e.Exception);
+        MessageBox.Show(
+            $"An error occurred:\n\n{e.Exception.Message}\n\nFull details in:\n{_logger.FilePath}",
+            "Palworld Server Launcher", MessageBoxButton.OK, MessageBoxImage.Error);
+        e.Handled = true; // keep the window alive
+    }
+}
