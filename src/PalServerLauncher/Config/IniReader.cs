@@ -36,6 +36,8 @@ public static class IniReader
             RestApiEnabled = TryGetBool(options, "RESTAPIEnabled"),
             AdminPassword = options.TryGetValue("AdminPassword", out var pw) ? pw : null,
             PublicPort = TryGetInt(options, "PublicPort"),
+            RconPort = TryGetInt(options, "RCONPort"),
+            RconEnabled = TryGetBool(options, "RCONEnabled"),
         };
     }
 

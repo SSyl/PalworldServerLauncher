@@ -18,6 +18,17 @@ public class IniReaderTests
         Assert.Equal(8212, s.RestApiPort);
         Assert.Equal(8211, s.PublicPort);
         Assert.True(s.RestApiEnabled);
+        Assert.Equal(25575, s.RconPort);
+        Assert.False(s.RconEnabled);
+    }
+
+    [Fact]
+    public void Parse_reads_rcon_enabled_and_port()
+    {
+        var s = IniReader.Parse("""OptionSettings=(RCONEnabled=True,RCONPort=9999)""");
+
+        Assert.True(s.RconEnabled);
+        Assert.Equal(9999, s.RconPort);
     }
 
     [Fact]
@@ -76,8 +87,10 @@ public class IniReaderTests
         Assert.Null(s.PublicPort);
         Assert.Null(s.RestApiEnabled);
         Assert.Null(s.AdminPassword);
+        Assert.Null(s.RconPort);
         Assert.Equal(8212, s.RestApiPortOrDefault);
         Assert.Equal(8211, s.PublicPortOrDefault);
+        Assert.Equal(25575, s.RconPortOrDefault);
     }
 
     [Fact]
