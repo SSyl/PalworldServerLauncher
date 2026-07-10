@@ -226,8 +226,17 @@ public partial class MainWindow : Window
             _viewModel.ApplyDiscordSettings();
     }
 
-    private void OnCheckPorts(object sender, RoutedEventArgs e) =>
+    private void OnCheckPorts(object sender, RoutedEventArgs e)
+    {
+        var consent = ChoiceDialog.Show(this, "Port Accessibility",
+            "Your public IP address will be sent to check-host.cc, a free external service, so it can probe your "
+            + "ports from the internet. Nothing except your public IP and the ports you test is sent to their service.",
+            "OK", "Cancel");
+        if (consent != 0)
+            return;
+
         PortCheckDialog.Show(this, _viewModel.Config, _viewModel.ReadServerSettings(), _viewModel.PublicIp, _logger);
+    }
 
     private void OnToggleIpReveal(object sender, RoutedEventArgs e) =>
         _viewModel.IsIpRevealed = !_viewModel.IsIpRevealed;

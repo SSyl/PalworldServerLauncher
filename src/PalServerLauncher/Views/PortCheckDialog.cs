@@ -67,9 +67,8 @@ public sealed class PortCheckDialog : Window
 
         stack.Children.Add(new TextBlock
         {
-            Text = "Checks whether your ports can be reached from the internet, using check-host.cc (a free "
-                 + "external service). Your public IP and the ports below are sent to it - nothing leaves your "
-                 + "PC until you click Check. Run this with the server stopped so the launcher can test the ports.",
+            Text = "Checks whether your ports can be reached from the internet, using check-host.cc. Run this with "
+                 + "the server stopped so the launcher can bind and test the ports.",
             Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 12),
         });
 
