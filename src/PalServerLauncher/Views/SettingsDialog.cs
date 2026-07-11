@@ -149,6 +149,12 @@ public sealed class SettingsDialog : Window
             s => s.Doc != DocStatus.Unknown, gameEnabled, current, defaults);
         var undoc = BuildUndocumentedTab(gameAvailable, gameEnabled, current, defaults);
 
+        // Launch Arguments live in launcher.json (ours), so this tab stays editable even while the server runs,
+        // unlike the ini-backed tabs above. BuildLaunchArgs wires its own fields, live preview, and resets.
+        var launchStack = new StackPanel { Margin = new Thickness(18) };
+        BuildLaunchArgs(launchStack);
+        var launch = new ScrollViewer { Content = launchStack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
+
         var tabs = new TabControl
         {
             Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E)),
@@ -159,6 +165,7 @@ public sealed class SettingsDialog : Window
         tabs.Items.Add(new TabItem { Header = "World Settings", Content = world });
         tabs.Items.Add(new TabItem { Header = "Admin", Content = admin });
         tabs.Items.Add(new TabItem { Header = "Undocumented", Content = undoc });
+        tabs.Items.Add(new TabItem { Header = "Launch Arguments", Content = launch });
 
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(18, 10, 18, 14) };
         if (_resetActions.Count > 0)
@@ -168,7 +175,7 @@ public sealed class SettingsDialog : Window
 
         var root = new DockPanel();
         var bannerText = _serverRunning
-            ? "The server is running - these settings are read-only. Stop it to edit them."
+            ? "The server is running, so the game-settings tabs are read-only (a running server overwrites its own config). Launch Arguments can still be edited - like the game settings, they apply on the next start."
             : !gameAvailable
                 ? "Game settings unavailable - install the server first (no DefaultPalWorldSettings.ini found)."
                 : null;
@@ -643,16 +650,7 @@ public sealed class SettingsDialog : Window
     {
         if (_section == SettingsSection.LaunchArgs)
         {
-            _config.ServerPort = ParseInt(_port!.Text, _config.ServerPort);
-            _config.MaxPlayers = ParseInt(_maxPlayers!.Text, _config.MaxPlayers);
-            _config.PerformanceThreads = _perfThreads!.IsChecked == true;
-            _config.WorkerThreads = ParseInt(_workerThreads!.Text, _config.WorkerThreads);
-            _config.CommunityServer = _community!.IsChecked == true;
-            _config.PublicIp = _publicIp!.Text.Trim();
-            _config.PublicPortArg = ParseInt(_publicPort!.Text, _config.PublicPortArg);
-            _config.LogFormat = (_logFormat!.SelectedItem as string) ?? "";
-            _config.ExtraServerArgs = _extraArgs!.Text.Trim();
-            _config.Save();
+            ApplyLaunchArgs();
             return true;
         }
 
@@ -664,9 +662,16 @@ public sealed class SettingsDialog : Window
             return true;
         }
 
-        // ServerSettings: catalog edits + uncatalogued (extra) edits, only when stopped (the service enforces both).
+        // ServerSettings now also hosts the Launch Arguments tab. Launch args (launcher.json) are ours and safe
+        // to write any time; the game ini can only be written while stopped (a running server would overwrite it).
+        var hasLaunchArgs = _port is not null;
+
         if (_serverRunning)
+        {
+            if (hasLaunchArgs)
+                ApplyLaunchArgs();
             return true;
+        }
 
         // Compare catalog keys by typed value, not raw text, so a hand-edited non-canonical value (bHardcore=false,
         // 1.0 vs 1.000000, enum casing) on a key the user didn't touch isn't rewritten canonical.
@@ -678,7 +683,11 @@ public sealed class SettingsDialog : Window
             .ToDictionary(x => x.Key, x => x.Read());
 
         if (gameEdits.Count == 0 && extraEdits.Count == 0)
+        {
+            if (hasLaunchArgs)
+                ApplyLaunchArgs();
             return true;
+        }
 
         // Show exactly what will change and let the user confirm before we touch PalWorldSettings.ini.
         // Cap the list so a big change set (e.g. after Reset to defaults) can't make an oversized dialog;
@@ -702,7 +711,26 @@ public sealed class SettingsDialog : Window
             ShowCorruptError(badExtraKey);
             return false;
         }
+        // Launch args save only after the ini write succeeds, so cancelling the confirm above saves nothing.
+        if (hasLaunchArgs)
+            ApplyLaunchArgs();
         return true;
+    }
+
+    /// <summary>Persist the launch-argument fields to launcher.json. Safe to write any time (it's ours; the
+    /// running server never touches it), and applied on the next start.</summary>
+    private void ApplyLaunchArgs()
+    {
+        _config.ServerPort = ParseInt(_port!.Text, _config.ServerPort);
+        _config.MaxPlayers = ParseInt(_maxPlayers!.Text, _config.MaxPlayers);
+        _config.PerformanceThreads = _perfThreads!.IsChecked == true;
+        _config.WorkerThreads = ParseInt(_workerThreads!.Text, _config.WorkerThreads);
+        _config.CommunityServer = _community!.IsChecked == true;
+        _config.PublicIp = _publicIp!.Text.Trim();
+        _config.PublicPortArg = ParseInt(_publicPort!.Text, _config.PublicPortArg);
+        _config.LogFormat = (_logFormat!.SelectedItem as string) ?? "";
+        _config.ExtraServerArgs = _extraArgs!.Text.Trim();
+        _config.Save();
     }
 
     private void ShowCorruptError(string? key) =>
@@ -726,7 +754,7 @@ public sealed class SettingsDialog : Window
             return; // keep the dialog open so the user can fix the highlighted fields
         }
 
-        if (_section == SettingsSection.LaunchArgs && !ConfirmAdvancedArgs())
+        if (_extraArgs is not null && !ConfirmAdvancedArgs())
             return;
 
         if (!Apply())

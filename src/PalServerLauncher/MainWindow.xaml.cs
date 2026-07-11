@@ -203,9 +203,6 @@ public partial class MainWindow : Window
     private void OnOpenServerSettings(object sender, RoutedEventArgs e) =>
         SettingsDialog.ShowServerSettings(this, _viewModel.Config, _viewModel.GameSettings, _viewModel.IsServerRunning);
 
-    private void OnOpenLaunchArgs(object sender, RoutedEventArgs e) =>
-        SettingsDialog.ShowLaunchArgs(this, _viewModel.Config, _viewModel.GameSettings, _viewModel.IsServerRunning);
-
     private void OnOpenAdvanced(object sender, RoutedEventArgs e)
     {
         var proceed = ChoiceDialog.Show(this, "Danger zone!",

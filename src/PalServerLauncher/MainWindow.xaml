@@ -137,10 +137,8 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Button Content="Server Settings" Click="OnOpenServerSettings"
-                        ToolTip="Edit PalWorldSettings.ini in one tabbed editor - World Settings (gameplay and balance), Admin (name, passwords, REST / RCON), and Undocumented (keys the official docs don't cover, plus any a game update adds)."/>
-                <Button Content="Launch Arguments" Click="OnOpenLaunchArgs" Margin="0"
-                        ToolTip="Edit the server's command-line arguments - listen port, player cap, performance threads, community listing."/>
+                <Button Content="Server Settings" Click="OnOpenServerSettings" Margin="0"
+                        ToolTip="Edit the server in one tabbed editor - World Settings (gameplay and balance), Admin (name, passwords, REST / RCON), Undocumented (keys the official docs don't cover), and Launch Arguments (the command line: listen port, player cap, performance threads, community listing)."/>
             </StackPanel>
         </DockPanel>
 
