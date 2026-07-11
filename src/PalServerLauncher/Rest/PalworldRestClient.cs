@@ -50,6 +50,18 @@ public sealed class PalworldRestClient : IDisposable
 
     public Task<bool> StopAsync(CancellationToken ct = default) => PostAsync("stop", body: null, ct);
 
+    /// <summary>Kick a player by their platform user id (the <c>userId</c> from <c>/players</c>), with an optional reason.</summary>
+    public Task<bool> KickAsync(string userId, string message, CancellationToken ct = default) =>
+        PostAsync("kick", new { userid = userId, message }, ct);
+
+    /// <summary>Ban a player by their platform user id, with an optional reason shown to them.</summary>
+    public Task<bool> BanAsync(string userId, string message, CancellationToken ct = default) =>
+        PostAsync("ban", new { userid = userId, message }, ct);
+
+    /// <summary>Lift a ban on a player by their platform user id.</summary>
+    public Task<bool> UnbanAsync(string userId, CancellationToken ct = default) =>
+        PostAsync("unban", new { userid = userId }, ct);
+
     private async Task<T?> GetAsync<T>(string path, CancellationToken ct) where T : class
     {
         try
