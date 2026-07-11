@@ -74,15 +74,17 @@ public sealed class PortChecker
 
     private async Task<PortReachability> CheckTcpAsync(string target, PortCheckItem item, CancellationToken ct)
     {
-        TcpListener listener;
+        // Constructing the listener only stores the endpoint (no SocketException); Start() is what binds and
+        // can throw, and by then a socket may be allocated, so Stop() it before bailing to avoid a handle leak.
+        var listener = new TcpListener(IPAddress.Any, item.Port);
         try
         {
-            listener = new TcpListener(IPAddress.Any, item.Port);
             listener.Start();
         }
         catch (SocketException ex)
         {
             _logger.Debug($"Port check: couldn't bind TCP {item.Port} ({ex.SocketErrorCode}).");
+            listener.Stop();
             return PortReachability.BlockedLocally;
         }
 
