@@ -124,6 +124,8 @@
             <Button DockPanel.Dock="Left" Content="Validate Files" Command="{Binding ValidateFilesCommand}"
                     ToolTip="Full SteamCMD integrity check of the installed files"/>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button Content="Server Commands" Click="OnOpenServerCommands" IsEnabled="{Binding CanUseServerCommands}"
+                        ToolTip="Send live commands to the running server: announce, kick / ban / unban, save, shutdown, force stop. Available while the server is up."/>
                 <Button Content="Discord Bot" Click="OnOpenDiscord" ToolTip="Discord control bot + webhook notifications">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">

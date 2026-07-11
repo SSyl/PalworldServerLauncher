@@ -226,6 +226,9 @@ public partial class MainWindow : Window
             _viewModel.ApplyDiscordSettings();
     }
 
+    private void OnOpenServerCommands(object sender, RoutedEventArgs e) =>
+        ServerCommandsDialog.Show(this, _viewModel.ServerCommands, _logger);
+
     private void OnCheckPorts(object sender, RoutedEventArgs e)
     {
         var consent = ChoiceDialog.Show(this, "Port Accessibility",

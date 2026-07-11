@@ -33,7 +33,7 @@ public partial class MainViewModel : ObservableObject
     private readonly string[] _leadSlots = new string[3];
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate), nameof(CanCheckPorts))]
+    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate), nameof(CanCheckPorts), nameof(CanUseServerCommands))]
     [NotifyCanExecuteChangedFor(nameof(PrimaryActionCommand), nameof(RestartCommand), nameof(ValidateFilesCommand))]
     private ServerState _state = ServerState.Stopped;
 
@@ -152,6 +152,22 @@ public partial class MainViewModel : ObservableObject
     public Task ShutdownGracefulAsync() => _controller.StopAsync(graceful: true);
     public Task ForceStopAsync() => _controller.StopAsync(graceful: false);
     public Task StopAllInstancesAsync() => _controller.StopAllInstancesAsync();
+
+    // --- Live server commands (the Server Commands dialog) ---
+
+    /// <summary>Server Commands is live-only: enabled while the server is up (so REST is plausibly usable).</summary>
+    public bool CanUseServerCommands => State is ServerState.Healthy or ServerState.Degraded;
+
+    /// <summary>Delegate bundle the Server Commands dialog invokes (all route through the controller's REST client).</summary>
+    public Core.ServerCommandActions ServerCommands => new(
+        GetPlayers: () => _controller.GetPlayersAsync(),
+        Announce: message => _controller.AnnounceAsync(message),
+        Kick: (userId, reason) => _controller.KickPlayerAsync(userId, reason),
+        Ban: (userId, reason) => _controller.BanPlayerAsync(userId, reason),
+        Unban: userId => _controller.UnbanPlayerAsync(userId),
+        Save: () => _controller.SaveWorldAsync(),
+        ShutdownWithCountdown: seconds => _controller.ShutdownWithCountdownAsync(seconds),
+        ForceStop: () => _controller.StopAsync(graceful: false));
 
     // --- Scheduled-restart settings (persist to launcher.json on change; the scheduler reads config live) ---
     public bool ScheduledRestartEnabled
