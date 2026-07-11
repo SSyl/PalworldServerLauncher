@@ -30,9 +30,37 @@ public sealed class DiscordBotService : IDisposable
         Func<Task<string>> Start,
         Func<Task<string>> Update);
 
-    // Commands that take the server down / bounce it require a confirm click before they run.
-    private static readonly HashSet<string> DestructiveCommands = new() { "restart", "stop" };
+    // Commands that take the server down / bounce it, or moderate a player, require a confirm click first.
+    private static readonly HashSet<string> DestructiveCommands = new() { "restart", "stop", "kick", "ban" };
     private const string ButtonPrefix = "palcmd:";
+
+    public sealed record CommandInfo(string Name, bool DefaultEnabled, string Description);
+
+    /// <summary>Every bot command with its built-in default exposure and a short description (for the toggle UI).
+    /// Reads and benign actions default on; destructive ones (restart / stop / kick / ban) default off.</summary>
+    public static readonly IReadOnlyList<CommandInfo> AllCommands = new[]
+    {
+        new CommandInfo("status", true, "Show server status"),
+        new CommandInfo("players", true, "List online players"),
+        new CommandInfo("save", true, "Save the world"),
+        new CommandInfo("backup", true, "Take a backup"),
+        new CommandInfo("update", true, "Check for a server update"),
+        new CommandInfo("announce", true, "Broadcast a message"),
+        new CommandInfo("start", true, "Start the server"),
+        new CommandInfo("unban", true, "Unban a player"),
+        new CommandInfo("restart", false, "Restart the server"),
+        new CommandInfo("stop", false, "Stop the server"),
+        new CommandInfo("kick", false, "Kick a player"),
+        new CommandInfo("ban", false, "Ban a player"),
+    };
+
+    /// <summary>Whether a command is exposed: the configured value, or its built-in default if unset (unknown -> off).</summary>
+    public static bool IsCommandEnabled(LauncherConfig config, string name)
+    {
+        if (config.DiscordCommandEnabled.TryGetValue(name, out var enabled))
+            return enabled;
+        return AllCommands.FirstOrDefault(c => c.Name == name)?.DefaultEnabled ?? false;
+    }
 
     private readonly LauncherConfig _config;
     private readonly Logger _logger;

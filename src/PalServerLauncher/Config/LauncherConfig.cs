@@ -144,6 +144,10 @@ public sealed class LauncherConfig
     public ulong DiscordCommandRoleId { get; set; } = 0;
     /// <summary>Per-user cooldown between accepted commands, in seconds (throttles spam / fat-fingers).</summary>
     public int DiscordCommandCooldownSeconds { get; set; } = 5;
+    /// <summary>Which bot commands are exposed, by command name. A command missing from the map falls back to
+    /// its built-in default (see <see cref="Core.DiscordBotService.IsCommandEnabled"/>), so new commands added
+    /// in a later version appear automatically and destructive ones stay off until an admin opts in.</summary>
+    public Dictionary<string, bool> DiscordCommandEnabled { get; set; } = new();
 
     // --- Modding (scaffolding only - see docs/config-editor-and-integrations.md) ---
     public bool ModsEnabled { get; set; } = false;
