@@ -44,7 +44,7 @@ public sealed class ServerController : IDisposable
     private readonly List<DateTime> _restartTimes = new();
     private DateTime? _serverStartedUtc;
     private bool _manualStop;
-    private bool _forceKillLatched; // a user Force Shutdown, suppresses an in-flight auto-recovery relaunch until the next explicit Start
+    private bool _suppressRelaunch; // set by a deliberate stop / force-shutdown, suppresses any auto-recovery or restart relaunch until the next user Start
     private bool _restartInProgress;
     private CancellationTokenSource? _restartCts; // cancels a pending broadcast countdown on a user Stop
     private bool _disposed;
@@ -273,12 +273,20 @@ public sealed class ServerController : IDisposable
 
     public ServerState State
     {
-        get => _state;
+        get { lock (_gate) return _state; }
         private set
         {
-            if (_state == value) return;
-            _logger.Debug($"State: {_state} -> {value}");
-            _state = value;
+            ServerState previous;
+            // Compare-and-set under the lock so concurrent writers (OnProcessExited, the health monitor,
+            // restart/recovery) can't lose a store. Fire the event OUTSIDE the lock, handlers must not be
+            // run while holding _gate (they marshal to the UI / post to Discord and could otherwise deadlock).
+            lock (_gate)
+            {
+                if (_state == value) return;
+                previous = _state;
+                _state = value;
+            }
+            _logger.Debug($"State: {previous} -> {value}");
             StateChanged?.Invoke(value);
         }
     }
@@ -426,11 +434,12 @@ public sealed class ServerController : IDisposable
     /// cref="LauncherConfig.UpdateOnStart"/> is on, or <paramref name="forceUpdate"/> for an explicit
     /// update-restart) so the server is current on boot, then launches. A failed/offline update doesn't
     /// block launch, we run the installed build. A missing install routes to Install instead (never a
-    /// surprise multi-GB download). <paramref name="clearForceLatch"/> is true for a user Start (it clears a
-    /// prior Force Shutdown) and false when called from a restart (a Force Shutdown mid-restart stays in
-    /// effect, so the restart's own relaunch is suppressed and the server stays down until an explicit Start).
+    /// surprise multi-GB download). <paramref name="userInitiated"/> is true for a user Start (it clears a
+    /// prior deliberate-stop relaunch suppression) and false when called from a restart (a Stop or Force
+    /// Shutdown during the restart stays in effect, so the restart's own relaunch is suppressed and the server
+    /// stays down until a user Start).
     /// </summary>
-    public async Task StartAsync(bool forceUpdate = false, bool clearForceLatch = true, CancellationToken ct = default)
+    public async Task StartAsync(bool forceUpdate = false, bool userInitiated = true, CancellationToken ct = default)
     {
         if (IsRunning())
         {
@@ -444,12 +453,12 @@ public sealed class ServerController : IDisposable
             return;
         }
 
-        // A user Start clears a prior Force Shutdown. A restart passes false so a Force Shutdown during the
-        // restart keeps the server down instead of being undone by the restart's relaunch.
-        if (clearForceLatch)
+        // A user Start clears a prior deliberate-stop suppression. A restart passes false so a Stop or Force
+        // Shutdown during the restart keeps the server down instead of being undone by the restart's relaunch.
+        if (userInitiated)
         {
             lock (_gate)
-                _forceKillLatched = false;
+                _suppressRelaunch = false;
         }
 
         // Back up before the update: SteamCMD can wipe PalWorldSettings.ini, and the server is stopped
@@ -502,7 +511,10 @@ public sealed class ServerController : IDisposable
     public Task ShutdownWithCountdownAsync(int seconds, CancellationToken ct = default)
     {
         lock (_gate)
+        {
             _restartCts?.Cancel();
+            _suppressRelaunch = true; // a deliberate shutdown stays stopped, like a plain Stop
+        }
         return StopCoreAsync(graceful: true, shutdownWaitSeconds: seconds, restarting: false, ct);
     }
 
@@ -522,7 +534,7 @@ public sealed class ServerController : IDisposable
             _manualStop = true;
             // Latch so an auto-recovery already in flight (its stop phase can run for ~45s against a dead
             // REST API) doesn't relaunch the server we're about to kill. Cleared by the next explicit Start.
-            _forceKillLatched = true;
+            _suppressRelaunch = true;
             _restartCts?.Cancel();
             process = _process;
             // Detach the monitors under the lock (consistent with StopCoreAsync) so the kill isn't mistaken
@@ -625,13 +637,13 @@ public sealed class ServerController : IDisposable
         {
             // Authoritative check inside the lock: if another launch (crash-relaunch / recovery /
             // restart) won the race and already started a server, drop this one, never double-launch.
-            // Also drop it when a Force Shutdown latched, so an in-flight auto-recovery can't relaunch
-            // the server the user just force-killed (cleared by the next explicit Start).
-            if (IsRunningNoLock() || _forceKillLatched)
+            // Also drop it when a deliberate stop / force shutdown latched, so an in-flight auto-recovery or
+            // restart can't relaunch the server the user just stopped (cleared by the next user Start).
+            if (IsRunningNoLock() || _suppressRelaunch)
             {
                 process.Dispose();
-                if (_forceKillLatched)
-                    _logger.Info("Launch skipped, Force Shutdown was requested. Click Start to run the server again.");
+                if (_suppressRelaunch)
+                    _logger.Info("Launch skipped, the server was deliberately stopped. Click Start to run it again.");
                 return Task.CompletedTask;
             }
             _manualStop = false;
@@ -655,7 +667,10 @@ public sealed class ServerController : IDisposable
     public async Task StopAsync(bool graceful = true, CancellationToken ct = default)
     {
         lock (_gate)
+        {
             _restartCts?.Cancel();
+            _suppressRelaunch = true; // a user Stop stays stopped: don't let a racing recovery / restart relaunch it
+        }
         // 0 -> StopCoreAsync clamps to the 1s minimum /shutdown requires, i.e. an immediate shutdown.
         await StopCoreAsync(graceful, shutdownWaitSeconds: 0, restarting: false, ct).ConfigureAwait(false);
     }
@@ -804,7 +819,7 @@ public sealed class ServerController : IDisposable
             // An update-restart forces the SteamCMD update even if "Update on start" is off.
             await StopCoreAsync(graceful: true, shutdownWaitSeconds: 0, restarting: true, ct).ConfigureAwait(false);
             State = ServerState.Restarting; // hold "Restarting" across the update + relaunch (not "Stopped")
-            await StartAsync(forceUpdate: reason == RestartReason.Update, clearForceLatch: false, ct: ct).ConfigureAwait(false);
+            await StartAsync(forceUpdate: reason == RestartReason.Update, userInitiated: false, ct: ct).ConfigureAwait(false);
         }
         finally
         {
@@ -838,7 +853,7 @@ public sealed class ServerController : IDisposable
         {
             await StopCoreAsync(graceful: true, shutdownWaitSeconds: 0, restarting: true, ct).ConfigureAwait(false);
             State = ServerState.Restarting; // hold "Restarting" across the update + relaunch (not "Stopped")
-            await StartAsync(clearForceLatch: false, ct: ct).ConfigureAwait(false);
+            await StartAsync(userInitiated: false, ct: ct).ConfigureAwait(false);
         }
         finally
         {
@@ -970,7 +985,9 @@ public sealed class ServerController : IDisposable
     {
         if (_config.ServerAffinityMask == 0)
             return; // no restriction configured
-        var process = _process;
+        Process? process;
+        lock (_gate)
+            process = _process; // snapshot: this runs on the health-probe thread, racing OnProcessExited / BindProcess
         if (process is null)
             return;
         try

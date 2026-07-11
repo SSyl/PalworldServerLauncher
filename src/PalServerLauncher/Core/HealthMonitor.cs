@@ -92,6 +92,8 @@ public sealed class HealthMonitor : IDisposable
         if (rest is null)
         {
             // No REST API, can't read stats. Treat the process as running after a brief boot grace.
+            if (ct.IsCancellationRequested)
+                return; // disposed mid-probe, don't fire a stale Healthy / sample
             if (!_reachedHealthy && DateTime.UtcNow - _startedUtc > NoRestGrace)
             {
                 _reachedHealthy = true;
@@ -104,10 +106,15 @@ public sealed class HealthMonitor : IDisposable
         }
 
         MetricsResponseSafe? metrics = await SafeMetricsAsync(rest, ct).ConfigureAwait(false);
+        // A cancelled read (the monitor was disposed mid-probe) comes back as a null "failure" because the REST
+        // client swallows the cancellation into null. Bail before we mistake it for a real failure and fire a
+        // spurious Degraded / Zombie after the monitor is gone.
+        if (ct.IsCancellationRequested)
+            return;
         if (metrics is null)
         {
             if (_reachedHealthy)
-                RegisterFailure("REST API unreachable");
+                RegisterFailure("REST API unreachable", ct);
             return; // still booting; unreachable before first healthy sample is expected
         }
 
@@ -120,9 +127,13 @@ public sealed class HealthMonitor : IDisposable
             _logger.Info($"Server is up ({metrics.Version}, REST responding).");
         }
 
+        // Re-check right before the state-driving raises: the monitor may have been disposed since the guard
+        // above. There is no await between here and the raises, so this closes all but a sub-instruction window.
+        if (ct.IsCancellationRequested)
+            return;
         if (frozen)
         {
-            RegisterFailure($"frozen (uptime={metrics.Uptime}, fps={metrics.Fps})");
+            RegisterFailure($"frozen (uptime={metrics.Uptime}, fps={metrics.Fps})", ct);
         }
         else
         {
@@ -207,8 +218,10 @@ public sealed class HealthMonitor : IDisposable
         : !string.IsNullOrWhiteSpace(player.PlayerId) ? player.PlayerId
         : player.Name;
 
-    private void RegisterFailure(string reason)
+    private void RegisterFailure(string reason, CancellationToken ct)
     {
+        if (ct.IsCancellationRequested)
+            return; // monitor disposed mid-probe, don't escalate a cancelled read to Degraded / Zombie
         _consecutiveFailures++;
         StateChanged?.Invoke(ServerState.Degraded);
         var threshold = Math.Max(1, _config.ZombieFailureThreshold);
