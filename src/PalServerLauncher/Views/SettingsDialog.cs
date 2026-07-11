@@ -175,7 +175,7 @@ public sealed class SettingsDialog : Window
 
         var root = new DockPanel();
         var bannerText = _serverRunning
-            ? "The server is running, so the game-settings tabs are read-only (a running server overwrites its own config). Launch Arguments can still be edited - like the game settings, they apply on the next start."
+            ? "The server is running, so the game-settings tabs are read-only (a running server overwrites its own config). Launch Arguments can still be edited, and apply on the next start just like the game settings."
             : !gameAvailable
                 ? "Game settings unavailable - install the server first (no DefaultPalWorldSettings.ini found)."
                 : null;
