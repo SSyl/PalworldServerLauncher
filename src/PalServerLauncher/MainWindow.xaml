@@ -13,6 +13,7 @@
         d:DataContext="{d:DesignInstance Type=vm:MainViewModel}">
 
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         <Style TargetType="Button">
             <Setter Property="Background" Value="#3A3A3A"/>
             <Setter Property="Foreground" Value="#E0E0E0"/>
@@ -119,6 +120,21 @@
             </Button>
             <Button DockPanel.Dock="Left" Content="↻" Command="{Binding RestartCommand}" FontSize="16" MinWidth="40"
                     ToolTip="Restart now: saves and restarts the server immediately, with no player countdown. Scheduled and update restarts warn players first."/>
+            <Button DockPanel.Dock="Left" Content="Force Shutdown" Click="OnForceShutdown"
+                    Visibility="{Binding IsForceShutdownVisible, Converter={StaticResource BoolToVis}}"
+                    ToolTip="Immediately kill the server process, with no save. Appears when a start, stop, or restart has been stuck for a while. Use it only when the server has stopped responding.">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Background" Value="#8B2620"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#701E1A"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
             <Button DockPanel.Dock="Left" Content="Check for Update" Click="OnCheckForUpdate" IsEnabled="{Binding CanCheckForUpdate}"
                     ToolTip="Check SteamCMD for a newer build (read-only; works while running)"/>
             <Button DockPanel.Dock="Left" Content="Validate Files" Command="{Binding ValidateFilesCommand}"
@@ -325,7 +341,7 @@
         </TabControl>
             <Button Content="Server Commands" Click="OnOpenServerCommands" IsEnabled="{Binding CanUseServerCommands}"
                     HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0" ToolTipService.ShowOnDisabled="True"
-                    ToolTip="Send live commands to the running server: announce, kick / ban / unban, save, shutdown, force stop. Available while the server is up."/>
+                    ToolTip="Send live commands to the running server: announce, kick / ban / unban, save, shutdown. Available while the server is up."/>
         </Grid>
     </Grid>
 </Window>

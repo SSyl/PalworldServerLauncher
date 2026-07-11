@@ -261,6 +261,14 @@ public sealed class DiscordBotService : IDisposable
             return;
         }
 
+        // Re-check exposure at confirm time too (defense in depth, mirrors OnSlashCommandAsync): an admin may
+        // have disabled this command between the prompt and the click.
+        if (!IsCommandEnabled(_config, pending.Action))
+        {
+            await ClearWith(component, "That command isn't available anymore.").ConfigureAwait(false);
+            return;
+        }
+
         // Clear the (ephemeral) confirm prompt for the clicker, then post the result publicly in the channel.
         await ClearWith(component, $"Confirmed, running /{pending.Action}.").ConfigureAwait(false);
         var result = await RunAsync(pending.Action, pending.Args, component.User.Username).ConfigureAwait(false);

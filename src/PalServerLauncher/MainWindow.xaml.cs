@@ -166,7 +166,7 @@ public partial class MainWindow : Window
         e.Cancel = true; // keep the window open until the user decides
         var choice = ChoiceDialog.Show(this, "Server still running",
             "The Palworld server is still running. What should happen to it?",
-            "Shut Down (graceful)", "Force Stop", "Leave Running");
+            "Shut Down (graceful)", "Force Shutdown", "Leave Running");
 
         switch (choice)
         {
@@ -225,6 +225,16 @@ public partial class MainWindow : Window
 
     private void OnOpenServerCommands(object sender, RoutedEventArgs e) =>
         ServerCommandsDialog.Show(this, _viewModel.ServerCommands, _logger);
+
+    private void OnForceShutdown(object sender, RoutedEventArgs e)
+    {
+        if (ChoiceDialog.Show(this, "Force Shutdown",
+                "This will shut the server down immediately without a save by killing the process entirely. It can "
+                + "cause save data loss or corruption. This is not recommended unless the server has completely "
+                + "stopped responding.", "Force Shutdown", "Cancel") != 0)
+            return;
+        _viewModel.ForceShutdownNow();
+    }
 
     private void OnCheckPorts(object sender, RoutedEventArgs e)
     {

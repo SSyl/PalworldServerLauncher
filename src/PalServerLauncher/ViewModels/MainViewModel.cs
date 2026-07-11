@@ -27,6 +27,8 @@ public partial class MainViewModel : ObservableObject
     private readonly ServerController _controller;
     private readonly DispatcherTimer _busyAnimationTimer;
     private int _busyDots;
+    // Reveals the Force Shutdown button only after the server has been stuck in a transitional state for this long.
+    private readonly DispatcherTimer _forceShutdownRevealTimer;
 
     // The up-to-3 announce lead-minute marks as independent slots (blank = off), so a user can announce
     // at just one mark. Populated from config in the constructor; digit-gated in the view.
@@ -55,6 +57,11 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] private string _nextRestart = "-";
     [ObservableProperty] private string _nextBackup = "-";
     [ObservableProperty] private string _updateStatus = "-";
+
+    /// <summary>Drives the Force Shutdown button's visibility. It stays hidden until the server has been stuck
+    /// in a transitional state (Starting / Stopping / Restarting) past the reveal delay, so it only surfaces
+    /// as an escape hatch when a start, stop, or restart is dragging.</summary>
+    [ObservableProperty] private bool _isForceShutdownVisible;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(PublicIpDisplay), nameof(ConnectionInfo), nameof(CanCopyConnectionInfo))]
@@ -107,6 +114,9 @@ public partial class MainViewModel : ObservableObject
             OnPropertyChanged(nameof(PrimaryActionText));
         };
 
+        _forceShutdownRevealTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(10) };
+        _forceShutdownRevealTimer.Tick += OnForceShutdownRevealElapsed;
+
         _logger.Info($"Launcher UI ready. Server root: {_config.ServerRoot}");
     }
 
@@ -157,6 +167,43 @@ public partial class MainViewModel : ObservableObject
 
     /// <summary>Server Commands is live-only: enabled while the server is up (so REST is plausibly usable).</summary>
     public bool CanUseServerCommands => State is ServerState.Healthy or ServerState.Degraded;
+
+    /// <summary>
+    /// On every server-state change, manage the Force Shutdown reveal. Entering a transitional state
+    /// (Starting / Stopping / Restarting) starts a one-shot countdown, and the button appears only if the
+    /// server is still transitional when it elapses. Leaving those states hides it again at once.
+    /// </summary>
+    partial void OnStateChanged(ServerState value) => RefreshForceShutdownReveal();
+
+    private static bool IsTransitional(ServerState state) =>
+        state is ServerState.Starting or ServerState.Stopping or ServerState.Restarting;
+
+    private void RefreshForceShutdownReveal()
+    {
+        if (IsTransitional(State))
+        {
+            // Start the countdown once on entering the window and let it run continuously across
+            // Starting <-> Stopping <-> Restarting, so the delay measures total time stuck, not per state.
+            if (!IsForceShutdownVisible && !_forceShutdownRevealTimer.IsEnabled)
+                _forceShutdownRevealTimer.Start();
+        }
+        else
+        {
+            _forceShutdownRevealTimer.Stop();
+            IsForceShutdownVisible = false;
+        }
+    }
+
+    private void OnForceShutdownRevealElapsed(object? sender, EventArgs e)
+    {
+        _forceShutdownRevealTimer.Stop();
+        if (IsTransitional(State))
+            IsForceShutdownVisible = true;
+    }
+
+    /// <summary>Immediately kill the server process (direct OS kill, no save). Backs the main-window Force
+    /// Shutdown button, the View confirms first.</summary>
+    public void ForceShutdownNow() => _controller.ForceShutdownNow();
 
     /// <summary>Delegate bundle the Server Commands dialog invokes (all route through the controller's REST client).</summary>
     public Core.ServerCommandActions ServerCommands => new(
