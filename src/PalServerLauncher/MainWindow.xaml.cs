@@ -229,8 +229,9 @@ public partial class MainWindow : Window
     private void OnCheckPorts(object sender, RoutedEventArgs e)
     {
         var consent = ChoiceDialog.Show(this, "Port Accessibility",
-            "Your public IP address will be sent to check-host.cc, a free external service, so it can probe your "
-            + "ports from the internet. Nothing except your public IP and the ports you test is sent to their service.",
+            "Your public IP address will be sent to check-host.cc, a free external service, to check whether "
+            + "players can reach your server from outside your network. Nothing except your public IP and the "
+            + "ports you test is sent to their service.",
             "OK", "Cancel");
         if (consent != 0)
             return;
