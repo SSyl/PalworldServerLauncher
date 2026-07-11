@@ -81,7 +81,11 @@ public sealed class ServerController : IDisposable
             Restart: DiscordRestartAsync,
             Stop: DiscordStopAsync,
             Start: DiscordStartAsync,
-            Update: DiscordUpdateCheckAsync));
+            Update: DiscordUpdateCheckAsync,
+            Announce: DiscordAnnounceAsync,
+            Kick: DiscordKickAsync,
+            Ban: DiscordBanAsync,
+            Unban: DiscordUnbanAsync));
         if (config.DiscordBotEnabled)
             FireAndForget(_discordBot.StartAsync, "Discord bot start");
     }
@@ -200,6 +204,34 @@ public sealed class ServerController : IDisposable
             UpdateCheckResult.UpToDate => "Server is up to date.",
             _ => "Update check failed - see the launcher log.",
         };
+    }
+
+    private async Task<string> DiscordAnnounceAsync(string message)
+    {
+        if (RestClient is null)
+            return "REST API is off - can't announce.";
+        return await AnnounceAsync(message).ConfigureAwait(false) ? "Announcement sent." : "The announce request wasn't accepted.";
+    }
+
+    private async Task<string> DiscordKickAsync(string userId, string reason)
+    {
+        if (RestClient is null)
+            return "REST API is off - can't kick.";
+        return await KickPlayerAsync(userId, reason).ConfigureAwait(false) ? $"Kicked `{userId}`." : "Kick wasn't accepted (check the user id).";
+    }
+
+    private async Task<string> DiscordBanAsync(string userId, string reason)
+    {
+        if (RestClient is null)
+            return "REST API is off - can't ban.";
+        return await BanPlayerAsync(userId, reason).ConfigureAwait(false) ? $"Banned `{userId}`." : "Ban wasn't accepted (check the user id).";
+    }
+
+    private async Task<string> DiscordUnbanAsync(string userId)
+    {
+        if (RestClient is null)
+            return "REST API is off - can't unban.";
+        return await UnbanPlayerAsync(userId).ConfigureAwait(false) ? $"Unbanned `{userId}`." : "Unban wasn't accepted (check the user id).";
     }
 
     public event Action<ServerState>? StateChanged;

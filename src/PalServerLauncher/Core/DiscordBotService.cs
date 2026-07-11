@@ -14,12 +14,14 @@ namespace PalServerLauncher.Core;
 /// like the webhook notifier. Auth is the command channel's Discord permissions: the bot only acts on the
 /// configured channel, so anyone who can post there is trusted (the launcher keeps no user allowlist).
 /// Slash commands only (<see cref="GatewayIntents.Guilds"/>) - the bot never reads general chat - and the
-/// token is never logged. This build handles the read-only commands (/status, /players); control commands
-/// come next. All server work is delegated to <see cref="DiscordCommands"/> so routing stays testable.
+/// token is never logged. Which commands are exposed is admin-configurable (see <see cref="IsCommandEnabled"/>),
+/// destructive ones default off, and only enabled commands are registered. All server work is delegated to
+/// <see cref="DiscordCommands"/> so routing stays testable.
 /// </summary>
 public sealed class DiscordBotService : IDisposable
 {
-    /// <summary>Operations the bot can invoke; each returns a short user-facing status string.</summary>
+    /// <summary>Operations the bot can invoke; each returns a short user-facing status string. The last four
+    /// take arguments supplied as slash-command options.</summary>
     public sealed record DiscordCommands(
         Func<Task<string>> Status,
         Func<Task<string>> Players,
@@ -28,7 +30,11 @@ public sealed class DiscordBotService : IDisposable
         Func<Task<string>> Restart,
         Func<Task<string>> Stop,
         Func<Task<string>> Start,
-        Func<Task<string>> Update);
+        Func<Task<string>> Update,
+        Func<string, Task<string>> Announce,
+        Func<string, string, Task<string>> Kick,
+        Func<string, string, Task<string>> Ban,
+        Func<string, Task<string>> Unban);
 
     // Commands that take the server down / bounce it, or moderate a player, require a confirm click first.
     private static readonly HashSet<string> DestructiveCommands = new() { "restart", "stop", "kick", "ban" };
@@ -66,8 +72,14 @@ public sealed class DiscordBotService : IDisposable
     private readonly Logger _logger;
     private readonly DiscordCommands _commands;
     private readonly DiscordCommandCooldown _cooldown = new();
+    private readonly Dictionary<string, Pending> _pending = new();
+    private readonly object _pendingGate = new();
+    private static readonly TimeSpan PendingTtl = TimeSpan.FromMinutes(5);
     private DiscordSocketClient? _client;
     private bool _disposed;
+
+    /// <summary>A destructive command awaiting its Confirm click, holding the arguments a button can't carry.</summary>
+    private sealed record Pending(string Action, string[] Args, DateTime CreatedUtc);
 
     public DiscordBotService(LauncherConfig config, Logger logger, DiscordCommands commands)
     {
@@ -139,25 +151,41 @@ public sealed class DiscordBotService : IDisposable
         if (_client is null)
             return;
 
-        // Register commands per-guild (instant; global commands take ~1h to propagate).
-        var commands = new ApplicationCommandProperties[]
-        {
-            new SlashCommandBuilder().WithName("status").WithDescription("Show server status (FPS, players, uptime, version).").Build(),
-            new SlashCommandBuilder().WithName("players").WithDescription("List players currently online.").Build(),
-            new SlashCommandBuilder().WithName("save").WithDescription("Save the world now.").Build(),
-            new SlashCommandBuilder().WithName("backup").WithDescription("Take a backup now.").Build(),
-            new SlashCommandBuilder().WithName("update").WithDescription("Check for a server update (does not apply it).").Build(),
-            new SlashCommandBuilder().WithName("start").WithDescription("Start the server.").Build(),
-            new SlashCommandBuilder().WithName("restart").WithDescription("Restart the server (asks for confirmation).").Build(),
-            new SlashCommandBuilder().WithName("stop").WithDescription("Stop the server (asks for confirmation).").Build(),
-        };
+        // Register only the enabled commands, per-guild (instant; global commands take ~1h to propagate).
+        var commands = BuildCommandDefinitions()
+            .Where(definition => IsCommandEnabled(_config, definition.Name))
+            .Select(definition => definition.Props)
+            .ToArray();
+
         foreach (var guild in _client.Guilds)
         {
             try { await guild.BulkOverwriteApplicationCommandAsync(commands).ConfigureAwait(false); }
             catch (Exception ex) { _logger.Debug($"Discord command registration failed for guild {guild.Id}: {ex.Message}"); }
         }
-        _logger.Info($"Discord bot ready as {_client.CurrentUser?.Username} (commands registered in {_client.Guilds.Count} server(s)).");
+        _logger.Info($"Discord bot ready as {_client.CurrentUser?.Username} ({commands.Length} command(s) in {_client.Guilds.Count} server(s)).");
     }
+
+    private static IReadOnlyList<(string Name, ApplicationCommandProperties Props)> BuildCommandDefinitions() => new (string, ApplicationCommandProperties)[]
+    {
+        ("status", new SlashCommandBuilder().WithName("status").WithDescription("Show server status (FPS, players, uptime, version).").Build()),
+        ("players", new SlashCommandBuilder().WithName("players").WithDescription("List players currently online.").Build()),
+        ("save", new SlashCommandBuilder().WithName("save").WithDescription("Save the world now.").Build()),
+        ("backup", new SlashCommandBuilder().WithName("backup").WithDescription("Take a backup now.").Build()),
+        ("update", new SlashCommandBuilder().WithName("update").WithDescription("Check for a server update (does not apply it).").Build()),
+        ("announce", new SlashCommandBuilder().WithName("announce").WithDescription("Broadcast a message to the server.")
+            .AddOption("message", ApplicationCommandOptionType.String, "The message to broadcast", isRequired: true).Build()),
+        ("start", new SlashCommandBuilder().WithName("start").WithDescription("Start the server.").Build()),
+        ("unban", new SlashCommandBuilder().WithName("unban").WithDescription("Unban a player by user id.")
+            .AddOption("userid", ApplicationCommandOptionType.String, "Platform user id, e.g. steam_0123...", isRequired: true).Build()),
+        ("restart", new SlashCommandBuilder().WithName("restart").WithDescription("Restart the server (asks for confirmation).").Build()),
+        ("stop", new SlashCommandBuilder().WithName("stop").WithDescription("Stop the server (asks for confirmation).").Build()),
+        ("kick", new SlashCommandBuilder().WithName("kick").WithDescription("Kick a player (asks for confirmation).")
+            .AddOption("userid", ApplicationCommandOptionType.String, "Player user id (from /players)", isRequired: true)
+            .AddOption("reason", ApplicationCommandOptionType.String, "Reason shown to the player", isRequired: false).Build()),
+        ("ban", new SlashCommandBuilder().WithName("ban").WithDescription("Ban a player (asks for confirmation).")
+            .AddOption("userid", ApplicationCommandOptionType.String, "Player user id (from /players)", isRequired: true)
+            .AddOption("reason", ApplicationCommandOptionType.String, "Reason shown to the player", isRequired: false).Build()),
+    };
 
     private async Task OnSlashCommandAsync(SocketSlashCommand command)
     {
@@ -166,31 +194,40 @@ public sealed class DiscordBotService : IDisposable
             await command.RespondAsync("You're not allowed to run commands here.", ephemeral: true).ConfigureAwait(false);
             return;
         }
+        if (!IsCommandEnabled(_config, command.CommandName) || Resolve(command.CommandName) is null)
+        {
+            await command.RespondAsync("That command isn't available.", ephemeral: true).ConfigureAwait(false);
+            return;
+        }
         if (!AllowNow(command.User.Id, out var retryAfter))
         {
             await command.RespondAsync($"Slow down - try again in {retryAfter.TotalSeconds:F0}s.", ephemeral: true).ConfigureAwait(false);
             return;
         }
-        if (Resolve(command.CommandName) is null)
-        {
-            await command.RespondAsync("Unknown command.", ephemeral: true).ConfigureAwait(false);
-            return;
-        }
 
-        // Destructive commands ask first. The prompt is ephemeral, so only the invoker can click Confirm.
+        var args = ExtractArgs(command);
+
+        // Destructive commands ask first. The prompt is ephemeral, so only the invoker can click Confirm. A
+        // Discord button carries no state, so the args are held in a pending entry keyed by a token in the id.
         if (DestructiveCommands.Contains(command.CommandName))
         {
+            var token = NewToken();
+            lock (_pendingGate)
+            {
+                PrunePending(DateTime.UtcNow);
+                _pending[token] = new Pending(command.CommandName, args, DateTime.UtcNow);
+            }
             var buttons = new ComponentBuilder()
-                .WithButton("Confirm", ButtonPrefix + command.CommandName, ButtonStyle.Danger)
+                .WithButton("Confirm", ButtonPrefix + token, ButtonStyle.Danger)
                 .WithButton("Cancel", ButtonPrefix + "cancel", ButtonStyle.Secondary)
                 .Build();
-            await command.RespondAsync($"⚠️ Really **/{command.CommandName}** the server?", components: buttons, ephemeral: true).ConfigureAwait(false);
+            await command.RespondAsync($"⚠️ Really **/{command.CommandName}**?", components: buttons, ephemeral: true).ConfigureAwait(false);
             return;
         }
 
         // Post the result publicly in the channel (AllowedMentions.None so an echoed name can't ping).
         await command.DeferAsync().ConfigureAwait(false);
-        var result = await RunAsync(command.CommandName, command.User.Username).ConfigureAwait(false);
+        var result = await RunAsync(command.CommandName, args, command.User.Username).ConfigureAwait(false);
         await command.FollowupAsync(result, allowedMentions: AllowedMentions.None).ConfigureAwait(false);
     }
 
@@ -199,33 +236,42 @@ public sealed class DiscordBotService : IDisposable
         var id = component.Data.CustomId;
         if (!id.StartsWith(ButtonPrefix, StringComparison.Ordinal))
             return;
-        var action = id[ButtonPrefix.Length..];
+        var token = id[ButtonPrefix.Length..];
 
         if (!IsAuthorized(component))
         {
             await component.RespondAsync("You're not allowed to run commands here.", ephemeral: true).ConfigureAwait(false);
             return;
         }
-        if (action == "cancel")
+        if (token == "cancel")
         {
             await ClearWith(component, "Cancelled.").ConfigureAwait(false);
             return;
         }
 
+        Pending? pending;
+        lock (_pendingGate)
+            _pending.Remove(token, out pending);
+        if (pending is null)
+        {
+            await ClearWith(component, "This confirmation expired - run the command again.").ConfigureAwait(false);
+            return;
+        }
+
         // Clear the (ephemeral) confirm prompt for the clicker, then post the result publicly in the channel.
-        await ClearWith(component, $"Confirmed - running /{action}.").ConfigureAwait(false);
-        var result = await RunAsync(action, component.User.Username).ConfigureAwait(false);
+        await ClearWith(component, $"Confirmed - running /{pending.Action}.").ConfigureAwait(false);
+        var result = await RunAsync(pending.Action, pending.Args, component.User.Username).ConfigureAwait(false);
         await component.FollowupAsync(result, allowedMentions: AllowedMentions.None).ConfigureAwait(false);
     }
 
-    private async Task<string> RunAsync(string action, string user)
+    private async Task<string> RunAsync(string action, string[] args, string user)
     {
         var handler = Resolve(action);
         if (handler is null)
             return "Unknown command.";
         try
         {
-            var result = await handler().ConfigureAwait(false);
+            var result = await handler(args).ConfigureAwait(false);
             _logger.Info($"Discord command /{action} by {user}.");
             return result;
         }
@@ -236,18 +282,36 @@ public sealed class DiscordBotService : IDisposable
         }
     }
 
-    private Func<Task<string>>? Resolve(string name) => name switch
+    private Func<string[], Task<string>>? Resolve(string name) => name switch
     {
-        "status" => _commands.Status,
-        "players" => _commands.Players,
-        "save" => _commands.Save,
-        "backup" => _commands.Backup,
-        "update" => _commands.Update,
-        "start" => _commands.Start,
-        "restart" => _commands.Restart,
-        "stop" => _commands.Stop,
+        "status" => _ => _commands.Status(),
+        "players" => _ => _commands.Players(),
+        "save" => _ => _commands.Save(),
+        "backup" => _ => _commands.Backup(),
+        "update" => _ => _commands.Update(),
+        "start" => _ => _commands.Start(),
+        "restart" => _ => _commands.Restart(),
+        "stop" => _ => _commands.Stop(),
+        "announce" => args => _commands.Announce(Arg(args, 0)),
+        "kick" => args => _commands.Kick(Arg(args, 0), Arg(args, 1)),
+        "ban" => args => _commands.Ban(Arg(args, 0), Arg(args, 1)),
+        "unban" => args => _commands.Unban(Arg(args, 0)),
         _ => null,
     };
+
+    private static string Arg(string[] args, int index) => index < args.Length ? args[index] : "";
+
+    private static string[] ExtractArgs(SocketSlashCommand command) => command.CommandName switch
+    {
+        "announce" => new[] { Opt(command, "message") },
+        "kick" => new[] { Opt(command, "userid"), Opt(command, "reason") },
+        "ban" => new[] { Opt(command, "userid"), Opt(command, "reason") },
+        "unban" => new[] { Opt(command, "userid") },
+        _ => Array.Empty<string>(),
+    };
+
+    private static string Opt(SocketSlashCommand command, string name) =>
+        command.Data.Options.FirstOrDefault(o => o.Name == name)?.Value?.ToString() ?? "";
 
     /// <summary>Allowed only if every configured gate passes (channel AND role) and at least one is set,
     /// so an unconfigured bot never becomes wide-open (fail closed).</summary>
@@ -268,6 +332,15 @@ public sealed class DiscordBotService : IDisposable
 
     private bool AllowNow(ulong userId, out TimeSpan retryAfter) =>
         _cooldown.TryUse(userId, DateTime.UtcNow, TimeSpan.FromSeconds(Math.Max(0, _config.DiscordCommandCooldownSeconds)), out retryAfter);
+
+    private static string NewToken() => Guid.NewGuid().ToString("N")[..12];
+
+    /// <summary>Drop confirm prompts nobody clicked, so the pending map can't grow without bound. Caller holds the gate.</summary>
+    private void PrunePending(DateTime nowUtc)
+    {
+        foreach (var expired in _pending.Where(entry => nowUtc - entry.Value.CreatedUtc > PendingTtl).Select(entry => entry.Key).ToList())
+            _pending.Remove(expired);
+    }
 
     private static Task ClearWith(SocketMessageComponent component, string content) =>
         component.UpdateAsync(m => { m.Content = content; m.Components = new ComponentBuilder().Build(); });
