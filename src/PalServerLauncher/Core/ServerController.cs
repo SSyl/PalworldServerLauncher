@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using PalServerLauncher.Config;
 using PalServerLauncher.Logging;
 using PalServerLauncher.Rest;
+using PalServerLauncher.Rest.Models;
 using PalServerLauncher.State;
 
 namespace PalServerLauncher.Core;
@@ -400,6 +401,38 @@ public sealed class ServerController : IDisposable
     /// <summary>Take a backup on demand (the "Backup now" button). Fresh <c>/save</c> if running + REST usable.</summary>
     public Task BackupNowAsync(CancellationToken ct = default) =>
         _backup.BackupNowAsync(BackupReason.Manual, RestClient, IsRunning(), ct);
+
+    // --- Live server command surface (shared by the Server Commands dialog and the Discord bot). All return
+    // false / null when the REST API is off or unreachable, so callers report "couldn't do it" rather than crash. ---
+
+    /// <summary>Online players from the REST API, or null if REST is off / unreachable.</summary>
+    public Task<PlayersResponse?> GetPlayersAsync(CancellationToken ct = default) =>
+        RestClient?.GetPlayersAsync(ct) ?? Task.FromResult<PlayersResponse?>(null);
+
+    /// <summary>Broadcast an in-game message to everyone on the server.</summary>
+    public async Task<bool> AnnounceAsync(string message, CancellationToken ct = default) =>
+        RestClient is { } rest && await rest.AnnounceAsync(message, ct).ConfigureAwait(false);
+
+    /// <summary>Kick a player by their platform user id, with an optional reason.</summary>
+    public async Task<bool> KickPlayerAsync(string userId, string message, CancellationToken ct = default) =>
+        RestClient is { } rest && await rest.KickAsync(userId, message, ct).ConfigureAwait(false);
+
+    /// <summary>Ban a player by their platform user id, with an optional reason.</summary>
+    public async Task<bool> BanPlayerAsync(string userId, string message, CancellationToken ct = default) =>
+        RestClient is { } rest && await rest.BanAsync(userId, message, ct).ConfigureAwait(false);
+
+    /// <summary>Lift a ban on a player by their platform user id.</summary>
+    public async Task<bool> UnbanPlayerAsync(string userId, CancellationToken ct = default) =>
+        RestClient is { } rest && await rest.UnbanAsync(userId, ct).ConfigureAwait(false);
+
+    /// <summary>Trigger a fresh world save.</summary>
+    public async Task<bool> SaveWorldAsync(CancellationToken ct = default) =>
+        RestClient is { } rest && await rest.SaveAsync(ct).ConfigureAwait(false);
+
+    /// <summary>Graceful shutdown with an in-game countdown and no relaunch. Routes through the stop ladder so
+    /// the resulting exit is treated as a deliberate stop, not a crash.</summary>
+    public Task ShutdownWithCountdownAsync(int seconds, CancellationToken ct = default) =>
+        StopCoreAsync(graceful: true, shutdownWaitSeconds: seconds, restarting: false, ct);
 
     /// <summary>Recompute the next-restart/next-backup UI text immediately (after a schedule setting change).</summary>
     public void RefreshScheduleText()
