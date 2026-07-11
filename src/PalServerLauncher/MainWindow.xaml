@@ -325,7 +325,7 @@
             </TabItem>
         </TabControl>
             <Button Content="Server Commands" Click="OnOpenServerCommands" IsEnabled="{Binding CanUseServerCommands}"
-                    HorizontalAlignment="Right" VerticalAlignment="Top" Padding="10,4" Margin="0,2,0,0"
+                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0"
                     ToolTip="Send live commands to the running server: announce, kick / ban / unban, save, shutdown, force stop. Available while the server is up."/>
         </Grid>
     </Grid>
