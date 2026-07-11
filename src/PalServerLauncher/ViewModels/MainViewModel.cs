@@ -33,7 +33,7 @@ public partial class MainViewModel : ObservableObject
     private readonly string[] _leadSlots = new string[3];
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate))]
+    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate), nameof(CanCheckPorts))]
     [NotifyCanExecuteChangedFor(nameof(PrimaryActionCommand), nameof(RestartCommand), nameof(ValidateFilesCommand))]
     private ServerState _state = ServerState.Stopped;
 
@@ -43,7 +43,7 @@ public partial class MainViewModel : ObservableObject
     private bool _isInstalled;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate))]
+    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate), nameof(CanCheckPorts))]
     [NotifyCanExecuteChangedFor(nameof(PrimaryActionCommand), nameof(RestartCommand), nameof(ValidateFilesCommand), nameof(BackupNowCommand))]
     private bool _isBusy;
 
@@ -55,6 +55,14 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] private string _nextRestart = "-";
     [ObservableProperty] private string _nextBackup = "-";
     [ObservableProperty] private string _updateStatus = "-";
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PublicIpDisplay), nameof(ConnectionInfo), nameof(CanCopyConnectionInfo))]
+    private string _publicIp = "";
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PublicIpDisplay))]
+    private bool _isIpRevealed;
 
     /// <summary>General tab: every line. Server/SteamCmd tabs: only their own channel.</summary>
     public ObservableCollection<string> LogGeneral { get; } = new();
@@ -351,6 +359,30 @@ public partial class MainViewModel : ObservableObject
 
     /// <summary>Check for Update is a read-only build-id check, so it's allowed while the server runs too.</summary>
     public bool CanCheckForUpdate => IsInstalled && !IsBusy;
+
+    // --- External IP + Port Accessibility ---
+
+    /// <summary>The IP:port a player connects to (public IP + game port), or empty until the IP is known.</summary>
+    public string ConnectionInfo => string.IsNullOrEmpty(PublicIp) ? "" : $"{PublicIp}:{_config.ServerPort}";
+
+    /// <summary>External IP display: masked dots by default, the real IP:port when revealed, "-" if unknown.</summary>
+    public string PublicIpDisplay =>
+        string.IsNullOrEmpty(PublicIp) ? "-" : IsIpRevealed ? ConnectionInfo : "••••••••••••";
+
+    public bool CanCopyConnectionInfo => !string.IsNullOrEmpty(PublicIp);
+
+    /// <summary>Port Accessibility is stopped-only (it binds the ports to test them), mirroring Validate Files.</summary>
+    public bool CanCheckPorts => !IsBusy && State == ServerState.Stopped;
+
+    /// <summary>Parsed REST / RCON / port values from PalWorldSettings.ini, for the port-check dialog.</summary>
+    public PalworldServerSettings ReadServerSettings() => _controller.ReadServerSettings();
+
+    /// <summary>Detect the machine's public IP for the External IP display (best-effort, ignored on failure).</summary>
+    public async Task RefreshPublicIpAsync()
+    {
+        try { PublicIp = await PublicIpLookup.DetectPublicIpAsync() ?? ""; }
+        catch (Exception ex) { _logger.Debug($"Public IP detection failed: {ex.Message}"); }
+    }
 
     /// <summary>Validate Files: full SteamCMD integrity pass on the installed (stopped) server.</summary>
     [RelayCommand(CanExecute = nameof(CanValidateFiles))]

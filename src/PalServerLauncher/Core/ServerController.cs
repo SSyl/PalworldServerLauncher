@@ -274,6 +274,9 @@ public sealed class ServerController : IDisposable
     /// <summary>True when PalWorldSettings.ini has the REST API enabled with a non-blank admin password.</summary>
     public bool IsRestApiConfigured => IniReader.ReadFile(PalWorldSettingsPath).RestApiUsable;
 
+    /// <summary>A read-only snapshot of the REST / RCON / port values from PalWorldSettings.ini (for the port checker).</summary>
+    public PalworldServerSettings ReadServerSettings() => IniReader.ReadFile(PalWorldSettingsPath);
+
     /// <summary>
     /// Enable the REST API in PalWorldSettings.ini with a fresh cryptographically-random admin password
     /// (seeding the ini from the default template if needed). Stopped-only - the settings service refuses
