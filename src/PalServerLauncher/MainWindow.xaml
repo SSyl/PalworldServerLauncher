@@ -124,8 +124,6 @@
             <Button DockPanel.Dock="Left" Content="Validate Files" Command="{Binding ValidateFilesCommand}"
                     ToolTip="Full SteamCMD integrity check of the installed files"/>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                <Button Content="Server Commands" Click="OnOpenServerCommands" IsEnabled="{Binding CanUseServerCommands}"
-                        ToolTip="Send live commands to the running server: announce, kick / ban / unban, save, shutdown, force stop. Available while the server is up."/>
                 <Button Content="Discord Bot" Click="OnOpenDiscord" ToolTip="Discord control bot + webhook notifications">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
@@ -208,6 +206,8 @@
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="Minutes before restart to announce (blank = off)"/>
                         <TextBlock Text="min" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
+                    <Button Content="Edit Announcements" Click="OnEditAnnouncements" HorizontalAlignment="Left" Margin="0,0,0,7"
+                            ToolTip="Edit the in-game messages players see before a restart."/>
                     <CheckBox Content="Validate files on restart" IsChecked="{Binding VerifyOnUpdate}" ToolTip="Add a full integrity pass to the update on Start/restart (slower)"/>
                 </StackPanel>
             </Border>
@@ -276,8 +276,6 @@
                         <TextBlock Text="s" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                     <WrapPanel>
-                        <Button Content="Edit Announcements" Click="OnEditAnnouncements" Margin="0,0,8,4"
-                                ToolTip="Edit the in-game messages players see before a restart."/>
                         <Button Content="Advanced Settings" Click="OnOpenAdvanced" Margin="0,0,0,4" ToolTip="Low-level process tuning (priority, CPU affinity) - advanced users only">
                             <Button.Style>
                                 <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
@@ -294,8 +292,9 @@
             </Border>
         </Grid>
 
-        <!-- Row 5: tabbed logs -->
-        <TabControl Grid.Row="5" Background="#1E1E1E" BorderThickness="0" Padding="0,8,0,0">
+        <!-- Row 5: tabbed logs, with Server Commands docked to the far right of the tab strip -->
+        <Grid Grid.Row="5">
+        <TabControl Background="#1E1E1E" BorderThickness="0" Padding="0,8,0,0">
             <TabControl.Resources>
                 <Style TargetType="TabItem" BasedOn="{StaticResource DarkTabItem}"/>
                 <Style TargetType="ListBox" x:Key="LogListStyle">
@@ -325,5 +324,9 @@
                 <ListBox x:Name="SteamCmdList" ItemsSource="{Binding LogSteamCmd}" Style="{StaticResource LogListStyle}"/>
             </TabItem>
         </TabControl>
+            <Button Content="Server Commands" Click="OnOpenServerCommands" IsEnabled="{Binding CanUseServerCommands}"
+                    HorizontalAlignment="Right" VerticalAlignment="Top" Padding="10,4" Margin="0,2,0,0"
+                    ToolTip="Send live commands to the running server: announce, kick / ban / unban, save, shutdown, force stop. Available while the server is up."/>
+        </Grid>
     </Grid>
 </Window>
