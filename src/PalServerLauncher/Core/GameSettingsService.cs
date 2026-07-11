@@ -118,8 +118,8 @@ public sealed class GameSettingsService
         }
 
         var rendered = blob.Render();
-        // Raw (tuple/list) values are written verbatim, so a malformed one, a stray comma, quote, or
-        // unbalanced parenthesis, could corrupt the whole blob. Re-parse and confirm each survived intact
+        // Raw (tuple/list) values are written verbatim, so a malformed one (a stray comma, quote, or
+        // unbalanced parenthesis) could corrupt the whole blob. Re-parse and confirm each survived intact
         // before writing; refuse rather than save a broken file (same safety net as SaveExtras).
         if (rawEdits.Count > 0)
         {
