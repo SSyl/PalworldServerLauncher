@@ -32,6 +32,7 @@ public partial class MainWindow : Window
 
         _viewModel.InstallFinished += OnInstallFinished;
         _viewModel.ConfirmInstall = ConfirmInstall;
+        _viewModel.RequestShutdownDecision = PromptShutdownDecision;
 
         Loaded += OnLoaded;
         Closing += OnClosing;
@@ -100,6 +101,34 @@ public partial class MainWindow : Window
             "This downloads and installs the Palworld dedicated server with SteamCMD, about 4 GB, into this " +
             "launcher's folder. A SteamCMD window opens to show progress.\n\nDownload and install it now?",
             "Download & Install", "Cancel") == 0;
+
+    /// <summary>The Stop-button shutdown prompt: immediate / timed when REST is on, or a force-stop notice when
+    /// it's off. Returns the user's choice, the ViewModel routes it. The dialogs live here, never in the VM.</summary>
+    private ShutdownDecision PromptShutdownDecision()
+    {
+        if (!_viewModel.IsRestApiReady)
+        {
+            var forceChoice = ChoiceDialog.Show(this, "Shut down the server",
+                "REST is not enabled, so the server can't be shut down gracefully. It will be force-stopped, the "
+                + "process is killed directly and the last autosave limits any loss. Turn on REST for graceful shutdowns.",
+                "Force Stop", "Cancel");
+            return new ShutdownDecision(forceChoice == 0 ? ShutdownKind.ForceNoRest : ShutdownKind.Cancel);
+        }
+
+        var choice = ChoiceDialog.Show(this, "Shut down the server",
+            "Shut down now, or on a timer that shows players an in-game countdown first?",
+            "Shutdown Now", "Timed Shutdown", "Cancel");
+        if (choice == 0)
+            return new ShutdownDecision(ShutdownKind.GracefulNow);
+        if (choice == 1)
+        {
+            var seconds = NumberPromptDialog.Show(this, "Timed shutdown",
+                "Players get an in-game countdown for this many seconds before the server shuts down.",
+                "seconds", defaultValue: 60, min: 1, max: 3600);
+            return seconds is int s ? new ShutdownDecision(ShutdownKind.Timed, s) : new ShutdownDecision(ShutdownKind.Cancel);
+        }
+        return new ShutdownDecision(ShutdownKind.Cancel);
+    }
 
     /// <summary>Right after a fresh install, offer to enable the REST API (with install-specific wording).</summary>
     private void OnInstallFinished() => PromptRestSetupIfNeeded(afterInstall: true);

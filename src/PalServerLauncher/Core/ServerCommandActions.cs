@@ -14,6 +14,4 @@ public sealed record ServerCommandActions(
     Func<string, string, Task<bool>> Kick,
     Func<string, string, Task<bool>> Ban,
     Func<string, Task<bool>> Unban,
-    Func<Task<bool>> Save,
-    Func<int, Task> ShutdownWithCountdown,
-    Func<Task> ForceStop);
+    Func<Task<bool>> Save);

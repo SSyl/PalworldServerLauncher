@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,7 +30,6 @@ public sealed class ServerCommandsDialog : Window
     private readonly TextBox _announce;
     private readonly TextBox _reason;
     private readonly TextBox _unbanUserId;
-    private readonly TextBox _shutdownSeconds;
     private readonly StackPanel _playersPanel;
     private readonly TextBlock _status;
 
@@ -99,14 +97,6 @@ public sealed class ServerCommandsDialog : Window
         stack.Children.Add(Header("Server"));
         var serverRow = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 2, 0, 0) };
         serverRow.Children.Add(MakeButton("Save world", OnSave));
-        serverRow.Children.Add(new TextBlock { Text = "Shutdown in", Foreground = Fg, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(16, 0, 6, 0) });
-        _shutdownSeconds = Field("30");
-        _shutdownSeconds.Width = 48;
-        DigitsOnly(_shutdownSeconds);
-        serverRow.Children.Add(_shutdownSeconds);
-        serverRow.Children.Add(new TextBlock { Text = "s", Foreground = Muted, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(4, 0, 6, 0) });
-        serverRow.Children.Add(MakeButton("Shutdown", OnShutdown, Warn));
-        serverRow.Children.Add(MakeButton("Force Stop", OnForceStop, Danger));
         stack.Children.Add(serverRow);
 
         _status = new TextBlock { Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 16, 0, 0) };
@@ -157,27 +147,6 @@ public sealed class ServerCommandsDialog : Window
 
     private async void OnSave() => await Guard(async () =>
         SetStatus(await _actions.Save() ? "World saved." : "Couldn't save (REST off or rejected)."));
-
-    private void OnShutdown()
-    {
-        if (!int.TryParse(_shutdownSeconds.Text.Trim(), NumberStyles.None, CultureInfo.InvariantCulture, out var seconds) || seconds < 1)
-        {
-            SetStatus("Enter a countdown of 1 second or more.");
-            return;
-        }
-        if (ChoiceDialog.Show(this, "Shut down the server",
-                $"Shut the server down in {seconds} seconds? Players see an in-game countdown.", "Shutdown", "Cancel") != 0)
-            return;
-        FireAndClose(_actions.ShutdownWithCountdown(seconds), "Shutdown");
-    }
-
-    private void OnForceStop()
-    {
-        if (ChoiceDialog.Show(this, "Force stop",
-                "Force-stop the server now? This kills it with no countdown (the last autosave limits loss).", "Force Stop", "Cancel") != 0)
-            return;
-        FireAndClose(_actions.ForceStop(), "Force stop");
-    }
 
     private Grid PlayerRow(Player player)
     {
@@ -234,18 +203,6 @@ public sealed class ServerCommandsDialog : Window
         else SetStatus($"Couldn't ban {name} (REST off or rejected).");
     });
 
-    private void FireAndClose(Task task, string what)
-    {
-        _ = LogFailure(task, what);
-        Close();
-    }
-
-    private async Task LogFailure(Task task, string what)
-    {
-        try { await task; }
-        catch (Exception ex) { _logger.Error($"{what} failed", ex); }
-    }
-
     private async Task Guard(Func<Task> body)
     {
         try { await body(); }
@@ -282,21 +239,6 @@ public sealed class ServerCommandsDialog : Window
         Text = value, Background = FieldBg, Foreground = Fg, BorderBrush = FieldBorder,
         Padding = new Thickness(5, 4, 5, 4), CaretBrush = Brushes.White, VerticalContentAlignment = VerticalAlignment.Center,
     };
-
-    private static void DigitsOnly(TextBox box)
-    {
-        box.PreviewTextInput += (_, e) =>
-        {
-            foreach (var c in e.Text)
-                if (!char.IsAsciiDigit(c)) { e.Handled = true; return; }
-        };
-        DataObject.AddPastingHandler(box, (_, e) =>
-        {
-            if (e.DataObject.GetData(DataFormats.UnicodeText) is string s)
-                foreach (var c in s)
-                    if (!char.IsAsciiDigit(c)) { e.CancelCommand(); return; }
-        });
-    }
 
     private static Button MakeButton(string label, Action onClick, Brush? background = null)
     {

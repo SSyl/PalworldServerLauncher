@@ -84,6 +84,10 @@ public partial class MainViewModel : ObservableObject
     /// Returns true to proceed. Only gates the Install button, Validate / Download-update aren't multi-GB.</summary>
     public Func<bool>? ConfirmInstall { get; set; }
 
+    /// <summary>Set by the View: when Stop is pressed, ask how to shut down (immediate / timed / force when REST
+    /// is off) and return the choice. Keeps the shutdown dialogs in the View, not the ViewModel.</summary>
+    public Func<ShutdownDecision>? RequestShutdownDecision { get; set; }
+
     /// <summary>Label for the multi-state primary button (animated dots while busy, so it's clearly not frozen).</summary>
     public string PrimaryActionText => IsBusy
         ? "Working" + new string('.', _busyDots)
@@ -212,9 +216,10 @@ public partial class MainViewModel : ObservableObject
         Kick: (userId, reason) => _controller.KickPlayerAsync(userId, reason),
         Ban: (userId, reason) => _controller.BanPlayerAsync(userId, reason),
         Unban: userId => _controller.UnbanPlayerAsync(userId),
-        Save: () => _controller.SaveWorldAsync(),
-        ShutdownWithCountdown: seconds => _controller.ShutdownWithCountdownAsync(seconds),
-        ForceStop: () => _controller.StopAsync(graceful: false));
+        Save: () => _controller.SaveWorldAsync());
+
+    /// <summary>True when a live REST client exists, so a graceful shutdown is possible (else Stop can only force-kill).</summary>
+    public bool IsRestApiReady => _controller.RestClient is not null;
 
     // --- Scheduled-restart settings (persist to launcher.json on change; the scheduler reads config live) ---
     public bool ScheduledRestartEnabled
@@ -393,9 +398,23 @@ public partial class MainViewModel : ObservableObject
         {
             PrimaryActionKind.Install => ConfirmedInstallAsync(),
             PrimaryActionKind.Start => StartCoreAsync(),
-            PrimaryActionKind.Stop => _controller.StopAsync(graceful: true),
+            PrimaryActionKind.Stop => StopWithPromptAsync(),
             _ => Task.CompletedTask,
         });
+    }
+
+    /// <summary>Stop from the primary button: ask the View how to shut down, then route to the controller. The
+    /// countdown only ever happens when the user explicitly picks Timed, a plain Stop is immediate.</summary>
+    private Task StopWithPromptAsync()
+    {
+        var decision = RequestShutdownDecision?.Invoke() ?? new ShutdownDecision(ShutdownKind.GracefulNow);
+        return decision.Kind switch
+        {
+            ShutdownKind.ForceNoRest => _controller.StopAsync(graceful: false),
+            ShutdownKind.GracefulNow => _controller.StopAsync(graceful: true),
+            ShutdownKind.Timed => _controller.ShutdownWithCountdownAsync(decision.Seconds),
+            _ => Task.CompletedTask, // Cancel
+        };
     }
 
     /// <summary>First install pulls several GB via SteamCMD; let the View confirm before we start.</summary>
