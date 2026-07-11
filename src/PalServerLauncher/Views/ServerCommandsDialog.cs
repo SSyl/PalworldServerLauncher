@@ -94,7 +94,7 @@ public sealed class ServerCommandsDialog : Window
         unbanRow.Children.Add(_unbanUserId);
         unbanRow.Children.Add(unbanButton);
         stack.Children.Add(unbanRow);
-        stack.Children.Add(Line("Banned players aren't online, so unban takes the platform user id (e.g. steam_0123...).", Muted));
+        stack.Children.Add(Line("Unban must use the platform user id (e.g. steam_0123...).", Muted));
 
         stack.Children.Add(Header("Server"));
         var serverRow = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 2, 0, 0) };
