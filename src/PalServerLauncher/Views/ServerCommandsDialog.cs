@@ -187,9 +187,13 @@ public sealed class ServerCommandsDialog : Window
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
-        var label = new TextBlock { Text = $"{name}  (Lv {player.Level})", Foreground = Fg, VerticalAlignment = VerticalAlignment.Center };
-        Grid.SetColumn(label, 0);
-        grid.Children.Add(label);
+        // Show the name and the platform user id (the thing that actually gets kicked/banned) so two players
+        // with the same display name can be told apart.
+        var info = new StackPanel { VerticalAlignment = VerticalAlignment.Center };
+        info.Children.Add(new TextBlock { Text = $"{name}  (Lv {player.Level})", Foreground = Fg });
+        info.Children.Add(new TextBlock { Text = string.IsNullOrEmpty(player.UserId) ? "(no user id)" : player.UserId, Foreground = Muted, FontSize = 11 });
+        Grid.SetColumn(info, 0);
+        grid.Children.Add(info);
 
         var hasUserId = !string.IsNullOrEmpty(player.UserId);
         var kick = MakeButton("Kick", () => OnKick(player), Warn);
@@ -208,10 +212,10 @@ public sealed class ServerCommandsDialog : Window
     {
         var name = player.Name ?? player.AccountName ?? "(unknown)";
         if (string.IsNullOrEmpty(player.UserId)) return;
-        if (ChoiceDialog.Show(this, "Kick player", $"Kick {name}?", "Kick", "Cancel") != 0) return;
+        if (ChoiceDialog.Show(this, "Kick player", $"Kick {name} ({player.UserId})?", "Kick", "Cancel") != 0) return;
         if (await _actions.Kick(player.UserId, _reason.Text.Trim()))
         {
-            SetStatus($"Kicked {name}.");
+            SetStatus($"Kicked {name} ({player.UserId}).");
             OnRefreshPlayers();
         }
         else SetStatus($"Couldn't kick {name} (REST off or rejected).");
@@ -221,10 +225,10 @@ public sealed class ServerCommandsDialog : Window
     {
         var name = player.Name ?? player.AccountName ?? "(unknown)";
         if (string.IsNullOrEmpty(player.UserId)) return;
-        if (ChoiceDialog.Show(this, "Ban player", $"Ban {name}? They'll be kicked and blocked from rejoining.", "Ban", "Cancel") != 0) return;
+        if (ChoiceDialog.Show(this, "Ban player", $"Ban {name} ({player.UserId})? They'll be kicked and blocked from rejoining.", "Ban", "Cancel") != 0) return;
         if (await _actions.Ban(player.UserId, _reason.Text.Trim()))
         {
-            SetStatus($"Banned {name}.");
+            SetStatus($"Banned {name} ({player.UserId}).");
             OnRefreshPlayers();
         }
         else SetStatus($"Couldn't ban {name} (REST off or rejected).");
