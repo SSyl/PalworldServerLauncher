@@ -51,7 +51,7 @@ public partial class MainWindow : Window
 
     /// <summary>
     /// A managed server was found at startup and adopted. Only servers launched from THIS folder are
-    /// detected, so it's almost certainly ours from a previous session - offer to reconnect (keep managing
+    /// detected, so it's almost certainly ours from a previous session, offer to reconnect (keep managing
     /// it), shut it down, or exit. Returns false only when the launcher is exiting.
     /// </summary>
     private async Task<bool> HandleAlreadyRunningAsync()
@@ -60,10 +60,10 @@ public partial class MainWindow : Window
 
         if (count > 1)
         {
-            // Several servers under one folder share a save + ports and will conflict - don't keep them.
+            // Several servers under one folder share a save + ports and will conflict, don't keep them.
             var multiChoice = ChoiceDialog.Show(this, "Multiple servers running",
                 $"Detected {count} Palworld servers running from this folder. They share one save and set of " +
-                "ports, so they'll conflict - the launcher manages a single server. Shut them all down, or exit.",
+                "ports, so they'll conflict, the launcher manages a single server. Shut them all down, or exit.",
                 "Shut Down All", "Exit Launcher");
             if (multiChoice != 0)
             {
@@ -75,7 +75,7 @@ public partial class MainWindow : Window
         }
 
         var choice = ChoiceDialog.Show(this, "Server already running",
-            "A Palworld server started from this folder is already running - almost certainly yours from a " +
+            "A Palworld server started from this folder is already running, almost certainly yours from a " +
             "previous session, since the launcher only tracks servers it started here.\n\n" +
             "Reconnect to keep managing it over the REST API (live stats, scheduled restarts, backups; the " +
             "Server Log tab stays empty for a server the launcher didn't start itself). Otherwise shut it down, or exit.",
@@ -97,7 +97,7 @@ public partial class MainWindow : Window
     /// <summary>Confirm the first install (a multi-GB SteamCMD download) before it starts.</summary>
     private bool ConfirmInstall() =>
         ChoiceDialog.Show(this, "Install the server?",
-            "This downloads and installs the Palworld dedicated server with SteamCMD - about 4 GB - into this " +
+            "This downloads and installs the Palworld dedicated server with SteamCMD, about 4 GB, into this " +
             "launcher's folder. A SteamCMD window opens to show progress.\n\nDownload and install it now?",
             "Download & Install", "Cancel") == 0;
 
@@ -132,7 +132,7 @@ public partial class MainWindow : Window
             "This launcher is built around Palworld's REST API and uses it for almost everything: graceful " +
             "save-and-shutdown, fresh backups, live health / zombie monitoring, automatic restarts, and player " +
             "join/leave logging.\n\n" +
-            "The REST API isn't enabled on this server yet, so those features will be limited - shutdowns fall " +
+            "The REST API isn't enabled on this server yet, so those features will be limited, shutdowns fall " +
             "back to a hard kill, backups may be stale, and there are no automatic restarts.\n\n" +
             "Enable it now with a secure, randomly-generated admin password?",
             "Yes, enable it", "No, run limited", "Exit");
@@ -151,7 +151,7 @@ public partial class MainWindow : Window
         ChoiceDialog.Show(this,
             ok ? "REST API enabled" : "Couldn't enable REST",
             ok
-                ? "Done - the REST API is on with a new random admin password (view or change it under Server " +
+                ? "Done, the REST API is on with a new random admin password (view or change it under Server " +
                   "Settings, in the Admin tab). It takes effect the next time you start the server."
                 : "Couldn't write the server config. Make sure the server is installed and stopped, then set " +
                   "it manually under Server Settings, in the Admin tab.",
@@ -172,7 +172,7 @@ public partial class MainWindow : Window
         {
             case 0: _ = ShutdownThenClose(_viewModel.ShutdownGracefulAsync()); break;
             case 1: _ = ShutdownThenClose(_viewModel.ForceStopAsync()); break;
-            // Leave the server running (orphaned by choice). Just let THIS close proceed - calling Close()
+            // Leave the server running (orphaned by choice). Just let THIS close proceed, calling Close()
             // here throws because we're already inside the Closing handler (WPF forbids it mid-close).
             case 2: e.Cancel = false; break;
             // default (-1): dialog dismissed -> stay open
@@ -206,7 +206,7 @@ public partial class MainWindow : Window
     private void OnOpenAdvanced(object sender, RoutedEventArgs e)
     {
         var proceed = ChoiceDialog.Show(this, "Danger zone!",
-            "These are advanced, low-level settings. Using the wrong values here can HURT performance - for "
+            "These are advanced, low-level settings. Using the wrong values here can HURT performance, for "
             + "example, setting the process priority too high can starve the rest of your system and make the "
             + "server run worse, not better.\n\nDon't use these unless you know what you're doing.",
             "I understand, continue", "Cancel");

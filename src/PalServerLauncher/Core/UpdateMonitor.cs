@@ -8,7 +8,7 @@ namespace PalServerLauncher.Core;
 /// <summary>
 /// While one server instance is running, polls SteamCMD's published build id against the installed
 /// one and raises <see cref="UpdateFound"/> when they diverge. One monitor per running process,
-/// created/disposed by the controller - so it never touches SteamCMD while the server is stopped.
+/// created/disposed by the controller, so it never touches SteamCMD while the server is stopped.
 /// The build-id query is read-only (<c>app_info_print</c>, hidden); the controller applies the actual
 /// update (broadcast -> stop -> app_update -> start) in response to <see cref="UpdateFound"/>.
 ///
@@ -52,7 +52,7 @@ public sealed class UpdateMonitor : IDisposable
         using var timer = new PeriodicTimer(_config.UpdateCheckInterval);
         try
         {
-            // Wait one interval before the first check - Start already ran app_update, so an immediate
+            // Wait one interval before the first check, Start already ran app_update, so an immediate
             // query would just confirm "up to date" and waste a SteamCMD launch.
             while (await timer.WaitForNextTickAsync(ct).ConfigureAwait(false))
                 await CheckAsync(ct).ConfigureAwait(false);
@@ -91,8 +91,8 @@ public sealed class UpdateMonitor : IDisposable
         if (IsUpdateAvailable(installed, latest))
         {
             _fired = true;
-            _logger.Info($"New server build {latest} found (installed {installed}) - starting update restart.");
-            StatusChanged?.Invoke($"New build {latest} found - restarting");
+            _logger.Info($"New server build {latest} found (installed {installed}), starting update restart.");
+            StatusChanged?.Invoke($"New build {latest} found, restarting");
             UpdateFound?.Invoke();
         }
         else

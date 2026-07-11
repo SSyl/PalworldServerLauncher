@@ -28,7 +28,7 @@ public static class ConsoleBridge
         if (!attached)
             return false;
 
-        // After attach/alloc the CLR's cached stdout handle is stale - repoint it at the real console.
+        // After attach/alloc the CLR's cached stdout handle is stale, repoint it at the real console.
         var stdout = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true };
         Console.SetOut(stdout);
         return true;

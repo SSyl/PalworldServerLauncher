@@ -24,7 +24,7 @@ public sealed record PalworldServerSettings
 
     /// <summary>
     /// The REST API is only reachable when it is explicitly enabled AND a non-empty AdminPassword
-    /// is set - the game engine silently disables the API when the password is blank
+    /// is set, the game engine silently disables the API when the password is blank
     /// (PalworldServer-main/README.md:35). This drives the onboarding gate.
     /// </summary>
     public bool RestApiUsable => (RestApiEnabled ?? false) && !string.IsNullOrEmpty(AdminPassword);

@@ -99,7 +99,7 @@ public sealed class ServerController : IDisposable
         var state = State;
         var rest = RestClient;
         if (rest is null)
-            return $"### 🖥️ Server status\n**State:** {state}\n_REST API off - no live stats._";
+            return $"### 🖥️ Server status\n**State:** {state}\n_REST API off, no live stats._";
 
         var metrics = await rest.GetMetricsAsync().ConfigureAwait(false);
         if (metrics is null)
@@ -125,7 +125,7 @@ public sealed class ServerController : IDisposable
     {
         var rest = RestClient;
         if (rest is null)
-            return "REST API is off - the player list is unavailable.";
+            return "REST API is off, the player list is unavailable.";
 
         var players = await rest.GetPlayersAsync().ConfigureAwait(false);
         if (players is null)
@@ -159,7 +159,7 @@ public sealed class ServerController : IDisposable
     {
         var rest = RestClient;
         if (rest is null)
-            return "REST API is off - can't save.";
+            return "REST API is off, can't save.";
         return await rest.SaveAsync().ConfigureAwait(false) ? "World saved." : "The save request wasn't accepted.";
     }
 
@@ -190,7 +190,7 @@ public sealed class ServerController : IDisposable
         if (IsRunning())
             return Task.FromResult("Server is already running.");
         if (!IsInstalled)
-            return Task.FromResult("Server isn't installed - install it from the launcher first.");
+            return Task.FromResult("Server isn't installed, install it from the launcher first.");
         FireAndForget(() => StartAsync(), "Discord start");
         return Task.FromResult("Starting the server (updating first if needed)...");
     }
@@ -202,35 +202,35 @@ public sealed class ServerController : IDisposable
         {
             UpdateCheckResult.UpdateAvailable => $"Update available: build {latest}. Use /restart to apply it.",
             UpdateCheckResult.UpToDate => "Server is up to date.",
-            _ => "Update check failed - see the launcher log.",
+            _ => "Update check failed, see the launcher log.",
         };
     }
 
     private async Task<string> DiscordAnnounceAsync(string message)
     {
         if (RestClient is null)
-            return "REST API is off - can't announce.";
+            return "REST API is off, can't announce.";
         return await AnnounceAsync(message).ConfigureAwait(false) ? "Announcement sent." : "The announce request wasn't accepted.";
     }
 
     private async Task<string> DiscordKickAsync(string userId, string reason)
     {
         if (RestClient is null)
-            return "REST API is off - can't kick.";
+            return "REST API is off, can't kick.";
         return await KickPlayerAsync(userId, reason).ConfigureAwait(false) ? $"Kicked `{userId}`." : "Kick wasn't accepted (check the user id).";
     }
 
     private async Task<string> DiscordBanAsync(string userId, string reason)
     {
         if (RestClient is null)
-            return "REST API is off - can't ban.";
+            return "REST API is off, can't ban.";
         return await BanPlayerAsync(userId, reason).ConfigureAwait(false) ? $"Banned `{userId}`." : "Ban wasn't accepted (check the user id).";
     }
 
     private async Task<string> DiscordUnbanAsync(string userId)
     {
         if (RestClient is null)
-            return "REST API is off - can't unban.";
+            return "REST API is off, can't unban.";
         return await UnbanPlayerAsync(userId).ConfigureAwait(false) ? $"Unbanned `{userId}`." : "Unban wasn't accepted (check the user id).";
     }
 
@@ -269,7 +269,7 @@ public sealed class ServerController : IDisposable
 
     /// <summary>
     /// Adopt an already-running managed server if present (so the launcher can control/stop it).
-    /// Returns true if one was found - the UI uses this to prompt the user to shut it down or exit.
+    /// Returns true if one was found, the UI uses this to prompt the user to shut it down or exit.
     /// </summary>
     public bool Attach()
     {
@@ -295,8 +295,8 @@ public sealed class ServerController : IDisposable
             RebuildRestClient();
         }
         _logger.Info(all.Count == 1
-            ? $"Startup scan: detected 1 running server ({pidList}) - adopted so it can be controlled."
-            : $"Startup scan: detected {all.Count} running server instances ({pidList}) - adopted PID {existing.Id}; use Shut Down All to stop them.");
+            ? $"Startup scan: detected 1 running server ({pidList}), adopted so it can be controlled."
+            : $"Startup scan: detected {all.Count} running server instances ({pidList}), adopted PID {existing.Id}; use Shut Down All to stop them.");
         State = ServerState.Starting; // health monitor promotes to Healthy once REST responds
         return true;
     }
@@ -312,7 +312,7 @@ public sealed class ServerController : IDisposable
 
     /// <summary>
     /// Enable the REST API in PalWorldSettings.ini with a fresh cryptographically-random admin password
-    /// (seeding the ini from the default template if needed). Stopped-only - the settings service refuses
+    /// (seeding the ini from the default template if needed). Stopped-only, the settings service refuses
     /// while the server runs. Returns false if it couldn't be written (not installed, or running).
     /// </summary>
     public bool EnableRestApiWithRandomPassword()
@@ -326,13 +326,13 @@ public sealed class ServerController : IDisposable
         }, IsServerRunning);
     }
 
-    /// <summary>A 20-char alphanumeric password from a CSPRNG - deliberately not derivable from time/source.</summary>
+    /// <summary>A 20-char alphanumeric password from a CSPRNG, deliberately not derivable from time/source.</summary>
     public static string GenerateAdminPassword() =>
         RandomNumberGenerator.GetString("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", 20);
 
     /// <summary>
     /// Install (first run) or update + validate the server via SteamCMD. This is an explicit,
-    /// user-triggered action - it never runs implicitly from <see cref="StartAsync"/>, so a plain
+    /// user-triggered action, it never runs implicitly from <see cref="StartAsync"/>, so a plain
     /// "Start" can never surprise the user with a multi-GB download. Refuses while running (locked files).
     /// </summary>
     public async Task InstallOrUpdateAsync(bool validate = true, CancellationToken ct = default)
@@ -400,14 +400,14 @@ public sealed class ServerController : IDisposable
     /// Update-then-launch (the Start button). Runs SteamCMD app_update first (when <see
     /// cref="LauncherConfig.UpdateOnStart"/> is on, or <paramref name="forceUpdate"/> for an explicit
     /// update-restart) so the server is current on boot, then launches. A failed/offline update doesn't
-    /// block launch - we run the installed build. A missing install routes to Install instead (never a
+    /// block launch, we run the installed build. A missing install routes to Install instead (never a
     /// surprise multi-GB download).
     /// </summary>
     public async Task StartAsync(bool forceUpdate = false, CancellationToken ct = default)
     {
         if (IsRunning())
         {
-            _logger.Info("Start ignored - server already running.");
+            _logger.Info("Start ignored, server already running.");
             return;
         }
 
@@ -493,7 +493,7 @@ public sealed class ServerController : IDisposable
             }
             else
             {
-                _logger.Info($"SteamCMD update exited with code {exit} - launching the installed build anyway.");
+                _logger.Info($"SteamCMD update exited with code {exit}, launching the installed build anyway.");
             }
         }
         finally
@@ -508,22 +508,22 @@ public sealed class ServerController : IDisposable
         if (IsRunning())
             return Task.CompletedTask;
 
-        // The REST API being disabled is not fatal - we still launch (a fresh install has no
+        // The REST API being disabled is not fatal, we still launch (a fresh install has no
         // PalWorldSettings.ini until the server generates one on first boot). We just lose
         // stats/health/graceful-shutdown until the user enables it.
         var settings = IniReader.ReadFile(PalWorldSettingsPath);
         if (!settings.RestApiUsable)
         {
             _logger.Info(File.Exists(PalWorldSettingsPath)
-                ? "REST API not enabled - starting without stats/health. Set AdminPassword + RESTAPIEnabled=True in PalWorldSettings.ini for full control."
-                : "First run - the server will generate its config. Afterward, set AdminPassword + RESTAPIEnabled=True for stats/health, then restart.");
+                ? "REST API not enabled, starting without stats/health. Set AdminPassword + RESTAPIEnabled=True in PalWorldSettings.ini for full control."
+                : "First run, the server will generate its config. Afterward, set AdminPassword + RESTAPIEnabled=True for stats/health, then restart.");
         }
 
         var exe = ProcessScanner.ExpectedExePath(_config.ServerRoot);
         var queryPort = FindFreeUdpPort(27015);
         var args = BuildLaunchArgs(_config, queryPort);
 
-        // Launched hidden (the launcher owns the server - no stray console window). We capture the
+        // Launched hidden (the launcher owns the server, no stray console window). We capture the
         // server's stdout/stderr and mirror it into the Server Log tab.
         var psi = new ProcessStartInfo
         {
@@ -544,7 +544,7 @@ public sealed class ServerController : IDisposable
         lock (_gate)
         {
             // Authoritative check inside the lock: if another launch (crash-relaunch / recovery /
-            // restart) won the race and already started a server, drop this one - never double-launch.
+            // restart) won the race and already started a server, drop this one, never double-launch.
             if (IsRunningNoLock())
             {
                 process.Dispose();
@@ -607,7 +607,7 @@ public sealed class ServerController : IDisposable
     }
 
     /// <summary>The shutdown ladder. <paramref name="shutdownWaitSeconds"/> is the in-game /shutdown countdown
-    /// (0 for restarts and plain Stop - restarts already warned via broadcasts, and a plain Stop is immediate).
+    /// (0 for restarts and plain Stop, restarts already warned via broadcasts, and a plain Stop is immediate).
     /// <paramref name="restarting"/> picks the state shown while stopping: <see cref="ServerState.Restarting"/>
     /// when a relaunch will follow (restart / recovery), else <see cref="ServerState.Stopping"/>.</summary>
     private async Task StopCoreAsync(bool graceful, int shutdownWaitSeconds, bool restarting, CancellationToken ct)
@@ -655,12 +655,12 @@ public sealed class ServerController : IDisposable
 
             var shutdownAccepted = await rest.ShutdownAsync(wait, "Server is shutting down.").ConfigureAwait(false);
             if (!shutdownAccepted)
-                _logger.Info("REST /shutdown was rejected - will force-stop if the server doesn't exit.");
+                _logger.Info("REST /shutdown was rejected, will force-stop if the server doesn't exit.");
 
             if (await WaitForExitAsync(process, TimeSpan.FromSeconds(wait + 30), ct).ConfigureAwait(false))
                 return;
 
-            _logger.Info("Graceful shutdown timed out - forcing stop.");
+            _logger.Info("Graceful shutdown timed out, forcing stop.");
             await rest.StopAsync(ct).ConfigureAwait(false);
             if (await WaitForExitAsync(process, TimeSpan.FromSeconds(10), ct).ConfigureAwait(false))
                 return;
@@ -668,7 +668,7 @@ public sealed class ServerController : IDisposable
         else if (graceful)
         {
             // No REST -> no save/graceful-shutdown is possible (Palworld has no safe OS-signal stop).
-            _logger.Info("REST API off - can't save or graceful-shutdown; force-stopping (autosave limits loss). Enable REST for clean shutdowns.");
+            _logger.Info("REST API off, can't save or graceful-shutdown; force-stopping (autosave limits loss). Enable REST for clean shutdowns.");
         }
 
         KillNow(process);
@@ -677,7 +677,7 @@ public sealed class ServerController : IDisposable
     /// <summary>
     /// Restart the server. A manual restart happens immediately (save + bounce now, like a plain Stop); an
     /// update restart warns players with the staged broadcast countdown first, then restarts. Scheduled
-    /// restarts don't come through here - the scheduler drives them so the shutdown lands on the chosen time.
+    /// restarts don't come through here, the scheduler drives them so the shutdown lands on the chosen time.
     /// </summary>
     public Task RestartAsync(RestartReason reason, CancellationToken ct = default) =>
         reason == RestartReason.Manual
@@ -696,7 +696,7 @@ public sealed class ServerController : IDisposable
         {
             if (_restartInProgress)
             {
-                _logger.Debug($"{reason} restart ignored - a restart is already in progress.");
+                _logger.Debug($"{reason} restart ignored, a restart is already in progress.");
                 return;
             }
             _restartInProgress = true;
@@ -725,7 +725,7 @@ public sealed class ServerController : IDisposable
         finally
         {
             // If the relaunch didn't bring the server up (e.g. install missing / SteamCMD failure),
-            // don't leave the UI latched on "Restarting" - fall back to Stopped.
+            // don't leave the UI latched on "Restarting", fall back to Stopped.
             if (!IsRunning())
                 State = ServerState.Stopped;
             ClearRestart();
@@ -744,7 +744,7 @@ public sealed class ServerController : IDisposable
         {
             if (_restartInProgress)
             {
-                _logger.Debug($"{reason} restart ignored - a restart is already in progress.");
+                _logger.Debug($"{reason} restart ignored, a restart is already in progress.");
                 return;
             }
             _restartInProgress = true;
@@ -799,7 +799,7 @@ public sealed class ServerController : IDisposable
             }
         }
 
-        _logger.Info($"{reason} restart: no countdown (server empty or REST off) - restarting now.");
+        _logger.Info($"{reason} restart: no countdown (server empty or REST off), restarting now.");
     }
 
     /// <summary>Largest configured broadcast lead (0 when broadcasts are off / no valid leads).</summary>
@@ -845,7 +845,7 @@ public sealed class ServerController : IDisposable
 
     /// <summary>
     /// Apply the configured Windows priority + CPU affinity to the server process (best-effort, on every
-    /// launch/adopt). Failures - process already gone, access denied - are logged, not fatal. RealTime
+    /// launch/adopt). Failures, process already gone, access denied, are logged, not fatal. RealTime
     /// isn't offered (needs elevation and can starve the OS). A mask bit for a non-existent core is ignored.
     /// </summary>
     private void ApplyProcessTuning(Process process)
@@ -925,7 +925,7 @@ public sealed class ServerController : IDisposable
     private void HandleUpdateFound()
     {
         if (_config.DiscordNotifyLifecycle)
-            _discord.Notify("⬆️ A new Palworld server build was found - updating and restarting.");
+            _discord.Notify("⬆️ A new Palworld server build was found, updating and restarting.");
         FireAndForget(() => RestartAsync(RestartReason.Update), "Update restart");
     }
 
@@ -949,7 +949,7 @@ public sealed class ServerController : IDisposable
             {
                 ServerState.Healthy when _lastNotifiedState is ServerState.Starting or ServerState.Restarting => "🟢 Palworld server is up.",
                 ServerState.Stopped => "🔴 Palworld server stopped.",
-                ServerState.Backoff => "⚠️ Palworld server crashed repeatedly - auto-restart suspended.",
+                ServerState.Backoff => "⚠️ Palworld server crashed repeatedly, auto-restart suspended.",
                 _ => null,
             };
             if (message is not null)
@@ -993,14 +993,14 @@ public sealed class ServerController : IDisposable
 
         if (AllowRestart())
         {
-            // Fast relaunch to restore service - no update check on a crash.
-            _logger.Info("Server exited unexpectedly (crash) - restarting.");
+            // Fast relaunch to restore service, no update check on a crash.
+            _logger.Info("Server exited unexpectedly (crash), restarting.");
             FireAndForget(() => LaunchServerAsync(), "Crash relaunch");
         }
         else
         {
             State = ServerState.Backoff;
-            _logger.Error("Server crashed repeatedly - auto-restart suspended (circuit breaker). Fix the issue, then Start manually.");
+            _logger.Error("Server crashed repeatedly, auto-restart suspended (circuit breaker). Fix the issue, then Start manually.");
         }
     }
 
@@ -1019,7 +1019,7 @@ public sealed class ServerController : IDisposable
         if (!AllowRestart())
         {
             State = ServerState.Backoff;
-            _logger.Error("Server wedged repeatedly - auto-recovery suspended (circuit breaker). Fix the issue, then Start manually.");
+            _logger.Error("Server wedged repeatedly, auto-recovery suspended (circuit breaker). Fix the issue, then Start manually.");
             return;
         }
         _logger.Info("Recovering wedged server (stop + relaunch)...");
@@ -1155,7 +1155,7 @@ public sealed class ServerController : IDisposable
             }
             catch (SocketException)
             {
-                // In use - try next.
+                // In use, try next.
             }
         }
         return start;

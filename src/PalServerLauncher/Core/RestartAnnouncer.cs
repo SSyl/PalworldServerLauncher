@@ -36,7 +36,7 @@ public static class RestartAnnouncer
     /// <summary>
     /// The broadcast marks for the configured leads: at most 3 distinct positive leads, largest first,
     /// each with its delay from <paramref name="now"/> (which can be zero/negative if the restart is
-    /// nearer than that lead - <see cref="RunAsync"/> fires those immediately).
+    /// nearer than that lead, <see cref="RunAsync"/> fires those immediately).
     /// </summary>
     public static IReadOnlyList<BroadcastMark> Schedule(IReadOnlyList<int> leadMinutes, DateTime restartAt, DateTime now) =>
         Sanitize(leadMinutes)
@@ -74,7 +74,7 @@ public static class RestartAnnouncer
             await Task.Delay(remaining, ct).ConfigureAwait(false);
     }
 
-    /// <summary>Positive, de-duplicated, largest-first, capped at 3 - the marks we actually announce.</summary>
+    /// <summary>Positive, de-duplicated, largest-first, capped at 3, the marks we actually announce.</summary>
     private static IEnumerable<int> Sanitize(IReadOnlyList<int> leadMinutes) =>
         leadMinutes.Where(m => m > 0).Distinct().OrderByDescending(m => m).Take(3);
 }

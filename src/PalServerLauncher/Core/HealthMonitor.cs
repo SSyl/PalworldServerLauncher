@@ -48,7 +48,7 @@ public sealed class HealthMonitor : IDisposable
     public event Action<ServerState>? StateChanged;
     public event Action<HealthSample>? Sampled;
     public event Action? ZombieDetected;
-    /// <summary>A player joined or left (the change and the resulting online count) - for Discord notifications.</summary>
+    /// <summary>A player joined or left (the change and the resulting online count), for Discord notifications.</summary>
     public event Action<RosterChange, int>? PlayerChanged;
 
     public HealthMonitor(Process process, Func<PalworldRestClient?> getRest, LauncherConfig config, Logger logger)
@@ -91,11 +91,11 @@ public sealed class HealthMonitor : IDisposable
 
         if (rest is null)
         {
-            // No REST API - can't read stats. Treat the process as running after a brief boot grace.
+            // No REST API, can't read stats. Treat the process as running after a brief boot grace.
             if (!_reachedHealthy && DateTime.UtcNow - _startedUtc > NoRestGrace)
             {
                 _reachedHealthy = true;
-                _logger.Info("Server running (REST API disabled - stats unavailable).");
+                _logger.Info("Server running (REST API disabled, stats unavailable).");
                 StateChanged?.Invoke(ServerState.Healthy);
             }
             if (_reachedHealthy)
@@ -149,7 +149,7 @@ public sealed class HealthMonitor : IDisposable
 
     /// <summary>
     /// Read the current roster and log join/leave changes to the Server Log. Palworld has no push for
-    /// this, so we diff the roster on each health probe (folded into the existing poll - no extra timer).
+    /// this, so we diff the roster on each health probe (folded into the existing poll, no extra timer).
     /// The first successful read is baselined silently.
     /// </summary>
     private async Task TrackPlayersAsync(PalworldRestClient rest, CancellationToken ct)
@@ -216,7 +216,7 @@ public sealed class HealthMonitor : IDisposable
 
         if (_config.ZombieCheckEnabled && _consecutiveFailures >= threshold)
         {
-            _logger.Error($"Server appears wedged ({reason}) - flagged as zombie.");
+            _logger.Error($"Server appears wedged ({reason}), flagged as zombie.");
             StateChanged?.Invoke(ServerState.Zombie);
             _consecutiveFailures = 0;
             ZombieDetected?.Invoke();

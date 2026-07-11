@@ -33,7 +33,7 @@ public sealed class CheckHostClient : IDisposable
         _http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
 
-    /// <summary>True if the check-host API answers at all - the "Port Check Service Online" precheck.</summary>
+    /// <summary>True if the check-host API answers at all, the "Port Check Service Online" precheck.</summary>
     public async Task<bool> IsServiceUpAsync(CancellationToken ct = default)
     {
         try

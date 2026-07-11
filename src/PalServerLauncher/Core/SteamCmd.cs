@@ -12,7 +12,7 @@ namespace PalServerLauncher.Core;
 /// <summary>
 /// Wraps SteamCMD for installing/updating the Palworld dedicated server and for querying the
 /// latest available build id. Version-agnostic: it always operates on app-id 2394010, which
-/// resolves to whatever the current build is (0.x / 1.0 / future) - see [[launcher-version-agnostic]].
+/// resolves to whatever the current build is (0.x / 1.0 / future), see [[launcher-version-agnostic]].
 ///
 /// Install/update runs in SteamCMD's own console window so the user sees its live progress bar
 /// (line-by-line redirection hides SteamCMD's carriage-return progress updates). The build-id
@@ -32,7 +32,7 @@ public sealed class SteamCmd
     public string InstallDir => Path.Combine(_serverRoot, LauncherConfig.ServerFolderName);
     public string AppManifestPath => Path.Combine(InstallDir, "steamapps", $"appmanifest_{AppId}.acf");
 
-    /// <summary>SteamCMD's own console log - tailed into the SteamCMD tab while it runs in its window.</summary>
+    /// <summary>SteamCMD's own console log, tailed into the SteamCMD tab while it runs in its window.</summary>
     public string ConsoleLogPath => Path.Combine(SteamCmdDir, "logs", "console_log.txt");
 
     /// <summary>Download + unzip + prime SteamCMD if it isn't present yet. Small (~few MB) download.</summary>
@@ -90,7 +90,7 @@ public sealed class SteamCmd
 
     /// <summary>
     /// Extract the first <c>"buildid" "N"</c> value from ACF/app_info text. In app_info_print the
-    /// public branch's buildid appears first, which is the one we compare against - matching the
+    /// public branch's buildid appears first, which is the one we compare against, matching the
     /// proven behavior of the original Python tool (start_server.py:218).
     /// </summary>
     public static string? ParseBuildId(string text)

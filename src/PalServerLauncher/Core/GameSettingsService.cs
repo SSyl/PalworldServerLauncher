@@ -38,7 +38,7 @@ public sealed class GameSettingsService
 
         if (!File.Exists(DefaultTemplatePath))
         {
-            _logger.Info("Can't open game settings - DefaultPalWorldSettings.ini not found (install the server first).");
+            _logger.Info("Can't open game settings, DefaultPalWorldSettings.ini not found (install the server first).");
             return false;
         }
 
@@ -81,7 +81,7 @@ public sealed class GameSettingsService
 
     /// <summary>
     /// Apply edits (key -> new value, typed per the catalog for correct quoting) and write the file.
-    /// Refuses while the server is running - the ini must not change under a live server.
+    /// Refuses while the server is running, the ini must not change under a live server.
     /// </summary>
     public bool Save(IReadOnlyDictionary<string, string> edits, bool serverRunning) =>
         Save(edits, serverRunning, out _);
@@ -118,8 +118,8 @@ public sealed class GameSettingsService
         }
 
         var rendered = blob.Render();
-        // Raw (tuple/list) values are written verbatim, so a malformed one - a stray comma, quote, or
-        // unbalanced parenthesis - could corrupt the whole blob. Re-parse and confirm each survived intact
+        // Raw (tuple/list) values are written verbatim, so a malformed one, a stray comma, quote, or
+        // unbalanced parenthesis, could corrupt the whole blob. Re-parse and confirm each survived intact
         // before writing; refuse rather than save a broken file (same safety net as SaveExtras).
         if (rawEdits.Count > 0)
         {
@@ -128,7 +128,7 @@ public sealed class GameSettingsService
                 if ((reparsed.GetRaw(key) ?? "").Trim() != value)
                 {
                     invalidKey = key;
-                    _logger.Error($"Game setting '{key}' would corrupt PalWorldSettings.ini - nothing saved.");
+                    _logger.Error($"Game setting '{key}' would corrupt PalWorldSettings.ini, nothing saved.");
                     return false;
                 }
         }
@@ -145,7 +145,7 @@ public sealed class GameSettingsService
 
     /// <summary>
     /// Keys present in PalWorldSettings.ini's OptionSettings blob that <see cref="GameSettingsCatalog"/>
-    /// doesn't cover - including any params a future game update adds. Surfaced so new settings are editable
+    /// doesn't cover, including any params a future game update adds. Surfaced so new settings are editable
     /// without a code change (the Extra Settings panel).
     /// </summary>
     public IReadOnlyList<ExtraSetting> LoadExtras()
@@ -163,7 +163,7 @@ public sealed class GameSettingsService
 
     /// <summary>
     /// Write edited extra (non-catalog) keys back, preserving each one's quoted/bare shape. Stopped-only.
-    /// Refuses (saving nothing) if a value would break the blob structure - checked by a round-trip.
+    /// Refuses (saving nothing) if a value would break the blob structure, checked by a round-trip.
     /// </summary>
     public bool SaveExtras(IReadOnlyDictionary<string, string> edits, bool serverRunning) =>
         SaveExtras(edits, serverRunning, out _);
@@ -199,14 +199,14 @@ public sealed class GameSettingsService
         }
 
         // Safety net: re-parse the result; if an edited value didn't survive intact it broke the blob
-        // structure (stray comma / quote / unbalanced paren) - refuse rather than write a corrupt file.
+        // structure (stray comma / quote / unbalanced paren), refuse rather than write a corrupt file.
         var rendered = blob.Render();
         var reparsed = OptionSettingsBlob.Load(rendered);
         foreach (var key in applied)
             if (reparsed.GetValue(key) != edits[key])
             {
                 invalidKey = key;
-                _logger.Error($"Extra setting '{key}' would corrupt PalWorldSettings.ini - nothing saved.");
+                _logger.Error($"Extra setting '{key}' would corrupt PalWorldSettings.ini, nothing saved.");
                 return false;
             }
 

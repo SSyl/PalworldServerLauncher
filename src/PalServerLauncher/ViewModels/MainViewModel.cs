@@ -74,7 +74,7 @@ public partial class MainViewModel : ObservableObject
     public event Action? InstallFinished;
 
     /// <summary>Set by the View: confirm the first install (a multi-GB SteamCMD download) before it starts.
-    /// Returns true to proceed. Only gates the Install button - Validate / Download-update aren't multi-GB.</summary>
+    /// Returns true to proceed. Only gates the Install button, Validate / Download-update aren't multi-GB.</summary>
     public Func<bool>? ConfirmInstall { get; set; }
 
     /// <summary>Label for the multi-state primary button (animated dots while busy, so it's clearly not frozen).</summary>
@@ -82,7 +82,7 @@ public partial class MainViewModel : ObservableObject
         ? "Working" + new string('.', _busyDots)
         : PrimaryButton.Label(IsInstalled, IsBusy, State);
 
-    /// <summary>What the primary button currently represents - drives its color via XAML (Install/Start = green, Stop = red).</summary>
+    /// <summary>What the primary button currently represents, drives its color via XAML (Install/Start = green, Stop = red).</summary>
     public PrimaryActionKind PrimaryActionKind => PrimaryButton.Resolve(IsInstalled, IsBusy, State);
 
     public MainViewModel(Logger logger)
@@ -135,7 +135,7 @@ public partial class MainViewModel : ObservableObject
 
     // --- REST-API setup prompt (offered whenever the server is installed but REST is off) ---
     /// <summary>Prompt when the server is installed, stopped, and the REST API isn't set up. Asked every launch
-    /// until enabled - the launcher is ~90% REST-driven, so declining is a per-session choice, not persisted.
+    /// until enabled, the launcher is ~90% REST-driven, so declining is a per-session choice, not persisted.
     /// Gated on stopped because enabling writes the ini, which the settings service refuses while running.</summary>
     public bool ShouldPromptRestSetup() => IsInstalled && !IsServerRunning && !_controller.IsRestApiConfigured;
 
@@ -197,7 +197,7 @@ public partial class MainViewModel : ObservableObject
             return "(none)";
 
         // Show up to two times; beyond that, just the first plus a count so the summary stays short enough
-        // not to overflow the narrow settings box (it's only a hint - the full list is in the picker).
+        // not to overflow the narrow settings box (it's only a hint, the full list is in the picker).
         if (times.Count <= 2)
             return string.Join(", ", times.Select(t => t.ToString("t", CultureInfo.CurrentCulture)));
         return $"{times[0].ToString("t", CultureInfo.CurrentCulture)}  +{times.Count - 1} more";
@@ -459,7 +459,7 @@ public partial class MainViewModel : ObservableObject
             InstallFinished?.Invoke();
     }
 
-    // Start now runs a SteamCMD update check before launching, so it's a long op - show "Working...".
+    // Start now runs a SteamCMD update check before launching, so it's a long op, show "Working...".
     private async Task StartCoreAsync()
     {
         IsBusy = true;

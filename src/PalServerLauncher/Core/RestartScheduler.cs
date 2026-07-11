@@ -8,13 +8,13 @@ namespace PalServerLauncher.Core;
 
 /// <summary>
 /// Drives scheduled restarts at explicit times of day. Each 20s tick re-reads the config and, over the
-/// window since the last tick, fires (a) any lead-up announcement whose mark (time - lead) just passed and
-/// (b) the actual stop+start when the chosen time itself passes - so the shutdown lands ON the chosen time,
+/// window since the last tick, fires (a) any lead-up announcement whose mark (time, lead) just passed and
+/// (b) the actual stop+start when the chosen time itself passes, so the shutdown lands ON the chosen time,
 /// with warnings leading up to it. Because everything is recomputed from config every tick, editing the
 /// times or leads mid-countdown is honored immediately and can't race a captured schedule. A minimum-uptime
 /// guard skips (and doesn't announce) a restart on a freshly-started server. Long-lived (owned by the
 /// controller): it always reports the next-restart time for the UI, but only acts when enabled and running.
-/// Manual/update restarts do NOT go through here - they use the controller's own countdown.
+/// Manual/update restarts do NOT go through here, they use the controller's own countdown.
 /// </summary>
 public sealed class RestartScheduler : IDisposable
 {
@@ -76,7 +76,7 @@ public sealed class RestartScheduler : IDisposable
                 : (IReadOnlyList<int>)Array.Empty<int>();
             var started = _serverStartedUtc();
 
-            // Warn players as each lead mark (shutdown - lead) is crossed, but only for a restart that
+            // Warn players as each lead mark (shutdown, lead) is crossed, but only for a restart that
             // will actually fire (never announce a restart we'd then skip for min-uptime).
             foreach (var (shutdown, lead) in DueAnnouncements(_lastTick, now, times, leads))
                 if (UptimeReadyBy(shutdown, now, started))
@@ -93,7 +93,7 @@ public sealed class RestartScheduler : IDisposable
                 }
                 else
                 {
-                    _logger.Info($"Scheduled restart {due.Value:HH:mm} skipped - uptime below minimum ({_config.MinUptimeBeforeRestart.TotalHours:0.#}h).");
+                    _logger.Info($"Scheduled restart {due.Value:HH:mm} skipped, uptime below minimum ({_config.MinUptimeBeforeRestart.TotalHours:0.#}h).");
                 }
             }
         }
@@ -107,11 +107,11 @@ public sealed class RestartScheduler : IDisposable
 
     /// <summary>
     /// The announcement marks that fell due this tick: for each configured shutdown time and each positive
-    /// lead, the mark (shutdown - lead) that lies in (<paramref name="lastTick"/>, <paramref name="now"/>].
+    /// lead, the mark (shutdown, lead) that lies in (<paramref name="lastTick"/>, <paramref name="now"/>].
     /// Times map to today and tomorrow (same window as <see cref="NextRestart"/>), so a mark can belong to
     /// tomorrow's early-morning shutdown. Pure + edge-detected: each mark fires exactly once, and because
     /// the caller re-reads config every tick, changing the leads or times mid-countdown just changes which
-    /// marks are still ahead - past marks never re-fire.
+    /// marks are still ahead, past marks never re-fire.
     /// </summary>
     public static IReadOnlyList<(DateTime Shutdown, int Lead)> DueAnnouncements(
         DateTime lastTick, DateTime now, IReadOnlyList<TimeOnly> times, IReadOnlyList<int> leads)

@@ -94,7 +94,7 @@ public sealed class PortCheckDialog : Window
         }
 
         stack.Children.Add(Note(
-            "This test binds a temporary listener on the launcher. If Windows Firewall prompts, allow it - "
+            "This test binds a temporary listener on the launcher. If Windows Firewall prompts, allow it, "
             + "otherwise ports can falsely show as unreachable. REST and RCON are admin ports: they should "
             + "normally NOT be reachable from the internet, so a green result there is a warning, not a pass."));
 
@@ -134,7 +134,7 @@ public sealed class PortCheckDialog : Window
 
             var serviceUp = await checkHost.IsServiceUpAsync(_cts.Token);
             SetLight(_serviceLight, _serviceStatus, serviceUp ? Green : Red,
-                serviceUp ? "Online." : "Unavailable - can't reach check-host.cc right now.", muted: !serviceUp);
+                serviceUp ? "Online." : "Unavailable, can't reach check-host.cc right now.", muted: !serviceUp);
 
             if (!serviceUp)
             {
@@ -168,7 +168,7 @@ public sealed class PortCheckDialog : Window
         catch (Exception ex)
         {
             _logger.Error("Port check failed", ex);
-            SetLight(_serviceLight, _serviceStatus, Red, "Port check failed - see the log.", muted: true);
+            SetLight(_serviceLight, _serviceStatus, Red, "Port check failed, see the log.", muted: true);
         }
         finally
         {

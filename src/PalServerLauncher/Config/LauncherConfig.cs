@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 namespace PalServerLauncher.Config;
 
 /// <summary>
-/// The launcher's own settings - the only file we write at runtime. The game never touches
+/// The launcher's own settings, the only file we write at runtime. The game never touches
 /// this, so it is safe to edit any time (unlike PalWorldSettings.ini, which we only read).
 /// Serialized as indented JSON via <see cref="Load"/> / <see cref="Save"/>.
 /// </summary>
@@ -121,7 +121,7 @@ public sealed class LauncherConfig
     /// Default 10 (~70s at the default probe interval) so a brief lag spike doesn't trigger a restart.</summary>
     public int ZombieFailureThreshold { get; set; } = 10;
 
-    /// <summary>Periodically log a server status line (FPS | Players | Uptime | ...) - handy in --console / CLI use.</summary>
+    /// <summary>Periodically log a server status line (FPS | Players | Uptime | ...), handy in --console / CLI use.</summary>
     public bool LogHealthStats { get; set; } = false;
 
     // --- Discord webhook notifications (off by default) ---
@@ -132,10 +132,10 @@ public sealed class LauncherConfig
     /// <summary>Notify on player join/leave (needs REST).</summary>
     public bool DiscordNotifyPlayers { get; set; } = false;
 
-    // --- Discord bot control (off by default) - lets a bot run server commands from Discord ---
+    // --- Discord bot control (off by default), lets a bot run server commands from Discord ---
     /// <summary>Enable the Discord bot that accepts slash commands (needs a bot token below).</summary>
     public bool DiscordBotEnabled { get; set; } = false;
-    /// <summary>Bot token (a SECRET - never logged). Create a bot at the Discord Developer Portal.</summary>
+    /// <summary>Bot token (a SECRET, never logged). Create a bot at the Discord Developer Portal.</summary>
     public string DiscordBotToken { get; set; } = "";
     /// <summary>Only accept commands in this channel (0 = no channel restriction). Lock it down in Discord -
     /// anyone who can post here can control the server.</summary>
@@ -149,9 +149,9 @@ public sealed class LauncherConfig
     /// in a later version appear automatically and destructive ones stay off until an admin opts in.</summary>
     public Dictionary<string, bool> DiscordCommandEnabled { get; set; } = new();
 
-    // --- Modding (scaffolding only - see docs/config-editor-and-integrations.md) ---
+    // --- Modding (scaffolding only, see docs/config-editor-and-integrations.md) ---
     public bool ModsEnabled { get; set; } = false;
-    /// <summary>Placeholder list of enabled mod ids/paths - shape TBD once the mod mechanism is confirmed.</summary>
+    /// <summary>Placeholder list of enabled mod ids/paths, shape TBD once the mod mechanism is confirmed.</summary>
     public List<string> EnabledMods { get; set; } = new();
 
     [JsonIgnore] public static string DefaultPath => Path.Combine(DataRoot, "launcher.json");
@@ -235,7 +235,7 @@ public sealed class LauncherConfig
             }
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
-                // Locked/in-use (e.g. a running server) - leave it; a later run finishes the move.
+                // Locked/in-use (e.g. a running server), leave it; a later run finishes the move.
             }
         }
         return moved;
@@ -259,7 +259,7 @@ public sealed class LauncherConfig
     /// <summary>
     /// Rewrite <paramref name="path"/> with the fully-serialized config when it differs from what's on
     /// disk (missing new fields, a different formatter, etc.), so the file always reflects the current
-    /// schema. Best-effort - a locked/read-only file just leaves the in-memory defaults in place.
+    /// schema. Best-effort, a locked/read-only file just leaves the in-memory defaults in place.
     /// </summary>
     private static void NormalizeFileToCurrentSchema(LauncherConfig config, string rawOnDisk, string path)
     {

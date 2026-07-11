@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 namespace PalServerLauncher.Core;
 
 /// <summary>
-/// Polls a growing text file and reports newly-appended lines - used to mirror SteamCMD's
+/// Polls a growing text file and reports newly-appended lines, used to mirror SteamCMD's
 /// console_log.txt into its UI tab while SteamCMD keeps the file open. (The game server's output is
-/// captured live from its stdout, not a file - Palworld writes no log file.) Opens shared read/write,
+/// captured live from its stdout, not a file, Palworld writes no log file.) Opens shared read/write,
 /// tolerates the file not existing yet, and resets if the file is truncated/rotated. Best-effort:
 /// transient IO errors are ignored.
 /// </summary>
@@ -42,7 +42,7 @@ public sealed class FileTailer : IDisposable
             }
             catch (IOException)
             {
-                // File locked/mid-write - retry next tick.
+                // File locked/mid-write, retry next tick.
             }
 
             try

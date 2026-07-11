@@ -19,7 +19,7 @@ public enum SettingType
     Text,
     Enum,
     IpAddress,
-    /// <summary>A value written back verbatim (no quoting) - for tuple/list values like
+    /// <summary>A value written back verbatim (no quoting), for tuple/list values like
     /// <c>CrossplayPlatforms=(Steam,Xbox,PS5,Mac)</c> that the other types would mis-quote. The save path
     /// round-trip-verifies a Raw edit and refuses if it would corrupt the blob.</summary>
     Raw,
@@ -316,7 +316,7 @@ public static class GameSettingsCatalog
         new("GuildRejoinCooldownMinutes", "Guild rejoin cooldown (min)", SettingCategory.GameBalance, SettingType.Int,
             "Cooldown before rejoining a guild (minutes).", Min: 0),
         new("DenyTechnologyList", "Disabled technologies", SettingCategory.GameBalance, SettingType.Raw,
-            "Disable specific technologies. Specify Technology IDs - example: (\"PALBOX\", \"RepairBench\"). Blank = none."),
+            "Disable specific technologies. Specify Technology IDs, example: (\"PALBOX\", \"RepairBench\"). Blank = none."),
         new("bAdditionalDropItemWhenPlayerKillingInPvPMode", "PvP kill: drop item", SettingCategory.GameBalance, SettingType.Bool,
             "Whether to drop a special item when a player is killed while PvP is enabled."),
         new("AdditionalDropItemWhenPlayerKillingInPvPMode", "PvP kill: item ID", SettingCategory.GameBalance, SettingType.Text,

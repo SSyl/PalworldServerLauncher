@@ -2,10 +2,10 @@ using PalServerLauncher.Config;
 
 namespace PalServerLauncher.Core;
 
-/// <summary>Transport used to probe a port - drives the check-host method and which listener we bind.</summary>
+/// <summary>Transport used to probe a port, drives the check-host method and which listener we bind.</summary>
 public enum PortProtocol { Udp, Tcp }
 
-/// <summary>Which server port a row represents - drives how its result is interpreted.</summary>
+/// <summary>Which server port a row represents, drives how its result is interpreted.</summary>
 public enum PortKind { Game, Query, Rest, Rcon }
 
 /// <summary>One port to test: its role, label, protocol, and number (seeded from config/ini, user-editable).</summary>

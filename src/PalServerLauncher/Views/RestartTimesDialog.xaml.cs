@@ -10,7 +10,7 @@ namespace PalServerLauncher.Views;
 
 /// <summary>
 /// Add/remove restart times with dropdowns (no typing). The hour dropdown and AM/PM follow the OS
-/// time format - AM/PM in 12-hour cultures, 00-23 in 24-hour cultures. Returns the chosen times.
+/// time format, AM/PM in 12-hour cultures, 00-23 in 24-hour cultures. Returns the chosen times.
 /// </summary>
 public partial class RestartTimesDialog : Window
 {
@@ -95,7 +95,7 @@ public partial class RestartTimesDialog : Window
         if (step < 15 || step > 24 * 60)
         {
             ChoiceDialog.Show(this, "Invalid interval",
-                "Enter an interval between 15 minutes and 24 hours - e.g. 30m, 2h, or 2.5 (hours).", "OK");
+                "Enter an interval between 15 minutes and 24 hours, e.g. 30m, 2h, or 2.5 (hours).", "OK");
             return;
         }
 
@@ -114,7 +114,7 @@ public partial class RestartTimesDialog : Window
     }
 
     /// <summary>Times every <paramref name="intervalHours"/> from midnight, stopping before 24h (a
-    /// non-dividing interval just leaves a shorter final gap). Pure - unit-tested.</summary>
+    /// non-dividing interval just leaves a shorter final gap). Pure, unit-tested.</summary>
     public static IReadOnlyList<TimeOnly> EverySchedule(double intervalHours)
     {
         var step = (int)Math.Round(intervalHours * 60);

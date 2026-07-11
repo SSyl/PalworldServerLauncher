@@ -7,13 +7,13 @@ public enum PortReachability
     Reachable,
     /// <summary>Nodes reported back but none reached the port (closed or filtered).</summary>
     Unreachable,
-    /// <summary>No node reported in time - can't say either way.</summary>
+    /// <summary>No node reported in time, can't say either way.</summary>
     Inconclusive,
     /// <summary>Our own listener couldn't even accept a loopback connection: a local firewall block, not the internet.</summary>
     BlockedLocally,
 }
 
-/// <summary>Severity shown for a port row - drives the status light colour.</summary>
+/// <summary>Severity shown for a port row, drives the status light colour.</summary>
 public enum VerdictLevel { Ok, Warn, Fail, Unknown }
 
 public sealed record PortVerdict(VerdictLevel Level, string Message);
@@ -30,14 +30,14 @@ public static class PortCheckVerdict
     public static PortVerdict Evaluate(PortKind kind, PortReachability reachability, bool serviceUp)
     {
         if (!serviceUp)
-            return new PortVerdict(VerdictLevel.Unknown, "Port check service unavailable - can't test this port.");
+            return new PortVerdict(VerdictLevel.Unknown, "Port check service unavailable, can't test this port.");
 
         return reachability switch
         {
             PortReachability.BlockedLocally => new PortVerdict(VerdictLevel.Unknown,
-                "Blocked on this PC - allow the launcher through Windows Firewall, then retry."),
+                "Blocked on this PC, allow the launcher through Windows Firewall, then retry."),
             PortReachability.Inconclusive => new PortVerdict(VerdictLevel.Unknown,
-                "Inconclusive - no probe nodes reported back. Try again."),
+                "Inconclusive, no probe nodes reported back. Try again."),
             PortReachability.Reachable => WhenReachable(kind),
             _ => WhenUnreachable(kind),
         };
@@ -45,15 +45,15 @@ public static class PortCheckVerdict
 
     private static PortVerdict WhenReachable(PortKind kind) => kind switch
     {
-        PortKind.Game => new(VerdictLevel.Ok, "Reachable from the internet - players can connect."),
-        PortKind.Query => new(VerdictLevel.Ok, "Reachable - the server can list in the community browser."),
-        _ => new(VerdictLevel.Warn, "Reachable from the internet - this admin port should NOT be public-facing."),
+        PortKind.Game => new(VerdictLevel.Ok, "Reachable from the internet, players can connect."),
+        PortKind.Query => new(VerdictLevel.Ok, "Reachable, the server can list in the community browser."),
+        _ => new(VerdictLevel.Warn, "Reachable from the internet, this admin port should NOT be public-facing."),
     };
 
     private static PortVerdict WhenUnreachable(PortKind kind) => kind switch
     {
-        PortKind.Game => new(VerdictLevel.Fail, "Not reachable - players can't connect. Check your port forward and firewall."),
-        PortKind.Query => new(VerdictLevel.Warn, "Not reachable - only needed for the community server browser."),
-        _ => new(VerdictLevel.Ok, "Not reachable from the internet - good, admin ports should stay private."),
+        PortKind.Game => new(VerdictLevel.Fail, "Not reachable, players can't connect. Check your port forward and firewall."),
+        PortKind.Query => new(VerdictLevel.Warn, "Not reachable, only needed for the community server browser."),
+        _ => new(VerdictLevel.Ok, "Not reachable from the internet, good, admin ports should stay private."),
     };
 }

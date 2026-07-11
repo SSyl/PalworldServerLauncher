@@ -10,7 +10,7 @@ namespace PalServerLauncher.Views;
 /// Edits the two in-game restart announcement templates (scheduled/manual vs update). The token
 /// <c>{minutes}</c> is replaced at announce time with the minutes remaining; a template without it is a
 /// fixed message. Save requires each message be non-empty (Palworld's <c>/announce</c> rejects a blank
-/// body) and warns - with a save-anyway option - if a message drops the <c>{minutes}</c> token.
+/// body) and warns, with a save-anyway option, if a message drops the <c>{minutes}</c> token.
 /// </summary>
 public sealed class AnnouncementsDialog : Window
 {

@@ -44,7 +44,7 @@
             <ComboBox x:Name="HourBox" Width="52"/>
             <TextBlock Text=":" VerticalAlignment="Center" Margin="4,0"/>
             <ComboBox x:Name="MinuteBox" Width="52" IsEditable="True" PreviewTextInput="MinuteDigitsOnly"
-                      ToolTip="Any minute 0-59 - pick a preset or type it"/>
+                      ToolTip="Any minute 0-59, pick a preset or type it"/>
             <ComboBox x:Name="AmPmBox" Width="52" Margin="6,0,0,0"/>
             <Button Content="Add" Click="AddTime" Margin="10,0,0,0" MinWidth="52"/>
         </StackPanel>

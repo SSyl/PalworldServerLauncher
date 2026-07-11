@@ -248,7 +248,7 @@ public sealed class ServerCommandsDialog : Window
         catch (Exception ex)
         {
             _logger.Error("Server command failed", ex);
-            SetStatus("Command failed - see the log.");
+            SetStatus("Command failed, see the log.");
         }
     }
 

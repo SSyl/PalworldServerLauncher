@@ -71,7 +71,7 @@ public sealed class DiscordDialog : Window
         DigitsOnly(_cooldown);
         stack.Children.Add(Row("Command cooldown (seconds)", _cooldown));
         stack.Children.Add(Note(
-            "Security: set a command channel and/or a required role - the bot only acts when every gate you set "
+            "Security: set a command channel and/or a required role, the bot only acts when every gate you set "
             + "passes (set at least one). Anyone who can post in the command channel, or has the role, can "
             + "control the server, so lock it down (a private, admin-only channel and/or an admin role). Enable "
             + "Discord Developer Mode, then right-click a channel or role -> Copy ID. The token is stored locally "
@@ -219,7 +219,7 @@ public sealed class DiscordDialog : Window
         try { Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); }
         catch (Exception ex) when (ex is System.ComponentModel.Win32Exception or InvalidOperationException)
         {
-            // No default browser / launch blocked - nothing useful to do here.
+            // No default browser / launch blocked, nothing useful to do here.
         }
     }
 

@@ -20,7 +20,7 @@ public sealed record CheckHostAggregate(int Reachable, int Unreachable, int Pend
 {
     public int Total => Reachable + Unreachable + Pending;
 
-    /// <summary>At least one node reached the target - the port is reachable from the internet.</summary>
+    /// <summary>At least one node reached the target, the port is reachable from the internet.</summary>
     public bool AnyReachable => Reachable > 0;
 
     /// <summary>Every node that exists has reported (none still pending), and there is at least one node.</summary>

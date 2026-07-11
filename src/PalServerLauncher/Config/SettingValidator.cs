@@ -110,7 +110,7 @@ public static class SettingValidator
 
     /// <summary>
     /// A Raw (tuple/list) value is well-formed when its parentheses and double-quotes are balanced and it
-    /// has no comma at the top level - a top-level comma would split it into two blob entries and drop data.
+    /// has no comma at the top level, a top-level comma would split it into two blob entries and drop data.
     /// Mirrors the structure <c>OptionSettingsBlob.SplitTopLevel</c> relies on, so the field can turn red
     /// live instead of only failing the save-time round-trip guard.
     /// </summary>

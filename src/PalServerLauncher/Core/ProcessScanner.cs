@@ -8,7 +8,7 @@ namespace PalServerLauncher.Core;
 
 /// <summary>
 /// Locates the managed Palworld server process by matching the console server exe whose on-disk
-/// path lives under a specific server root - this is what makes the launcher stateless and
+/// path lives under a specific server root, this is what makes the launcher stateless and
 /// re-attachable (it can adopt a server it did not start) and lets multiple servers coexist as
 /// long as they are in separate folders. Also exposes process I/O counters, used by the health
 /// monitor as an OS-level "is it actually doing anything" signal when the REST API is unresponsive.
@@ -58,7 +58,7 @@ public static class ProcessScanner
             }
             catch
             {
-                // Access denied / process exited between enumeration and inspection - not ours.
+                // Access denied / process exited between enumeration and inspection, not ours.
             }
 
             if (matched)
@@ -96,7 +96,7 @@ public static class ProcessScanner
         }
         catch (InvalidOperationException)
         {
-            // Process already exited - no handle to query.
+            // Process already exited, no handle to query.
         }
         return null;
     }

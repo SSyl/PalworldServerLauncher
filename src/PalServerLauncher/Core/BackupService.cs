@@ -14,7 +14,7 @@ namespace PalServerLauncher.Core;
 /// <summary>
 /// Snapshots the world + server config into a timestamped zip under <c>backups/</c>. Palworld only
 /// writes the world on its own autosaves (never on shutdown/startup), so when the server is running
-/// and REST is usable we <c>POST /save</c> first (synchronous - the file is on disk by the time it
+/// and REST is usable we <c>POST /save</c> first (synchronous, the file is on disk by the time it
 /// returns) for a fresh archive; otherwise we archive whatever's on disk and warn it may be stale.
 /// Palworld's own nested <c>backup/</c> dirs are excluded (they're redundant and dominate the size).
 /// </summary>
@@ -43,7 +43,7 @@ public sealed class BackupService
     {
         if (!Directory.Exists(SaveGamesDir))
         {
-            _logger.Info($"Backup ({reason}) skipped - no save data yet.");
+            _logger.Info($"Backup ({reason}) skipped, no save data yet.");
             return null;
         }
 
@@ -51,11 +51,11 @@ public sealed class BackupService
         {
             _logger.Info($"Backup ({reason}): saving world before archiving...");
             if (!await rest.SaveAsync(ct).ConfigureAwait(false))
-                _logger.Info($"Backup ({reason}): /save was not accepted - archiving the current on-disk save, which may not include the latest changes.");
+                _logger.Info($"Backup ({reason}): /save was not accepted, archiving the current on-disk save, which may not include the latest changes.");
         }
         else
         {
-            _logger.Info($"Backup ({reason}): no fresh save (REST off or server stopped) - archiving the current on-disk save, which may not include the latest changes.");
+            _logger.Info($"Backup ({reason}): no fresh save (REST off or server stopped), archiving the current on-disk save, which may not include the latest changes.");
         }
 
         Directory.CreateDirectory(BackupsDir);
@@ -110,7 +110,7 @@ public sealed class BackupService
         }
     }
 
-    /// <summary>Skip anything inside a nested "backup" directory (Palworld's own rolling backups - bloat).</summary>
+    /// <summary>Skip anything inside a nested "backup" directory (Palworld's own rolling backups, bloat).</summary>
     public static bool ShouldSkipEntry(string relativePath) =>
         relativePath.Replace('\\', '/').Split('/')
             .Any(segment => segment.Equals("backup", StringComparison.OrdinalIgnoreCase));

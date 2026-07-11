@@ -13,7 +13,7 @@ namespace PalServerLauncher.Core;
 /// answers an arbitrary probe, so for the duration of a check we bind our OWN temporary listener on the
 /// port (a UDP echo, or a TCP accept-and-drop) and have check-host.cc probe our public IP:port from
 /// external nodes: if the probe reaches our listener and (for UDP) is echoed back, the port is reachable.
-/// This is why the check is stopped-only - the ports must be free for us to bind.
+/// This is why the check is stopped-only, the ports must be free for us to bind.
 ///
 /// A loopback self-test runs first: if our own listener can't even accept a 127.0.0.1 connection, the
 /// problem is local (couldn't bind / firewall) and we report <see cref="PortReachability.BlockedLocally"/>

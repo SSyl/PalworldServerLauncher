@@ -9,7 +9,7 @@ namespace PalServerLauncher.Core;
 
 /// <summary>
 /// Posts lifecycle notifications to a Discord webhook (REST). No-op unless enabled with a URL set.
-/// Fire-and-forget and best-effort - a webhook failure never affects the server. Wired to the
+/// Fire-and-forget and best-effort, a webhook failure never affects the server. Wired to the
 /// controller's lifecycle in <see cref="ServerController"/>; extend by calling <see cref="Notify"/>
 /// from more sites and gating on <see cref="LauncherConfig.DiscordNotifyLifecycle"/> /
 /// <see cref="LauncherConfig.DiscordNotifyPlayers"/>.

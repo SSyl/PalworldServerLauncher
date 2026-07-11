@@ -35,7 +35,7 @@ public sealed class Logger
 
     public void Info(string message) => Emit("INFO", message, message, LogChannel.General);
 
-    /// <summary>Detailed diagnostics - written only when verbose (--debug / --verbose).</summary>
+    /// <summary>Detailed diagnostics, written only when verbose (--debug / --verbose).</summary>
     public void Debug(string message)
     {
         if (Verbose) Emit("DEBUG", message, message, LogChannel.General);

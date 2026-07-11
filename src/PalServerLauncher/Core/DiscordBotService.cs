@@ -10,10 +10,10 @@ namespace PalServerLauncher.Core;
 
 /// <summary>
 /// Optional Discord bot (Gateway) that runs server commands from ONE locked-down Discord channel. It runs
-/// inside the launcher (dials out - no inbound ports) and is active only while the launcher is running,
+/// inside the launcher (dials out, no inbound ports) and is active only while the launcher is running,
 /// like the webhook notifier. Auth is the command channel's Discord permissions: the bot only acts on the
 /// configured channel, so anyone who can post there is trusted (the launcher keeps no user allowlist).
-/// Slash commands only (<see cref="GatewayIntents.Guilds"/>) - the bot never reads general chat - and the
+/// Slash commands only (<see cref="GatewayIntents.Guilds"/>), the bot never reads general chat, and the
 /// token is never logged. Which commands are exposed is admin-configurable (see <see cref="IsCommandEnabled"/>),
 /// destructive ones default off, and only enabled commands are registered. All server work is delegated to
 /// <see cref="DiscordCommands"/> so routing stays testable.
@@ -115,7 +115,7 @@ public sealed class DiscordBotService : IDisposable
         }
         catch (Exception ex)
         {
-            _logger.Error("Discord bot failed to connect - check the bot token", ex);
+            _logger.Error("Discord bot failed to connect, check the bot token", ex);
             await StopAsync().ConfigureAwait(false);
         }
     }
@@ -201,7 +201,7 @@ public sealed class DiscordBotService : IDisposable
         }
         if (!AllowNow(command.User.Id, out var retryAfter))
         {
-            await command.RespondAsync($"Slow down - try again in {retryAfter.TotalSeconds:F0}s.", ephemeral: true).ConfigureAwait(false);
+            await command.RespondAsync($"Slow down, try again in {retryAfter.TotalSeconds:F0}s.", ephemeral: true).ConfigureAwait(false);
             return;
         }
 
@@ -254,12 +254,12 @@ public sealed class DiscordBotService : IDisposable
             _pending.Remove(token, out pending);
         if (pending is null)
         {
-            await ClearWith(component, "This confirmation expired - run the command again.").ConfigureAwait(false);
+            await ClearWith(component, "This confirmation expired, run the command again.").ConfigureAwait(false);
             return;
         }
 
         // Clear the (ephemeral) confirm prompt for the clicker, then post the result publicly in the channel.
-        await ClearWith(component, $"Confirmed - running /{pending.Action}.").ConfigureAwait(false);
+        await ClearWith(component, $"Confirmed, running /{pending.Action}.").ConfigureAwait(false);
         var result = await RunAsync(pending.Action, pending.Args, component.User.Username).ConfigureAwait(false);
         await component.FollowupAsync(result, allowedMentions: AllowedMentions.None).ConfigureAwait(false);
     }
@@ -278,7 +278,7 @@ public sealed class DiscordBotService : IDisposable
         catch (Exception ex)
         {
             _logger.Error($"Discord command /{action} failed", ex);
-            return "That command failed - check the launcher log.";
+            return "That command failed, check the launcher log.";
         }
     }
 

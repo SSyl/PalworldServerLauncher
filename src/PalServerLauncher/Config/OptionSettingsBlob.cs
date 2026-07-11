@@ -7,12 +7,12 @@ using System.Text;
 namespace PalServerLauncher.Config;
 
 /// <summary>
-/// Round-trips the single-line <c>OptionSettings=(...)</c> blob in PalWorldSettings.ini - the ~90
+/// Round-trips the single-line <c>OptionSettings=(...)</c> blob in PalWorldSettings.ini, the ~90
 /// gameplay/server keys Palworld stores as one compact tuple under
 /// <c>[/Script/Pal.PalGameWorldSettings]</c>. It parses the blob into an ORDERED (key, raw-value)
 /// list, preserving every key (including ones the launcher doesn't recognise) and each value's exact
 /// raw text, lets specific keys be edited, and re-emits the file with only the OptionSettings line
-/// rebuilt - every other line and byte untouched.
+/// rebuilt, every other line and byte untouched.
 ///
 /// This is the riskiest file in the project (the old design deliberately avoided writing game ini):
 /// edits are gated to a stopped server, unknown keys are never touched, and the identity round-trip
@@ -153,7 +153,7 @@ public sealed class OptionSettingsBlob
             if (inQuotes && c == '\\' && i + 1 < inner.Length)
             {
                 // Inside a quoted value a backslash escapes the next char (matches Quote()): consume
-                // both so an escaped \" doesn't flip quote state and desync the split - otherwise the
+                // both so an escaped \" doesn't flip quote state and desync the split, otherwise the
                 // value swallows every following key up to the next balanced quote.
                 sb.Append(c);
                 sb.Append(inner[++i]);

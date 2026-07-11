@@ -5,7 +5,7 @@ namespace PalServerLauncher.ViewModels;
 /// <summary>What clicking the multi-state primary button should do, given the current state.</summary>
 public enum PrimaryActionKind
 {
-    /// <summary>No action - transitional/busy; the button is disabled.</summary>
+    /// <summary>No action, transitional/busy; the button is disabled.</summary>
     None,
     Install,
     Start,

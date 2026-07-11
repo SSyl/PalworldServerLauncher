@@ -138,7 +138,7 @@
                     </Button.Style>
                 </Button>
                 <Button Content="Server Settings" Click="OnOpenServerSettings" Margin="0"
-                        ToolTip="Edit the server in one tabbed editor - World Settings (gameplay and balance), Admin (name, passwords, REST / RCON), Undocumented (keys the official docs don't cover), and Launch Arguments (the command line: listen port, player cap, performance threads, community listing)."/>
+                        ToolTip="Edit the server in one tabbed editor, World Settings (gameplay and balance), Admin (name, passwords, REST / RCON), Undocumented (keys the official docs don't cover), and Launch Arguments (the command line: listen port, player cap, performance threads, community listing)."/>
             </StackPanel>
         </DockPanel>
 
@@ -274,7 +274,7 @@
                         <TextBlock Text="s" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                     <WrapPanel>
-                        <Button Content="Advanced Settings" Click="OnOpenAdvanced" Margin="0,0,0,4" ToolTip="Low-level process tuning (priority, CPU affinity) - advanced users only">
+                        <Button Content="Advanced Settings" Click="OnOpenAdvanced" Margin="0,0,0,4" ToolTip="Low-level process tuning (priority, CPU affinity), advanced users only">
                             <Button.Style>
                                 <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                                     <Style.Triggers>

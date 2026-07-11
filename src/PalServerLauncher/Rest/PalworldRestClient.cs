@@ -75,7 +75,7 @@ public sealed class PalworldRestClient : IDisposable
         }
         catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException or JsonException or ObjectDisposedException)
         {
-            // ObjectDisposedException: the client was rebuilt/disposed mid-probe - treat as a failed read.
+            // ObjectDisposedException: the client was rebuilt/disposed mid-probe, treat as a failed read.
             return null;
         }
     }
