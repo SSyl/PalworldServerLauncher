@@ -14,9 +14,8 @@ namespace PalServerLauncher.Views;
 /// <summary>Which slice of the settings this dialog instance shows.</summary>
 public enum SettingsSection
 {
-    /// <summary>Command-line launch args (our config; apply on next start, always editable).</summary>
-    LaunchArgs,
-    /// <summary>The tabbed PalWorldSettings.ini editor: World Settings, Admin, and Undocumented tabs.</summary>
+    /// <summary>The tabbed PalWorldSettings.ini editor: World Settings, Admin, Undocumented, plus a Launch
+    /// Arguments tab (launcher.json args, always editable) folded in.</summary>
     ServerSettings,
     /// <summary>Low-level process tuning (priority, CPU affinity), behind a danger-zone warning.</summary>
     Advanced,
@@ -80,21 +79,11 @@ public sealed class SettingsDialog : Window
         _gameSettings = gameSettings;
         _serverRunning = serverRunning;
 
-        Title = section switch
-        {
-            SettingsSection.LaunchArgs => "Launch Arguments",
-            SettingsSection.Advanced => "Advanced Settings",
-            _ => "Server Settings",
-        };
+        Title = section == SettingsSection.Advanced ? "Advanced Settings" : "Server Settings";
         Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         Width = section == SettingsSection.ServerSettings ? 720 : 660;
-        Height = section switch
-        {
-            SettingsSection.LaunchArgs => 560,
-            SettingsSection.Advanced => 440,
-            _ => 720,
-        };
+        Height = section == SettingsSection.Advanced ? 440 : 720;
         ShowInTaskbar = false;
 
         if (section == SettingsSection.ServerSettings)
@@ -103,11 +92,9 @@ public sealed class SettingsDialog : Window
             return;
         }
 
+        // The only non-ServerSettings section left is Advanced (Launch Arguments is now a tab in ServerSettings).
         var stack = new StackPanel { Margin = new Thickness(18) };
-        if (section == SettingsSection.LaunchArgs)
-            BuildLaunchArgs(stack);
-        else
-            BuildAdvanced(stack);
+        BuildAdvanced(stack);
 
         var scroll = new ScrollViewer { Content = stack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
 
@@ -348,9 +335,6 @@ public sealed class SettingsDialog : Window
         ChoiceDialog.Show(this, $"{presetName} preset applied",
             $"Applied the {presetName} preset. {changes.Count} setting(s) changed and saved.", "OK");
     }
-
-    public static bool ShowLaunchArgs(Window? owner, LauncherConfig config, GameSettingsService gs, bool serverRunning) =>
-        Show(owner, SettingsSection.LaunchArgs, config, gs, serverRunning);
 
     public static bool ShowServerSettings(Window? owner, LauncherConfig config, GameSettingsService gs, bool serverRunning) =>
         Show(owner, SettingsSection.ServerSettings, config, gs, serverRunning);
@@ -648,12 +632,6 @@ public sealed class SettingsDialog : Window
 
     private bool Apply()
     {
-        if (_section == SettingsSection.LaunchArgs)
-        {
-            ApplyLaunchArgs();
-            return true;
-        }
-
         if (_section == SettingsSection.Advanced)
         {
             _config.ServerPriority = LabelToPriority(_priority!.SelectedItem as string);
