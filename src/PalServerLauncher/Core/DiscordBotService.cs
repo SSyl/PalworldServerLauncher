@@ -34,7 +34,8 @@ public sealed class DiscordBotService : IDisposable
         Func<string, Task<string>> Announce,
         Func<string, string, Task<string>> Kick,
         Func<string, string, Task<string>> Ban,
-        Func<string, Task<string>> Unban);
+        Func<string, Task<string>> Unban,
+        Func<string, Task<string?>> ResolvePlayerName);
 
     // Commands that take the server down / bounce it, or moderate a player, require a confirm click first.
     private static readonly HashSet<string> DestructiveCommands = new() { "restart", "stop", "kick", "ban" };
@@ -217,11 +218,13 @@ public sealed class DiscordBotService : IDisposable
                 PrunePending(DateTime.UtcNow);
                 _pending[token] = new Pending(command.CommandName, args, DateTime.UtcNow);
             }
+            var target = await DescribeConfirmTargetAsync(command.CommandName, args).ConfigureAwait(false);
             var buttons = new ComponentBuilder()
                 .WithButton("Confirm", ButtonPrefix + token, ButtonStyle.Danger)
                 .WithButton("Cancel", ButtonPrefix + "cancel", ButtonStyle.Secondary)
                 .Build();
-            await command.RespondAsync($"⚠️ Really **/{command.CommandName}**?", components: buttons, ephemeral: true).ConfigureAwait(false);
+            await command.RespondAsync($"⚠️ Really **/{command.CommandName}**{target}?", components: buttons,
+                ephemeral: true, allowedMentions: AllowedMentions.None).ConfigureAwait(false);
             return;
         }
 
@@ -300,6 +303,17 @@ public sealed class DiscordBotService : IDisposable
     };
 
     private static string Arg(string[] args, int index) => index < args.Length ? args[index] : "";
+
+    /// <summary>For a kick/ban confirm, describe the target as " **Name** (`userid`)" so the admin sees who they're
+    /// about to act on, falling back to just the id if the player isn't online. Empty for argument-less commands.</summary>
+    private async Task<string> DescribeConfirmTargetAsync(string command, string[] args)
+    {
+        if (command is not ("kick" or "ban") || args.Length == 0)
+            return "";
+        var userId = args[0];
+        var name = await _commands.ResolvePlayerName(userId).ConfigureAwait(false);
+        return name is null ? $" `{userId}`" : $" **{name}** (`{userId}`)";
+    }
 
     private static string[] ExtractArgs(SocketSlashCommand command) => command.CommandName switch
     {

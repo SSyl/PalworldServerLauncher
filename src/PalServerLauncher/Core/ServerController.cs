@@ -85,7 +85,8 @@ public sealed class ServerController : IDisposable
             Announce: DiscordAnnounceAsync,
             Kick: DiscordKickAsync,
             Ban: DiscordBanAsync,
-            Unban: DiscordUnbanAsync));
+            Unban: DiscordUnbanAsync,
+            ResolvePlayerName: ResolvePlayerDisplayNameAsync));
         if (config.DiscordBotEnabled)
             FireAndForget(_discordBot.StartAsync, "Discord bot start");
     }
@@ -217,21 +218,42 @@ public sealed class ServerController : IDisposable
     {
         if (RestClient is null)
             return "REST API is off, can't kick.";
-        return await KickPlayerAsync(userId, reason).ConfigureAwait(false) ? $"Kicked `{userId}`." : "Kick wasn't accepted (check the user id).";
+        // Resolve the name before kicking (they're still online); after the kick they'd be gone from /players.
+        var who = await DescribeUserAsync(userId).ConfigureAwait(false);
+        return await KickPlayerAsync(userId, reason).ConfigureAwait(false) ? $"Kicked {who}." : "Kick wasn't accepted (check the user id).";
     }
 
     private async Task<string> DiscordBanAsync(string userId, string reason)
     {
         if (RestClient is null)
             return "REST API is off, can't ban.";
-        return await BanPlayerAsync(userId, reason).ConfigureAwait(false) ? $"Banned `{userId}`." : "Ban wasn't accepted (check the user id).";
+        var who = await DescribeUserAsync(userId).ConfigureAwait(false);
+        return await BanPlayerAsync(userId, reason).ConfigureAwait(false) ? $"Banned {who}." : "Ban wasn't accepted (check the user id).";
     }
 
     private async Task<string> DiscordUnbanAsync(string userId)
     {
         if (RestClient is null)
             return "REST API is off, can't unban.";
+        // No name to resolve here: a banned player isn't online, so we can only echo the id.
         return await UnbanPlayerAsync(userId).ConfigureAwait(false) ? $"Unbanned `{userId}`." : "Unban wasn't accepted (check the user id).";
+    }
+
+    /// <summary>Resolve a platform user id to a Discord-safe (markdown-escaped) display name from the current
+    /// player list, or null if the id isn't online / REST is off. Lets Discord kick/ban show who they hit.</summary>
+    public async Task<string?> ResolvePlayerDisplayNameAsync(string userId)
+    {
+        var players = await GetPlayersAsync().ConfigureAwait(false);
+        var player = players?.Players.FirstOrDefault(p => string.Equals(p.UserId, userId, StringComparison.OrdinalIgnoreCase));
+        var name = player?.Name ?? player?.AccountName;
+        return string.IsNullOrWhiteSpace(name) ? null : SanitizeName(name);
+    }
+
+    /// <summary>"**Name** (`userid`)" for a known online player, else "`userid`", for Discord result messages.</summary>
+    private async Task<string> DescribeUserAsync(string userId)
+    {
+        var name = await ResolvePlayerDisplayNameAsync(userId).ConfigureAwait(false);
+        return name is null ? $"`{userId}`" : $"**{name}** (`{userId}`)";
     }
 
     public event Action<ServerState>? StateChanged;
@@ -845,7 +867,7 @@ public sealed class ServerController : IDisposable
 
     /// <summary>
     /// Apply the configured Windows priority + CPU affinity to the server process (best-effort, on every
-    /// launch/adopt). Failures, process already gone, access denied, are logged, not fatal. RealTime
+    /// launch/adopt). Failures (process already gone, access denied) are logged, not fatal. RealTime
     /// isn't offered (needs elevation and can starve the OS). A mask bit for a non-existent core is ignored.
     /// </summary>
     private void ApplyProcessTuning(Process process)
