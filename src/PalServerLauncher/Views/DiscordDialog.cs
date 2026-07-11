@@ -6,6 +6,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using PalServerLauncher.Config;
+using PalServerLauncher.Core;
 
 namespace PalServerLauncher.Views;
 
@@ -34,6 +35,7 @@ public sealed class DiscordDialog : Window
     private readonly TextBox _webhook;
     private readonly CheckBox _notifyLifecycle;
     private readonly CheckBox _notifyPlayers;
+    private readonly Dictionary<string, CheckBox> _commandChecks = new();
 
     private DiscordDialog(LauncherConfig config)
     {
@@ -74,6 +76,28 @@ public sealed class DiscordDialog : Window
             + "control the server, so lock it down (a private, admin-only channel and/or an admin role). Enable "
             + "Discord Developer Mode, then right-click a channel or role -> Copy ID. The token is stored locally "
             + "in launcher.json and is never logged."));
+
+        stack.Children.Add(Header("Commands the bot exposes"));
+        stack.Children.Add(new TextBlock
+        {
+            Text = "Tick the slash commands the bot should accept. Destructive ones (restart, stop, kick, ban) are "
+                 + "off by default. Changes take effect on Save (the bot reconnects and re-registers its commands).",
+            Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 2),
+        });
+        var commandsPanel = new WrapPanel();
+        foreach (var command in DiscordBotService.AllCommands)
+        {
+            var check = new CheckBox
+            {
+                Content = "/" + command.Name,
+                IsChecked = DiscordBotService.IsCommandEnabled(config, command.Name),
+                Foreground = Fg, Width = 150, Margin = new Thickness(0, 4, 12, 0),
+                ToolTip = command.Description,
+            };
+            _commandChecks[command.Name] = check;
+            commandsPanel.Children.Add(check);
+        }
+        stack.Children.Add(commandsPanel);
 
         stack.Children.Add(Header("Webhook notifications"));
         _notifyEnabled = Check("Enable notifications", config.DiscordEnabled);
@@ -134,6 +158,8 @@ public sealed class DiscordDialog : Window
         _config.DiscordWebhookUrl = _webhook.Text.Trim();
         _config.DiscordNotifyLifecycle = _notifyLifecycle.IsChecked == true;
         _config.DiscordNotifyPlayers = _notifyPlayers.IsChecked == true;
+        foreach (var (name, check) in _commandChecks)
+            _config.DiscordCommandEnabled[name] = check.IsChecked == true;
         _config.Save();
         _saved = true;
         Close();
