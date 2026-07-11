@@ -640,14 +640,12 @@ public sealed class SettingsDialog : Window
             return true;
         }
 
-        // ServerSettings now also hosts the Launch Arguments tab. Launch args (launcher.json) are ours and safe
-        // to write any time; the game ini can only be written while stopped (a running server would overwrite it).
-        var hasLaunchArgs = _port is not null;
-
+        // ServerSettings also hosts the Launch Arguments tab. Launch args (launcher.json) are ours and always
+        // safe to write, so we save them regardless of running state. The game ini can only be written while
+        // stopped (a running server would overwrite it), so those edits are gated below.
         if (_serverRunning)
         {
-            if (hasLaunchArgs)
-                ApplyLaunchArgs();
+            ApplyLaunchArgs();
             return true;
         }
 
@@ -662,8 +660,7 @@ public sealed class SettingsDialog : Window
 
         if (gameEdits.Count == 0 && extraEdits.Count == 0)
         {
-            if (hasLaunchArgs)
-                ApplyLaunchArgs();
+            ApplyLaunchArgs();
             return true;
         }
 
@@ -690,8 +687,7 @@ public sealed class SettingsDialog : Window
             return false;
         }
         // Launch args save only after the ini write succeeds, so cancelling the confirm above saves nothing.
-        if (hasLaunchArgs)
-            ApplyLaunchArgs();
+        ApplyLaunchArgs();
         return true;
     }
 
