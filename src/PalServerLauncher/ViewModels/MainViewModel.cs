@@ -132,7 +132,7 @@ public partial class MainViewModel : ObservableObject
             OnPropertyChanged(nameof(PrimaryActionText));
         };
 
-        _forceShutdownRevealTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(10) };
+        _forceShutdownRevealTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(20) };
         _forceShutdownRevealTimer.Tick += OnForceShutdownRevealElapsed;
 
         _shutdownCountdownTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
