@@ -64,7 +64,7 @@ public sealed record GameSetting(
 /// Data-driven catalog of PalWorldSettings.ini <c>OptionSettings</c> keys as typed fields. Covers EVERY
 /// key a current default config contains (verified against a real 1.0 DefaultPalWorldSettings.ini), so the
 /// "Undocumented" tab's "new in your config" section is empty on a normal install and only lists a key
-/// once a future game update adds one we haven't catalogued yet.
+/// once a future game update adds one we haven't cataloged yet.
 ///
 /// Labels use the game's own in-game "Edit World Settings" wording for keys that appear there, so they
 /// match what players see. Keys the game screen doesn't expose (server management, and options only a

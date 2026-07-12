@@ -114,7 +114,7 @@ public sealed class SettingsDialog : Window
     /// <summary>
     /// Build the tabbed PalWorldSettings.ini editor: World Settings + Admin hold the documented (and
     /// understood-undocumented) keys grouped by category, and the Undocumented tab collects the keys we
-    /// can't confidently explain plus any the catalog doesn't recognise. One Save applies every tab.
+    /// can't confidently explain plus any the catalog doesn't recognize. One Save applies every tab.
     /// </summary>
     private void BuildServerSettings()
     {
@@ -200,8 +200,8 @@ public sealed class SettingsDialog : Window
         return new ScrollViewer { Content = stack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
     }
 
-    /// <summary>The Undocumented tab: catalogued keys we can't confidently explain (typed, with a best-guess
-    /// tooltip), then a divider and any keys in the config the catalog doesn't recognise (raw, future-proofing
+    /// <summary>The Undocumented tab: cataloged keys we can't confidently explain (typed, with a best-guess
+    /// tooltip), then a divider and any keys in the config the catalog doesn't recognize (raw, future-proofing
     /// against a game update adding params before we catalog them).</summary>
     private ScrollViewer BuildUndocumentedTab(bool gameAvailable, bool gameEnabled,
         IReadOnlyDictionary<string, string?> current, IReadOnlyDictionary<string, string?> defaults)
@@ -216,11 +216,11 @@ public sealed class SettingsDialog : Window
         foreach (var setting in GameSettingsCatalog.All.Where(s => s.Doc == DocStatus.Unknown))
             AddCatalogRow(stack, setting, gameEnabled, current, defaults);
 
-        stack.Children.Add(Header("New in your config (not catalogued)"));
+        stack.Children.Add(Header("New in your config (not recognized)"));
         if (AppendExtras(stack, gameAvailable, gameEnabled) == 0)
             stack.Children.Add(new TextBlock
             {
-                Text = "None, every key in your config is catalogued.",
+                Text = "None, every key in your config is recognized.",
                 Foreground = Fg, Margin = new Thickness(0, 2, 0, 0),
             });
 
@@ -562,7 +562,7 @@ public sealed class SettingsDialog : Window
         return false;
     }
 
-    /// <summary>Append rows for keys present in the config that the catalog doesn't recognise (edited raw, and
+    /// <summary>Append rows for keys present in the config that the catalog doesn't recognize (edited raw, and
     /// marked undocumented). Returns how many were added, so the caller can show a placeholder when there are none.</summary>
     private int AppendExtras(StackPanel stack, bool available, bool enabled)
     {

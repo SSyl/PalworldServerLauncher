@@ -22,7 +22,7 @@ public class GameSettingsServiceTests
     [Fact]
     public void LoadExtras_returns_only_non_catalog_keys()
     {
-        // FutureTuple stands in for a not-yet-catalogued key a game update might add (CrossplayPlatforms is
+        // FutureTuple stands in for a not-yet-cataloged key a game update might add (CrossplayPlatforms is
         // now a first-class Raw catalog key, so it is no longer "extra").
         var root = WriteIni("ExpRate=2.000000,FutureParam=5,FutureTuple=(A,B)");
         try
@@ -34,7 +34,7 @@ public class GameSettingsServiceTests
             Assert.Contains("FutureParam", keys);
             Assert.Contains("FutureTuple", keys);
             Assert.DoesNotContain("ExpRate", keys);            // ExpRate is a catalog key
-            Assert.DoesNotContain("CrossplayPlatforms", keys); // now catalogued (Raw), not extra
+            Assert.DoesNotContain("CrossplayPlatforms", keys); // now cataloged (Raw), not extra
             Assert.Equal("(A,B)", extras.First(x => x.Key == "FutureTuple").Value);
         }
         finally { Directory.Delete(root, recursive: true); }

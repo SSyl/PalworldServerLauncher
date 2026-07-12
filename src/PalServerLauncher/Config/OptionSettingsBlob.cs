@@ -10,7 +10,7 @@ namespace PalServerLauncher.Config;
 /// Round-trips the single-line <c>OptionSettings=(...)</c> blob in PalWorldSettings.ini, the ~90
 /// gameplay/server keys Palworld stores as one compact tuple under
 /// <c>[/Script/Pal.PalGameWorldSettings]</c>. It parses the blob into an ORDERED (key, raw-value)
-/// list, preserving every key (including ones the launcher doesn't recognise) and each value's exact
+/// list, preserving every key (including ones the launcher doesn't recognize) and each value's exact
 /// raw text, lets specific keys be edited, and re-emits the file with only the OptionSettings line
 /// rebuilt, every other line and byte untouched.
 ///

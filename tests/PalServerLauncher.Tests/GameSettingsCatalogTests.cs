@@ -17,8 +17,8 @@ public class GameSettingsCatalogTests
     public void Catalog_covers_every_key_in_a_fresh_1_0_default_ini()
     {
         // Guards the promise that the Undocumented tab's "new in your config" section stays empty on a normal
-        // 1.0 install: a game update that adds a key we haven't catalogued (or a catalog key that drifts from
-        // the default ini) fails here instead of quietly surfacing as an unrecognised setting in the UI.
+        // 1.0 install: a game update that adds a key we haven't cataloged (or a catalog key that drifts from
+        // the default ini) fails here instead of quietly surfacing as an unrecognized setting in the UI.
         var blob = OptionSettingsBlob.Load(Load10DefaultIni());
         Assert.True(blob.HasOptionSettings);
 
