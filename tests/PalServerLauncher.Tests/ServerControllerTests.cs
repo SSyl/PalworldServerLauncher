@@ -65,20 +65,21 @@ public class ServerControllerTests
     [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/metrics OK")]
     [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/info OK")]
     [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/players OK")]
-    public void IsHealthPollLogLine_filters_the_polled_endpoints(string line)
+    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/announce OK")] // commands are noise too
+    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/kick OK")]
+    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/shutdown OK")]
+    public void IsRestAccessLogLine_filters_every_rest_access(string line)
     {
-        Assert.True(ServerController.IsHealthPollLogLine(line));
+        Assert.True(ServerController.IsRestAccessLogLine(line));
     }
 
     [Theory]
-    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/announce OK")] // real commands stay
-    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/kick OK")]
-    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/shutdown OK")]
-    [InlineData("[2026-07-12 03:48:24] [LOG] Server started on port 8211")]              // ordinary output stays
+    [InlineData("[2026-07-12 03:48:24] [LOG] Server started on port 8211")] // ordinary output stays
+    [InlineData("[2026-07-12 03:48:24] [CHAT] <SSyl> hello")]
     [InlineData("")]
-    public void IsHealthPollLogLine_keeps_everything_else(string line)
+    public void IsRestAccessLogLine_keeps_ordinary_output(string line)
     {
-        Assert.False(ServerController.IsHealthPollLogLine(line));
+        Assert.False(ServerController.IsRestAccessLogLine(line));
     }
 
     [Theory]
@@ -86,14 +87,15 @@ public class ServerControllerTests
     [InlineData("")]     // blank line the server emits after each REST access
     [InlineData("   ")]
     [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/players OK")] // health-poll spam
+    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/ban OK")]     // command spam, dropped now
     public void ShouldLogServerLine_drops_noise(string? line)
     {
         Assert.False(ServerController.ShouldLogServerLine(line));
     }
 
     [Theory]
-    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/ban OK")]  // a real command
-    [InlineData("[2026-07-12 03:48:24] [LOG] Server started on port 8211")]            // ordinary output
+    [InlineData("[2026-07-12 03:48:24] [LOG] Server started on port 8211")] // ordinary output
+    [InlineData("[2026-07-12 03:48:24] [CHAT] <SSyl> hello")]               // chat output stays
     public void ShouldLogServerLine_keeps_real_output(string line)
     {
         Assert.True(ServerController.ShouldLogServerLine(line));
