@@ -60,4 +60,42 @@ public class ServerControllerTests
         // Palworld's POST /shutdown rejects waittime=0 with a 400.
         Assert.Equal(1, ServerController.ShutdownWaitSeconds(requested));
     }
+
+    [Theory]
+    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/metrics OK")]
+    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/info OK")]
+    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/players OK")]
+    public void IsHealthPollLogLine_filters_the_polled_endpoints(string line)
+    {
+        Assert.True(ServerController.IsHealthPollLogLine(line));
+    }
+
+    [Theory]
+    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/announce OK")] // real commands stay
+    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/kick OK")]
+    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/shutdown OK")]
+    [InlineData("[2026-07-12 03:48:24] [LOG] Server started on port 8211")]              // ordinary output stays
+    [InlineData("")]
+    public void IsHealthPollLogLine_keeps_everything_else(string line)
+    {
+        Assert.False(ServerController.IsHealthPollLogLine(line));
+    }
+
+    [Theory]
+    [InlineData(null)]   // end-of-stream marker
+    [InlineData("")]     // blank line the server emits after each REST access
+    [InlineData("   ")]
+    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/players OK")] // health-poll spam
+    public void ShouldLogServerLine_drops_noise(string? line)
+    {
+        Assert.False(ServerController.ShouldLogServerLine(line));
+    }
+
+    [Theory]
+    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/ban OK")]  // a real command
+    [InlineData("[2026-07-12 03:48:24] [LOG] Server started on port 8211")]            // ordinary output
+    public void ShouldLogServerLine_keeps_real_output(string line)
+    {
+        Assert.True(ServerController.ShouldLogServerLine(line));
+    }
 }

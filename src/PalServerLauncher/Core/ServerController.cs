@@ -665,8 +665,11 @@ public sealed class ServerController : IDisposable
         foreach (var a in args) psi.ArgumentList.Add(a);
 
         var process = new Process { StartInfo = psi, EnableRaisingEvents = true };
-        process.OutputDataReceived += (_, e) => { if (e.Data is not null) _logger.Server(e.Data); };
-        process.ErrorDataReceived += (_, e) => { if (e.Data is not null) _logger.Server(e.Data); };
+        // Filter captured server output before it reaches the Server Log: drop blank lines (the server emits
+        // one after each REST access) and the health-poll access spam (/metrics + /info + /players every few
+        // seconds). Real commands and ordinary output still show. See ShouldLogServerLine.
+        process.OutputDataReceived += (_, e) => { if (ShouldLogServerLine(e.Data)) _logger.Server(e.Data!); };
+        process.ErrorDataReceived += (_, e) => { if (ShouldLogServerLine(e.Data)) _logger.Server(e.Data!); };
         lock (_gate)
         {
             // Authoritative check inside the lock: if another launch (crash-relaunch / recovery /
@@ -743,6 +746,20 @@ public sealed class ServerController : IDisposable
     /// with a 400, so it is always at least 1s. The requested value is otherwise honored as-is, an explicit
     /// timed shutdown must not be shortened just because the server happens to be empty. Pure, so it's tested.</summary>
     public static int ShutdownWaitSeconds(int requested) => Math.Max(1, requested);
+
+    /// <summary>Whether a captured server output line is worth showing in the Server Log. Drops nulls (the
+    /// end-of-stream marker), blank lines (the server emits one after each REST access), and the health-poll
+    /// access spam. Command endpoints (announce, kick, ...) and ordinary server output are kept.</summary>
+    public static bool ShouldLogServerLine(string? line) =>
+        !string.IsNullOrWhiteSpace(line) && !IsHealthPollLogLine(line);
+
+    /// <summary>True for the server's own "REST accessed endpoint" log line for one of the endpoints the launcher
+    /// polls every health tick (metrics / info / players). These echo back 3x per probe and would flood the
+    /// Server Log, so they're dropped from the captured output. Command endpoints (announce, kick, ...) are kept.</summary>
+    public static bool IsHealthPollLogLine(string line) =>
+        line.Contains("REST accessed endpoint /v1/api/metrics", StringComparison.Ordinal)
+        || line.Contains("REST accessed endpoint /v1/api/info", StringComparison.Ordinal)
+        || line.Contains("REST accessed endpoint /v1/api/players", StringComparison.Ordinal);
 
     /// <summary>The shutdown ladder. <paramref name="shutdownWaitSeconds"/> is the in-game /shutdown countdown
     /// (0 for restarts and plain Stop, restarts already warned via broadcasts, and a plain Stop is immediate).
