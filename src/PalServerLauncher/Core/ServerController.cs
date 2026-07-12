@@ -482,25 +482,62 @@ public sealed class ServerController : IDisposable
     public Task<PlayersResponse?> GetPlayersAsync(CancellationToken ct = default) =>
         RestClient?.GetPlayersAsync(ct) ?? Task.FromResult<PlayersResponse?>(null);
 
+    // Each command logs its outcome to the Server Log (visible in the Server Log tab, alongside join/leave),
+    // since the game server doesn't echo REST commands to its own output and the dialog / Discord otherwise
+    // leave no trace there. Both the dialog and the Discord bot route through here, so one log site covers both.
+
     /// <summary>Broadcast an in-game message to everyone on the server.</summary>
-    public async Task<bool> AnnounceAsync(string message, CancellationToken ct = default) =>
-        RestClient is { } rest && await rest.AnnounceAsync(message, ct).ConfigureAwait(false);
+    public async Task<bool> AnnounceAsync(string message, CancellationToken ct = default)
+    {
+        if (RestClient is not { } rest)
+            return false;
+        var ok = await rest.AnnounceAsync(message, ct).ConfigureAwait(false);
+        _logger.Server(ok ? $"Broadcast: {message}" : "Broadcast rejected by the server.");
+        return ok;
+    }
 
     /// <summary>Kick a player by their platform user id, with an optional reason.</summary>
-    public async Task<bool> KickPlayerAsync(string userId, string message, CancellationToken ct = default) =>
-        RestClient is { } rest && await rest.KickAsync(userId, message, ct).ConfigureAwait(false);
+    public async Task<bool> KickPlayerAsync(string userId, string message, CancellationToken ct = default)
+    {
+        if (RestClient is not { } rest)
+            return false;
+        var ok = await rest.KickAsync(userId, message, ct).ConfigureAwait(false);
+        _logger.Server(ok ? $"Kicked {userId}.{Reason(message)}" : $"Kick rejected for {userId}.");
+        return ok;
+    }
 
     /// <summary>Ban a player by their platform user id, with an optional reason.</summary>
-    public async Task<bool> BanPlayerAsync(string userId, string message, CancellationToken ct = default) =>
-        RestClient is { } rest && await rest.BanAsync(userId, message, ct).ConfigureAwait(false);
+    public async Task<bool> BanPlayerAsync(string userId, string message, CancellationToken ct = default)
+    {
+        if (RestClient is not { } rest)
+            return false;
+        var ok = await rest.BanAsync(userId, message, ct).ConfigureAwait(false);
+        _logger.Server(ok ? $"Banned {userId}.{Reason(message)}" : $"Ban rejected for {userId}.");
+        return ok;
+    }
 
     /// <summary>Lift a ban on a player by their platform user id.</summary>
-    public async Task<bool> UnbanPlayerAsync(string userId, CancellationToken ct = default) =>
-        RestClient is { } rest && await rest.UnbanAsync(userId, ct).ConfigureAwait(false);
+    public async Task<bool> UnbanPlayerAsync(string userId, CancellationToken ct = default)
+    {
+        if (RestClient is not { } rest)
+            return false;
+        var ok = await rest.UnbanAsync(userId, ct).ConfigureAwait(false);
+        _logger.Server(ok ? $"Unbanned {userId}." : $"Unban rejected for {userId}.");
+        return ok;
+    }
 
     /// <summary>Trigger a fresh world save.</summary>
-    public async Task<bool> SaveWorldAsync(CancellationToken ct = default) =>
-        RestClient is { } rest && await rest.SaveAsync(ct).ConfigureAwait(false);
+    public async Task<bool> SaveWorldAsync(CancellationToken ct = default)
+    {
+        if (RestClient is not { } rest)
+            return false;
+        var ok = await rest.SaveAsync(ct).ConfigureAwait(false);
+        _logger.Server(ok ? "World saved." : "Save rejected by the server.");
+        return ok;
+    }
+
+    /// <summary>" Reason: X" for a non-empty kick/ban reason, else empty.</summary>
+    private static string Reason(string message) => string.IsNullOrWhiteSpace(message) ? "" : $" Reason: {message}";
 
     /// <summary>Graceful shutdown with an in-game countdown and no relaunch. Routes through the stop ladder so
     /// the resulting exit is treated as a deliberate stop, not a crash. Cancels any pending restart countdown
