@@ -739,6 +739,11 @@ public sealed class ServerController : IDisposable
         RunningInstanceCount = 0;
     }
 
+    /// <summary>Clamp a requested shutdown countdown to Palworld's minimum: POST /shutdown rejects waittime=0
+    /// with a 400, so it is always at least 1s. The requested value is otherwise honored as-is, an explicit
+    /// timed shutdown must not be shortened just because the server happens to be empty. Pure, so it's tested.</summary>
+    public static int ShutdownWaitSeconds(int requested) => Math.Max(1, requested);
+
     /// <summary>The shutdown ladder. <paramref name="shutdownWaitSeconds"/> is the in-game /shutdown countdown
     /// (0 for restarts and plain Stop, restarts already warned via broadcasts, and a plain Stop is immediate).
     /// <paramref name="restarting"/> picks the state shown while stopping: <see cref="ServerState.Restarting"/>
@@ -775,10 +780,7 @@ public sealed class ServerController : IDisposable
 
         if (graceful && rest is not null)
         {
-            var players = await rest.GetMetricsAsync(ct).ConfigureAwait(false);
-            // Palworld's /shutdown rejects waittime=0 with a 400, so the countdown is always >= 1s.
-            var wait = Math.Max(1, players is { CurrentPlayerNum: 0 } ? 0 : shutdownWaitSeconds);
-
+            var wait = ShutdownWaitSeconds(shutdownWaitSeconds);
             _logger.Info($"Saving and shutting down (wait {wait}s)...");
             // The shutdown backup does its own fresh /save; otherwise just save.
             if (_config.BackupOnShutdown)

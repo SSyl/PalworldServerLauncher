@@ -41,4 +41,23 @@ public class ServerControllerTests
         // CSPRNG - two draws must not collide (not a time/source-derivable value).
         Assert.NotEqual(ServerController.GenerateAdminPassword(), ServerController.GenerateAdminPassword());
     }
+
+    [Theory]
+    [InlineData(60, 60)]   // an explicit timed shutdown keeps its duration...
+    [InlineData(5, 5)]
+    [InlineData(3600, 3600)]
+    public void ShutdownWaitSeconds_honors_an_explicit_timer(int requested, int expected)
+    {
+        // ...even on an empty server. The bug: an empty server clamped a requested timer down to 1s.
+        Assert.Equal(expected, ServerController.ShutdownWaitSeconds(requested));
+    }
+
+    [Theory]
+    [InlineData(0)]        // a plain Stop passes 0
+    [InlineData(-5)]       // and never below Palworld's minimum
+    public void ShutdownWaitSeconds_clamps_to_one_second_minimum(int requested)
+    {
+        // Palworld's POST /shutdown rejects waittime=0 with a 400.
+        Assert.Equal(1, ServerController.ShutdownWaitSeconds(requested));
+    }
 }
