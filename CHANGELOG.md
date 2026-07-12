@@ -2,6 +2,41 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [Unreleased]
+
+### Added
+- **Live server commands.** A Server Commands panel lets you announce a message, kick, ban, or unban a player,
+  and save the world, all while the server is running, right from the launcher.
+- **Force Shutdown.** A button that immediately stops a server that's wedged or stuck shutting down. It stays
+  hidden until a start, stop, or restart has been dragging for a while, so it's there when you need it and out
+  of the way the rest of the time.
+- **Discord control commands.** Your control bot can now announce, kick, ban, and unban from Discord, with a
+  checklist of exactly which commands it's allowed to run. The ones that stop the server or remove players stay
+  off until you turn them on.
+- **Port Check.** See whether your server's ports are actually reachable from the internet.
+- **CPU usage** now sits alongside the other live stats (FPS, players, memory, and so on).
+- **Compact view.** Click the little arrow above the Restarts / Backups / Misc sections to fold them away for a
+  smaller, log-focused window. Your choice is remembered next time.
+
+### Changed
+- **The Stop button now asks how you want to shut down:** right away, or on a timer that shows players an
+  in-game countdown first. If the REST API is off, it explains that it can only force-stop.
+- **Live stats moved to a status bar** along the bottom of the window, under the log.
+- **Launch Arguments** are now a tab inside the Server Settings window instead of a separate button.
+- **Server commands show up in the Server Log.** Announcing, kicking, banning, unbanning, and saving each
+  leave a line so you can see what happened.
+- Some layout tidying: the settings buttons were rearranged, and Status and Update now share a row with your
+  public IP.
+
+### Fixed
+- **A timed shutdown now keeps its timer even when nobody's online.** It used to shut down instantly on an
+  empty server.
+- **The Server Log is much quieter.** The launcher's own health checks no longer flood it with "REST accessed
+  endpoint" lines every few seconds.
+- **A server you stop now stays stopped.** Fixed some timing cases where an automatic restart or recovery could
+  bring it right back after you deliberately shut it down.
+- The **"Working..." button** no longer changes width as its animated dots come and go.
+
 ## [0.2.0] - 2026-07-10
 
 ### Added
