@@ -33,6 +33,7 @@ public partial class MainWindow : Window
         _viewModel.InstallFinished += OnInstallFinished;
         _viewModel.ConfirmInstall = ConfirmInstall;
         _viewModel.RequestShutdownDecision = PromptShutdownDecision;
+        _viewModel.ConfirmShutdownNow = ConfirmShutdownNow;
 
         Loaded += OnLoaded;
         Closing += OnClosing;
@@ -101,6 +102,12 @@ public partial class MainWindow : Window
             "This downloads and installs the Palworld dedicated server with SteamCMD, about 4 GB, into this " +
             "launcher's folder. A SteamCMD window opens to show progress.\n\nDownload and install it now?",
             "Download & Install", "Cancel") == 0;
+
+    /// <summary>Confirm skipping a timed shutdown's countdown to shut the server down immediately.</summary>
+    private bool ConfirmShutdownNow() =>
+        ChoiceDialog.Show(this, "Shut down now?",
+            "Skip the countdown and shut the server down now?",
+            "Shut Down Now", "Keep Waiting") == 0;
 
     /// <summary>The Stop-button shutdown prompt: immediate / timed when REST is on, or a force-stop notice when
     /// it's off. Returns the user's choice, the ViewModel routes it. The dialogs live here, never in the VM.</summary>

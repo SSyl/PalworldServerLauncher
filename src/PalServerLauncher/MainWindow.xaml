@@ -109,6 +109,10 @@
                             <DataTrigger Binding="{Binding PrimaryActionKind}" Value="Stop">
                                 <Setter Property="Background" Value="#C24238"/>
                             </DataTrigger>
+                            <!-- Amber while a timed shutdown counts down: the button becomes a clickable "shut down now". -->
+                            <DataTrigger Binding="{Binding PrimaryActionKind}" Value="ShutdownNow">
+                                <Setter Property="Background" Value="#D99A2B"/>
+                            </DataTrigger>
                             <DataTrigger Binding="{Binding IsBusy}" Value="True">
                                 <Setter Property="Background" Value="#2D6CDF"/>
                                 <Setter Property="Opacity" Value="1"/>

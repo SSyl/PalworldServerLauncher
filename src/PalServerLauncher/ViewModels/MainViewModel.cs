@@ -29,6 +29,8 @@ public partial class MainViewModel : ObservableObject
     private int _busyDots;
     // Reveals the Force Shutdown button only after the server has been stuck in a transitional state for this long.
     private readonly DispatcherTimer _forceShutdownRevealTimer;
+    // Ticks the display-only mirror countdown for a timed shutdown (1s), while the server runs the real countdown.
+    private readonly DispatcherTimer _shutdownCountdownTimer;
 
     // The up-to-3 announce lead-minute marks as independent slots (blank = off), so a user can announce
     // at just one mark. Populated from config in the constructor; digit-gated in the view.
@@ -64,6 +66,13 @@ public partial class MainViewModel : ObservableObject
     /// as an escape hatch when a start, stop, or restart is dragging.</summary>
     [ObservableProperty] private bool _isForceShutdownVisible;
 
+    /// <summary>Remaining seconds on a timed shutdown's mirror countdown, or null when none is running. Turns the
+    /// primary button into the amber "Shutdown Now" (accelerate) affordance while the server counts down.</summary>
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind))]
+    [NotifyCanExecuteChangedFor(nameof(PrimaryActionCommand))]
+    private int? _shutdownRemainingSeconds;
+
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(PublicIpDisplay), nameof(ConnectionInfo), nameof(CanCopyConnectionInfo))]
     private string _publicIp = "";
@@ -89,13 +98,16 @@ public partial class MainViewModel : ObservableObject
     /// is off) and return the choice. Keeps the shutdown dialogs in the View, not the ViewModel.</summary>
     public Func<ShutdownDecision>? RequestShutdownDecision { get; set; }
 
+    /// <summary>Set by the View: confirm accelerating a timed shutdown before it skips the countdown.</summary>
+    public Func<bool>? ConfirmShutdownNow { get; set; }
+
     /// <summary>Label for the multi-state primary button (animated dots while busy, so it's clearly not frozen).</summary>
     public string PrimaryActionText => IsBusy
         ? "Working" + new string('.', _busyDots)
-        : PrimaryButton.Label(IsInstalled, IsBusy, State);
+        : PrimaryButton.Label(IsInstalled, IsBusy, State, ShutdownRemainingSeconds);
 
     /// <summary>What the primary button currently represents, drives its color via XAML (Install/Start = green, Stop = red).</summary>
-    public PrimaryActionKind PrimaryActionKind => PrimaryButton.Resolve(IsInstalled, IsBusy, State);
+    public PrimaryActionKind PrimaryActionKind => PrimaryButton.Resolve(IsInstalled, IsBusy, State, ShutdownRemainingSeconds);
 
     public MainViewModel(Logger logger)
     {
@@ -110,6 +122,7 @@ public partial class MainViewModel : ObservableObject
         _controller.NextRestartTextChanged += t => _dispatcher.BeginInvoke(() => NextRestart = t);
         _controller.NextBackupTextChanged += t => _dispatcher.BeginInvoke(() => NextBackup = t);
         _controller.UpdateStatusChanged += t => _dispatcher.BeginInvoke(() => UpdateStatus = t);
+        _controller.TimedShutdownChanged += total => _dispatcher.BeginInvoke(() => OnTimedShutdownChanged(total));
         _logger.LineForUi += OnLoggerLine;
 
         _busyAnimationTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(400) };
@@ -121,6 +134,9 @@ public partial class MainViewModel : ObservableObject
 
         _forceShutdownRevealTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(10) };
         _forceShutdownRevealTimer.Tick += OnForceShutdownRevealElapsed;
+
+        _shutdownCountdownTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+        _shutdownCountdownTimer.Tick += OnShutdownCountdownTick;
 
         _logger.Info($"Launcher UI ready. Server root: {_config.ServerRoot}");
     }
@@ -204,6 +220,30 @@ public partial class MainViewModel : ObservableObject
         _forceShutdownRevealTimer.Stop();
         if (IsTransitional(State))
             IsForceShutdownVisible = true;
+    }
+
+    /// <summary>Start/stop the display-only timed-shutdown mirror countdown when the controller signals it. The
+    /// server runs the authoritative countdown; this ticks a local mirror and turns the button amber.</summary>
+    private void OnTimedShutdownChanged(int? total)
+    {
+        if (total is int seconds)
+        {
+            ShutdownRemainingSeconds = seconds;
+            _shutdownCountdownTimer.Start();
+        }
+        else
+        {
+            _shutdownCountdownTimer.Stop();
+            ShutdownRemainingSeconds = null;
+        }
+    }
+
+    private void OnShutdownCountdownTick(object? sender, EventArgs e)
+    {
+        if (ShutdownRemainingSeconds is int remaining && remaining > 0)
+            ShutdownRemainingSeconds = remaining - 1;
+        else
+            _shutdownCountdownTimer.Stop();
     }
 
     /// <summary>Immediately kill the server process (direct OS kill, no save). Backs the main-window Force
@@ -414,13 +454,14 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanPrimaryAction))]
     private Task PrimaryAction()
     {
-        var kind = PrimaryButton.Resolve(IsInstalled, IsBusy, State);
+        var kind = PrimaryButton.Resolve(IsInstalled, IsBusy, State, ShutdownRemainingSeconds);
         _logger.Info($"Button clicked: {kind}");
         return Guard(() => kind switch
         {
             PrimaryActionKind.Install => ConfirmedInstallAsync(),
             PrimaryActionKind.Start => StartCoreAsync(),
             PrimaryActionKind.Stop => StopWithPromptAsync(),
+            PrimaryActionKind.ShutdownNow => ShutdownNowAsync(),
             _ => Task.CompletedTask,
         });
     }
@@ -430,13 +471,28 @@ public partial class MainViewModel : ObservableObject
     private Task StopWithPromptAsync()
     {
         var decision = RequestShutdownDecision?.Invoke() ?? new ShutdownDecision(ShutdownKind.GracefulNow);
+        if (decision.Kind == ShutdownKind.Timed)
+        {
+            // Fire-and-forget the countdown so THIS command doesn't stay "running" (an AsyncRelayCommand disables
+            // itself while executing) for the whole timer. That frees the primary button to re-enable as the amber
+            // "Shutdown Now" (accelerate) affordance while the server counts down. Guard still logs any failure.
+            _ = Guard(() => _controller.ShutdownWithCountdownAsync(decision.Seconds));
+            return Task.CompletedTask;
+        }
         return decision.Kind switch
         {
             ShutdownKind.ForceNoRest => _controller.StopAsync(graceful: false),
             ShutdownKind.GracefulNow => _controller.StopAsync(graceful: true),
-            ShutdownKind.Timed => _controller.ShutdownWithCountdownAsync(decision.Seconds),
             _ => Task.CompletedTask, // Cancel
         };
+    }
+
+    /// <summary>Accelerate a counting-down timed shutdown from the amber primary button (confirmed in the View).</summary>
+    private async Task ShutdownNowAsync()
+    {
+        if (ConfirmShutdownNow is { } confirm && !confirm())
+            return;
+        await _controller.ShutdownNowAsync();
     }
 
     /// <summary>First install pulls several GB via SteamCMD; let the View confirm before we start.</summary>
@@ -447,7 +503,7 @@ public partial class MainViewModel : ObservableObject
         return InstallOrUpdateCoreAsync();
     }
 
-    private bool CanPrimaryAction() => PrimaryButton.CanExecute(IsInstalled, IsBusy, State);
+    private bool CanPrimaryAction() => PrimaryButton.CanExecute(IsInstalled, IsBusy, State, ShutdownRemainingSeconds);
 
     [RelayCommand(CanExecute = nameof(CanRestart))]
     private Task Restart()

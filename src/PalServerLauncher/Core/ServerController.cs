@@ -46,6 +46,7 @@ public sealed class ServerController : IDisposable
     private bool _manualStop;
     private readonly RelaunchGate _relaunchGate = new(); // suppresses auto-recovery / restart relaunch after a deliberate stop, until the next user Start
     private bool _restartInProgress;
+    private bool _timedShutdownActive; // true while a timed shutdown's server-side countdown runs (drives the Shutdown Now affordance)
     private CancellationTokenSource? _restartCts; // cancels a pending broadcast countdown on a user Stop
     private bool _disposed;
     private ServerState _state = ServerState.Stopped;
@@ -264,6 +265,8 @@ public sealed class ServerController : IDisposable
     public event Action<string>? NextRestartTextChanged;
     public event Action<string>? NextBackupTextChanged;
     public event Action<string>? UpdateStatusChanged;
+    /// <summary>A timed shutdown's countdown began (the total seconds) or ended (null), for the mirror countdown / Shutdown Now button.</summary>
+    public event Action<int?>? TimedShutdownChanged;
 
     /// <summary>True if a managed server process is currently running (used by the close/startup prompts).</summary>
     public bool IsServerRunning => IsRunning();
@@ -552,6 +555,25 @@ public sealed class ServerController : IDisposable
         return StopCoreAsync(graceful: true, shutdownWaitSeconds: seconds, restarting: false, ct);
     }
 
+    /// <summary>Accelerate a timed shutdown that's counting down: send a fresh REST /shutdown(1), which overrides the
+    /// pending timer (Palworld honors the latest /shutdown). The in-flight <see cref="StopCoreAsync"/> wait catches
+    /// the resulting exit and clears the mirror. No-ops if no timed shutdown is counting down or REST is off.</summary>
+    public async Task<bool> ShutdownNowAsync()
+    {
+        PalworldRestClient? rest;
+        lock (_gate)
+        {
+            if (!_timedShutdownActive)
+                return false;
+            rest = RestClient;
+        }
+        if (rest is null)
+            return false;
+        var ok = await rest.ShutdownAsync(1, "Server is shutting down now.").ConfigureAwait(false);
+        _logger.Server(ok ? "Shutdown accelerated to now." : "Shutdown-now request was rejected.");
+        return ok;
+    }
+
     /// <summary>
     /// Immediately kill the server process (direct OS kill, no REST, no save). The escape hatch for a wedged
     /// server or a graceful stop that's dragging, usable whenever the process is alive. A DIRECT kill, not a
@@ -809,13 +831,34 @@ public sealed class ServerController : IDisposable
             if (!shutdownAccepted)
                 _logger.Info("REST /shutdown was rejected, will force-stop if the server doesn't exit.");
 
-            if (await WaitForExitAsync(process, TimeSpan.FromSeconds(wait + 30), ct).ConfigureAwait(false))
-                return;
+            // A real timed shutdown (not a restart, and an actual countdown past the 1s minimum) drives a
+            // launcher-side mirror countdown + a "Shutdown Now" affordance. Signal AFTER /shutdown is sent so an
+            // accelerate (a second /shutdown(1), see ShutdownNowAsync) is always the later, overriding call; clear
+            // it in the finally whichever way the wait ends.
+            var timedMirror = !restarting && wait > 1;
+            if (timedMirror)
+            {
+                lock (_gate) _timedShutdownActive = true;
+                TimedShutdownChanged?.Invoke(wait);
+            }
+            try
+            {
+                if (await WaitForExitAsync(process, TimeSpan.FromSeconds(wait + 30), ct).ConfigureAwait(false))
+                    return;
 
-            _logger.Info("Graceful shutdown timed out, forcing stop.");
-            await rest.StopAsync(ct).ConfigureAwait(false);
-            if (await WaitForExitAsync(process, TimeSpan.FromSeconds(10), ct).ConfigureAwait(false))
-                return;
+                _logger.Info("Graceful shutdown timed out, forcing stop.");
+                await rest.StopAsync(ct).ConfigureAwait(false);
+                if (await WaitForExitAsync(process, TimeSpan.FromSeconds(10), ct).ConfigureAwait(false))
+                    return;
+            }
+            finally
+            {
+                if (timedMirror)
+                {
+                    lock (_gate) _timedShutdownActive = false;
+                    TimedShutdownChanged?.Invoke(null);
+                }
+            }
         }
         else if (graceful)
         {

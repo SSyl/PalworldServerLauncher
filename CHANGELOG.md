@@ -5,6 +5,8 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
 ## [Unreleased]
 
 ### Added
+- **A timed shutdown you can watch and skip.** When you shut down on a timer, the Stop button now shows the
+  seconds ticking down and turns amber. Click it to shut down right away instead of waiting out the countdown.
 - **Live server commands.** A Server Commands panel lets you announce a message, kick, ban, or unban a player,
   and save the world, all while the server is running, right from the launcher.
 - **Force Shutdown.** A button that immediately stops a server that's wedged or stuck shutting down. It stays
