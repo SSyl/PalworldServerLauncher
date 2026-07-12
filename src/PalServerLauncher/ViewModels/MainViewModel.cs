@@ -51,6 +51,7 @@ public partial class MainViewModel : ObservableObject
 
     [ObservableProperty] private string _version = "-";
     [ObservableProperty] private string _fps = "-";
+    [ObservableProperty] private string _cpu = "-";
     [ObservableProperty] private string _memory = "-";
     [ObservableProperty] private string _players = "-";
     [ObservableProperty] private string _uptime = "-";
@@ -279,6 +280,27 @@ public partial class MainViewModel : ObservableObject
         get => _config.HideSteamCmdWindow;
         set { _config.HideSteamCmdWindow = value; _config.Save(); OnPropertyChanged(); }
     }
+
+    /// <summary>Compact view: hide the settings sections (Restarts / Backups / Misc) so the log area fills the
+    /// window. Persisted, so the choice sticks across launches.</summary>
+    public bool CompactMode
+    {
+        get => _config.CompactMode;
+        set
+        {
+            _config.CompactMode = value;
+            _config.Save();
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(ShowConfigBoxes));
+            OnPropertyChanged(nameof(CompactChevron));
+        }
+    }
+
+    /// <summary>Inverse of <see cref="CompactMode"/>, drives the settings-boxes Visibility.</summary>
+    public bool ShowConfigBoxes => !_config.CompactMode;
+
+    /// <summary>Disclosure triangle for the settings-sections collapse bar: down when shown, right when hidden.</summary>
+    public string CompactChevron => _config.CompactMode ? "▸" : "▾";
 
     public bool VerifyOnUpdate
     {
@@ -563,6 +585,7 @@ public partial class MainViewModel : ObservableObject
     {
         Version = s.Version;
         Fps = s.Fps;
+        Cpu = s.Cpu;
         Players = s.Players;
         Uptime = s.Uptime;
         Memory = s.Memory;
@@ -570,7 +593,7 @@ public partial class MainViewModel : ObservableObject
 
     private void ResetTiles()
     {
-        Version = Fps = Memory = Players = Uptime = NextRestart = NextBackup = "-";
+        Version = Fps = Cpu = Memory = Players = Uptime = NextRestart = NextBackup = "-";
     }
 
     // Logger lines arrive on background threads; marshal to the UI before touching the collections.

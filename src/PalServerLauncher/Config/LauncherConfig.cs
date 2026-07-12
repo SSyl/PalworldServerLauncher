@@ -149,6 +149,10 @@ public sealed class LauncherConfig
     /// in a later version appear automatically and destructive ones stay off until an admin opts in.</summary>
     public Dictionary<string, bool> DiscordCommandEnabled { get; set; } = new();
 
+    // --- UI ---
+    /// <summary>Collapse the settings sections (Restarts / Backups / Misc) for a compact, log-focused window.</summary>
+    public bool CompactMode { get; set; } = false;
+
     // --- Modding (scaffolding only, see docs/config-editor-and-integrations.md) ---
     public bool ModsEnabled { get; set; } = false;
     /// <summary>Placeholder list of enabled mod ids/paths, shape TBD once the mod mechanism is confirmed.</summary>

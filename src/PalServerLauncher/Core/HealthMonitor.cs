@@ -11,7 +11,7 @@ using PalServerLauncher.State;
 namespace PalServerLauncher.Core;
 
 /// <summary>Snapshot of live server stats for the status tiles.</summary>
-public sealed record HealthSample(string Version, string Fps, string Players, string Uptime, string Memory);
+public sealed record HealthSample(string Version, string Fps, string Players, string Uptime, string Memory, string Cpu);
 
 /// <summary>
 /// Polls one running server instance (via REST /metrics + /info) to drive state transitions and
@@ -32,6 +32,8 @@ public sealed class HealthMonitor : IDisposable
 
     private DateTime _startedUtc;
     private long _lastUptime = -1;
+    private TimeSpan? _lastCpuTotal;      // baseline for computing process CPU% between probes
+    private DateTime _lastCpuSampleUtc;
     private int _consecutiveFailures;
     private bool _reachedHealthy;
     private bool _disposed;
@@ -87,6 +89,7 @@ public sealed class HealthMonitor : IDisposable
             return; // controller handles the Stopped transition via Process.Exited
 
         var memory = FormatMemory(_process);
+        var cpu = SampleCpu(_process);
         var rest = _getRest();
 
         if (rest is null)
@@ -101,7 +104,7 @@ public sealed class HealthMonitor : IDisposable
                 StateChanged?.Invoke(ServerState.Healthy);
             }
             if (_reachedHealthy)
-                Sampled?.Invoke(new HealthSample("REST off", "-", "-", "-", memory));
+                Sampled?.Invoke(new HealthSample("REST off", "-", "-", "-", memory, cpu));
             return;
         }
 
@@ -146,13 +149,14 @@ public sealed class HealthMonitor : IDisposable
             metrics.Fps.ToString(),
             $"{metrics.Players}/{metrics.MaxPlayers}",
             FormatUptime(metrics.Uptime),
-            memory);
+            memory,
+            cpu);
         Sampled?.Invoke(sample);
 
         if (_config.LogHealthStats && DateTime.UtcNow - _lastStatusLogUtc >= StatusLogInterval)
         {
             _lastStatusLogUtc = DateTime.UtcNow;
-            _logger.Info($"Status | FPS {sample.Fps} | Players {sample.Players} | Uptime {sample.Uptime} | Mem {sample.Memory} | {sample.Version}");
+            _logger.Info($"Status | FPS {sample.Fps} | CPU {sample.Cpu} | Players {sample.Players} | Uptime {sample.Uptime} | Mem {sample.Memory} | {sample.Version}");
         }
 
         await TrackPlayersAsync(rest, ct).ConfigureAwait(false);
@@ -252,6 +256,35 @@ public sealed class HealthMonitor : IDisposable
             process.Refresh();
             var mb = process.WorkingSet64 / 1024d / 1024d;
             return mb >= 1024 ? $"{mb / 1024:F2} GB" : $"{mb:F0} MB";
+        }
+        catch
+        {
+            return "-";
+        }
+    }
+
+    /// <summary>Process CPU as a percent of total machine capacity (0-100, all cores), averaged over the
+    /// interval since the last probe. Returns "-" on the first sample (no baseline yet) or on error.</summary>
+    private string SampleCpu(Process process)
+    {
+        try
+        {
+            var now = DateTime.UtcNow;
+            var cpuNow = process.TotalProcessorTime;
+            var result = "-";
+            if (_lastCpuTotal is { } lastCpu)
+            {
+                var wallSeconds = (now - _lastCpuSampleUtc).TotalSeconds;
+                if (wallSeconds > 0)
+                {
+                    var cores = Math.Max(1, Environment.ProcessorCount);
+                    var percent = (cpuNow - lastCpu).TotalSeconds / wallSeconds / cores * 100;
+                    result = $"{Math.Clamp(percent, 0, 100):F0}%";
+                }
+            }
+            _lastCpuTotal = cpuNow;
+            _lastCpuSampleUtc = now;
+            return result;
         }
         catch
         {

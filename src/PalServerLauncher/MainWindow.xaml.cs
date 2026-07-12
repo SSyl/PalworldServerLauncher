@@ -267,7 +267,7 @@ public partial class MainWindow : Window
 
     private void OnCheckPorts(object sender, RoutedEventArgs e)
     {
-        var consent = ChoiceDialog.Show(this, "Port Accessibility",
+        var consent = ChoiceDialog.Show(this, "Port Check",
             "Your public IP address will be sent to check-host.cc, a free external service, to check whether "
             + "players can reach your server from outside your network. Nothing except your public IP and the "
             + "ports you test is sent to their service.",
@@ -280,6 +280,9 @@ public partial class MainWindow : Window
 
     private void OnToggleIpReveal(object sender, RoutedEventArgs e) =>
         _viewModel.IsIpRevealed = !_viewModel.IsIpRevealed;
+
+    private void OnToggleCompact(object sender, MouseButtonEventArgs e) =>
+        _viewModel.CompactMode = !_viewModel.CompactMode;
 
     private void OnCopyConnectionInfo(object sender, RoutedEventArgs e)
     {

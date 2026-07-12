@@ -55,7 +55,7 @@ public sealed class PortCheckDialog : Window
     {
         _logger = logger;
 
-        Title = "Port Accessibility";
+        Title = "Port Check";
         Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         Width = 640;
