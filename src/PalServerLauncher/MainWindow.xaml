@@ -147,6 +147,8 @@
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                 <Button Content="Server Settings" Click="OnOpenServerSettings"
                         ToolTip="Edit the server in one tabbed editor, World Settings (gameplay and balance), Admin (name, passwords, REST / RCON), Undocumented (keys the official docs don't cover), and Launch Arguments (the command line: listen port, player cap, performance threads, community listing)."/>
+                <Button Content="Mods" Click="OnOpenMods"
+                        ToolTip="Manage Steam Workshop server mods: add Workshop ids for the launcher to download, or scan for mods you dropped into the mods folder yourself."/>
                 <Button Content="Advanced Settings" Click="OnOpenAdvanced" Margin="0"
                         ToolTip="Low-level process tuning (priority, CPU affinity), advanced users only">
                     <Button.Style>

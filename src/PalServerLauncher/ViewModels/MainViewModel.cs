@@ -192,6 +192,18 @@ public partial class MainViewModel : ObservableObject
     public LauncherConfig Config => _config;
     public Core.GameSettingsService GameSettings => _controller.GameSettings;
 
+    /// <summary>Steam Workshop mod service (the Mods dialog scans / opens the folder / resolves package names through it).</summary>
+    public Core.ModService ModService => _controller.ModService;
+
+    /// <summary>Run SteamCMD's interactive sign-in for Workshop downloads. Visible SteamCMD window, the launcher
+    /// only passes the username and never sees the password. Returns true on a successful login.</summary>
+    public Task<bool> ConnectSteamAsync(string username) => _controller.ConnectSteamAsync(username);
+
+    /// <summary>Called after the Mods dialog saves. Mods deploy on the next start/restart, so this just notes it.</summary>
+    public void ApplyModSettings() => _logger.Info(_config.ModsEnabled
+        ? "Mod settings saved. Enabled mods download and apply on the next server start or restart."
+        : "Mods disabled. They'll be turned off on the next server start.");
+
     /// <summary>Reconnect the Discord bot after its settings changed in the Discord dialog.</summary>
     public void ApplyDiscordSettings() => _controller.ApplyDiscordSettings();
     public int RunningInstanceCount => _controller.RunningInstanceCount;

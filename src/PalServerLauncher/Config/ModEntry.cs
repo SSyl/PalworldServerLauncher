@@ -25,4 +25,15 @@ public sealed class ModEntry
 
     /// <summary>Steam's last-updated timestamp for the Workshop item, for an "update available" hint.</summary>
     public long TimeUpdated { get; set; }
+
+    /// <summary>A field-for-field copy, so the Mods dialog can edit a working copy and discard it on Cancel.</summary>
+    public ModEntry Clone() => new()
+    {
+        WorkshopId = WorkshopId,
+        Enabled = Enabled,
+        ModName = ModName,
+        Note = Note,
+        PackageName = PackageName,
+        TimeUpdated = TimeUpdated,
+    };
 }

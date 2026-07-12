@@ -258,6 +258,12 @@ public partial class MainWindow : Window
             SettingsDialog.ShowAdvanced(this, _viewModel.Config, _viewModel.GameSettings, _viewModel.IsServerRunning);
     }
 
+    private void OnOpenMods(object sender, RoutedEventArgs e)
+    {
+        if (ModsDialog.Show(this, _viewModel.Config, _viewModel.ModService, _viewModel.ConnectSteamAsync))
+            _viewModel.ApplyModSettings();
+    }
+
     private void OnEditAnnouncements(object sender, RoutedEventArgs e) =>
         AnnouncementsDialog.Show(this, _viewModel.Config);
 
