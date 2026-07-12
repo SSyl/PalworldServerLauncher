@@ -21,6 +21,8 @@ namespace PalServerLauncher.Core;
 public sealed class SteamCmd
 {
     public const string AppId = "2394010";
+    /// <summary>Palworld's game app id, where Steam Workshop content lives (distinct from the server <see cref="AppId"/>).</summary>
+    public const string GameAppId = "1623730";
     private const string SteamCmdUrl = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip";
 
     private readonly string _serverRoot;
@@ -34,6 +36,10 @@ public sealed class SteamCmd
 
     /// <summary>SteamCMD's own console log, tailed into the SteamCMD tab while it runs in its window.</summary>
     public string ConsoleLogPath => Path.Combine(SteamCmdDir, "logs", "console_log.txt");
+
+    /// <summary>Where <c>workshop_download_item</c> lands a mod, before the launcher copies it into the server's Mods\Workshop.</summary>
+    public string WorkshopContentDir(string workshopId) =>
+        Path.Combine(SteamCmdDir, "steamapps", "workshop", "content", GameAppId, workshopId);
 
     /// <summary>Download + unzip + prime SteamCMD if it isn't present yet. Small (~few MB) download.</summary>
     public async Task EnsureSteamCmdAsync(IProgress<string>? log, CancellationToken ct = default)
@@ -83,6 +89,64 @@ public sealed class SteamCmd
             .ConfigureAwait(false);
         return ParseBuildId(output);
     }
+
+    /// <summary>The outcome of a Workshop download run.</summary>
+    public enum WorkshopDownloadResult { Ok, AuthFailed, Failed }
+
+    /// <summary>
+    /// Interactive one-time Steam sign-in for Workshop downloads. Runs SteamCMD in its OWN console window with
+    /// just <c>+login &lt;username&gt;</c>: SteamCMD prompts for the password and Steam Guard code IN THAT WINDOW and
+    /// caches its own session, the launcher never sees or stores them (we only pass the username). Returns the
+    /// exit code (0 on a successful login).
+    /// </summary>
+    public Task<int> ConnectAccountAsync(string username, IProgress<string>? log, CancellationToken ct = default) =>
+        RunProcessAsync(["+login", username, "+quit"], visible: true, log, ct);
+
+    /// <summary>
+    /// Download (or update, it's incremental) one Workshop item using SteamCMD's cached session. No password is
+    /// passed, and if the session has expired SteamCMD's stdin is closed so it fails fast instead of hanging, and
+    /// we report <see cref="WorkshopDownloadResult.AuthFailed"/> so the caller can ask the user to reconnect.
+    /// </summary>
+    public async Task<WorkshopDownloadResult> DownloadWorkshopItemAsync(
+        string username, string workshopId, IProgress<string>? log, CancellationToken ct = default)
+    {
+        using var timeout = CancellationTokenSource.CreateLinkedTokenSource(ct);
+        timeout.CancelAfter(TimeSpan.FromMinutes(10)); // a hung download must not block a start forever
+        int exit;
+        string output;
+        try
+        {
+            (exit, output) = await RunCapturedAsync(
+                ["+login", username, "+workshop_download_item", GameAppId, workshopId, "+quit"], timeout.Token)
+                .ConfigureAwait(false);
+        }
+        catch (OperationCanceledException) when (!ct.IsCancellationRequested)
+        {
+            log?.Report($"Workshop download of {workshopId} timed out.");
+            return WorkshopDownloadResult.Failed;
+        }
+
+        if (output.Contains("Success. Downloaded item", StringComparison.OrdinalIgnoreCase))
+        {
+            log?.Report($"Downloaded Workshop item {workshopId}.");
+            return WorkshopDownloadResult.Ok;
+        }
+        if (LooksLikeAuthFailure(output))
+        {
+            log?.Report($"Workshop download of {workshopId} needs a Steam sign-in (reconnect your account).");
+            return WorkshopDownloadResult.AuthFailed;
+        }
+        log?.Report($"Workshop download of {workshopId} failed (exit {exit}).");
+        return WorkshopDownloadResult.Failed;
+    }
+
+    private static bool LooksLikeAuthFailure(string output) =>
+        output.Contains("Login Failure", StringComparison.OrdinalIgnoreCase)
+        || output.Contains("Invalid Password", StringComparison.OrdinalIgnoreCase)
+        || output.Contains("password:", StringComparison.OrdinalIgnoreCase)       // prompted = no cached session
+        || output.Contains("Two-factor code", StringComparison.OrdinalIgnoreCase)
+        || output.Contains("Steam Guard", StringComparison.OrdinalIgnoreCase)
+        || (output.Contains("FAILED", StringComparison.OrdinalIgnoreCase) && output.Contains("login", StringComparison.OrdinalIgnoreCase));
 
     /// <summary>Build id currently installed on disk, read from the app manifest (null if not installed).</summary>
     public string? ReadInstalledBuildId() =>
@@ -150,6 +214,7 @@ public sealed class SteamCmd
             WorkingDirectory = SteamCmdDir,
             RedirectStandardOutput = true,
             RedirectStandardError = true,
+            RedirectStandardInput = true,   // closed right after start, so a login prompt gets EOF instead of hanging
             UseShellExecute = false,
             CreateNoWindow = true,
         };
@@ -162,6 +227,7 @@ public sealed class SteamCmd
         process.ErrorDataReceived += (_, e) => { if (e.Data is not null) lock (output) output.AppendLine(e.Data); };
 
         process.Start();
+        process.StandardInput.Close();
         process.BeginOutputReadLine();
         process.BeginErrorReadLine();
         await process.WaitForExitAsync(ct).ConfigureAwait(false);
