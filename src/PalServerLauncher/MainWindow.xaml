@@ -351,6 +351,12 @@
             <TabItem Header="Server Log">
                 <ListBox x:Name="ServerList" ItemsSource="{Binding LogServer}" Style="{StaticResource LogListStyle}"/>
             </TabItem>
+            <TabItem Header="Chat">
+                <ListBox x:Name="ChatList" ItemsSource="{Binding LogChat}" Style="{StaticResource LogListStyle}"/>
+            </TabItem>
+            <TabItem Header="Players">
+                <ListBox x:Name="PlayersList" ItemsSource="{Binding LogPlayerJoin}" Style="{StaticResource LogListStyle}"/>
+            </TabItem>
             <TabItem Header="SteamCMD">
                 <ListBox x:Name="SteamCmdList" ItemsSource="{Binding LogSteamCmd}" Style="{StaticResource LogListStyle}"/>
             </TabItem>

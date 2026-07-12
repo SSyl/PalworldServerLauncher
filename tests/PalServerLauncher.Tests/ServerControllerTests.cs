@@ -100,4 +100,20 @@ public class ServerControllerTests
     {
         Assert.True(ServerController.ShouldLogServerLine(line));
     }
+
+    [Theory]
+    [InlineData("[2026-07-12 03:48:24] [CHAT] <SSyl> hello there")]
+    [InlineData("[2026-07-09 22:57:26] [CHAT] <Someone> 2.5 is ok")]
+    public void IsChatLine_matches_chat_output(string line)
+    {
+        Assert.True(ServerController.IsChatLine(line));
+    }
+
+    [Theory]
+    [InlineData("[2026-07-12 03:48:24] [LOG] Server started on port 8211")]
+    [InlineData("[2026-07-12 03:48:24] [LOG] REST accessed endpoint /v1/api/players OK")]
+    public void IsChatLine_ignores_non_chat(string line)
+    {
+        Assert.False(ServerController.IsChatLine(line));
+    }
 }

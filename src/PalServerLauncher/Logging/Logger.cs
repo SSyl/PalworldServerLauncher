@@ -54,6 +54,12 @@ public sealed class Logger
     /// <summary>A line captured from the game server's stdout/stderr (Palworld writes no log file).</summary>
     public void Server(string message) => Emit("SERVER", message, message, LogChannel.Server);
 
+    /// <summary>An in-game chat line captured from the server's stdout.</summary>
+    public void Chat(string message) => Emit("CHAT", message, message, LogChannel.Chat);
+
+    /// <summary>A player join/leave line (derived from the REST /players roster diff).</summary>
+    public void PlayerJoin(string message) => Emit("PLAYER", message, message, LogChannel.PlayerJoin);
+
     private void Emit(string tag, string fileText, string uiText, LogChannel channel)
     {
         var line = $"[{DateTime.Now:HH:mm:ss.fff}] [{tag,-6}] {fileText}";

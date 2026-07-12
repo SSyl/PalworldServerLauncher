@@ -81,9 +81,11 @@ public partial class MainViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(PublicIpDisplay))]
     private bool _isIpRevealed;
 
-    /// <summary>General tab: every line. Server/SteamCmd tabs: only their own channel.</summary>
+    /// <summary>General tab: every line. The Server / Chat / Players / SteamCmd tabs each show only their channel.</summary>
     public ObservableCollection<string> LogGeneral { get; } = new();
     public ObservableCollection<string> LogServer { get; } = new();
+    public ObservableCollection<string> LogChat { get; } = new();
+    public ObservableCollection<string> LogPlayerJoin { get; } = new();
     public ObservableCollection<string> LogSteamCmd { get; } = new();
 
     /// <summary>Raised on the UI thread after a genuine first install (server went from absent to present),
@@ -675,8 +677,13 @@ public partial class MainViewModel : ObservableObject
     {
         var stamped = $"[{DateTime.Now:HH:mm:ss}] {message}";
         AddCapped(LogGeneral, stamped); // General shows everything
-        if (channel == LogChannel.SteamCmd) AddCapped(LogSteamCmd, stamped);
-        else if (channel == LogChannel.Server) AddCapped(LogServer, stamped);
+        switch (channel)
+        {
+            case LogChannel.SteamCmd: AddCapped(LogSteamCmd, stamped); break;
+            case LogChannel.Server: AddCapped(LogServer, stamped); break;
+            case LogChannel.Chat: AddCapped(LogChat, stamped); break;
+            case LogChannel.PlayerJoin: AddCapped(LogPlayerJoin, stamped); break;
+        }
     }
 
     private static void AddCapped(ObservableCollection<string> log, string line)

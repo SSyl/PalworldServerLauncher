@@ -195,9 +195,9 @@ public sealed class HealthMonitor : IDisposable
 
         foreach (var change in DiffRoster(_knownPlayers, current))
         {
-            _logger.Server(change.Joined
-                ? $"+ {change.Name} joined ({current.Count} online)"
-                : $"- {change.Name} left ({current.Count} online)");
+            _logger.PlayerJoin(change.Joined
+                ? $"+ {change.Name} [{change.Id}] joined ({current.Count} online)"
+                : $"- {change.Name} [{change.Id}] left ({current.Count} online)");
             PlayerChanged?.Invoke(change, current.Count);
         }
 

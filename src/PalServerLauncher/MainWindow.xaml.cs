@@ -28,6 +28,8 @@ public partial class MainWindow : Window
         // Keep each tab's log scrolled to the newest line as entries are appended.
         HookAutoScroll(_viewModel.LogGeneral, GeneralList);
         HookAutoScroll(_viewModel.LogServer, ServerList);
+        HookAutoScroll(_viewModel.LogChat, ChatList);
+        HookAutoScroll(_viewModel.LogPlayerJoin, PlayersList);
         HookAutoScroll(_viewModel.LogSteamCmd, SteamCmdList);
 
         _viewModel.InstallFinished += OnInstallFinished;

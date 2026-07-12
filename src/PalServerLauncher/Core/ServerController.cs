@@ -711,11 +711,10 @@ public sealed class ServerController : IDisposable
         foreach (var a in args) psi.ArgumentList.Add(a);
 
         var process = new Process { StartInfo = psi, EnableRaisingEvents = true };
-        // Filter captured server output before it reaches the Server Log: drop blank lines (the server emits
-        // one after each REST access) and every "REST accessed endpoint" line (the launcher drives all REST
-        // traffic, so those just echo our own calls back). Ordinary output still shows. See ShouldLogServerLine.
-        process.OutputDataReceived += (_, e) => { if (ShouldLogServerLine(e.Data)) _logger.Server(e.Data!); };
-        process.ErrorDataReceived += (_, e) => { if (ShouldLogServerLine(e.Data)) _logger.Server(e.Data!); };
+        // Route captured server output (see LogServerOutput): drop noise (blank lines and every "REST accessed
+        // endpoint" echo of our own calls), send in-game chat to the Chat log, and the rest to the Server Log.
+        process.OutputDataReceived += (_, e) => LogServerOutput(e.Data);
+        process.ErrorDataReceived += (_, e) => LogServerOutput(e.Data);
         lock (_gate)
         {
             // Authoritative check inside the lock: if another launch (crash-relaunch / recovery /
@@ -804,6 +803,21 @@ public sealed class ServerController : IDisposable
     /// Server Log. We drop them all; command outcomes are still logged by the launcher's own command surface.</summary>
     public static bool IsRestAccessLogLine(string line) =>
         line.Contains("REST accessed endpoint", StringComparison.Ordinal);
+
+    /// <summary>True for an in-game chat line (the server tags these "[CHAT]").</summary>
+    public static bool IsChatLine(string line) => line.Contains("[CHAT]", StringComparison.Ordinal);
+
+    /// <summary>Route a captured server-output line: drop noise via <see cref="ShouldLogServerLine"/>, send chat
+    /// to the Chat log, and everything else to the Server Log, so the Server Log stays focused on server events.</summary>
+    private void LogServerOutput(string? data)
+    {
+        if (!ShouldLogServerLine(data))
+            return;
+        if (IsChatLine(data!))
+            _logger.Chat(data!);
+        else
+            _logger.Server(data!);
+    }
 
     /// <summary>The shutdown ladder. <paramref name="shutdownWaitSeconds"/> is the in-game /shutdown countdown
     /// (0 for restarts and plain Stop, restarts already warned via broadcasts, and a plain Stop is immediate).
