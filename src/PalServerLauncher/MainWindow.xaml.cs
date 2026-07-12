@@ -44,17 +44,20 @@ public partial class MainWindow : Window
         // Detect the public IP for the External IP display, in the background (best-effort, never blocks load).
         _ = _viewModel.RefreshPublicIpAsync();
 
-        // Attach() adopts an already-running managed server; if one was found, offer to keep, stop, or exit.
-        if (_viewModel.Attach() && !await HandleAlreadyRunningAsync())
-            return; // the user chose Exit - the launcher is closing
+        // Detect an already-running managed server but DON'T adopt it yet: prompt first (reconnect / shut down /
+        // exit), then adopt per the choice. Adopting before the prompt would start monitoring a server the user
+        // might want gone, and make "Reconnect" a no-op confirming something that already happened.
+        if (_viewModel.DetectRunningInstances() > 0 && !await HandleAlreadyRunningAsync())
+            return; // the user chose Exit, the launcher is closing
 
         PromptRestSetupIfNeeded();
     }
 
     /// <summary>
-    /// A managed server was found at startup and adopted. Only servers launched from THIS folder are
-    /// detected, so it's almost certainly ours from a previous session, offer to reconnect (keep managing
-    /// it), shut it down, or exit. Returns false only when the launcher is exiting.
+    /// A managed server was DETECTED at startup (not yet adopted). Only servers launched from THIS folder are
+    /// found, so it's almost certainly ours from a previous session, offer to reconnect (adopt and keep managing
+    /// it), shut it down, or exit. Adopting happens here, per the choice, so the launcher never starts monitoring
+    /// a server the user chose to shut down or leave. Returns false only when the launcher is exiting.
     /// </summary>
     private async Task<bool> HandleAlreadyRunningAsync()
     {
@@ -72,6 +75,7 @@ public partial class MainWindow : Window
                 Application.Current.Shutdown();
                 return false;
             }
+            _viewModel.Attach(); // adopt the primary so it stops gracefully, then force-stop the rest
             await _viewModel.StopAllInstancesAsync();
             return true;
         }
@@ -85,13 +89,15 @@ public partial class MainWindow : Window
 
         switch (choice)
         {
-            case 1: // Shut Down Server
+            case 1: // Shut Down Server: adopt, then graceful stop
+                _viewModel.Attach();
                 await _viewModel.ShutdownGracefulAsync();
                 return true;
-            case 2: // Exit Launcher
+            case 2: // Exit Launcher: leave it running, don't adopt
                 Application.Current.Shutdown();
                 return false;
-            default: // Reconnect (0) or dismissed (-1): keep the adopted server and stay open
+            default: // Reconnect (0) or dismissed (-1): adopt and keep managing it
+                _viewModel.Attach();
                 return true;
         }
     }

@@ -304,8 +304,32 @@ public sealed class ServerController : IDisposable
         _config.ServerRoot, LauncherConfig.ServerFolderName, "Pal", "Saved", "Config", "WindowsServer", "PalWorldSettings.ini");
 
     /// <summary>
-    /// Adopt an already-running managed server if present (so the launcher can control/stop it).
-    /// Returns true if one was found, the UI uses this to prompt the user to shut it down or exit.
+    /// Scan for an already-running managed server WITHOUT adopting it, so the UI can prompt (reconnect / shut
+    /// down / exit) before the launcher binds and starts monitoring. Sets <see cref="RunningInstanceCount"/>.
+    /// Call <see cref="Attach"/> afterwards to actually adopt (on reconnect or before a shut-down).
+    /// </summary>
+    public int DetectRunningInstances()
+    {
+        var all = ProcessScanner.FindAllManagedServers(_config.ServerRoot);
+        RunningInstanceCount = all.Count;
+        foreach (var proc in all)
+            proc.Dispose(); // detect only: don't hold handles, Attach re-scans if the user reconnects
+        if (all.Count == 0)
+        {
+            _logger.Debug("Startup scan: no running Palworld server found under the server root.");
+            State = ServerState.Stopped;
+        }
+        else
+        {
+            _logger.Debug($"Startup scan: {all.Count} running server instance(s) detected, waiting for the user's choice before adopting.");
+        }
+        return all.Count;
+    }
+
+    /// <summary>
+    /// Adopt an already-running managed server (bind it, start monitoring, build the REST client), so the
+    /// launcher can control it. Called AFTER the startup prompt, on reconnect or before a shut-down, never
+    /// before the user has chosen. Returns true if one was found and adopted.
     /// </summary>
     public bool Attach()
     {

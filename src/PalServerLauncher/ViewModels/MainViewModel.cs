@@ -150,8 +150,21 @@ public partial class MainViewModel : ObservableObject
     }
 
     /// <summary>
-    /// Adopt an already-running server and reflect install state. Returns true if a server was
-    /// already running (the window then prompts to shut it down or exit). Called from Loaded.
+    /// Detect an already-running server WITHOUT adopting it (so the View can prompt first), and reflect
+    /// install state. Returns the instance count; <see cref="Attach"/> does the actual adopt if the user
+    /// reconnects. Called from Loaded.
+    /// </summary>
+    public int DetectRunningInstances()
+    {
+        var count = _controller.DetectRunningInstances();
+        IsInstalled = _controller.IsInstalled;
+        _logger.Debug($"Startup detect. Installed={IsInstalled}, running instances={count}, State={State}");
+        return count;
+    }
+
+    /// <summary>
+    /// Adopt the running server (bind + monitor + REST). Called from the View AFTER the startup prompt, on
+    /// reconnect or before a shut-down. Returns true if one was found and adopted.
     /// </summary>
     public bool Attach()
     {
