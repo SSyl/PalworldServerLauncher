@@ -80,6 +80,16 @@ public sealed class ModService
     public string? ResolvePackageName(string workshopId) =>
         ReadModInfo(Path.Combine(WorkshopDir, workshopId))?.PackageName;
 
+    /// <summary>True when PalModSettings.ini exists and currently has mods globally enabled. Lets the launcher
+    /// avoid rewriting the file (or creating one on a never-modded install) just to leave it unchanged.</summary>
+    public bool AreModsEnabledInIni()
+    {
+        if (!File.Exists(PalModSettingsPath))
+            return false;
+        try { return PalModSettingsFile.Load(File.ReadAllText(PalModSettingsPath)).GlobalEnable; }
+        catch (IOException) { return false; }
+    }
+
     /// <summary>
     /// Write <c>Mods\PalModSettings.ini</c>: set <c>bGlobalEnableMod</c> and the <c>ActiveModList</c> block to
     /// the given package names, preserving every other key (WorkshopRootDir / ConfigVersion / future keys). Loads

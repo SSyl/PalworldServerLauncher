@@ -41,6 +41,10 @@ public sealed class ServerController : IDisposable
 
     /// <summary>Read/write access to PalWorldSettings.ini game settings (used by the settings editor; gated to stopped).</summary>
     public GameSettingsService GameSettings { get; }
+
+    /// <summary>Steam Workshop mod management (the Mods dialog scans / opens the folder through it; the launch
+    /// path downloads + applies mods through it).</summary>
+    public ModService ModService { get; }
     private readonly List<DateTime> _restartTimes = new();
     private DateTime? _serverStartedUtc;
     private bool _manualStop;
@@ -59,6 +63,7 @@ public sealed class ServerController : IDisposable
         _backup = new BackupService(config, logger);
         _discord = new DiscordNotifier(config, logger);
         GameSettings = new GameSettingsService(config.ServerRoot, logger);
+        ModService = new ModService(config.ServerRoot, logger);
         StateChanged += NotifyDiscordOnStateChange;
 
         _scheduler = new RestartScheduler(config, logger,
@@ -495,6 +500,11 @@ public sealed class ServerController : IDisposable
             await UpdateInPlaceAsync(ct).ConfigureAwait(false);
         else
             _logger.Info("Skipping the start-time update check (Update on start is off).");
+
+        // Download + enable mods (or reconcile them off) so this boot reflects the current mod config. A
+        // restart routes through here too, so it re-syncs. A failed sync never blocks the launch.
+        await SyncModsAsync(ct).ConfigureAwait(false);
+
         await LaunchServerAsync(ct).ConfigureAwait(false);
     }
 
@@ -667,6 +677,117 @@ public sealed class ServerController : IDisposable
             {
                 _logger.Info($"SteamCMD update exited with code {exit}, launching the installed build anyway.");
             }
+        }
+        finally
+        {
+            _steamGate.Release();
+        }
+    }
+
+    /// <summary>
+    /// Bring the server's mods in line with config just before launch (a restart routes through StartAsync, so
+    /// it re-syncs). Mods on: download each enabled Workshop id with the connected Steam account (incremental,
+    /// so it doubles as an up-to-date check), copy it into the server's Mods\Workshop, resolve its PackageName,
+    /// then write PalModSettings.ini enabling every enabled mod (downloaded + dropped-in). Mods off: turn the
+    /// ini's master flag off if a previous run left it on. A failed sync never blocks launch, it logs and
+    /// continues, same posture as the update step. SteamCMD work runs under <see cref="_steamGate"/>.
+    /// </summary>
+    private async Task SyncModsAsync(CancellationToken ct)
+    {
+        try
+        {
+            if (!_config.ModsEnabled)
+            {
+                // Unchecking "Enable mods" should take effect on the next start, so turn the ini master flag off
+                // if a previous run enabled it. Don't create the file on a never-modded install.
+                if (ModService.AreModsEnabledInIni())
+                {
+                    ModService.ApplyPalModSettings(globalEnable: false, Array.Empty<string>());
+                    _logger.Info("Mods are off, disabled them in PalModSettings.ini.");
+                }
+                return;
+            }
+
+            var enabled = _config.Mods.Where(m => m.Enabled).ToList();
+            var toDownload = enabled.Where(m => !string.IsNullOrWhiteSpace(m.WorkshopId)).ToList();
+
+            if (toDownload.Count > 0 && string.IsNullOrWhiteSpace(_config.SteamUsername))
+                _logger.Info("Mods are on but no Steam account is connected, skipping Workshop downloads. Dropped-in mods still apply. Connect an account in the Mods dialog.");
+            else if (toDownload.Count > 0)
+                await DownloadModsAsync(toDownload, ct).ConfigureAwait(false);
+
+            // Enable every enabled mod that resolves to a PackageName (from the cached value or its Info.json).
+            var active = new List<string>();
+            foreach (var mod in enabled)
+            {
+                var pkg = !string.IsNullOrWhiteSpace(mod.PackageName)
+                    ? mod.PackageName
+                    : string.IsNullOrWhiteSpace(mod.WorkshopId) ? null : ModService.ResolvePackageName(mod.WorkshopId);
+                if (!string.IsNullOrWhiteSpace(pkg))
+                    active.Add(pkg);
+                else
+                    _logger.Info($"Mod '{ModDisplayName(mod)}' has no PackageName yet, it won't activate until it's downloaded or scanned.");
+            }
+            ModService.ApplyPalModSettings(globalEnable: true, active);
+        }
+        catch (Exception ex)
+        {
+            _logger.Error("Mod sync failed, launching without applying mod changes", ex);
+        }
+    }
+
+    /// <summary>Download (incrementally) each enabled Workshop mod under the SteamCMD gate, copy it into the
+    /// server's Mods\Workshop, and cache its resolved PackageName in the in-memory config. Stops early on an
+    /// auth failure so the user is told to reconnect once, not once per mod.</summary>
+    private async Task DownloadModsAsync(IReadOnlyList<ModEntry> mods, CancellationToken ct)
+    {
+        var steamLog = new Progress<string>(_logger.SteamCmd);
+        await _steamGate.WaitAsync(ct).ConfigureAwait(false);
+        try
+        {
+            await _steamCmd.EnsureSteamCmdAsync(steamLog, ct).ConfigureAwait(false);
+            foreach (var mod in mods)
+            {
+                var result = await _steamCmd.DownloadWorkshopItemAsync(_config.SteamUsername, mod.WorkshopId, steamLog, ct).ConfigureAwait(false);
+                if (result == SteamCmd.WorkshopDownloadResult.AuthFailed)
+                {
+                    _logger.Error("Steam sign-in expired, reconnect your account in the Mods dialog. Skipping the remaining downloads.");
+                    return;
+                }
+                if (result != SteamCmd.WorkshopDownloadResult.Ok)
+                    continue; // a single failed download shouldn't stop the others
+
+                ModService.CopyDownloadedMod(mod.WorkshopId, _steamCmd.WorkshopContentDir(mod.WorkshopId));
+                var pkg = ModService.ResolvePackageName(mod.WorkshopId);
+                if (!string.IsNullOrWhiteSpace(pkg))
+                    mod.PackageName = pkg; // same object the VM holds; the dialog's Save persists it
+            }
+        }
+        finally
+        {
+            _steamGate.Release();
+        }
+    }
+
+    /// <summary>A friendly identifier for a mod in a log line: its name, else its Workshop id, else "(local mod)".</summary>
+    private static string ModDisplayName(ModEntry mod) =>
+        !string.IsNullOrWhiteSpace(mod.ModName) ? mod.ModName
+        : !string.IsNullOrWhiteSpace(mod.WorkshopId) ? mod.WorkshopId
+        : "(local mod)";
+
+    /// <summary>
+    /// Run SteamCMD's interactive one-time sign-in so it caches a session for Workshop downloads. Its own visible
+    /// window prompts for the password + Steam Guard, the launcher only passes the username. Under the gate.
+    /// </summary>
+    public async Task<bool> ConnectSteamAsync(string username, CancellationToken ct = default)
+    {
+        var steamLog = new Progress<string>(_logger.SteamCmd);
+        await _steamGate.WaitAsync(ct).ConfigureAwait(false);
+        try
+        {
+            await _steamCmd.EnsureSteamCmdAsync(steamLog, ct).ConfigureAwait(false);
+            var exit = await _steamCmd.ConnectAccountAsync(username, steamLog, ct).ConfigureAwait(false);
+            return exit == 0;
         }
         finally
         {
