@@ -161,8 +161,6 @@ public sealed class LauncherConfig
     public string SteamUsername { get; set; } = "";
     /// <summary>The tracked mods: added Workshop ids (downloaded) plus any local/dropped-in mods.</summary>
     public List<ModEntry> Mods { get; set; } = new();
-    /// <summary>Legacy placeholder, superseded by <see cref="Mods"/>. Left until the mod service rewrite drops it.</summary>
-    public List<string> EnabledMods { get; set; } = new();
 
     [JsonIgnore] public static string DefaultPath => Path.Combine(DataRoot, "launcher.json");
 
