@@ -13,6 +13,9 @@ namespace PalServerLauncher.Core;
 /// <summary>Snapshot of live server stats for the status tiles.</summary>
 public sealed record HealthSample(string Version, string Fps, string Players, string Uptime, string Memory, string Cpu);
 
+/// <summary>The state action a metrics reading should drive: fire nothing, flag a failure, or mark healthy.</summary>
+public enum ProbeAction { Ignore, Failure, Healthy }
+
 /// <summary>
 /// Polls one running server instance (via REST /metrics + /info) to drive state transitions and
 /// the status tiles. Promotes Starting -> Healthy once the server responds; flags Degraded then
@@ -109,32 +112,34 @@ public sealed class HealthMonitor : IDisposable
         }
 
         MetricsResponseSafe? metrics = await SafeMetricsAsync(rest, ct).ConfigureAwait(false);
-        // A cancelled read (the monitor was disposed mid-probe) comes back as a null "failure" because the REST
-        // client swallows the cancellation into null. Bail before we mistake it for a real failure and fire a
-        // spurious Degraded / Zombie after the monitor is gone.
-        if (ct.IsCancellationRequested)
+
+        // frozen needs the metrics plus the pre-update healthy/uptime state, so compute it before deciding.
+        var frozen = metrics is not null && _reachedHealthy && (metrics.Uptime <= _lastUptime || metrics.Fps <= 0);
+        var action = EvaluateMetricsProbe(ct.IsCancellationRequested, metrics is not null, _reachedHealthy, frozen);
+
+        // Ignore = fire nothing: either the probe was cancelled by disposal (the swallowed cancellation comes
+        // back as a null "failure", see PalworldRestClient) or the server is still booting with no metrics yet.
+        if (action == ProbeAction.Ignore)
             return;
+
         if (metrics is null)
         {
-            if (_reachedHealthy)
-                RegisterFailure("REST API unreachable", ct);
-            return; // still booting; unreachable before first healthy sample is expected
+            RegisterFailure("REST API unreachable", ct); // Failure: unreachable after we'd already been healthy
+            return;
         }
 
-        var frozen = _reachedHealthy && (metrics.Uptime <= _lastUptime || metrics.Fps <= 0);
         _lastUptime = metrics.Uptime;
-
         if (!_reachedHealthy)
         {
             _reachedHealthy = true;
             _logger.Info($"Server is up ({metrics.Version}, REST responding).");
         }
 
-        // Re-check right before the state-driving raises: the monitor may have been disposed since the guard
-        // above. There is no await between here and the raises, so this closes all but a sub-instruction window.
+        // Re-check right before the raises: disposal may have landed during the bookkeeping above (there is no
+        // await here, so this closes all but a sub-instruction window). RegisterFailure re-checks ct on its own.
         if (ct.IsCancellationRequested)
             return;
-        if (frozen)
+        if (action == ProbeAction.Failure)
         {
             RegisterFailure($"frozen (uptime={metrics.Uptime}, fps={metrics.Fps})", ct);
         }
@@ -221,6 +226,22 @@ public sealed class HealthMonitor : IDisposable
         !string.IsNullOrWhiteSpace(player.UserId) ? player.UserId
         : !string.IsNullOrWhiteSpace(player.PlayerId) ? player.PlayerId
         : player.Name;
+
+    /// <summary>
+    /// Decide what a metrics reading should do. Pure so the disposal-race guard is unit-testable. A cancelled
+    /// probe (the monitor was disposed mid-read, which the REST client turns into a null result) always yields
+    /// <see cref="ProbeAction.Ignore"/>, so it can never be mistaken for a real failure and fire a spurious
+    /// Degraded / Zombie. No metrics = a failure only once we'd been healthy (before that we're still booting),
+    /// and a live-but-frozen reading is a failure too.
+    /// </summary>
+    public static ProbeAction EvaluateMetricsProbe(bool cancelled, bool hasMetrics, bool reachedHealthy, bool frozen)
+    {
+        if (cancelled)
+            return ProbeAction.Ignore;
+        if (!hasMetrics)
+            return reachedHealthy ? ProbeAction.Failure : ProbeAction.Ignore;
+        return frozen ? ProbeAction.Failure : ProbeAction.Healthy;
+    }
 
     private void RegisterFailure(string reason, CancellationToken ct)
     {

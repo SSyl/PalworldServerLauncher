@@ -44,7 +44,7 @@ public sealed class ServerController : IDisposable
     private readonly List<DateTime> _restartTimes = new();
     private DateTime? _serverStartedUtc;
     private bool _manualStop;
-    private bool _suppressRelaunch; // set by a deliberate stop / force-shutdown, suppresses any auto-recovery or restart relaunch until the next user Start
+    private readonly RelaunchGate _relaunchGate = new(); // suppresses auto-recovery / restart relaunch after a deliberate stop, until the next user Start
     private bool _restartInProgress;
     private CancellationTokenSource? _restartCts; // cancels a pending broadcast countdown on a user Stop
     private bool _disposed;
@@ -455,11 +455,8 @@ public sealed class ServerController : IDisposable
 
         // A user Start clears a prior deliberate-stop suppression. A restart passes false so a Stop or Force
         // Shutdown during the restart keeps the server down instead of being undone by the restart's relaunch.
-        if (userInitiated)
-        {
-            lock (_gate)
-                _suppressRelaunch = false;
-        }
+        lock (_gate)
+            _relaunchGate.OnStart(userInitiated);
 
         // Back up before the update: SteamCMD can wipe PalWorldSettings.ini, and the server is stopped
         // here so this snapshots the on-disk (last-autosave) state.
@@ -513,7 +510,7 @@ public sealed class ServerController : IDisposable
         lock (_gate)
         {
             _restartCts?.Cancel();
-            _suppressRelaunch = true; // a deliberate shutdown stays stopped, like a plain Stop
+            _relaunchGate.SuppressForDeliberateStop(); // a deliberate shutdown stays stopped, like a plain Stop
         }
         return StopCoreAsync(graceful: true, shutdownWaitSeconds: seconds, restarting: false, ct);
     }
@@ -534,7 +531,7 @@ public sealed class ServerController : IDisposable
             _manualStop = true;
             // Latch so an auto-recovery already in flight (its stop phase can run for ~45s against a dead
             // REST API) doesn't relaunch the server we're about to kill. Cleared by the next explicit Start.
-            _suppressRelaunch = true;
+            _relaunchGate.SuppressForDeliberateStop();
             _restartCts?.Cancel();
             process = _process;
             // Detach the monitors under the lock (consistent with StopCoreAsync) so the kill isn't mistaken
@@ -639,10 +636,10 @@ public sealed class ServerController : IDisposable
             // restart) won the race and already started a server, drop this one, never double-launch.
             // Also drop it when a deliberate stop / force shutdown latched, so an in-flight auto-recovery or
             // restart can't relaunch the server the user just stopped (cleared by the next user Start).
-            if (IsRunningNoLock() || _suppressRelaunch)
+            if (!_relaunchGate.MayLaunch(IsRunningNoLock()))
             {
                 process.Dispose();
-                if (_suppressRelaunch)
+                if (_relaunchGate.Suppressed)
                     _logger.Info("Launch skipped, the server was deliberately stopped. Click Start to run it again.");
                 return Task.CompletedTask;
             }
@@ -669,7 +666,7 @@ public sealed class ServerController : IDisposable
         lock (_gate)
         {
             _restartCts?.Cancel();
-            _suppressRelaunch = true; // a user Stop stays stopped: don't let a racing recovery / restart relaunch it
+            _relaunchGate.SuppressForDeliberateStop(); // a user Stop stays stopped: don't let a racing recovery / restart relaunch it
         }
         // 0 -> StopCoreAsync clamps to the 1s minimum /shutdown requires, i.e. an immediate shutdown.
         await StopCoreAsync(graceful, shutdownWaitSeconds: 0, restarting: false, ct).ConfigureAwait(false);
