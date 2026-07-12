@@ -10,6 +10,8 @@ public enum PrimaryActionKind
     Install,
     Start,
     Stop,
+    /// <summary>A timed shutdown is counting down; the button is an amber "shut down now" (accelerate) affordance.</summary>
+    ShutdownNow,
 }
 
 /// <summary>
@@ -20,10 +22,13 @@ public enum PrimaryActionKind
 /// </summary>
 public static class PrimaryButton
 {
-    public static PrimaryActionKind Resolve(bool isInstalled, bool isBusy, ServerState state)
+    public static PrimaryActionKind Resolve(bool isInstalled, bool isBusy, ServerState state, int? timedShutdownRemaining = null)
     {
         if (isBusy) return PrimaryActionKind.None;
         if (!isInstalled) return PrimaryActionKind.Install;
+        // During a timed shutdown the server is mid-Stopping, but we surface an amber, clickable "shut down now"
+        // (accelerate the countdown) instead of the usual disabled transitional label.
+        if (timedShutdownRemaining is not null) return PrimaryActionKind.ShutdownNow;
 
         return state switch
         {
@@ -33,10 +38,11 @@ public static class PrimaryButton
         };
     }
 
-    public static string Label(bool isInstalled, bool isBusy, ServerState state)
+    public static string Label(bool isInstalled, bool isBusy, ServerState state, int? timedShutdownRemaining = null)
     {
         if (isBusy) return "Working…";
         if (!isInstalled) return "Install";
+        if (timedShutdownRemaining is int seconds) return $"Stopping ({seconds}s)";
 
         return state switch
         {
@@ -47,6 +53,6 @@ public static class PrimaryButton
         };
     }
 
-    public static bool CanExecute(bool isInstalled, bool isBusy, ServerState state) =>
-        Resolve(isInstalled, isBusy, state) != PrimaryActionKind.None;
+    public static bool CanExecute(bool isInstalled, bool isBusy, ServerState state, int? timedShutdownRemaining = null) =>
+        Resolve(isInstalled, isBusy, state, timedShutdownRemaining) != PrimaryActionKind.None;
 }

@@ -55,4 +55,29 @@ public class PrimaryButtonTests
         // Auto-restart suspended, but the user may still manually start.
         Assert.Equal(PrimaryActionKind.Start, PrimaryButton.Resolve(true, false, ServerState.Backoff));
     }
+
+    [Fact]
+    public void Timed_shutdown_countdown_shows_a_clickable_ShutdownNow()
+    {
+        // While a timed shutdown counts down the state is still Stopping, but the button becomes an amber,
+        // clickable "shut down now" that accelerates the countdown.
+        Assert.Equal(PrimaryActionKind.ShutdownNow, PrimaryButton.Resolve(true, false, ServerState.Stopping, timedShutdownRemaining: 58));
+        Assert.Equal("Stopping (58s)", PrimaryButton.Label(true, false, ServerState.Stopping, timedShutdownRemaining: 58));
+        Assert.True(PrimaryButton.CanExecute(true, false, ServerState.Stopping, timedShutdownRemaining: 58));
+    }
+
+    [Fact]
+    public void No_countdown_keeps_Stopping_disabled()
+    {
+        // A null remaining preserves the normal transitional behavior.
+        Assert.Equal(PrimaryActionKind.None, PrimaryButton.Resolve(true, false, ServerState.Stopping, timedShutdownRemaining: null));
+        Assert.False(PrimaryButton.CanExecute(true, false, ServerState.Stopping));
+        Assert.Equal("Stopping…", PrimaryButton.Label(true, false, ServerState.Stopping));
+    }
+
+    [Fact]
+    public void Busy_still_overrides_a_timed_shutdown()
+    {
+        Assert.Equal(PrimaryActionKind.None, PrimaryButton.Resolve(true, isBusy: true, ServerState.Stopping, timedShutdownRemaining: 58));
+    }
 }
