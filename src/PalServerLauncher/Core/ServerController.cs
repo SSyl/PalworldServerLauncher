@@ -925,7 +925,10 @@ public sealed class ServerController : IDisposable
         _health?.Dispose();
         _health = new HealthMonitor(process, () => RestClient, _config, _logger);
         _health.StateChanged += s => State = s;
-        _health.Sampled += s => { HealthUpdated?.Invoke(s); ReapplyAffinity(); };
+        // Hand ReapplyAffinity this monitor's own process, not the _process field. It's the exact process this
+        // monitor samples and is non-null for the monitor's whole life, so the re-pin needs no lock, no shared
+        // field read, and no null check (an earlier version reached into _process under the gate for no reason).
+        _health.Sampled += s => { HealthUpdated?.Invoke(s); ReapplyAffinity(process); };
         _health.ZombieDetected += HandleZombie;
         _health.PlayerChanged += NotifyDiscordOnPlayerChange;
         _health.Start();
@@ -976,19 +979,16 @@ public sealed class ServerController : IDisposable
     /// Re-pin the configured CPU affinity if it has drifted (no-op when unrestricted). Unreal resets the
     /// process affinity to all cores during startup, clobbering the initial set in <see cref="BindProcess"/>,
     /// so the health probe calls this each tick: it reads the current affinity and re-applies the mask only
-    /// when it doesn't match. Priority isn't reset by the engine, so it isn't re-applied here.
+    /// when it doesn't match. Priority isn't reset by the engine, so it isn't re-applied here. Operates on the
+    /// process the health monitor is sampling (passed in), so there's no shared field to read or race.
     /// </summary>
-    private void ReapplyAffinity()
+    private void ReapplyAffinity(Process process)
     {
         if (_config.ServerAffinityMask == 0)
             return; // no restriction configured
-        Process? process;
-        lock (_gate)
-            process = _process; // snapshot: this runs on the health-probe thread, racing OnProcessExited / BindProcess
-        if (process is null)
-            return;
         try
         {
+            // The external server can exit at any instant; poking a dead process throws, which is caught below.
             if (process.HasExited)
                 return;
             var cores = Math.Min(Environment.ProcessorCount, 64);
