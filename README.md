@@ -176,9 +176,9 @@ telemetry and no analytics. It makes network connections only to:
 - your own server, over `127.0.0.1` (your local machine),
 - Steam, to download SteamCMD and to install or update the server,
 - your own Discord webhook and bot, if you choose to set them up,
-- when you use **Port Accessibility**, and only then: check-host.cc, a free external probe service, which is
-  told your public IP and the ports you choose to test so it can check them from the internet, and a public-IP
-  lookup service (ipify) used to show your External IP.
+- when you use the **Port Check** feature, and only then, and only after it warns you first: check-host.cc, a
+  free external probe service, which is told your public IP and the ports you choose to test so it can check
+  them from the internet, and a public-IP lookup service (ipify) used to show your External IP.
 
 Your settings, logs, backups, and any tokens stay on your PC in the launcher's folder. The only features that
 reach an outside service are ones you choose to run (like the port check above), and they are listed here.
