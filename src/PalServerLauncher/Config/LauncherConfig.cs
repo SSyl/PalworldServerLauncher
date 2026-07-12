@@ -153,9 +153,15 @@ public sealed class LauncherConfig
     /// <summary>Collapse the settings sections (Restarts / Backups / Misc) for a compact, log-focused window.</summary>
     public bool CompactMode { get; set; } = false;
 
-    // --- Modding (scaffolding only, see docs/config-editor-and-integrations.md) ---
+    // --- Modding (Steam Workshop + bring-your-own, deployed via Mods/PalModSettings.ini) ---
+    /// <summary>Master switch: when on, the launcher manages mods (downloads Workshop ids + writes PalModSettings.ini on start).</summary>
     public bool ModsEnabled { get; set; } = false;
-    /// <summary>Placeholder list of enabled mod ids/paths, shape TBD once the mod mechanism is confirmed.</summary>
+    /// <summary>Steam username for authenticated Workshop downloads. SteamCMD caches its own session, the launcher
+    /// never stores the password. Empty when no account is connected.</summary>
+    public string SteamUsername { get; set; } = "";
+    /// <summary>The tracked mods: added Workshop ids (downloaded) plus any local/dropped-in mods.</summary>
+    public List<ModEntry> Mods { get; set; } = new();
+    /// <summary>Legacy placeholder, superseded by <see cref="Mods"/>. Left until the mod service rewrite drops it.</summary>
     public List<string> EnabledMods { get; set; } = new();
 
     [JsonIgnore] public static string DefaultPath => Path.Combine(DataRoot, "launcher.json");
