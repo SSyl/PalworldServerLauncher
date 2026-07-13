@@ -199,6 +199,10 @@ public partial class MainViewModel : ObservableObject
     /// only passes the username and never sees the password. Returns true on a successful login.</summary>
     public Task<bool> ConnectSteamAsync(string username) => _controller.ConnectSteamAsync(username);
 
+    /// <summary>Check whether SteamCMD still has a cached session for the account (no login window), for the Mods
+    /// dialog's sign-in status.</summary>
+    public Task<bool> CheckSteamLoginAsync(string username) => _controller.CheckSteamLoginAsync(username);
+
     /// <summary>Called after the Mods dialog saves. Mods deploy on the next start/restart, so this just notes it.</summary>
     public void ApplyModSettings() => _logger.Info(_config.ModsEnabled
         ? "Mod settings saved. Enabled mods apply on the next server start or restart."

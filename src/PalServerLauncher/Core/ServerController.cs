@@ -800,6 +800,24 @@ public sealed class ServerController : IDisposable
         }
     }
 
+    /// <summary>Check whether SteamCMD still has a usable session for the account, without opening a login window
+    /// (a hidden captured login under the gate). False if the account is blank or SteamCMD isn't installed. Lets
+    /// the Mods dialog show a verified sign-in status on open.</summary>
+    public async Task<bool> CheckSteamLoginAsync(string username, CancellationToken ct = default)
+    {
+        if (string.IsNullOrWhiteSpace(username) || !File.Exists(_steamCmd.SteamCmdExe))
+            return false;
+        await _steamGate.WaitAsync(ct).ConfigureAwait(false);
+        try
+        {
+            return await _steamCmd.HasCachedSessionAsync(username, ct).ConfigureAwait(false);
+        }
+        finally
+        {
+            _steamGate.Release();
+        }
+    }
+
     /// <summary>Launch the installed server (no update). Used by Start (after updating), crash-restart, and recovery.</summary>
     private Task LaunchServerAsync(CancellationToken ct = default)
     {

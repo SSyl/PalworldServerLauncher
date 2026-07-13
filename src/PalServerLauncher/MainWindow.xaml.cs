@@ -260,7 +260,7 @@ public partial class MainWindow : Window
 
     private void OnOpenMods(object sender, RoutedEventArgs e)
     {
-        if (ModsDialog.Show(this, _viewModel.Config, _viewModel.ModService, _viewModel.ConnectSteamAsync))
+        if (ModsDialog.Show(this, _viewModel.Config, _viewModel.ModService, _viewModel.ConnectSteamAsync, _viewModel.CheckSteamLoginAsync))
             _viewModel.ApplyModSettings();
     }
 

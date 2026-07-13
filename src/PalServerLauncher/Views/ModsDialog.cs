@@ -33,6 +33,7 @@ public sealed class ModsDialog : Window
     private readonly LauncherConfig _config;
     private readonly ModService _modService;
     private readonly Func<string, Task<bool>> _connectSteam;
+    private readonly Func<string, Task<bool>> _checkLogin;
     private bool _saved;
 
     private readonly CheckBox _modsEnabled;
@@ -55,11 +56,12 @@ public sealed class ModsDialog : Window
         public required FrameworkElement Panel;
     }
 
-    private ModsDialog(LauncherConfig config, ModService modService, Func<string, Task<bool>> connectSteam)
+    private ModsDialog(LauncherConfig config, ModService modService, Func<string, Task<bool>> connectSteam, Func<string, Task<bool>> checkLogin)
     {
         _config = config;
         _modService = modService;
         _connectSteam = connectSteam;
+        _checkLogin = checkLogin;
 
         Title = "Mods";
         Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
@@ -170,13 +172,14 @@ public sealed class ModsDialog : Window
         RebuildLoosePakList();
         UpdateSteamStatus();
         RefreshWarning();
+        Loaded += async (_, _) => await CheckLoginOnOpenAsync();
 
         Content = new ScrollViewer { Content = stack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
     }
 
-    public static bool Show(Window? owner, LauncherConfig config, ModService modService, Func<string, Task<bool>> connectSteam)
+    public static bool Show(Window? owner, LauncherConfig config, ModService modService, Func<string, Task<bool>> connectSteam, Func<string, Task<bool>> checkLogin)
     {
-        var dialog = new ModsDialog(config, modService, connectSteam) { Owner = owner };
+        var dialog = new ModsDialog(config, modService, connectSteam, checkLogin) { Owner = owner };
         dialog.ShowDialog();
         return dialog._saved;
     }
@@ -208,6 +211,27 @@ public sealed class ModsDialog : Window
             _connectButton.IsEnabled = true;
             _connectButton.Content = "Connect Steam account";
             RefreshWarning();
+        }
+    }
+
+    /// <summary>On open, if a username is set, verify the cached session in the background and show a real
+    /// signed-in / not-signed-in status, so the user isn't left guessing whether a past sign-in still holds.</summary>
+    private async Task CheckLoginOnOpenAsync()
+    {
+        var username = _username.Text.Trim();
+        if (username.Length == 0)
+            return;
+        _steamStatus.Text = $"Checking sign-in for {username}...";
+        try
+        {
+            var signedIn = await _checkLogin(username);
+            _steamStatus.Text = signedIn
+                ? $"Signed in as {username}."
+                : $"Not signed in as {username}. Click Connect to sign in.";
+        }
+        catch (Exception ex)
+        {
+            _steamStatus.Text = $"Couldn't check sign-in: {ex.Message}";
         }
     }
 
@@ -505,7 +529,7 @@ public sealed class ModsDialog : Window
 
     private void UpdateSteamStatus() => _steamStatus.Text = string.IsNullOrWhiteSpace(_username.Text)
         ? "Not connected. Add Workshop mods below, then connect an account to download them."
-        : $"Steam account: {_username.Text.Trim()}. SteamCMD keeps the sign-in cached between runs.";
+        : $"Steam account: {_username.Text.Trim()} (sign-in not checked yet).";
 
     // --- small dark-theme builders (mirrors DiscordDialog) ---
     private static TextBlock Header(string text) => new()
