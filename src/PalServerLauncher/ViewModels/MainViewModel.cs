@@ -111,11 +111,11 @@ public partial class MainViewModel : ObservableObject
     /// <summary>What the primary button currently represents, drives its color via XAML (Install/Start = green, Stop = red).</summary>
     public PrimaryActionKind PrimaryActionKind => PrimaryButton.Resolve(IsInstalled, IsBusy, State, ShutdownRemainingSeconds);
 
-    public MainViewModel(Logger logger)
+    public MainViewModel(Logger logger, LauncherConfig config)
     {
         _logger = logger;
         _dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
-        _config = LauncherConfig.Load();
+        _config = config;
         InitLeadSlots();
         _controller = new ServerController(_config, _logger);
 

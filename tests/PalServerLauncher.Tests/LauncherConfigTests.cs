@@ -31,6 +31,8 @@ public class LauncherConfigTests
 
         Assert.Equal("Server restart in {minutes} minutes", cfg.RestartAnnounceMessage);
         Assert.Equal("Server update available. Restarting server in {minutes} minutes", cfg.UpdateAnnounceMessage);
+
+        Assert.Equal("en", cfg.Language);
     }
 
     [Fact]

@@ -150,6 +150,11 @@ public sealed class LauncherConfig
     public Dictionary<string, bool> DiscordCommandEnabled { get; set; } = new();
 
     // --- UI ---
+    /// <summary>UI language as a culture name (e.g. "en", "zh-Hans"). Applied at startup to
+    /// <c>CurrentUICulture</c> only, so changing it needs a launcher restart. Regional number/date
+    /// formatting stays on the OS setting. An unknown tag falls back to English.</summary>
+    public string Language { get; set; } = "en";
+
     /// <summary>Collapse the settings sections (Restarts / Backups / Misc) for a compact, log-focused window.</summary>
     public bool CompactMode { get; set; } = false;
 

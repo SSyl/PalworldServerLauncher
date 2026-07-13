@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Windows;
 using System.Windows.Threading;
 using PalServerLauncher.Config;
@@ -31,6 +32,11 @@ public partial class App : Application
         if (migrated.Count > 0)
             _logger.Info($"Moved existing data into {LauncherConfig.DataRoot}: {string.Join(", ", migrated)}");
 
+        // Load the config once here (not in MainViewModel) so the UI language is set before MainWindow's
+        // XAML is evaluated, and thread the same instance through the window and view model.
+        var config = LauncherConfig.Load();
+        ApplyUiCulture(config.Language);
+
         // Without these, any unhandled exception (e.g. inside an async command) silently closes the window.
         DispatcherUnhandledException += OnDispatcherUnhandledException;
         AppDomain.CurrentDomain.UnhandledException += (_, args) =>
@@ -48,7 +54,23 @@ public partial class App : Application
         EventManager.RegisterClassHandler(typeof(Window), FrameworkElement.LoadedEvent,
             new RoutedEventHandler((s, _) => { if (s is Window w) DarkTitleBar.Apply(w); }));
 
-        new MainWindow(_logger).Show();
+        new MainWindow(_logger, config).Show();
+    }
+
+    // Set only the UI culture (drives resx lookup). CurrentCulture is left on the OS regional setting so
+    // number and date formatting (e.g. the restart-times 12/24h clock) is unaffected by the UI language.
+    private static void ApplyUiCulture(string language)
+    {
+        try
+        {
+            var culture = CultureInfo.GetCultureInfo(language);
+            CultureInfo.CurrentUICulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+        }
+        catch (CultureNotFoundException)
+        {
+            // Unknown/blank tag: leave the default UI culture, which resolves to the neutral English strings.
+        }
     }
 
     private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

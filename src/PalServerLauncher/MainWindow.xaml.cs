@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
+using PalServerLauncher.Config;
 using PalServerLauncher.Core;
 using PalServerLauncher.Logging;
 using PalServerLauncher.ViewModels;
@@ -18,11 +19,11 @@ public partial class MainWindow : Window
     private readonly Logger _logger;
     private bool _forceClose;
 
-    public MainWindow(Logger logger)
+    public MainWindow(Logger logger, LauncherConfig config)
     {
         InitializeComponent();
         _logger = logger;
-        _viewModel = new MainViewModel(logger);
+        _viewModel = new MainViewModel(logger, config);
         DataContext = _viewModel;
 
         // Keep each tab's log scrolled to the newest line as entries are appended.
