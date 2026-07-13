@@ -107,18 +107,42 @@ public sealed class ModService
         _logger.Info($"Wrote PalModSettings.ini (mods {(globalEnable ? "on" : "off")}, {file.ActiveMods.Count} active).");
     }
 
+    /// <summary>Loose-paks folder: <c>Pal\Content\Paks\~mods</c>. Raw .pak mods (no Info.json) dropped here are
+    /// mounted by the engine directly, outside the managed Workshop system.</summary>
+    public string LoosePaksDir => Path.Combine(_serverRoot, LauncherConfig.ServerFolderName, "Pal", "Content", "Paks", "~mods");
+
     /// <summary>Open the server's <c>Mods\Workshop</c> folder in Explorer (creating it first), for the
     /// "drop your own mods here" workflow.</summary>
-    public void OpenModsFolder()
+    public void OpenModsFolder() => OpenFolder(WorkshopDir);
+
+    /// <summary>Open the loose-paks folder (creating it first), for raw .pak mods that aren't Workshop-packaged.</summary>
+    public void OpenLoosePaksFolder() => OpenFolder(LoosePaksDir);
+
+    /// <summary>Delete a mod's source folder under <c>Mods\Workshop</c>. No-op if the name is blank or the folder
+    /// is already gone. The server clears its own deployed copy on the next restart (the mod leaves ActiveModList).
+    /// Exceptions propagate so the caller can report a failed delete.</summary>
+    public void DeleteModFolder(string folderName)
     {
-        Directory.CreateDirectory(WorkshopDir);
+        if (string.IsNullOrWhiteSpace(folderName))
+            return;
+        var dir = Path.Combine(WorkshopDir, folderName);
+        if (Directory.Exists(dir))
+        {
+            Directory.Delete(dir, recursive: true);
+            _logger.Info($"Deleted mod files: Mods\\Workshop\\{folderName}.");
+        }
+    }
+
+    private void OpenFolder(string dir)
+    {
+        Directory.CreateDirectory(dir);
         try
         {
-            Process.Start(new ProcessStartInfo { FileName = WorkshopDir, UseShellExecute = true });
+            Process.Start(new ProcessStartInfo { FileName = dir, UseShellExecute = true });
         }
         catch (Exception ex) when (ex is System.ComponentModel.Win32Exception or InvalidOperationException or IOException)
         {
-            _logger.Info($"Couldn't open the mods folder: {ex.Message}");
+            _logger.Info($"Couldn't open the folder: {ex.Message}");
         }
     }
 

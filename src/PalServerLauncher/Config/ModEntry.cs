@@ -23,6 +23,10 @@ public sealed class ModEntry
     /// PalModSettings.ini's ActiveModList needs (NOT the folder name or the Workshop id).</summary>
     public string PackageName { get; set; } = "";
 
+    /// <summary>The mod's folder name under Mods\Workshop. For a downloaded mod this is the WorkshopId; for a
+    /// dropped-in (local) mod it's the folder the Scan found. Lets Remove delete the right folder.</summary>
+    public string FolderName { get; set; } = "";
+
     /// <summary>Steam's last-updated timestamp for the Workshop item, for an "update available" hint.</summary>
     public long TimeUpdated { get; set; }
 
@@ -34,6 +38,7 @@ public sealed class ModEntry
         ModName = ModName,
         Note = Note,
         PackageName = PackageName,
+        FolderName = FolderName,
         TimeUpdated = TimeUpdated,
     };
 }

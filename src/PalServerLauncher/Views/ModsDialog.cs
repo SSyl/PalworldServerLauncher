@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -251,7 +252,7 @@ public sealed class ModsDialog : Window
                 continue;
             }
             // Found on disk, so track it as a local mod (empty WorkshopId, the launcher won't try to download it).
-            _rows.Add(BuildRow(new ModEntry { WorkshopId = "", ModName = mod.FolderId, PackageName = mod.PackageName, Enabled = true }));
+            _rows.Add(BuildRow(new ModEntry { WorkshopId = "", FolderName = mod.FolderId, ModName = mod.FolderId, PackageName = mod.PackageName, Enabled = true }));
             added++;
         }
         RebuildModList();
@@ -315,9 +316,9 @@ public sealed class ModsDialog : Window
             Content = "✕", Width = 30, Height = 26, Padding = new Thickness(0), Foreground = Fg,
             Background = new SolidColorBrush(Color.FromRgb(0x55, 0x55, 0x55)), BorderThickness = new Thickness(0),
             Cursor = Cursors.Hand, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(6, 0, 0, 0),
-            ToolTip = "Remove from the list (doesn't delete the mod files).",
+            ToolTip = "Delete this mod (removes it from the list and deletes its downloaded files).",
         };
-        remove.Click += (_, _) => { _rows.RemoveAll(r => ReferenceEquals(r.Entry, entry)); RebuildModList(); RefreshWarning(); };
+        remove.Click += (_, _) => DeleteRow(entry);
 
         var grid = new Grid();
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });                       // checkbox
@@ -359,6 +360,37 @@ public sealed class ModsDialog : Window
         foreach (var row in _rows)
             _modListPanel.Children.Add(row.Panel);
     }
+
+    /// <summary>Confirm, then delete the mod's source folder and drop it from the list. The server clears its
+    /// deployed copy on the next restart. The file delete is best-effort, a failure still removes the row.</summary>
+    private void DeleteRow(ModEntry entry)
+    {
+        if (ChoiceDialog.Show(this, "Delete mod",
+            $"This will delete the mod files and remove it from your mod list.\n\n{ModLabel(entry)}", "Delete", "Cancel") != 0)
+            return;
+        try
+        {
+            _modService.DeleteModFolder(FolderOf(entry));
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            ChoiceDialog.Show(this, "Couldn't delete files",
+                $"Removed it from the list, but couldn't delete the files: {ex.Message}", "OK");
+        }
+        _rows.RemoveAll(r => ReferenceEquals(r.Entry, entry));
+        RebuildModList();
+        RefreshWarning();
+    }
+
+    /// <summary>The folder under Mods\Workshop for this entry: the WorkshopId for a downloaded mod, else the
+    /// scanned FolderName for a dropped-in one.</summary>
+    private static string FolderOf(ModEntry entry) => entry.WorkshopId.Length > 0 ? entry.WorkshopId : entry.FolderName;
+
+    private static string ModLabel(ModEntry entry) =>
+        entry.ModName.Length > 0 ? entry.ModName
+        : entry.WorkshopId.Length > 0 ? entry.WorkshopId
+        : entry.FolderName.Length > 0 ? entry.FolderName
+        : "this mod";
 
     private void RefreshWarning()
     {
