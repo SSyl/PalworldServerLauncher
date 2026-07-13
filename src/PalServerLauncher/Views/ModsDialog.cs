@@ -312,9 +312,10 @@ public sealed class ModsDialog : Window
         var note = RowField(entry.Note);
         var remove = new Button
         {
-            Content = "✕", Width = 26, Foreground = Fg, Background = new SolidColorBrush(Color.FromRgb(0x55, 0x55, 0x55)),
-            BorderThickness = new Thickness(0), Cursor = Cursors.Hand, VerticalAlignment = VerticalAlignment.Center,
-            Margin = new Thickness(6, 0, 0, 0), ToolTip = "Remove from the list (doesn't delete the mod files).",
+            Content = "✕", Width = 30, Height = 26, Padding = new Thickness(0), Foreground = Fg,
+            Background = new SolidColorBrush(Color.FromRgb(0x55, 0x55, 0x55)), BorderThickness = new Thickness(0),
+            Cursor = Cursors.Hand, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(6, 0, 0, 0),
+            ToolTip = "Remove from the list (doesn't delete the mod files).",
         };
         remove.Click += (_, _) => { _rows.RemoveAll(r => ReferenceEquals(r.Entry, entry)); RebuildModList(); RefreshWarning(); };
 
