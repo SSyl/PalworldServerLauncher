@@ -381,4 +381,168 @@
   <data name="Main_ServerCommandsTip" xml:space="preserve">
     <value>Send live commands to the running server: announce, kick / ban / unban, save, shutdown. Available while the server is up.</value>
   </data>
+  <data name="Main_MultiServerTitle" xml:space="preserve">
+    <value>Multiple servers running</value>
+  </data>
+  <data name="Main_MultiServerMessage" xml:space="preserve">
+    <value>Detected {0} Palworld servers running from this folder. They share one save and set of ports, so they'll conflict, the launcher manages a single server. Shut them all down, or exit.</value>
+  </data>
+  <data name="Main_ShutDownAll" xml:space="preserve">
+    <value>Shut Down All</value>
+  </data>
+  <data name="Main_ExitLauncher" xml:space="preserve">
+    <value>Exit Launcher</value>
+  </data>
+  <data name="Main_ServerRunningTitle" xml:space="preserve">
+    <value>Server already running</value>
+  </data>
+  <data name="Main_ServerRunningMessage" xml:space="preserve">
+    <value>A Palworld server started from this folder is already running, almost certainly yours from a previous session, since the launcher only tracks servers it started here.
+
+Reconnect to keep managing it over the REST API (live stats, scheduled restarts, backups; the Server Log tab stays empty for a server the launcher didn't start itself). Otherwise shut it down, or exit.</value>
+  </data>
+  <data name="Main_Reconnect" xml:space="preserve">
+    <value>Reconnect</value>
+  </data>
+  <data name="Main_ShutDownServer" xml:space="preserve">
+    <value>Shut Down Server</value>
+  </data>
+  <data name="Main_InstallTitle" xml:space="preserve">
+    <value>Install the server?</value>
+  </data>
+  <data name="Main_InstallMessage" xml:space="preserve">
+    <value>This downloads and installs the Palworld dedicated server with SteamCMD, about 4 GB, into this launcher's folder. A SteamCMD window opens to show progress.
+
+Download and install it now?</value>
+  </data>
+  <data name="Main_DownloadInstall" xml:space="preserve">
+    <value>Download &amp; Install</value>
+  </data>
+  <data name="Main_ShutdownNowTitle" xml:space="preserve">
+    <value>Shut down now?</value>
+  </data>
+  <data name="Main_ShutdownNowMessage" xml:space="preserve">
+    <value>Skip the countdown and shut the server down now?</value>
+  </data>
+  <data name="Main_ShutDownNow" xml:space="preserve">
+    <value>Shut Down Now</value>
+  </data>
+  <data name="Main_KeepWaiting" xml:space="preserve">
+    <value>Keep Waiting</value>
+  </data>
+  <data name="Main_ShutdownTitle" xml:space="preserve">
+    <value>Shut down the server</value>
+  </data>
+  <data name="Main_ShutdownForceMessage" xml:space="preserve">
+    <value>REST is not enabled, so the server can't be shut down gracefully. It will be force-stopped, the process is killed directly and the last autosave limits any loss. Turn on REST for graceful shutdowns.</value>
+  </data>
+  <data name="Main_ForceStop" xml:space="preserve">
+    <value>Force Stop</value>
+  </data>
+  <data name="Main_ShutdownChoiceMessage" xml:space="preserve">
+    <value>Shut down now, or on a timer that shows players an in-game countdown first?</value>
+  </data>
+  <data name="Main_ShutdownNowButton" xml:space="preserve">
+    <value>Shutdown Now</value>
+  </data>
+  <data name="Main_TimedShutdown" xml:space="preserve">
+    <value>Timed Shutdown</value>
+  </data>
+  <data name="Main_TimedShutdownTitle" xml:space="preserve">
+    <value>Timed shutdown</value>
+  </data>
+  <data name="Main_TimedShutdownMessage" xml:space="preserve">
+    <value>Players get an in-game countdown for this many seconds before the server shuts down.</value>
+  </data>
+  <data name="Main_SecondsUnit" xml:space="preserve">
+    <value>seconds</value>
+  </data>
+  <data name="Main_ServerInstalledTitle" xml:space="preserve">
+    <value>Server installed</value>
+  </data>
+  <data name="Main_ServerInstalledMessage" xml:space="preserve">
+    <value>Server successfully installed.
+
+Enable the REST API? It's what lets the launcher control the server: apply game updates, gracefully save and shut down, schedule restarts and backups, and monitor server health.
+
+If you enable it, the launcher generates the server config now and sets a secure, randomly generated admin password (view or change it later under Server Settings, in the Admin tab). You can also skip this and enable it yourself later.</value>
+  </data>
+  <data name="Main_YesEnableRest" xml:space="preserve">
+    <value>Yes, enable it</value>
+  </data>
+  <data name="Main_NotNow" xml:space="preserve">
+    <value>Not now</value>
+  </data>
+  <data name="Main_EnableRestTitle" xml:space="preserve">
+    <value>Enable the REST API?</value>
+  </data>
+  <data name="Main_EnableRestMessage" xml:space="preserve">
+    <value>This launcher is built around Palworld's REST API and uses it for almost everything: graceful save-and-shutdown, fresh backups, live health / zombie monitoring, automatic restarts, and player join/leave logging.
+
+The REST API isn't enabled on this server yet, so those features will be limited, shutdowns fall back to a hard kill, backups may be stale, and there are no automatic restarts.
+
+Enable it now with a secure, randomly-generated admin password?</value>
+  </data>
+  <data name="Main_NoRunLimited" xml:space="preserve">
+    <value>No, run limited</value>
+  </data>
+  <data name="Main_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Main_RestEnabledTitle" xml:space="preserve">
+    <value>REST API enabled</value>
+  </data>
+  <data name="Main_RestFailedTitle" xml:space="preserve">
+    <value>Couldn't enable REST</value>
+  </data>
+  <data name="Main_RestEnabledMessage" xml:space="preserve">
+    <value>Done, the REST API is on with a new random admin password (view or change it under Server Settings, in the Admin tab). It takes effect the next time you start the server.</value>
+  </data>
+  <data name="Main_RestFailedMessage" xml:space="preserve">
+    <value>Couldn't write the server config. Make sure the server is installed and stopped, then set it manually under Server Settings, in the Admin tab.</value>
+  </data>
+  <data name="Main_ServerStillRunningTitle" xml:space="preserve">
+    <value>Server still running</value>
+  </data>
+  <data name="Main_ServerStillRunningMessage" xml:space="preserve">
+    <value>The Palworld server is still running. What should happen to it?</value>
+  </data>
+  <data name="Main_ShutDownGraceful" xml:space="preserve">
+    <value>Shut Down (graceful)</value>
+  </data>
+  <data name="Main_LeaveRunning" xml:space="preserve">
+    <value>Leave Running</value>
+  </data>
+  <data name="Main_DangerZoneTitle" xml:space="preserve">
+    <value>Danger zone!</value>
+  </data>
+  <data name="Main_DangerZoneMessage" xml:space="preserve">
+    <value>These are advanced, low-level settings. Using the wrong values here can HURT performance, for example, setting the process priority too high can starve the rest of your system and make the server run worse, not better.
+
+Don't use these unless you know what you're doing.</value>
+  </data>
+  <data name="Main_UnderstandContinue" xml:space="preserve">
+    <value>I understand, continue</value>
+  </data>
+  <data name="Main_ForceShutdownConfirmMessage" xml:space="preserve">
+    <value>This will shut the server down immediately without a save by killing the process entirely. It can cause save data loss or corruption. This is not recommended unless the server has completely stopped responding.</value>
+  </data>
+  <data name="Main_PortCheckConsentMessage" xml:space="preserve">
+    <value>Your public IP address will be sent to check-host.cc, a free external service, to check whether players can reach your server from outside your network. Nothing except your public IP and the ports you test is sent to their service.</value>
+  </data>
+  <data name="Main_UpdateAvailableTitle" xml:space="preserve">
+    <value>Update available</value>
+  </data>
+  <data name="Main_UpdateRunningMessage" xml:space="preserve">
+    <value>A newer server build ({0}) is available. Update and restart the server now? Players get the usual restart warnings.</value>
+  </data>
+  <data name="Main_UpdateRestart" xml:space="preserve">
+    <value>Update &amp; restart</value>
+  </data>
+  <data name="Main_UpdateStoppedMessage" xml:space="preserve">
+    <value>A newer server build ({0}) is available. Download and apply it now?</value>
+  </data>
+  <data name="Main_Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
 </root>

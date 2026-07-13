@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using PalServerLauncher.Config;
 using PalServerLauncher.Core;
+using PalServerLauncher.Localization;
 using PalServerLauncher.Logging;
 using PalServerLauncher.ViewModels;
 using PalServerLauncher.Views;
@@ -71,10 +72,9 @@ public partial class MainWindow : Window
         if (count > 1)
         {
             // Several servers under one folder share a save + ports and will conflict, don't keep them.
-            var multiChoice = ChoiceDialog.Show(this, "Multiple servers running",
-                $"Detected {count} Palworld servers running from this folder. They share one save and set of " +
-                "ports, so they'll conflict, the launcher manages a single server. Shut them all down, or exit.",
-                "Shut Down All", "Exit Launcher");
+            var multiChoice = ChoiceDialog.Show(this, Strings.Main_MultiServerTitle,
+                string.Format(Strings.Main_MultiServerMessage, count),
+                Strings.Main_ShutDownAll, Strings.Main_ExitLauncher);
             if (multiChoice != 0)
             {
                 Application.Current.Shutdown();
@@ -85,12 +85,9 @@ public partial class MainWindow : Window
             return true;
         }
 
-        var choice = ChoiceDialog.Show(this, "Server already running",
-            "A Palworld server started from this folder is already running, almost certainly yours from a " +
-            "previous session, since the launcher only tracks servers it started here.\n\n" +
-            "Reconnect to keep managing it over the REST API (live stats, scheduled restarts, backups; the " +
-            "Server Log tab stays empty for a server the launcher didn't start itself). Otherwise shut it down, or exit.",
-            "Reconnect", "Shut Down Server", "Exit Launcher");
+        var choice = ChoiceDialog.Show(this, Strings.Main_ServerRunningTitle,
+            Strings.Main_ServerRunningMessage,
+            Strings.Main_Reconnect, Strings.Main_ShutDownServer, Strings.Main_ExitLauncher);
 
         switch (choice)
         {
@@ -109,16 +106,15 @@ public partial class MainWindow : Window
 
     /// <summary>Confirm the first install (a multi-GB SteamCMD download) before it starts.</summary>
     private bool ConfirmInstall() =>
-        ChoiceDialog.Show(this, "Install the server?",
-            "This downloads and installs the Palworld dedicated server with SteamCMD, about 4 GB, into this " +
-            "launcher's folder. A SteamCMD window opens to show progress.\n\nDownload and install it now?",
-            "Download & Install", "Cancel") == 0;
+        ChoiceDialog.Show(this, Strings.Main_InstallTitle,
+            Strings.Main_InstallMessage,
+            Strings.Main_DownloadInstall, Strings.Common_Cancel) == 0;
 
     /// <summary>Confirm skipping a timed shutdown's countdown to shut the server down immediately.</summary>
     private bool ConfirmShutdownNow() =>
-        ChoiceDialog.Show(this, "Shut down now?",
-            "Skip the countdown and shut the server down now?",
-            "Shut Down Now", "Keep Waiting") == 0;
+        ChoiceDialog.Show(this, Strings.Main_ShutdownNowTitle,
+            Strings.Main_ShutdownNowMessage,
+            Strings.Main_ShutDownNow, Strings.Main_KeepWaiting) == 0;
 
     /// <summary>The Stop-button shutdown prompt: immediate / timed when REST is on, or a force-stop notice when
     /// it's off. Returns the user's choice, the ViewModel routes it. The dialogs live here, never in the VM.</summary>
@@ -126,23 +122,22 @@ public partial class MainWindow : Window
     {
         if (!_viewModel.IsRestApiReady)
         {
-            var forceChoice = ChoiceDialog.Show(this, "Shut down the server",
-                "REST is not enabled, so the server can't be shut down gracefully. It will be force-stopped, the "
-                + "process is killed directly and the last autosave limits any loss. Turn on REST for graceful shutdowns.",
-                "Force Stop", "Cancel");
+            var forceChoice = ChoiceDialog.Show(this, Strings.Main_ShutdownTitle,
+                Strings.Main_ShutdownForceMessage,
+                Strings.Main_ForceStop, Strings.Common_Cancel);
             return new ShutdownDecision(forceChoice == 0 ? ShutdownKind.ForceNoRest : ShutdownKind.Cancel);
         }
 
-        var choice = ChoiceDialog.Show(this, "Shut down the server",
-            "Shut down now, or on a timer that shows players an in-game countdown first?",
-            "Shutdown Now", "Timed Shutdown", "Cancel");
+        var choice = ChoiceDialog.Show(this, Strings.Main_ShutdownTitle,
+            Strings.Main_ShutdownChoiceMessage,
+            Strings.Main_ShutdownNowButton, Strings.Main_TimedShutdown, Strings.Common_Cancel);
         if (choice == 0)
             return new ShutdownDecision(ShutdownKind.GracefulNow);
         if (choice == 1)
         {
-            var seconds = NumberPromptDialog.Show(this, "Timed shutdown",
-                "Players get an in-game countdown for this many seconds before the server shuts down.",
-                "seconds", defaultValue: 60, min: 1, max: 3600);
+            var seconds = NumberPromptDialog.Show(this, Strings.Main_TimedShutdownTitle,
+                Strings.Main_TimedShutdownMessage,
+                Strings.Main_SecondsUnit, defaultValue: 60, min: 1, max: 3600);
             return seconds is int s ? new ShutdownDecision(ShutdownKind.Timed, s) : new ShutdownDecision(ShutdownKind.Cancel);
         }
         return new ShutdownDecision(ShutdownKind.Cancel);
@@ -162,27 +157,17 @@ public partial class MainWindow : Window
 
         if (afterInstall)
         {
-            var installChoice = ChoiceDialog.Show(this, "Server installed",
-                "Server successfully installed.\n\n" +
-                "Enable the REST API? It's what lets the launcher control the server: apply game updates, " +
-                "gracefully save and shut down, schedule restarts and backups, and monitor server health.\n\n" +
-                "If you enable it, the launcher generates the server config now and sets a secure, randomly " +
-                "generated admin password (view or change it later under Server Settings, in the Admin tab). You " +
-                "can also skip this and enable it yourself later.",
-                "Yes, enable it", "Not now");
+            var installChoice = ChoiceDialog.Show(this, Strings.Main_ServerInstalledTitle,
+                Strings.Main_ServerInstalledMessage,
+                Strings.Main_YesEnableRest, Strings.Main_NotNow);
             if (installChoice == 0)
                 EnableRestAndReport();
             return;
         }
 
-        var choice = ChoiceDialog.Show(this, "Enable the REST API?",
-            "This launcher is built around Palworld's REST API and uses it for almost everything: graceful " +
-            "save-and-shutdown, fresh backups, live health / zombie monitoring, automatic restarts, and player " +
-            "join/leave logging.\n\n" +
-            "The REST API isn't enabled on this server yet, so those features will be limited, shutdowns fall " +
-            "back to a hard kill, backups may be stale, and there are no automatic restarts.\n\n" +
-            "Enable it now with a secure, randomly-generated admin password?",
-            "Yes, enable it", "No, run limited", "Exit");
+        var choice = ChoiceDialog.Show(this, Strings.Main_EnableRestTitle,
+            Strings.Main_EnableRestMessage,
+            Strings.Main_YesEnableRest, Strings.Main_NoRunLimited, Strings.Main_Exit);
 
         if (choice == 0)
             EnableRestAndReport();
@@ -196,13 +181,9 @@ public partial class MainWindow : Window
     {
         var ok = _viewModel.EnableRestApi();
         ChoiceDialog.Show(this,
-            ok ? "REST API enabled" : "Couldn't enable REST",
-            ok
-                ? "Done, the REST API is on with a new random admin password (view or change it under Server " +
-                  "Settings, in the Admin tab). It takes effect the next time you start the server."
-                : "Couldn't write the server config. Make sure the server is installed and stopped, then set " +
-                  "it manually under Server Settings, in the Admin tab.",
-            "OK");
+            ok ? Strings.Main_RestEnabledTitle : Strings.Main_RestFailedTitle,
+            ok ? Strings.Main_RestEnabledMessage : Strings.Main_RestFailedMessage,
+            Strings.Common_OK);
     }
 
     private void OnClosing(object? sender, CancelEventArgs e)
@@ -211,9 +192,9 @@ public partial class MainWindow : Window
             return;
 
         e.Cancel = true; // keep the window open until the user decides
-        var choice = ChoiceDialog.Show(this, "Server still running",
-            "The Palworld server is still running. What should happen to it?",
-            "Shut Down (graceful)", "Force Shutdown", "Leave Running");
+        var choice = ChoiceDialog.Show(this, Strings.Main_ServerStillRunningTitle,
+            Strings.Main_ServerStillRunningMessage,
+            Strings.Main_ShutDownGraceful, Strings.Common_ForceShutdown, Strings.Main_LeaveRunning);
 
         switch (choice)
         {
@@ -255,11 +236,9 @@ public partial class MainWindow : Window
 
     private void OnOpenAdvanced(object sender, RoutedEventArgs e)
     {
-        var proceed = ChoiceDialog.Show(this, "Danger zone!",
-            "These are advanced, low-level settings. Using the wrong values here can HURT performance, for "
-            + "example, setting the process priority too high can starve the rest of your system and make the "
-            + "server run worse, not better.\n\nDon't use these unless you know what you're doing.",
-            "I understand, continue", "Cancel");
+        var proceed = ChoiceDialog.Show(this, Strings.Main_DangerZoneTitle,
+            Strings.Main_DangerZoneMessage,
+            Strings.Main_UnderstandContinue, Strings.Common_Cancel);
         if (proceed == 0)
             SettingsDialog.ShowAdvanced(this, _viewModel.Config, _viewModel.GameSettings, _viewModel.IsServerRunning);
     }
@@ -284,21 +263,17 @@ public partial class MainWindow : Window
 
     private void OnForceShutdown(object sender, RoutedEventArgs e)
     {
-        if (ChoiceDialog.Show(this, "Force Shutdown",
-                "This will shut the server down immediately without a save by killing the process entirely. It can "
-                + "cause save data loss or corruption. This is not recommended unless the server has completely "
-                + "stopped responding.", "Force Shutdown", "Cancel") != 0)
+        if (ChoiceDialog.Show(this, Strings.Common_ForceShutdown,
+                Strings.Main_ForceShutdownConfirmMessage, Strings.Common_ForceShutdown, Strings.Common_Cancel) != 0)
             return;
         _viewModel.ForceShutdownNow();
     }
 
     private void OnCheckPorts(object sender, RoutedEventArgs e)
     {
-        var consent = ChoiceDialog.Show(this, "Port Check",
-            "Your public IP address will be sent to check-host.cc, a free external service, to check whether "
-            + "players can reach your server from outside your network. Nothing except your public IP and the "
-            + "ports you test is sent to their service.",
-            "OK", "Cancel");
+        var consent = ChoiceDialog.Show(this, Strings.Main_PortCheck,
+            Strings.Main_PortCheckConsentMessage,
+            Strings.Common_OK, Strings.Common_Cancel);
         if (consent != 0)
             return;
 
@@ -329,17 +304,17 @@ public partial class MainWindow : Window
 
         if (_viewModel.IsServerRunning)
         {
-            var choice = ChoiceDialog.Show(this, "Update available",
-                $"A newer server build ({latest}) is available. Update and restart the server now? Players get the usual restart warnings.",
-                "Update & restart", "Not now");
+            var choice = ChoiceDialog.Show(this, Strings.Main_UpdateAvailableTitle,
+                string.Format(Strings.Main_UpdateRunningMessage, latest),
+                Strings.Main_UpdateRestart, Strings.Main_NotNow);
             if (choice == 0)
                 await _viewModel.UpdateAndRestartAsync();
         }
         else
         {
-            var choice = ChoiceDialog.Show(this, "Update available",
-                $"A newer server build ({latest}) is available. Download and apply it now?",
-                "Download", "Not now");
+            var choice = ChoiceDialog.Show(this, Strings.Main_UpdateAvailableTitle,
+                string.Format(Strings.Main_UpdateStoppedMessage, latest),
+                Strings.Main_Download, Strings.Main_NotNow);
             if (choice == 0)
                 await _viewModel.DownloadUpdateAsync();
         }
