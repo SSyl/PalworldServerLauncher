@@ -50,5 +50,40 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- Dark button, applied app-wide so the code-built dialogs match the main window instead of falling
+             back to the default WPF template (whose hover/press paints an unreadable light-blue over the text).
+             MainWindow.xaml has its own local Button style that overrides this for the main window. Hover/press
+             are ControlTemplate triggers on the border, so they still show even when a dialog button sets its
+             own Background. -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#3A3A3A"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="14,7"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="4"
+                                Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#4A4A4A"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#2D2D2D"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>
