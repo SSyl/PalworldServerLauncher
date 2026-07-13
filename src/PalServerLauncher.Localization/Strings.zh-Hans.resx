@@ -562,4 +562,510 @@ Don't use these unless you know what you're doing.</value>
 Full details in:
 {1}</value>
   </data>
+  <data name="Times_RestartTitle" xml:space="preserve">
+    <value>Restart Times</value>
+  </data>
+  <data name="Times_RestartHeader" xml:space="preserve">
+    <value>Restart times</value>
+  </data>
+  <data name="Times_BackupTitle" xml:space="preserve">
+    <value>Backup Times</value>
+  </data>
+  <data name="Times_BackupHeader" xml:space="preserve">
+    <value>Backup times</value>
+  </data>
+  <data name="Times_Every" xml:space="preserve">
+    <value>Every</value>
+  </data>
+  <data name="Times_EveryTip" xml:space="preserve">
+    <value>Fill the whole day at this interval, stepping from midnight. Pick a preset or type a decimal like 2.5. Replaces the times below.</value>
+  </data>
+  <data name="Times_Apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="Times_MinuteTip" xml:space="preserve">
+    <value>Any minute 0-59, pick a preset or type it</value>
+  </data>
+  <data name="Times_Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Times_Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="Times_InvalidTimeTitle" xml:space="preserve">
+    <value>Invalid time</value>
+  </data>
+  <data name="Times_InvalidTimeMessage" xml:space="preserve">
+    <value>Enter minutes as a number 0-59.</value>
+  </data>
+  <data name="Times_InvalidIntervalTitle" xml:space="preserve">
+    <value>Invalid interval</value>
+  </data>
+  <data name="Times_InvalidIntervalMessage" xml:space="preserve">
+    <value>Enter an interval between 15 minutes and 24 hours, e.g. 30m, 2h, or 2.5 (hours).</value>
+  </data>
+  <data name="Times_ReplaceTitle" xml:space="preserve">
+    <value>Replace times</value>
+  </data>
+  <data name="Times_ReplaceMessage" xml:space="preserve">
+    <value>This replaces the {0} time(s) below with a schedule every {1}. Continue?</value>
+  </data>
+  <data name="Times_Replace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="PortCheck_Title" xml:space="preserve">
+    <value>Port Check</value>
+  </data>
+  <data name="PortCheck_Intro" xml:space="preserve">
+    <value>Checks whether your ports can be reached from the internet, using check-host.cc. Run this with the server stopped so the launcher can bind and test the ports.</value>
+  </data>
+  <data name="PortCheck_YourPublicIp" xml:space="preserve">
+    <value>Your public IP</value>
+  </data>
+  <data name="PortCheck_Results" xml:space="preserve">
+    <value>Results</value>
+  </data>
+  <data name="PortCheck_NotCheckedYet" xml:space="preserve">
+    <value>Not checked yet.</value>
+  </data>
+  <data name="PortCheck_ServiceOnline" xml:space="preserve">
+    <value>Port check service online</value>
+  </data>
+  <data name="PortCheck_PortRowLabel" xml:space="preserve">
+    <value>{0} ({1})</value>
+  </data>
+  <data name="PortCheck_FirewallNote" xml:space="preserve">
+    <value>This test binds a temporary listener on the launcher. If Windows Firewall prompts, allow it, otherwise ports can falsely show as unreachable. REST and RCON are admin ports: they should normally NOT be reachable from the internet, so a green result there is a warning, not a pass.</value>
+  </data>
+  <data name="PortCheck_Check" xml:space="preserve">
+    <value>Check</value>
+  </data>
+  <data name="PortCheck_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="PortCheck_NoPublicIpTitle" xml:space="preserve">
+    <value>No public IP</value>
+  </data>
+  <data name="PortCheck_NoPublicIpMessage" xml:space="preserve">
+    <value>Enter your public IP first (it's normally filled in automatically).</value>
+  </data>
+  <data name="PortCheck_Checking" xml:space="preserve">
+    <value>Checking...</value>
+  </data>
+  <data name="PortCheck_ServiceOnlineStatus" xml:space="preserve">
+    <value>Online.</value>
+  </data>
+  <data name="PortCheck_ServiceUnavailable" xml:space="preserve">
+    <value>Unavailable, can't reach check-host.cc right now.</value>
+  </data>
+  <data name="PortCheck_InvalidPort" xml:space="preserve">
+    <value>Enter a port between 1 and 65535.</value>
+  </data>
+  <data name="PortCheck_Failed" xml:space="preserve">
+    <value>Port check failed, see the log.</value>
+  </data>
+  <data name="ServerCmd_Title" xml:space="preserve">
+    <value>Server Commands</value>
+  </data>
+  <data name="ServerCmd_HeaderAnnounce" xml:space="preserve">
+    <value>Announce</value>
+  </data>
+  <data name="ServerCmd_Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="ServerCmd_HeaderPlayers" xml:space="preserve">
+    <value>Players</value>
+  </data>
+  <data name="ServerCmd_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ServerCmd_ReasonLabel" xml:space="preserve">
+    <value>Reason (kick / ban)</value>
+  </data>
+  <data name="ServerCmd_LoadingPlayers" xml:space="preserve">
+    <value>Loading players...</value>
+  </data>
+  <data name="ServerCmd_HeaderUnban" xml:space="preserve">
+    <value>Unban</value>
+  </data>
+  <data name="ServerCmd_Unban" xml:space="preserve">
+    <value>Unban</value>
+  </data>
+  <data name="ServerCmd_UnbanHint" xml:space="preserve">
+    <value>Unban must use the platform user id (e.g. steam_0123...).</value>
+  </data>
+  <data name="ServerCmd_HeaderServer" xml:space="preserve">
+    <value>Server</value>
+  </data>
+  <data name="ServerCmd_SaveWorld" xml:space="preserve">
+    <value>Save world</value>
+  </data>
+  <data name="ServerCmd_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ServerCmd_EnterMessage" xml:space="preserve">
+    <value>Enter a message to announce.</value>
+  </data>
+  <data name="ServerCmd_Announced" xml:space="preserve">
+    <value>Announced.</value>
+  </data>
+  <data name="ServerCmd_AnnounceFailed" xml:space="preserve">
+    <value>Couldn't announce (REST off or rejected).</value>
+  </data>
+  <data name="ServerCmd_RestOff" xml:space="preserve">
+    <value>REST API is off or not responding.</value>
+  </data>
+  <data name="ServerCmd_NoPlayers" xml:space="preserve">
+    <value>No players online.</value>
+  </data>
+  <data name="ServerCmd_EnterUserId" xml:space="preserve">
+    <value>Enter a user id to unban.</value>
+  </data>
+  <data name="ServerCmd_UnbanTitle" xml:space="preserve">
+    <value>Unban player</value>
+  </data>
+  <data name="ServerCmd_UnbanConfirm" xml:space="preserve">
+    <value>Unban {0}?</value>
+  </data>
+  <data name="ServerCmd_Unbanned" xml:space="preserve">
+    <value>Unbanned {0}.</value>
+  </data>
+  <data name="ServerCmd_UnbanFailed" xml:space="preserve">
+    <value>Couldn't unban (REST off or rejected).</value>
+  </data>
+  <data name="ServerCmd_WorldSaved" xml:space="preserve">
+    <value>World saved.</value>
+  </data>
+  <data name="ServerCmd_SaveFailed" xml:space="preserve">
+    <value>Couldn't save (REST off or rejected).</value>
+  </data>
+  <data name="ServerCmd_UnknownName" xml:space="preserve">
+    <value>(unknown)</value>
+  </data>
+  <data name="ServerCmd_PlayerNameLevel" xml:space="preserve">
+    <value>{0}  (Lv {1})</value>
+  </data>
+  <data name="ServerCmd_NoUserId" xml:space="preserve">
+    <value>(no user id)</value>
+  </data>
+  <data name="ServerCmd_Kick" xml:space="preserve">
+    <value>Kick</value>
+  </data>
+  <data name="ServerCmd_Ban" xml:space="preserve">
+    <value>Ban</value>
+  </data>
+  <data name="ServerCmd_NoUserIdTooltip" xml:space="preserve">
+    <value>No user id reported for this player.</value>
+  </data>
+  <data name="ServerCmd_KickTitle" xml:space="preserve">
+    <value>Kick player</value>
+  </data>
+  <data name="ServerCmd_KickConfirm" xml:space="preserve">
+    <value>Kick {0} ({1})?</value>
+  </data>
+  <data name="ServerCmd_Kicked" xml:space="preserve">
+    <value>Kicked {0} ({1}).</value>
+  </data>
+  <data name="ServerCmd_KickFailed" xml:space="preserve">
+    <value>Couldn't kick {0} (REST off or rejected).</value>
+  </data>
+  <data name="ServerCmd_BanTitle" xml:space="preserve">
+    <value>Ban player</value>
+  </data>
+  <data name="ServerCmd_BanConfirm" xml:space="preserve">
+    <value>Ban {0} ({1})? They'll be kicked and blocked from rejoining.</value>
+  </data>
+  <data name="ServerCmd_Banned" xml:space="preserve">
+    <value>Banned {0} ({1}).</value>
+  </data>
+  <data name="ServerCmd_BanFailed" xml:space="preserve">
+    <value>Couldn't ban {0} (REST off or rejected).</value>
+  </data>
+  <data name="ServerCmd_CommandFailed" xml:space="preserve">
+    <value>Command failed, see the log.</value>
+  </data>
+  <data name="Discord_Title" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="Discord_BlurbPrefix" xml:space="preserve">
+    <value>Control the server from Discord with slash commands, and/or post lifecycle notifications to a channel. Create a bot and copy its token from the</value>
+  </data>
+  <data name="Discord_BlurbLinkText" xml:space="preserve">
+    <value>Discord Developer Portal</value>
+  </data>
+  <data name="Discord_BlurbSuffix" xml:space="preserve">
+    <value> (add a Bot, then invite it with the bot + applications.commands scopes).</value>
+  </data>
+  <data name="Discord_ServerControlBotHeader" xml:space="preserve">
+    <value>Server control bot</value>
+  </data>
+  <data name="Discord_EnableControlBot" xml:space="preserve">
+    <value>Enable the control bot (slash commands: /status /players /save /backup /update /start /restart /stop)</value>
+  </data>
+  <data name="Discord_BotTokenLabel" xml:space="preserve">
+    <value>Bot token (secret)</value>
+  </data>
+  <data name="Discord_CommandChannelIdLabel" xml:space="preserve">
+    <value>Command channel ID</value>
+  </data>
+  <data name="Discord_RequiredRoleIdLabel" xml:space="preserve">
+    <value>Required role ID (optional)</value>
+  </data>
+  <data name="Discord_CommandCooldownLabel" xml:space="preserve">
+    <value>Command cooldown (seconds)</value>
+  </data>
+  <data name="Discord_SecurityNote" xml:space="preserve">
+    <value>Security: set a command channel and/or a required role, the bot only acts when every gate you set passes (set at least one). Anyone who can post in the command channel, or has the role, can control the server, so lock it down (a private, admin-only channel and/or an admin role). Enable Discord Developer Mode, then right-click a channel or role -&gt; Copy ID. The token is stored locally in launcher.json and is never logged.</value>
+  </data>
+  <data name="Discord_CommandsExposedHeader" xml:space="preserve">
+    <value>Commands the bot exposes</value>
+  </data>
+  <data name="Discord_CommandsExposedHint" xml:space="preserve">
+    <value>Tick the slash commands the bot should accept. Destructive ones (restart, stop, kick, ban) are off by default. Changes take effect on Save (the bot reconnects and re-registers its commands).</value>
+  </data>
+  <data name="Discord_WebhookNotificationsHeader" xml:space="preserve">
+    <value>Webhook notifications</value>
+  </data>
+  <data name="Discord_EnableNotifications" xml:space="preserve">
+    <value>Enable notifications</value>
+  </data>
+  <data name="Discord_WebhookUrlLabel" xml:space="preserve">
+    <value>Webhook URL</value>
+  </data>
+  <data name="Discord_NotifyLifecycle" xml:space="preserve">
+    <value>Notify on up / down / update / crash</value>
+  </data>
+  <data name="Discord_NotifyPlayers" xml:space="preserve">
+    <value>Notify on player join / leave (needs REST)</value>
+  </data>
+  <data name="Discord_InvalidChannelIdTitle" xml:space="preserve">
+    <value>Invalid channel ID</value>
+  </data>
+  <data name="Discord_InvalidChannelIdMessage" xml:space="preserve">
+    <value>The command channel ID must be a number (Discord Developer Mode -&gt; right-click the channel -&gt; Copy Channel ID).</value>
+  </data>
+  <data name="Discord_InvalidRoleIdTitle" xml:space="preserve">
+    <value>Invalid role ID</value>
+  </data>
+  <data name="Discord_InvalidRoleIdMessage" xml:space="preserve">
+    <value>The required role ID must be a number (Discord Developer Mode -&gt; right-click the role -&gt; Copy Role ID).</value>
+  </data>
+  <data name="Discord_BotNotReadyTitle" xml:space="preserve">
+    <value>Bot not ready</value>
+  </data>
+  <data name="Discord_BotNotReadyMessage" xml:space="preserve">
+    <value>To enable the control bot, set a bot token and at least one gate: a command channel ID and/or a required role ID.</value>
+  </data>
+  <data name="Mods_Title" xml:space="preserve">
+    <value>Mods</value>
+  </data>
+  <data name="Mods_Disclaimer" xml:space="preserve">
+    <value>Only mods that are built to run on servers will work here. Many mods are client-side only and can't or shouldn't be installed on the server, so check a mod's description before loading it. Use mods at your own risk, they may cause save-data corruption or crashes.</value>
+  </data>
+  <data name="Mods_EnableMods" xml:space="preserve">
+    <value>Enable mods on this server</value>
+  </data>
+  <data name="Mods_SteamAccountHeader" xml:space="preserve">
+    <value>Steam account</value>
+  </data>
+  <data name="Mods_SteamAccountNote" xml:space="preserve">
+    <value>Only needed to download Workshop mods, dropped-in mods need no account. Steam's own SteamCMD handles the sign-in in its own window, so the launcher never sees or stores your password, it only remembers your username.</value>
+  </data>
+  <data name="Mods_ConnectButton" xml:space="preserve">
+    <value>Connect Steam account</value>
+  </data>
+  <data name="Mods_DifferentAccountLink" xml:space="preserve">
+    <value>Connect with a different account?</value>
+  </data>
+  <data name="Mods_WorkshopHeader" xml:space="preserve">
+    <value>Steam Workshop mods</value>
+  </data>
+  <data name="Mods_BrowsePrefix" xml:space="preserve">
+    <value>Browse mods on the </value>
+  </data>
+  <data name="Mods_BrowseLinkText" xml:space="preserve">
+    <value>Palworld Steam Workshop</value>
+  </data>
+  <data name="Mods_BrowseSuffix" xml:space="preserve">
+    <value>.</value>
+  </data>
+  <data name="Mods_AddButton" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Mods_ScanFolderButton" xml:space="preserve">
+    <value>Scan folder</value>
+  </data>
+  <data name="Mods_OpenModsFolderButton" xml:space="preserve">
+    <value>Open mods folder</value>
+  </data>
+  <data name="Mods_AddByIdLabel" xml:space="preserve">
+    <value>Add by Steam Workshop id or URL:</value>
+  </data>
+  <data name="Mods_NoAccountWarning" xml:space="preserve">
+    <value>You have Workshop mods enabled but no Steam account connected. Connect one above to download them, or they'll be skipped on start (dropped-in mods still load).</value>
+  </data>
+  <data name="Mods_LoosePakHeader" xml:space="preserve">
+    <value>Loose .pak mods</value>
+  </data>
+  <data name="Mods_LoosePakDescription" xml:space="preserve">
+    <value>You don't need this if you're using Steam Workshop above. For raw .pak mods with no Info.json (many NexusMods downloads): drop them into the loose-paks folder and toggle them here. They're enabled/disabled by renaming (never deleted) and load on the next server start.</value>
+  </data>
+  <data name="Mods_OpenLoosePaksFolderButton" xml:space="preserve">
+    <value>Open loose-paks folder</value>
+  </data>
+  <data name="Mods_RescanButton" xml:space="preserve">
+    <value>Rescan</value>
+  </data>
+  <data name="Mods_OpenUe4ssFolderButton" xml:space="preserve">
+    <value>Open UE4SS mods folder</value>
+  </data>
+  <data name="Mods_EnterUsernameTitle" xml:space="preserve">
+    <value>Enter a username</value>
+  </data>
+  <data name="Mods_EnterUsernameBody" xml:space="preserve">
+    <value>Enter your Steam account name first, then connect.</value>
+  </data>
+  <data name="Mods_ConnectingButton" xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
+  <data name="Mods_SteamCmdWindowOpened" xml:space="preserve">
+    <value>A SteamCMD window opened. Enter your password and Steam Guard code there, it stays open so you can read the result, then close it.</value>
+  </data>
+  <data name="Mods_ConfirmSignInFailed" xml:space="preserve">
+    <value>Couldn't confirm the sign-in. Connect again and watch the SteamCMD window for the error (wrong password or Steam Guard code).</value>
+  </data>
+  <data name="Mods_SignInFailed" xml:space="preserve">
+    <value>Sign-in failed: {0}</value>
+  </data>
+  <data name="Mods_SavedSignInInvalid" xml:space="preserve">
+    <value>Your saved sign-in isn't valid anymore, connect again.</value>
+  </data>
+  <data name="Mods_CheckSignInFailed" xml:space="preserve">
+    <value>Couldn't check sign-in: {0}</value>
+  </data>
+  <data name="Mods_CheckingSignIn" xml:space="preserve">
+    <value>Checking sign-in...</value>
+  </data>
+  <data name="Mods_SignedIn" xml:space="preserve">
+    <value>Signed into SteamCMD</value>
+  </data>
+  <data name="Mods_InvalidIdTitle" xml:space="preserve">
+    <value>Invalid Workshop id</value>
+  </data>
+  <data name="Mods_InvalidIdBody" xml:space="preserve">
+    <value>Enter a numeric Steam Workshop id, or a workshop URL like https://steamcommunity.com/sharedfiles/filedetails/?id=123456.</value>
+  </data>
+  <data name="Mods_AlreadyAddedTitle" xml:space="preserve">
+    <value>Already added</value>
+  </data>
+  <data name="Mods_AlreadyAddedBody" xml:space="preserve">
+    <value>That Workshop id is already in the list.</value>
+  </data>
+  <data name="Mods_AddingButton" xml:space="preserve">
+    <value>Adding...</value>
+  </data>
+  <data name="Mods_NotPalworldTitle" xml:space="preserve">
+    <value>Not a Palworld mod?</value>
+  </data>
+  <data name="Mods_NotPalworldBody" xml:space="preserve">
+    <value>This item's Steam app id is {0}, not Palworld's ({1}), so it may not work on your server. Add it anyway?</value>
+  </data>
+  <data name="Mods_AddAnyway" xml:space="preserve">
+    <value>Add anyway</value>
+  </data>
+  <data name="Mods_ScanNoneFound" xml:space="preserve">
+    <value>No new mods found in the mods folder.</value>
+  </data>
+  <data name="Mods_ScanAdded" xml:space="preserve">
+    <value>Added {0} mod(s) from the mods folder.</value>
+  </data>
+  <data name="Mods_ScanSkipped" xml:space="preserve">
+    <value> Skipped {0} folder(s) with no readable Info.json.</value>
+  </data>
+  <data name="Mods_ScanTitle" xml:space="preserve">
+    <value>Scan mods folder</value>
+  </data>
+  <data name="Mods_NoAccountTitle" xml:space="preserve">
+    <value>No Steam account connected</value>
+  </data>
+  <data name="Mods_NoAccountSaveBody" xml:space="preserve">
+    <value>You have Workshop mods enabled but no Steam account connected, so they can't be downloaded and will be skipped when the server starts (dropped-in mods still load). Save anyway?</value>
+  </data>
+  <data name="Mods_SaveAnyway" xml:space="preserve">
+    <value>Save anyway</value>
+  </data>
+  <data name="Mods_PackageTip" xml:space="preserve">
+    <value>Package: {0}</value>
+  </data>
+  <data name="Mods_PackageUnresolvedTip" xml:space="preserve">
+    <value>Package name not resolved yet (download or scan the mod).</value>
+  </data>
+  <data name="Mods_OpenWorkshopPageTip" xml:space="preserve">
+    <value>Open this mod's Steam Workshop page. </value>
+  </data>
+  <data name="Mods_LocalLabel" xml:space="preserve">
+    <value>local</value>
+  </data>
+  <data name="Mods_DeleteModTip" xml:space="preserve">
+    <value>Delete this mod (removes it from the list and deletes its downloaded files).</value>
+  </data>
+  <data name="Mods_EmptyList" xml:space="preserve">
+    <value>No mods yet. Add a Workshop id above, or drop mod folders into the mods folder and Scan.</value>
+  </data>
+  <data name="Mods_DeleteTitle" xml:space="preserve">
+    <value>Delete mod</value>
+  </data>
+  <data name="Mods_DeleteBody" xml:space="preserve">
+    <value>This will delete the mod files and remove it from your mod list.
+
+{0}</value>
+  </data>
+  <data name="Mods_DeleteButton" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Mods_DeleteFailedTitle" xml:space="preserve">
+    <value>Couldn't delete files</value>
+  </data>
+  <data name="Mods_DeleteFailedBody" xml:space="preserve">
+    <value>Removed it from the list, but couldn't delete the files: {0}</value>
+  </data>
+  <data name="Mods_ThisModFallback" xml:space="preserve">
+    <value>this mod</value>
+  </data>
+  <data name="Mods_LoosePakEmpty" xml:space="preserve">
+    <value>No loose .pak mods found. Drop .pak files (with any .utoc / .ucas) into the loose-paks folder, then Rescan.</value>
+  </data>
+  <data name="Mods_LoosePakLabelSingular" xml:space="preserve">
+    <value>{0}  ({1} file)</value>
+  </data>
+  <data name="Mods_LoosePakLabelPlural" xml:space="preserve">
+    <value>{0}  ({1} files)</value>
+  </data>
+  <data name="Mods_ChangeModFailedTitle" xml:space="preserve">
+    <value>Couldn't change the mod</value>
+  </data>
+  <data name="Mods_EnablePakFailed" xml:space="preserve">
+    <value>Couldn't enable '{0}': {1}</value>
+  </data>
+  <data name="Mods_DisablePakFailed" xml:space="preserve">
+    <value>Couldn't disable '{0}': {1}</value>
+  </data>
+  <data name="Mods_Ue4ssNotInstalledTitle" xml:space="preserve">
+    <value>UE4SS not installed</value>
+  </data>
+  <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
+    <value>UE4SS isn't installed yet. Add a UE4SS mod from the Workshop and start the server once, then its mods folder will appear here.</value>
+  </data>
+  <data name="Mods_ColOn" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="Mods_ColName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Mods_ColId" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Mods_ColNote" xml:space="preserve">
+    <value>Note</value>
+  </data>
 </root>

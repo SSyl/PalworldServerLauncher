@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using PalServerLauncher.Config;
 using PalServerLauncher.Core;
+using PalServerLauncher.Localization;
 using PalServerLauncher.Rest;
 
 namespace PalServerLauncher.Views;
@@ -69,7 +70,7 @@ public sealed class ModsDialog : Window
         _connectSteam = connectSteam;
         _checkLogin = checkLogin;
 
-        Title = "Mods";
+        Title = Strings.Mods_Title;
         Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         Width = 720;
@@ -80,30 +81,26 @@ public sealed class ModsDialog : Window
 
         stack.Children.Add(new TextBlock
         {
-            Text = "Only mods that are built to run on servers will work here. Many mods are client-side only and can't "
-                 + "or shouldn't be installed on the server, so check a mod's description before loading it. Use mods at "
-                 + "your own risk, they may cause save-data corruption or crashes.",
+            Text = Strings.Mods_Disclaimer,
             Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 8),
         });
 
-        _modsEnabled = Check("Enable mods on this server", config.ModsEnabled);
+        _modsEnabled = Check(Strings.Mods_EnableMods, config.ModsEnabled);
         _modsEnabled.Checked += (_, _) => RefreshWarning();
         _modsEnabled.Unchecked += (_, _) => RefreshWarning();
         stack.Children.Add(_modsEnabled);
 
         // --- Steam account (stateful: checking / signed-in / not-signed-in) ---
-        stack.Children.Add(Header("Steam account"));
+        stack.Children.Add(Header(Strings.Mods_SteamAccountHeader));
         _steamStatus = new TextBlock { Margin = new Thickness(0, 2, 0, 0), TextWrapping = TextWrapping.Wrap };
         stack.Children.Add(_steamStatus);
 
         // Build the connect panel first so the "different account" link can reference it (assigned field).
         _connectPanel = new StackPanel();
-        _connectPanel.Children.Add(Note(
-            "Only needed to download Workshop mods, dropped-in mods need no account. Steam's own SteamCMD handles the "
-            + "sign-in in its own window, so the launcher never sees or stores your password, it only remembers your username."));
+        _connectPanel.Children.Add(Note(Strings.Mods_SteamAccountNote));
         _username = Field(config.SteamUsername);
         _username.TextChanged += (_, _) => RefreshWarning();
-        _connectButton = MakeButton("Connect Steam account", () => _ = OnConnectSteam());
+        _connectButton = MakeButton(Strings.Mods_ConnectButton, () => _ = OnConnectSteam());
         var connectRow = new Grid { Margin = new Thickness(0, 6, 0, 0) };
         connectRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         connectRow.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
@@ -114,15 +111,15 @@ public sealed class ModsDialog : Window
         connectRow.Children.Add(_connectButton);
         _connectPanel.Children.Add(connectRow);
 
-        _differentAccountLink = LinkButton("Connect with a different account?", () => _connectPanel.Visibility = Visibility.Visible);
+        _differentAccountLink = LinkButton(Strings.Mods_DifferentAccountLink, () => _connectPanel.Visibility = Visibility.Visible);
         stack.Children.Add(_differentAccountLink);
         stack.Children.Add(_connectPanel);
 
         // --- Steam Workshop mods ---
-        stack.Children.Add(Header("Steam Workshop mods"));
-        stack.Children.Add(Link("Browse mods on the ", "https://steamcommunity.com/app/1623730/workshop/", "Palworld Steam Workshop", "."));
+        stack.Children.Add(Header(Strings.Mods_WorkshopHeader));
+        stack.Children.Add(Link(Strings.Mods_BrowsePrefix, "https://steamcommunity.com/app/1623730/workshop/", Strings.Mods_BrowseLinkText, Strings.Mods_BrowseSuffix));
         _addInput = Field("");
-        _addButton = MakeButton("Add", () => _ = OnAddMod());
+        _addButton = MakeButton(Strings.Mods_AddButton, () => _ = OnAddMod());
         var addRow = new Grid { Margin = new Thickness(0, 2, 0, 0) };
         addRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         addRow.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
@@ -130,8 +127,8 @@ public sealed class ModsDialog : Window
         Grid.SetColumn(_addInput, 0);
         _addButton.Margin = new Thickness(8, 0, 0, 0);
         Grid.SetColumn(_addButton, 1);
-        var scanButton = MakeButton("Scan folder", OnScanFolder);
-        var openButton = MakeButton("Open mods folder", () => _modService.OpenModsFolder());
+        var scanButton = MakeButton(Strings.Mods_ScanFolderButton, OnScanFolder);
+        var openButton = MakeButton(Strings.Mods_OpenModsFolderButton, () => _modService.OpenModsFolder());
         var folderButtons = new StackPanel { Orientation = Orientation.Horizontal };
         scanButton.Margin = new Thickness(8, 0, 0, 0);
         openButton.Margin = new Thickness(8, 0, 0, 0);
@@ -141,12 +138,10 @@ public sealed class ModsDialog : Window
         addRow.Children.Add(_addInput);
         addRow.Children.Add(_addButton);
         addRow.Children.Add(folderButtons);
-        stack.Children.Add(new TextBlock { Text = "Add by Steam Workshop id or URL:", Foreground = Muted, Margin = new Thickness(0, 4, 0, 0) });
+        stack.Children.Add(new TextBlock { Text = Strings.Mods_AddByIdLabel, Foreground = Muted, Margin = new Thickness(0, 4, 0, 0) });
         stack.Children.Add(addRow);
 
-        _noAccountWarning = Warning(
-            "You have Workshop mods enabled but no Steam account connected. Connect one above to download them, "
-            + "or they'll be skipped on start (dropped-in mods still load).");
+        _noAccountWarning = Warning(Strings.Mods_NoAccountWarning);
         stack.Children.Add(_noAccountWarning);
 
         stack.Children.Add(ListHeader());
@@ -155,12 +150,10 @@ public sealed class ModsDialog : Window
 
         // --- Loose .pak mods (a separate mechanism: raw paks in ~mods, toggled by rename) ---
         stack.Children.Add(Separator());
-        stack.Children.Add(Header("Loose .pak mods"));
+        stack.Children.Add(Header(Strings.Mods_LoosePakHeader));
         stack.Children.Add(new TextBlock
         {
-            Text = "You don't need this if you're using Steam Workshop above. For raw .pak mods with no Info.json "
-                 + "(many NexusMods downloads): drop them into the loose-paks folder and toggle them here. They're "
-                 + "enabled/disabled by renaming (never deleted) and load on the next server start.",
+            Text = Strings.Mods_LoosePakDescription,
             Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 2),
         });
         _loosePakPanel = new StackPanel();
@@ -170,16 +163,16 @@ public sealed class ModsDialog : Window
             CornerRadius = new CornerRadius(4), Padding = new Thickness(10, 6, 10, 6), Margin = new Thickness(0, 6, 0, 0),
         });
         var looseButtons = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 8, 0, 0) };
-        var openLoose = MakeButton("Open loose-paks folder", () => _modService.OpenLoosePaksFolder());
+        var openLoose = MakeButton(Strings.Mods_OpenLoosePaksFolderButton, () => _modService.OpenLoosePaksFolder());
         openLoose.Margin = new Thickness(0);
         looseButtons.Children.Add(openLoose);
-        looseButtons.Children.Add(MakeButton("Rescan", RebuildLoosePakList));
-        looseButtons.Children.Add(MakeButton("Open UE4SS mods folder", OnOpenUe4ss));
+        looseButtons.Children.Add(MakeButton(Strings.Mods_RescanButton, RebuildLoosePakList));
+        looseButtons.Children.Add(MakeButton(Strings.Mods_OpenUe4ssFolderButton, OnOpenUe4ss));
         stack.Children.Add(looseButtons);
 
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 18, 0, 0) };
-        buttons.Children.Add(MakeButton("Save", OnSave));
-        buttons.Children.Add(MakeButton("Cancel", Close));
+        buttons.Children.Add(MakeButton(Strings.Common_Save, OnSave));
+        buttons.Children.Add(MakeButton(Strings.Common_Cancel, Close));
         stack.Children.Add(buttons);
 
         foreach (var entry in config.Mods)
@@ -205,28 +198,28 @@ public sealed class ModsDialog : Window
         var username = _username.Text.Trim();
         if (username.Length == 0)
         {
-            ChoiceDialog.Show(this, "Enter a username", "Enter your Steam account name first, then connect.", "OK");
+            ChoiceDialog.Show(this, Strings.Mods_EnterUsernameTitle, Strings.Mods_EnterUsernameBody, Strings.Common_OK);
             return;
         }
         _connectButton.IsEnabled = false;
-        _connectButton.Content = "Connecting...";
+        _connectButton.Content = Strings.Mods_ConnectingButton;
         _steamStatus.Visibility = Visibility.Visible;
         _steamStatus.Foreground = Muted;
-        _steamStatus.Text = "A SteamCMD window opened. Enter your password and Steam Guard code there, it stays open so you can read the result, then close it.";
+        _steamStatus.Text = Strings.Mods_SteamCmdWindowOpened;
         try
         {
             var ok = await _connectSteam(username);
             ShowSteamState(ok ? SteamUi.SignedIn : SteamUi.NotSignedIn,
-                ok ? null : "Couldn't confirm the sign-in. Connect again and watch the SteamCMD window for the error (wrong password or Steam Guard code).");
+                ok ? null : Strings.Mods_ConfirmSignInFailed);
         }
         catch (Exception ex)
         {
-            ShowSteamState(SteamUi.NotSignedIn, $"Sign-in failed: {ex.Message}", error: true);
+            ShowSteamState(SteamUi.NotSignedIn, string.Format(Strings.Mods_SignInFailed, ex.Message), error: true);
         }
         finally
         {
             _connectButton.IsEnabled = true;
-            _connectButton.Content = "Connect Steam account";
+            _connectButton.Content = Strings.Mods_ConnectButton;
             RefreshWarning();
         }
     }
@@ -243,11 +236,11 @@ public sealed class ModsDialog : Window
         {
             var signedIn = await _checkLogin(username);
             ShowSteamState(signedIn ? SteamUi.SignedIn : SteamUi.NotSignedIn,
-                signedIn ? null : "Your saved sign-in isn't valid anymore, connect again.");
+                signedIn ? null : Strings.Mods_SavedSignInInvalid);
         }
         catch (Exception ex)
         {
-            ShowSteamState(SteamUi.NotSignedIn, $"Couldn't check sign-in: {ex.Message}", error: true);
+            ShowSteamState(SteamUi.NotSignedIn, string.Format(Strings.Mods_CheckSignInFailed, ex.Message), error: true);
         }
     }
 
@@ -262,14 +255,14 @@ public sealed class ModsDialog : Window
             case SteamUi.Checking:
                 _steamStatus.Visibility = Visibility.Visible;
                 _steamStatus.Foreground = Muted;
-                _steamStatus.Text = "Checking sign-in...";
+                _steamStatus.Text = Strings.Mods_CheckingSignIn;
                 _differentAccountLink.Visibility = Visibility.Collapsed;
                 _connectPanel.Visibility = Visibility.Collapsed;
                 break;
             case SteamUi.SignedIn:
                 _steamStatus.Visibility = Visibility.Visible;
                 _steamStatus.Foreground = GreenFg;
-                _steamStatus.Text = "Signed into SteamCMD";
+                _steamStatus.Text = Strings.Mods_SignedIn;
                 _differentAccountLink.Visibility = Visibility.Visible;
                 _connectPanel.Visibility = Visibility.Collapsed;
                 break;
@@ -289,18 +282,18 @@ public sealed class ModsDialog : Window
         var id = WorkshopId.TryParse(_addInput.Text);
         if (id is null)
         {
-            ChoiceDialog.Show(this, "Invalid Workshop id",
-                "Enter a numeric Steam Workshop id, or a workshop URL like https://steamcommunity.com/sharedfiles/filedetails/?id=123456.", "OK");
+            ChoiceDialog.Show(this, Strings.Mods_InvalidIdTitle,
+                Strings.Mods_InvalidIdBody, Strings.Common_OK);
             return;
         }
         if (_rows.Any(r => r.Entry.WorkshopId == id))
         {
-            ChoiceDialog.Show(this, "Already added", "That Workshop id is already in the list.", "OK");
+            ChoiceDialog.Show(this, Strings.Mods_AlreadyAddedTitle, Strings.Mods_AlreadyAddedBody, Strings.Common_OK);
             return;
         }
 
         _addButton.IsEnabled = false;
-        _addButton.Content = "Adding...";
+        _addButton.Content = Strings.Mods_AddingButton;
         try
         {
             var name = "";
@@ -312,9 +305,9 @@ public sealed class ModsDialog : Window
                 {
                     if (details.ConsumerAppId != SteamWorkshopClient.PalworldAppId)
                     {
-                        var choice = ChoiceDialog.Show(this, "Not a Palworld mod?",
-                            $"This item's Steam app id is {details.ConsumerAppId}, not Palworld's ({SteamWorkshopClient.PalworldAppId}), "
-                            + "so it may not work on your server. Add it anyway?", "Add anyway", "Cancel");
+                        var choice = ChoiceDialog.Show(this, Strings.Mods_NotPalworldTitle,
+                            string.Format(Strings.Mods_NotPalworldBody, details.ConsumerAppId, SteamWorkshopClient.PalworldAppId),
+                            Strings.Mods_AddAnyway, Strings.Common_Cancel);
                         if (choice != 0)
                             return;
                     }
@@ -330,7 +323,7 @@ public sealed class ModsDialog : Window
         finally
         {
             _addButton.IsEnabled = true;
-            _addButton.Content = "Add";
+            _addButton.Content = Strings.Mods_AddButton;
         }
     }
 
@@ -357,10 +350,10 @@ public sealed class ModsDialog : Window
         RebuildModList();
         RefreshWarning();
 
-        var message = added == 0 ? "No new mods found in the mods folder." : $"Added {added} mod(s) from the mods folder.";
+        var message = added == 0 ? Strings.Mods_ScanNoneFound : string.Format(Strings.Mods_ScanAdded, added);
         if (skipped > 0)
-            message += $" Skipped {skipped} folder(s) with no readable Info.json.";
-        ChoiceDialog.Show(this, "Scan mods folder", message, "OK");
+            message += string.Format(Strings.Mods_ScanSkipped, skipped);
+        ChoiceDialog.Show(this, Strings.Mods_ScanTitle, message, Strings.Common_OK);
     }
 
     private void OnSave()
@@ -380,9 +373,8 @@ public sealed class ModsDialog : Window
             && _rows.Any(r => r.Entry.Enabled && r.Entry.WorkshopId.Length > 0);
         if (needsAccount)
         {
-            var choice = ChoiceDialog.Show(this, "No Steam account connected",
-                "You have Workshop mods enabled but no Steam account connected, so they can't be downloaded and will "
-                + "be skipped when the server starts (dropped-in mods still load). Save anyway?", "Save anyway", "Cancel");
+            var choice = ChoiceDialog.Show(this, Strings.Mods_NoAccountTitle,
+                Strings.Mods_NoAccountSaveBody, Strings.Mods_SaveAnyway, Strings.Common_Cancel);
             if (choice != 0)
                 return;
         }
@@ -402,7 +394,7 @@ public sealed class ModsDialog : Window
         enabled.Unchecked += (_, _) => RefreshWarning();
 
         var name = RowField(entry.ModName);
-        var pkgTip = entry.PackageName.Length > 0 ? $"Package: {entry.PackageName}" : "Package name not resolved yet (download or scan the mod).";
+        var pkgTip = entry.PackageName.Length > 0 ? string.Format(Strings.Mods_PackageTip, entry.PackageName) : Strings.Mods_PackageUnresolvedTip;
         FrameworkElement idCell;
         if (entry.WorkshopId.Length > 0)
         {
@@ -415,14 +407,14 @@ public sealed class ModsDialog : Window
             idCell = new TextBlock(idLink)
             {
                 VerticalAlignment = VerticalAlignment.Center, TextAlignment = TextAlignment.Center,
-                Margin = new Thickness(6, 0, 6, 0), ToolTip = "Open this mod's Steam Workshop page. " + pkgTip,
+                Margin = new Thickness(6, 0, 6, 0), ToolTip = Strings.Mods_OpenWorkshopPageTip + pkgTip,
             };
         }
         else
         {
             idCell = new TextBlock
             {
-                Text = "local", Foreground = Muted, VerticalAlignment = VerticalAlignment.Center,
+                Text = Strings.Mods_LocalLabel, Foreground = Muted, VerticalAlignment = VerticalAlignment.Center,
                 TextAlignment = TextAlignment.Center, Margin = new Thickness(6, 0, 6, 0), ToolTip = pkgTip,
             };
         }
@@ -432,7 +424,7 @@ public sealed class ModsDialog : Window
             Content = "✕", Width = 30, Height = 26, Padding = new Thickness(0), Foreground = Fg,
             Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)), BorderThickness = new Thickness(0),
             Cursor = Cursors.Hand, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(6, 0, 0, 0),
-            ToolTip = "Delete this mod (removes it from the list and deletes its downloaded files).",
+            ToolTip = Strings.Mods_DeleteModTip,
         };
         remove.Click += (_, _) => DeleteRow(entry);
 
@@ -468,7 +460,7 @@ public sealed class ModsDialog : Window
         {
             _modListPanel.Children.Add(new TextBlock
             {
-                Text = "No mods yet. Add a Workshop id above, or drop mod folders into the mods folder and Scan.",
+                Text = Strings.Mods_EmptyList,
                 Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 0),
             });
             return;
@@ -481,8 +473,8 @@ public sealed class ModsDialog : Window
     /// deployed copy on the next restart. The file delete is best-effort, a failure still removes the row.</summary>
     private void DeleteRow(ModEntry entry)
     {
-        if (ChoiceDialog.Show(this, "Delete mod",
-            $"This will delete the mod files and remove it from your mod list.\n\n{ModLabel(entry)}", "Delete", "Cancel") != 0)
+        if (ChoiceDialog.Show(this, Strings.Mods_DeleteTitle,
+            string.Format(Strings.Mods_DeleteBody, ModLabel(entry)), Strings.Mods_DeleteButton, Strings.Common_Cancel) != 0)
             return;
         try
         {
@@ -490,8 +482,8 @@ public sealed class ModsDialog : Window
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
-            ChoiceDialog.Show(this, "Couldn't delete files",
-                $"Removed it from the list, but couldn't delete the files: {ex.Message}", "OK");
+            ChoiceDialog.Show(this, Strings.Mods_DeleteFailedTitle,
+                string.Format(Strings.Mods_DeleteFailedBody, ex.Message), Strings.Common_OK);
         }
         _rows.RemoveAll(r => ReferenceEquals(r.Entry, entry));
         RebuildModList();
@@ -506,7 +498,7 @@ public sealed class ModsDialog : Window
         entry.ModName.Length > 0 ? entry.ModName
         : entry.WorkshopId.Length > 0 ? entry.WorkshopId
         : entry.FolderName.Length > 0 ? entry.FolderName
-        : "this mod";
+        : Strings.Mods_ThisModFallback;
 
     /// <summary>Rescan the loose-paks folder and rebuild its toggle list.</summary>
     private void RebuildLoosePakList()
@@ -517,7 +509,7 @@ public sealed class ModsDialog : Window
         {
             _loosePakPanel.Children.Add(new TextBlock
             {
-                Text = "No loose .pak mods found. Drop .pak files (with any .utoc / .ucas) into the loose-paks folder, then Rescan.",
+                Text = Strings.Mods_LoosePakEmpty,
                 Foreground = Muted, TextWrapping = TextWrapping.Wrap,
             });
             return;
@@ -527,7 +519,7 @@ public sealed class ModsDialog : Window
             var count = mod.Files.Count;
             var check = new CheckBox
             {
-                Content = $"{mod.BaseName}  ({count} file{(count == 1 ? "" : "s")})",
+                Content = string.Format(count == 1 ? Strings.Mods_LoosePakLabelSingular : Strings.Mods_LoosePakLabelPlural, mod.BaseName, count),
                 IsChecked = mod.Enabled, Foreground = Fg, Margin = new Thickness(0, 4, 0, 0),
             };
             // Click fires only on user interaction, not the programmatic IsChecked above, so there's no toggle loop.
@@ -545,8 +537,8 @@ public sealed class ModsDialog : Window
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
-            ChoiceDialog.Show(this, "Couldn't change the mod",
-                $"Couldn't {(enable ? "enable" : "disable")} '{mod.BaseName}': {ex.Message}", "OK");
+            ChoiceDialog.Show(this, Strings.Mods_ChangeModFailedTitle,
+                string.Format(enable ? Strings.Mods_EnablePakFailed : Strings.Mods_DisablePakFailed, mod.BaseName, ex.Message), Strings.Common_OK);
         }
         Dispatcher.BeginInvoke(RebuildLoosePakList);
     }
@@ -555,9 +547,8 @@ public sealed class ModsDialog : Window
     {
         if (!_modService.Ue4ssInstalled)
         {
-            ChoiceDialog.Show(this, "UE4SS not installed",
-                "UE4SS isn't installed yet. Add a UE4SS mod from the Workshop and start the server once, then its "
-                + "mods folder will appear here.", "OK");
+            ChoiceDialog.Show(this, Strings.Mods_Ue4ssNotInstalledTitle,
+                Strings.Mods_Ue4ssNotInstalledBody, Strings.Common_OK);
             return;
         }
         _modService.OpenUe4ssModsFolder();
@@ -621,10 +612,10 @@ public sealed class ModsDialog : Window
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80) });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.6, GridUnitType.Star) });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-        AddHeaderCell(grid, 0, "On");
-        AddHeaderCell(grid, 1, "Name");
-        AddHeaderCell(grid, 2, "ID");
-        AddHeaderCell(grid, 3, "Note");
+        AddHeaderCell(grid, 0, Strings.Mods_ColOn);
+        AddHeaderCell(grid, 1, Strings.Mods_ColName);
+        AddHeaderCell(grid, 2, Strings.Mods_ColId);
+        AddHeaderCell(grid, 3, Strings.Mods_ColNote);
         return grid;
     }
 

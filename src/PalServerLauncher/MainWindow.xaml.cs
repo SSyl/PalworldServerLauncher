@@ -216,14 +216,14 @@ public partial class MainWindow : Window
 
     private void OnEditRestartTimes(object sender, RoutedEventArgs e)
     {
-        var result = RestartTimesDialog.Show(this, _viewModel.RestartTimes);
+        var result = RestartTimesDialog.Show(this, _viewModel.RestartTimes, Strings.Times_RestartTitle, Strings.Times_RestartHeader);
         if (result is not null)
             _viewModel.SetRestartTimes(result);
     }
 
     private void OnEditBackupTimes(object sender, RoutedEventArgs e)
     {
-        var result = RestartTimesDialog.Show(this, _viewModel.BackupTimes, "Backup");
+        var result = RestartTimesDialog.Show(this, _viewModel.BackupTimes, Strings.Times_BackupTitle, Strings.Times_BackupHeader);
         if (result is not null)
             _viewModel.SetBackupTimes(result);
     }

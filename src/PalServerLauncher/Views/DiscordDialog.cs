@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using PalServerLauncher.Config;
 using PalServerLauncher.Core;
+using PalServerLauncher.Localization;
 
 namespace PalServerLauncher.Views;
 
@@ -41,7 +42,7 @@ public sealed class DiscordDialog : Window
     {
         _config = config;
 
-        Title = "Discord";
+        Title = Strings.Discord_Title;
         Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         Width = 640;
@@ -51,37 +52,30 @@ public sealed class DiscordDialog : Window
         var stack = new StackPanel { Margin = new Thickness(18) };
 
         stack.Children.Add(Blurb(
-            "Control the server from Discord with slash commands, and/or post lifecycle notifications to a "
-            + "channel. Create a bot and copy its token from the",
-            "https://discord.com/developers/applications", "Discord Developer Portal",
-            " (add a Bot, then invite it with the bot + applications.commands scopes)."));
+            Strings.Discord_BlurbPrefix,
+            "https://discord.com/developers/applications", Strings.Discord_BlurbLinkText,
+            Strings.Discord_BlurbSuffix));
 
-        stack.Children.Add(Header("Server control bot"));
-        _botEnabled = Check("Enable the control bot (slash commands: /status /players /save /backup /update /start /restart /stop)", config.DiscordBotEnabled);
+        stack.Children.Add(Header(Strings.Discord_ServerControlBotHeader));
+        _botEnabled = Check(Strings.Discord_EnableControlBot, config.DiscordBotEnabled);
         stack.Children.Add(_botEnabled);
         _token = new SecretField(config.DiscordBotToken, editable: true);
-        stack.Children.Add(Row("Bot token (secret)", _token.Element));
+        stack.Children.Add(Row(Strings.Discord_BotTokenLabel, _token.Element));
         _channelId = Field(config.DiscordCommandChannelId == 0 ? "" : config.DiscordCommandChannelId.ToString(CultureInfo.InvariantCulture));
         DigitsOnly(_channelId);
-        stack.Children.Add(Row("Command channel ID", _channelId));
+        stack.Children.Add(Row(Strings.Discord_CommandChannelIdLabel, _channelId));
         _roleId = Field(config.DiscordCommandRoleId == 0 ? "" : config.DiscordCommandRoleId.ToString(CultureInfo.InvariantCulture));
         DigitsOnly(_roleId);
-        stack.Children.Add(Row("Required role ID (optional)", _roleId));
+        stack.Children.Add(Row(Strings.Discord_RequiredRoleIdLabel, _roleId));
         _cooldown = Field(config.DiscordCommandCooldownSeconds.ToString(CultureInfo.InvariantCulture));
         DigitsOnly(_cooldown);
-        stack.Children.Add(Row("Command cooldown (seconds)", _cooldown));
-        stack.Children.Add(Note(
-            "Security: set a command channel and/or a required role, the bot only acts when every gate you set "
-            + "passes (set at least one). Anyone who can post in the command channel, or has the role, can "
-            + "control the server, so lock it down (a private, admin-only channel and/or an admin role). Enable "
-            + "Discord Developer Mode, then right-click a channel or role -> Copy ID. The token is stored locally "
-            + "in launcher.json and is never logged."));
+        stack.Children.Add(Row(Strings.Discord_CommandCooldownLabel, _cooldown));
+        stack.Children.Add(Note(Strings.Discord_SecurityNote));
 
-        stack.Children.Add(Header("Commands the bot exposes"));
+        stack.Children.Add(Header(Strings.Discord_CommandsExposedHeader));
         stack.Children.Add(new TextBlock
         {
-            Text = "Tick the slash commands the bot should accept. Destructive ones (restart, stop, kick, ban) are "
-                 + "off by default. Changes take effect on Save (the bot reconnects and re-registers its commands).",
+            Text = Strings.Discord_CommandsExposedHint,
             Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 2),
         });
         var commandsPanel = new WrapPanel();
@@ -99,19 +93,19 @@ public sealed class DiscordDialog : Window
         }
         stack.Children.Add(commandsPanel);
 
-        stack.Children.Add(Header("Webhook notifications"));
-        _notifyEnabled = Check("Enable notifications", config.DiscordEnabled);
+        stack.Children.Add(Header(Strings.Discord_WebhookNotificationsHeader));
+        _notifyEnabled = Check(Strings.Discord_EnableNotifications, config.DiscordEnabled);
         stack.Children.Add(_notifyEnabled);
         _webhook = Field(config.DiscordWebhookUrl);
-        stack.Children.Add(Row("Webhook URL", _webhook));
-        _notifyLifecycle = Check("Notify on up / down / update / crash", config.DiscordNotifyLifecycle);
+        stack.Children.Add(Row(Strings.Discord_WebhookUrlLabel, _webhook));
+        _notifyLifecycle = Check(Strings.Discord_NotifyLifecycle, config.DiscordNotifyLifecycle);
         stack.Children.Add(_notifyLifecycle);
-        _notifyPlayers = Check("Notify on player join / leave (needs REST)", config.DiscordNotifyPlayers);
+        _notifyPlayers = Check(Strings.Discord_NotifyPlayers, config.DiscordNotifyPlayers);
         stack.Children.Add(_notifyPlayers);
 
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 18, 0, 0) };
-        buttons.Children.Add(MakeButton("Save", OnSave));
-        buttons.Children.Add(MakeButton("Cancel", Close));
+        buttons.Children.Add(MakeButton(Strings.Common_Save, OnSave));
+        buttons.Children.Add(MakeButton(Strings.Common_Cancel, Close));
         stack.Children.Add(buttons);
 
         Content = new ScrollViewer { Content = stack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
@@ -130,22 +124,22 @@ public sealed class DiscordDialog : Window
         var channelText = _channelId.Text.Trim();
         if (channelText.Length > 0 && !ulong.TryParse(channelText, NumberStyles.None, CultureInfo.InvariantCulture, out channelId))
         {
-            ChoiceDialog.Show(this, "Invalid channel ID",
-                "The command channel ID must be a number (Discord Developer Mode -> right-click the channel -> Copy Channel ID).", "OK");
+            ChoiceDialog.Show(this, Strings.Discord_InvalidChannelIdTitle,
+                Strings.Discord_InvalidChannelIdMessage, Strings.Common_OK);
             return;
         }
         ulong roleId = 0;
         var roleText = _roleId.Text.Trim();
         if (roleText.Length > 0 && !ulong.TryParse(roleText, NumberStyles.None, CultureInfo.InvariantCulture, out roleId))
         {
-            ChoiceDialog.Show(this, "Invalid role ID",
-                "The required role ID must be a number (Discord Developer Mode -> right-click the role -> Copy Role ID).", "OK");
+            ChoiceDialog.Show(this, Strings.Discord_InvalidRoleIdTitle,
+                Strings.Discord_InvalidRoleIdMessage, Strings.Common_OK);
             return;
         }
         if (_botEnabled.IsChecked == true && (_token.Value.Trim().Length == 0 || (channelId == 0 && roleId == 0)))
         {
-            ChoiceDialog.Show(this, "Bot not ready",
-                "To enable the control bot, set a bot token and at least one gate: a command channel ID and/or a required role ID.", "OK");
+            ChoiceDialog.Show(this, Strings.Discord_BotNotReadyTitle,
+                Strings.Discord_BotNotReadyMessage, Strings.Common_OK);
             return;
         }
 

@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using PalServerLauncher.Config;
 using PalServerLauncher.Core;
+using PalServerLauncher.Localization;
 using PalServerLauncher.Logging;
 using PalServerLauncher.Rest;
 
@@ -55,7 +56,7 @@ public sealed class PortCheckDialog : Window
     {
         _logger = logger;
 
-        Title = "Port Check";
+        Title = Strings.PortCheck_Title;
         Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         Width = 640;
@@ -67,19 +68,18 @@ public sealed class PortCheckDialog : Window
 
         stack.Children.Add(new TextBlock
         {
-            Text = "Checks whether your ports can be reached from the internet, using check-host.cc. Run this with "
-                 + "the server stopped so the launcher can bind and test the ports.",
+            Text = Strings.PortCheck_Intro,
             Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 12),
         });
 
         _ipBox = Field(detectedIp ?? "");
-        stack.Children.Add(Row("Your public IP", _ipBox));
+        stack.Children.Add(Row(Strings.PortCheck_YourPublicIp, _ipBox));
 
-        stack.Children.Add(Header("Results"));
+        stack.Children.Add(Header(Strings.PortCheck_Results));
 
         _serviceLight = Light();
-        _serviceStatus = Status("Not checked yet.");
-        stack.Children.Add(RowGrid("Port check service online", portBox: null, _serviceLight, _serviceStatus));
+        _serviceStatus = Status(Strings.PortCheck_NotCheckedYet);
+        stack.Children.Add(RowGrid(Strings.PortCheck_ServiceOnline, portBox: null, _serviceLight, _serviceStatus));
 
         foreach (var item in PortCheckPlan.Build(config, settings))
         {
@@ -88,20 +88,17 @@ public sealed class PortCheckDialog : Window
             portBox.HorizontalAlignment = HorizontalAlignment.Left;
             DigitsOnly(portBox);
             var light = Light();
-            var status = Status("Not checked yet.");
+            var status = Status(Strings.PortCheck_NotCheckedYet);
             _rows.Add(new PortRow { Kind = item.Kind, Protocol = item.Protocol, PortBox = portBox, Light = light, Status = status });
-            stack.Children.Add(RowGrid($"{item.Label} ({item.Protocol.ToString().ToUpperInvariant()})", portBox, light, status));
+            stack.Children.Add(RowGrid(string.Format(Strings.PortCheck_PortRowLabel, item.Label, item.Protocol.ToString().ToUpperInvariant()), portBox, light, status));
         }
 
-        stack.Children.Add(Note(
-            "This test binds a temporary listener on the launcher. If Windows Firewall prompts, allow it, "
-            + "otherwise ports can falsely show as unreachable. REST and RCON are admin ports: they should "
-            + "normally NOT be reachable from the internet, so a green result there is a warning, not a pass."));
+        stack.Children.Add(Note(Strings.PortCheck_FirewallNote));
 
-        _checkButton = MakeButton("Check", OnCheck);
+        _checkButton = MakeButton(Strings.PortCheck_Check, OnCheck);
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 16, 0, 0) };
         buttons.Children.Add(_checkButton);
-        buttons.Children.Add(MakeButton("Close", Close));
+        buttons.Children.Add(MakeButton(Strings.PortCheck_Close, Close));
         stack.Children.Add(buttons);
 
         Content = stack;
@@ -118,15 +115,15 @@ public sealed class PortCheckDialog : Window
         var target = _ipBox.Text.Trim();
         if (target.Length == 0)
         {
-            ChoiceDialog.Show(this, "No public IP",
-                "Enter your public IP first (it's normally filled in automatically).", "OK");
+            ChoiceDialog.Show(this, Strings.PortCheck_NoPublicIpTitle,
+                Strings.PortCheck_NoPublicIpMessage, Strings.Common_OK);
             return;
         }
 
         _checkButton.IsEnabled = false;
-        SetLight(_serviceLight, _serviceStatus, Blue, "Checking...", muted: true);
+        SetLight(_serviceLight, _serviceStatus, Blue, Strings.PortCheck_Checking, muted: true);
         foreach (var row in _rows)
-            SetLight(row.Light, row.Status, Blue, "Checking...", muted: true);
+            SetLight(row.Light, row.Status, Blue, Strings.PortCheck_Checking, muted: true);
 
         try
         {
@@ -134,7 +131,7 @@ public sealed class PortCheckDialog : Window
 
             var serviceUp = await checkHost.IsServiceUpAsync(_cts.Token);
             SetLight(_serviceLight, _serviceStatus, serviceUp ? Green : Red,
-                serviceUp ? "Online." : "Unavailable, can't reach check-host.cc right now.", muted: !serviceUp);
+                serviceUp ? Strings.PortCheck_ServiceOnlineStatus : Strings.PortCheck_ServiceUnavailable, muted: !serviceUp);
 
             if (!serviceUp)
             {
@@ -151,11 +148,11 @@ public sealed class PortCheckDialog : Window
             {
                 if (!TryReadPort(row.PortBox, out var port))
                 {
-                    SetLight(row.Light, row.Status, Grey, "Enter a port between 1 and 65535.", muted: true);
+                    SetLight(row.Light, row.Status, Grey, Strings.PortCheck_InvalidPort, muted: true);
                     continue;
                 }
 
-                SetLight(row.Light, row.Status, Blue, "Checking...", muted: true);
+                SetLight(row.Light, row.Status, Blue, Strings.PortCheck_Checking, muted: true);
                 var item = new PortCheckItem(row.Kind, "", row.Protocol, port);
                 var reachability = await checker.CheckPortAsync(target, item, _cts.Token);
                 SetVerdict(row, PortCheckVerdict.Evaluate(row.Kind, reachability, serviceUp: true));
@@ -168,7 +165,7 @@ public sealed class PortCheckDialog : Window
         catch (Exception ex)
         {
             _logger.Error("Port check failed", ex);
-            SetLight(_serviceLight, _serviceStatus, Red, "Port check failed, see the log.", muted: true);
+            SetLight(_serviceLight, _serviceStatus, Red, Strings.PortCheck_Failed, muted: true);
         }
         finally
         {

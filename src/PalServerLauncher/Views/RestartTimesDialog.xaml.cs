@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using PalServerLauncher.Localization;
 
 namespace PalServerLauncher.Views;
 
@@ -26,12 +27,12 @@ public partial class RestartTimesDialog : Window
 
     public List<TimeOnly>? Result { get; private set; }
 
-    public RestartTimesDialog(IEnumerable<TimeOnly> initial, string label)
+    public RestartTimesDialog(IEnumerable<TimeOnly> initial, string title, string header)
     {
         InitializeComponent();
 
-        Title = $"{label} Times";
-        HeaderText.Text = $"{label} times";
+        Title = title;
+        HeaderText.Text = header;
 
         _use12Hour = CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern
             .Contains("t", StringComparison.OrdinalIgnoreCase);
@@ -64,7 +65,7 @@ public partial class RestartTimesDialog : Window
     {
         if (!TryCompose(out var time))
         {
-            ChoiceDialog.Show(this, "Invalid time", "Enter minutes as a number 0-59.", "OK");
+            ChoiceDialog.Show(this, Strings.Times_InvalidTimeTitle, Strings.Times_InvalidTimeMessage, Strings.Common_OK);
             return;
         }
         if (_times.Any(x => x.Time == time))
@@ -94,16 +95,16 @@ public partial class RestartTimesDialog : Window
         var step = hours is null ? 0 : (int)Math.Round(hours.Value * 60);
         if (step < 15 || step > 24 * 60)
         {
-            ChoiceDialog.Show(this, "Invalid interval",
-                "Enter an interval between 15 minutes and 24 hours, e.g. 30m, 2h, or 2.5 (hours).", "OK");
+            ChoiceDialog.Show(this, Strings.Times_InvalidIntervalTitle,
+                Strings.Times_InvalidIntervalMessage, Strings.Common_OK);
             return;
         }
 
         if (_times.Count > 0)
         {
-            var choice = ChoiceDialog.Show(this, "Replace times",
-                $"This replaces the {_times.Count} time(s) below with a schedule every {EveryBox.Text.Trim()}. Continue?",
-                "Replace", "Cancel");
+            var choice = ChoiceDialog.Show(this, Strings.Times_ReplaceTitle,
+                string.Format(Strings.Times_ReplaceMessage, _times.Count, EveryBox.Text.Trim()),
+                Strings.Times_Replace, Strings.Common_Cancel);
             if (choice != 0)
                 return;
         }
@@ -174,9 +175,9 @@ public partial class RestartTimesDialog : Window
     }
 
     /// <summary>Show the dialog; returns the chosen times, or null if cancelled.</summary>
-    public static List<TimeOnly>? Show(Window owner, IEnumerable<TimeOnly> initial, string label = "Restart")
+    public static List<TimeOnly>? Show(Window owner, IEnumerable<TimeOnly> initial, string title, string header)
     {
-        var dialog = new RestartTimesDialog(initial, label) { Owner = owner };
+        var dialog = new RestartTimesDialog(initial, title, header) { Owner = owner };
         return dialog.ShowDialog() == true ? dialog.Result : null;
     }
 }
