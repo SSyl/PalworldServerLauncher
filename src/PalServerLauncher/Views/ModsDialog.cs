@@ -30,6 +30,8 @@ public sealed class ModsDialog : Window
     private static readonly Brush RowBorder = new SolidColorBrush(Color.FromRgb(0x2C, 0x2C, 0x2C));
     private static readonly Brush LinkFg = new SolidColorBrush(Color.FromRgb(0x5A, 0xA0, 0xE0));
     private static readonly Brush GreenFg = new SolidColorBrush(Color.FromRgb(0x4C, 0xC9, 0x4C));
+    private static readonly Brush AmberFg = new SolidColorBrush(Color.FromRgb(0xE0, 0xB8, 0x4C));
+    private static readonly Brush RedFg = new SolidColorBrush(Color.FromRgb(0xE8, 0x6A, 0x6A));
     private static readonly Brush InsetBg = new SolidColorBrush(Color.FromRgb(0x25, 0x25, 0x25));
 
     private readonly LauncherConfig _config;
@@ -219,7 +221,7 @@ public sealed class ModsDialog : Window
         }
         catch (Exception ex)
         {
-            ShowSteamState(SteamUi.NotSignedIn, $"Sign-in failed: {ex.Message}");
+            ShowSteamState(SteamUi.NotSignedIn, $"Sign-in failed: {ex.Message}", error: true);
         }
         finally
         {
@@ -245,7 +247,7 @@ public sealed class ModsDialog : Window
         }
         catch (Exception ex)
         {
-            ShowSteamState(SteamUi.NotSignedIn, $"Couldn't check sign-in: {ex.Message}");
+            ShowSteamState(SteamUi.NotSignedIn, $"Couldn't check sign-in: {ex.Message}", error: true);
         }
     }
 
@@ -253,7 +255,7 @@ public sealed class ModsDialog : Window
 
     /// <summary>Drive the Steam account section. Checking: just a status line. Signed in: a green line plus a
     /// "different account" link, connect UI hidden. Not signed in: the connect panel, with an optional message.</summary>
-    private void ShowSteamState(SteamUi state, string? message = null)
+    private void ShowSteamState(SteamUi state, string? message = null, bool error = false)
     {
         switch (state)
         {
@@ -272,8 +274,9 @@ public sealed class ModsDialog : Window
                 _connectPanel.Visibility = Visibility.Collapsed;
                 break;
             default: // NotSignedIn
+                // Amber for the ambiguous "couldn't confirm / not signed in", red for a definite error.
                 _steamStatus.Visibility = message is null ? Visibility.Collapsed : Visibility.Visible;
-                _steamStatus.Foreground = Muted;
+                _steamStatus.Foreground = error ? RedFg : AmberFg;
                 _steamStatus.Text = message ?? "";
                 _differentAccountLink.Visibility = Visibility.Collapsed;
                 _connectPanel.Visibility = Visibility.Visible;
