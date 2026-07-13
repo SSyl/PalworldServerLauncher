@@ -42,6 +42,11 @@ public partial class App : Application
             args.SetObserved();
         };
 
+        // Paint every window's OS title bar dark to match the app (WPF leaves it light by default). A class
+        // handler on Loaded covers every window, current and future, including the code-built dialogs.
+        EventManager.RegisterClassHandler(typeof(Window), FrameworkElement.LoadedEvent,
+            new RoutedEventHandler((s, _) => { if (s is Window w) DarkTitleBar.Apply(w); }));
+
         new MainWindow(_logger).Show();
     }
 

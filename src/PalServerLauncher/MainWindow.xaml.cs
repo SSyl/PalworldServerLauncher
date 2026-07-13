@@ -39,6 +39,8 @@ public partial class MainWindow : Window
 
         Loaded += OnLoaded;
         Closing += OnClosing;
+        // Dark title bar before the first paint, so the main window doesn't flash a light bar on launch.
+        SourceInitialized += (_, _) => DarkTitleBar.Apply(this);
     }
 
     private async void OnLoaded(object sender, RoutedEventArgs e)
