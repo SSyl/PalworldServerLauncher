@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using PalServerLauncher.Config;
@@ -26,6 +28,7 @@ public sealed class ModsDialog : Window
     private static readonly Brush FieldBg = new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33));
     private static readonly Brush FieldBorder = new SolidColorBrush(Color.FromRgb(0x4A, 0x4A, 0x4A));
     private static readonly Brush RowBorder = new SolidColorBrush(Color.FromRgb(0x2C, 0x2C, 0x2C));
+    private static readonly Brush LinkFg = new SolidColorBrush(Color.FromRgb(0x5A, 0xA0, 0xE0));
 
     private readonly LauncherConfig _config;
     private readonly ModService _modService;
@@ -69,9 +72,9 @@ public sealed class ModsDialog : Window
 
         stack.Children.Add(new TextBlock
         {
-            Text = "Manage this server's mods. Add Steam Workshop ids for the launcher to download, or drop mod folders "
-                 + "into the mods folder yourself and Scan for them. Either way, enabled mods load on the next server "
-                 + "start or restart.",
+            Text = "Only mods that are built to run on servers will work here. Many mods are client-side only and can't "
+                 + "or shouldn't be installed on the server, so check a mod's description before loading it. Use mods at "
+                 + "your own risk, they may cause save-data corruption or crashes.",
             Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 8),
         });
 
@@ -101,8 +104,9 @@ public sealed class ModsDialog : Window
         connectRow.Children.Add(_connectButton);
         stack.Children.Add(connectRow);
 
-        // --- Mods ---
-        stack.Children.Add(Header("Mods"));
+        // --- Steam Workshop mods ---
+        stack.Children.Add(Header("Steam Workshop mods"));
+        stack.Children.Add(Link("Browse mods on the ", "https://steamcommunity.com/app/1623730/workshop/", "Palworld Steam Workshop", "."));
         _addInput = Field("");
         _addButton = MakeButton("Add", () => _ = OnAddMod());
         var addRow = new Grid { Margin = new Thickness(0, 2, 0, 0) };
@@ -137,12 +141,12 @@ public sealed class ModsDialog : Window
 
         // --- Loose .pak mods (a separate mechanism: raw paks in ~mods, toggled by rename) ---
         stack.Children.Add(Separator());
-        stack.Children.Add(Header("Loose .pak mods (advanced)"));
+        stack.Children.Add(Header("Loose .pak mods"));
         stack.Children.Add(new TextBlock
         {
-            Text = "Raw .pak mods with no Info.json (many NexusMods downloads). Drop them into the loose-paks folder "
-                 + "and toggle them here. They're enabled/disabled by renaming (never deleted) and load on the next "
-                 + "server start. This is separate from the Workshop list above.",
+            Text = "You don't need this if you're using Steam Workshop above. For raw .pak mods with no Info.json "
+                 + "(many NexusMods downloads): drop them into the loose-paks folder and toggle them here. They're "
+                 + "enabled/disabled by renaming (never deleted) and load on the next server start.",
             Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 2),
         });
         _loosePakPanel = new StackPanel();
@@ -325,13 +329,30 @@ public sealed class ModsDialog : Window
         enabled.Unchecked += (_, _) => RefreshWarning();
 
         var name = RowField(entry.ModName);
-        var idLabel = new TextBlock
+        var pkgTip = entry.PackageName.Length > 0 ? $"Package: {entry.PackageName}" : "Package name not resolved yet (download or scan the mod).";
+        FrameworkElement idCell;
+        if (entry.WorkshopId.Length > 0)
         {
-            Text = entry.WorkshopId.Length > 0 ? entry.WorkshopId : "local",
-            Foreground = Muted, VerticalAlignment = VerticalAlignment.Center, TextAlignment = TextAlignment.Center,
-            Margin = new Thickness(6, 0, 6, 0),
-            ToolTip = entry.PackageName.Length > 0 ? $"Package: {entry.PackageName}" : "Package name not resolved yet (download or scan the mod).",
-        };
+            var idLink = new Hyperlink(new Run(entry.WorkshopId))
+            {
+                NavigateUri = new Uri($"https://steamcommunity.com/sharedfiles/filedetails/?id={entry.WorkshopId}"),
+                Foreground = LinkFg,
+            };
+            idLink.RequestNavigate += (_, e) => { OpenUrl(e.Uri.AbsoluteUri); e.Handled = true; };
+            idCell = new TextBlock(idLink)
+            {
+                VerticalAlignment = VerticalAlignment.Center, TextAlignment = TextAlignment.Center,
+                Margin = new Thickness(6, 0, 6, 0), ToolTip = "Open this mod's Steam Workshop page. " + pkgTip,
+            };
+        }
+        else
+        {
+            idCell = new TextBlock
+            {
+                Text = "local", Foreground = Muted, VerticalAlignment = VerticalAlignment.Center,
+                TextAlignment = TextAlignment.Center, Margin = new Thickness(6, 0, 6, 0), ToolTip = pkgTip,
+            };
+        }
         var note = RowField(entry.Note);
         var remove = new Button
         {
@@ -350,12 +371,12 @@ public sealed class ModsDialog : Window
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });                        // remove
         Grid.SetColumn(enabled, 0);
         Grid.SetColumn(name, 1);
-        Grid.SetColumn(idLabel, 2);
+        Grid.SetColumn(idCell, 2);
         Grid.SetColumn(note, 3);
         Grid.SetColumn(remove, 4);
         grid.Children.Add(enabled);
         grid.Children.Add(name);
-        grid.Children.Add(idLabel);
+        grid.Children.Add(idCell);
         grid.Children.Add(note);
         grid.Children.Add(remove);
 
@@ -543,6 +564,26 @@ public sealed class ModsDialog : Window
         var cell = new TextBlock { Text = text, Foreground = Muted, FontWeight = FontWeights.SemiBold, Margin = new Thickness(column == 0 ? 0 : 6, 0, 6, 0) };
         Grid.SetColumn(cell, column);
         grid.Children.Add(cell);
+    }
+
+    private static TextBlock Link(string prefix, string url, string linkText, string suffix)
+    {
+        var block = new TextBlock { Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 2, 0, 0) };
+        block.Inlines.Add(prefix);
+        var link = new Hyperlink(new Run(linkText)) { NavigateUri = new Uri(url), Foreground = LinkFg };
+        link.RequestNavigate += (_, e) => { OpenUrl(e.Uri.AbsoluteUri); e.Handled = true; };
+        block.Inlines.Add(link);
+        block.Inlines.Add(suffix);
+        return block;
+    }
+
+    private static void OpenUrl(string url)
+    {
+        try { Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); }
+        catch (Exception ex) when (ex is System.ComponentModel.Win32Exception or InvalidOperationException)
+        {
+            // No default browser / launch blocked, nothing useful to do here.
+        }
     }
 
     private static Button MakeButton(string label, Action onClick)
