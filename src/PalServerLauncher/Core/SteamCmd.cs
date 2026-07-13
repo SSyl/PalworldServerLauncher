@@ -94,13 +94,46 @@ public sealed class SteamCmd
     public enum WorkshopDownloadResult { Ok, AuthFailed, Failed }
 
     /// <summary>
-    /// Interactive one-time Steam sign-in for Workshop downloads. Runs SteamCMD in its OWN console window with
-    /// just <c>+login &lt;username&gt;</c>: SteamCMD prompts for the password and Steam Guard code IN THAT WINDOW and
-    /// caches its own session, the launcher never sees or stores them (we only pass the username). Returns the
-    /// exit code (0 on a successful login).
+    /// Interactive one-time Steam sign-in for Workshop downloads. Runs SteamCMD in its OWN console window (via
+    /// cmd.exe) with just <c>+login &lt;username&gt;</c>: SteamCMD prompts for the password and Steam Guard code IN
+    /// THAT WINDOW and caches its own session, the launcher never sees or stores them (only the username). The
+    /// window is held open with a pause afterward so the user can read the result, SteamCMD's own <c>+quit</c>
+    /// would slam it shut the instant login finishes. The launcher confirms success separately via
+    /// <see cref="HasCachedSessionAsync"/>, so this method's exit code (cmd's, not SteamCMD's) is unused.
     /// </summary>
-    public Task<int> ConnectAccountAsync(string username, IProgress<string>? log, CancellationToken ct = default) =>
-        RunProcessAsync(["+login", username, "+quit"], visible: true, log, ct);
+    public async Task ConnectAccountAsync(string username, IProgress<string>? log, CancellationToken ct = default)
+    {
+        username = username.Replace("\"", "").Trim(); // keep the account name from breaking the cmd quoting
+        log?.Report($"Opening a Steam sign-in window for account '{username}'. Enter your password and Steam Guard code there.");
+
+        var login = $"\"{SteamCmdExe}\" +login \"{username}\" +quit";
+        var pause = "echo. & echo Sign-in finished, review the result above. & echo Press any key to close this window. & pause > nul";
+        var psi = new ProcessStartInfo
+        {
+            FileName = "cmd.exe",
+            Arguments = $"/c \"{login} & {pause}\"", // the & forces cmd to keep the inner quotes around the exe path
+            WorkingDirectory = SteamCmdDir,
+            UseShellExecute = false,
+            CreateNoWindow = false,
+            WindowStyle = ProcessWindowStyle.Normal,
+        };
+        using var process = new Process { StartInfo = psi, EnableRaisingEvents = true };
+        process.Start();
+        await process.WaitForExitAsync(ct).ConfigureAwait(false);
+        log?.Report("Steam sign-in window closed, verifying the session...");
+    }
+
+    /// <summary>
+    /// Confirm SteamCMD has a usable cached session for <paramref name="username"/> by running a hidden captured
+    /// login (stdin is closed, so a missing/expired session fails fast instead of prompting). True when the login
+    /// didn't hit an auth failure, i.e. the cached session works. Used right after <see cref="ConnectAccountAsync"/>
+    /// to reliably tell the user whether the sign-in took.
+    /// </summary>
+    public async Task<bool> HasCachedSessionAsync(string username, CancellationToken ct = default)
+    {
+        var (_, output) = await RunCapturedAsync(["+login", username, "+quit"], ct).ConfigureAwait(false);
+        return !LooksLikeAuthFailure(output);
+    }
 
     /// <summary>
     /// Download (or update, it's incremental) one Workshop item using SteamCMD's cached session. No password is

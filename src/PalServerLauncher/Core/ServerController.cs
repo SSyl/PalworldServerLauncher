@@ -786,8 +786,13 @@ public sealed class ServerController : IDisposable
         try
         {
             await _steamCmd.EnsureSteamCmdAsync(steamLog, ct).ConfigureAwait(false);
-            var exit = await _steamCmd.ConnectAccountAsync(username, steamLog, ct).ConfigureAwait(false);
-            return exit == 0;
+            await _steamCmd.ConnectAccountAsync(username, steamLog, ct).ConfigureAwait(false);
+            // The sign-in window's exit code isn't SteamCMD's, so confirm the session took with a quick hidden check.
+            var connected = await _steamCmd.HasCachedSessionAsync(username, ct).ConfigureAwait(false);
+            _logger.Info(connected
+                ? $"Steam account '{username}' connected."
+                : $"Steam sign-in for '{username}' didn't complete, try again.");
+            return connected;
         }
         finally
         {

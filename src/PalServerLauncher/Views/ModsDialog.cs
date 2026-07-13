@@ -164,13 +164,13 @@ public sealed class ModsDialog : Window
         }
         _connectButton.IsEnabled = false;
         _connectButton.Content = "Connecting...";
-        _steamStatus.Text = "A SteamCMD window opened, enter your password and Steam Guard code there.";
+        _steamStatus.Text = "A SteamCMD window opened. Enter your password and Steam Guard code there, it stays open so you can read the result, then close it.";
         try
         {
             var ok = await _connectSteam(username);
             _steamStatus.Text = ok
                 ? $"Connected as {username}. SteamCMD cached the session."
-                : "Sign-in didn't complete. Try again, and check the SteamCMD window / your credentials.";
+                : "Couldn't confirm the sign-in. Click Connect again and watch the SteamCMD window for the error (wrong password or Steam Guard code).";
         }
         catch (Exception ex)
         {
