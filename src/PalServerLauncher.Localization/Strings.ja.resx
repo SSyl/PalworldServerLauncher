@@ -1407,4 +1407,726 @@ Save these changes?</value>
   <data name="Sched_UntilMS" xml:space="preserve">
     <value>{0}m {1}s</value>
   </data>
+  <data name="Cat_ServerName_Label" xml:space="preserve">
+    <value>ワールド名</value>
+  </data>
+  <data name="Cat_ServerName_Desc" xml:space="preserve">
+    <value>サーバー名</value>
+  </data>
+  <data name="Cat_ServerDescription_Label" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Cat_ServerDescription_Desc" xml:space="preserve">
+    <value>サーバー説明</value>
+  </data>
+  <data name="Cat_ServerPassword_Label" xml:space="preserve">
+    <value>Server password</value>
+  </data>
+  <data name="Cat_ServerPassword_Desc" xml:space="preserve">
+    <value>サーバーのログインに必要なパスワード</value>
+  </data>
+  <data name="Cat_AdminPassword_Label" xml:space="preserve">
+    <value>Admin password</value>
+  </data>
+  <data name="Cat_AdminPassword_Desc" xml:space="preserve">
+    <value>サーバーの管理者権限を取得するのに使用するパスワード</value>
+  </data>
+  <data name="Cat_ServerPlayerMaxNum_Label" xml:space="preserve">
+    <value>Max players</value>
+  </data>
+  <data name="Cat_ServerPlayerMaxNum_Desc" xml:space="preserve">
+    <value>サーバーに参加できる最大人数</value>
+  </data>
+  <data name="Cat_CoopPlayerMaxNum_Label" xml:space="preserve">
+    <value>CoopPlayerMaxNum</value>
+  </data>
+  <data name="Cat_CoopPlayerMaxNum_Desc" xml:space="preserve">
+    <value>Undocumented. Community guesses a cooperative-play party size, but this may be an internal value that has no effect on a dedicated server.</value>
+  </data>
+  <data name="Cat_RESTAPIEnabled_Label" xml:space="preserve">
+    <value>REST API enabled</value>
+  </data>
+  <data name="Cat_RESTAPIEnabled_Desc" xml:space="preserve">
+    <value>REST APIの有効化</value>
+  </data>
+  <data name="Cat_RESTAPIPort_Label" xml:space="preserve">
+    <value>REST API port</value>
+  </data>
+  <data name="Cat_RESTAPIPort_Desc" xml:space="preserve">
+    <value>REST APIの待ち受けポート</value>
+  </data>
+  <data name="Cat_RCONEnabled_Label" xml:space="preserve">
+    <value>RCON enabled</value>
+  </data>
+  <data name="Cat_RCONEnabled_Desc" xml:space="preserve">
+    <value>RCONを有効化</value>
+  </data>
+  <data name="Cat_RCONPort_Label" xml:space="preserve">
+    <value>RCON port</value>
+  </data>
+  <data name="Cat_RCONPort_Desc" xml:space="preserve">
+    <value>RCONで使用するポート番号</value>
+  </data>
+  <data name="Cat_bUseAuth_Label" xml:space="preserve">
+    <value>bUseAuth</value>
+  </data>
+  <data name="Cat_bUseAuth_Desc" xml:space="preserve">
+    <value>Undocumented. Defaults to True.</value>
+  </data>
+  <data name="Cat_BanListURL_Label" xml:space="preserve">
+    <value>BanListURL</value>
+  </data>
+  <data name="Cat_BanListURL_Desc" xml:space="preserve">
+    <value>Undocumented. Likely the ban list the server checks against, but the exact format and behavior are unconfirmed.</value>
+  </data>
+  <data name="Cat_bIsUseBackupSaveData_Label" xml:space="preserve">
+    <value>Built-in save backups</value>
+  </data>
+  <data name="Cat_bIsUseBackupSaveData_Desc" xml:space="preserve">
+    <value>ワールドバックアップの有効化
+有効化するとディスクへの負荷が高まります。</value>
+  </data>
+  <data name="Cat_AutoSaveSpan_Label" xml:space="preserve">
+    <value>オートセーブ間隔</value>
+  </data>
+  <data name="Cat_AutoSaveSpan_Desc" xml:space="preserve">
+    <value>How often the world auto-saves (seconds).</value>
+  </data>
+  <data name="Cat_bIsShowJoinLeftMessage_Label" xml:space="preserve">
+    <value>Show join/leave messages</value>
+  </data>
+  <data name="Cat_bIsShowJoinLeftMessage_Desc" xml:space="preserve">
+    <value>サーバー環境で、プレイヤーの参加・退出時にゲーム内メッセージを表示するかどうか</value>
+  </data>
+  <data name="Cat_bAllowClientMod_Label" xml:space="preserve">
+    <value>Allow client mods</value>
+  </data>
+  <data name="Cat_bAllowClientMod_Desc" xml:space="preserve">
+    <value>Modを有効化しているユーザーのサーバー参加を許可するか</value>
+  </data>
+  <data name="Cat_ChatPostLimitPerMinute_Label" xml:space="preserve">
+    <value>Chat rate limit</value>
+  </data>
+  <data name="Cat_ChatPostLimitPerMinute_Desc" xml:space="preserve">
+    <value>1分間に投稿可能なチャット数</value>
+  </data>
+  <data name="Cat_LogFormatType_Label" xml:space="preserve">
+    <value>Log format</value>
+  </data>
+  <data name="Cat_LogFormatType_Desc" xml:space="preserve">
+    <value>ログフォーマットの指定 Text または Json</value>
+  </data>
+  <data name="Cat_bIsMultiplay_Label" xml:space="preserve">
+    <value>マルチプレイ</value>
+  </data>
+  <data name="Cat_bIsMultiplay_Desc" xml:space="preserve">
+    <value>Undocumented. Likely the game client's 'Multiplayer: Yes/No' option shown when creating a world, so it has no effect on a dedicated server. False by default.</value>
+  </data>
+  <data name="Cat_Region_Label" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="Cat_Region_Desc" xml:space="preserve">
+    <value>Undocumented. A region code of some kind, but the expected format (NA, US, a number?) and its purpose (matchmaking, server browser, or neither) are both unknown. Blank by default.</value>
+  </data>
+  <data name="Cat_CrossplayPlatforms_Label" xml:space="preserve">
+    <value>Crossplay platforms</value>
+  </data>
+  <data name="Cat_CrossplayPlatforms_Desc" xml:space="preserve">
+    <value>接続を許可するプラットフォーム デフォルト (Steam,Xbox,PS5,Mac)</value>
+  </data>
+  <data name="Cat_PublicIP_Label" xml:space="preserve">
+    <value>Public IP</value>
+  </data>
+  <data name="Cat_PublicIP_Desc" xml:space="preserve">
+    <value>コミュニティサーバー設定において、外部公開IPを明示的に指定</value>
+  </data>
+  <data name="Cat_PublicPort_Label" xml:space="preserve">
+    <value>Public port</value>
+  </data>
+  <data name="Cat_PublicPort_Desc" xml:space="preserve">
+    <value>コミュニティサーバー設定において、外部公開ポートを明示的に指定（この設定ではサーバーの待ち受けポートは変更されません）</value>
+  </data>
+  <data name="Cat_bEnableBuildingPlayerUIdDisplay_Label" xml:space="preserve">
+    <value>Show builder ID on structures</value>
+  </data>
+  <data name="Cat_bEnableBuildingPlayerUIdDisplay_Desc" xml:space="preserve">
+    <value>建築物上に作成者のプレイヤーIDを表示するか</value>
+  </data>
+  <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Label" xml:space="preserve">
+    <value>BuildingNameDisplayCacheTTLSeconds</value>
+  </data>
+  <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Desc" xml:space="preserve">
+    <value>Undocumented. Likely how long a building's cached display name (see 'Show builder ID on structures') is kept before refreshing (seconds).</value>
+  </data>
+  <data name="Cat_BaseCampMaxNum_Label" xml:space="preserve">
+    <value>Max bases (world)</value>
+  </data>
+  <data name="Cat_BaseCampMaxNum_Desc" xml:space="preserve">
+    <value>サーバー全体の拠点数</value>
+  </data>
+  <data name="Cat_BaseCampMaxNumInGuild_Label" xml:space="preserve">
+    <value>ギルド毎の拠点最大数</value>
+  </data>
+  <data name="Cat_BaseCampMaxNumInGuild_Desc" xml:space="preserve">
+    <value>ギルド当たりの最大拠点数 デフォルト4 (最大10)
+値を大きくするほど処理負荷が増大します</value>
+  </data>
+  <data name="Cat_BaseCampWorkerMaxNum_Label" xml:space="preserve">
+    <value>拠点の作業パル最大数</value>
+  </data>
+  <data name="Cat_BaseCampWorkerMaxNum_Desc" xml:space="preserve">
+    <value>拠点当たりの最大パル数（最大50）
+値を大きくするほど処理負荷が増大します</value>
+  </data>
+  <data name="Cat_MaxBuildingLimitNum_Label" xml:space="preserve">
+    <value>拠点毎の建築最大数</value>
+  </data>
+  <data name="Cat_MaxBuildingLimitNum_Desc" xml:space="preserve">
+    <value>プレイヤーごとに建築物数制限 (0 = 無制限)</value>
+  </data>
+  <data name="Cat_DropItemMaxNum_Label" xml:space="preserve">
+    <value>ワールド内のドロップアイテム最大数</value>
+  </data>
+  <data name="Cat_DropItemMaxNum_Desc" xml:space="preserve">
+    <value>Maximum number of items lying dropped in the world before they start to despawn.</value>
+  </data>
+  <data name="Cat_PhysicsActiveDropItemMaxNum_Label" xml:space="preserve">
+    <value>ワールド内の物理挙動するドロップアイテム最大数</value>
+  </data>
+  <data name="Cat_PhysicsActiveDropItemMaxNum_Desc" xml:space="preserve">
+    <value>ドロップアイテムが物理挙動をする上限数</value>
+  </data>
+  <data name="Cat_DropItemMaxNum_UNKO_Label" xml:space="preserve">
+    <value>ワールド内の排泄物最大数</value>
+  </data>
+  <data name="Cat_DropItemMaxNum_UNKO_Desc" xml:space="preserve">
+    <value>Undocumented. Appears unused, likely deadweight or an unimplemented feature.</value>
+  </data>
+  <data name="Cat_ServerReplicatePawnCullDistance_Label" xml:space="preserve">
+    <value>Pal sync distance</value>
+  </data>
+  <data name="Cat_ServerReplicatePawnCullDistance_Desc" xml:space="preserve">
+    <value>プレイヤーからのPalの同期距離（cm） 最小5000~最大15000</value>
+  </data>
+  <data name="Cat_ItemContainerForceMarkDirtyInterval_Label" xml:space="preserve">
+    <value>Container re-sync interval</value>
+  </data>
+  <data name="Cat_ItemContainerForceMarkDirtyInterval_Desc" xml:space="preserve">
+    <value>コンテナを開いている際に強制的に同期しなおす頻度（秒）</value>
+  </data>
+  <data name="Cat_MaxGuildsPerFrame_Label" xml:space="preserve">
+    <value>MaxGuildsPerFrame</value>
+  </data>
+  <data name="Cat_MaxGuildsPerFrame_Desc" xml:space="preserve">
+    <value>Undocumented. Likely a per-frame cap on how many guilds the server processes each tick, a performance lever.</value>
+  </data>
+  <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Label" xml:space="preserve">
+    <value>PlayerDataPalStorageUpdateCheckTickInterval</value>
+  </data>
+  <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Desc" xml:space="preserve">
+    <value>Undocumented. Likely how often the server checks player Pal Box/storage data for changes to sync (seconds).</value>
+  </data>
+  <data name="Cat_Difficulty_Label" xml:space="preserve">
+    <value>難易度</value>
+  </data>
+  <data name="Cat_Difficulty_Desc" xml:space="preserve">
+    <value>Client / single-player difficulty preset. It has no effect on a dedicated server, so leave it at None and use the individual settings below (or the Difficulty preset buttons at the top) to set server difficulty.</value>
+  </data>
+  <data name="Cat_bHardcore_Label" xml:space="preserve">
+    <value>Hardcore Mode: Permanent Loss of Progress Upon Player Death</value>
+  </data>
+  <data name="Cat_bHardcore_Desc" xml:space="preserve">
+    <value>ハードコアの有効化 死亡時リスポーンできなくなります。</value>
+  </data>
+  <data name="Cat_bCharacterRecreateInHardcore_Label" xml:space="preserve">
+    <value>Recreate character (Hardcore)</value>
+  </data>
+  <data name="Cat_bCharacterRecreateInHardcore_Desc" xml:space="preserve">
+    <value>ハードコア設定時の死亡時のキャラクター再作成可否</value>
+  </data>
+  <data name="Cat_bIsPvP_Label" xml:space="preserve">
+    <value>PvP</value>
+  </data>
+  <data name="Cat_bIsPvP_Desc" xml:space="preserve">
+    <value>PvPを有効化するかどうか</value>
+  </data>
+  <data name="Cat_bEnablePlayerToPlayerDamage_Label" xml:space="preserve">
+    <value>Player-vs-player damage</value>
+  </data>
+  <data name="Cat_bEnablePlayerToPlayerDamage_Desc" xml:space="preserve">
+    <value>Let players harm each other. One of the three settings that together enable PvP.</value>
+  </data>
+  <data name="Cat_bEnableFriendlyFire_Label" xml:space="preserve">
+    <value>Friendly fire</value>
+  </data>
+  <data name="Cat_bEnableFriendlyFire_Desc" xml:space="preserve">
+    <value>Undocumented. Community says it lets players and their Pals damage members of their own guild.</value>
+  </data>
+  <data name="Cat_bCanPickupOtherGuildDeathPenaltyDrop_Label" xml:space="preserve">
+    <value>Loot other guilds' drops</value>
+  </data>
+  <data name="Cat_bCanPickupOtherGuildDeathPenaltyDrop_Desc" xml:space="preserve">
+    <value>Allow players to pick up the Pals and items dropped by other guilds' players on death.</value>
+  </data>
+  <data name="Cat_bEnableDefenseOtherGuildPlayer_Label" xml:space="preserve">
+    <value>Base defense vs. other guilds</value>
+  </data>
+  <data name="Cat_bEnableDefenseOtherGuildPlayer_Desc" xml:space="preserve">
+    <value>Base Pals engage hostile players who trespass into your base. One of the three settings that enable PvP.</value>
+  </data>
+  <data name="Cat_bEnableFastTravel_Label" xml:space="preserve">
+    <value>ファストトラベル</value>
+  </data>
+  <data name="Cat_bEnableFastTravel_Desc" xml:space="preserve">
+    <value>ファストトラベルを有効化するか</value>
+  </data>
+  <data name="Cat_bEnableFastTravelOnlyBaseCamp_Label" xml:space="preserve">
+    <value>ファストトラベルを拠点間のみに制限するか</value>
+  </data>
+  <data name="Cat_bEnableFastTravelOnlyBaseCamp_Desc" xml:space="preserve">
+    <value>ファストトラベルを拠点間のみに制限するか</value>
+  </data>
+  <data name="Cat_bEnableInvaderEnemy_Label" xml:space="preserve">
+    <value>襲撃イベントが発生するか</value>
+  </data>
+  <data name="Cat_bEnableInvaderEnemy_Desc" xml:space="preserve">
+    <value>襲撃を有効化するか</value>
+  </data>
+  <data name="Cat_EnablePredatorBossPal_Label" xml:space="preserve">
+    <value>プレデターパルが出現するか</value>
+  </data>
+  <data name="Cat_EnablePredatorBossPal_Desc" xml:space="preserve">
+    <value>Allows Predator Pals to spawn in the world.</value>
+  </data>
+  <data name="Cat_bBuildAreaLimit_Label" xml:space="preserve">
+    <value>Build area limit</value>
+  </data>
+  <data name="Cat_bBuildAreaLimit_Desc" xml:space="preserve">
+    <value>ファストトラベルなどの構造物付近で建築を禁止するか</value>
+  </data>
+  <data name="Cat_bInvisibleOtherGuildBaseCampAreaFX_Label" xml:space="preserve">
+    <value>Show base area boundaries</value>
+  </data>
+  <data name="Cat_bInvisibleOtherGuildBaseCampAreaFX_Desc" xml:space="preserve">
+    <value>拠点範囲表示</value>
+  </data>
+  <data name="Cat_bShowPlayerList_Label" xml:space="preserve">
+    <value>Player list in ESC menu</value>
+  </data>
+  <data name="Cat_bShowPlayerList_Desc" xml:space="preserve">
+    <value>ESCキーで表示される画面での参加者一覧を有効化</value>
+  </data>
+  <data name="Cat_bExistPlayerAfterLogout_Label" xml:space="preserve">
+    <value>Body stays after logout</value>
+  </data>
+  <data name="Cat_bExistPlayerAfterLogout_Desc" xml:space="preserve">
+    <value>ログアウト時にプレイヤーがその場で寝た状態にするか</value>
+  </data>
+  <data name="Cat_bEnableNonLoginPenalty_Label" xml:space="preserve">
+    <value>bEnableNonLoginPenalty</value>
+  </data>
+  <data name="Cat_bEnableNonLoginPenalty_Desc" xml:space="preserve">
+    <value>Undocumented. May relate to whether your Pals get debuffs when you haven't logged in. Untested.</value>
+  </data>
+  <data name="Cat_bIsStartLocationSelectByMap_Label" xml:space="preserve">
+    <value>Choose starting location</value>
+  </data>
+  <data name="Cat_bIsStartLocationSelectByMap_Desc" xml:space="preserve">
+    <value>ゲーム開始地点を選べるようにするか</value>
+  </data>
+  <data name="Cat_bActiveUNKO_Label" xml:space="preserve">
+    <value>キャラクターの排泄有無</value>
+  </data>
+  <data name="Cat_bActiveUNKO_Desc" xml:space="preserve">
+    <value>Undocumented. Appears unused, likely deadweight or an unimplemented feature.</value>
+  </data>
+  <data name="Cat_bEnableAimAssistPad_Label" xml:space="preserve">
+    <value>Aim assist (controller)</value>
+  </data>
+  <data name="Cat_bEnableAimAssistPad_Desc" xml:space="preserve">
+    <value>Aim assist for controllers. Set to False to disable it.</value>
+  </data>
+  <data name="Cat_bEnableAimAssistKeyboard_Label" xml:space="preserve">
+    <value>Aim assist (keyboard)</value>
+  </data>
+  <data name="Cat_bEnableAimAssistKeyboard_Desc" xml:space="preserve">
+    <value>Enable aim assist for mouse &amp; keyboard.</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Attack_Label" xml:space="preserve">
+    <value>Allow stat points: Attack</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Attack_Desc" xml:space="preserve">
+    <value>Allow allocating stat points to Attack.</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Health_Label" xml:space="preserve">
+    <value>Allow stat points: HP</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Health_Desc" xml:space="preserve">
+    <value>Allow allocating stat points to HP.</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Stamina_Label" xml:space="preserve">
+    <value>Allow stat points: Stamina</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Stamina_Desc" xml:space="preserve">
+    <value>Allow allocating stat points to Stamina.</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Weight_Label" xml:space="preserve">
+    <value>Allow stat points: Carry Weight</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Weight_Desc" xml:space="preserve">
+    <value>Allow allocating stat points to Carry Weight.</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_WorkSpeed_Label" xml:space="preserve">
+    <value>Allow stat points: Work Speed</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_WorkSpeed_Desc" xml:space="preserve">
+    <value>Allow allocating stat points to Work Speed.</value>
+  </data>
+  <data name="Cat_bAllowGlobalPalboxExport_Label" xml:space="preserve">
+    <value>Allow Pal Genetic Data to be Saved in the Global Palbox</value>
+  </data>
+  <data name="Cat_bAllowGlobalPalboxExport_Desc" xml:space="preserve">
+    <value>グローバルパルボックスへの保存を可能にするか</value>
+  </data>
+  <data name="Cat_bAllowGlobalPalboxImport_Label" xml:space="preserve">
+    <value>Allow Pals to be Reconstructed from the Global Palbox</value>
+  </data>
+  <data name="Cat_bAllowGlobalPalboxImport_Desc" xml:space="preserve">
+    <value>グローバルパルボックスからの読み込みを可能にするか</value>
+  </data>
+  <data name="Cat_bAutoResetGuildNoOnlinePlayers_Label" xml:space="preserve">
+    <value>一定期間ログインが無いギルドの施設を自動削除</value>
+  </data>
+  <data name="Cat_bAutoResetGuildNoOnlinePlayers_Desc" xml:space="preserve">
+    <value>ギルド所属プレイヤーが誰もログインしなかった場合に建築物や拠点パルを自動的に削除するかどうか。</value>
+  </data>
+  <data name="Cat_AutoResetGuildTimeNoOnlinePlayers_Label" xml:space="preserve">
+    <value>ログインが無いギルド施設の自動削除までの期間(h)</value>
+  </data>
+  <data name="Cat_AutoResetGuildTimeNoOnlinePlayers_Desc" xml:space="preserve">
+    <value>`bAutoResetGuildNoOnlinePlayers` が発動するまでのオフライン時間。
+`bAutoResetGuildNoOnlinePlayers` がFalseの場合は無視されます。</value>
+  </data>
+  <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Label" xml:space="preserve">
+    <value>Show base PvP items on map</value>
+  </data>
+  <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Desc" xml:space="preserve">
+    <value>Whether to show, on the map, the number of PvP-exclusive items in each base.</value>
+  </data>
+  <data name="Cat_bDisplayPvPItemNumOnWorldMap_Player_Label" xml:space="preserve">
+    <value>Show player PvP items on map</value>
+  </data>
+  <data name="Cat_bDisplayPvPItemNumOnWorldMap_Player_Desc" xml:space="preserve">
+    <value>Whether to show player locations and the number of PvP-exclusive items on the map.</value>
+  </data>
+  <data name="Cat_bIsRandomizerPalLevelRandom_Label" xml:space="preserve">
+    <value>ランダムモードで野生パルのレベルを完全ランダムにする</value>
+  </data>
+  <data name="Cat_bIsRandomizerPalLevelRandom_Desc" xml:space="preserve">
+    <value>true にすると野生パルのレベルを完全にランダムにします。false にするとエリアに見合ったレベル内でランダム化されます。</value>
+  </data>
+  <data name="Cat_RandomizerType_Label" xml:space="preserve">
+    <value>出現パルランダムモード ※この項目はワールド生成後は変更できません</value>
+  </data>
+  <data name="Cat_RandomizerType_Desc" xml:space="preserve">
+    <value>出現パルのランダムモードを設定
+None : ランダム化しない, Region : 地域ごとにランダム化, All : 完全にランダム化</value>
+  </data>
+  <data name="Cat_RandomizerSeed_Label" xml:space="preserve">
+    <value>シード値</value>
+  </data>
+  <data name="Cat_RandomizerSeed_Desc" xml:space="preserve">
+    <value>出現パルのランダムモードを設定した際のシード値</value>
+  </data>
+  <data name="Cat_bEnableVoiceChat_Label" xml:space="preserve">
+    <value>Voice chat</value>
+  </data>
+  <data name="Cat_bEnableVoiceChat_Desc" xml:space="preserve">
+    <value>ボイスチャット機能を有効化するか</value>
+  </data>
+  <data name="Cat_VoiceChatMaxVolumeDistance_Label" xml:space="preserve">
+    <value>Voice chat full-volume distance</value>
+  </data>
+  <data name="Cat_VoiceChatMaxVolumeDistance_Desc" xml:space="preserve">
+    <value>ボイスチャットの通話音量を減衰させない距離</value>
+  </data>
+  <data name="Cat_VoiceChatZeroVolumeDistance_Label" xml:space="preserve">
+    <value>Voice chat silence distance</value>
+  </data>
+  <data name="Cat_VoiceChatZeroVolumeDistance_Desc" xml:space="preserve">
+    <value>ボイスチャットの通話音量を0にする距離</value>
+  </data>
+  <data name="Cat_DayTimeSpeedRate_Label" xml:space="preserve">
+    <value>昼の経過速度</value>
+  </data>
+  <data name="Cat_DayTimeSpeedRate_Desc" xml:space="preserve">
+    <value>昼の経過速度</value>
+  </data>
+  <data name="Cat_NightTimeSpeedRate_Label" xml:space="preserve">
+    <value>夜の経過速度</value>
+  </data>
+  <data name="Cat_NightTimeSpeedRate_Desc" xml:space="preserve">
+    <value>夜の経過速度</value>
+  </data>
+  <data name="Cat_ExpRate_Label" xml:space="preserve">
+    <value>経験値の入手倍率</value>
+  </data>
+  <data name="Cat_ExpRate_Desc" xml:space="preserve">
+    <value>経験値の入手倍率</value>
+  </data>
+  <data name="Cat_PalCaptureRate_Label" xml:space="preserve">
+    <value>捕獲確率の倍率</value>
+  </data>
+  <data name="Cat_PalCaptureRate_Desc" xml:space="preserve">
+    <value>捕獲確率の倍率</value>
+  </data>
+  <data name="Cat_PalSpawnNumRate_Label" xml:space="preserve">
+    <value>パル出現数倍率　※ゲームのパフォーマンスに影響します</value>
+  </data>
+  <data name="Cat_PalSpawnNumRate_Desc" xml:space="preserve">
+    <value>パル出現倍率 ※パフォーマンスに影響します</value>
+  </data>
+  <data name="Cat_PalEggDefaultHatchingTime_Label" xml:space="preserve">
+    <value>キョダイタマゴ孵化にかかる時間(h) ※他のタマゴも相応に孵化時間が変わります</value>
+  </data>
+  <data name="Cat_PalEggDefaultHatchingTime_Desc" xml:space="preserve">
+    <value>キョダイタマゴの孵化にかかる時間(h)</value>
+  </data>
+  <data name="Cat_WorkSpeedRate_Label" xml:space="preserve">
+    <value>作業速度倍率</value>
+  </data>
+  <data name="Cat_WorkSpeedRate_Desc" xml:space="preserve">
+    <value>How fast both players and Pals complete work. Multiplier: 2.0 = work completed twice as fast.</value>
+  </data>
+  <data name="Cat_MonsterFarmActionSpeedRate_Label" xml:space="preserve">
+    <value>Grazing Item Production Rate Multiplier</value>
+  </data>
+  <data name="Cat_MonsterFarmActionSpeedRate_Desc" xml:space="preserve">
+    <value>放牧によるアイテムの生産速度倍率</value>
+  </data>
+  <data name="Cat_PalDamageRateAttack_Label" xml:space="preserve">
+    <value>すべてのパルの与えるダメージ倍率</value>
+  </data>
+  <data name="Cat_PalDamageRateAttack_Desc" xml:space="preserve">
+    <value>パルの与えるダメージ倍率</value>
+  </data>
+  <data name="Cat_PalDamageRateDefense_Label" xml:space="preserve">
+    <value>すべてのパルの受けるダメージ倍率</value>
+  </data>
+  <data name="Cat_PalDamageRateDefense_Desc" xml:space="preserve">
+    <value>パルの受けるダメージ倍率</value>
+  </data>
+  <data name="Cat_PlayerDamageRateAttack_Label" xml:space="preserve">
+    <value>プレイヤーの与えるダメージ倍率</value>
+  </data>
+  <data name="Cat_PlayerDamageRateAttack_Desc" xml:space="preserve">
+    <value>プレイヤーの与えるダメージ倍率</value>
+  </data>
+  <data name="Cat_PlayerDamageRateDefense_Label" xml:space="preserve">
+    <value>プレイヤーの受けるダメージ倍率</value>
+  </data>
+  <data name="Cat_PlayerDamageRateDefense_Desc" xml:space="preserve">
+    <value>プレイヤーの受けるダメージ倍率</value>
+  </data>
+  <data name="Cat_PlayerStomachDecreaceRate_Label" xml:space="preserve">
+    <value>プレイヤーの満腹度減少倍率</value>
+  </data>
+  <data name="Cat_PlayerStomachDecreaceRate_Desc" xml:space="preserve">
+    <value>プレイヤーの満腹度減少倍率</value>
+  </data>
+  <data name="Cat_PlayerStaminaDecreaceRate_Label" xml:space="preserve">
+    <value>プレイヤーのスタミナ減少倍率</value>
+  </data>
+  <data name="Cat_PlayerStaminaDecreaceRate_Desc" xml:space="preserve">
+    <value>プレイヤーのスタミナ減少倍率</value>
+  </data>
+  <data name="Cat_PlayerAutoHPRegeneRate_Label" xml:space="preserve">
+    <value>プレイヤーのHP自然回復倍率</value>
+  </data>
+  <data name="Cat_PlayerAutoHPRegeneRate_Desc" xml:space="preserve">
+    <value>プレイヤーのHP自然回復倍率</value>
+  </data>
+  <data name="Cat_PlayerAutoHpRegeneRateInSleep_Label" xml:space="preserve">
+    <value>プレイヤーの睡眠時HP回復倍率</value>
+  </data>
+  <data name="Cat_PlayerAutoHpRegeneRateInSleep_Desc" xml:space="preserve">
+    <value>プレイヤーの睡眠時HP回復倍率</value>
+  </data>
+  <data name="Cat_PalStomachDecreaceRate_Label" xml:space="preserve">
+    <value>パルの満腹度減少倍率</value>
+  </data>
+  <data name="Cat_PalStomachDecreaceRate_Desc" xml:space="preserve">
+    <value>パルの満腹度現象倍率</value>
+  </data>
+  <data name="Cat_PalStaminaDecreaceRate_Label" xml:space="preserve">
+    <value>パルのスタミナ減少倍率</value>
+  </data>
+  <data name="Cat_PalStaminaDecreaceRate_Desc" xml:space="preserve">
+    <value>パルのスタミナ減少倍率</value>
+  </data>
+  <data name="Cat_PalAutoHPRegeneRate_Label" xml:space="preserve">
+    <value>パルのHP自然回復倍率</value>
+  </data>
+  <data name="Cat_PalAutoHPRegeneRate_Desc" xml:space="preserve">
+    <value>パルのHP自然回復倍率</value>
+  </data>
+  <data name="Cat_PalAutoHpRegeneRateInSleep_Label" xml:space="preserve">
+    <value>パルの睡眠時HP回復倍率 (パルボックス内のHP回復倍率)</value>
+  </data>
+  <data name="Cat_PalAutoHpRegeneRateInSleep_Desc" xml:space="preserve">
+    <value>パルの睡眠時HP回復倍率(パルボックス内)</value>
+  </data>
+  <data name="Cat_CollectionDropRate_Label" xml:space="preserve">
+    <value>採集アイテムの入手量倍率</value>
+  </data>
+  <data name="Cat_CollectionDropRate_Desc" xml:space="preserve">
+    <value>採集アイテムの入手量倍率</value>
+  </data>
+  <data name="Cat_CollectionObjectHpRate_Label" xml:space="preserve">
+    <value>採集オブジェクトのHP倍率</value>
+  </data>
+  <data name="Cat_CollectionObjectHpRate_Desc" xml:space="preserve">
+    <value>採集オブジェクトのHP倍率</value>
+  </data>
+  <data name="Cat_CollectionObjectRespawnSpeedRate_Label" xml:space="preserve">
+    <value>採集オブジェクトのリスポーン間隔</value>
+  </data>
+  <data name="Cat_CollectionObjectRespawnSpeedRate_Desc" xml:space="preserve">
+    <value>採集オブジェクトのリスポーン間隔</value>
+  </data>
+  <data name="Cat_EnemyDropItemRate_Label" xml:space="preserve">
+    <value>ドロップアイテム量の倍率</value>
+  </data>
+  <data name="Cat_EnemyDropItemRate_Desc" xml:space="preserve">
+    <value>ドロップアイテム量の倍率</value>
+  </data>
+  <data name="Cat_DropItemAliveMaxHours_Label" xml:space="preserve">
+    <value>Dropped item lifetime (hours)</value>
+  </data>
+  <data name="Cat_DropItemAliveMaxHours_Desc" xml:space="preserve">
+    <value>How long dropped items remain in the world before they despawn (hours). Lowering it helps server cleanup / performance.</value>
+  </data>
+  <data name="Cat_ItemWeightRate_Label" xml:space="preserve">
+    <value>アイテムの重量倍率</value>
+  </data>
+  <data name="Cat_ItemWeightRate_Desc" xml:space="preserve">
+    <value>アイテム重量倍率</value>
+  </data>
+  <data name="Cat_ItemCorruptionMultiplier_Label" xml:space="preserve">
+    <value>Item Decay Rate Multiplier</value>
+  </data>
+  <data name="Cat_ItemCorruptionMultiplier_Desc" xml:space="preserve">
+    <value>アイテムの腐敗速度倍率</value>
+  </data>
+  <data name="Cat_EquipmentDurabilityDamageRate_Label" xml:space="preserve">
+    <value>Equipment Durability Loss Multiplier</value>
+  </data>
+  <data name="Cat_EquipmentDurabilityDamageRate_Desc" xml:space="preserve">
+    <value>装備品の耐久度減少倍率</value>
+  </data>
+  <data name="Cat_BuildObjectHpRate_Label" xml:space="preserve">
+    <value>Building HP</value>
+  </data>
+  <data name="Cat_BuildObjectHpRate_Desc" xml:space="preserve">
+    <value>Multiplier for how much health buildings have. 2.0 = double building HP.</value>
+  </data>
+  <data name="Cat_BuildObjectDamageRate_Label" xml:space="preserve">
+    <value>建築物に対するダメージ倍率</value>
+  </data>
+  <data name="Cat_BuildObjectDamageRate_Desc" xml:space="preserve">
+    <value>建築物に対するダメージ倍率</value>
+  </data>
+  <data name="Cat_BuildObjectDeteriorationDamageRate_Label" xml:space="preserve">
+    <value>建築物の劣化速度倍率</value>
+  </data>
+  <data name="Cat_BuildObjectDeteriorationDamageRate_Desc" xml:space="preserve">
+    <value>建築物の劣化速度倍率</value>
+  </data>
+  <data name="Cat_DeathPenalty_Label" xml:space="preserve">
+    <value>デスペナルティ</value>
+  </data>
+  <data name="Cat_DeathPenalty_Desc" xml:space="preserve">
+    <value>デスペナルティ
+None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment : すべての装備品とアイテム, All : 全ての装備品と装備品と手持ちパル</value>
+  </data>
+  <data name="Cat_bPalLost_Label" xml:space="preserve">
+    <value>Hardcore Mode: Pals Who Die Will Be Permanently Lost</value>
+  </data>
+  <data name="Cat_bPalLost_Desc" xml:space="preserve">
+    <value>死亡時にパルを永久的にロストするか</value>
+  </data>
+  <data name="Cat_BlockRespawnTime_Label" xml:space="preserve">
+    <value>Respawn cooldown (seconds)</value>
+  </data>
+  <data name="Cat_BlockRespawnTime_Desc" xml:space="preserve">
+    <value>死亡後リスポーンするまでのクールタイム（秒）</value>
+  </data>
+  <data name="Cat_RespawnPenaltyDurationThreshold_Label" xml:space="preserve">
+    <value>Respawn penalty threshold</value>
+  </data>
+  <data name="Cat_RespawnPenaltyDurationThreshold_Desc" xml:space="preserve">
+    <value>再死亡時にRespawnPenaltyTimeScaleで設定したクールタイム倍率を適用する生存時間の閾値（秒）</value>
+  </data>
+  <data name="Cat_RespawnPenaltyTimeScale_Label" xml:space="preserve">
+    <value>Respawn penalty multiplier</value>
+  </data>
+  <data name="Cat_RespawnPenaltyTimeScale_Desc" xml:space="preserve">
+    <value>リスポーンクールタイムに適用する倍率</value>
+  </data>
+  <data name="Cat_GuildPlayerMaxNum_Label" xml:space="preserve">
+    <value>ギルドの最大人数</value>
+  </data>
+  <data name="Cat_GuildPlayerMaxNum_Desc" xml:space="preserve">
+    <value>ギルドの最大人数</value>
+  </data>
+  <data name="Cat_GuildRejoinCooldownMinutes_Label" xml:space="preserve">
+    <value>Guild rejoin cooldown (min)</value>
+  </data>
+  <data name="Cat_GuildRejoinCooldownMinutes_Desc" xml:space="preserve">
+    <value>ギルド再加入クールタイム（分）</value>
+  </data>
+  <data name="Cat_DenyTechnologyList_Label" xml:space="preserve">
+    <value>Disabled technologies</value>
+  </data>
+  <data name="Cat_DenyTechnologyList_Desc" xml:space="preserve">
+    <value>無効化するテクノロジーを設定
+[テクノロジーID](https://docs.palworldgame.com/ja/settings-and-operation/technologyids) を指定
+例： `DenyTechnologyList=(""PALBOX"", ""RepairBench""))`</value>
+  </data>
+  <data name="Cat_bAdditionalDropItemWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
+    <value>PvP kill: drop item</value>
+  </data>
+  <data name="Cat_bAdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
+    <value>PvP有効化状態でプレイヤーをキルしたとき、専用アイテムをドロップするか</value>
+  </data>
+  <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
+    <value>PvP kill: item ID</value>
+  </data>
+  <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
+    <value>`bAdditionalDropItemWhenPlayerKillingInPvPMode` が有効の時、ドロップするアイテムのID</value>
+  </data>
+  <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
+    <value>PvP kill: item count</value>
+  </data>
+  <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
+    <value>`bAdditionalDropItemWhenPlayerKillingInPvPMode` が有効の時、ドロップするアイテムの量</value>
+  </data>
+  <data name="Cat_SupplyDropSpan_Label" xml:space="preserve">
+    <value>隕石・補給物資の投下間隔(m)</value>
+  </data>
+  <data name="Cat_SupplyDropSpan_Desc" xml:space="preserve">
+    <value>隕石・補給物資の投下間隔（分）</value>
+  </data>
+  <data name="Cat_AutoTransferMasterCheckIntervalSeconds_Label" xml:space="preserve">
+    <value>AutoTransferMasterCheckIntervalSeconds</value>
+  </data>
+  <data name="Cat_AutoTransferMasterCheckIntervalSeconds_Desc" xml:space="preserve">
+    <value>Undocumented. Likely how often the server checks whether guild/base ownership should auto-transfer from an inactive master (seconds).</value>
+  </data>
+  <data name="Cat_AutoTransferMasterThresholdDays_Label" xml:space="preserve">
+    <value>AutoTransferMasterThresholdDays</value>
+  </data>
+  <data name="Cat_AutoTransferMasterThresholdDays_Desc" xml:space="preserve">
+    <value>Undocumented. Likely the days a guild/base master must be inactive before ownership auto-transfers.</value>
+  </data>
 </root>

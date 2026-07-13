@@ -235,7 +235,8 @@ public sealed class SettingsDialog : Window
         var value = current.TryGetValue(setting.Key, out var v) ? v ?? "" : "";
         var hasDefault = defaults.TryGetValue(setting.Key, out var dv);
         // Tooltip leads with the real ini key (the "true" name) so it's discoverable, then the description.
-        var tip = string.IsNullOrEmpty(setting.Description) ? setting.Key : $"{setting.Key}\n{setting.Description}";
+        var desc = CatalogText.Description(setting);
+        var tip = string.IsNullOrEmpty(desc) ? setting.Key : $"{setting.Key}\n{desc}";
         // An app-preferred default (e.g. RESTAPIEnabled = True) overrides the game default for reset: the ↺
         // resets toward it (so it only shows when the value differs, i.e. REST is off) and the key is left out
         // of bulk "Reset to defaults" so a blanket reset can't disable a feature the launcher relies on.
@@ -245,7 +246,7 @@ public sealed class SettingsDialog : Window
             WarnNoServerEffectOnUse(setting, noEffectCombo);
         // No reset (↺) on secret fields, don't let "Reset to defaults" silently blank a password.
         var offerReset = gameEnabled && !setting.Secret && (setting.AppDefault is not null || hasDefault);
-        stack.Children.Add(Row(setting.Label, input, tip, offerReset ? reset : null, setting.Doc,
+        stack.Children.Add(Row(CatalogText.Label(setting), input, tip, offerReset ? reset : null, setting.Doc,
             includeInBulkReset: setting.AppDefault is null));
     }
 
@@ -260,7 +261,7 @@ public sealed class SettingsDialog : Window
             combo.IsDropDownOpen = false;
             // Defer so the modal doesn't open synchronously inside the dropdown-opened event.
             Dispatcher.BeginInvoke(new System.Action(() => ChoiceDialog.Show(this, Strings.Settings_NoEffectTitle,
-                string.Format(Strings.Settings_NoEffectMessage, setting.Label), Strings.Settings_GotIt)));
+                string.Format(Strings.Settings_NoEffectMessage, CatalogText.Label(setting)), Strings.Settings_GotIt)));
         };
     }
 
@@ -611,7 +612,7 @@ public sealed class SettingsDialog : Window
                     return (secret.Element, new ResetSpec(
                         () => secret.SetValue(defaultValue), () => secret.Value == defaultValue, cb => secret.OnChanged(cb)));
                 }
-                var box = ValidatedTextField(setting.Label, value, enabled, setting.Type, setting.Min, setting.Max);
+                var box = ValidatedTextField(CatalogText.Label(setting), value, enabled, setting.Type, setting.Min, setting.Max);
                 _gameInputs.Add((setting, () => box.Text, s => box.Text = s, value));
                 return (box, TextReset(box, defaultValue));
             }
