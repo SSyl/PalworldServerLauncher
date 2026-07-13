@@ -48,4 +48,22 @@ public class LocalizationSmokeTests
         Assert.True(missingFromChinese.Count == 0, $"Keys missing from Strings.zh-Hans.resx: {string.Join(", ", missingFromChinese)}");
         Assert.True(missingFromEnglish.Count == 0, $"Keys missing from Strings.resx: {string.Join(", ", missingFromEnglish)}");
     }
+
+    [Fact]
+    public void English_and_Japanese_resource_sets_have_the_same_keys()
+    {
+        var english = Strings.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, createIfNotExists: true, tryParents: false);
+        var ja = Strings.ResourceManager.GetResourceSet(CultureInfo.GetCultureInfo("ja"), createIfNotExists: true, tryParents: false);
+        Assert.NotNull(english);
+        Assert.NotNull(ja);
+
+        var englishKeys = english!.Cast<System.Collections.DictionaryEntry>().Select(e => (string)e.Key).ToHashSet();
+        var jaKeys = ja!.Cast<System.Collections.DictionaryEntry>().Select(e => (string)e.Key).ToHashSet();
+
+        var missingFromJapanese = englishKeys.Except(jaKeys).ToList();
+        var missingFromEnglish = jaKeys.Except(englishKeys).ToList();
+
+        Assert.True(missingFromJapanese.Count == 0, $"Keys missing from Strings.ja.resx: {string.Join(", ", missingFromJapanese)}");
+        Assert.True(missingFromEnglish.Count == 0, $"Keys missing from Strings.resx: {string.Join(", ", missingFromEnglish)}");
+    }
 }
