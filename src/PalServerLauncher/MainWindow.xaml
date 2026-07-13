@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PalServerLauncher"
         xmlns:vm="clr-namespace:PalServerLauncher.ViewModels"
         mc:Ignorable="d"
-        Title="Palworld Server Launcher" Height="640" Width="1000"
+        Title="Palworld Server Launcher" Height="656" Width="1000"
         Icon="logo.png"
         Background="#1E1E1E" Foreground="#E0E0E0"
         FontFamily="Segoe UI" FontSize="13"

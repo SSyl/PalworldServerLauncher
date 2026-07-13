@@ -62,7 +62,7 @@ public sealed class ModsDialog : Window
         Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         Width = 720;
-        Height = 660;
+        Height = 700;
         ShowInTaskbar = false;
 
         var stack = new StackPanel { Margin = new Thickness(18) };
