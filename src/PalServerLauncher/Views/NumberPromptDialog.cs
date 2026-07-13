@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using PalServerLauncher.Localization;
 
 namespace PalServerLauncher.Views;
 
@@ -62,8 +63,8 @@ public sealed class NumberPromptDialog : Window
         root.Children.Add(inputRow);
 
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
-        buttons.Children.Add(MakeButton("OK", OnOk));
-        buttons.Children.Add(MakeButton("Cancel", Close));
+        buttons.Children.Add(MakeButton(Strings.Common_OK, OnOk));
+        buttons.Children.Add(MakeButton(Strings.Common_Cancel, Close));
         root.Children.Add(buttons);
 
         Content = root;

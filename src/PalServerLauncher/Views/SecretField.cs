@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using PalServerLauncher.Localization;
 
 namespace PalServerLauncher.Views;
 
@@ -49,23 +50,23 @@ internal sealed class SecretField
         // Always enabled, even when read-only, so you can reveal a password to view it while the server runs.
         var toggle = new ToggleButton
         {
-            Content = "Show", Width = 52, Margin = new Thickness(6, 0, 0, 0), Foreground = Fg,
+            Content = Strings.Secret_Show, Width = 52, Margin = new Thickness(6, 0, 0, 0), Foreground = Fg,
             Background = ButtonBg, BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand,
-            VerticalAlignment = VerticalAlignment.Stretch, ToolTip = "Show or hide the value",
+            VerticalAlignment = VerticalAlignment.Stretch, ToolTip = Strings.Secret_Tooltip,
         };
         toggle.Checked += (_, _) =>
         {
             _revealed.Text = _masked.Password;
             _masked.Visibility = Visibility.Collapsed;
             _revealed.Visibility = Visibility.Visible;
-            toggle.Content = "Hide";
+            toggle.Content = Strings.Secret_Hide;
         };
         toggle.Unchecked += (_, _) =>
         {
             _masked.Password = _revealed.Text;
             _revealed.Visibility = Visibility.Collapsed;
             _masked.Visibility = Visibility.Visible;
-            toggle.Content = "Show";
+            toggle.Content = Strings.Secret_Show;
         };
 
         var grid = new Grid();

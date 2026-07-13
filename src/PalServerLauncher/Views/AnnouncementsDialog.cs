@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using PalServerLauncher.Config;
+using PalServerLauncher.Localization;
 
 namespace PalServerLauncher.Views;
 
@@ -28,7 +29,7 @@ public sealed class AnnouncementsDialog : Window
     {
         _config = config;
 
-        Title = "Announcements";
+        Title = Strings.Announcements_Title;
         Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         Width = 620;
@@ -38,22 +39,21 @@ public sealed class AnnouncementsDialog : Window
         var stack = new StackPanel { Margin = new Thickness(18) };
         stack.Children.Add(new TextBlock
         {
-            Text = "Shown to players before a restart. Put " + Token + " where the countdown should go " +
-                   "(it becomes the minutes remaining). Remove it for a fixed message with no time.",
+            Text = Strings.Announcements_Intro,
             Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 14),
         });
 
-        stack.Children.Add(Label("Scheduled / manual restart"));
+        stack.Children.Add(Label(Strings.Announcements_RestartLabel));
         _restart = Field(_config.RestartAnnounceMessage);
         stack.Children.Add(_restart);
 
-        stack.Children.Add(Label("Update restart"));
+        stack.Children.Add(Label(Strings.Announcements_UpdateLabel));
         _update = Field(_config.UpdateAnnounceMessage);
         stack.Children.Add(_update);
 
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 16, 0, 0) };
-        buttons.Children.Add(MakeButton("Save", OnSave));
-        buttons.Children.Add(MakeButton("Cancel", Close));
+        buttons.Children.Add(MakeButton(Strings.Common_Save, OnSave));
+        buttons.Children.Add(MakeButton(Strings.Common_Cancel, Close));
         stack.Children.Add(buttons);
 
         Content = stack;
@@ -73,24 +73,24 @@ public sealed class AnnouncementsDialog : Window
 
         // Hard rule: the server's /announce rejects an empty body.
         var empty = new List<string>();
-        if (restart.Length == 0) empty.Add("Scheduled / manual restart");
-        if (update.Length == 0) empty.Add("Update restart");
+        if (restart.Length == 0) empty.Add(Strings.Announcements_RestartLabel);
+        if (update.Length == 0) empty.Add(Strings.Announcements_UpdateLabel);
         if (empty.Count > 0)
         {
-            ChoiceDialog.Show(this, "Empty announcement",
-                "An announcement can't be empty (the server rejects a blank message):\n" + string.Join("\n", empty), "OK");
+            ChoiceDialog.Show(this, Strings.Announcements_EmptyTitle,
+                Strings.Announcements_EmptyMessage + "\n" + string.Join("\n", empty), Strings.Common_OK);
             return;
         }
 
         // Soft warning: a missing token is allowed (fixed message) but the user probably didn't mean to.
         var missing = new List<string>();
-        if (!restart.Contains(Token)) missing.Add("Scheduled / manual restart");
-        if (!update.Contains(Token)) missing.Add("Update restart");
+        if (!restart.Contains(Token)) missing.Add(Strings.Announcements_RestartLabel);
+        if (!update.Contains(Token)) missing.Add(Strings.Announcements_UpdateLabel);
         if (missing.Count > 0)
         {
-            var choice = ChoiceDialog.Show(this, "No countdown token",
-                $"These have no {Token} token, so they won't show the minutes remaining:\n{string.Join("\n", missing)}\n\nSave them as fixed messages anyway?",
-                "Save anyway", "Keep editing");
+            var choice = ChoiceDialog.Show(this, Strings.Announcements_NoTokenTitle,
+                string.Format(Strings.Announcements_NoTokenMessage, Token, string.Join("\n", missing)),
+                Strings.Announcements_SaveAnyway, Strings.Announcements_KeepEditing);
             if (choice != 0)
                 return;
         }

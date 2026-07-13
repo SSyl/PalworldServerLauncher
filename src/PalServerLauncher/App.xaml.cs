@@ -87,7 +87,7 @@ public partial class App : Application
     {
         _logger.Error("Unhandled UI exception", e.Exception);
         MessageBox.Show(
-            $"An error occurred:\n\n{e.Exception.Message}\n\nFull details in:\n{_logger.FilePath}",
+            string.Format(Strings.App_ErrorFormat, e.Exception.Message, _logger.FilePath),
             Strings.Common_AppName, MessageBoxButton.OK, MessageBoxImage.Error);
         e.Handled = true; // keep the window alive
     }

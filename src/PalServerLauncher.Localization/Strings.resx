@@ -607,4 +607,23 @@ Don't use these unless you know what you're doing.</value>
   <data name="Main_Download" xml:space="preserve">
     <value>Download</value>
   </data>
+  <!-- Secret field (masked password / token) -->
+  <data name="Secret_Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="Secret_Hide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="Secret_Tooltip" xml:space="preserve">
+    <value>Show or hide the value</value>
+  </data>
+  <!-- App-level -->
+  <data name="App_ErrorFormat" xml:space="preserve">
+    <value>An error occurred:
+
+{0}
+
+Full details in:
+{1}</value>
+  </data>
 </root>
