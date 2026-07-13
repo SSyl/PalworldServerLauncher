@@ -1137,4 +1137,271 @@ Full details in:
   <data name="Mods_ColNote" xml:space="preserve">
     <value>Note</value>
   </data>
+  <!-- SettingsDialog -->
+  <data name="Settings_AdvancedTitle" xml:space="preserve">
+    <value>Advanced Settings</value>
+  </data>
+  <data name="Settings_ServerTitle" xml:space="preserve">
+    <value>Server Settings</value>
+  </data>
+  <data name="Settings_ResetToDefaults" xml:space="preserve">
+    <value>Reset to defaults</value>
+  </data>
+  <data name="Settings_WorldBlurb" xml:space="preserve">
+    <value>Gameplay and balance, difficulty, EXP / capture / drop rates, damage multipliers, and world features. Full reference:</value>
+  </data>
+  <data name="Settings_WorldBlurbLink" xml:space="preserve">
+    <value>Features docs</value>
+  </data>
+  <data name="Settings_AdminBlurb" xml:space="preserve">
+    <value>Server management, server name, passwords, player limit, and the REST / RCON APIs. Full reference:</value>
+  </data>
+  <data name="Settings_AdminBlurbLink" xml:space="preserve">
+    <value>Server management docs</value>
+  </data>
+  <data name="Settings_TabWorld" xml:space="preserve">
+    <value>World Settings</value>
+  </data>
+  <data name="Settings_TabAdmin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="Settings_TabUndocumented" xml:space="preserve">
+    <value>Undocumented</value>
+  </data>
+  <data name="Settings_TabLaunchArgs" xml:space="preserve">
+    <value>Launch Arguments</value>
+  </data>
+  <data name="Settings_BannerServerRunning" xml:space="preserve">
+    <value>The server is running, so the game-settings tabs are read-only (a running server overwrites its own config). Launch Arguments can still be edited, and apply on the next start just like the game settings.</value>
+  </data>
+  <data name="Settings_BannerGameUnavailable" xml:space="preserve">
+    <value>Game settings unavailable, install the server first (no DefaultPalWorldSettings.ini found).</value>
+  </data>
+  <data name="Settings_UndocumentedBlurb" xml:space="preserve">
+    <value>Settings the official docs don't cover. Each tooltip has our best guess, but we can't vouch for these, some may be internal or unused. Look them up in the</value>
+  </data>
+  <data name="Settings_UndocumentedBlurbLink" xml:space="preserve">
+    <value>Palworld configuration reference</value>
+  </data>
+  <data name="Settings_UndocKnownHeader" xml:space="preserve">
+    <value>Known to the launcher</value>
+  </data>
+  <data name="Settings_UndocNewHeader" xml:space="preserve">
+    <value>New in your config (not recognized)</value>
+  </data>
+  <data name="Settings_UndocNoneRecognized" xml:space="preserve">
+    <value>None, every key in your config is recognized.</value>
+  </data>
+  <data name="Settings_NoEffectTitle" xml:space="preserve">
+    <value>This setting does nothing on a server</value>
+  </data>
+  <data name="Settings_NoEffectMessage" xml:space="preserve">
+    <value>Heads up: '{0}' is a client / single-player setting and has no effect on a dedicated server. Changing it here won't change how the server plays. Use the individual settings (or the Difficulty preset buttons at the top of World Settings) to control server difficulty.</value>
+  </data>
+  <data name="Settings_GotIt" xml:space="preserve">
+    <value>Got it</value>
+  </data>
+  <data name="Settings_DifficultyPreset" xml:space="preserve">
+    <value>Difficulty preset:</value>
+  </data>
+  <data name="Settings_PresetTitle" xml:space="preserve">
+    <value>{0} preset</value>
+  </data>
+  <data name="Settings_PresetNoChanges" xml:space="preserve">
+    <value>Your settings already match the {0} preset, nothing to change.</value>
+  </data>
+  <data name="Settings_PresetConfirmMessage" xml:space="preserve">
+    <value>These are the values as of Palworld 1.0. Some settings may have been added or changed since.
+
+Here are the values that will change for the {0} preset:
+
+{1}
+
+Any values not listed above will remain the same.
+
+Apply and save these changes?</value>
+  </data>
+  <data name="Settings_Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Settings_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Settings_PresetAppliedTitle" xml:space="preserve">
+    <value>{0} preset applied</value>
+  </data>
+  <data name="Settings_PresetAppliedMessage" xml:space="preserve">
+    <value>Applied the {0} preset. {1} setting(s) changed and saved.</value>
+  </data>
+  <data name="Settings_LaunchArgsIntro" xml:space="preserve">
+    <value>The exact command line used to launch the dedicated server (rebuilt live below). Where an argument here and a PalWorldSettings.ini setting control the same thing, the argument wins, a field left blank, 0, or at its default is left off, so the ini value is used instead. Most game settings have no argument and live only in the ini (edit those under Server Settings). Changes take effect on the next start.</value>
+  </data>
+  <data name="Settings_ListenPortTerm" xml:space="preserve">
+    <value>Listen port</value>
+  </data>
+  <data name="Settings_ListenPortNote" xml:space="preserve">
+    <value> is the port the server binds to and players connect to. </value>
+  </data>
+  <data name="Settings_PublicPortTerm" xml:space="preserve">
+    <value>Public port</value>
+  </data>
+  <data name="Settings_PublicPortNote" xml:space="preserve">
+    <value> (community servers only) sets what the server advertises to the public list, it does NOT change the listen port.</value>
+  </data>
+  <data name="Settings_ValidateListenPort" xml:space="preserve">
+    <value>Listen port</value>
+  </data>
+  <data name="Settings_ValidateMaxPlayers" xml:space="preserve">
+    <value>Max players</value>
+  </data>
+  <data name="Settings_ValidateWorkerThreads" xml:space="preserve">
+    <value>Worker threads</value>
+  </data>
+  <data name="Settings_ValidatePublicIp" xml:space="preserve">
+    <value>Public IP</value>
+  </data>
+  <data name="Settings_ValidatePublicPort" xml:space="preserve">
+    <value>Public port</value>
+  </data>
+  <data name="Settings_RowListenPort" xml:space="preserve">
+    <value>Listen port (-port)</value>
+  </data>
+  <data name="Settings_TipListenPort" xml:space="preserve">
+    <value>The UDP port the server binds to, what players connect to (Palworld default 8211). Always applied. This is not the Public port below.</value>
+  </data>
+  <data name="Settings_RowMaxPlayers" xml:space="preserve">
+    <value>Max players (-players, 0 = use game setting)</value>
+  </data>
+  <data name="Settings_TipMaxPlayers" xml:space="preserve">
+    <value>Overrides ServerPlayerMaxNum in the ini when set. 0 = leave the argument off and use the game setting.</value>
+  </data>
+  <data name="Settings_RowPerfThreads" xml:space="preserve">
+    <value>Performance threads</value>
+  </data>
+  <data name="Settings_TipPerfThreads" xml:space="preserve">
+    <value>Adds -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS. Recommended on for a dedicated server.</value>
+  </data>
+  <data name="Settings_RowWorkerThreads" xml:space="preserve">
+    <value>Worker threads (0 = auto)</value>
+  </data>
+  <data name="Settings_TipWorkerThreads" xml:space="preserve">
+    <value>-NumberOfWorkerThreadsServer. 0 = auto (left off). Only used when Performance threads is on.</value>
+  </data>
+  <data name="Settings_RowCommunity" xml:space="preserve">
+    <value>Community/public server (-publiclobby)</value>
+  </data>
+  <data name="Settings_TipCommunity" xml:space="preserve">
+    <value>-publiclobby: list the server on the public/community browser. Off = private (players join by IP).</value>
+  </data>
+  <data name="Settings_RowPublicIp" xml:space="preserve">
+    <value>Public IP (community, blank = auto)</value>
+  </data>
+  <data name="Settings_TipPublicIp" xml:space="preserve">
+    <value>-publicip for community servers (blank = auto-detect). Advertising only; does not change what the server binds to.</value>
+  </data>
+  <data name="Settings_RowPublicPort" xml:space="preserve">
+    <value>Public port (community, 0 = use game setting)</value>
+  </data>
+  <data name="Settings_TipPublicPort" xml:space="preserve">
+    <value>-publicport for community servers: the external port advertised to the public list. Does NOT change the listen port. 0 = left off (use the ini value).</value>
+  </data>
+  <data name="Settings_RowLogFormat" xml:space="preserve">
+    <value>Log format</value>
+  </data>
+  <data name="Settings_TipLogFormat" xml:space="preserve">
+    <value>-logformat (Text or Json). Blank = left off; the ini/default applies.</value>
+  </data>
+  <data name="Settings_ExtraArgsNote" xml:space="preserve">
+    <value>Raw arguments appended to the command line verbatim (space- or line-separated). Some Unreal servers accept map / game-class overrides here. Only change this if you know what you're doing.</value>
+  </data>
+  <data name="Settings_AdvancedExpander" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="Settings_AdvancedIntro" xml:space="preserve">
+    <value>Low-level settings applied to the server process after it launches. The wrong values here can hurt performance, change only if you know what you're doing. Takes effect on the next start.</value>
+  </data>
+  <data name="Settings_PriorityAffinityHeader" xml:space="preserve">
+    <value>Process priority &amp; CPU affinity</value>
+  </data>
+  <data name="Settings_RowPriority" xml:space="preserve">
+    <value>Process priority</value>
+  </data>
+  <data name="Settings_TipPriority" xml:space="preserve">
+    <value>Windows priority for the server process. Above normal / High can help under load but can starve other apps and hurt performance; RealTime isn't offered (unsafe).</value>
+  </data>
+  <data name="Settings_CoreLabel" xml:space="preserve">
+    <value>Core {0}</value>
+  </data>
+  <data name="Settings_CpuAffinityNote" xml:space="preserve">
+    <value>CPU affinity, pin the server to specific cores (all checked = no restriction / use every core):</value>
+  </data>
+  <data name="Settings_AdvancedArgsTitle" xml:space="preserve">
+    <value>Advanced arguments</value>
+  </data>
+  <data name="Settings_AdvancedArgsMessage" xml:space="preserve">
+    <value>You've put custom arguments in the Advanced box. They're passed to the server exactly as typed, only keep them if you know what you're doing.</value>
+  </data>
+  <data name="Settings_Accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="Settings_ConfirmSaveMore" xml:space="preserve">
+    <value>
+...and {0} more</value>
+  </data>
+  <data name="Settings_ConfirmSaveTitle" xml:space="preserve">
+    <value>Confirm save</value>
+  </data>
+  <data name="Settings_ConfirmSaveMessage" xml:space="preserve">
+    <value>These settings will change:
+
+{0}
+
+Save these changes?</value>
+  </data>
+  <data name="Settings_NotSavedTitle" xml:space="preserve">
+    <value>Not saved</value>
+  </data>
+  <data name="Settings_NotSavedMessage" xml:space="preserve">
+    <value>'{0}' has a value that would break the config format (a stray comma, quote, or unbalanced parenthesis). Nothing was saved, fix it and try again.</value>
+  </data>
+  <data name="Settings_ValidationError" xml:space="preserve">
+    <value>{0} is invalid. Must be {1}.</value>
+  </data>
+  <data name="Settings_InvalidSettingsTitle" xml:space="preserve">
+    <value>Invalid settings</value>
+  </data>
+  <data name="Settings_ResetFieldTooltip" xml:space="preserve">
+    <value>Reset this field to its default</value>
+  </data>
+  <data name="Settings_UndocumentedMarker" xml:space="preserve">
+    <value>  · undocumented</value>
+  </data>
+  <data name="Settings_ResetAllMessage" xml:space="preserve">
+    <value>Reset every field in this panel to its default value? You'll still need to Save to apply.</value>
+  </data>
+  <data name="Settings_ResetAllButton" xml:space="preserve">
+    <value>Reset all</value>
+  </data>
+  <data name="Settings_CategoryServerManagement" xml:space="preserve">
+    <value>Server management</value>
+  </data>
+  <data name="Settings_CategoryPerformance" xml:space="preserve">
+    <value>Performance</value>
+  </data>
+  <data name="Settings_CategoryGameplay" xml:space="preserve">
+    <value>Gameplay</value>
+  </data>
+  <data name="Settings_CategoryGameBalance" xml:space="preserve">
+    <value>Game balance</value>
+  </data>
+  <!-- MainViewModel -->
+  <data name="Vm_Working" xml:space="preserve">
+    <value>Working</value>
+  </data>
+  <data name="Vm_TimesSummaryNone" xml:space="preserve">
+    <value>(none)</value>
+  </data>
+  <data name="Vm_TimesSummaryMore" xml:space="preserve">
+    <value>{0}  +{1} more</value>
+  </data>
 </root>

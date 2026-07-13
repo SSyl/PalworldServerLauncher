@@ -8,6 +8,7 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using PalServerLauncher.Config;
 using PalServerLauncher.Core;
+using PalServerLauncher.Localization;
 
 namespace PalServerLauncher.Views;
 
@@ -79,7 +80,7 @@ public sealed class SettingsDialog : Window
         _gameSettings = gameSettings;
         _serverRunning = serverRunning;
 
-        Title = section == SettingsSection.Advanced ? "Advanced Settings" : "Server Settings";
+        Title = section == SettingsSection.Advanced ? Strings.Settings_AdvancedTitle : Strings.Settings_ServerTitle;
         Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         Width = section == SettingsSection.ServerSettings ? 720 : 660;
@@ -100,9 +101,9 @@ public sealed class SettingsDialog : Window
 
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(18, 10, 18, 14) };
         if (_resetActions.Count > 0)
-            buttons.Children.Add(MakeButton("Reset to defaults", ResetAll));
-        buttons.Children.Add(MakeButton("Save", OnSave));
-        buttons.Children.Add(MakeButton("Cancel", Close));
+            buttons.Children.Add(MakeButton(Strings.Settings_ResetToDefaults, ResetAll));
+        buttons.Children.Add(MakeButton(Strings.Common_Save, OnSave));
+        buttons.Children.Add(MakeButton(Strings.Common_Cancel, Close));
 
         var root = new DockPanel();
         DockPanel.SetDock(buttons, Dock.Bottom);
@@ -124,14 +125,14 @@ public sealed class SettingsDialog : Window
         var defaults = gameAvailable ? _gameSettings.LoadDefaults() : new Dictionary<string, string?>();
 
         var world = BuildIniTab(
-            DocBlurb("Gameplay and balance, difficulty, EXP / capture / drop rates, damage multipliers, and world features. Full reference:",
-                "https://docs.palworldgame.com/settings-and-operation/configuration#features", "Features docs"),
+            DocBlurb(Strings.Settings_WorldBlurb,
+                "https://docs.palworldgame.com/settings-and-operation/configuration#features", Strings.Settings_WorldBlurbLink),
             new[] { SettingCategory.Performance, SettingCategory.Gameplay, SettingCategory.GameBalance },
             s => s.Doc != DocStatus.Unknown, gameEnabled, current, defaults,
             topExtra: BuildPresetRow(gameEnabled));
         var admin = BuildIniTab(
-            DocBlurb("Server management, server name, passwords, player limit, and the REST / RCON APIs. Full reference:",
-                "https://docs.palworldgame.com/settings-and-operation/configuration#server-management", "Server management docs"),
+            DocBlurb(Strings.Settings_AdminBlurb,
+                "https://docs.palworldgame.com/settings-and-operation/configuration#server-management", Strings.Settings_AdminBlurbLink),
             new[] { SettingCategory.ServerAdmin },
             s => s.Doc != DocStatus.Unknown, gameEnabled, current, defaults);
         var undoc = BuildUndocumentedTab(gameAvailable, gameEnabled, current, defaults);
@@ -149,22 +150,22 @@ public sealed class SettingsDialog : Window
         };
         if (Application.Current?.TryFindResource("DarkTabItem") is Style tabStyle)
             tabs.ItemContainerStyle = tabStyle;
-        tabs.Items.Add(new TabItem { Header = "World Settings", Content = world });
-        tabs.Items.Add(new TabItem { Header = "Admin", Content = admin });
-        tabs.Items.Add(new TabItem { Header = "Undocumented", Content = undoc });
-        tabs.Items.Add(new TabItem { Header = "Launch Arguments", Content = launch });
+        tabs.Items.Add(new TabItem { Header = Strings.Settings_TabWorld, Content = world });
+        tabs.Items.Add(new TabItem { Header = Strings.Settings_TabAdmin, Content = admin });
+        tabs.Items.Add(new TabItem { Header = Strings.Settings_TabUndocumented, Content = undoc });
+        tabs.Items.Add(new TabItem { Header = Strings.Settings_TabLaunchArgs, Content = launch });
 
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(18, 10, 18, 14) };
         if (_resetActions.Count > 0)
-            buttons.Children.Add(MakeButton("Reset to defaults", ResetAll));
-        buttons.Children.Add(MakeButton("Save", OnSave));
-        buttons.Children.Add(MakeButton("Cancel", Close));
+            buttons.Children.Add(MakeButton(Strings.Settings_ResetToDefaults, ResetAll));
+        buttons.Children.Add(MakeButton(Strings.Common_Save, OnSave));
+        buttons.Children.Add(MakeButton(Strings.Common_Cancel, Close));
 
         var root = new DockPanel();
         var bannerText = _serverRunning
-            ? "The server is running, so the game-settings tabs are read-only (a running server overwrites its own config). Launch Arguments can still be edited, and apply on the next start just like the game settings."
+            ? Strings.Settings_BannerServerRunning
             : !gameAvailable
-                ? "Game settings unavailable, install the server first (no DefaultPalWorldSettings.ini found)."
+                ? Strings.Settings_BannerGameUnavailable
                 : null;
         if (bannerText is not null)
         {
@@ -208,19 +209,18 @@ public sealed class SettingsDialog : Window
     {
         var stack = new StackPanel { Margin = new Thickness(18) };
         stack.Children.Add(DocBlurb(
-            "Settings the official docs don't cover. Each tooltip has our best guess, but we can't vouch for these, "
-            + "some may be internal or unused. Look them up in the",
-            ConfigDocsUrl, "Palworld configuration reference"));
+            Strings.Settings_UndocumentedBlurb,
+            ConfigDocsUrl, Strings.Settings_UndocumentedBlurbLink));
 
-        stack.Children.Add(Header("Known to the launcher"));
+        stack.Children.Add(Header(Strings.Settings_UndocKnownHeader));
         foreach (var setting in GameSettingsCatalog.All.Where(s => s.Doc == DocStatus.Unknown))
             AddCatalogRow(stack, setting, gameEnabled, current, defaults);
 
-        stack.Children.Add(Header("New in your config (not recognized)"));
+        stack.Children.Add(Header(Strings.Settings_UndocNewHeader));
         if (AppendExtras(stack, gameAvailable, gameEnabled) == 0)
             stack.Children.Add(new TextBlock
             {
-                Text = "None, every key in your config is recognized.",
+                Text = Strings.Settings_UndocNoneRecognized,
                 Foreground = Fg, Margin = new Thickness(0, 2, 0, 0),
             });
 
@@ -259,10 +259,8 @@ public sealed class SettingsDialog : Window
                 return;
             combo.IsDropDownOpen = false;
             // Defer so the modal doesn't open synchronously inside the dropdown-opened event.
-            Dispatcher.BeginInvoke(new System.Action(() => ChoiceDialog.Show(this, "This setting does nothing on a server",
-                $"Heads up: '{setting.Label}' is a client / single-player setting and has no effect on a dedicated "
-                + "server. Changing it here won't change how the server plays. Use the individual settings (or the "
-                + "Difficulty preset buttons at the top of World Settings) to control server difficulty.", "Got it")));
+            Dispatcher.BeginInvoke(new System.Action(() => ChoiceDialog.Show(this, Strings.Settings_NoEffectTitle,
+                string.Format(Strings.Settings_NoEffectMessage, setting.Label), Strings.Settings_GotIt)));
         };
     }
 
@@ -272,7 +270,7 @@ public sealed class SettingsDialog : Window
         var panel = new WrapPanel { Margin = new Thickness(0, 0, 0, 4) };
         panel.Children.Add(new TextBlock
         {
-            Text = "Difficulty preset:", Foreground = Muted, VerticalAlignment = VerticalAlignment.Center,
+            Text = Strings.Settings_DifficultyPreset, Foreground = Muted, VerticalAlignment = VerticalAlignment.Center,
             Margin = new Thickness(0, 0, 8, 0),
         });
         foreach (var name in DifficultyPresets.Names)
@@ -302,16 +300,14 @@ public sealed class SettingsDialog : Window
 
         if (changes.Count == 0)
         {
-            ChoiceDialog.Show(this, $"{presetName} preset",
-                $"Your settings already match the {presetName} preset, nothing to change.", "OK");
+            ChoiceDialog.Show(this, string.Format(Strings.Settings_PresetTitle, presetName),
+                string.Format(Strings.Settings_PresetNoChanges, presetName), Strings.Common_OK);
             return;
         }
 
         var list = string.Join("\n", changes.Select(c => $"{c.Key} = {c.Value}"));
-        var message = "These are the values as of Palworld 1.0. Some settings may have been added or changed since.\n\n"
-            + $"Here are the values that will change for the {presetName} preset:\n\n{list}\n\n"
-            + "Any values not listed above will remain the same.\n\nApply and save these changes?";
-        if (ChoiceDialog.Show(this, $"{presetName} preset", message, "Yes", "No") != 0)
+        var message = string.Format(Strings.Settings_PresetConfirmMessage, presetName, list);
+        if (ChoiceDialog.Show(this, string.Format(Strings.Settings_PresetTitle, presetName), message, Strings.Settings_Yes, Strings.Settings_No) != 0)
             return;
 
         // Push into the live controls and update each Original so the change isn't re-flagged as unsaved.
@@ -332,8 +328,8 @@ public sealed class SettingsDialog : Window
             return;
         }
         _saved = true;
-        ChoiceDialog.Show(this, $"{presetName} preset applied",
-            $"Applied the {presetName} preset. {changes.Count} setting(s) changed and saved.", "OK");
+        ChoiceDialog.Show(this, string.Format(Strings.Settings_PresetAppliedTitle, presetName),
+            string.Format(Strings.Settings_PresetAppliedMessage, presetName, changes.Count), Strings.Common_OK);
     }
 
     public static bool ShowServerSettings(Window? owner, LauncherConfig config, GameSettingsService gs, bool serverRunning) =>
@@ -353,11 +349,7 @@ public sealed class SettingsDialog : Window
     {
         stack.Children.Add(new TextBlock
         {
-            Text = "The exact command line used to launch the dedicated server (rebuilt live below). Where an "
-                 + "argument here and a PalWorldSettings.ini setting control the same thing, the argument wins, a "
-                 + "field left blank, 0, or at its default is left off, so the ini value is used instead. Most game "
-                 + "settings have no argument and live only in the ini (edit those under Server Settings). Changes "
-                 + "take effect on the next start.",
+            Text = Strings.Settings_LaunchArgsIntro,
             Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 10),
         });
 
@@ -374,19 +366,19 @@ public sealed class SettingsDialog : Window
 
         // The single biggest launch-arg footgun: Listen port vs Public port. Call it out visibly.
         var portNote = new TextBlock { TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 12), Foreground = Muted };
-        portNote.Inlines.Add(new Run("Listen port") { FontWeight = FontWeights.SemiBold, Foreground = Fg });
-        portNote.Inlines.Add(" is the port the server binds to and players connect to. ");
-        portNote.Inlines.Add(new Run("Public port") { FontWeight = FontWeights.SemiBold, Foreground = Fg });
-        portNote.Inlines.Add(" (community servers only) sets what the server advertises to the public list, it does NOT change the listen port.");
+        portNote.Inlines.Add(new Run(Strings.Settings_ListenPortTerm) { FontWeight = FontWeights.SemiBold, Foreground = Fg });
+        portNote.Inlines.Add(Strings.Settings_ListenPortNote);
+        portNote.Inlines.Add(new Run(Strings.Settings_PublicPortTerm) { FontWeight = FontWeights.SemiBold, Foreground = Fg });
+        portNote.Inlines.Add(Strings.Settings_PublicPortNote);
         stack.Children.Add(portNote);
 
-        _port = ValidatedTextField("Listen port", _config.ServerPort.ToString(), true, SettingType.Int, min: 1, max: 65535, required: true);
-        _maxPlayers = ValidatedTextField("Max players", _config.MaxPlayers.ToString(), true, SettingType.Int, min: 0);
+        _port = ValidatedTextField(Strings.Settings_ValidateListenPort, _config.ServerPort.ToString(), true, SettingType.Int, min: 1, max: 65535, required: true);
+        _maxPlayers = ValidatedTextField(Strings.Settings_ValidateMaxPlayers, _config.MaxPlayers.ToString(), true, SettingType.Int, min: 0);
         _perfThreads = CheckField(_config.PerformanceThreads, true);
-        _workerThreads = ValidatedTextField("Worker threads", _config.WorkerThreads.ToString(), true, SettingType.Int, min: 0);
+        _workerThreads = ValidatedTextField(Strings.Settings_ValidateWorkerThreads, _config.WorkerThreads.ToString(), true, SettingType.Int, min: 0);
         _community = CheckField(_config.CommunityServer, true);
-        _publicIp = ValidatedTextField("Public IP", _config.PublicIp, true, SettingType.IpAddress);
-        _publicPort = ValidatedTextField("Public port", _config.PublicPortArg.ToString(), true, SettingType.Int, min: 0, max: 65535);
+        _publicIp = ValidatedTextField(Strings.Settings_ValidatePublicIp, _config.PublicIp, true, SettingType.IpAddress);
+        _publicPort = ValidatedTextField(Strings.Settings_ValidatePublicPort, _config.PublicPortArg.ToString(), true, SettingType.Int, min: 0, max: 65535);
         _logFormat = ComboField(new[] { "", "Text", "Json" }, _config.LogFormat, true);
 
         // Rebuild the preview whenever any launch field changes.
@@ -402,29 +394,29 @@ public sealed class SettingsDialog : Window
         _logFormat.SelectionChanged += OnLaunchFieldChanged;
 
         var d = new LauncherConfig(); // built-in defaults for the reset (↺) actions
-        stack.Children.Add(Row("Listen port (-port)", _port,
-            "The UDP port the server binds to, what players connect to (Palworld default 8211). Always applied. This is not the Public port below.",
+        stack.Children.Add(Row(Strings.Settings_RowListenPort, _port,
+            Strings.Settings_TipListenPort,
             TextReset(_port, d.ServerPort.ToString(CultureInfo.InvariantCulture))));
-        stack.Children.Add(Row("Max players (-players, 0 = use game setting)", _maxPlayers,
-            "Overrides ServerPlayerMaxNum in the ini when set. 0 = leave the argument off and use the game setting.",
+        stack.Children.Add(Row(Strings.Settings_RowMaxPlayers, _maxPlayers,
+            Strings.Settings_TipMaxPlayers,
             TextReset(_maxPlayers, d.MaxPlayers.ToString(CultureInfo.InvariantCulture))));
-        stack.Children.Add(Row("Performance threads", _perfThreads,
-            "Adds -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS. Recommended on for a dedicated server.",
+        stack.Children.Add(Row(Strings.Settings_RowPerfThreads, _perfThreads,
+            Strings.Settings_TipPerfThreads,
             CheckReset(_perfThreads, d.PerformanceThreads)));
-        stack.Children.Add(Row("Worker threads (0 = auto)", _workerThreads,
-            "-NumberOfWorkerThreadsServer. 0 = auto (left off). Only used when Performance threads is on.",
+        stack.Children.Add(Row(Strings.Settings_RowWorkerThreads, _workerThreads,
+            Strings.Settings_TipWorkerThreads,
             TextReset(_workerThreads, d.WorkerThreads.ToString(CultureInfo.InvariantCulture))));
-        stack.Children.Add(Row("Community/public server (-publiclobby)", _community,
-            "-publiclobby: list the server on the public/community browser. Off = private (players join by IP).",
+        stack.Children.Add(Row(Strings.Settings_RowCommunity, _community,
+            Strings.Settings_TipCommunity,
             CheckReset(_community, d.CommunityServer)));
-        stack.Children.Add(Row("Public IP (community, blank = auto)", _publicIp,
-            "-publicip for community servers (blank = auto-detect). Advertising only; does not change what the server binds to.",
+        stack.Children.Add(Row(Strings.Settings_RowPublicIp, _publicIp,
+            Strings.Settings_TipPublicIp,
             TextReset(_publicIp, d.PublicIp)));
-        stack.Children.Add(Row("Public port (community, 0 = use game setting)", _publicPort,
-            "-publicport for community servers: the external port advertised to the public list. Does NOT change the listen port. 0 = left off (use the ini value).",
+        stack.Children.Add(Row(Strings.Settings_RowPublicPort, _publicPort,
+            Strings.Settings_TipPublicPort,
             TextReset(_publicPort, d.PublicPortArg.ToString(CultureInfo.InvariantCulture))));
-        stack.Children.Add(Row("Log format", _logFormat,
-            "-logformat (Text or Json). Blank = left off; the ini/default applies.",
+        stack.Children.Add(Row(Strings.Settings_RowLogFormat, _logFormat,
+            Strings.Settings_TipLogFormat,
             ComboReset(_logFormat, d.LogFormat)));
 
         // --- Advanced (collapsed): free-form extra arguments ---
@@ -442,14 +434,14 @@ public sealed class SettingsDialog : Window
         var advancedBody = new StackPanel();
         advancedBody.Children.Add(new TextBlock
         {
-            Text = "Raw arguments appended to the command line verbatim (space- or line-separated). Some Unreal servers accept map / game-class overrides here. Only change this if you know what you're doing.",
+            Text = Strings.Settings_ExtraArgsNote,
             Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 4, 0, 6),
         });
         advancedBody.Children.Add(_extraArgs);
 
         stack.Children.Add(new Expander
         {
-            Header = "Advanced", IsExpanded = false, Foreground = Fg, Margin = new Thickness(0, 12, 0, 0), Content = advancedBody,
+            Header = Strings.Settings_AdvancedExpander, IsExpanded = false, Foreground = Fg, Margin = new Thickness(0, 12, 0, 0), Content = advancedBody,
         });
 
         UpdatePreview();
@@ -460,16 +452,15 @@ public sealed class SettingsDialog : Window
     {
         stack.Children.Add(new TextBlock
         {
-            Text = "Low-level settings applied to the server process after it launches. The wrong values here can "
-                 + "hurt performance, change only if you know what you're doing. Takes effect on the next start.",
+            Text = Strings.Settings_AdvancedIntro,
             Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 10),
         });
 
-        stack.Children.Add(Header("Process priority & CPU affinity"));
+        stack.Children.Add(Header(Strings.Settings_PriorityAffinityHeader));
 
         _priority = ComboField(new[] { "Below normal", "Normal", "Above normal", "High" }, PriorityToLabel(_config.ServerPriority), true);
-        stack.Children.Add(Row("Process priority", _priority,
-            "Windows priority for the server process. Above normal / High can help under load but can starve other apps and hurt performance; RealTime isn't offered (unsafe).",
+        stack.Children.Add(Row(Strings.Settings_RowPriority, _priority,
+            Strings.Settings_TipPriority,
             ComboReset(_priority, "Normal")));
 
         var cores = Environment.ProcessorCount;
@@ -480,7 +471,7 @@ public sealed class SettingsDialog : Window
         {
             var box = new CheckBox
             {
-                Content = $"Core {i}", Foreground = Fg, MinWidth = 68, Margin = new Thickness(0, 0, 10, 4),
+                Content = string.Format(Strings.Settings_CoreLabel, i), Foreground = Fg, MinWidth = 68, Margin = new Thickness(0, 0, 10, 4),
                 IsChecked = allCores || (_config.ServerAffinityMask & (1L << i)) != 0,
             };
             _affinityBoxes[i] = box;
@@ -488,7 +479,7 @@ public sealed class SettingsDialog : Window
         }
         stack.Children.Add(new TextBlock
         {
-            Text = "CPU affinity, pin the server to specific cores (all checked = no restriction / use every core):",
+            Text = Strings.Settings_CpuAffinityNote,
             Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 4),
         });
         stack.Children.Add(affinityPanel);
@@ -552,9 +543,9 @@ public sealed class SettingsDialog : Window
         if (current.Length == 0 || current == _extraArgsOriginal.Trim())
             return true;
 
-        var choice = ChoiceDialog.Show(this, "Advanced arguments",
-            "You've put custom arguments in the Advanced box. They're passed to the server exactly as typed, only keep them if you know what you're doing.",
-            "Accept", "Cancel");
+        var choice = ChoiceDialog.Show(this, Strings.Settings_AdvancedArgsTitle,
+            Strings.Settings_AdvancedArgsMessage,
+            Strings.Settings_Accept, Strings.Common_Cancel);
         if (choice == 0)
             return true;
 
@@ -671,9 +662,9 @@ public sealed class SettingsDialog : Window
         const int maxShown = 20;
         var body = string.Join("\n", changes.Take(maxShown));
         if (changes.Count > maxShown)
-            body += $"\n...and {changes.Count - maxShown} more";
-        if (ChoiceDialog.Show(this, "Confirm save",
-                $"These settings will change:\n\n{body}\n\nSave these changes?", "Save", "Cancel") != 0)
+            body += string.Format(Strings.Settings_ConfirmSaveMore, changes.Count - maxShown);
+        if (ChoiceDialog.Show(this, Strings.Settings_ConfirmSaveTitle,
+                string.Format(Strings.Settings_ConfirmSaveMessage, body), Strings.Common_Save, Strings.Common_Cancel) != 0)
             return false; // keep the dialog open so the user can review or cancel
 
         if (gameEdits.Count > 0 && !_gameSettings.Save(gameEdits, serverRunning: false, out var badGameKey))
@@ -708,9 +699,8 @@ public sealed class SettingsDialog : Window
     }
 
     private void ShowCorruptError(string? key) =>
-        ChoiceDialog.Show(this, "Not saved",
-            $"'{key}' has a value that would break the config format (a stray comma, quote, or unbalanced "
-            + "parenthesis). Nothing was saved, fix it and try again.", "OK");
+        ChoiceDialog.Show(this, Strings.Settings_NotSavedTitle,
+            string.Format(Strings.Settings_NotSavedMessage, key), Strings.Common_OK);
 
     /// <summary>Validate every editable text field; block Save and list the failures if any are invalid.</summary>
     private void OnSave()
@@ -719,12 +709,12 @@ public sealed class SettingsDialog : Window
             .Where(f => f.Box.IsEnabled) // grayed-out game fields (server running) aren't user-editable
             .Select(f => (f.Label, Result: SettingValidator.Validate(f.Type, f.Box.Text, f.Min, f.Max, f.Required)))
             .Where(x => !x.Result.Ok)
-            .Select(x => $"{x.Label} is invalid. Must be {x.Result.Reason}.")
+            .Select(x => string.Format(Strings.Settings_ValidationError, x.Label, x.Result.Reason))
             .ToList();
 
         if (errors.Count > 0)
         {
-            ChoiceDialog.Show(this, "Invalid settings", string.Join("\n", errors), "OK");
+            ChoiceDialog.Show(this, Strings.Settings_InvalidSettingsTitle, string.Join("\n", errors), Strings.Common_OK);
             return; // keep the dialog open so the user can fix the highlighted fields
         }
 
@@ -819,7 +809,7 @@ public sealed class SettingsDialog : Window
         text.Inlines.Add(new Run(label));
         // Flag anything the official docs don't cover, so a plain-language label never reads as authoritative.
         if (doc != DocStatus.Documented)
-            text.Inlines.Add(new Run("  · undocumented") { Foreground = Muted, FontStyle = FontStyles.Italic });
+            text.Inlines.Add(new Run(Strings.Settings_UndocumentedMarker) { Foreground = Muted, FontStyle = FontStyles.Italic });
         if (!string.IsNullOrEmpty(tip))
         {
             text.ToolTip = tip;
@@ -869,7 +859,7 @@ public sealed class SettingsDialog : Window
             Content = "↺", Width = 26, Margin = new Thickness(6, 0, 0, 0), Padding = new Thickness(0, 1, 0, 1),
             Foreground = Fg, Background = new SolidColorBrush(Color.FromRgb(0x44, 0x44, 0x44)),
             BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand,
-            VerticalAlignment = VerticalAlignment.Center, ToolTip = "Reset this field to its default",
+            VerticalAlignment = VerticalAlignment.Center, ToolTip = Strings.Settings_ResetFieldTooltip,
         };
         button.Click += (_, _) => spec.Reset();
         void Refresh() => button.Visibility = spec.IsDefault() ? Visibility.Collapsed : Visibility.Visible;
@@ -918,9 +908,9 @@ public sealed class SettingsDialog : Window
     /// <summary>Reset every field in the open panel to its default (confirmed; still needs Save to apply).</summary>
     private void ResetAll()
     {
-        if (ChoiceDialog.Show(this, "Reset to defaults",
-                "Reset every field in this panel to its default value? You'll still need to Save to apply.",
-                "Reset all", "Cancel") != 0)
+        if (ChoiceDialog.Show(this, Strings.Settings_ResetToDefaults,
+                Strings.Settings_ResetAllMessage,
+                Strings.Settings_ResetAllButton, Strings.Common_Cancel) != 0)
             return;
         foreach (var reset in _resetActions)
             reset();
@@ -928,9 +918,9 @@ public sealed class SettingsDialog : Window
 
     private static string CategoryLabel(SettingCategory c) => c switch
     {
-        SettingCategory.ServerAdmin => "Server management",
-        SettingCategory.Performance => "Performance",
-        SettingCategory.Gameplay => "Gameplay",
-        _ => "Game balance",
+        SettingCategory.ServerAdmin => Strings.Settings_CategoryServerManagement,
+        SettingCategory.Performance => Strings.Settings_CategoryPerformance,
+        SettingCategory.Gameplay => Strings.Settings_CategoryGameplay,
+        _ => Strings.Settings_CategoryGameBalance,
     };
 }

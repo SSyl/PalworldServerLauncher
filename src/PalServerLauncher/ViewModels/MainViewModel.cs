@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PalServerLauncher.Config;
 using PalServerLauncher.Core;
+using PalServerLauncher.Localization;
 using PalServerLauncher.Logging;
 using PalServerLauncher.State;
 
@@ -105,7 +106,7 @@ public partial class MainViewModel : ObservableObject
 
     /// <summary>Label for the multi-state primary button (animated dots while busy, so it's clearly not frozen).</summary>
     public string PrimaryActionText => IsBusy
-        ? "Working" + new string('.', _busyDots)
+        ? Strings.Vm_Working + new string('.', _busyDots)
         : PrimaryButton.Label(IsInstalled, IsBusy, State, ShutdownRemainingSeconds);
 
     /// <summary>What the primary button currently represents, drives its color via XAML (Install/Start = green, Stop = red).</summary>
@@ -318,13 +319,13 @@ public partial class MainViewModel : ObservableObject
     private static string FormatTimesSummary(IReadOnlyList<TimeOnly> times)
     {
         if (times.Count == 0)
-            return "(none)";
+            return Strings.Vm_TimesSummaryNone;
 
         // Show up to two times; beyond that, just the first plus a count so the summary stays short enough
         // not to overflow the narrow settings box (it's only a hint, the full list is in the picker).
         if (times.Count <= 2)
             return string.Join(", ", times.Select(t => t.ToString("t", CultureInfo.CurrentCulture)));
-        return $"{times[0].ToString("t", CultureInfo.CurrentCulture)}  +{times.Count - 1} more";
+        return string.Format(Strings.Vm_TimesSummaryMore, times[0].ToString("t", CultureInfo.CurrentCulture), times.Count - 1);
     }
 
     public double MinUptimeHours
