@@ -201,7 +201,7 @@ public partial class MainViewModel : ObservableObject
 
     /// <summary>Called after the Mods dialog saves. Mods deploy on the next start/restart, so this just notes it.</summary>
     public void ApplyModSettings() => _logger.Info(_config.ModsEnabled
-        ? "Mod settings saved. Enabled mods download and apply on the next server start or restart."
+        ? "Mod settings saved. Enabled mods apply on the next server start or restart."
         : "Mods disabled. They'll be turned off on the next server start.");
 
     /// <summary>Reconnect the Discord bot after its settings changed in the Discord dialog.</summary>

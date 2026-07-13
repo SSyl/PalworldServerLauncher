@@ -67,13 +67,13 @@ public sealed class ModsDialog : Window
 
         stack.Children.Add(new TextBlock
         {
-            Text = "Manage Palworld's built-in Steam Workshop server mods. The launcher downloads the Workshop ids you "
-                 + "add and enables them on the next server start. You can also drop mod folders into the mods folder "
-                 + "yourself and Scan for them. Either way, mods apply on a start or restart.",
+            Text = "Manage this server's mods. Add Steam Workshop ids for the launcher to download, or drop mod folders "
+                 + "into the mods folder yourself and Scan for them. Either way, enabled mods load on the next server "
+                 + "start or restart.",
             Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 8),
         });
 
-        _modsEnabled = Check("Enable mods (manage and load Workshop mods on this server)", config.ModsEnabled);
+        _modsEnabled = Check("Enable mods on this server", config.ModsEnabled);
         _modsEnabled.Checked += (_, _) => RefreshWarning();
         _modsEnabled.Unchecked += (_, _) => RefreshWarning();
         stack.Children.Add(_modsEnabled);
