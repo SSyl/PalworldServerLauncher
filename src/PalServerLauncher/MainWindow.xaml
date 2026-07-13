@@ -104,7 +104,7 @@
         <!-- Row 0: action buttons (left) + settings dialogs (right) -->
         <DockPanel Grid.Row="0" LastChildFill="False" Margin="0,0,0,10">
             <Button DockPanel.Dock="Left" Content="{Binding PrimaryActionText}" Command="{Binding PrimaryActionCommand}" MinWidth="46" FontSize="16" FontWeight="SemiBold"
-                    ToolTip="Install the server, or start (▶) / stop (■) it once installed. Start checks for an update first (when Update on start is on), then launches.">
+                    ToolTip="{x:Static loc:Strings.Main_PrimaryTip}">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                         <Style.Triggers>
@@ -134,10 +134,10 @@
                 </Button.Style>
             </Button>
             <Button DockPanel.Dock="Left" Content="↻" Command="{Binding RestartCommand}" FontSize="16" MinWidth="40"
-                    ToolTip="Restart now: saves and restarts the server immediately, with no player countdown. Scheduled and update restarts warn players first."/>
-            <Button DockPanel.Dock="Left" Content="Force Shutdown" Click="OnForceShutdown"
+                    ToolTip="{x:Static loc:Strings.Main_RestartTip}"/>
+            <Button DockPanel.Dock="Left" Content="{x:Static loc:Strings.Common_ForceShutdown}" Click="OnForceShutdown"
                     Visibility="{Binding IsForceShutdownVisible, Converter={StaticResource BoolToVis}}"
-                    ToolTip="Immediately kill the server process, with no save. Appears when a start, stop, or restart has been stuck for a while. Use it only when the server has stopped responding.">
+                    ToolTip="{x:Static loc:Strings.Main_ForceShutdownTip}">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                         <Setter Property="Background" Value="#8B2620"/>
@@ -150,19 +150,19 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button DockPanel.Dock="Left" Content="Check for Update" Click="OnCheckForUpdate" IsEnabled="{Binding CanCheckForUpdate}"
-                    ToolTip="Check SteamCMD for a newer build (read-only; works while running)"/>
-            <Button DockPanel.Dock="Left" Content="Validate Files" Command="{Binding ValidateFilesCommand}"
-                    ToolTip="Full SteamCMD integrity check of the installed files"/>
+            <Button DockPanel.Dock="Left" Content="{x:Static loc:Strings.Main_CheckForUpdate}" Click="OnCheckForUpdate" IsEnabled="{Binding CanCheckForUpdate}"
+                    ToolTip="{x:Static loc:Strings.Main_CheckForUpdateTip}"/>
+            <Button DockPanel.Dock="Left" Content="{x:Static loc:Strings.Main_ValidateFiles}" Command="{Binding ValidateFilesCommand}"
+                    ToolTip="{x:Static loc:Strings.Main_ValidateFilesTip}"/>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                 <Button Content="{x:Static loc:Strings.LauncherSettings_Title}" Click="OnOpenLauncherSettings"
                         ToolTip="{x:Static loc:Strings.LauncherSettings_Tooltip}"/>
-                <Button Content="Server Settings" Click="OnOpenServerSettings"
-                        ToolTip="Edit the server in one tabbed editor, World Settings (gameplay and balance), Admin (name, passwords, REST / RCON), Undocumented (keys the official docs don't cover), and Launch Arguments (the command line: listen port, player cap, performance threads, community listing)."/>
-                <Button Content="Mods" Click="OnOpenMods"
-                        ToolTip="Manage Steam Workshop server mods: add Workshop ids for the launcher to download, or scan for mods you dropped into the mods folder yourself."/>
-                <Button Content="Advanced Settings" Click="OnOpenAdvanced" Margin="0"
-                        ToolTip="Low-level process tuning (priority, CPU affinity), advanced users only">
+                <Button Content="{x:Static loc:Strings.Main_ServerSettings}" Click="OnOpenServerSettings"
+                        ToolTip="{x:Static loc:Strings.Main_ServerSettingsTip}"/>
+                <Button Content="{x:Static loc:Strings.Main_Mods}" Click="OnOpenMods"
+                        ToolTip="{x:Static loc:Strings.Main_ModsTip}"/>
+                <Button Content="{x:Static loc:Strings.Main_AdvancedSettings}" Click="OnOpenAdvanced" Margin="0"
+                        ToolTip="{x:Static loc:Strings.Main_AdvancedSettingsTip}">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                             <Style.Triggers>
@@ -179,41 +179,41 @@
         <!-- Row 1: status + update (left), public IP + port check (right) -->
         <DockPanel Grid.Row="1" LastChildFill="False" Margin="0,0,0,12">
             <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock Text="Status:" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <TextBlock Text="{x:Static loc:Strings.Main_StatusLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                 <TextBlock Text="{Binding State}" Style="{StaticResource Value}" FontSize="15" VerticalAlignment="Center" Margin="0,0,24,0"/>
-                <TextBlock Text="Update:" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <TextBlock Text="{x:Static loc:Strings.Main_UpdateLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                 <TextBlock Text="{Binding UpdateStatus}" Foreground="#F0F0F0" VerticalAlignment="Center"/>
             </StackPanel>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock Text="Public IP:" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <TextBlock Text="{x:Static loc:Strings.Main_PublicIpLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                 <TextBox Text="{Binding PublicIpDisplay, Mode=OneWay}" IsReadOnly="True" Width="150" VerticalAlignment="Center" Margin="0,0,4,0"
-                         ToolTip="Your public IP and game port. Reveal it with the eye, then highlight to copy, or use the copy button."/>
+                         ToolTip="{x:Static loc:Strings.Main_PublicIpTip}"/>
                 <Button Click="OnToggleIpReveal" FontFamily="Segoe MDL2 Assets" Content="&#xE7B3;" Padding="9,5" MinWidth="0" Margin="0,0,4,0"
-                        ToolTip="Show or hide your public IP"/>
+                        ToolTip="{x:Static loc:Strings.Main_RevealIpTip}"/>
                 <Button Click="OnCopyConnectionInfo" FontFamily="Segoe MDL2 Assets" Content="&#xE8C8;" Padding="9,5" MinWidth="0" IsEnabled="{Binding CanCopyConnectionInfo}"
-                        ToolTip="Copy your IP:port to the clipboard"/>
-                <Button Content="Port Check" Click="OnCheckPorts" IsEnabled="{Binding CanCheckPorts}" ToolTipService.ShowOnDisabled="True" Margin="8,0,0,0"
-                        ToolTip="Check whether your ports are reachable from the internet. The server must be stopped so the launcher can test the ports."/>
+                        ToolTip="{x:Static loc:Strings.Main_CopyIpTip}"/>
+                <Button Content="{x:Static loc:Strings.Main_PortCheck}" Click="OnCheckPorts" IsEnabled="{Binding CanCheckPorts}" ToolTipService.ShowOnDisabled="True" Margin="8,0,0,0"
+                        ToolTip="{x:Static loc:Strings.Main_PortCheckTip}"/>
             </StackPanel>
         </DockPanel>
 
         <!-- Bottom status bar: live server stats, under the log terminal -->
         <Border Grid.Row="4" BorderBrush="#3A3A3A" BorderThickness="0,1,0,0" Padding="0,7,0,0" Margin="0,8,0,0">
         <StackPanel Orientation="Horizontal">
-            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="Version" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Version}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="FPS" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Fps}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="CPU" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Cpu}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="Memory" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Memory}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="Players" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Players}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="Uptime" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Uptime}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal"><TextBlock Text="Next restart" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding NextRestart}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="{x:Static loc:Strings.Main_StatVersion}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Version}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="{x:Static loc:Strings.Main_StatFps}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Fps}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="{x:Static loc:Strings.Main_StatCpu}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Cpu}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="{x:Static loc:Strings.Main_StatMemory}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Memory}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="{x:Static loc:Strings.Main_StatPlayers}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Players}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="{x:Static loc:Strings.Main_StatUptime}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Uptime}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal"><TextBlock Text="{x:Static loc:Strings.Main_StatNextRestart}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding NextRestart}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
         </StackPanel>
         </Border>
 
         <!-- Settings sections (Restarts / Backups / Misc) with a collapse bar; hidden in Compact mode -->
         <StackPanel Grid.Row="2" Margin="0,0,0,14">
             <DockPanel Background="Transparent" Cursor="Hand" MouseLeftButtonUp="OnToggleCompact" Margin="0,0,0,8"
-                       ToolTip="Show or hide the settings sections (Restarts, Backups, Misc)">
+                       ToolTip="{x:Static loc:Strings.Main_CollapseTip}">
                 <TextBlock Text="{Binding CompactChevron}" DockPanel.Dock="Left" Foreground="#BBBBBB" FontSize="28" VerticalAlignment="Center" Margin="2,0,10,0"/>
                 <Border Height="1" Background="#3A3A3A" VerticalAlignment="Center"/>
             </DockPanel>
@@ -226,99 +226,99 @@
 
             <Border Grid.Column="0" Style="{StaticResource Box}">
                 <StackPanel>
-                    <TextBlock Text="Restarts" Style="{StaticResource BoxHeader}"/>
+                    <TextBlock Text="{x:Static loc:Strings.Main_RestartsHeader}" Style="{StaticResource BoxHeader}"/>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
-                        <CheckBox Content="Scheduled restart at" IsChecked="{Binding ScheduledRestartEnabled}"
-                                  ToolTip="Automatically restart the server at the times listed. A restart is skipped if the server hasn't been up for the minimum uptime below."/>
-                        <Button Content="{Binding RestartTimesSummary}" Click="OnEditRestartTimes" MinWidth="120" Margin="8,0,0,0" HorizontalContentAlignment="Left" ToolTip="Choose restart times"/>
+                        <CheckBox Content="{x:Static loc:Strings.Main_ScheduledRestartAt}" IsChecked="{Binding ScheduledRestartEnabled}"
+                                  ToolTip="{x:Static loc:Strings.Main_ScheduledRestartTip}"/>
+                        <Button Content="{Binding RestartTimesSummary}" Click="OnEditRestartTimes" MinWidth="120" Margin="8,0,0,0" HorizontalContentAlignment="Left" ToolTip="{x:Static loc:Strings.Main_ChooseRestartTimes}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
-                        <TextBlock Text="Min uptime before restart" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <TextBlock Text="{x:Static loc:Strings.Main_MinUptime}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                         <TextBox Text="{Binding MinUptimeHours}" Width="40" VerticalAlignment="Center"/>
-                        <TextBlock Text="h" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                        <TextBlock Text="{x:Static loc:Strings.Main_HourSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
-                        <CheckBox Content="Announce restarts" IsChecked="{Binding AnnounceRestartsEnabled}"
-                                  ToolTip="Warn players in-game before a scheduled or update restart, at the minute marks on the right. Skipped when nobody's online."/>
+                        <CheckBox Content="{x:Static loc:Strings.Main_AnnounceRestarts}" IsChecked="{Binding AnnounceRestartsEnabled}"
+                                  ToolTip="{x:Static loc:Strings.Main_AnnounceRestartsTip}"/>
                         <TextBox Text="{Binding AnnounceLead1}" Width="34" MaxLength="3" VerticalAlignment="Center" Margin="6,0,0,0"
-                                 PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="Minutes before restart to announce (blank = off)"/>
+                                 PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="{x:Static loc:Strings.Main_AnnounceLeadTip}"/>
                         <TextBox Text="{Binding AnnounceLead2}" Width="34" MaxLength="3" VerticalAlignment="Center" Margin="4,0,0,0"
-                                 PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="Minutes before restart to announce (blank = off)"/>
+                                 PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="{x:Static loc:Strings.Main_AnnounceLeadTip}"/>
                         <TextBox Text="{Binding AnnounceLead3}" Width="34" MaxLength="3" VerticalAlignment="Center" Margin="4,0,0,0"
-                                 PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="Minutes before restart to announce (blank = off)"/>
-                        <TextBlock Text="min" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                 PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="{x:Static loc:Strings.Main_AnnounceLeadTip}"/>
+                        <TextBlock Text="{x:Static loc:Strings.Main_MinuteSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
-                    <Button Content="Edit Announcements" Click="OnEditAnnouncements" HorizontalAlignment="Left" Margin="0,0,0,7"
-                            ToolTip="Edit the in-game messages players see before a restart."/>
-                    <CheckBox Content="Validate files on restart" IsChecked="{Binding VerifyOnUpdate}" ToolTip="Add a full integrity pass to the update on Start/restart (slower)"/>
+                    <Button Content="{x:Static loc:Strings.Main_EditAnnouncements}" Click="OnEditAnnouncements" HorizontalAlignment="Left" Margin="0,0,0,7"
+                            ToolTip="{x:Static loc:Strings.Main_EditAnnouncementsTip}"/>
+                    <CheckBox Content="{x:Static loc:Strings.Main_ValidateOnRestart}" IsChecked="{Binding VerifyOnUpdate}" ToolTip="{x:Static loc:Strings.Main_ValidateOnRestartTip}"/>
                 </StackPanel>
             </Border>
 
             <Border Grid.Column="1" Style="{StaticResource Box}">
                 <StackPanel>
-                    <TextBlock Text="Backups" Style="{StaticResource BoxHeader}"/>
+                    <TextBlock Text="{x:Static loc:Strings.Main_BackupsHeader}" Style="{StaticResource BoxHeader}"/>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
-                        <TextBlock Text="Backup on:" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                        <CheckBox Content="Startup" IsChecked="{Binding BackupOnStartup}"
-                                  ToolTip="Back up when the server starts, before it checks for updates (SteamCMD can overwrite config)."/>
-                        <CheckBox Content="Shutdown" IsChecked="{Binding BackupOnShutdown}" Margin="12,0,0,0"
-                                  ToolTip="Back up when the server stops or restarts (saves the world first)."/>
+                        <TextBlock Text="{x:Static loc:Strings.Main_BackupOn}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <CheckBox Content="{x:Static loc:Strings.Main_BackupStartup}" IsChecked="{Binding BackupOnStartup}"
+                                  ToolTip="{x:Static loc:Strings.Main_BackupStartupTip}"/>
+                        <CheckBox Content="{x:Static loc:Strings.Main_BackupShutdown}" IsChecked="{Binding BackupOnShutdown}" Margin="12,0,0,0"
+                                  ToolTip="{x:Static loc:Strings.Main_BackupShutdownTip}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
-                        <CheckBox Content="Scheduled" IsChecked="{Binding ScheduledBackupEnabled}"
-                                  ToolTip="Automatically back up at the times listed on the right, while the server is running."/>
-                        <Button Content="{Binding BackupTimesSummary}" Click="OnEditBackupTimes" MinWidth="90" Margin="6,0,0,0" HorizontalContentAlignment="Left" ToolTip="Choose backup times"/>
+                        <CheckBox Content="{x:Static loc:Strings.Main_BackupScheduled}" IsChecked="{Binding ScheduledBackupEnabled}"
+                                  ToolTip="{x:Static loc:Strings.Main_BackupScheduledTip}"/>
+                        <Button Content="{Binding BackupTimesSummary}" Click="OnEditBackupTimes" MinWidth="90" Margin="6,0,0,0" HorizontalContentAlignment="Left" ToolTip="{x:Static loc:Strings.Main_ChooseBackupTimes}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,7"
-                                ToolTip="How long to keep automatic backups (startup / shutdown / scheduled). Manual backups and any file you add to the backups folder yourself are never deleted. 0 = keep everything.">
-                        <TextBlock Text="Keep for" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                                ToolTip="{x:Static loc:Strings.Main_BackupRetentionTip}">
+                        <TextBlock Text="{x:Static loc:Strings.Main_KeepFor}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,4,0"/>
                         <TextBox Text="{Binding BackupRetentionDays}" Width="38" VerticalAlignment="Center"/>
-                        <TextBlock Text="days" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                        <TextBlock Text="{x:Static loc:Strings.Main_DaysSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Next backup:" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <TextBlock Text="{x:Static loc:Strings.Main_NextBackupLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                         <TextBlock Text="{Binding NextBackup}" Foreground="#F0F0F0" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                        <Button Content="Backup Now" Command="{Binding BackupNowCommand}" Margin="0"
-                                ToolTip="Take a manual backup immediately. Saves the world first if the server is running with REST on."/>
+                        <Button Content="{x:Static loc:Strings.Main_BackupNow}" Command="{Binding BackupNowCommand}" Margin="0"
+                                ToolTip="{x:Static loc:Strings.Main_BackupNowTip}"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
 
             <Border Grid.Column="2" Style="{StaticResource Box}" Margin="0">
                 <StackPanel>
-                    <TextBlock Text="Misc." Style="{StaticResource BoxHeader}"/>
-                    <CheckBox Content="Auto-update server" IsChecked="{Binding AutoUpdateEnabled}" Margin="0,0,0,7"
-                              ToolTip="Automatically restart the server when a new update is found. The Announce restarts setting adds a delay before restarting if anyone is on the server."/>
-                    <CheckBox Content="Update on start / restart" IsChecked="{Binding UpdateOnStart}" Margin="0,0,0,7"
-                              ToolTip="Run a SteamCMD update check each time the server starts or restarts. Uncheck to never auto-download on start. You can still update explicitly via Check for Update."/>
+                    <TextBlock Text="{x:Static loc:Strings.Main_MiscHeader}" Style="{StaticResource BoxHeader}"/>
+                    <CheckBox Content="{x:Static loc:Strings.Main_AutoUpdate}" IsChecked="{Binding AutoUpdateEnabled}" Margin="0,0,0,7"
+                              ToolTip="{x:Static loc:Strings.Main_AutoUpdateTip}"/>
+                    <CheckBox Content="{x:Static loc:Strings.Main_UpdateOnStart}" IsChecked="{Binding UpdateOnStart}" Margin="0,0,0,7"
+                              ToolTip="{x:Static loc:Strings.Main_UpdateOnStartTip}"/>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
-                        <TextBlock Text="Check for update every" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <TextBlock Text="{x:Static loc:Strings.Main_CheckUpdateEvery}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                         <TextBox Text="{Binding UpdateCheckMinutes}" Width="40" MaxLength="4" VerticalAlignment="Center"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"
-                                 ToolTip="How often to check SteamCMD for a new build while the server is running. Applies on next start."/>
-                        <TextBlock Text="min" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                 ToolTip="{x:Static loc:Strings.Main_CheckUpdateEveryTip}"/>
+                        <TextBlock Text="{x:Static loc:Strings.Main_MinuteSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
-                    <CheckBox Content="Hide SteamCMD window" IsChecked="{Binding HideSteamCmdWindow}" Margin="0,0,0,7"
-                              ToolTip="Run SteamCMD in the background instead of opening its own console window. Live progress still appears in the SteamCMD tab."/>
-                    <CheckBox Content="Log Server Status" IsChecked="{Binding LogHealthStats}" Margin="0,0,0,7"
-                              ToolTip="Write a server stats line (FPS, players, uptime, memory) to the log every 30s. Handy when running from a terminal; adds noise to the log otherwise."/>
+                    <CheckBox Content="{x:Static loc:Strings.Main_HideSteamCmd}" IsChecked="{Binding HideSteamCmdWindow}" Margin="0,0,0,7"
+                              ToolTip="{x:Static loc:Strings.Main_HideSteamCmdTip}"/>
+                    <CheckBox Content="{x:Static loc:Strings.Main_LogServerStatus}" IsChecked="{Binding LogHealthStats}" Margin="0,0,0,7"
+                              ToolTip="{x:Static loc:Strings.Main_LogServerStatusTip}"/>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
-                        <CheckBox Content="Zombie check: restart after" IsChecked="{Binding ZombieCheckEnabled}"
-                                  ToolTip="When the REST API stays unreachable or the world stays frozen for this many checks in a row, restart the server. Turn off if your REST API is flaky and you'd rather it never auto-restart."/>
+                        <CheckBox Content="{x:Static loc:Strings.Main_ZombieCheck}" IsChecked="{Binding ZombieCheckEnabled}"
+                                  ToolTip="{x:Static loc:Strings.Main_ZombieCheckTip}"/>
                         <TextBox Text="{Binding ZombieFailureThreshold}" Width="34" MaxLength="2" VerticalAlignment="Center" Margin="6,0,0,0"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"
-                                 ToolTip="How many failed health checks in a row before the server is treated as wedged and force-restarted."/>
-                        <TextBlock Text="checks" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                 ToolTip="{x:Static loc:Strings.Main_ZombieThresholdTip}"/>
+                        <TextBlock Text="{x:Static loc:Strings.Main_ChecksSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,9">
-                        <TextBlock Text="REST check every" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <TextBlock Text="{x:Static loc:Strings.Main_RestCheckEvery}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                         <TextBox Text="{Binding HealthProbeSeconds}" Width="34" MaxLength="3" VerticalAlignment="Center"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"
-                                 ToolTip="How often (seconds) the launcher polls the REST API for status/health. 5-10 is recommended. Going below 5 just hammers the API for no real gain (allowed, but not advised); it won't go below 1. Applies on next start."/>
-                        <TextBlock Text="s" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                 ToolTip="{x:Static loc:Strings.Main_RestCheckEveryTip}"/>
+                        <TextBlock Text="{x:Static loc:Strings.Main_SecondsSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                     <WrapPanel>
-                        <Button Content="Discord Bot" Click="OnOpenDiscord" Margin="0,0,0,4" ToolTip="Discord control bot + webhook notifications">
+                        <Button Content="{x:Static loc:Strings.Main_DiscordBot}" Click="OnOpenDiscord" Margin="0,0,0,4" ToolTip="{x:Static loc:Strings.Main_DiscordBotTip}">
                             <Button.Style>
                                 <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                                     <Setter Property="Background" Value="#5865F2"/>
@@ -359,25 +359,25 @@
                     </Setter>
                 </Style>
             </TabControl.Resources>
-            <TabItem Header="General">
+            <TabItem Header="{x:Static loc:Strings.Main_TabGeneral}">
                 <ListBox x:Name="GeneralList" ItemsSource="{Binding LogGeneral}" Style="{StaticResource LogListStyle}"/>
             </TabItem>
-            <TabItem Header="Server Log">
+            <TabItem Header="{x:Static loc:Strings.Main_TabServerLog}">
                 <ListBox x:Name="ServerList" ItemsSource="{Binding LogServer}" Style="{StaticResource LogListStyle}"/>
             </TabItem>
-            <TabItem Header="Chat">
+            <TabItem Header="{x:Static loc:Strings.Main_TabChat}">
                 <ListBox x:Name="ChatList" ItemsSource="{Binding LogChat}" Style="{StaticResource LogListStyle}"/>
             </TabItem>
-            <TabItem Header="Players">
+            <TabItem Header="{x:Static loc:Strings.Main_TabPlayers}">
                 <ListBox x:Name="PlayersList" ItemsSource="{Binding LogPlayerJoin}" Style="{StaticResource LogListStyle}"/>
             </TabItem>
-            <TabItem Header="SteamCMD">
+            <TabItem Header="{x:Static loc:Strings.Main_TabSteamCmd}">
                 <ListBox x:Name="SteamCmdList" ItemsSource="{Binding LogSteamCmd}" Style="{StaticResource LogListStyle}"/>
             </TabItem>
         </TabControl>
-            <Button Content="Server Commands" Click="OnOpenServerCommands" IsEnabled="{Binding CanUseServerCommands}"
+            <Button Content="{x:Static loc:Strings.Main_ServerCommands}" Click="OnOpenServerCommands" IsEnabled="{Binding CanUseServerCommands}"
                     HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0" ToolTipService.ShowOnDisabled="True"
-                    ToolTip="Send live commands to the running server: announce, kick / ban / unban, save, shutdown. Available while the server is up."/>
+                    ToolTip="{x:Static loc:Strings.Main_ServerCommandsTip}"/>
         </Grid>
     </Grid>
 </Window>

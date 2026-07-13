@@ -123,4 +123,262 @@
   <data name="Announcements_KeepEditing" xml:space="preserve">
     <value>继续编辑</value>
   </data>
+  <data name="Common_ForceShutdown" xml:space="preserve">
+    <value>Force Shutdown</value>
+  </data>
+  <data name="Main_PrimaryTip" xml:space="preserve">
+    <value>Install the server, or start (▶) / stop (■) it once installed. Start checks for an update first (when Update on start is on), then launches.</value>
+  </data>
+  <data name="Main_RestartTip" xml:space="preserve">
+    <value>Restart now: saves and restarts the server immediately, with no player countdown. Scheduled and update restarts warn players first.</value>
+  </data>
+  <data name="Main_ForceShutdownTip" xml:space="preserve">
+    <value>Immediately kill the server process, with no save. Appears when a start, stop, or restart has been stuck for a while. Use it only when the server has stopped responding.</value>
+  </data>
+  <data name="Main_CheckForUpdate" xml:space="preserve">
+    <value>Check for Update</value>
+  </data>
+  <data name="Main_CheckForUpdateTip" xml:space="preserve">
+    <value>Check SteamCMD for a newer build (read-only; works while running)</value>
+  </data>
+  <data name="Main_ValidateFiles" xml:space="preserve">
+    <value>Validate Files</value>
+  </data>
+  <data name="Main_ValidateFilesTip" xml:space="preserve">
+    <value>Full SteamCMD integrity check of the installed files</value>
+  </data>
+  <data name="Main_ServerSettings" xml:space="preserve">
+    <value>Server Settings</value>
+  </data>
+  <data name="Main_ServerSettingsTip" xml:space="preserve">
+    <value>Edit the server in one tabbed editor, World Settings (gameplay and balance), Admin (name, passwords, REST / RCON), Undocumented (keys the official docs don't cover), and Launch Arguments (the command line: listen port, player cap, performance threads, community listing).</value>
+  </data>
+  <data name="Main_Mods" xml:space="preserve">
+    <value>Mods</value>
+  </data>
+  <data name="Main_ModsTip" xml:space="preserve">
+    <value>Manage Steam Workshop server mods: add Workshop ids for the launcher to download, or scan for mods you dropped into the mods folder yourself.</value>
+  </data>
+  <data name="Main_AdvancedSettings" xml:space="preserve">
+    <value>Advanced Settings</value>
+  </data>
+  <data name="Main_AdvancedSettingsTip" xml:space="preserve">
+    <value>Low-level process tuning (priority, CPU affinity), advanced users only</value>
+  </data>
+  <data name="Main_StatusLabel" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="Main_UpdateLabel" xml:space="preserve">
+    <value>Update:</value>
+  </data>
+  <data name="Main_PublicIpLabel" xml:space="preserve">
+    <value>Public IP:</value>
+  </data>
+  <data name="Main_PublicIpTip" xml:space="preserve">
+    <value>Your public IP and game port. Reveal it with the eye, then highlight to copy, or use the copy button.</value>
+  </data>
+  <data name="Main_RevealIpTip" xml:space="preserve">
+    <value>Show or hide your public IP</value>
+  </data>
+  <data name="Main_CopyIpTip" xml:space="preserve">
+    <value>Copy your IP:port to the clipboard</value>
+  </data>
+  <data name="Main_PortCheck" xml:space="preserve">
+    <value>Port Check</value>
+  </data>
+  <data name="Main_PortCheckTip" xml:space="preserve">
+    <value>Check whether your ports are reachable from the internet. The server must be stopped so the launcher can test the ports.</value>
+  </data>
+  <data name="Main_StatVersion" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Main_StatFps" xml:space="preserve">
+    <value>FPS</value>
+  </data>
+  <data name="Main_StatCpu" xml:space="preserve">
+    <value>CPU</value>
+  </data>
+  <data name="Main_StatMemory" xml:space="preserve">
+    <value>Memory</value>
+  </data>
+  <data name="Main_StatPlayers" xml:space="preserve">
+    <value>Players</value>
+  </data>
+  <data name="Main_StatUptime" xml:space="preserve">
+    <value>Uptime</value>
+  </data>
+  <data name="Main_StatNextRestart" xml:space="preserve">
+    <value>Next restart</value>
+  </data>
+  <data name="Main_CollapseTip" xml:space="preserve">
+    <value>Show or hide the settings sections (Restarts, Backups, Misc)</value>
+  </data>
+  <data name="Main_RestartsHeader" xml:space="preserve">
+    <value>Restarts</value>
+  </data>
+  <data name="Main_ScheduledRestartAt" xml:space="preserve">
+    <value>Scheduled restart at</value>
+  </data>
+  <data name="Main_ScheduledRestartTip" xml:space="preserve">
+    <value>Automatically restart the server at the times listed. A restart is skipped if the server hasn't been up for the minimum uptime below.</value>
+  </data>
+  <data name="Main_ChooseRestartTimes" xml:space="preserve">
+    <value>Choose restart times</value>
+  </data>
+  <data name="Main_MinUptime" xml:space="preserve">
+    <value>Min uptime before restart</value>
+  </data>
+  <data name="Main_HourSuffix" xml:space="preserve">
+    <value>h</value>
+  </data>
+  <data name="Main_AnnounceRestarts" xml:space="preserve">
+    <value>Announce restarts</value>
+  </data>
+  <data name="Main_AnnounceRestartsTip" xml:space="preserve">
+    <value>Warn players in-game before a scheduled or update restart, at the minute marks on the right. Skipped when nobody's online.</value>
+  </data>
+  <data name="Main_AnnounceLeadTip" xml:space="preserve">
+    <value>Minutes before restart to announce (blank = off)</value>
+  </data>
+  <data name="Main_MinuteSuffix" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="Main_EditAnnouncements" xml:space="preserve">
+    <value>Edit Announcements</value>
+  </data>
+  <data name="Main_EditAnnouncementsTip" xml:space="preserve">
+    <value>Edit the in-game messages players see before a restart.</value>
+  </data>
+  <data name="Main_ValidateOnRestart" xml:space="preserve">
+    <value>Validate files on restart</value>
+  </data>
+  <data name="Main_ValidateOnRestartTip" xml:space="preserve">
+    <value>Add a full integrity pass to the update on Start/restart (slower)</value>
+  </data>
+  <data name="Main_BackupsHeader" xml:space="preserve">
+    <value>Backups</value>
+  </data>
+  <data name="Main_BackupOn" xml:space="preserve">
+    <value>Backup on:</value>
+  </data>
+  <data name="Main_BackupStartup" xml:space="preserve">
+    <value>Startup</value>
+  </data>
+  <data name="Main_BackupStartupTip" xml:space="preserve">
+    <value>Back up when the server starts, before it checks for updates (SteamCMD can overwrite config).</value>
+  </data>
+  <data name="Main_BackupShutdown" xml:space="preserve">
+    <value>Shutdown</value>
+  </data>
+  <data name="Main_BackupShutdownTip" xml:space="preserve">
+    <value>Back up when the server stops or restarts (saves the world first).</value>
+  </data>
+  <data name="Main_BackupScheduled" xml:space="preserve">
+    <value>Scheduled</value>
+  </data>
+  <data name="Main_BackupScheduledTip" xml:space="preserve">
+    <value>Automatically back up at the times listed on the right, while the server is running.</value>
+  </data>
+  <data name="Main_ChooseBackupTimes" xml:space="preserve">
+    <value>Choose backup times</value>
+  </data>
+  <data name="Main_BackupRetentionTip" xml:space="preserve">
+    <value>How long to keep automatic backups (startup / shutdown / scheduled). Manual backups and any file you add to the backups folder yourself are never deleted. 0 = keep everything.</value>
+  </data>
+  <data name="Main_KeepFor" xml:space="preserve">
+    <value>Keep for</value>
+  </data>
+  <data name="Main_DaysSuffix" xml:space="preserve">
+    <value>days</value>
+  </data>
+  <data name="Main_NextBackupLabel" xml:space="preserve">
+    <value>Next backup:</value>
+  </data>
+  <data name="Main_BackupNow" xml:space="preserve">
+    <value>Backup Now</value>
+  </data>
+  <data name="Main_BackupNowTip" xml:space="preserve">
+    <value>Take a manual backup immediately. Saves the world first if the server is running with REST on.</value>
+  </data>
+  <data name="Main_MiscHeader" xml:space="preserve">
+    <value>Misc.</value>
+  </data>
+  <data name="Main_AutoUpdate" xml:space="preserve">
+    <value>Auto-update server</value>
+  </data>
+  <data name="Main_AutoUpdateTip" xml:space="preserve">
+    <value>Automatically restart the server when a new update is found. The Announce restarts setting adds a delay before restarting if anyone is on the server.</value>
+  </data>
+  <data name="Main_UpdateOnStart" xml:space="preserve">
+    <value>Update on start / restart</value>
+  </data>
+  <data name="Main_UpdateOnStartTip" xml:space="preserve">
+    <value>Run a SteamCMD update check each time the server starts or restarts. Uncheck to never auto-download on start. You can still update explicitly via Check for Update.</value>
+  </data>
+  <data name="Main_CheckUpdateEvery" xml:space="preserve">
+    <value>Check for update every</value>
+  </data>
+  <data name="Main_CheckUpdateEveryTip" xml:space="preserve">
+    <value>How often to check SteamCMD for a new build while the server is running. Applies on next start.</value>
+  </data>
+  <data name="Main_HideSteamCmd" xml:space="preserve">
+    <value>Hide SteamCMD window</value>
+  </data>
+  <data name="Main_HideSteamCmdTip" xml:space="preserve">
+    <value>Run SteamCMD in the background instead of opening its own console window. Live progress still appears in the SteamCMD tab.</value>
+  </data>
+  <data name="Main_LogServerStatus" xml:space="preserve">
+    <value>Log Server Status</value>
+  </data>
+  <data name="Main_LogServerStatusTip" xml:space="preserve">
+    <value>Write a server stats line (FPS, players, uptime, memory) to the log every 30s. Handy when running from a terminal; adds noise to the log otherwise.</value>
+  </data>
+  <data name="Main_ZombieCheck" xml:space="preserve">
+    <value>Zombie check: restart after</value>
+  </data>
+  <data name="Main_ZombieCheckTip" xml:space="preserve">
+    <value>When the REST API stays unreachable or the world stays frozen for this many checks in a row, restart the server. Turn off if your REST API is flaky and you'd rather it never auto-restart.</value>
+  </data>
+  <data name="Main_ZombieThresholdTip" xml:space="preserve">
+    <value>How many failed health checks in a row before the server is treated as wedged and force-restarted.</value>
+  </data>
+  <data name="Main_ChecksSuffix" xml:space="preserve">
+    <value>checks</value>
+  </data>
+  <data name="Main_RestCheckEvery" xml:space="preserve">
+    <value>REST check every</value>
+  </data>
+  <data name="Main_RestCheckEveryTip" xml:space="preserve">
+    <value>How often (seconds) the launcher polls the REST API for status/health. 5-10 is recommended. Going below 5 just hammers the API for no real gain (allowed, but not advised); it won't go below 1. Applies on next start.</value>
+  </data>
+  <data name="Main_SecondsSuffix" xml:space="preserve">
+    <value>s</value>
+  </data>
+  <data name="Main_DiscordBot" xml:space="preserve">
+    <value>Discord Bot</value>
+  </data>
+  <data name="Main_DiscordBotTip" xml:space="preserve">
+    <value>Discord control bot + webhook notifications</value>
+  </data>
+  <data name="Main_TabGeneral" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Main_TabServerLog" xml:space="preserve">
+    <value>Server Log</value>
+  </data>
+  <data name="Main_TabChat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="Main_TabPlayers" xml:space="preserve">
+    <value>Players</value>
+  </data>
+  <data name="Main_TabSteamCmd" xml:space="preserve">
+    <value>SteamCMD</value>
+  </data>
+  <data name="Main_ServerCommands" xml:space="preserve">
+    <value>Server Commands</value>
+  </data>
+  <data name="Main_ServerCommandsTip" xml:space="preserve">
+    <value>Send live commands to the running server: announce, kick / ban / unban, save, shutdown. Available while the server is up.</value>
+  </data>
 </root>
