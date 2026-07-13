@@ -1404,4 +1404,17 @@ Save these changes?</value>
   <data name="Vm_TimesSummaryMore" xml:space="preserve">
     <value>{0}  +{1} more</value>
   </data>
+  <!-- SettingsDialog process-priority dropdown (canonical value stored in config, label translated). Match Windows Task Manager wording per locale. -->
+  <data name="Settings_PriorityBelowNormal" xml:space="preserve">
+    <value>Below normal</value>
+  </data>
+  <data name="Settings_PriorityNormal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="Settings_PriorityAboveNormal" xml:space="preserve">
+    <value>Above normal</value>
+  </data>
+  <data name="Settings_PriorityHigh" xml:space="preserve">
+    <value>High</value>
+  </data>
 </root>

@@ -458,10 +458,12 @@ public sealed class SettingsDialog : Window
 
         stack.Children.Add(Header(Strings.Settings_PriorityAffinityHeader));
 
-        _priority = ComboField(new[] { "Below normal", "Normal", "Above normal", "High" }, PriorityToLabel(_config.ServerPriority), true);
+        _priority = ComboField(
+            new[] { Strings.Settings_PriorityBelowNormal, Strings.Settings_PriorityNormal, Strings.Settings_PriorityAboveNormal, Strings.Settings_PriorityHigh },
+            PriorityToLabel(_config.ServerPriority), true);
         stack.Children.Add(Row(Strings.Settings_RowPriority, _priority,
             Strings.Settings_TipPriority,
-            ComboReset(_priority, "Normal")));
+            ComboReset(_priority, Strings.Settings_PriorityNormal)));
 
         var cores = Environment.ProcessorCount;
         _affinityBoxes = new CheckBox[cores];
@@ -486,21 +488,24 @@ public sealed class SettingsDialog : Window
         _resetActions.Add(() => { foreach (var b in _affinityBoxes) b.IsChecked = true; }); // reset = all cores
     }
 
+    // The config stores the canonical ProcessPriorityClass name ("BelowNormal" / "Normal" / "AboveNormal" /
+    // "High"), which ServerController.MapPriority turns into the real priority. Only the DISPLAY label is
+    // localized, so these map between the stored value and the (translated) dropdown label.
     private static string PriorityToLabel(string priority) => priority switch
     {
-        "BelowNormal" => "Below normal",
-        "AboveNormal" => "Above normal",
-        "High" => "High",
-        _ => "Normal",
+        "BelowNormal" => Strings.Settings_PriorityBelowNormal,
+        "AboveNormal" => Strings.Settings_PriorityAboveNormal,
+        "High" => Strings.Settings_PriorityHigh,
+        _ => Strings.Settings_PriorityNormal,
     };
 
-    private static string LabelToPriority(string? label) => label switch
+    private static string LabelToPriority(string? label)
     {
-        "Below normal" => "BelowNormal",
-        "Above normal" => "AboveNormal",
-        "High" => "High",
-        _ => "Normal",
-    };
+        if (label == Strings.Settings_PriorityBelowNormal) return "BelowNormal";
+        if (label == Strings.Settings_PriorityAboveNormal) return "AboveNormal";
+        if (label == Strings.Settings_PriorityHigh) return "High";
+        return "Normal";
+    }
 
     /// <summary>The affinity mask from the core checkboxes; 0 when all (or none) are checked = no restriction.</summary>
     private long ComputeAffinityMask()
