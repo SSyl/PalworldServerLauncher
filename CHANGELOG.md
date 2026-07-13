@@ -5,6 +5,16 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
 ## [Unreleased]
 
 ### Added
+- **Mods.** Manage Steam Workshop server mods from the launcher. Paste a mod's Workshop id or URL and it
+  downloads the mod (and keeps it up to date on each start), then enable, disable, or remove mods from a list
+  where each links to its Workshop page. A separate section manages loose `.pak` mods you drop in yourself,
+  toggling them on and off by renaming rather than deleting, and there's a shortcut to the UE4SS mods folder
+  for script mods. Downloading Workshop mods needs a one-time Steam sign-in, which Steam's own tool handles in
+  its own window, the launcher never sees or stores your password.
+- **Chat and Players log tabs.** In-game chat and player joins and leaves each have their own tab now, separate
+  from the general log.
+- **Dark window title bars.** Every window's title bar now matches the app's dark theme instead of staying
+  system-light.
 - **A timed shutdown you can watch and skip.** When you shut down on a timer, the Stop button now shows the
   seconds ticking down and turns amber. Click it to shut down right away instead of waiting out the countdown.
 - **Live server commands.** A Server Commands panel lets you announce a message, kick, ban, or unban a player,
@@ -21,6 +31,8 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
   smaller, log-focused window. Your choice is remembered next time.
 
 ### Changed
+- **Already-running server prompt.** When a managed server is already running as the launcher starts, it now
+  asks whether to reconnect to it, shut it down, or exit, instead of adopting it automatically.
 - **The Stop button now asks how you want to shut down:** right away, or on a timer that shows players an
   in-game countdown first. If the REST API is off, it explains that it can only force-stop.
 - **Live stats moved to a status bar** along the bottom of the window, under the log.
