@@ -2122,4 +2122,43 @@ Save these changes?</value>
   <data name="Cat_AutoTransferMasterThresholdDays_Desc" xml:space="preserve">
     <value>Undocumented. Likely the days a guild/base master must be inactive before ownership auto-transfers.</value>
   </data>
+  <data name="Cat_LogFormatType_Opt_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="Cat_LogFormatType_Opt_Json" xml:space="preserve">
+    <value>Json</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_Casual" xml:space="preserve">
+    <value>Casual</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_Normal" xml:space="preserve">
+    <value>普通</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_Hard" xml:space="preserve">
+    <value>困难</value>
+  </data>
+  <data name="Cat_RandomizerType_Opt_None" xml:space="preserve">
+    <value>不随机</value>
+  </data>
+  <data name="Cat_RandomizerType_Opt_Region" xml:space="preserve">
+    <value>按地域随机</value>
+  </data>
+  <data name="Cat_RandomizerType_Opt_All" xml:space="preserve">
+    <value>完全随机</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_None" xml:space="preserve">
+    <value>不掉落任何东西</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_Item" xml:space="preserve">
+    <value>掉落装备以外的道具</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_ItemAndEquipment" xml:space="preserve">
+    <value>掉落所有道具</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_All" xml:space="preserve">
+    <value>掉落所有道具及队伍内帕鲁</value>
+  </data>
 </root>

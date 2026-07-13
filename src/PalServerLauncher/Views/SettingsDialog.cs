@@ -599,7 +599,7 @@ public sealed class SettingsDialog : Window
             }
             case SettingType.Enum:
             {
-                var combo = ComboField(setting.Options?.ToArray() ?? new[] { value }, value, enabled);
+                var combo = ComboField(setting.Options?.ToArray() ?? new[] { value }, value, enabled, setting.Key);
                 _gameInputs.Add((setting, () => (combo.SelectedItem as string) ?? "", s => SelectCombo(combo, s), value));
                 return (combo, ComboReset(combo, defaultValue));
             }
@@ -886,7 +886,7 @@ public sealed class SettingsDialog : Window
         IsChecked = value, IsEnabled = enabled, Foreground = Fg, VerticalAlignment = VerticalAlignment.Center,
     };
 
-    private static ComboBox ComboField(string[] options, string value, bool enabled)
+    private static ComboBox ComboField(string[] options, string value, bool enabled, string? optionKey = null)
     {
         var combo = new ComboBox { IsEnabled = enabled, Background = FieldBg, Foreground = Brushes.Black };
         // Preserve an out-of-list / odd-case original so Save never silently snaps it to the first option.
@@ -896,7 +896,25 @@ public sealed class SettingsDialog : Window
         foreach (var o in items)
             combo.Items.Add(o);
         combo.SelectedItem = items.Contains(value) ? value : items.FirstOrDefault();
+        // For enum game settings the item stays the canonical value (so select / reset / save are unchanged),
+        // but each is DISPLAYED through a localized option label.
+        if (optionKey is not null)
+        {
+            var factory = new FrameworkElementFactory(typeof(TextBlock));
+            factory.SetBinding(TextBlock.TextProperty,
+                new System.Windows.Data.Binding { Converter = new OptionLabelConverter(optionKey) });
+            combo.ItemTemplate = new DataTemplate { VisualTree = factory };
+        }
         return combo;
+    }
+
+    private sealed class OptionLabelConverter(string settingKey) : System.Windows.Data.IValueConverter
+    {
+        public object Convert(object? value, System.Type targetType, object? parameter, System.Globalization.CultureInfo culture) =>
+            CatalogText.Option(settingKey, value as string ?? "");
+
+        public object ConvertBack(object? value, System.Type targetType, object? parameter, System.Globalization.CultureInfo culture) =>
+            System.Windows.Data.Binding.DoNothing;
     }
 
     private static Button MakeButton(string label, System.Action onClick)

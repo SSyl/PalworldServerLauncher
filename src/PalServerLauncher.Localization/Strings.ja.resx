@@ -2129,4 +2129,43 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
   <data name="Cat_AutoTransferMasterThresholdDays_Desc" xml:space="preserve">
     <value>Undocumented. Likely the days a guild/base master must be inactive before ownership auto-transfers.</value>
   </data>
+  <data name="Cat_LogFormatType_Opt_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="Cat_LogFormatType_Opt_Json" xml:space="preserve">
+    <value>Json</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_Casual" xml:space="preserve">
+    <value>Casual</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_Normal" xml:space="preserve">
+    <value>ノーマル</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_Hard" xml:space="preserve">
+    <value>ハード</value>
+  </data>
+  <data name="Cat_RandomizerType_Opt_None" xml:space="preserve">
+    <value>ランダムなし</value>
+  </data>
+  <data name="Cat_RandomizerType_Opt_Region" xml:space="preserve">
+    <value>地域ごとでランダム</value>
+  </data>
+  <data name="Cat_RandomizerType_Opt_All" xml:space="preserve">
+    <value>完全にランダム</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_None" xml:space="preserve">
+    <value>何もドロップしない</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_Item" xml:space="preserve">
+    <value>装備品以外のアイテムをドロップ</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_ItemAndEquipment" xml:space="preserve">
+    <value>全アイテムをドロップ</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_All" xml:space="preserve">
+    <value>全アイテムと手持ちパルをドロップ</value>
+  </data>
 </root>

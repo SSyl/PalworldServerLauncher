@@ -17,6 +17,11 @@ public static class CatalogText
     public static string Description(GameSetting setting) =>
         Lookup($"Cat_{setting.Key}_Desc") ?? setting.Description;
 
+    /// <summary>Localized display label for one enum option value of a setting. The value stored in the config
+    /// stays canonical, only the dropdown display is translated.</summary>
+    public static string Option(string settingKey, string value) =>
+        Lookup($"Cat_{settingKey}_Opt_{value}") ?? value;
+
     private static string? Lookup(string key)
     {
         var value = Strings.ResourceManager.GetString(key, CultureInfo.CurrentUICulture);
