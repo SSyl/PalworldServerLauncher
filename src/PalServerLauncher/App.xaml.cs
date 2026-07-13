@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Threading;
 using PalServerLauncher.Config;
+using PalServerLauncher.Localization;
 using PalServerLauncher.Logging;
 
 namespace PalServerLauncher;
@@ -55,7 +56,7 @@ public partial class App : Application
         _logger.Error("Unhandled UI exception", e.Exception);
         MessageBox.Show(
             $"An error occurred:\n\n{e.Exception.Message}\n\nFull details in:\n{_logger.FilePath}",
-            "Palworld Server Launcher", MessageBoxButton.OK, MessageBoxImage.Error);
+            Strings.Common_AppName, MessageBoxButton.OK, MessageBoxImage.Error);
         e.Handled = true; // keep the window alive
     }
 }

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- AI first-pass draft, not yet reviewed by a native speaker. See GitHub issue #1. -->
+  <data name="Start_Button" xml:space="preserve">
+    <value>启动</value>
+  </data>
+  <data name="FirstRun_Prompt" xml:space="preserve">
+    <value>请选择语言。您以后可以在"启动器设置"中更改此设置。</value>
+  </data>
+  <data name="RestartNotice_Format" xml:space="preserve">
+    <value>请重启启动器以应用{0}。</value>
+  </data>
+  <data name="Common_AppName" xml:space="preserve">
+    <value>Palworld Server Launcher</value>
+  </data>
+  <data name="Common_Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Common_OK" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="Announcements_Title" xml:space="preserve">
+    <value>公告</value>
+  </data>
+  <data name="Announcements_Intro" xml:space="preserve">
+    <value>重启前向玩家显示。在需要显示倒计时的位置放置 {minutes}（它会替换为剩余分钟数）。删除它则显示不带时间的固定消息。</value>
+  </data>
+  <data name="Announcements_RestartLabel" xml:space="preserve">
+    <value>计划 / 手动重启</value>
+  </data>
+  <data name="Announcements_UpdateLabel" xml:space="preserve">
+    <value>更新重启</value>
+  </data>
+  <data name="Announcements_EmptyTitle" xml:space="preserve">
+    <value>公告不能为空</value>
+  </data>
+  <data name="Announcements_EmptyMessage" xml:space="preserve">
+    <value>公告不能为空（服务器会拒绝空白消息）：</value>
+  </data>
+  <data name="Announcements_NoTokenTitle" xml:space="preserve">
+    <value>缺少倒计时占位符</value>
+  </data>
+  <data name="Announcements_NoTokenMessage" xml:space="preserve">
+    <value>以下公告没有 {0} 占位符，因此不会显示剩余分钟数：
+{1}
+
+仍要将它们保存为固定消息吗？</value>
+  </data>
+  <data name="Announcements_SaveAnyway" xml:space="preserve">
+    <value>仍然保存</value>
+  </data>
+  <data name="Announcements_KeepEditing" xml:space="preserve">
+    <value>继续编辑</value>
+  </data>
+</root>

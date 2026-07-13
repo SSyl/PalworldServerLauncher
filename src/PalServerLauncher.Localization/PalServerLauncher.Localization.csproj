@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>PalServerLauncher.Localization</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Strongly-typed string class generated from the neutral/English resx via plain MSBuild
+       (MSBuild:Compile, not the VS-only PublicResXFileCodeGenerator, which silently no-ops under
+       `dotnet build`). Keeping the resx in a plain class library, not the WPF app, is deliberate: the
+       app's XAML markup compiler spins up a temp _wpftmp project that does NOT run this generation, so
+       an app-code reference to Strings would fail to compile there. As a referenced assembly the type
+       resolves fine. Strings.zh-Hans.resx is the Chinese satellite (no codegen of its own). -->
+  <ItemGroup>
+    <EmbeddedResource Update="Strings.resx">
+      <Generator>MSBuild:Compile</Generator>
+      <StronglyTypedFileName>$(IntermediateOutputPath)Strings.Designer.cs</StronglyTypedFileName>
+      <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+      <StronglyTypedNamespace>PalServerLauncher.Localization</StronglyTypedNamespace>
+      <StronglyTypedClassName>Strings</StronglyTypedClassName>
+      <PublicClass>true</PublicClass>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Strings.zh-Hans.resx">
+      <DependentUpon>Strings.resx</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

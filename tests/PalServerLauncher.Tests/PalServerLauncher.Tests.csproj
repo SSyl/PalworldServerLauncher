@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\PalServerLauncher\PalServerLauncher.csproj" />
+    <ProjectReference Include="..\..\src\PalServerLauncher.Localization\PalServerLauncher.Localization.csproj" />
   </ItemGroup>
 
   <ItemGroup>
