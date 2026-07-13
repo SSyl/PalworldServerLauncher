@@ -50,7 +50,7 @@ public sealed class ChoiceDialog : Window
                 Margin = new Thickness(8, 0, 0, 0),
                 Padding = new Thickness(14, 7, 14, 7),
                 Foreground = Brushes.White,
-                Background = new SolidColorBrush(Color.FromRgb(0x55, 0x55, 0x55)),
+                Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)),
                 BorderThickness = new Thickness(0),
                 Cursor = System.Windows.Input.Cursors.Hand,
                 MinWidth = 90,

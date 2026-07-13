@@ -245,7 +245,7 @@ public sealed class ServerCommandsDialog : Window
         var button = new Button
         {
             Content = label, Margin = new Thickness(8, 0, 0, 0), Padding = new Thickness(14, 6, 14, 6),
-            Foreground = Fg, Background = background ?? new SolidColorBrush(Color.FromRgb(0x55, 0x55, 0x55)),
+            Foreground = Fg, Background = background ?? new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)),
             BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand, MinWidth = 74,
         };
         button.Click += (_, _) => onClick();

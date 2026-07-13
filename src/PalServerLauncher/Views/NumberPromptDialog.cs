@@ -105,7 +105,7 @@ public sealed class NumberPromptDialog : Window
         var button = new Button
         {
             Content = label, Margin = new Thickness(8, 0, 0, 0), Padding = new Thickness(14, 7, 14, 7),
-            Foreground = Fg, Background = new SolidColorBrush(Color.FromRgb(0x55, 0x55, 0x55)),
+            Foreground = Fg, Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)),
             BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand, MinWidth = 80,
         };
         button.Click += (_, _) => onClick();

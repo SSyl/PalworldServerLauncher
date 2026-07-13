@@ -243,7 +243,7 @@ public sealed class DiscordDialog : Window
         var button = new Button
         {
             Content = label, Margin = new Thickness(8, 0, 0, 0), Padding = new Thickness(16, 7, 16, 7),
-            Foreground = Fg, Background = new SolidColorBrush(Color.FromRgb(0x55, 0x55, 0x55)),
+            Foreground = Fg, Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)),
             BorderThickness = new Thickness(0), Cursor = Cursors.Hand, MinWidth = 90,
         };
         button.Click += (_, _) => onClick();

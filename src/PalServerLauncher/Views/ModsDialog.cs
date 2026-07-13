@@ -71,7 +71,7 @@ public sealed class ModsDialog : Window
         Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         Width = 720;
-        Height = 700;
+        Height = 706;
         ShowInTaskbar = false;
 
         var stack = new StackPanel { Margin = new Thickness(18) };
@@ -427,7 +427,7 @@ public sealed class ModsDialog : Window
         var remove = new Button
         {
             Content = "✕", Width = 30, Height = 26, Padding = new Thickness(0), Foreground = Fg,
-            Background = new SolidColorBrush(Color.FromRgb(0x55, 0x55, 0x55)), BorderThickness = new Thickness(0),
+            Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)), BorderThickness = new Thickness(0),
             Cursor = Cursors.Hand, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(6, 0, 0, 0),
             ToolTip = "Delete this mod (removes it from the list and deletes its downloaded files).",
         };
@@ -667,7 +667,7 @@ public sealed class ModsDialog : Window
         var button = new Button
         {
             Content = label, Margin = new Thickness(8, 0, 0, 0), Padding = new Thickness(16, 7, 16, 7),
-            Foreground = Fg, Background = new SolidColorBrush(Color.FromRgb(0x55, 0x55, 0x55)),
+            Foreground = Fg, Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)),
             BorderThickness = new Thickness(0), Cursor = Cursors.Hand, MinWidth = 90,
         };
         button.Click += (_, _) => onClick();
