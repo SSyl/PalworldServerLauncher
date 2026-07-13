@@ -1,3 +1,4 @@
+using PalServerLauncher.Localization;
 using PalServerLauncher.State;
 using PalServerLauncher.ViewModels;
 
@@ -9,7 +10,7 @@ public class PrimaryButtonTests
     public void Not_installed_shows_Install()
     {
         Assert.Equal(PrimaryActionKind.Install, PrimaryButton.Resolve(isInstalled: false, isBusy: false, ServerState.Stopped));
-        Assert.Equal("Install", PrimaryButton.Label(false, false, ServerState.Stopped));
+        Assert.Equal(Strings.Btn_Install, PrimaryButton.Label(false, false, ServerState.Stopped));
         Assert.True(PrimaryButton.CanExecute(false, false, ServerState.Stopped));
     }
 
@@ -31,14 +32,15 @@ public class PrimaryButtonTests
     }
 
     [Theory]
-    [InlineData(ServerState.Starting, "Starting…")]
-    [InlineData(ServerState.Stopping, "Stopping…")]
-    [InlineData(ServerState.Restarting, "Stopping…")]
-    public void Transitional_states_are_disabled(ServerState state, string expectedLabel)
+    [InlineData(ServerState.Starting)]
+    [InlineData(ServerState.Stopping)]
+    [InlineData(ServerState.Restarting)]
+    public void Transitional_states_are_disabled(ServerState state)
     {
         Assert.Equal(PrimaryActionKind.None, PrimaryButton.Resolve(true, false, state));
         Assert.False(PrimaryButton.CanExecute(true, false, state));
-        Assert.Equal(expectedLabel, PrimaryButton.Label(true, false, state));
+        var expected = state == ServerState.Starting ? Strings.Btn_Starting : Strings.Btn_Stopping;
+        Assert.Equal(expected, PrimaryButton.Label(true, false, state));
     }
 
     [Fact]
@@ -46,7 +48,7 @@ public class PrimaryButtonTests
     {
         Assert.Equal(PrimaryActionKind.None, PrimaryButton.Resolve(isInstalled: false, isBusy: true, ServerState.Stopped));
         Assert.False(PrimaryButton.CanExecute(true, true, ServerState.Healthy));
-        Assert.Equal("Working…", PrimaryButton.Label(true, true, ServerState.Stopped));
+        Assert.Equal(Strings.Btn_Working, PrimaryButton.Label(true, true, ServerState.Stopped));
     }
 
     [Fact]
@@ -62,7 +64,7 @@ public class PrimaryButtonTests
         // While a timed shutdown counts down the state is still Stopping, but the button becomes an amber,
         // clickable "shut down now" that accelerates the countdown.
         Assert.Equal(PrimaryActionKind.ShutdownNow, PrimaryButton.Resolve(true, false, ServerState.Stopping, timedShutdownRemaining: 58));
-        Assert.Equal("Stopping (58s)", PrimaryButton.Label(true, false, ServerState.Stopping, timedShutdownRemaining: 58));
+        Assert.Equal(string.Format(Strings.Btn_StoppingSeconds, 58), PrimaryButton.Label(true, false, ServerState.Stopping, timedShutdownRemaining: 58));
         Assert.True(PrimaryButton.CanExecute(true, false, ServerState.Stopping, timedShutdownRemaining: 58));
     }
 
@@ -72,7 +74,7 @@ public class PrimaryButtonTests
         // A null remaining preserves the normal transitional behavior.
         Assert.Equal(PrimaryActionKind.None, PrimaryButton.Resolve(true, false, ServerState.Stopping, timedShutdownRemaining: null));
         Assert.False(PrimaryButton.CanExecute(true, false, ServerState.Stopping));
-        Assert.Equal("Stopping…", PrimaryButton.Label(true, false, ServerState.Stopping));
+        Assert.Equal(Strings.Btn_Stopping, PrimaryButton.Label(true, false, ServerState.Stopping));
     }
 
     [Fact]

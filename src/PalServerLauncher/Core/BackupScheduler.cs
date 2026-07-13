@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using PalServerLauncher.Config;
+using PalServerLauncher.Localization;
 using PalServerLauncher.Logging;
 
 namespace PalServerLauncher.Core;
@@ -75,16 +76,18 @@ public sealed class BackupScheduler : IDisposable
 
     private string NextBackupText(DateTime now, bool running, bool enabled)
     {
-        if (!enabled) return "off";
+        if (!enabled) return Strings.Sched_Off;
         if (!running) return "-";
         var soonest = RestartScheduler.NextRestart(now, _config.BackupTimes);
-        return soonest is null ? "off" : FormatUntil(soonest.Value - now);
+        return soonest is null ? Strings.Sched_Off : FormatUntil(soonest.Value - now);
     }
 
     private static string FormatUntil(TimeSpan t)
     {
         if (t < TimeSpan.Zero) t = TimeSpan.Zero;
-        return t.TotalHours >= 1 ? $"{(int)t.TotalHours}h {t.Minutes}m" : $"{t.Minutes}m {t.Seconds}s";
+        return t.TotalHours >= 1
+            ? string.Format(Strings.Sched_UntilHM, (int)t.TotalHours, t.Minutes)
+            : string.Format(Strings.Sched_UntilMS, t.Minutes, t.Seconds);
     }
 
     public void Dispose()

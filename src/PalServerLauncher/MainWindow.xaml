@@ -180,7 +180,7 @@
         <DockPanel Grid.Row="1" LastChildFill="False" Margin="0,0,0,12">
             <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Text="{x:Static loc:Strings.Main_StatusLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                <TextBlock Text="{Binding State}" Style="{StaticResource Value}" FontSize="15" VerticalAlignment="Center" Margin="0,0,24,0"/>
+                <TextBlock Text="{Binding StateText}" Style="{StaticResource Value}" FontSize="15" VerticalAlignment="Center" Margin="0,0,24,0"/>
                 <TextBlock Text="{x:Static loc:Strings.Main_UpdateLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                 <TextBlock Text="{Binding UpdateStatus}" Foreground="#F0F0F0" VerticalAlignment="Center"/>
             </StackPanel>

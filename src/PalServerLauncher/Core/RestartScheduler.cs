@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using PalServerLauncher.Config;
+using PalServerLauncher.Localization;
 using PalServerLauncher.Logging;
 
 namespace PalServerLauncher.Core;
@@ -140,7 +141,7 @@ public sealed class RestartScheduler : IDisposable
         var hasSchedule = _config.ScheduledRestartEnabled && _config.RestartTimes.Count > 0;
         var next = NextRestart(now, _config.RestartTimes);
         NextRestartTextChanged?.Invoke(
-            !hasSchedule ? "off" : !_isRunning() ? "-" : next is null ? "off" : FormatUntil(next.Value - now));
+            !hasSchedule ? Strings.Sched_Off : !_isRunning() ? "-" : next is null ? Strings.Sched_Off : FormatUntil(next.Value - now));
     }
 
     /// <summary>
@@ -165,7 +166,9 @@ public sealed class RestartScheduler : IDisposable
     private static string FormatUntil(TimeSpan t)
     {
         if (t < TimeSpan.Zero) t = TimeSpan.Zero;
-        return t.TotalHours >= 1 ? $"{(int)t.TotalHours}h {t.Minutes}m" : $"{t.Minutes}m {t.Seconds}s";
+        return t.TotalHours >= 1
+            ? string.Format(Strings.Sched_UntilHM, (int)t.TotalHours, t.Minutes)
+            : string.Format(Strings.Sched_UntilMS, t.Minutes, t.Seconds);
     }
 
     public void Dispose()

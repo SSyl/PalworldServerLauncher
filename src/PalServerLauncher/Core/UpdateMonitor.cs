@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using PalServerLauncher.Config;
+using PalServerLauncher.Localization;
 using PalServerLauncher.Logging;
 
 namespace PalServerLauncher.Core;
@@ -74,17 +75,17 @@ public sealed class UpdateMonitor : IDisposable
 
         if (!_config.AutoUpdateEnabled)
         {
-            StatusChanged?.Invoke($"Auto-update off (build {installed})");
+            StatusChanged?.Invoke(string.Format(Strings.Update_AutoUpdateOff, installed));
             return;
         }
 
-        StatusChanged?.Invoke("Checking for updates...");
+        StatusChanged?.Invoke(Strings.Update_Checking);
         var latest = await _queryLatestBuildId(ct).ConfigureAwait(false);
 
         if (string.IsNullOrWhiteSpace(latest))
         {
             _logger.Debug("Update check: could not read latest build id (will retry next interval).");
-            StatusChanged?.Invoke($"Update check failed (build {installed})");
+            StatusChanged?.Invoke(string.Format(Strings.Update_CheckFailed, installed));
             return;
         }
 
@@ -92,13 +93,13 @@ public sealed class UpdateMonitor : IDisposable
         {
             _fired = true;
             _logger.Info($"New server build {latest} found (installed {installed}), starting update restart.");
-            StatusChanged?.Invoke($"New build {latest} found, restarting");
+            StatusChanged?.Invoke(string.Format(Strings.Update_Found, latest));
             UpdateFound?.Invoke();
         }
         else
         {
             _logger.Debug($"Update check: up to date (build {installed}).");
-            StatusChanged?.Invoke($"Up to date (build {installed})");
+            StatusChanged?.Invoke(string.Format(Strings.Update_UpToDate, installed));
         }
     }
 

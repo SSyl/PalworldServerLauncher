@@ -38,7 +38,7 @@ public partial class MainViewModel : ObservableObject
     private readonly string[] _leadSlots = new string[3];
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate), nameof(CanCheckPorts), nameof(CanUseServerCommands))]
+    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(StateText), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate), nameof(CanCheckPorts), nameof(CanUseServerCommands))]
     [NotifyCanExecuteChangedFor(nameof(PrimaryActionCommand), nameof(RestartCommand), nameof(ValidateFilesCommand))]
     private ServerState _state = ServerState.Stopped;
 
@@ -111,6 +111,20 @@ public partial class MainViewModel : ObservableObject
 
     /// <summary>What the primary button currently represents, drives its color via XAML (Install/Start = green, Stop = red).</summary>
     public PrimaryActionKind PrimaryActionKind => PrimaryButton.Resolve(IsInstalled, IsBusy, State, ShutdownRemainingSeconds);
+
+    /// <summary>Localized display text for the Status tile (the raw ServerState enum, translated).</summary>
+    public string StateText => State switch
+    {
+        ServerState.Stopped => Strings.State_Stopped,
+        ServerState.Starting => Strings.State_Starting,
+        ServerState.Healthy => Strings.State_Healthy,
+        ServerState.Degraded => Strings.State_Degraded,
+        ServerState.Zombie => Strings.State_Zombie,
+        ServerState.Stopping => Strings.State_Stopping,
+        ServerState.Restarting => Strings.State_Restarting,
+        ServerState.Backoff => Strings.State_Backoff,
+        _ => State.ToString(),
+    };
 
     public MainViewModel(Logger logger, LauncherConfig config)
     {

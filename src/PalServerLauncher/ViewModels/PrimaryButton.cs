@@ -1,3 +1,4 @@
+using PalServerLauncher.Localization;
 using PalServerLauncher.State;
 
 namespace PalServerLauncher.ViewModels;
@@ -40,15 +41,15 @@ public static class PrimaryButton
 
     public static string Label(bool isInstalled, bool isBusy, ServerState state, int? timedShutdownRemaining = null)
     {
-        if (isBusy) return "Working…";
-        if (!isInstalled) return "Install";
-        if (timedShutdownRemaining is int seconds) return $"Stopping ({seconds}s)";
+        if (isBusy) return Strings.Btn_Working;
+        if (!isInstalled) return Strings.Btn_Install;
+        if (timedShutdownRemaining is int seconds) return string.Format(Strings.Btn_StoppingSeconds, seconds);
 
         return state switch
         {
             ServerState.Stopped or ServerState.Backoff => "▶",  // Start (play)
-            ServerState.Starting => "Starting…",
-            ServerState.Stopping or ServerState.Restarting => "Stopping…",
+            ServerState.Starting => Strings.Btn_Starting,
+            ServerState.Stopping or ServerState.Restarting => Strings.Btn_Stopping,
             _ => "■",  // Stop (running)
         };
     }

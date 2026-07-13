@@ -1345,4 +1345,67 @@ Save these changes?</value>
   <data name="Settings_PriorityHigh" xml:space="preserve">
     <value>High</value>
   </data>
+  <data name="Btn_Working" xml:space="preserve">
+    <value>Working…</value>
+  </data>
+  <data name="Btn_Install" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="Btn_Starting" xml:space="preserve">
+    <value>Starting…</value>
+  </data>
+  <data name="Btn_Stopping" xml:space="preserve">
+    <value>Stopping…</value>
+  </data>
+  <data name="Btn_StoppingSeconds" xml:space="preserve">
+    <value>Stopping ({0}s)</value>
+  </data>
+  <data name="State_Stopped" xml:space="preserve">
+    <value>Stopped</value>
+  </data>
+  <data name="State_Starting" xml:space="preserve">
+    <value>Starting</value>
+  </data>
+  <data name="State_Healthy" xml:space="preserve">
+    <value>Healthy</value>
+  </data>
+  <data name="State_Degraded" xml:space="preserve">
+    <value>Degraded</value>
+  </data>
+  <data name="State_Zombie" xml:space="preserve">
+    <value>Zombie</value>
+  </data>
+  <data name="State_Stopping" xml:space="preserve">
+    <value>Stopping</value>
+  </data>
+  <data name="State_Restarting" xml:space="preserve">
+    <value>Restarting</value>
+  </data>
+  <data name="State_Backoff" xml:space="preserve">
+    <value>Backoff</value>
+  </data>
+  <data name="Update_AutoUpdateOff" xml:space="preserve">
+    <value>Auto-update off (build {0})</value>
+  </data>
+  <data name="Update_Checking" xml:space="preserve">
+    <value>Checking for updates...</value>
+  </data>
+  <data name="Update_CheckFailed" xml:space="preserve">
+    <value>Update check failed (build {0})</value>
+  </data>
+  <data name="Update_Found" xml:space="preserve">
+    <value>New build {0} found, restarting</value>
+  </data>
+  <data name="Update_UpToDate" xml:space="preserve">
+    <value>Up to date (build {0})</value>
+  </data>
+  <data name="Sched_Off" xml:space="preserve">
+    <value>off</value>
+  </data>
+  <data name="Sched_UntilHM" xml:space="preserve">
+    <value>{0}h {1}m</value>
+  </data>
+  <data name="Sched_UntilMS" xml:space="preserve">
+    <value>{0}m {1}s</value>
+  </data>
 </root>
