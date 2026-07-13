@@ -40,6 +40,7 @@ public sealed class ModsDialog : Window
     private readonly Button _addButton;
     private readonly StackPanel _modListPanel;
     private readonly Border _noAccountWarning;
+    private readonly StackPanel _loosePakPanel;
     private readonly List<ModRow> _rows = new();
 
     private sealed class ModRow
@@ -134,6 +135,26 @@ public sealed class ModsDialog : Window
         _modListPanel = new StackPanel { Margin = new Thickness(0, 2, 0, 0) };
         stack.Children.Add(_modListPanel);
 
+        // --- Loose .pak mods (a separate mechanism: raw paks in ~mods, toggled by rename) ---
+        stack.Children.Add(Separator());
+        stack.Children.Add(Header("Loose .pak mods (advanced)"));
+        stack.Children.Add(new TextBlock
+        {
+            Text = "Raw .pak mods with no Info.json (many NexusMods downloads). Drop them into the loose-paks folder "
+                 + "and toggle them here. They're enabled/disabled by renaming (never deleted) and load on the next "
+                 + "server start. This is separate from the Workshop list above.",
+            Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 2),
+        });
+        _loosePakPanel = new StackPanel();
+        stack.Children.Add(_loosePakPanel);
+        var looseButtons = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 8, 0, 0) };
+        var openLoose = MakeButton("Open loose-paks folder", () => _modService.OpenLoosePaksFolder());
+        openLoose.Margin = new Thickness(0);
+        looseButtons.Children.Add(openLoose);
+        looseButtons.Children.Add(MakeButton("Rescan", RebuildLoosePakList));
+        looseButtons.Children.Add(MakeButton("Open UE4SS mods folder", OnOpenUe4ss));
+        stack.Children.Add(looseButtons);
+
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 18, 0, 0) };
         buttons.Children.Add(MakeButton("Save", OnSave));
         buttons.Children.Add(MakeButton("Cancel", Close));
@@ -142,6 +163,7 @@ public sealed class ModsDialog : Window
         foreach (var entry in config.Mods)
             _rows.Add(BuildRow(entry.Clone()));
         RebuildModList();
+        RebuildLoosePakList();
         UpdateSteamStatus();
         RefreshWarning();
 
@@ -391,6 +413,66 @@ public sealed class ModsDialog : Window
         : entry.WorkshopId.Length > 0 ? entry.WorkshopId
         : entry.FolderName.Length > 0 ? entry.FolderName
         : "this mod";
+
+    /// <summary>Rescan the loose-paks folder and rebuild its toggle list.</summary>
+    private void RebuildLoosePakList()
+    {
+        _loosePakPanel.Children.Clear();
+        var mods = _modService.ScanLoosePaks();
+        if (mods.Count == 0)
+        {
+            _loosePakPanel.Children.Add(new TextBlock
+            {
+                Text = "No loose .pak mods found. Drop .pak files (with any .utoc / .ucas) into the loose-paks folder, then Rescan.",
+                Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 0),
+            });
+            return;
+        }
+        foreach (var mod in mods)
+        {
+            var count = mod.Files.Count;
+            var check = new CheckBox
+            {
+                Content = $"{mod.BaseName}  ({count} file{(count == 1 ? "" : "s")})",
+                IsChecked = mod.Enabled, Foreground = Fg, Margin = new Thickness(0, 4, 0, 0),
+            };
+            // Click fires only on user interaction, not the programmatic IsChecked above, so there's no toggle loop.
+            check.Click += (_, _) => ToggleLoosePak(mod, check.IsChecked == true);
+            _loosePakPanel.Children.Add(check);
+        }
+    }
+
+    /// <summary>Enable/disable a loose pak by renaming its files, then rescan (the file names just changed).</summary>
+    private void ToggleLoosePak(LoosePakMods.LoosePakMod mod, bool enable)
+    {
+        try
+        {
+            _modService.SetLoosePakEnabled(mod, enable);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            ChoiceDialog.Show(this, "Couldn't change the mod",
+                $"Couldn't {(enable ? "enable" : "disable")} '{mod.BaseName}': {ex.Message}", "OK");
+        }
+        Dispatcher.BeginInvoke(RebuildLoosePakList);
+    }
+
+    private void OnOpenUe4ss()
+    {
+        if (!_modService.Ue4ssInstalled)
+        {
+            ChoiceDialog.Show(this, "UE4SS not installed",
+                "UE4SS isn't installed yet. Add a UE4SS mod from the Workshop and start the server once, then its "
+                + "mods folder will appear here.", "OK");
+            return;
+        }
+        _modService.OpenUe4ssModsFolder();
+    }
+
+    private static Border Separator() => new()
+    {
+        Height = 1, Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)), Margin = new Thickness(0, 18, 0, 0),
+    };
 
     private void RefreshWarning()
     {

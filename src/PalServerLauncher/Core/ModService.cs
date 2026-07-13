@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using PalServerLauncher.Config;
 using PalServerLauncher.Logging;
 
@@ -111,12 +112,23 @@ public sealed class ModService
     /// mounted by the engine directly, outside the managed Workshop system.</summary>
     public string LoosePaksDir => Path.Combine(_serverRoot, LauncherConfig.ServerFolderName, "Pal", "Content", "Paks", "~mods");
 
+    /// <summary>UE4SS script-mods folder: <c>Mods\NativeMods\UE4SS\Mods</c>, where UE4SS (installed via a Workshop
+    /// mod) keeps its Lua mods. Only exists once a UE4SS mod has been deployed.</summary>
+    public string Ue4ssModsDir => Path.Combine(_serverRoot, LauncherConfig.ServerFolderName, "Mods", "NativeMods", "UE4SS", "Mods");
+
+    /// <summary>True once UE4SS has been deployed (its mods folder exists).</summary>
+    public bool Ue4ssInstalled => Directory.Exists(Ue4ssModsDir);
+
     /// <summary>Open the server's <c>Mods\Workshop</c> folder in Explorer (creating it first), for the
     /// "drop your own mods here" workflow.</summary>
     public void OpenModsFolder() => OpenFolder(WorkshopDir);
 
     /// <summary>Open the loose-paks folder (creating it first), for raw .pak mods that aren't Workshop-packaged.</summary>
     public void OpenLoosePaksFolder() => OpenFolder(LoosePaksDir);
+
+    /// <summary>Open the UE4SS script-mods folder if UE4SS is installed. Doesn't create it (that would fake an
+    /// install), so it's a no-op when UE4SS isn't there, the caller checks <see cref="Ue4ssInstalled"/>.</summary>
+    public void OpenUe4ssModsFolder() => OpenFolder(Ue4ssModsDir, create: false);
 
     /// <summary>Delete a mod's source folder under <c>Mods\Workshop</c>. No-op if the name is blank or the folder
     /// is already gone. The server clears its own deployed copy on the next restart (the mod leaves ActiveModList).
@@ -133,9 +145,35 @@ public sealed class ModService
         }
     }
 
-    private void OpenFolder(string dir)
+    /// <summary>Scan the loose-paks folder (<c>~mods</c>) and group the files into mods. Empty when the folder
+    /// doesn't exist yet.</summary>
+    public IReadOnlyList<LoosePakMods.LoosePakMod> ScanLoosePaks()
     {
-        Directory.CreateDirectory(dir);
+        if (!Directory.Exists(LoosePaksDir))
+            return Array.Empty<LoosePakMods.LoosePakMod>();
+        var names = Directory.EnumerateFiles(LoosePaksDir).Select(f => Path.GetFileName(f)!);
+        return LoosePakMods.Scan(names);
+    }
+
+    /// <summary>Enable or disable a loose pak mod by renaming its files (never deleting them). Takes effect on the
+    /// next server start. Exceptions propagate so the caller can report a failed rename.</summary>
+    public void SetLoosePakEnabled(LoosePakMods.LoosePakMod mod, bool enable)
+    {
+        foreach (var (from, to) in LoosePakMods.TogglePlan(mod, enable))
+        {
+            var fromPath = Path.Combine(LoosePaksDir, from);
+            if (File.Exists(fromPath))
+                File.Move(fromPath, Path.Combine(LoosePaksDir, to), overwrite: true);
+        }
+        _logger.Info($"{(enable ? "Enabled" : "Disabled")} loose pak mod '{mod.BaseName}', takes effect on the next server start.");
+    }
+
+    private void OpenFolder(string dir, bool create = true)
+    {
+        if (create)
+            Directory.CreateDirectory(dir);
+        else if (!Directory.Exists(dir))
+            return;
         try
         {
             Process.Start(new ProcessStartInfo { FileName = dir, UseShellExecute = true });
