@@ -29,6 +29,8 @@ public sealed class ModsDialog : Window
     private static readonly Brush FieldBorder = new SolidColorBrush(Color.FromRgb(0x4A, 0x4A, 0x4A));
     private static readonly Brush RowBorder = new SolidColorBrush(Color.FromRgb(0x2C, 0x2C, 0x2C));
     private static readonly Brush LinkFg = new SolidColorBrush(Color.FromRgb(0x5A, 0xA0, 0xE0));
+    private static readonly Brush GreenFg = new SolidColorBrush(Color.FromRgb(0x4C, 0xC9, 0x4C));
+    private static readonly Brush InsetBg = new SolidColorBrush(Color.FromRgb(0x25, 0x25, 0x25));
 
     private readonly LauncherConfig _config;
     private readonly ModService _modService;
@@ -40,6 +42,8 @@ public sealed class ModsDialog : Window
     private readonly TextBox _username;
     private readonly TextBlock _steamStatus;
     private readonly Button _connectButton;
+    private readonly TextBlock _differentAccountLink;
+    private readonly StackPanel _connectPanel;
     private readonly TextBox _addInput;
     private readonly Button _addButton;
     private readonly StackPanel _modListPanel;
@@ -85,16 +89,18 @@ public sealed class ModsDialog : Window
         _modsEnabled.Unchecked += (_, _) => RefreshWarning();
         stack.Children.Add(_modsEnabled);
 
-        // --- Steam account ---
-        stack.Children.Add(Header("Steam account (optional, only needed to download Workshop mods)"));
-        _steamStatus = new TextBlock { Foreground = Fg, Margin = new Thickness(0, 2, 0, 0), TextWrapping = TextWrapping.Wrap };
+        // --- Steam account (stateful: checking / signed-in / not-signed-in) ---
+        stack.Children.Add(Header("Steam account"));
+        _steamStatus = new TextBlock { Margin = new Thickness(0, 2, 0, 0), TextWrapping = TextWrapping.Wrap };
         stack.Children.Add(_steamStatus);
-        stack.Children.Add(Note(
-            "Steam's own SteamCMD handles the sign-in in its own window. The launcher never sees or stores your "
-            + "password, it only remembers your username. Dropped-in mods need no account."));
 
+        // Build the connect panel first so the "different account" link can reference it (assigned field).
+        _connectPanel = new StackPanel();
+        _connectPanel.Children.Add(Note(
+            "Only needed to download Workshop mods, dropped-in mods need no account. Steam's own SteamCMD handles the "
+            + "sign-in in its own window, so the launcher never sees or stores your password, it only remembers your username."));
         _username = Field(config.SteamUsername);
-        _username.TextChanged += (_, _) => { UpdateSteamStatus(); RefreshWarning(); };
+        _username.TextChanged += (_, _) => RefreshWarning();
         _connectButton = MakeButton("Connect Steam account", () => _ = OnConnectSteam());
         var connectRow = new Grid { Margin = new Thickness(0, 6, 0, 0) };
         connectRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -104,7 +110,11 @@ public sealed class ModsDialog : Window
         Grid.SetColumn(_connectButton, 1);
         connectRow.Children.Add(_username);
         connectRow.Children.Add(_connectButton);
-        stack.Children.Add(connectRow);
+        _connectPanel.Children.Add(connectRow);
+
+        _differentAccountLink = LinkButton("Connect with a different account?", () => _connectPanel.Visibility = Visibility.Visible);
+        stack.Children.Add(_differentAccountLink);
+        stack.Children.Add(_connectPanel);
 
         // --- Steam Workshop mods ---
         stack.Children.Add(Header("Steam Workshop mods"));
@@ -152,7 +162,11 @@ public sealed class ModsDialog : Window
             Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 2),
         });
         _loosePakPanel = new StackPanel();
-        stack.Children.Add(_loosePakPanel);
+        stack.Children.Add(new Border
+        {
+            Child = _loosePakPanel, Background = InsetBg, BorderBrush = FieldBorder, BorderThickness = new Thickness(1),
+            CornerRadius = new CornerRadius(4), Padding = new Thickness(10, 6, 10, 6), Margin = new Thickness(0, 6, 0, 0),
+        });
         var looseButtons = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 8, 0, 0) };
         var openLoose = MakeButton("Open loose-paks folder", () => _modService.OpenLoosePaksFolder());
         openLoose.Margin = new Thickness(0);
@@ -170,7 +184,7 @@ public sealed class ModsDialog : Window
             _rows.Add(BuildRow(entry.Clone()));
         RebuildModList();
         RebuildLoosePakList();
-        UpdateSteamStatus();
+        ShowSteamState(string.IsNullOrWhiteSpace(config.SteamUsername) ? SteamUi.NotSignedIn : SteamUi.Checking);
         RefreshWarning();
         Loaded += async (_, _) => await CheckLoginOnOpenAsync();
 
@@ -194,17 +208,18 @@ public sealed class ModsDialog : Window
         }
         _connectButton.IsEnabled = false;
         _connectButton.Content = "Connecting...";
+        _steamStatus.Visibility = Visibility.Visible;
+        _steamStatus.Foreground = Muted;
         _steamStatus.Text = "A SteamCMD window opened. Enter your password and Steam Guard code there, it stays open so you can read the result, then close it.";
         try
         {
             var ok = await _connectSteam(username);
-            _steamStatus.Text = ok
-                ? $"Connected as {username}. SteamCMD cached the session."
-                : "Couldn't confirm the sign-in. Click Connect again and watch the SteamCMD window for the error (wrong password or Steam Guard code).";
+            ShowSteamState(ok ? SteamUi.SignedIn : SteamUi.NotSignedIn,
+                ok ? null : "Couldn't confirm the sign-in. Connect again and watch the SteamCMD window for the error (wrong password or Steam Guard code).");
         }
         catch (Exception ex)
         {
-            _steamStatus.Text = $"Sign-in failed: {ex.Message}";
+            ShowSteamState(SteamUi.NotSignedIn, $"Sign-in failed: {ex.Message}");
         }
         finally
         {
@@ -220,18 +235,49 @@ public sealed class ModsDialog : Window
     {
         var username = _username.Text.Trim();
         if (username.Length == 0)
-            return;
-        _steamStatus.Text = $"Checking sign-in for {username}...";
+            return; // no account -> already showing the connect panel
+        ShowSteamState(SteamUi.Checking);
         try
         {
             var signedIn = await _checkLogin(username);
-            _steamStatus.Text = signedIn
-                ? $"Signed in as {username}."
-                : $"Not signed in as {username}. Click Connect to sign in.";
+            ShowSteamState(signedIn ? SteamUi.SignedIn : SteamUi.NotSignedIn,
+                signedIn ? null : "Your saved sign-in isn't valid anymore, connect again.");
         }
         catch (Exception ex)
         {
-            _steamStatus.Text = $"Couldn't check sign-in: {ex.Message}";
+            ShowSteamState(SteamUi.NotSignedIn, $"Couldn't check sign-in: {ex.Message}");
+        }
+    }
+
+    private enum SteamUi { Checking, SignedIn, NotSignedIn }
+
+    /// <summary>Drive the Steam account section. Checking: just a status line. Signed in: a green line plus a
+    /// "different account" link, connect UI hidden. Not signed in: the connect panel, with an optional message.</summary>
+    private void ShowSteamState(SteamUi state, string? message = null)
+    {
+        switch (state)
+        {
+            case SteamUi.Checking:
+                _steamStatus.Visibility = Visibility.Visible;
+                _steamStatus.Foreground = Muted;
+                _steamStatus.Text = "Checking sign-in...";
+                _differentAccountLink.Visibility = Visibility.Collapsed;
+                _connectPanel.Visibility = Visibility.Collapsed;
+                break;
+            case SteamUi.SignedIn:
+                _steamStatus.Visibility = Visibility.Visible;
+                _steamStatus.Foreground = GreenFg;
+                _steamStatus.Text = "Signed into SteamCMD";
+                _differentAccountLink.Visibility = Visibility.Visible;
+                _connectPanel.Visibility = Visibility.Collapsed;
+                break;
+            default: // NotSignedIn
+                _steamStatus.Visibility = message is null ? Visibility.Collapsed : Visibility.Visible;
+                _steamStatus.Foreground = Muted;
+                _steamStatus.Text = message ?? "";
+                _differentAccountLink.Visibility = Visibility.Collapsed;
+                _connectPanel.Visibility = Visibility.Visible;
+                break;
         }
     }
 
@@ -469,7 +515,7 @@ public sealed class ModsDialog : Window
             _loosePakPanel.Children.Add(new TextBlock
             {
                 Text = "No loose .pak mods found. Drop .pak files (with any .utoc / .ucas) into the loose-paks folder, then Rescan.",
-                Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 0),
+                Foreground = Muted, TextWrapping = TextWrapping.Wrap,
             });
             return;
         }
@@ -526,10 +572,6 @@ public sealed class ModsDialog : Window
             && _rows.Any(r => r.Enabled.IsChecked == true && r.Entry.WorkshopId.Length > 0);
         _noAccountWarning.Visibility = needsAccount ? Visibility.Visible : Visibility.Collapsed;
     }
-
-    private void UpdateSteamStatus() => _steamStatus.Text = string.IsNullOrWhiteSpace(_username.Text)
-        ? "Not connected. Add Workshop mods below, then connect an account to download them."
-        : $"Steam account: {_username.Text.Trim()} (sign-in not checked yet).";
 
     // --- small dark-theme builders (mirrors DiscordDialog) ---
     private static TextBlock Header(string text) => new()
@@ -608,6 +650,16 @@ public sealed class ModsDialog : Window
         {
             // No default browser / launch blocked, nothing useful to do here.
         }
+    }
+
+    /// <summary>A clickable text link that runs an action (not a URL), for in-dialog affordances.</summary>
+    private static TextBlock LinkButton(string text, Action onClick)
+    {
+        var block = new TextBlock { Margin = new Thickness(0, 4, 0, 0) };
+        var link = new Hyperlink(new Run(text)) { Foreground = LinkFg };
+        link.Click += (_, _) => onClick();
+        block.Inlines.Add(link);
+        return block;
     }
 
     private static Button MakeButton(string label, Action onClick)
