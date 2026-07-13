@@ -1,0 +1,96 @@
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using PalServerLauncher.Config;
+using PalServerLauncher.Localization;
+
+namespace PalServerLauncher.Views;
+
+/// <summary>
+/// Launcher-level preferences (currently just the UI language). A dark modal built in code, mirroring the
+/// other one-off dialogs. On Save it persists the chosen language and, when it changed, tells the user a
+/// restart is needed to apply it (restart-to-apply, not a live switch). Returns true if a change was saved.
+/// </summary>
+public sealed class LauncherSettingsDialog : Window
+{
+    private static readonly Brush Fg = Brushes.White;
+    private static readonly Brush FieldBg = new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33));
+
+    private readonly LauncherConfig _config;
+    private readonly ComboBox _languages;
+    private bool _changed;
+
+    private LauncherSettingsDialog(LauncherConfig config)
+    {
+        _config = config;
+
+        Title = Strings.LauncherSettings_Title;
+        Background = new SolidColorBrush(Color.FromRgb(0x2F, 0x2F, 0x2F));
+        WindowStartupLocation = WindowStartupLocation.CenterOwner;
+        SizeToContent = SizeToContent.WidthAndHeight;
+        ResizeMode = ResizeMode.NoResize;
+        WindowStyle = WindowStyle.SingleBorderWindow;
+        ShowInTaskbar = false;
+        MinWidth = 360;
+
+        var root = new StackPanel { Margin = new Thickness(20) };
+
+        var languageRow = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 0, 0, 18) };
+        languageRow.Children.Add(new TextBlock
+        {
+            Text = Strings.LauncherSettings_LanguageLabel, Foreground = Fg,
+            VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 10, 0),
+        });
+        _languages = new ComboBox
+        {
+            Background = FieldBg, Foreground = Brushes.Black, MinWidth = 180,
+            DisplayMemberPath = nameof(LauncherLanguage.DisplayName), VerticalAlignment = VerticalAlignment.Center,
+        };
+        foreach (var lang in LauncherLanguages.All)
+            _languages.Items.Add(lang);
+        _languages.SelectedItem = LauncherLanguages.ForCode(config.Language);
+        languageRow.Children.Add(_languages);
+        root.Children.Add(languageRow);
+
+        var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
+        buttons.Children.Add(MakeButton(Strings.Common_Save, OnSave));
+        buttons.Children.Add(MakeButton(Strings.Common_Cancel, Close));
+        root.Children.Add(buttons);
+
+        Content = root;
+    }
+
+    /// <summary>Show the dialog modally; returns true if the user saved a change.</summary>
+    public static bool Show(Window? owner, LauncherConfig config)
+    {
+        var dialog = new LauncherSettingsDialog(config) { Owner = owner };
+        dialog.ShowDialog();
+        return dialog._changed;
+    }
+
+    private void OnSave()
+    {
+        if (_languages.SelectedItem is LauncherLanguage lang &&
+            !string.Equals(lang.Code, _config.Language, StringComparison.OrdinalIgnoreCase))
+        {
+            _config.Language = lang.Code;
+            _config.Save();
+            _changed = true;
+            ChoiceDialog.Show(this, Strings.LauncherSettings_Title,
+                string.Format(Strings.RestartNotice_Format, lang.DisplayName), Strings.Common_OK);
+        }
+        Close();
+    }
+
+    private static Button MakeButton(string label, System.Action onClick)
+    {
+        var button = new Button
+        {
+            Content = label, Margin = new Thickness(8, 0, 0, 0), Padding = new Thickness(14, 7, 14, 7),
+            Foreground = Fg, Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)),
+            BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand, MinWidth = 80,
+        };
+        button.Click += (_, _) => onClick();
+        return button;
+    }
+}

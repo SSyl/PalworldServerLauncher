@@ -1,9 +1,11 @@
 using System.Globalization;
+using System.IO;
 using System.Windows;
 using System.Windows.Threading;
 using PalServerLauncher.Config;
 using PalServerLauncher.Localization;
 using PalServerLauncher.Logging;
+using PalServerLauncher.Views;
 
 namespace PalServerLauncher;
 
@@ -32,11 +34,6 @@ public partial class App : Application
         if (migrated.Count > 0)
             _logger.Info($"Moved existing data into {LauncherConfig.DataRoot}: {string.Join(", ", migrated)}");
 
-        // Load the config once here (not in MainViewModel) so the UI language is set before MainWindow's
-        // XAML is evaluated, and thread the same instance through the window and view model.
-        var config = LauncherConfig.Load();
-        ApplyUiCulture(config.Language);
-
         // Without these, any unhandled exception (e.g. inside an async command) silently closes the window.
         DispatcherUnhandledException += OnDispatcherUnhandledException;
         AppDomain.CurrentDomain.UnhandledException += (_, args) =>
@@ -53,6 +50,19 @@ public partial class App : Application
         // handler on Loaded covers every window, current and future, including the code-built dialogs.
         EventManager.RegisterClassHandler(typeof(Window), FrameworkElement.LoadedEvent,
             new RoutedEventHandler((s, _) => { if (s is Window w) DarkTitleBar.Apply(w); }));
+
+        // Load the config once here (not in MainViewModel) so the UI language is set before MainWindow's
+        // XAML is evaluated, and thread the same instance through the window and view model. On a fresh
+        // install (no launcher.json yet) let the user pick a language first, defaulting to English. The
+        // dark-title-bar handler is registered above, so the picker gets a dark title bar too.
+        var freshInstall = !File.Exists(LauncherConfig.DefaultPath);
+        var config = LauncherConfig.Load();
+        if (freshInstall)
+        {
+            config.Language = LanguagePickerDialog.Show(config.Language);
+            config.Save();
+        }
+        ApplyUiCulture(config.Language);
 
         new MainWindow(_logger, config).Show();
     }

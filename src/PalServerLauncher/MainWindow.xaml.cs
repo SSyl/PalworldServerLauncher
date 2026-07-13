@@ -247,6 +247,9 @@ public partial class MainWindow : Window
             _viewModel.SetBackupTimes(result);
     }
 
+    private void OnOpenLauncherSettings(object sender, RoutedEventArgs e) =>
+        LauncherSettingsDialog.Show(this, _viewModel.Config);
+
     private void OnOpenServerSettings(object sender, RoutedEventArgs e) =>
         SettingsDialog.ShowServerSettings(this, _viewModel.Config, _viewModel.GameSettings, _viewModel.IsServerRunning);
 

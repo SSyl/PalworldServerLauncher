@@ -155,6 +155,8 @@
             <Button DockPanel.Dock="Left" Content="Validate Files" Command="{Binding ValidateFilesCommand}"
                     ToolTip="Full SteamCMD integrity check of the installed files"/>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Button Content="{x:Static loc:Strings.LauncherSettings_Title}" Click="OnOpenLauncherSettings"
+                        ToolTip="{x:Static loc:Strings.LauncherSettings_Tooltip}"/>
                 <Button Content="Server Settings" Click="OnOpenServerSettings"
                         ToolTip="Edit the server in one tabbed editor, World Settings (gameplay and balance), Admin (name, passwords, REST / RCON), Undocumented (keys the official docs don't cover), and Launch Arguments (the command line: listen port, player cap, performance threads, community listing)."/>
                 <Button Content="Mods" Click="OnOpenMods"

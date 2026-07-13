@@ -126,6 +126,16 @@
   <data name="RestartNotice_Format" xml:space="preserve">
     <value>Restart the launcher to apply {0}.</value>
   </data>
+  <!-- Launcher Settings dialog + its main-window button -->
+  <data name="LauncherSettings_Title" xml:space="preserve">
+    <value>Launcher Settings</value>
+  </data>
+  <data name="LauncherSettings_LanguageLabel" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LauncherSettings_Tooltip" xml:space="preserve">
+    <value>Change the launcher's language and other launcher preferences.</value>
+  </data>
   <!-- Shared across dialogs (dedupe: one key reused everywhere the word appears) -->
   <data name="Common_AppName" xml:space="preserve">
     <value>Palworld Server Launcher</value>
