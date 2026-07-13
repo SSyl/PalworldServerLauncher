@@ -51,6 +51,11 @@ public partial class App : Application
         EventManager.RegisterClassHandler(typeof(Window), FrameworkElement.LoadedEvent,
             new RoutedEventHandler((s, _) => { if (s is Window w) DarkTitleBar.Apply(w); }));
 
+        // The first-run language picker is shown before MainWindow exists, so it is briefly the only open
+        // window. Under the default OnLastWindowClose, closing it would exit the app before MainWindow opens.
+        // Hold shutdown until MainWindow is up, then restore the normal close-to-exit behavior.
+        ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
         // Load the config once here (not in MainViewModel) so the UI language is set before MainWindow's
         // XAML is evaluated, and thread the same instance through the window and view model. On a fresh
         // install (no launcher.json yet) let the user pick a language first, defaulting to English. The
@@ -65,6 +70,7 @@ public partial class App : Application
         ApplyUiCulture(config.Language);
 
         new MainWindow(_logger, config).Show();
+        ShutdownMode = ShutdownMode.OnLastWindowClose;
     }
 
     // Set only the UI culture (drives resx lookup). CurrentCulture is left on the OS regional setting so
