@@ -2,6 +2,13 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [0.3.1] - 2026-07-14
+
+### Added
+- **Set a fixed Steam query port.** It is still auto-picked (the first free port from 27015) by default, but you
+  can now set a specific one under Launch Arguments, handy if you forward it or run behind a strict firewall.
+  The Port Check tests whatever you set.
+
 ## [0.3.0] - 2026-07-14
 
 ### Added

@@ -170,7 +170,8 @@ backups). Just give each server its own ports:
 - **REST API port** (default 8212) and **RCON port** (default 25575, if you turn it on), set in that
   server's `PalWorldSettings.ini`.
 
-The Steam query port sorts itself out automatically by picking the first free one.
+The Steam query port picks the first free one automatically (starting at 27015), or you can set a fixed
+**Query port** under Launch Arguments if you forward it.
 
 ## Command-line options
 
