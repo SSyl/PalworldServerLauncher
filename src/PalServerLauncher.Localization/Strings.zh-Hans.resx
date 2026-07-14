@@ -1187,6 +1187,15 @@
   <data name="Settings_ValidateListenPort" xml:space="preserve">
     <value>监听端口</value>
   </data>
+  <data name="Settings_RowQueryPort" xml:space="preserve">
+    <value>查询端口 (-QueryPort)</value>
+  </data>
+  <data name="Settings_TipQueryPort" xml:space="preserve">
+    <value>Steam 查询端口。留空或 0 会从 27015 起自动选择第一个空闲端口（这样同一台电脑上的多个服务器不会冲突）。如果要转发端口，可设置固定值。</value>
+  </data>
+  <data name="Settings_ValidateQueryPort" xml:space="preserve">
+    <value>查询端口</value>
+  </data>
   <data name="Settings_ValidateMaxPlayers" xml:space="preserve">
     <value>最大玩家数</value>
   </data>

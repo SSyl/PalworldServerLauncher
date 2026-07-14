@@ -82,6 +82,15 @@ public class PortCheckVerdictTests
         Assert.Equal(25575, plan.Single(p => p.Kind == PortKind.Rcon).Port);  // RconPortOrDefault
     }
 
+    [Fact]
+    public void Build_uses_the_configured_query_port_when_set()
+    {
+        // With an explicit query port the check tests THAT port, not the 27015 auto default.
+        var plan = PortCheckPlan.Build(new LauncherConfig { QueryPort = 27020 }, IniReader.Parse("nothing here"));
+
+        Assert.Equal(27020, plan.Single(p => p.Kind == PortKind.Query).Port);
+    }
+
     private static PortVerdict Evaluate(PortKind kind, PortReachability reachability) =>
         PortCheckVerdict.Evaluate(kind, reachability, serviceUp: true);
 }

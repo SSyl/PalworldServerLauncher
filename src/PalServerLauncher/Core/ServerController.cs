@@ -837,7 +837,9 @@ public sealed class ServerController : IDisposable
         }
 
         var exe = ProcessScanner.ExpectedExePath(_config.ServerRoot);
-        var queryPort = FindFreeUdpPort(27015);
+        // An explicit query port is used as-is (the user forwards it). 0 keeps the auto-pick of the first free
+        // UDP port from 27015, so several servers on one box don't collide.
+        var queryPort = _config.QueryPort > 0 ? _config.QueryPort : FindFreeUdpPort(27015);
         var args = BuildLaunchArgs(_config, queryPort);
 
         // Launched hidden (the launcher owns the server, no stray console window). We capture the

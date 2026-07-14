@@ -29,6 +29,9 @@ public sealed class LauncherConfig
     /// <summary><c>-port</c>: the port the server listens on.</summary>
     public int ServerPort { get; set; } = 8211;
 
+    /// <summary><c>-QueryPort</c>: the Steam query port. 0 = auto-pick the first free UDP port at launch (from 27015).</summary>
+    public int QueryPort { get; set; } = 0;
+
     /// <summary><c>-players</c>: max players. 0 = don't pass it, defer to the ini's ServerPlayerMaxNum (the arg overrides the ini).</summary>
     public int MaxPlayers { get; set; } = 0;
 

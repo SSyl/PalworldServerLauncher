@@ -1257,6 +1257,15 @@ Apply and save these changes?</value>
   <data name="Settings_ValidateListenPort" xml:space="preserve">
     <value>Listen port</value>
   </data>
+  <data name="Settings_RowQueryPort" xml:space="preserve">
+    <value>Query port (-QueryPort)</value>
+  </data>
+  <data name="Settings_TipQueryPort" xml:space="preserve">
+    <value>The Steam query port. Blank or 0 auto-picks the first free port from 27015 (so several servers on one PC don't collide). Set a fixed one if you forward it.</value>
+  </data>
+  <data name="Settings_ValidateQueryPort" xml:space="preserve">
+    <value>Query port</value>
+  </data>
   <data name="Settings_ValidateMaxPlayers" xml:space="preserve">
     <value>Max players</value>
   </data>

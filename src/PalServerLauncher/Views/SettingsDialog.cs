@@ -48,7 +48,7 @@ public sealed class SettingsDialog : Window
     private bool _saved;
 
     // Launch-arg inputs (only built in the LaunchArgs section).
-    private TextBox? _port, _maxPlayers, _workerThreads, _publicIp, _publicPort, _extraArgs;
+    private TextBox? _port, _queryPort, _maxPlayers, _workerThreads, _publicIp, _publicPort, _extraArgs;
     private CheckBox? _perfThreads, _community;
     private ComboBox? _logFormat;
     private ComboBox? _priority;
@@ -584,6 +584,8 @@ public sealed class SettingsDialog : Window
         _community = CheckField(_config.CommunityServer, true);
         _publicIp = ValidatedTextField(Strings.Settings_ValidatePublicIp, _config.PublicIp, true, SettingType.IpAddress);
         _publicPort = ValidatedTextField(Strings.Settings_ValidatePublicPort, _config.PublicPortArg.ToString(), true, SettingType.Int, min: 0, max: 65535);
+        // Blank when auto (0), so the field reads as "auto" rather than showing a 0 the user never set.
+        _queryPort = ValidatedTextField(Strings.Settings_ValidateQueryPort, _config.QueryPort > 0 ? _config.QueryPort.ToString(CultureInfo.InvariantCulture) : "", true, SettingType.Int, min: 0, max: 65535);
         _logFormat = ComboField(new[] { "", "Text", "Json" }, _config.LogFormat, true);
 
         // Rebuild the preview whenever any launch field changes.
@@ -596,12 +598,16 @@ public sealed class SettingsDialog : Window
         _community.Unchecked += OnLaunchFieldChanged;
         _publicIp.TextChanged += OnLaunchFieldChanged;
         _publicPort.TextChanged += OnLaunchFieldChanged;
+        _queryPort.TextChanged += OnLaunchFieldChanged;
         _logFormat.SelectionChanged += OnLaunchFieldChanged;
 
         var d = new LauncherConfig(); // built-in defaults for the reset (↺) actions
         stack.Children.Add(Row(Strings.Settings_RowListenPort, _port,
             Strings.Settings_TipListenPort,
             TextReset(_port, d.ServerPort.ToString(CultureInfo.InvariantCulture))));
+        stack.Children.Add(Row(Strings.Settings_RowQueryPort, _queryPort,
+            Strings.Settings_TipQueryPort,
+            TextReset(_queryPort, ""))); // reset = blank = auto
         stack.Children.Add(Row(Strings.Settings_RowMaxPlayers, _maxPlayers,
             Strings.Settings_TipMaxPlayers,
             TextReset(_maxPlayers, d.MaxPlayers.ToString(CultureInfo.InvariantCulture))));
@@ -742,7 +748,8 @@ public sealed class SettingsDialog : Window
             LogFormat = (_logFormat!.SelectedItem as string) ?? "",
             ExtraServerArgs = _extraArgs?.Text ?? "",
         };
-        var args = ServerController.BuildLaunchArgs(temp, queryPort: 0);
+        var queryPort = ParseInt(_queryPort!.Text, 0); // blank / 0 = auto, rendered as <auto> below
+        var args = ServerController.BuildLaunchArgs(temp, queryPort);
         _commandPreview.Text = "PalServer-Win64-Shipping-Cmd.exe " + string.Join(" ", args).Replace("-QueryPort=0", "-QueryPort=<auto>");
     }
 
@@ -901,6 +908,7 @@ public sealed class SettingsDialog : Window
     private void ApplyLaunchArgs()
     {
         _config.ServerPort = ParseInt(_port!.Text, _config.ServerPort);
+        _config.QueryPort = ParseInt(_queryPort!.Text, 0); // blank / 0 = auto
         _config.MaxPlayers = ParseInt(_maxPlayers!.Text, _config.MaxPlayers);
         _config.PerformanceThreads = _perfThreads!.IsChecked == true;
         _config.WorkerThreads = ParseInt(_workerThreads!.Text, _config.WorkerThreads);

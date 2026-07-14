@@ -13,9 +13,9 @@ public sealed record PortCheckItem(PortKind Kind, string Label, PortProtocol Pro
 
 /// <summary>
 /// Derives the default set of ports to test from the launcher config and the parsed game ini. Pure and
-/// unit-tested. The query port has no persisted value (the launcher auto-picks a free one at launch via
-/// <see cref="ServerController.FindFreeUdpPort"/>), so it defaults to Palworld's 27015 and the dialog notes
-/// the check tests "the port you'll forward", not a live server port.
+/// unit-tested. The query port is seeded from the configured value when the user set one, else Palworld's
+/// 27015 (the likely auto-pick, since the launcher grabs the first free UDP port from 27015 at launch when it
+/// is left on auto). The row stays user-editable, and the dialog notes the check tests "the port you'll forward".
 /// </summary>
 public static class PortCheckPlan
 {
@@ -24,7 +24,7 @@ public static class PortCheckPlan
     public static IReadOnlyList<PortCheckItem> Build(LauncherConfig config, PalworldServerSettings settings) => new[]
     {
         new PortCheckItem(PortKind.Game, "Game port", PortProtocol.Udp, config.ServerPort),
-        new PortCheckItem(PortKind.Query, "Steam/Query port", PortProtocol.Udp, DefaultQueryPort),
+        new PortCheckItem(PortKind.Query, "Steam/Query port", PortProtocol.Udp, config.QueryPort > 0 ? config.QueryPort : DefaultQueryPort),
         new PortCheckItem(PortKind.Rest, "REST API port", PortProtocol.Tcp, settings.RestApiPortOrDefault),
         new PortCheckItem(PortKind.Rcon, "RCON port", PortProtocol.Tcp, settings.RconPortOrDefault),
     };

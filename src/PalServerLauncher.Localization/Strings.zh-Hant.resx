@@ -1187,6 +1187,15 @@
   <data name="Settings_ValidateListenPort" xml:space="preserve">
     <value>監聽埠</value>
   </data>
+  <data name="Settings_RowQueryPort" xml:space="preserve">
+    <value>查詢埠 (-QueryPort)</value>
+  </data>
+  <data name="Settings_TipQueryPort" xml:space="preserve">
+    <value>Steam 查詢埠。留空或 0 會從 27015 起自動選擇第一個空閒埠（這樣同一台電腦上的多個伺服器不會衝突）。如果要轉發連接埠，可設定固定值。</value>
+  </data>
+  <data name="Settings_ValidateQueryPort" xml:space="preserve">
+    <value>查詢埠</value>
+  </data>
   <data name="Settings_ValidateMaxPlayers" xml:space="preserve">
     <value>最大玩家數</value>
   </data>
