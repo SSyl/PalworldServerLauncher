@@ -161,9 +161,9 @@ PalworldServerLauncher.exe --console --debug
 
 ## Upcoming features
 
-- Mod support (Steam Workshop and maybe Nexusmods)
-- A headless mode you can drive entirely from the command line (start, stop, status, no window).
 - A system-tray icon and a copy-the-connection-info button.
+- Maybe a headless command-line mode, if there's demand for it. For now you can run the launcher hidden with a
+  small PowerShell script if you want it out of the way.
 
 ## Building from source
 
