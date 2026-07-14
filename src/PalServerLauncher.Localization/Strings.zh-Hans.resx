@@ -1405,6 +1405,9 @@
   <data name="Update_UpToDate" xml:space="preserve">
     <value>已是最新（构建 {0}）</value>
   </data>
+  <data name="Update_Available" xml:space="preserve">
+    <value>有新构建 {0} 可用</value>
+  </data>
   <data name="Sched_Off" xml:space="preserve">
     <value>关闭</value>
   </data>

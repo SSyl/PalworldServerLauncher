@@ -1480,6 +1480,9 @@ Save these changes?</value>
   <data name="Update_UpToDate" xml:space="preserve">
     <value>Up to date (build {0})</value>
   </data>
+  <data name="Update_Available" xml:space="preserve">
+    <value>New build {0} available</value>
+  </data>
   <!-- Next restart / backup schedule text -->
   <data name="Sched_Off" xml:space="preserve">
     <value>off</value>

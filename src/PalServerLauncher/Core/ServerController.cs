@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using PalServerLauncher.Config;
+using PalServerLauncher.Localization;
 using PalServerLauncher.Logging;
 using PalServerLauncher.Rest;
 using PalServerLauncher.Rest.Models;
@@ -444,20 +445,20 @@ public sealed class ServerController : IDisposable
     public async Task<(UpdateCheckResult Result, string? LatestBuildId)> CheckForUpdateAsync(CancellationToken ct = default)
     {
         var installed = _steamCmd.ReadInstalledBuildId();
-        UpdateStatusChanged?.Invoke("Checking for updates...");
+        UpdateStatusChanged?.Invoke(Strings.Update_Checking);
         var latest = await QueryLatestBuildIdGatedAsync(ct).ConfigureAwait(false);
 
         if (string.IsNullOrWhiteSpace(latest))
         {
-            UpdateStatusChanged?.Invoke($"Update check failed (build {installed ?? "?"})");
+            UpdateStatusChanged?.Invoke(string.Format(Strings.Update_CheckFailed, installed ?? "?"));
             return (UpdateCheckResult.CheckFailed, null);
         }
         if (UpdateMonitor.IsUpdateAvailable(installed, latest))
         {
-            UpdateStatusChanged?.Invoke($"New build {latest} available");
+            UpdateStatusChanged?.Invoke(string.Format(Strings.Update_Available, latest));
             return (UpdateCheckResult.UpdateAvailable, latest);
         }
-        UpdateStatusChanged?.Invoke($"Up to date (build {installed ?? "?"})");
+        UpdateStatusChanged?.Invoke(string.Format(Strings.Update_UpToDate, installed ?? "?"));
         return (UpdateCheckResult.UpToDate, latest);
     }
 
@@ -671,7 +672,7 @@ public sealed class ServerController : IDisposable
             if (exit == 0)
             {
                 _logger.Info($"Server up to date (build {buildId}).");
-                UpdateStatusChanged?.Invoke($"Up to date (build {buildId})");
+                UpdateStatusChanged?.Invoke(string.Format(Strings.Update_UpToDate, buildId));
             }
             else
             {
@@ -1047,6 +1048,12 @@ public sealed class ServerController : IDisposable
         }
 
         KillNow(process);
+        // Kill() is asynchronous: HasExited is not reliably true the instant it returns. Recovery and manual
+        // restart relaunch right after this, and the launch guard treats a process still reporting
+        // HasExited == false as "already running" and skips the relaunch, leaving the server down. Wait for the
+        // exit to actually land so that guard sees the truth. CancellationToken.None: we killed it, so we must
+        // observe it die even if the surrounding restart was cancelled.
+        await WaitForExitAsync(process, TimeSpan.FromSeconds(10), CancellationToken.None).ConfigureAwait(false);
     }
 
     /// <summary>
