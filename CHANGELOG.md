@@ -15,6 +15,10 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
   toggling them on and off by renaming rather than deleting, and there's a shortcut to the UE4SS mods folder
   for script mods. Downloading Workshop mods needs a one-time Steam sign-in, which Steam's own tool handles in
   its own window, the launcher never sees or stores your password.
+- **Search your server settings.** The Server Settings window now has a search box that filters settings as you
+  type. It matches a setting's name, its label, and its description (even its raw in-file name), in whatever
+  language you are using, so searching "death" turns up the Hardcore character-recreation option through its
+  description. Launch Arguments are left out of the search.
 - **Chat and Players log tabs.** In-game chat and player joins and leaves each have their own tab now, separate
   from the general log.
 - **Dark window title bars.** Every window's title bar now matches the app's dark theme instead of staying
