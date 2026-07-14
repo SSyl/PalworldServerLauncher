@@ -6,6 +6,8 @@ A Windows app for running a **Palworld dedicated server**: installs it, keeps it
 restarts and backups, and watches its health, all through Palworld's REST API. Native C# / WPF, single `.exe`.
 Inspired by [Conan Exiles' Dedicated Server Launcher](https://forums.funcom.com/t/introducing-the-conan-exiles-dedicated-server-app/21699).
 
+Other languages are available: Simplified Chinese, Traditional Chinese, and Japanese. See [Languages](#languages).
+
 > [!NOTE]
 > **Status:** pre-release and still a work in progress.
 
@@ -16,6 +18,7 @@ Inspired by [Conan Exiles' Dedicated Server Launcher](https://forums.funcom.com/
 ## Contents
 
 - [Features](#features)
+  - [Languages](#languages)
 - [Screenshots](#screenshots)
 - [Getting started](#getting-started)
 - [File locations](#file-locations)
