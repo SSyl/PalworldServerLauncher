@@ -58,6 +58,8 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
 - **A server you stop now stays stopped.** Fixed some timing cases where an automatic restart or recovery could
   bring it right back after you deliberately shut it down.
 - The **"Working..." button** no longer changes width as its animated dots come and go.
+- **Passwords with a quote or backslash work now.** A server or admin password containing `"` or `\` could be
+  misread, which broke the REST API connection. It is parsed correctly now.
 
 ## [0.2.0] - 2026-07-10
 

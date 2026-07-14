@@ -57,8 +57,9 @@ Inspired by [Conan Exiles' Dedicated Server Launcher](https://forums.funcom.com/
 
 ### Settings
 - A full **Server Settings** editor for `PalWorldSettings.ini`, tabbed (World Settings / Admin /
-  Undocumented), labeled with the game's own wording where it has one. Only writes what you changed, and
-  shows a preview before saving.
+  Undocumented), labeled with the game's own wording where it has one. **Search** filters the settings as you
+  type, matching a setting's name, label, or description. Only writes what you changed, and shows a preview
+  before saving.
 - **Difficulty presets**: Casual, Normal, Hard, or Hardcore in one click, previewed first.
 - A **Launch Arguments** editor with a live preview of the exact command line.
 - **Advanced**: set the server's process priority and pin it to specific CPU cores, re-applied automatically
