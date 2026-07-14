@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using PalServerLauncher.Config;
+using PalServerLauncher.Localization;
 using PalServerLauncher.Logging;
 using PalServerLauncher.Rest;
 using PalServerLauncher.Rest.Models;
@@ -316,7 +317,11 @@ public sealed class HealthMonitor : IDisposable
     private static string FormatUptime(long seconds)
     {
         var t = TimeSpan.FromSeconds(seconds);
-        return t.TotalHours >= 1 ? $"{(int)t.TotalHours}h {t.Minutes}m" : $"{t.Minutes}m {t.Seconds}s";
+        // Reuse the schedulers' localized H/M and M/S format strings (identical shape) so Uptime matches
+        // the "next restart in ..." display instead of showing hardcoded English h/m/s in every language.
+        return t.TotalHours >= 1
+            ? string.Format(Strings.Sched_UntilHM, (int)t.TotalHours, t.Minutes)
+            : string.Format(Strings.Sched_UntilMS, t.Minutes, t.Seconds);
     }
 
     public void Dispose()
