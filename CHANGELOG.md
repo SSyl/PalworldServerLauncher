@@ -2,9 +2,13 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
-## [Unreleased]
+## [0.3.0] - 2026-07-14
 
 ### Added
+- **More languages.** The launcher now speaks Simplified Chinese (简体中文), Traditional Chinese (繁體中文), and
+  Japanese (日本語) in addition to English. Pick your language when you first run it, or later under Launcher
+  Settings, and it restarts itself to apply. All of the non-English translations are machine-generated, so
+  corrections and suggestions on GitHub are very welcome.
 - **Mods.** Manage Steam Workshop server mods from the launcher. Paste a mod's Workshop id or URL and it
   downloads the mod (and keeps it up to date on each start), then enable, disable, or remove mods from a list
   where each links to its Workshop page. A separate section manages loose `.pak` mods you drop in yourself,

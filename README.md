@@ -76,6 +76,12 @@ Inspired by [Conan Exiles' Dedicated Server Launcher](https://forums.funcom.com/
   a locked-down channel and/or role. Restart and stop confirm first. Setup guide:
   [docs/discord-bot-setup.md](docs/discord-bot-setup.md).
 
+### Languages
+- Available in **English**, **Simplified Chinese** (简体中文), **Traditional Chinese** (繁體中文), and **Japanese**
+  (日本語). Pick your language on first run, or any time from Launcher Settings, then it restarts to apply.
+- The non-English translations are machine-generated, so if something reads oddly, corrections via an issue or
+  pull request are welcome.
+
 ---
 
 ## Screenshots
