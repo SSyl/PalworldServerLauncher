@@ -228,8 +228,49 @@ public partial class MainWindow : Window
             _viewModel.SetBackupTimes(result);
     }
 
-    private void OnOpenLauncherSettings(object sender, RoutedEventArgs e) =>
-        LauncherSettingsDialog.Show(this, _viewModel.Config);
+    private void OnOpenLauncherSettings(object sender, RoutedEventArgs e)
+    {
+        if (LauncherSettingsDialog.Show(this, _viewModel.Config))
+            PromptRestartForLanguage();
+    }
+
+    /// <summary>After a language change, offer to restart the launcher now to apply it. A running server keeps
+    /// running and the fresh instance re-adopts it, so this mirrors the "leave running" close path.</summary>
+    private void PromptRestartForLanguage()
+    {
+        var language = LauncherLanguages.ForCode(_viewModel.Config.Language).DisplayName;
+        var message = _viewModel.IsServerRunning
+            ? string.Format(Strings.LauncherSettings_RestartPromptRunning, language)
+            : string.Format(Strings.LauncherSettings_RestartPrompt, language);
+        if (ChoiceDialog.Show(this, Strings.LauncherSettings_Title, message,
+                Strings.LauncherSettings_RestartNow, Strings.Main_NotNow) == 0)
+            RestartApp();
+    }
+
+    /// <summary>Relaunch the launcher: start a fresh instance (preserving the original CLI args), then exit
+    /// this one without disturbing a running server, which the new instance re-adopts. Aborts if the new
+    /// process can't be started, leaving the change to apply on the next manual launch.</summary>
+    private void RestartApp()
+    {
+        var exePath = Environment.ProcessPath;
+        if (exePath is null)
+            return;
+        try
+        {
+            var start = new System.Diagnostics.ProcessStartInfo(exePath) { UseShellExecute = false };
+            var args = Environment.GetCommandLineArgs();
+            for (var i = 1; i < args.Length; i++) // preserve --debug / --console etc, skip the exe path
+                start.ArgumentList.Add(args[i]);
+            System.Diagnostics.Process.Start(start);
+        }
+        catch (Exception ex)
+        {
+            _logger.Error("Couldn't restart the launcher to apply the language", ex);
+            return;
+        }
+        _forceClose = true;
+        Application.Current.Shutdown();
+    }
 
     private void OnOpenServerSettings(object sender, RoutedEventArgs e) =>
         SettingsDialog.ShowServerSettings(this, _viewModel.Config, _viewModel.GameSettings, _viewModel.IsServerRunning);

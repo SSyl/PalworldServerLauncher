@@ -8,8 +8,8 @@ namespace PalServerLauncher.Views;
 
 /// <summary>
 /// Launcher-level preferences (currently just the UI language). A dark modal built in code, mirroring the
-/// other one-off dialogs. On Save it persists the chosen language and, when it changed, tells the user a
-/// restart is needed to apply it (restart-to-apply, not a live switch). Returns true if a change was saved.
+/// other one-off dialogs. On Save it persists the chosen language. Returns true if the language changed, so
+/// the caller can restart the launcher to apply it (restart-to-apply, not a live switch).
 /// </summary>
 public sealed class LauncherSettingsDialog : Window
 {
@@ -75,9 +75,7 @@ public sealed class LauncherSettingsDialog : Window
         {
             _config.Language = lang.Code;
             _config.Save();
-            _changed = true;
-            ChoiceDialog.Show(this, Strings.LauncherSettings_Title,
-                string.Format(Strings.RestartNotice_Format, lang.DisplayName), Strings.Common_OK);
+            _changed = true; // the caller offers to restart the launcher to apply the new language
         }
         Close();
     }

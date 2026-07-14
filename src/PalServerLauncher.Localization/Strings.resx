@@ -123,9 +123,6 @@
   <data name="FirstRun_Prompt" xml:space="preserve">
     <value>Choose your language. You can change this later from Launcher Settings.</value>
   </data>
-  <data name="RestartNotice_Format" xml:space="preserve">
-    <value>Restart the launcher to apply {0}.</value>
-  </data>
   <!-- Launcher Settings dialog + its main-window button -->
   <data name="LauncherSettings_Title" xml:space="preserve">
     <value>Launcher Settings</value>
@@ -2248,5 +2245,14 @@ Save these changes?</value>
   </data>
   <data name="Settings_PresetHardcore" xml:space="preserve">
     <value>Hardcore</value>
+  </data>
+  <data name="LauncherSettings_RestartPrompt" xml:space="preserve">
+    <value>The launcher needs to restart to apply the new language ({0}). Restart now?</value>
+  </data>
+  <data name="LauncherSettings_RestartPromptRunning" xml:space="preserve">
+    <value>The launcher needs to restart to apply the new language ({0}). Your Palworld server keeps running, and the launcher reconnects to it. Restart now?</value>
+  </data>
+  <data name="LauncherSettings_RestartNow" xml:space="preserve">
+    <value>Restart now</value>
   </data>
 </root>

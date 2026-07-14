@@ -28,7 +28,7 @@ public class LocalizationSmokeTests
         var zhHans = CultureInfo.GetCultureInfo("zh-Hans");
         var resourceSet = Strings.ResourceManager.GetResourceSet(zhHans, createIfNotExists: true, tryParents: false);
         Assert.NotNull(resourceSet);
-        Assert.Equal("请重启启动器以应用{0}。", resourceSet!.GetString("RestartNotice_Format"));
+        Assert.Equal("立即重启", resourceSet!.GetString("LauncherSettings_RestartNow"));
     }
 
     [Fact]
