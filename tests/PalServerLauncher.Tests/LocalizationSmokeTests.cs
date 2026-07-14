@@ -84,4 +84,46 @@ public class LocalizationSmokeTests
         Assert.True(missingFromJapanese.Count == 0, $"Keys missing from Strings.ja.resx: {string.Join(", ", missingFromJapanese)}");
         Assert.True(missingFromEnglish.Count == 0, $"Keys missing from Strings.resx: {string.Join(", ", missingFromEnglish)}");
     }
+
+    // A translated string.Format template that uses a different set of {N} placeholders than the English one
+    // throws FormatException at runtime. Several of these format calls run in background loops (uptime display,
+    // schedulers) whose only catch is OperationCanceledException, so a bad translation would silently kill
+    // health monitoring / scheduling. Key parity alone does not catch this, so assert placeholder parity too.
+    [Theory]
+    [InlineData("zh-Hans")]
+    [InlineData("zh-Hant")]
+    [InlineData("ja")]
+    public void Format_placeholders_match_english_in_every_satellite(string cultureName)
+    {
+        var english = Strings.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, createIfNotExists: true, tryParents: false);
+        Assert.NotNull(english);
+        var culture = CultureInfo.GetCultureInfo(cultureName);
+
+        var mismatches = new List<string>();
+        foreach (System.Collections.DictionaryEntry entry in english!)
+        {
+            var key = (string)entry.Key;
+            var enIndices = PlaceholderIndices((string)entry.Value!);
+            if (enIndices.Count == 0)
+                continue; // not a format string, nothing to check
+
+            var translated = Strings.ResourceManager.GetString(key, culture);
+            var translatedIndices = translated is null ? new HashSet<int>() : PlaceholderIndices(translated);
+            if (!enIndices.SetEquals(translatedIndices))
+                mismatches.Add($"{key}: en={{{string.Join(",", enIndices.OrderBy(i => i))}}} {cultureName}={{{string.Join(",", translatedIndices.OrderBy(i => i))}}}");
+        }
+
+        Assert.True(mismatches.Count == 0,
+            $"{cultureName} format placeholders differ from English (would throw FormatException at runtime):\n" + string.Join("\n", mismatches));
+    }
+
+    // The {N} argument indices a composite-format string references, ignoring escaped {{ and }} braces.
+    private static HashSet<int> PlaceholderIndices(string value)
+    {
+        var cleaned = value.Replace("{{", "").Replace("}}", "");
+        var indices = new HashSet<int>();
+        foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(cleaned, @"\{(\d+)"))
+            indices.Add(int.Parse(m.Groups[1].Value));
+        return indices;
+    }
 }
