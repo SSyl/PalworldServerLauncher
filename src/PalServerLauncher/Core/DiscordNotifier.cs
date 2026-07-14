@@ -46,8 +46,10 @@ public sealed class DiscordNotifier : IDisposable
             if (!response.IsSuccessStatusCode)
                 _logger.Debug($"Discord webhook returned HTTP {(int)response.StatusCode}.");
         }
-        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
+        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException or InvalidOperationException or UriFormatException)
         {
+            // Includes a malformed webhook URL (InvalidOperationException / UriFormatException), so a bad URL
+            // logs and is dropped rather than faulting this fire-and-forget task.
             _logger.Debug($"Discord webhook failed: {ex.Message}");
         }
     }

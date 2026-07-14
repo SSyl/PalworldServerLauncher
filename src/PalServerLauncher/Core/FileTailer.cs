@@ -40,9 +40,10 @@ public sealed class FileTailer : IDisposable
             {
                 ReadNewContent();
             }
-            catch (IOException)
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
-                // File locked/mid-write, retry next tick.
+                // File locked, mid-write, or a transient access denial: retry next tick rather than faulting
+                // this fire-and-forget loop (which would silently stop tailing).
             }
 
             try
