@@ -73,6 +73,39 @@ public sealed class SettingsDialog : Window
     // Per-field reset-to-default actions (each ↺ button; also driven by the "Reset to defaults" button).
     private readonly List<System.Action> _resetActions = new();
 
+    // Server Settings search: the tab control, the search box, and the per-tab structure it filters. Only the
+    // three ini tabs (World / Admin / Undocumented) are registered here, so Launch Arguments is never filtered.
+    private TabControl? _tabs;
+    private TextBox? _searchBox;
+    private UIElement? _presetRow; // the World tab's difficulty-preset buttons, hidden while a search is active
+    private readonly List<SearchTab> _searchTabs = new();
+
+    // One filterable setting row: the row element plus the text the search matches against. Key is the literal
+    // (English) ini variable name, Label/Description are the localized text the user sees, matching the spec.
+    private sealed record SearchRow(FrameworkElement Element, string Key, string Label, string Description);
+
+    private sealed class SearchGroup
+    {
+        public TextBlock? Header { get; init; }
+        public List<SearchRow> Rows { get; } = new();
+    }
+
+    private sealed class SearchTab
+    {
+        public SearchTab(TabItem tab, string baseHeader, TextBlock emptyPlaceholder, List<SearchGroup> groups)
+        {
+            Tab = tab;
+            BaseHeader = baseHeader;
+            EmptyPlaceholder = emptyPlaceholder;
+            Groups = groups;
+        }
+        public TabItem Tab { get; }
+        public string BaseHeader { get; }
+        public TextBlock EmptyPlaceholder { get; }
+        public IReadOnlyList<SearchGroup> Groups { get; }
+        public int LastMatchCount { get; set; }
+    }
+
     private SettingsDialog(SettingsSection section, LauncherConfig config, GameSettingsService gameSettings, bool serverRunning)
     {
         _section = section;
@@ -124,12 +157,13 @@ public sealed class SettingsDialog : Window
         var current = gameAvailable ? _gameSettings.Load() : new Dictionary<string, string?>();
         var defaults = gameAvailable ? _gameSettings.LoadDefaults() : new Dictionary<string, string?>();
 
+        _presetRow = BuildPresetRow(gameEnabled);
         var world = BuildIniTab(
             DocBlurb(Strings.Settings_WorldBlurb,
                 "https://docs.palworldgame.com/settings-and-operation/configuration#features", Strings.Settings_WorldBlurbLink),
             new[] { SettingCategory.Performance, SettingCategory.Gameplay, SettingCategory.GameBalance },
             s => s.Doc != DocStatus.Unknown, gameEnabled, current, defaults,
-            topExtra: BuildPresetRow(gameEnabled));
+            topExtra: _presetRow);
         var admin = BuildIniTab(
             DocBlurb(Strings.Settings_AdminBlurb,
                 "https://docs.palworldgame.com/settings-and-operation/configuration#server-management", Strings.Settings_AdminBlurbLink),
@@ -143,17 +177,25 @@ public sealed class SettingsDialog : Window
         BuildLaunchArgs(launchStack);
         var launch = new ScrollViewer { Content = launchStack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
 
-        var tabs = new TabControl
+        _tabs = new TabControl
         {
             Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E)),
             BorderThickness = new Thickness(0),
         };
         if (Application.Current?.TryFindResource("DarkTabItem") is Style tabStyle)
-            tabs.ItemContainerStyle = tabStyle;
-        tabs.Items.Add(new TabItem { Header = Strings.Settings_TabWorld, Content = world });
-        tabs.Items.Add(new TabItem { Header = Strings.Settings_TabAdmin, Content = admin });
-        tabs.Items.Add(new TabItem { Header = Strings.Settings_TabUndocumented, Content = undoc });
-        tabs.Items.Add(new TabItem { Header = Strings.Settings_TabLaunchArgs, Content = launch });
+            _tabs.ItemContainerStyle = tabStyle;
+        var worldTab = new TabItem { Header = Strings.Settings_TabWorld, Content = world.Content };
+        var adminTab = new TabItem { Header = Strings.Settings_TabAdmin, Content = admin.Content };
+        var undocTab = new TabItem { Header = Strings.Settings_TabUndocumented, Content = undoc.Content };
+        _tabs.Items.Add(worldTab);
+        _tabs.Items.Add(adminTab);
+        _tabs.Items.Add(undocTab);
+        _tabs.Items.Add(new TabItem { Header = Strings.Settings_TabLaunchArgs, Content = launch });
+
+        // Only the ini tabs are searchable. Launch Arguments is deliberately left out.
+        _searchTabs.Add(new SearchTab(worldTab, Strings.Settings_TabWorld, world.Placeholder, world.Groups));
+        _searchTabs.Add(new SearchTab(adminTab, Strings.Settings_TabAdmin, admin.Placeholder, admin.Groups));
+        _searchTabs.Add(new SearchTab(undocTab, Strings.Settings_TabUndocumented, undoc.Placeholder, undoc.Groups));
 
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(18, 10, 18, 14) };
         if (_resetActions.Count > 0)
@@ -173,15 +215,124 @@ public sealed class SettingsDialog : Window
             DockPanel.SetDock(banner, Dock.Top);
             root.Children.Add(banner);
         }
+        var searchRow = BuildSearchRow();
+        DockPanel.SetDock(searchRow, Dock.Top);
+        root.Children.Add(searchRow);
         DockPanel.SetDock(buttons, Dock.Bottom);
         root.Children.Add(buttons);
-        root.Children.Add(tabs);
+        root.Children.Add(_tabs); // last child fills the remaining space
         Content = root;
+    }
+
+    /// <summary>The search box docked above the tabs: filters the ini tabs by key, label, and description as
+    /// you type (see <see cref="ApplySearch"/>). A placeholder shows when empty, a ✕ clears it.</summary>
+    private FrameworkElement BuildSearchRow()
+    {
+        _searchBox = new TextBox
+        {
+            Background = FieldBg, Foreground = Fg, BorderThickness = new Thickness(0), CaretBrush = Brushes.White,
+            VerticalContentAlignment = VerticalAlignment.Center,
+        };
+
+        var placeholder = new TextBlock
+        {
+            Text = Strings.Settings_SearchPlaceholder, Foreground = Muted, IsHitTestVisible = false,
+            VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(2, 0, 0, 0),
+        };
+
+        // A prominent red button with a white ✕ (the app-wide Button style rounds it and adds hover feedback).
+        var clear = new Button
+        {
+            Content = "✕", Width = 22, Height = 22, Padding = new Thickness(0), FontSize = 11,
+            Foreground = Brushes.White, Background = new SolidColorBrush(Color.FromRgb(0xC8, 0x3A, 0x3A)),
+            Margin = new Thickness(6, 0, 2, 0), Visibility = Visibility.Collapsed,
+            VerticalAlignment = VerticalAlignment.Center, ToolTip = Strings.Settings_SearchClearTooltip,
+        };
+        clear.Click += (_, _) => { _searchBox.Clear(); _searchBox.Focus(); };
+
+        _searchBox.TextChanged += (_, _) =>
+        {
+            var hasText = _searchBox.Text.Length > 0;
+            placeholder.Visibility = hasText ? Visibility.Collapsed : Visibility.Visible;
+            clear.Visibility = hasText ? Visibility.Visible : Visibility.Collapsed;
+            ApplySearch(_searchBox.Text);
+        };
+
+        var inner = new Grid();
+        inner.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+        inner.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+        Grid.SetColumn(_searchBox, 0);
+        Grid.SetColumn(placeholder, 0);
+        Grid.SetColumn(clear, 1);
+        inner.Children.Add(_searchBox);
+        inner.Children.Add(placeholder);
+        inner.Children.Add(clear);
+
+        Loaded += (_, _) => _searchBox.Focus();
+        return new Border
+        {
+            Background = FieldBg, BorderBrush = NormalBorder, BorderThickness = new Thickness(1),
+            Padding = new Thickness(6, 5, 4, 5), Margin = new Thickness(18, 12, 18, 4), Child = inner,
+        };
+    }
+
+    /// <summary>
+    /// Filter the ini tabs against the query: hide non-matching rows, hide a category header whose rows are all
+    /// hidden, show each tab's match count in its header and a "no matches" placeholder when a tab has none.
+    /// An empty query restores everything. Launch Arguments is untouched (it is not a <see cref="SearchTab"/>).
+    /// </summary>
+    private void ApplySearch(string query)
+    {
+        var trimmed = (query ?? "").Trim();
+        var searching = trimmed.Length > 0;
+
+        foreach (var tab in _searchTabs)
+        {
+            var matched = 0;
+            foreach (var group in tab.Groups)
+            {
+                var groupMatches = 0;
+                foreach (var row in group.Rows)
+                {
+                    var isMatch = !searching || SettingsSearch.Matches(trimmed, row.Key, row.Label, row.Description);
+                    row.Element.Visibility = isMatch ? Visibility.Visible : Visibility.Collapsed;
+                    if (isMatch)
+                        groupMatches++;
+                }
+                if (group.Header is not null)
+                    group.Header.Visibility = !searching || groupMatches > 0 ? Visibility.Visible : Visibility.Collapsed;
+                matched += groupMatches;
+            }
+            tab.LastMatchCount = matched;
+            tab.EmptyPlaceholder.Visibility = searching && matched == 0 ? Visibility.Visible : Visibility.Collapsed;
+            tab.Tab.Header = searching ? $"{tab.BaseHeader} ({matched})" : tab.BaseHeader;
+        }
+
+        // The difficulty-preset buttons are context, not search results, so hide them while a search is active.
+        if (_presetRow is not null)
+            _presetRow.Visibility = searching ? Visibility.Collapsed : Visibility.Visible;
+
+        if (searching)
+            AutoSwitchToMatches();
+    }
+
+    /// <summary>If the user is on an ini tab that now shows nothing while another ini tab has matches, switch to
+    /// the first one that does. Leaves them alone otherwise (their tab has hits, or they are on Launch Arguments,
+    /// which is not a searchable tab).</summary>
+    private void AutoSwitchToMatches()
+    {
+        var selected = _searchTabs.FirstOrDefault(t => t.Tab == _tabs!.SelectedItem as TabItem);
+        if (selected is null || selected.LastMatchCount > 0)
+            return;
+        var firstWithMatches = _searchTabs.FirstOrDefault(t => t.LastMatchCount > 0);
+        if (firstWithMatches is not null)
+            _tabs!.SelectedItem = firstWithMatches.Tab;
     }
 
     /// <summary>One catalog tab: the doc blurb, then rows for the matching keys grouped by category (headers
     /// are dropped for a category with no matching rows).</summary>
-    private ScrollViewer BuildIniTab(UIElement blurb, IEnumerable<SettingCategory> categories, Func<GameSetting, bool> filter,
+    private (ScrollViewer Content, List<SearchGroup> Groups, TextBlock Placeholder) BuildIniTab(
+        UIElement blurb, IEnumerable<SettingCategory> categories, Func<GameSetting, bool> filter,
         bool gameEnabled, IReadOnlyDictionary<string, string?> current, IReadOnlyDictionary<string, string?> defaults,
         UIElement? topExtra = null)
     {
@@ -189,22 +340,37 @@ public sealed class SettingsDialog : Window
         stack.Children.Add(blurb);
         if (topExtra is not null)
             stack.Children.Add(topExtra);
+        var groups = new List<SearchGroup>();
         foreach (var category in categories)
         {
             var settings = GameSettingsCatalog.All.Where(s => s.Category == category && filter(s)).ToList();
             if (settings.Count == 0)
                 continue;
-            stack.Children.Add(Header(CategoryLabel(category)));
+            var header = Header(CategoryLabel(category));
+            stack.Children.Add(header);
+            var group = new SearchGroup { Header = header };
             foreach (var setting in settings)
-                AddCatalogRow(stack, setting, gameEnabled, current, defaults);
+                group.Rows.Add(AddCatalogRow(stack, setting, gameEnabled, current, defaults));
+            groups.Add(group);
         }
-        return new ScrollViewer { Content = stack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
+        var placeholder = SearchPlaceholder();
+        stack.Children.Add(placeholder);
+        return (new ScrollViewer { Content = stack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto }, groups, placeholder);
     }
+
+    /// <summary>The "no settings match your search" line shown in a tab whose rows are all filtered out. Hidden
+    /// until a search hides everything in its tab.</summary>
+    private static TextBlock SearchPlaceholder() => new()
+    {
+        Text = Strings.Settings_SearchNoMatches, Foreground = Muted,
+        Margin = new Thickness(0, 8, 0, 0), Visibility = Visibility.Collapsed,
+    };
 
     /// <summary>The Undocumented tab: cataloged keys we can't confidently explain (typed, with a best-guess
     /// tooltip), then a divider and any keys in the config the catalog doesn't recognize (raw, future-proofing
     /// against a game update adding params before we catalog them).</summary>
-    private ScrollViewer BuildUndocumentedTab(bool gameAvailable, bool gameEnabled,
+    private (ScrollViewer Content, List<SearchGroup> Groups, TextBlock Placeholder) BuildUndocumentedTab(
+        bool gameAvailable, bool gameEnabled,
         IReadOnlyDictionary<string, string?> current, IReadOnlyDictionary<string, string?> defaults)
     {
         var stack = new StackPanel { Margin = new Thickness(18) };
@@ -212,29 +378,51 @@ public sealed class SettingsDialog : Window
             Strings.Settings_UndocumentedBlurb,
             ConfigDocsUrl, Strings.Settings_UndocumentedBlurbLink));
 
-        stack.Children.Add(Header(Strings.Settings_UndocKnownHeader));
-        foreach (var setting in GameSettingsCatalog.All.Where(s => s.Doc == DocStatus.Unknown))
-            AddCatalogRow(stack, setting, gameEnabled, current, defaults);
+        var groups = new List<SearchGroup>();
 
-        stack.Children.Add(Header(Strings.Settings_UndocNewHeader));
-        if (AppendExtras(stack, gameAvailable, gameEnabled) == 0)
-            stack.Children.Add(new TextBlock
+        var knownHeader = Header(Strings.Settings_UndocKnownHeader);
+        stack.Children.Add(knownHeader);
+        var knownGroup = new SearchGroup { Header = knownHeader };
+        foreach (var setting in GameSettingsCatalog.All.Where(s => s.Doc == DocStatus.Unknown))
+            knownGroup.Rows.Add(AddCatalogRow(stack, setting, gameEnabled, current, defaults));
+        groups.Add(knownGroup);
+
+        var newHeader = Header(Strings.Settings_UndocNewHeader);
+        stack.Children.Add(newHeader);
+        var newGroup = new SearchGroup { Header = newHeader };
+        var extras = AppendExtras(stack, gameAvailable, gameEnabled);
+        if (extras.Count == 0)
+        {
+            // No unrecognized keys: this informational line stands in for the (absent) rows. Give it empty
+            // searchable text so it hides during an active search and reappears when the box is cleared.
+            var none = new TextBlock
             {
                 Text = Strings.Settings_UndocNoneRecognized,
                 Foreground = Fg, Margin = new Thickness(0, 2, 0, 0),
-            });
+            };
+            stack.Children.Add(none);
+            newGroup.Rows.Add(new SearchRow(none, "", "", ""));
+        }
+        else
+        {
+            newGroup.Rows.AddRange(extras);
+        }
+        groups.Add(newGroup);
 
-        return new ScrollViewer { Content = stack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
+        var placeholder = SearchPlaceholder();
+        stack.Children.Add(placeholder);
+        return (new ScrollViewer { Content = stack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto }, groups, placeholder);
     }
 
     /// <summary>Add one catalog key's row (input built by type, reset when a default exists and it's editable,
     /// undocumented marker driven by <see cref="GameSetting.Doc"/>).</summary>
-    private void AddCatalogRow(StackPanel stack, GameSetting setting, bool gameEnabled,
+    private SearchRow AddCatalogRow(StackPanel stack, GameSetting setting, bool gameEnabled,
         IReadOnlyDictionary<string, string?> current, IReadOnlyDictionary<string, string?> defaults)
     {
         var value = current.TryGetValue(setting.Key, out var v) ? v ?? "" : "";
         var hasDefault = defaults.TryGetValue(setting.Key, out var dv);
         // Tooltip leads with the real ini key (the "true" name) so it's discoverable, then the description.
+        var label = CatalogText.Label(setting);
         var desc = CatalogText.Description(setting);
         var tip = string.IsNullOrEmpty(desc) ? setting.Key : $"{setting.Key}\n{desc}";
         // An app-preferred default (e.g. RESTAPIEnabled = True) overrides the game default for reset: the ↺
@@ -246,8 +434,12 @@ public sealed class SettingsDialog : Window
             WarnNoServerEffectOnUse(setting, noEffectCombo);
         // No reset (↺) on secret fields, don't let "Reset to defaults" silently blank a password.
         var offerReset = gameEnabled && !setting.Secret && (setting.AppDefault is not null || hasDefault);
-        stack.Children.Add(Row(CatalogText.Label(setting), input, tip, offerReset ? reset : null, setting.Doc,
-            includeInBulkReset: setting.AppDefault is null));
+        var row = Row(label, input, tip, offerReset ? reset : null, setting.Doc,
+            includeInBulkReset: setting.AppDefault is null);
+        stack.Children.Add(row);
+        // Searchable text: the literal ini key (always English, so it works in any UI language) plus the
+        // localized label and description the user actually sees.
+        return new SearchRow(row, setting.Key, label, desc);
     }
 
     /// <summary>Warn (once per session) when the user opens a dropdown for a setting that has no effect on a
@@ -573,11 +765,12 @@ public sealed class SettingsDialog : Window
 
     /// <summary>Append rows for keys present in the config that the catalog doesn't recognize (edited raw, and
     /// marked undocumented). Returns how many were added, so the caller can show a placeholder when there are none.</summary>
-    private int AppendExtras(StackPanel stack, bool available, bool enabled)
+    private List<SearchRow> AppendExtras(StackPanel stack, bool available, bool enabled)
     {
+        var rows = new List<SearchRow>();
         var extras = available ? _gameSettings.LoadExtras() : System.Array.Empty<GameSettingsService.ExtraSetting>();
         if (extras.Count == 0)
-            return 0;
+            return rows;
 
         var defaults = available ? _gameSettings.LoadDefaults() : new Dictionary<string, string?>();
         foreach (var extra in extras)
@@ -594,9 +787,12 @@ public sealed class SettingsDialog : Window
             ResetSpec? reset = enabled && defaults.TryGetValue(extra.Key, out var dv)
                 ? TextReset(box, dv ?? "")
                 : null;
-            stack.Children.Add(Row(extra.Key, box, null, reset, DocStatus.Unknown));
+            var row = Row(extra.Key, box, null, reset, DocStatus.Unknown);
+            stack.Children.Add(row);
+            // The shown label IS the raw key (these keys aren't in the catalog), and there's no description.
+            rows.Add(new SearchRow(row, extra.Key, extra.Key, ""));
         }
-        return extras.Count;
+        return rows;
     }
 
     private (FrameworkElement Input, ResetSpec Reset) BuildGameInput(GameSetting setting, string value, string defaultValue, bool enabled)
