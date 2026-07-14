@@ -1,15 +1,17 @@
 # Palworld Server Launcher
 
-[![Latest release](https://img.shields.io/github/v/release/SSyl/PalworldServerLauncher?include_prereleases)](https://github.com/SSyl/PalworldServerLauncher/releases/latest) [![License: GPLv3](https://img.shields.io/github/license/SSyl/PalworldServerLauncher)](LICENSE)
+[![Latest release](https://img.shields.io/github/v/release/SSyl/PalworldServerLauncher?include_prereleases)](https://github.com/SSyl/PalworldServerLauncher/releases/latest) [![License: GPLv3](https://img.shields.io/github/license/SSyl/PalworldServerLauncher)](LICENSE) [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8X4237D8A)
 
 A Windows app for running a **Palworld dedicated server**: installs it, keeps it updated, handles scheduled
 restarts and backups, and watches its health, all through Palworld's REST API. Native C# / WPF, single `.exe`.
 Inspired by [Conan Exiles' Dedicated Server Launcher](https://forums.funcom.com/t/introducing-the-conan-exiles-dedicated-server-app/21699).
 
+**[Download the latest release](https://github.com/SSyl/PalworldServerLauncher/releases/latest)** to get started.
+
 Other languages are available: Simplified Chinese, Traditional Chinese, and Japanese. See [Languages](#languages).
 
 > [!NOTE]
-> **Status:** pre-release and still a work in progress.
+> **Status:** Pre-release but mostly feature complete
 
 ![The Palworld Server Launcher main window](docs/images/app-screenshots/main-window.png)
 
@@ -18,14 +20,8 @@ Other languages are available: Simplified Chinese, Traditional Chinese, and Japa
 ## Contents
 
 - [Features](#features)
-  - [Languages](#languages)
-- [Screenshots](#screenshots)
 - [Getting started](#getting-started)
-- [File locations](#file-locations)
 - [Running more than one server](#running-more-than-one-server)
-- [Command-line options](#command-line-options)
-- [Upcoming features](#upcoming-features)
-- [Building from source](#building-from-source)
 - [Privacy and security](#privacy-and-security)
 
 ---
@@ -130,20 +126,29 @@ Other languages are available: Simplified Chinese, Traditional Chinese, and Japa
 
 ## Getting started
 
-You'll need **Windows 10 or 11 (64-bit)**, and room and bandwidth for the server install (the first SteamCMD
-download is a few GB).
+You'll need **Windows 10 or 11 (64-bit)**, plus room and bandwidth for the server install (a full install with
+no mods sits a bit under 6 GB as of Palworld 1.0). The launcher itself is light (around 100 MB of RAM), but the
+Palworld dedicated server it runs is RAM-hungry, so check Palworld's
+[official requirements](https://docs.palworldgame.com/getting-started/requirements/) before hosting.
+
+**Download** the latest `PalworldServerLauncher.exe` from the
+[releases page](https://github.com/SSyl/PalworldServerLauncher/releases/latest). It's a single file with no
+installer, so drop it wherever you'd like the server to live.
 
 > [!NOTE]
 > The first time you run it, Windows may show a blue "Windows protected your PC" box, because the app isn't
-> code-signed. Click **More info**, then **Run anyway**.
+> code-signed. Click **More info**, then **Run anyway**. Some antivirus tools may flag it for the same reason
+> (an unsigned, self-contained build). If that worries you, the full source is here and you can
+> [build it yourself](#building-from-source).
 
 1. Run `PalworldServerLauncher.exe`.
 2. Click **Install** to grab SteamCMD and the server. You only need this the first time.
 3. Click **Start**. The very first launch creates the server's config files.
 
-   > [!TIP]
-   > Windows Firewall may ask whether to allow the Palworld server through. Click **Allow access**, otherwise
-   > the server won't be reachable over the network and players won't be able to connect.
+> [!TIP]
+> Windows Firewall may ask whether to allow the Palworld server through. Click **Allow access**, otherwise
+> the server won't be reachable over the network and players won't be able to connect.
+
 4. When offered, turn on the **REST API** (it can generate a secure admin password for you). It's what powers
    the stats, graceful restarts, backups, and health checks. Without it the server still runs, but the
    launcher has to hard-stop it instead of shutting it down cleanly.
