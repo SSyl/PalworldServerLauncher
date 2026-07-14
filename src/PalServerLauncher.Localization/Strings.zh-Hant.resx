@@ -1619,7 +1619,7 @@
     <value>PlayerDataPalStorageUpdateCheckTickInterval</value>
   </data>
   <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Desc" xml:space="preserve">
-    <value>未記錄。可能是伺服器檢查玩家帕魯盒子/儲存資料是否有變化以進行同步的頻率（秒）。</value>
+    <value>未記錄。可能是伺服器檢查玩家帕魯終端/儲存資料是否有變化以進行同步的頻率（秒）。</value>
   </data>
   <data name="Cat_Difficulty_Label" xml:space="preserve">
     <value>難度</value>
@@ -1778,16 +1778,16 @@
     <value>允許將屬性點分配到工作速度。</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxExport_Label" xml:space="preserve">
-    <value>允許將帕魯的遺傳資料保存到全域性帕魯盒子</value>
+    <value>允許將帕魯的遺傳資料保存到跨界帕魯終端</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxExport_Desc" xml:space="preserve">
-    <value>允許保存到全域性帕魯盒子。</value>
+    <value>允許保存到跨界帕魯終端。</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxImport_Label" xml:space="preserve">
-    <value>允許從全域性帕魯盒子重建帕魯</value>
+    <value>允許從跨界帕魯終端重建帕魯</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxImport_Desc" xml:space="preserve">
-    <value>允許從全域性帕魯盒子載入。</value>
+    <value>允許從跨界帕魯終端載入。</value>
   </data>
   <data name="Cat_bAutoResetGuildNoOnlinePlayers_Label" xml:space="preserve">
     <value>自動刪除長時間沒有玩家登入的公會的設施</value>
@@ -1967,7 +1967,7 @@
     <value>帕魯睡眠時生命值回復倍率（帕魯終端中的生命值回復倍率）</value>
   </data>
   <data name="Cat_PalAutoHpRegeneRateInSleep_Desc" xml:space="preserve">
-    <value>帕魯在帕魯盒子中睡眠時的生命值回復倍率。</value>
+    <value>帕魯在帕魯終端中睡眠時的生命值回復倍率。</value>
   </data>
   <data name="Cat_CollectionDropRate_Label" xml:space="preserve">
     <value>道具採集量倍率</value>
