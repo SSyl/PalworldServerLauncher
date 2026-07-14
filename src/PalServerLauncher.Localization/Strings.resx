@@ -1144,6 +1144,15 @@ Full details in:
   <data name="Settings_ResetToDefaults" xml:space="preserve">
     <value>Reset to defaults</value>
   </data>
+  <data name="Settings_SearchPlaceholder" xml:space="preserve">
+    <value>Search settings...</value>
+  </data>
+  <data name="Settings_SearchNoMatches" xml:space="preserve">
+    <value>No settings match your search.</value>
+  </data>
+  <data name="Settings_SearchClearTooltip" xml:space="preserve">
+    <value>Clear search</value>
+  </data>
   <data name="Settings_WorldBlurb" xml:space="preserve">
     <value>Gameplay and balance, difficulty, EXP / capture / drop rates, damage multipliers, and world features. Full reference:</value>
   </data>

@@ -1074,6 +1074,15 @@
   <data name="Settings_ResetToDefaults" xml:space="preserve">
     <value>重置為預設值</value>
   </data>
+  <data name="Settings_SearchPlaceholder" xml:space="preserve">
+    <value>搜尋設定...</value>
+  </data>
+  <data name="Settings_SearchNoMatches" xml:space="preserve">
+    <value>沒有符合搜尋的設定。</value>
+  </data>
+  <data name="Settings_SearchClearTooltip" xml:space="preserve">
+    <value>清除搜尋</value>
+  </data>
   <data name="Settings_WorldBlurb" xml:space="preserve">
     <value>玩法與平衡、難度、EXP / 捕獲 / 掉落倍率、傷害倍率，以及世界特性。完整參考：</value>
   </data>
