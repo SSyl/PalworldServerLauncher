@@ -98,4 +98,23 @@ public class GameSettingsServiceTests
         }
         finally { Directory.Delete(root, recursive: true); }
     }
+
+    [Fact]
+    public void Save_preserves_a_hand_added_uncataloged_key()
+    {
+        // A user (or a mod, or a future game update) adds a key the launcher does not catalog. Editing an
+        // unrelated cataloged key must leave that custom key exactly as it was: we never throw out custom
+        // ini values just because we do not recognize them.
+        var root = WriteIni("ExpRate=1.000000,SomeModSetting=42,ServerName=\"Home\"");
+        try
+        {
+            var svc = new GameSettingsService(root, new Logger(verbose: false));
+            Assert.True(svc.Save(new Dictionary<string, string> { ["ExpRate"] = "2.0" }, serverRunning: false));
+
+            Assert.Equal("42", svc.LoadExtras().First(x => x.Key == "SomeModSetting").Value); // custom key intact
+            Assert.Equal("2.000000", svc.Load()["ExpRate"]);   // our edit applied
+            Assert.Equal("Home", svc.Load()["ServerName"]);    // the other neighbor untouched
+        }
+        finally { Directory.Delete(root, recursive: true); }
+    }
 }
