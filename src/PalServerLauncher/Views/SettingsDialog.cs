@@ -277,13 +277,24 @@ public sealed class SettingsDialog : Window
         foreach (var name in DifficultyPresets.Names)
         {
             var presetName = name;
-            var button = MakeButton(presetName, () => ApplyPreset(presetName));
+            var button = MakeButton(PresetLabel(presetName), () => ApplyPreset(presetName));
             button.IsEnabled = enabled;
             button.Margin = new Thickness(0, 0, 6, 4);
             panel.Children.Add(button);
         }
         return panel;
     }
+
+    /// <summary>Localized display label for a difficulty preset. The canonical name (Casual/Normal/Hard/Hardcore)
+    /// stays the lookup key for <see cref="DifficultyPresets"/>, only the shown text is translated.</summary>
+    private static string PresetLabel(string canonicalName) => canonicalName switch
+    {
+        "Casual" => Strings.Settings_PresetCasual,
+        "Normal" => Strings.Settings_PresetNormal,
+        "Hard" => Strings.Settings_PresetHard,
+        "Hardcore" => Strings.Settings_PresetHardcore,
+        _ => canonicalName,
+    };
 
     /// <summary>
     /// Apply a difficulty preset: show what changes versus the current values, and on confirm push them into
@@ -298,17 +309,18 @@ public sealed class SettingsDialog : Window
         var defaults = _gameSettings.LoadDefaults();
         var current = _gameInputs.ToDictionary(g => g.Setting.Key, g => (string?)g.Read(), StringComparer.OrdinalIgnoreCase);
         var changes = DifficultyPresets.ResolveChanges(presetName, defaults, current);
+        var label = PresetLabel(presetName);
 
         if (changes.Count == 0)
         {
-            ChoiceDialog.Show(this, string.Format(Strings.Settings_PresetTitle, presetName),
-                string.Format(Strings.Settings_PresetNoChanges, presetName), Strings.Common_OK);
+            ChoiceDialog.Show(this, string.Format(Strings.Settings_PresetTitle, label),
+                string.Format(Strings.Settings_PresetNoChanges, label), Strings.Common_OK);
             return;
         }
 
         var list = string.Join("\n", changes.Select(c => $"{c.Key} = {c.Value}"));
-        var message = string.Format(Strings.Settings_PresetConfirmMessage, presetName, list);
-        if (ChoiceDialog.Show(this, string.Format(Strings.Settings_PresetTitle, presetName), message, Strings.Settings_Yes, Strings.Settings_No) != 0)
+        var message = string.Format(Strings.Settings_PresetConfirmMessage, label, list);
+        if (ChoiceDialog.Show(this, string.Format(Strings.Settings_PresetTitle, label), message, Strings.Settings_Yes, Strings.Settings_No) != 0)
             return;
 
         // Push into the live controls and update each Original so the change isn't re-flagged as unsaved.
@@ -329,8 +341,8 @@ public sealed class SettingsDialog : Window
             return;
         }
         _saved = true;
-        ChoiceDialog.Show(this, string.Format(Strings.Settings_PresetAppliedTitle, presetName),
-            string.Format(Strings.Settings_PresetAppliedMessage, presetName, changes.Count), Strings.Common_OK);
+        ChoiceDialog.Show(this, string.Format(Strings.Settings_PresetAppliedTitle, label),
+            string.Format(Strings.Settings_PresetAppliedMessage, label, changes.Count), Strings.Common_OK);
     }
 
     public static bool ShowServerSettings(Window? owner, LauncherConfig config, GameSettingsService gs, bool serverRunning) =>

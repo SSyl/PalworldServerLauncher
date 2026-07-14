@@ -2161,4 +2161,16 @@ Save these changes?</value>
   <data name="Cat_DeathPenalty_Opt_All" xml:space="preserve">
     <value>掉落所有道具及队伍内帕鲁</value>
   </data>
+  <data name="Settings_PresetCasual" xml:space="preserve">
+    <value>休闲</value>
+  </data>
+  <data name="Settings_PresetNormal" xml:space="preserve">
+    <value>普通</value>
+  </data>
+  <data name="Settings_PresetHard" xml:space="preserve">
+    <value>困难</value>
+  </data>
+  <data name="Settings_PresetHardcore" xml:space="preserve">
+    <value>硬核</value>
+  </data>
 </root>

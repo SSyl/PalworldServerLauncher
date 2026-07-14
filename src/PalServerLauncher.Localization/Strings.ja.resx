@@ -2168,4 +2168,16 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
   <data name="Cat_DeathPenalty_Opt_All" xml:space="preserve">
     <value>全アイテムと手持ちパルをドロップ</value>
   </data>
+  <data name="Settings_PresetCasual" xml:space="preserve">
+    <value>Casual</value>
+  </data>
+  <data name="Settings_PresetNormal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="Settings_PresetHard" xml:space="preserve">
+    <value>Hard</value>
+  </data>
+  <data name="Settings_PresetHardcore" xml:space="preserve">
+    <value>Hardcore</value>
+  </data>
 </root>
