@@ -98,6 +98,10 @@ Inspired by [Conan Exiles' Dedicated Server Launcher](https://forums.funcom.com/
 
 ![Launch arguments](docs/images/app-screenshots/launcher-args.png)
 
+**Advanced settings.** Set the server process priority and pin it to specific CPU cores.
+
+![Advanced settings](docs/images/app-screenshots/advanced-settings.png)
+
 **Picking restart and backup times.**
 
 ![Restart and backup time picker](docs/images/app-screenshots/schedules.png)
@@ -105,6 +109,18 @@ Inspired by [Conan Exiles' Dedicated Server Launcher](https://forums.funcom.com/
 **Customizable in-game restart announcements.**
 
 ![Announcements editor](docs/images/app-screenshots/announcements.png)
+
+**Live server commands.** Announce a message, kick, ban, or unban a player, and save the world, all while the server is running.
+
+![Live server commands](docs/images/app-screenshots/server-rest-commands.png)
+
+**Discord.** Optional webhook notifications and a locked-down control bot, with a checklist of exactly which slash commands it may run.
+
+![Discord settings](docs/images/app-screenshots/discord-bot-settings.png)
+
+**Available in several languages.** English, Simplified Chinese, Traditional Chinese (shown here), and Japanese.
+
+![The main window in Traditional Chinese](docs/images/app-screenshots/main-window-traditional-chinese.png)
 
 ---
 
