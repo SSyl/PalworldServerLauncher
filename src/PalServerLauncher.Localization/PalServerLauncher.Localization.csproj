@@ -28,6 +28,9 @@
     <EmbeddedResource Update="Strings.ja.resx">
       <DependentUpon>Strings.resx</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Update="Strings.zh-Hant.resx">
+      <DependentUpon>Strings.resx</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

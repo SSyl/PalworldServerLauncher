@@ -13,6 +13,7 @@ public static class LauncherLanguages
     {
         new LauncherLanguage("en", "English"),
         new LauncherLanguage("zh-Hans", "简体中文"),
+        new LauncherLanguage("zh-Hant", "繁體中文"),
         new LauncherLanguage("ja", "日本語"),
     };
 

@@ -1,0 +1,2182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- AI first-pass draft, not yet reviewed by a native speaker. See GitHub issue #1. -->
+  <data name="Start_Button" xml:space="preserve">
+    <value>啟動</value>
+  </data>
+  <data name="FirstRun_Prompt" xml:space="preserve">
+    <value>請選擇語言。您以後可以在"啟動器設定"中更改此設定。</value>
+  </data>
+  <!-- Launcher Settings dialog + its main-window button. English placeholders pending translation. -->
+  <data name="LauncherSettings_Title" xml:space="preserve">
+    <value>啟動器設定</value>
+  </data>
+  <data name="LauncherSettings_LanguageLabel" xml:space="preserve">
+    <value>語言</value>
+  </data>
+  <data name="LauncherSettings_Tooltip" xml:space="preserve">
+    <value>更改啟動器的語言及其他啟動器偏好設定。</value>
+  </data>
+  <data name="Common_AppName" xml:space="preserve">
+    <value>Palworld Server Launcher</value>
+  </data>
+  <data name="Common_Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Common_OK" xml:space="preserve">
+    <value>確定</value>
+  </data>
+  <data name="Announcements_Title" xml:space="preserve">
+    <value>公告</value>
+  </data>
+  <data name="Announcements_Intro" xml:space="preserve">
+    <value>重啟前向玩家顯示。在需要顯示倒計時的位置放置 {minutes}（它會替換為剩餘分鐘數）。刪除它則顯示不帶時間的固定訊息。</value>
+  </data>
+  <data name="Announcements_RestartLabel" xml:space="preserve">
+    <value>計劃 / 手動重啟</value>
+  </data>
+  <data name="Announcements_UpdateLabel" xml:space="preserve">
+    <value>更新重啟</value>
+  </data>
+  <data name="Announcements_EmptyTitle" xml:space="preserve">
+    <value>公告不能為空</value>
+  </data>
+  <data name="Announcements_EmptyMessage" xml:space="preserve">
+    <value>公告不能為空（伺服器會拒絕空白訊息）：</value>
+  </data>
+  <data name="Announcements_NoTokenTitle" xml:space="preserve">
+    <value>缺少倒計時佔位符</value>
+  </data>
+  <data name="Announcements_NoTokenMessage" xml:space="preserve">
+    <value>以下公告沒有 {0} 佔位符，因此不會顯示剩餘分鐘數：
+{1}
+
+仍要將它們保存為固定訊息嗎？</value>
+  </data>
+  <data name="Announcements_SaveAnyway" xml:space="preserve">
+    <value>仍然保存</value>
+  </data>
+  <data name="Announcements_KeepEditing" xml:space="preserve">
+    <value>繼續編輯</value>
+  </data>
+  <data name="Common_ForceShutdown" xml:space="preserve">
+    <value>強制關閉</value>
+  </data>
+  <data name="Main_PrimaryTip" xml:space="preserve">
+    <value>安裝伺服器，或在安裝後啟動 (▶) / 停止 (■)。啟動時會先檢查更新（當“啟動時更新”開啟時），然後再啟動。</value>
+  </data>
+  <data name="Main_RestartTip" xml:space="preserve">
+    <value>立即重啟：立即保存並重啟伺服器，不向玩家顯示倒計時。定時重啟和更新重啟會先向玩家發出警告。</value>
+  </data>
+  <data name="Main_ForceShutdownTip" xml:space="preserve">
+    <value>立即終止伺服器程序，不進行保存。當啟動、停止或重啟操作卡住一段時間後才會出現。僅在伺服器停止響應時使用。</value>
+  </data>
+  <data name="Main_CheckForUpdate" xml:space="preserve">
+    <value>檢查更新</value>
+  </data>
+  <data name="Main_CheckForUpdateTip" xml:space="preserve">
+    <value>通過 SteamCMD 檢查是否有更新的版本（只讀，伺服器執行時也可使用）</value>
+  </data>
+  <data name="Main_ValidateFiles" xml:space="preserve">
+    <value>校驗檔案</value>
+  </data>
+  <data name="Main_ValidateFilesTip" xml:space="preserve">
+    <value>對已安裝檔案進行完整的 SteamCMD 完整性校驗</value>
+  </data>
+  <data name="Main_ServerSettings" xml:space="preserve">
+    <value>伺服器設定</value>
+  </data>
+  <data name="Main_ServerSettingsTip" xml:space="preserve">
+    <value>在一個分頁編輯器中編輯伺服器：世界設定（玩法與平衡）、管理（名稱、密碼、REST / RCON）、未記錄（官方文件未涵蓋的設定項），以及啟動引數（命令列：監聽埠、玩家上限、效能執行緒、社群列表）。</value>
+  </data>
+  <data name="Main_Mods" xml:space="preserve">
+    <value>模組</value>
+  </data>
+  <data name="Main_ModsTip" xml:space="preserve">
+    <value>管理 Steam 創意工坊伺服器模組：新增創意工坊 ID 讓啟動器下載，或掃描你自己放入模組資料夾的模組。</value>
+  </data>
+  <data name="Main_AdvancedSettings" xml:space="preserve">
+    <value>進階設定</value>
+  </data>
+  <data name="Main_AdvancedSettingsTip" xml:space="preserve">
+    <value>底層程序調優（優先順序、CPU 親和性），僅限高階使用者</value>
+  </data>
+  <data name="Main_StatusLabel" xml:space="preserve">
+    <value>狀態：</value>
+  </data>
+  <data name="Main_UpdateLabel" xml:space="preserve">
+    <value>更新：</value>
+  </data>
+  <data name="Main_PublicIpLabel" xml:space="preserve">
+    <value>公網 IP：</value>
+  </data>
+  <data name="Main_PublicIpTip" xml:space="preserve">
+    <value>你的公網 IP 和遊戲埠。點選眼睛圖示顯示，然後選中複製，或使用複製按鈕。</value>
+  </data>
+  <data name="Main_RevealIpTip" xml:space="preserve">
+    <value>顯示或隱藏你的公網 IP</value>
+  </data>
+  <data name="Main_CopyIpTip" xml:space="preserve">
+    <value>將你的 IP:埠 複製到剪貼簿</value>
+  </data>
+  <data name="Main_PortCheck" xml:space="preserve">
+    <value>埠檢測</value>
+  </data>
+  <data name="Main_PortCheckTip" xml:space="preserve">
+    <value>檢測你的埠能否從網際網路訪問。伺服器必須處於停止狀態，啟動器才能測試這些埠。</value>
+  </data>
+  <data name="Main_StatVersion" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="Main_StatFps" xml:space="preserve">
+    <value>FPS</value>
+  </data>
+  <data name="Main_StatCpu" xml:space="preserve">
+    <value>CPU</value>
+  </data>
+  <data name="Main_StatMemory" xml:space="preserve">
+    <value>記憶體</value>
+  </data>
+  <data name="Main_StatPlayers" xml:space="preserve">
+    <value>玩家</value>
+  </data>
+  <data name="Main_StatUptime" xml:space="preserve">
+    <value>執行時間</value>
+  </data>
+  <data name="Main_StatNextRestart" xml:space="preserve">
+    <value>下次重啟</value>
+  </data>
+  <data name="Main_CollapseTip" xml:space="preserve">
+    <value>顯示或隱藏設定區塊（重啟、備份、雜項）</value>
+  </data>
+  <data name="Main_RestartsHeader" xml:space="preserve">
+    <value>重啟</value>
+  </data>
+  <data name="Main_ScheduledRestartAt" xml:space="preserve">
+    <value>定時重啟於</value>
+  </data>
+  <data name="Main_ScheduledRestartTip" xml:space="preserve">
+    <value>在所列時間自動重啟伺服器。如果伺服器執行時間未達到下方的最短執行時間，則跳過該次重啟。</value>
+  </data>
+  <data name="Main_ChooseRestartTimes" xml:space="preserve">
+    <value>選擇重啟時間</value>
+  </data>
+  <data name="Main_MinUptime" xml:space="preserve">
+    <value>重啟前最短執行時間</value>
+  </data>
+  <data name="Main_HourSuffix" xml:space="preserve">
+    <value>小時</value>
+  </data>
+  <data name="Main_AnnounceRestarts" xml:space="preserve">
+    <value>重啟公告</value>
+  </data>
+  <data name="Main_AnnounceRestartsTip" xml:space="preserve">
+    <value>在定時重啟或更新重啟前，按右側設定的分鐘節點在遊戲內向玩家發出警告。無人線上時跳過。</value>
+  </data>
+  <data name="Main_AnnounceLeadTip" xml:space="preserve">
+    <value>重啟前多少分鐘發出公告（留空 = 關閉）</value>
+  </data>
+  <data name="Main_MinuteSuffix" xml:space="preserve">
+    <value>分鐘</value>
+  </data>
+  <data name="Main_EditAnnouncements" xml:space="preserve">
+    <value>編輯公告</value>
+  </data>
+  <data name="Main_EditAnnouncementsTip" xml:space="preserve">
+    <value>編輯重啟前玩家在遊戲內看到的訊息。</value>
+  </data>
+  <data name="Main_ValidateOnRestart" xml:space="preserve">
+    <value>重啟時校驗檔案</value>
+  </data>
+  <data name="Main_ValidateOnRestartTip" xml:space="preserve">
+    <value>在啟動/重啟時對更新進行完整的完整性校驗（較慢）</value>
+  </data>
+  <data name="Main_BackupsHeader" xml:space="preserve">
+    <value>備份</value>
+  </data>
+  <data name="Main_BackupOn" xml:space="preserve">
+    <value>備份時機：</value>
+  </data>
+  <data name="Main_BackupStartup" xml:space="preserve">
+    <value>啟動時</value>
+  </data>
+  <data name="Main_BackupStartupTip" xml:space="preserve">
+    <value>在伺服器啟動時、檢查更新之前進行備份（SteamCMD 可能會覆蓋配置）。</value>
+  </data>
+  <data name="Main_BackupShutdown" xml:space="preserve">
+    <value>關閉時</value>
+  </data>
+  <data name="Main_BackupShutdownTip" xml:space="preserve">
+    <value>在伺服器停止或重啟時進行備份（會先保存世界）。</value>
+  </data>
+  <data name="Main_BackupScheduled" xml:space="preserve">
+    <value>定時</value>
+  </data>
+  <data name="Main_BackupScheduledTip" xml:space="preserve">
+    <value>在伺服器執行期間，按右側所列的時間自動備份。</value>
+  </data>
+  <data name="Main_ChooseBackupTimes" xml:space="preserve">
+    <value>選擇備份時間</value>
+  </data>
+  <data name="Main_BackupRetentionTip" xml:space="preserve">
+    <value>自動備份（啟動/關閉/定時）的保留時長。手動備份以及你自己新增到備份資料夾中的任何檔案都不會被刪除。0 = 全部保留。</value>
+  </data>
+  <data name="Main_KeepFor" xml:space="preserve">
+    <value>保留</value>
+  </data>
+  <data name="Main_DaysSuffix" xml:space="preserve">
+    <value>天</value>
+  </data>
+  <data name="Main_NextBackupLabel" xml:space="preserve">
+    <value>下次備份：</value>
+  </data>
+  <data name="Main_BackupNow" xml:space="preserve">
+    <value>立即備份</value>
+  </data>
+  <data name="Main_BackupNowTip" xml:space="preserve">
+    <value>立即進行一次手動備份。如果伺服器正在執行且已開啟 REST，會先保存世界。</value>
+  </data>
+  <data name="Main_MiscHeader" xml:space="preserve">
+    <value>雜項</value>
+  </data>
+  <data name="Main_AutoUpdate" xml:space="preserve">
+    <value>自動更新伺服器</value>
+  </data>
+  <data name="Main_AutoUpdateTip" xml:space="preserve">
+    <value>發現新更新時自動重啟伺服器。如果有玩家線上，“重啟公告”設定會在重啟前增加延遲。</value>
+  </data>
+  <data name="Main_UpdateOnStart" xml:space="preserve">
+    <value>啟動/重啟時更新</value>
+  </data>
+  <data name="Main_UpdateOnStartTip" xml:space="preserve">
+    <value>每次伺服器啟動或重啟時都通過 SteamCMD 檢查更新。取消勾選後，啟動/重啟時不會自動下載更新。你仍可通過“檢查更新”手動更新。</value>
+  </data>
+  <data name="Main_CheckUpdateEvery" xml:space="preserve">
+    <value>檢查更新間隔</value>
+  </data>
+  <data name="Main_CheckUpdateEveryTip" xml:space="preserve">
+    <value>伺服器執行期間，每隔多久通過 SteamCMD 檢查一次新版本。下次啟動時生效。</value>
+  </data>
+  <data name="Main_HideSteamCmd" xml:space="preserve">
+    <value>隱藏 SteamCMD 視窗</value>
+  </data>
+  <data name="Main_HideSteamCmdTip" xml:space="preserve">
+    <value>在後臺執行 SteamCMD，而不是開啟它自己的控制台視窗。即時進度仍會顯示在 SteamCMD 選項卡中。</value>
+  </data>
+  <data name="Main_LogServerStatus" xml:space="preserve">
+    <value>記錄伺服器狀態</value>
+  </data>
+  <data name="Main_LogServerStatusTip" xml:space="preserve">
+    <value>每 30 秒向日志寫入一行伺服器統計資訊（FPS、玩家數、執行時間、記憶體）。從終端執行時很方便，否則會給日誌增加干擾。</value>
+  </data>
+  <data name="Main_ZombieCheck" xml:space="preserve">
+    <value>假死檢測：重啟閾值</value>
+  </data>
+  <data name="Main_ZombieCheckTip" xml:space="preserve">
+    <value>當 REST API 連續這麼多次無法訪問，或世界連續這麼多次保持凍結時，重啟伺服器。如果你的 REST API 不穩定，且你寧願它永不自動重啟，請關閉此項。</value>
+  </data>
+  <data name="Main_ZombieThresholdTip" xml:space="preserve">
+    <value>連續多少次健康檢查失敗後，伺服器會被視為假死並被強制重啟。</value>
+  </data>
+  <data name="Main_ChecksSuffix" xml:space="preserve">
+    <value>次</value>
+  </data>
+  <data name="Main_RestCheckEvery" xml:space="preserve">
+    <value>REST 檢查間隔</value>
+  </data>
+  <data name="Main_RestCheckEveryTip" xml:space="preserve">
+    <value>啟動器輪詢 REST API 獲取狀態/健康資訊的頻率（秒）。推薦 5-10。低於 5 只會徒增 API 負擔而沒有實際收益（允許，但不建議），且不會低於 1。下次啟動時生效。</value>
+  </data>
+  <data name="Main_SecondsSuffix" xml:space="preserve">
+    <value>秒</value>
+  </data>
+  <data name="Main_DiscordBot" xml:space="preserve">
+    <value>Discord 機器人</value>
+  </data>
+  <data name="Main_DiscordBotTip" xml:space="preserve">
+    <value>Discord 控制機器人 + webhook 通知</value>
+  </data>
+  <data name="Main_TabGeneral" xml:space="preserve">
+    <value>常規</value>
+  </data>
+  <data name="Main_TabServerLog" xml:space="preserve">
+    <value>伺服器日誌</value>
+  </data>
+  <data name="Main_TabChat" xml:space="preserve">
+    <value>聊天</value>
+  </data>
+  <data name="Main_TabPlayers" xml:space="preserve">
+    <value>玩家</value>
+  </data>
+  <data name="Main_TabSteamCmd" xml:space="preserve">
+    <value>SteamCMD</value>
+  </data>
+  <data name="Main_ServerCommands" xml:space="preserve">
+    <value>伺服器命令</value>
+  </data>
+  <data name="Main_ServerCommandsTip" xml:space="preserve">
+    <value>向正在執行的伺服器傳送即時命令：公告、踢出/封禁/解封、保存、關閉。伺服器執行時可用。</value>
+  </data>
+  <data name="Main_MultiServerTitle" xml:space="preserve">
+    <value>多個伺服器正在執行</value>
+  </data>
+  <data name="Main_MultiServerMessage" xml:space="preserve">
+    <value>檢測到從此資料夾執行的 {0} 個 Palworld 伺服器。它們共用同一個存檔和同一組埠，因此會互相沖突，而啟動器只管理單個伺服器。請全部關閉，或退出。</value>
+  </data>
+  <data name="Main_ShutDownAll" xml:space="preserve">
+    <value>全部關閉</value>
+  </data>
+  <data name="Main_ExitLauncher" xml:space="preserve">
+    <value>退出啟動器</value>
+  </data>
+  <data name="Main_ServerRunningTitle" xml:space="preserve">
+    <value>伺服器已在執行</value>
+  </data>
+  <data name="Main_ServerRunningMessage" xml:space="preserve">
+    <value>從此資料夾啟動的 Palworld 伺服器已在執行，幾乎可以肯定是你上次會話留下的，因為啟動器只跟蹤它在此處啟動的伺服器。
+
+重新連線可繼續通過 REST API 管理它（即時統計、定時重啟、備份，對於並非啟動器自己啟動的伺服器，伺服器日誌選項卡將保持為空）。否則請將其關閉，或退出。</value>
+  </data>
+  <data name="Main_Reconnect" xml:space="preserve">
+    <value>重新連線</value>
+  </data>
+  <data name="Main_ShutDownServer" xml:space="preserve">
+    <value>關閉伺服器</value>
+  </data>
+  <data name="Main_InstallTitle" xml:space="preserve">
+    <value>安裝伺服器？</value>
+  </data>
+  <data name="Main_InstallMessage" xml:space="preserve">
+    <value>這將通過 SteamCMD 下載並安裝 Palworld 專用伺服器（約 4 GB）到此啟動器的資料夾中。屆時會開啟一個 SteamCMD 視窗顯示進度。
+
+現在就下載並安裝嗎？</value>
+  </data>
+  <data name="Main_DownloadInstall" xml:space="preserve">
+    <value>下載並安裝</value>
+  </data>
+  <data name="Main_ShutdownNowTitle" xml:space="preserve">
+    <value>立即關閉？</value>
+  </data>
+  <data name="Main_ShutdownNowMessage" xml:space="preserve">
+    <value>跳過倒計時，立即關閉伺服器嗎？</value>
+  </data>
+  <data name="Main_ShutDownNow" xml:space="preserve">
+    <value>立即關閉</value>
+  </data>
+  <data name="Main_KeepWaiting" xml:space="preserve">
+    <value>繼續等待</value>
+  </data>
+  <data name="Main_ShutdownTitle" xml:space="preserve">
+    <value>關閉伺服器</value>
+  </data>
+  <data name="Main_ShutdownForceMessage" xml:space="preserve">
+    <value>未啟用 REST，因此無法正常關閉伺服器。它將被強制停止，程序會被直接終止，最後一次自動保存可將損失降至最低。開啟 REST 可實現正常關閉。</value>
+  </data>
+  <data name="Main_ForceStop" xml:space="preserve">
+    <value>強制停止</value>
+  </data>
+  <data name="Main_ShutdownChoiceMessage" xml:space="preserve">
+    <value>立即關閉，還是使用定時關閉（先向玩家顯示遊戲內倒計時）？</value>
+  </data>
+  <data name="Main_ShutdownNowButton" xml:space="preserve">
+    <value>立即關閉</value>
+  </data>
+  <data name="Main_TimedShutdown" xml:space="preserve">
+    <value>定時關閉</value>
+  </data>
+  <data name="Main_TimedShutdownTitle" xml:space="preserve">
+    <value>定時關閉</value>
+  </data>
+  <data name="Main_TimedShutdownMessage" xml:space="preserve">
+    <value>伺服器關閉前，玩家會在遊戲內看到指定秒數的倒計時。</value>
+  </data>
+  <data name="Main_SecondsUnit" xml:space="preserve">
+    <value>秒</value>
+  </data>
+  <data name="Main_ServerInstalledTitle" xml:space="preserve">
+    <value>伺服器已安裝</value>
+  </data>
+  <data name="Main_ServerInstalledMessage" xml:space="preserve">
+    <value>伺服器安裝成功。
+
+啟用 REST API 嗎？它讓啟動器能夠控制伺服器：應用遊戲更新、正常保存和關閉、定時重啟和備份，以及監控伺服器健康狀況。
+
+如果啟用，啟動器現在就會生成伺服器配置，並設定一個安全的隨機生成的管理員密碼（之後可在“伺服器設定”的“管理”選項卡中檢視或修改）。你也可以跳過此步，稍後自行啟用。</value>
+  </data>
+  <data name="Main_YesEnableRest" xml:space="preserve">
+    <value>是，啟用</value>
+  </data>
+  <data name="Main_NotNow" xml:space="preserve">
+    <value>暫不</value>
+  </data>
+  <data name="Main_EnableRestTitle" xml:space="preserve">
+    <value>啟用 REST API？</value>
+  </data>
+  <data name="Main_EnableRestMessage" xml:space="preserve">
+    <value>此啟動器圍繞 Palworld 的 REST API 構建，幾乎所有功能都依賴它：正常保存並關閉、最新備份、即時健康/假死監控、自動重啟，以及玩家加入/離開的記錄。
+
+此伺服器尚未啟用 REST API，因此這些功能會受到限制：關閉將退而使用強制終止，備份可能不是最新的，也沒有自動重啟。
+
+現在就用一個安全的隨機生成的管理員密碼啟用它嗎？</value>
+  </data>
+  <data name="Main_NoRunLimited" xml:space="preserve">
+    <value>否，功能受限執行</value>
+  </data>
+  <data name="Main_Exit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="Main_RestEnabledTitle" xml:space="preserve">
+    <value>REST API 已啟用</value>
+  </data>
+  <data name="Main_RestFailedTitle" xml:space="preserve">
+    <value>無法啟用 REST</value>
+  </data>
+  <data name="Main_RestEnabledMessage" xml:space="preserve">
+    <value>完成，REST API 已開啟，並設定了一個新的隨機管理員密碼（可在“伺服器設定”的“管理”選項卡中檢視或修改）。將在你下次啟動伺服器時生效。</value>
+  </data>
+  <data name="Main_RestFailedMessage" xml:space="preserve">
+    <value>無法寫入伺服器配置。請確保伺服器已安裝且已停止，然後在“伺服器設定”的“管理”選項卡中手動設定。</value>
+  </data>
+  <data name="Main_ServerStillRunningTitle" xml:space="preserve">
+    <value>伺服器仍在執行</value>
+  </data>
+  <data name="Main_ServerStillRunningMessage" xml:space="preserve">
+    <value>Palworld 伺服器仍在執行。要如何處理它？</value>
+  </data>
+  <data name="Main_ShutDownGraceful" xml:space="preserve">
+    <value>關閉（正常）</value>
+  </data>
+  <data name="Main_LeaveRunning" xml:space="preserve">
+    <value>保持執行</value>
+  </data>
+  <data name="Main_DangerZoneTitle" xml:space="preserve">
+    <value>危險區域！</value>
+  </data>
+  <data name="Main_DangerZoneMessage" xml:space="preserve">
+    <value>這些是高階的底層設定。在此使用錯誤的值可能會損害效能。例如，把程序優先順序設得過高會擠佔系統其餘部分的資源，讓伺服器執行得更差而非更好。
+
+除非你清楚自己在做什麼，否則請勿使用這些設定。</value>
+  </data>
+  <data name="Main_UnderstandContinue" xml:space="preserve">
+    <value>我明白，繼續</value>
+  </data>
+  <data name="Main_ForceShutdownConfirmMessage" xml:space="preserve">
+    <value>這將通過完全終止程序立即關閉伺服器，且不進行保存。可能導致存檔資料丟失或損壞。除非伺服器已完全停止響應，否則不建議使用。</value>
+  </data>
+  <data name="Main_PortCheckConsentMessage" xml:space="preserve">
+    <value>你的公網 IP 地址將被髮送到 check-host.cc（一個免費的外部服務），以檢測玩家能否從你的網路外部訪問你的伺服器。除了你的公網 IP 和你測試的埠之外，不會向該服務傳送任何其他資訊。</value>
+  </data>
+  <data name="Main_UpdateAvailableTitle" xml:space="preserve">
+    <value>有可用更新</value>
+  </data>
+  <data name="Main_UpdateRunningMessage" xml:space="preserve">
+    <value>有更新的伺服器版本（{0}）可用。現在就更新並重啟伺服器嗎？玩家會收到常規的重啟警告。</value>
+  </data>
+  <data name="Main_UpdateRestart" xml:space="preserve">
+    <value>更新並重啟</value>
+  </data>
+  <data name="Main_UpdateStoppedMessage" xml:space="preserve">
+    <value>有更新的伺服器版本（{0}）可用。現在就下載並應用嗎？</value>
+  </data>
+  <data name="Main_Download" xml:space="preserve">
+    <value>下載</value>
+  </data>
+  <data name="Secret_Show" xml:space="preserve">
+    <value>顯示</value>
+  </data>
+  <data name="Secret_Hide" xml:space="preserve">
+    <value>隱藏</value>
+  </data>
+  <data name="Secret_Tooltip" xml:space="preserve">
+    <value>顯示或隱藏該值</value>
+  </data>
+  <data name="App_ErrorFormat" xml:space="preserve">
+    <value>發生錯誤：
+
+{0}
+
+完整詳情請見：
+{1}</value>
+  </data>
+  <data name="Times_RestartTitle" xml:space="preserve">
+    <value>重啟時間</value>
+  </data>
+  <data name="Times_RestartHeader" xml:space="preserve">
+    <value>重啟時間</value>
+  </data>
+  <data name="Times_BackupTitle" xml:space="preserve">
+    <value>備份時間</value>
+  </data>
+  <data name="Times_BackupHeader" xml:space="preserve">
+    <value>備份時間</value>
+  </data>
+  <data name="Times_Every" xml:space="preserve">
+    <value>每隔</value>
+  </data>
+  <data name="Times_EveryTip" xml:space="preserve">
+    <value>以此間隔填滿一整天，從午夜開始遞推。可選擇一個預設，或輸入像 2.5 這樣的小數。會替換下方的時間。</value>
+  </data>
+  <data name="Times_Apply" xml:space="preserve">
+    <value>應用</value>
+  </data>
+  <data name="Times_MinuteTip" xml:space="preserve">
+    <value>0-59 之間的任意分鐘，選擇一個預設或直接輸入</value>
+  </data>
+  <data name="Times_Add" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="Times_Done" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="Times_InvalidTimeTitle" xml:space="preserve">
+    <value>無效時間</value>
+  </data>
+  <data name="Times_InvalidTimeMessage" xml:space="preserve">
+    <value>請輸入 0-59 之間的分鐘數。</value>
+  </data>
+  <data name="Times_InvalidIntervalTitle" xml:space="preserve">
+    <value>無效間隔</value>
+  </data>
+  <data name="Times_InvalidIntervalMessage" xml:space="preserve">
+    <value>請輸入 15 分鐘到 24 小時之間的間隔，例如 30m、2h 或 2.5（小時）。</value>
+  </data>
+  <data name="Times_ReplaceTitle" xml:space="preserve">
+    <value>替換時間</value>
+  </data>
+  <data name="Times_ReplaceMessage" xml:space="preserve">
+    <value>這會將下方的 {0} 個時間點替換為每 {1} 一次的日程。是否繼續？</value>
+  </data>
+  <data name="Times_Replace" xml:space="preserve">
+    <value>替換</value>
+  </data>
+  <data name="PortCheck_Title" xml:space="preserve">
+    <value>埠檢測</value>
+  </data>
+  <data name="PortCheck_Intro" xml:space="preserve">
+    <value>使用 check-host.cc 檢測你的埠能否從網際網路訪問。請在伺服器停止時執行此項，以便啟動器能夠繫結並測試這些埠。</value>
+  </data>
+  <data name="PortCheck_YourPublicIp" xml:space="preserve">
+    <value>你的公網 IP</value>
+  </data>
+  <data name="PortCheck_Results" xml:space="preserve">
+    <value>結果</value>
+  </data>
+  <data name="PortCheck_NotCheckedYet" xml:space="preserve">
+    <value>尚未檢測。</value>
+  </data>
+  <data name="PortCheck_ServiceOnline" xml:space="preserve">
+    <value>埠檢測服務線上</value>
+  </data>
+  <data name="PortCheck_PortRowLabel" xml:space="preserve">
+    <value>{0} ({1})</value>
+  </data>
+  <data name="PortCheck_FirewallNote" xml:space="preserve">
+    <value>此測試會在啟動器上繫結一個臨時監聽器。如果 Windows 防火牆彈出提示，請允許它，否則埠可能會被錯誤地顯示為無法訪問。REST 和 RCON 是管理埠：它們通常不應從網際網路訪問，因此綠色結果表示警告，而非通過。</value>
+  </data>
+  <data name="PortCheck_Check" xml:space="preserve">
+    <value>檢測</value>
+  </data>
+  <data name="PortCheck_Close" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="PortCheck_NoPublicIpTitle" xml:space="preserve">
+    <value>無公網 IP</value>
+  </data>
+  <data name="PortCheck_NoPublicIpMessage" xml:space="preserve">
+    <value>請先輸入你的公網 IP（通常會自動填入）。</value>
+  </data>
+  <data name="PortCheck_Checking" xml:space="preserve">
+    <value>檢測中...</value>
+  </data>
+  <data name="PortCheck_ServiceOnlineStatus" xml:space="preserve">
+    <value>線上。</value>
+  </data>
+  <data name="PortCheck_ServiceUnavailable" xml:space="preserve">
+    <value>不可用，目前無法連線 check-host.cc。</value>
+  </data>
+  <data name="PortCheck_InvalidPort" xml:space="preserve">
+    <value>請輸入 1 到 65535 之間的埠。</value>
+  </data>
+  <data name="PortCheck_Failed" xml:space="preserve">
+    <value>埠檢測失敗，請檢視日誌。</value>
+  </data>
+  <data name="ServerCmd_Title" xml:space="preserve">
+    <value>伺服器命令</value>
+  </data>
+  <data name="ServerCmd_HeaderAnnounce" xml:space="preserve">
+    <value>公告</value>
+  </data>
+  <data name="ServerCmd_Send" xml:space="preserve">
+    <value>傳送</value>
+  </data>
+  <data name="ServerCmd_HeaderPlayers" xml:space="preserve">
+    <value>玩家</value>
+  </data>
+  <data name="ServerCmd_Refresh" xml:space="preserve">
+    <value>重新整理</value>
+  </data>
+  <data name="ServerCmd_ReasonLabel" xml:space="preserve">
+    <value>原因（踢出/封禁）</value>
+  </data>
+  <data name="ServerCmd_LoadingPlayers" xml:space="preserve">
+    <value>正在載入玩家...</value>
+  </data>
+  <data name="ServerCmd_HeaderUnban" xml:space="preserve">
+    <value>解封</value>
+  </data>
+  <data name="ServerCmd_Unban" xml:space="preserve">
+    <value>解封</value>
+  </data>
+  <data name="ServerCmd_UnbanHint" xml:space="preserve">
+    <value>解封必須使用平臺使用者 ID（例如 steam_0123...）。</value>
+  </data>
+  <data name="ServerCmd_HeaderServer" xml:space="preserve">
+    <value>伺服器</value>
+  </data>
+  <data name="ServerCmd_SaveWorld" xml:space="preserve">
+    <value>保存世界</value>
+  </data>
+  <data name="ServerCmd_Close" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="ServerCmd_EnterMessage" xml:space="preserve">
+    <value>請輸入要公告的訊息。</value>
+  </data>
+  <data name="ServerCmd_Announced" xml:space="preserve">
+    <value>已公告。</value>
+  </data>
+  <data name="ServerCmd_AnnounceFailed" xml:space="preserve">
+    <value>無法公告（REST 已關閉或被拒絕）。</value>
+  </data>
+  <data name="ServerCmd_RestOff" xml:space="preserve">
+    <value>REST API 已關閉或無響應。</value>
+  </data>
+  <data name="ServerCmd_NoPlayers" xml:space="preserve">
+    <value>沒有線上玩家。</value>
+  </data>
+  <data name="ServerCmd_EnterUserId" xml:space="preserve">
+    <value>請輸入要解封的使用者 ID。</value>
+  </data>
+  <data name="ServerCmd_UnbanTitle" xml:space="preserve">
+    <value>解封玩家</value>
+  </data>
+  <data name="ServerCmd_UnbanConfirm" xml:space="preserve">
+    <value>解封 {0}？</value>
+  </data>
+  <data name="ServerCmd_Unbanned" xml:space="preserve">
+    <value>已解封 {0}。</value>
+  </data>
+  <data name="ServerCmd_UnbanFailed" xml:space="preserve">
+    <value>無法解封（REST 已關閉或被拒絕）。</value>
+  </data>
+  <data name="ServerCmd_WorldSaved" xml:space="preserve">
+    <value>世界已保存。</value>
+  </data>
+  <data name="ServerCmd_SaveFailed" xml:space="preserve">
+    <value>無法保存（REST 已關閉或被拒絕）。</value>
+  </data>
+  <data name="ServerCmd_UnknownName" xml:space="preserve">
+    <value>（未知）</value>
+  </data>
+  <data name="ServerCmd_PlayerNameLevel" xml:space="preserve">
+    <value>{0}  (等級 {1})</value>
+  </data>
+  <data name="ServerCmd_NoUserId" xml:space="preserve">
+    <value>（無使用者 ID）</value>
+  </data>
+  <data name="ServerCmd_Kick" xml:space="preserve">
+    <value>踢出</value>
+  </data>
+  <data name="ServerCmd_Ban" xml:space="preserve">
+    <value>封禁</value>
+  </data>
+  <data name="ServerCmd_NoUserIdTooltip" xml:space="preserve">
+    <value>此玩家未報告使用者 ID。</value>
+  </data>
+  <data name="ServerCmd_KickTitle" xml:space="preserve">
+    <value>踢出玩家</value>
+  </data>
+  <data name="ServerCmd_KickConfirm" xml:space="preserve">
+    <value>踢出 {0}（{1}）？</value>
+  </data>
+  <data name="ServerCmd_Kicked" xml:space="preserve">
+    <value>已踢出 {0}（{1}）。</value>
+  </data>
+  <data name="ServerCmd_KickFailed" xml:space="preserve">
+    <value>無法踢出 {0}（REST 已關閉或被拒絕）。</value>
+  </data>
+  <data name="ServerCmd_BanTitle" xml:space="preserve">
+    <value>封禁玩家</value>
+  </data>
+  <data name="ServerCmd_BanConfirm" xml:space="preserve">
+    <value>封禁 {0}（{1}）？他們將被踢出並禁止再次加入。</value>
+  </data>
+  <data name="ServerCmd_Banned" xml:space="preserve">
+    <value>已封禁 {0}（{1}）。</value>
+  </data>
+  <data name="ServerCmd_BanFailed" xml:space="preserve">
+    <value>無法封禁 {0}（REST 已關閉或被拒絕）。</value>
+  </data>
+  <data name="ServerCmd_CommandFailed" xml:space="preserve">
+    <value>命令失敗，請檢視日誌。</value>
+  </data>
+  <data name="Discord_Title" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="Discord_BlurbPrefix" xml:space="preserve">
+    <value>通過斜槓命令從 Discord 控制伺服器，和/或將生命週期通知釋出到某個頻道。建立一個機器人，並從</value>
+  </data>
+  <data name="Discord_BlurbLinkText" xml:space="preserve">
+    <value>Discord 開發者門戶</value>
+  </data>
+  <data name="Discord_BlurbSuffix" xml:space="preserve">
+    <value> 複製它的令牌（新增一個機器人，然後用 bot + applications.commands 許可權範圍邀請它）。</value>
+  </data>
+  <data name="Discord_ServerControlBotHeader" xml:space="preserve">
+    <value>伺服器控制機器人</value>
+  </data>
+  <data name="Discord_EnableControlBot" xml:space="preserve">
+    <value>啟用控制機器人（斜槓命令：/status /players /save /backup /update /start /restart /stop）</value>
+  </data>
+  <data name="Discord_BotTokenLabel" xml:space="preserve">
+    <value>機器人令牌（保密）</value>
+  </data>
+  <data name="Discord_CommandChannelIdLabel" xml:space="preserve">
+    <value>命令頻道 ID</value>
+  </data>
+  <data name="Discord_RequiredRoleIdLabel" xml:space="preserve">
+    <value>所需身份組 ID（可選）</value>
+  </data>
+  <data name="Discord_CommandCooldownLabel" xml:space="preserve">
+    <value>命令冷卻時間（秒）</value>
+  </data>
+  <data name="Discord_SecurityNote" xml:space="preserve">
+    <value>安全提示：設定一個命令頻道和/或一個所需身份組，機器人只有在你設定的每一道關卡都通過時才會執行操作（至少設定一個）。任何能在命令頻道發言、或擁有該身份組的人都能控制伺服器，因此請將其鎖定（一個私密的、僅管理員可見的頻道，和/或一個管理員身份組）。啟用 Discord 開發者模式，然後右鍵點選頻道或身份組 -&gt; 複製 ID。令牌保存在本地的 launcher.json 中，且永不寫入日誌。</value>
+  </data>
+  <data name="Discord_CommandsExposedHeader" xml:space="preserve">
+    <value>機器人開放的命令</value>
+  </data>
+  <data name="Discord_CommandsExposedHint" xml:space="preserve">
+    <value>勾選機器人應接受的斜槓命令。破壞性命令（restart、stop、kick、ban）預設關閉。更改在保存時生效（機器人會重新連線並重新註冊它的命令）。</value>
+  </data>
+  <data name="Discord_WebhookNotificationsHeader" xml:space="preserve">
+    <value>Webhook 通知</value>
+  </data>
+  <data name="Discord_EnableNotifications" xml:space="preserve">
+    <value>啟用通知</value>
+  </data>
+  <data name="Discord_WebhookUrlLabel" xml:space="preserve">
+    <value>Webhook URL</value>
+  </data>
+  <data name="Discord_NotifyLifecycle" xml:space="preserve">
+    <value>在啟動/關閉/更新/崩潰時通知</value>
+  </data>
+  <data name="Discord_NotifyPlayers" xml:space="preserve">
+    <value>在玩家加入/離開時通知（需要 REST）</value>
+  </data>
+  <data name="Discord_InvalidChannelIdTitle" xml:space="preserve">
+    <value>無效的頻道 ID</value>
+  </data>
+  <data name="Discord_InvalidChannelIdMessage" xml:space="preserve">
+    <value>命令頻道 ID 必須是數字（Discord 開發者模式 -&gt; 右鍵點選頻道 -&gt; 複製頻道 ID）。</value>
+  </data>
+  <data name="Discord_InvalidRoleIdTitle" xml:space="preserve">
+    <value>無效的身份組 ID</value>
+  </data>
+  <data name="Discord_InvalidRoleIdMessage" xml:space="preserve">
+    <value>所需身份組 ID 必須是數字（Discord 開發者模式 -&gt; 右鍵點選身份組 -&gt; 複製身份組 ID）。</value>
+  </data>
+  <data name="Discord_BotNotReadyTitle" xml:space="preserve">
+    <value>機器人未就緒</value>
+  </data>
+  <data name="Discord_BotNotReadyMessage" xml:space="preserve">
+    <value>要啟用控制機器人，請設定一個機器人令牌和至少一道關卡：一個命令頻道 ID 和/或一個所需身份組 ID。</value>
+  </data>
+  <data name="Mods_Title" xml:space="preserve">
+    <value>模組</value>
+  </data>
+  <data name="Mods_Disclaimer" xml:space="preserve">
+    <value>只有專為在伺服器上執行而製作的模組才能在此生效。許多模組僅供客戶端使用，不能也不應安裝到伺服器上，因此載入模組前請檢視它的說明。使用模組風險自負，它們可能導致存檔資料損壞或崩潰。</value>
+  </data>
+  <data name="Mods_EnableMods" xml:space="preserve">
+    <value>在此伺服器上啟用模組</value>
+  </data>
+  <data name="Mods_SteamAccountHeader" xml:space="preserve">
+    <value>Steam 賬戶</value>
+  </data>
+  <data name="Mods_SteamAccountNote" xml:space="preserve">
+    <value>僅在下載創意工坊模組時需要，手動放入的模組無需賬戶。登入由 Steam 自己的 SteamCMD 在它自己的視窗中處理，因此啟動器永遠不會看到或保存你的密碼，它只記住你的使用者名稱。</value>
+  </data>
+  <data name="Mods_ConnectButton" xml:space="preserve">
+    <value>連線 Steam 賬戶</value>
+  </data>
+  <data name="Mods_DifferentAccountLink" xml:space="preserve">
+    <value>用其他賬戶連線？</value>
+  </data>
+  <data name="Mods_WorkshopHeader" xml:space="preserve">
+    <value>Steam 創意工坊模組</value>
+  </data>
+  <data name="Mods_BrowsePrefix" xml:space="preserve">
+    <value>在 </value>
+  </data>
+  <data name="Mods_BrowseLinkText" xml:space="preserve">
+    <value>Palworld Steam 創意工坊</value>
+  </data>
+  <data name="Mods_BrowseSuffix" xml:space="preserve">
+    <value> 上瀏覽模組。</value>
+  </data>
+  <data name="Mods_AddButton" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="Mods_ScanFolderButton" xml:space="preserve">
+    <value>掃描資料夾</value>
+  </data>
+  <data name="Mods_OpenModsFolderButton" xml:space="preserve">
+    <value>開啟模組資料夾</value>
+  </data>
+  <data name="Mods_AddByIdLabel" xml:space="preserve">
+    <value>通過 Steam 創意工坊 ID 或 URL 新增：</value>
+  </data>
+  <data name="Mods_NoAccountWarning" xml:space="preserve">
+    <value>你已啟用創意工坊模組，但未連線 Steam 賬戶。請在上方連線一個賬戶以下載它們，否則它們會在啟動時被跳過（手動放入的模組仍會載入）。</value>
+  </data>
+  <data name="Mods_LoosePakHeader" xml:space="preserve">
+    <value>獨立 .pak 模組</value>
+  </data>
+  <data name="Mods_LoosePakDescription" xml:space="preserve">
+    <value>如果你使用上面的 Steam 創意工坊，則不需要這一項。對於沒有 Info.json 的原始 .pak 模組（許多 NexusMods 下載的模組）：將它們放入獨立 .pak 資料夾，然後在此處切換它們。它們通過重新命名來啟用/停用（絕不刪除），並在下次伺服器啟動時載入。</value>
+  </data>
+  <data name="Mods_OpenLoosePaksFolderButton" xml:space="preserve">
+    <value>開啟獨立 .pak 資料夾</value>
+  </data>
+  <data name="Mods_RescanButton" xml:space="preserve">
+    <value>重新掃描</value>
+  </data>
+  <data name="Mods_OpenUe4ssFolderButton" xml:space="preserve">
+    <value>開啟 UE4SS 模組資料夾</value>
+  </data>
+  <data name="Mods_EnterUsernameTitle" xml:space="preserve">
+    <value>請輸入使用者名稱</value>
+  </data>
+  <data name="Mods_EnterUsernameBody" xml:space="preserve">
+    <value>請先輸入你的 Steam 賬戶名，然後再連線。</value>
+  </data>
+  <data name="Mods_ConnectingButton" xml:space="preserve">
+    <value>連線中...</value>
+  </data>
+  <data name="Mods_SteamCmdWindowOpened" xml:space="preserve">
+    <value>已開啟一個 SteamCMD 視窗。請在其中輸入你的密碼和 Steam Guard 驗證碼，視窗會保持開啟以便你檢視結果，之後再關閉它。</value>
+  </data>
+  <data name="Mods_ConfirmSignInFailed" xml:space="preserve">
+    <value>無法確認登入。請重新連線，並留意 SteamCMD 視窗中的錯誤（密碼或 Steam Guard 驗證碼錯誤）。</value>
+  </data>
+  <data name="Mods_SignInFailed" xml:space="preserve">
+    <value>登入失敗：{0}</value>
+  </data>
+  <data name="Mods_SavedSignInInvalid" xml:space="preserve">
+    <value>你保存的登入已失效，請重新連線。</value>
+  </data>
+  <data name="Mods_CheckSignInFailed" xml:space="preserve">
+    <value>無法檢查登入：{0}</value>
+  </data>
+  <data name="Mods_CheckingSignIn" xml:space="preserve">
+    <value>正在檢查登入...</value>
+  </data>
+  <data name="Mods_SignedIn" xml:space="preserve">
+    <value>已登入 SteamCMD</value>
+  </data>
+  <data name="Mods_InvalidIdTitle" xml:space="preserve">
+    <value>無效的創意工坊 ID</value>
+  </data>
+  <data name="Mods_InvalidIdBody" xml:space="preserve">
+    <value>請輸入數字形式的 Steam 創意工坊 ID，或類似 https://steamcommunity.com/sharedfiles/filedetails/?id=123456 的創意工坊 URL。</value>
+  </data>
+  <data name="Mods_AlreadyAddedTitle" xml:space="preserve">
+    <value>已新增</value>
+  </data>
+  <data name="Mods_AlreadyAddedBody" xml:space="preserve">
+    <value>該創意工坊 ID 已在列表中。</value>
+  </data>
+  <data name="Mods_AddingButton" xml:space="preserve">
+    <value>新增中...</value>
+  </data>
+  <data name="Mods_NotPalworldTitle" xml:space="preserve">
+    <value>不是 Palworld 模組？</value>
+  </data>
+  <data name="Mods_NotPalworldBody" xml:space="preserve">
+    <value>此專案的 Steam 應用 ID 是 {0}，而不是 Palworld 的（{1}），因此它可能無法在你的伺服器上執行。仍要新增嗎？</value>
+  </data>
+  <data name="Mods_AddAnyway" xml:space="preserve">
+    <value>仍然新增</value>
+  </data>
+  <data name="Mods_ScanNoneFound" xml:space="preserve">
+    <value>在模組資料夾中未找到新模組。</value>
+  </data>
+  <data name="Mods_ScanAdded" xml:space="preserve">
+    <value>已從模組資料夾新增 {0} 個模組。</value>
+  </data>
+  <data name="Mods_ScanSkipped" xml:space="preserve">
+    <value> 跳過了 {0} 個沒有可讀 Info.json 的資料夾。</value>
+  </data>
+  <data name="Mods_ScanTitle" xml:space="preserve">
+    <value>掃描模組資料夾</value>
+  </data>
+  <data name="Mods_NoAccountTitle" xml:space="preserve">
+    <value>未連線 Steam 賬戶</value>
+  </data>
+  <data name="Mods_NoAccountSaveBody" xml:space="preserve">
+    <value>你已啟用創意工坊模組，但未連線 Steam 賬戶，因此無法下載它們，伺服器啟動時會跳過它們（手動放入的模組仍會載入）。仍要保存嗎？</value>
+  </data>
+  <data name="Mods_SaveAnyway" xml:space="preserve">
+    <value>仍然保存</value>
+  </data>
+  <data name="Mods_PackageTip" xml:space="preserve">
+    <value>包名：{0}</value>
+  </data>
+  <data name="Mods_PackageUnresolvedTip" xml:space="preserve">
+    <value>尚未解析出包名（請下載或掃描該模組）。</value>
+  </data>
+  <data name="Mods_OpenWorkshopPageTip" xml:space="preserve">
+    <value>開啟此模組的 Steam 創意工坊頁面。 </value>
+  </data>
+  <data name="Mods_LocalLabel" xml:space="preserve">
+    <value>本地</value>
+  </data>
+  <data name="Mods_DeleteModTip" xml:space="preserve">
+    <value>刪除此模組（將它從列表中移除並刪除其下載的檔案）。</value>
+  </data>
+  <data name="Mods_EmptyList" xml:space="preserve">
+    <value>還沒有模組。請在上方新增創意工坊 ID，或將模組資料夾放入模組資料夾後點擊掃描。</value>
+  </data>
+  <data name="Mods_DeleteTitle" xml:space="preserve">
+    <value>刪除模組</value>
+  </data>
+  <data name="Mods_DeleteBody" xml:space="preserve">
+    <value>這將刪除該模組的檔案，並將其從你的模組列表中移除。
+
+{0}</value>
+  </data>
+  <data name="Mods_DeleteButton" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="Mods_DeleteFailedTitle" xml:space="preserve">
+    <value>無法刪除檔案</value>
+  </data>
+  <data name="Mods_DeleteFailedBody" xml:space="preserve">
+    <value>已將它從列表中移除，但無法刪除檔案：{0}</value>
+  </data>
+  <data name="Mods_ThisModFallback" xml:space="preserve">
+    <value>此模組</value>
+  </data>
+  <data name="Mods_LoosePakEmpty" xml:space="preserve">
+    <value>未找到獨立 .pak 模組。請將 .pak 檔案（連同任何 .utoc / .ucas）放入獨立 .pak 資料夾，然後重新掃描。</value>
+  </data>
+  <data name="Mods_LoosePakLabelSingular" xml:space="preserve">
+    <value>{0}  ({1} 個檔案)</value>
+  </data>
+  <data name="Mods_LoosePakLabelPlural" xml:space="preserve">
+    <value>{0}  ({1} 個檔案)</value>
+  </data>
+  <data name="Mods_ChangeModFailedTitle" xml:space="preserve">
+    <value>無法更改模組</value>
+  </data>
+  <data name="Mods_EnablePakFailed" xml:space="preserve">
+    <value>無法啟用“{0}”：{1}</value>
+  </data>
+  <data name="Mods_DisablePakFailed" xml:space="preserve">
+    <value>無法停用“{0}”：{1}</value>
+  </data>
+  <data name="Mods_Ue4ssNotInstalledTitle" xml:space="preserve">
+    <value>UE4SS 未安裝</value>
+  </data>
+  <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
+    <value>UE4SS 尚未安裝。請從創意工坊新增一個 UE4SS 模組並啟動一次伺服器，之後它的模組資料夾就會出現在這裡。</value>
+  </data>
+  <data name="Mods_ColOn" xml:space="preserve">
+    <value>開</value>
+  </data>
+  <data name="Mods_ColName" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="Mods_ColId" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Mods_ColNote" xml:space="preserve">
+    <value>備註</value>
+  </data>
+  <data name="Settings_AdvancedTitle" xml:space="preserve">
+    <value>進階設定</value>
+  </data>
+  <data name="Settings_ServerTitle" xml:space="preserve">
+    <value>伺服器設定</value>
+  </data>
+  <data name="Settings_ResetToDefaults" xml:space="preserve">
+    <value>重置為預設值</value>
+  </data>
+  <data name="Settings_WorldBlurb" xml:space="preserve">
+    <value>玩法與平衡、難度、EXP / 捕獲 / 掉落倍率、傷害倍率，以及世界特性。完整參考：</value>
+  </data>
+  <data name="Settings_WorldBlurbLink" xml:space="preserve">
+    <value>功能文件</value>
+  </data>
+  <data name="Settings_AdminBlurb" xml:space="preserve">
+    <value>伺服器管理、伺服器名稱、密碼、玩家上限，以及 REST / RCON API。完整參考：</value>
+  </data>
+  <data name="Settings_AdminBlurbLink" xml:space="preserve">
+    <value>伺服器管理文件</value>
+  </data>
+  <data name="Settings_TabWorld" xml:space="preserve">
+    <value>世界設定</value>
+  </data>
+  <data name="Settings_TabAdmin" xml:space="preserve">
+    <value>管理</value>
+  </data>
+  <data name="Settings_TabUndocumented" xml:space="preserve">
+    <value>未記錄</value>
+  </data>
+  <data name="Settings_TabLaunchArgs" xml:space="preserve">
+    <value>啟動引數</value>
+  </data>
+  <data name="Settings_BannerServerRunning" xml:space="preserve">
+    <value>伺服器正在執行，因此遊戲設定選項卡為只讀（執行中的伺服器會覆蓋自己的配置）。啟動引數仍可編輯，並與遊戲設定一樣在下次啟動時生效。</value>
+  </data>
+  <data name="Settings_BannerGameUnavailable" xml:space="preserve">
+    <value>遊戲設定不可用，請先安裝伺服器（未找到 DefaultPalWorldSettings.ini）。</value>
+  </data>
+  <data name="Settings_UndocumentedBlurb" xml:space="preserve">
+    <value>官方文件未涵蓋的設定。每條提示都是我們的最佳推測，但我們無法為其擔保，有些可能是內部使用或未使用的。可在此查閱：</value>
+  </data>
+  <data name="Settings_UndocumentedBlurbLink" xml:space="preserve">
+    <value>Palworld 配置參考</value>
+  </data>
+  <data name="Settings_UndocKnownHeader" xml:space="preserve">
+    <value>啟動器識別的設定</value>
+  </data>
+  <data name="Settings_UndocNewHeader" xml:space="preserve">
+    <value>你配置中的新設定（無法識別）</value>
+  </data>
+  <data name="Settings_UndocNoneRecognized" xml:space="preserve">
+    <value>無，你配置中的每個鍵都能識別。</value>
+  </data>
+  <data name="Settings_NoEffectTitle" xml:space="preserve">
+    <value>此設定在伺服器上無效</value>
+  </data>
+  <data name="Settings_NoEffectMessage" xml:space="preserve">
+    <value>提示：“{0}”是客戶端/單人遊戲設定，對專用伺服器沒有影響。在此修改它不會改變伺服器的玩法。請使用各項單獨設定（或“世界設定”頂部的難度預設按鈕）來控制伺服器難度。</value>
+  </data>
+  <data name="Settings_GotIt" xml:space="preserve">
+    <value>知道了</value>
+  </data>
+  <data name="Settings_DifficultyPreset" xml:space="preserve">
+    <value>難度預設：</value>
+  </data>
+  <data name="Settings_PresetTitle" xml:space="preserve">
+    <value>{0} 預設</value>
+  </data>
+  <data name="Settings_PresetNoChanges" xml:space="preserve">
+    <value>你的設定已與 {0} 預設一致，無需更改。</value>
+  </data>
+  <data name="Settings_PresetConfirmMessage" xml:space="preserve">
+    <value>以下是 Palworld 1.0 時的數值。此後某些設定可能已被新增或更改。
+
+應用 {0} 預設後將更改以下數值：
+
+{1}
+
+上面未列出的數值將保持不變。
+
+應用並保存這些更改嗎？</value>
+  </data>
+  <data name="Settings_Yes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="Settings_No" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="Settings_PresetAppliedTitle" xml:space="preserve">
+    <value>已應用 {0} 預設</value>
+  </data>
+  <data name="Settings_PresetAppliedMessage" xml:space="preserve">
+    <value>已應用 {0} 預設。更改並保存了 {1} 項設定。</value>
+  </data>
+  <data name="Settings_LaunchArgsIntro" xml:space="preserve">
+    <value>用於啟動專用伺服器的完整命令列（下方即時重新生成）。當這裡的某個引數與 PalWorldSettings.ini 中的設定控制同一項內容時，以引數為準，留空、為 0 或保持預設值的欄位會被省略，從而改用 ini 中的值。大多數遊戲設定沒有對應引數，只存在於 ini 中（請在“伺服器設定”中編輯那些設定）。更改將在下次啟動時生效。</value>
+  </data>
+  <data name="Settings_ListenPortTerm" xml:space="preserve">
+    <value>監聽埠</value>
+  </data>
+  <data name="Settings_ListenPortNote" xml:space="preserve">
+    <value> 是伺服器繫結、玩家連線的埠。 </value>
+  </data>
+  <data name="Settings_PublicPortTerm" xml:space="preserve">
+    <value>公開埠</value>
+  </data>
+  <data name="Settings_PublicPortNote" xml:space="preserve">
+    <value> （僅限社群伺服器）設定伺服器向公開列表通告的內容，它不會改變監聽埠。</value>
+  </data>
+  <data name="Settings_ValidateListenPort" xml:space="preserve">
+    <value>監聽埠</value>
+  </data>
+  <data name="Settings_ValidateMaxPlayers" xml:space="preserve">
+    <value>最大玩家數</value>
+  </data>
+  <data name="Settings_ValidateWorkerThreads" xml:space="preserve">
+    <value>工作執行緒</value>
+  </data>
+  <data name="Settings_ValidatePublicIp" xml:space="preserve">
+    <value>公網 IP</value>
+  </data>
+  <data name="Settings_ValidatePublicPort" xml:space="preserve">
+    <value>公開埠</value>
+  </data>
+  <data name="Settings_RowListenPort" xml:space="preserve">
+    <value>監聽埠 (-port)</value>
+  </data>
+  <data name="Settings_TipListenPort" xml:space="preserve">
+    <value>伺服器繫結的 UDP 埠，即玩家連線的埠（Palworld 預設 8211）。始終生效。這不是下面的公開埠。</value>
+  </data>
+  <data name="Settings_RowMaxPlayers" xml:space="preserve">
+    <value>最大玩家數 (-players，0 = 使用遊戲設定)</value>
+  </data>
+  <data name="Settings_TipMaxPlayers" xml:space="preserve">
+    <value>設定後會覆蓋 ini 中的 ServerPlayerMaxNum。0 = 不新增該引數，改用遊戲設定。</value>
+  </data>
+  <data name="Settings_RowPerfThreads" xml:space="preserve">
+    <value>效能執行緒</value>
+  </data>
+  <data name="Settings_TipPerfThreads" xml:space="preserve">
+    <value>新增 -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS。建議專用伺服器開啟。</value>
+  </data>
+  <data name="Settings_RowWorkerThreads" xml:space="preserve">
+    <value>工作執行緒 (0 = 自動)</value>
+  </data>
+  <data name="Settings_TipWorkerThreads" xml:space="preserve">
+    <value>-NumberOfWorkerThreadsServer。0 = 自動（不新增）。僅在開啟效能執行緒時使用。</value>
+  </data>
+  <data name="Settings_RowCommunity" xml:space="preserve">
+    <value>社群/公開伺服器 (-publiclobby)</value>
+  </data>
+  <data name="Settings_TipCommunity" xml:space="preserve">
+    <value>-publiclobby：將伺服器列入公開/社群伺服器列表。關閉 = 私人（玩家通過 IP 加入）。</value>
+  </data>
+  <data name="Settings_RowPublicIp" xml:space="preserve">
+    <value>公網 IP (社群，留空 = 自動)</value>
+  </data>
+  <data name="Settings_TipPublicIp" xml:space="preserve">
+    <value>用於社群伺服器的 -publicip（留空 = 自動檢測）。僅用於通告，不會改變伺服器繫結的地址。</value>
+  </data>
+  <data name="Settings_RowPublicPort" xml:space="preserve">
+    <value>公開埠 (社群，0 = 使用遊戲設定)</value>
+  </data>
+  <data name="Settings_TipPublicPort" xml:space="preserve">
+    <value>用於社群伺服器的 -publicport：向公開列表通告的外部埠。不會改變監聽埠。0 = 不新增（使用 ini 中的值）。</value>
+  </data>
+  <data name="Settings_RowLogFormat" xml:space="preserve">
+    <value>日誌格式</value>
+  </data>
+  <data name="Settings_TipLogFormat" xml:space="preserve">
+    <value>-logformat（Text 或 Json）。留空 = 不新增，採用 ini/預設值。</value>
+  </data>
+  <data name="Settings_ExtraArgsNote" xml:space="preserve">
+    <value>原樣追加到命令列末尾的原始引數（以空格或換行分隔）。某些 Unreal 伺服器可在此接受地圖/遊戲類的覆蓋設定。除非你清楚自己在做什麼，否則請勿更改。</value>
+  </data>
+  <data name="Settings_AdvancedExpander" xml:space="preserve">
+    <value>高階</value>
+  </data>
+  <data name="Settings_AdvancedIntro" xml:space="preserve">
+    <value>在伺服器程序啟動後應用於它的底層設定。在此使用錯誤的值可能會損害效能，除非你清楚自己在做什麼，否則請勿更改。將在下次啟動時生效。</value>
+  </data>
+  <data name="Settings_PriorityAffinityHeader" xml:space="preserve">
+    <value>程序優先順序和 CPU 親和性</value>
+  </data>
+  <data name="Settings_RowPriority" xml:space="preserve">
+    <value>程序優先順序</value>
+  </data>
+  <data name="Settings_TipPriority" xml:space="preserve">
+    <value>伺服器程序的 Windows 優先順序。“高於正常”/“高”在高負載下可能有幫助，但會擠佔其他應用的資源並損害效能，此處不提供“即時”（不安全）。</value>
+  </data>
+  <data name="Settings_CoreLabel" xml:space="preserve">
+    <value>核心 {0}</value>
+  </data>
+  <data name="Settings_CpuAffinityNote" xml:space="preserve">
+    <value>CPU 親和性，將伺服器固定到特定核心（全部勾選 = 不限制 / 使用所有核心）：</value>
+  </data>
+  <data name="Settings_AdvancedArgsTitle" xml:space="preserve">
+    <value>高階引數</value>
+  </data>
+  <data name="Settings_AdvancedArgsMessage" xml:space="preserve">
+    <value>你在“高階”框中填入了自定義引數。它們會原樣傳遞給伺服器，除非你清楚自己在做什麼，否則請勿保留。</value>
+  </data>
+  <data name="Settings_Accept" xml:space="preserve">
+    <value>接受</value>
+  </data>
+  <data name="Settings_ConfirmSaveMore" xml:space="preserve">
+    <value>
+...還有 {0} 項</value>
+  </data>
+  <data name="Settings_ConfirmSaveTitle" xml:space="preserve">
+    <value>確認保存</value>
+  </data>
+  <data name="Settings_ConfirmSaveMessage" xml:space="preserve">
+    <value>以下設定將更改：
+
+{0}
+
+保存這些更改嗎？</value>
+  </data>
+  <data name="Settings_NotSavedTitle" xml:space="preserve">
+    <value>未保存</value>
+  </data>
+  <data name="Settings_NotSavedMessage" xml:space="preserve">
+    <value>“{0}”的值會破壞配置格式（多餘的逗號、引號或不匹配的括號）。未保存任何內容，請修正後重試。</value>
+  </data>
+  <data name="Settings_ValidationError" xml:space="preserve">
+    <value>{0} 無效。必須為 {1}。</value>
+  </data>
+  <data name="Settings_InvalidSettingsTitle" xml:space="preserve">
+    <value>設定無效</value>
+  </data>
+  <data name="Settings_ResetFieldTooltip" xml:space="preserve">
+    <value>將此欄位重置為預設值</value>
+  </data>
+  <data name="Settings_UndocumentedMarker" xml:space="preserve">
+    <value>  · 未記錄</value>
+  </data>
+  <data name="Settings_ResetAllMessage" xml:space="preserve">
+    <value>將此面板中的每個欄位都重置為預設值嗎？你仍需點選“保存”才能應用。</value>
+  </data>
+  <data name="Settings_ResetAllButton" xml:space="preserve">
+    <value>全部重置</value>
+  </data>
+  <data name="Settings_CategoryServerManagement" xml:space="preserve">
+    <value>伺服器管理</value>
+  </data>
+  <data name="Settings_CategoryPerformance" xml:space="preserve">
+    <value>效能</value>
+  </data>
+  <data name="Settings_CategoryGameplay" xml:space="preserve">
+    <value>玩法</value>
+  </data>
+  <data name="Settings_CategoryGameBalance" xml:space="preserve">
+    <value>遊戲平衡</value>
+  </data>
+  <data name="Vm_Working" xml:space="preserve">
+    <value>處理中</value>
+  </data>
+  <data name="Vm_TimesSummaryNone" xml:space="preserve">
+    <value>（無）</value>
+  </data>
+  <data name="Vm_TimesSummaryMore" xml:space="preserve">
+    <value>{0}  +{1} 項</value>
+  </data>
+  <data name="Settings_PriorityBelowNormal" xml:space="preserve">
+    <value>低於正常</value>
+  </data>
+  <data name="Settings_PriorityNormal" xml:space="preserve">
+    <value>正常</value>
+  </data>
+  <data name="Settings_PriorityAboveNormal" xml:space="preserve">
+    <value>高於正常</value>
+  </data>
+  <data name="Settings_PriorityHigh" xml:space="preserve">
+    <value>高</value>
+  </data>
+  <data name="Btn_Working" xml:space="preserve">
+    <value>處理中…</value>
+  </data>
+  <data name="Btn_Install" xml:space="preserve">
+    <value>安裝</value>
+  </data>
+  <data name="Btn_Starting" xml:space="preserve">
+    <value>啟動中…</value>
+  </data>
+  <data name="Btn_Stopping" xml:space="preserve">
+    <value>停止中…</value>
+  </data>
+  <data name="Btn_StoppingSeconds" xml:space="preserve">
+    <value>停止中（{0} 秒）</value>
+  </data>
+  <data name="State_Stopped" xml:space="preserve">
+    <value>已停止</value>
+  </data>
+  <data name="State_Starting" xml:space="preserve">
+    <value>啟動中</value>
+  </data>
+  <data name="State_Healthy" xml:space="preserve">
+    <value>健康</value>
+  </data>
+  <data name="State_Degraded" xml:space="preserve">
+    <value>降級</value>
+  </data>
+  <data name="State_Zombie" xml:space="preserve">
+    <value>假死</value>
+  </data>
+  <data name="State_Stopping" xml:space="preserve">
+    <value>停止中</value>
+  </data>
+  <data name="State_Restarting" xml:space="preserve">
+    <value>重啟中</value>
+  </data>
+  <data name="State_Backoff" xml:space="preserve">
+    <value>退避中</value>
+  </data>
+  <data name="Update_AutoUpdateOff" xml:space="preserve">
+    <value>自動更新已關閉（構建 {0}）</value>
+  </data>
+  <data name="Update_Checking" xml:space="preserve">
+    <value>正在檢查更新...</value>
+  </data>
+  <data name="Update_CheckFailed" xml:space="preserve">
+    <value>更新檢查失敗（構建 {0}）</value>
+  </data>
+  <data name="Update_Found" xml:space="preserve">
+    <value>發現新構建 {0}，正在重啟</value>
+  </data>
+  <data name="Update_UpToDate" xml:space="preserve">
+    <value>已是最新（構建 {0}）</value>
+  </data>
+  <data name="Sched_Off" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="Sched_UntilHM" xml:space="preserve">
+    <value>{0}小時{1}分</value>
+  </data>
+  <data name="Sched_UntilMS" xml:space="preserve">
+    <value>{0}分{1}秒</value>
+  </data>
+  <data name="Cat_ServerName_Label" xml:space="preserve">
+    <value>世界名稱</value>
+  </data>
+  <data name="Cat_ServerName_Desc" xml:space="preserve">
+    <value>伺服器名稱。</value>
+  </data>
+  <data name="Cat_ServerDescription_Label" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="Cat_ServerDescription_Desc" xml:space="preserve">
+    <value>伺服器描述。</value>
+  </data>
+  <data name="Cat_ServerPassword_Label" xml:space="preserve">
+    <value>伺服器密碼</value>
+  </data>
+  <data name="Cat_ServerPassword_Desc" xml:space="preserve">
+    <value>登入伺服器所需的密碼。留空 = 無密碼。</value>
+  </data>
+  <data name="Cat_AdminPassword_Label" xml:space="preserve">
+    <value>管理員密碼</value>
+  </data>
+  <data name="Cat_AdminPassword_Desc" xml:space="preserve">
+    <value>用於獲取伺服器管理員許可權的密碼。REST API 和 RCON 需要使用該密碼。</value>
+  </data>
+  <data name="Cat_ServerPlayerMaxNum_Label" xml:space="preserve">
+    <value>最大玩家數</value>
+  </data>
+  <data name="Cat_ServerPlayerMaxNum_Desc" xml:space="preserve">
+    <value>可加入伺服器的最大玩家數。如果設定了 -players 啟動引數，則以該引數為準。</value>
+  </data>
+  <data name="Cat_CoopPlayerMaxNum_Label" xml:space="preserve">
+    <value>CoopPlayerMaxNum</value>
+  </data>
+  <data name="Cat_CoopPlayerMaxNum_Desc" xml:space="preserve">
+    <value>未記錄。社群猜測這是合作遊戲的隊伍人數，但它可能是一個內部值，對專用伺服器沒有影響。</value>
+  </data>
+  <data name="Cat_RESTAPIEnabled_Label" xml:space="preserve">
+    <value>啟用 REST API</value>
+  </data>
+  <data name="Cat_RESTAPIEnabled_Desc" xml:space="preserve">
+    <value>啟用 REST API。啟動器需要它來獲取統計資料、執行正常關閉以及記錄玩家日誌。</value>
+  </data>
+  <data name="Cat_RESTAPIPort_Label" xml:space="preserve">
+    <value>REST API 埠</value>
+  </data>
+  <data name="Cat_RESTAPIPort_Desc" xml:space="preserve">
+    <value>REST API 的監聽埠。</value>
+  </data>
+  <data name="Cat_RCONEnabled_Label" xml:space="preserve">
+    <value>啟用 RCON</value>
+  </data>
+  <data name="Cat_RCONEnabled_Desc" xml:space="preserve">
+    <value>啟用 RCON。</value>
+  </data>
+  <data name="Cat_RCONPort_Label" xml:space="preserve">
+    <value>RCON 埠</value>
+  </data>
+  <data name="Cat_RCONPort_Desc" xml:space="preserve">
+    <value>RCON 使用的埠號。</value>
+  </data>
+  <data name="Cat_bUseAuth_Label" xml:space="preserve">
+    <value>bUseAuth</value>
+  </data>
+  <data name="Cat_bUseAuth_Desc" xml:space="preserve">
+    <value>未記錄。預設為 True。</value>
+  </data>
+  <data name="Cat_BanListURL_Label" xml:space="preserve">
+    <value>BanListURL</value>
+  </data>
+  <data name="Cat_BanListURL_Desc" xml:space="preserve">
+    <value>未記錄。可能是伺服器所依據的封禁列表，但其確切格式和行為尚未確認。</value>
+  </data>
+  <data name="Cat_bIsUseBackupSaveData_Label" xml:space="preserve">
+    <value>內建存檔備份</value>
+  </data>
+  <data name="Cat_bIsUseBackupSaveData_Desc" xml:space="preserve">
+    <value>啟用 Palworld 自帶的世界備份（獨立於啟動器的備份）。啟用此項會增加磁碟負載。</value>
+  </data>
+  <data name="Cat_AutoSaveSpan_Label" xml:space="preserve">
+    <value>自動保存間隔</value>
+  </data>
+  <data name="Cat_AutoSaveSpan_Desc" xml:space="preserve">
+    <value>世界自動保存的頻率（秒）。</value>
+  </data>
+  <data name="Cat_bIsShowJoinLeftMessage_Label" xml:space="preserve">
+    <value>顯示加入/離開訊息</value>
+  </data>
+  <data name="Cat_bIsShowJoinLeftMessage_Desc" xml:space="preserve">
+    <value>在專用伺服器上，當玩家加入或離開時顯示遊戲內訊息。</value>
+  </data>
+  <data name="Cat_bAllowClientMod_Label" xml:space="preserve">
+    <value>允許客戶端模組</value>
+  </data>
+  <data name="Cat_bAllowClientMod_Desc" xml:space="preserve">
+    <value>允許啟用了模組的玩家加入伺服器。</value>
+  </data>
+  <data name="Cat_ChatPostLimitPerMinute_Label" xml:space="preserve">
+    <value>聊天頻率限制</value>
+  </data>
+  <data name="Cat_ChatPostLimitPerMinute_Desc" xml:space="preserve">
+    <value>每分鐘允許的最大聊天訊息數。</value>
+  </data>
+  <data name="Cat_LogFormatType_Label" xml:space="preserve">
+    <value>日誌格式</value>
+  </data>
+  <data name="Cat_LogFormatType_Desc" xml:space="preserve">
+    <value>伺服器日誌檔案格式。</value>
+  </data>
+  <data name="Cat_bIsMultiplay_Label" xml:space="preserve">
+    <value>bIsMultiplay</value>
+  </data>
+  <data name="Cat_bIsMultiplay_Desc" xml:space="preserve">
+    <value>未記錄。可能是建立世界時遊戲客戶端顯示的“多人遊戲：是/否”選項，因此對專用伺服器沒有影響。預設為 False。</value>
+  </data>
+  <data name="Cat_Region_Label" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="Cat_Region_Desc" xml:space="preserve">
+    <value>未記錄。某種地區程式碼，但其預期格式（NA、US 還是數字？）和用途（匹配、伺服器列表，還是都不是）均未知。預設為空。</value>
+  </data>
+  <data name="Cat_CrossplayPlatforms_Label" xml:space="preserve">
+    <value>跨平臺聯機平臺</value>
+  </data>
+  <data name="Cat_CrossplayPlatforms_Desc" xml:space="preserve">
+    <value>允許連線到伺服器的平臺，以元組形式表示。預設：(Steam,Xbox,PS5,Mac)。</value>
+  </data>
+  <data name="Cat_PublicIP_Label" xml:space="preserve">
+    <value>公網 IP</value>
+  </data>
+  <data name="Cat_PublicIP_Desc" xml:space="preserve">
+    <value>社群伺服器：顯式指定對外的公網 IP。留空 = 自動檢測。</value>
+  </data>
+  <data name="Cat_PublicPort_Label" xml:space="preserve">
+    <value>公開埠</value>
+  </data>
+  <data name="Cat_PublicPort_Desc" xml:space="preserve">
+    <value>社群伺服器：顯式指定對外的公開埠。不會改變伺服器的監聽埠。</value>
+  </data>
+  <data name="Cat_bEnableBuildingPlayerUIdDisplay_Label" xml:space="preserve">
+    <value>在建築上顯示建造者 ID</value>
+  </data>
+  <data name="Cat_bEnableBuildingPlayerUIdDisplay_Desc" xml:space="preserve">
+    <value>是否在建築上顯示建造者的玩家 ID。</value>
+  </data>
+  <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Label" xml:space="preserve">
+    <value>BuildingNameDisplayCacheTTLSeconds</value>
+  </data>
+  <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Desc" xml:space="preserve">
+    <value>未記錄。可能是建築快取的顯示名稱（見“在建築上顯示建造者 ID”）在重新整理前保留的時長（秒）。</value>
+  </data>
+  <data name="Cat_BaseCampMaxNum_Label" xml:space="preserve">
+    <value>最大據點數（世界）</value>
+  </data>
+  <data name="Cat_BaseCampMaxNum_Desc" xml:space="preserve">
+    <value>地圖上據點的最大總數（所有公會的據點合計）。</value>
+  </data>
+  <data name="Cat_BaseCampMaxNumInGuild_Label" xml:space="preserve">
+    <value>各公會的最大據點數</value>
+  </data>
+  <data name="Cat_BaseCampMaxNumInGuild_Desc" xml:space="preserve">
+    <value>每個公會的最大據點數。預設 4（最大 10）。提高此值會增加處理負載。</value>
+  </data>
+  <data name="Cat_BaseCampWorkerMaxNum_Label" xml:space="preserve">
+    <value>據點工作帕魯最大數</value>
+  </data>
+  <data name="Cat_BaseCampWorkerMaxNum_Desc" xml:space="preserve">
+    <value>每個據點的最大帕魯數（最大 50）。提高此值會增加處理負載。</value>
+  </data>
+  <data name="Cat_MaxBuildingLimitNum_Label" xml:space="preserve">
+    <value>單個據點的最大建築數</value>
+  </data>
+  <data name="Cat_MaxBuildingLimitNum_Desc" xml:space="preserve">
+    <value>每名玩家的建築數量上限（0 = 無限制）。</value>
+  </data>
+  <data name="Cat_DropItemMaxNum_Label" xml:space="preserve">
+    <value>世界內的掉落物上限</value>
+  </data>
+  <data name="Cat_DropItemMaxNum_Desc" xml:space="preserve">
+    <value>掉落物品在消失前的最大數量。</value>
+  </data>
+  <data name="Cat_PhysicsActiveDropItemMaxNum_Label" xml:space="preserve">
+    <value>遊戲世界內具有物理互動效果的掉落物品最大數量</value>
+  </data>
+  <data name="Cat_PhysicsActiveDropItemMaxNum_Desc" xml:space="preserve">
+    <value>可使用物理效果的掉落物品的最大數量。-1 = 無限制。提高此值可能影響處理負載。</value>
+  </data>
+  <data name="Cat_DropItemMaxNum_UNKO_Label" xml:space="preserve">
+    <value>DropItemMaxNum_UNKO</value>
+  </data>
+  <data name="Cat_DropItemMaxNum_UNKO_Desc" xml:space="preserve">
+    <value>未記錄。似乎未使用，可能是無用項或未實現的功能。</value>
+  </data>
+  <data name="Cat_ServerReplicatePawnCullDistance_Label" xml:space="preserve">
+    <value>帕魯同步距離</value>
+  </data>
+  <data name="Cat_ServerReplicatePawnCullDistance_Desc" xml:space="preserve">
+    <value>帕魯與玩家的同步距離（釐米）。最小 5000，最大 15000。</value>
+  </data>
+  <data name="Cat_ItemContainerForceMarkDirtyInterval_Label" xml:space="preserve">
+    <value>容器重新同步間隔</value>
+  </data>
+  <data name="Cat_ItemContainerForceMarkDirtyInterval_Desc" xml:space="preserve">
+    <value>開啟容器介面時強制重新同步的頻率（秒）。</value>
+  </data>
+  <data name="Cat_MaxGuildsPerFrame_Label" xml:space="preserve">
+    <value>MaxGuildsPerFrame</value>
+  </data>
+  <data name="Cat_MaxGuildsPerFrame_Desc" xml:space="preserve">
+    <value>未記錄。可能是伺服器每幀處理公會數量的上限，一項效能調節引數。</value>
+  </data>
+  <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Label" xml:space="preserve">
+    <value>PlayerDataPalStorageUpdateCheckTickInterval</value>
+  </data>
+  <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Desc" xml:space="preserve">
+    <value>未記錄。可能是伺服器檢查玩家帕魯盒子/儲存資料是否有變化以進行同步的頻率（秒）。</value>
+  </data>
+  <data name="Cat_Difficulty_Label" xml:space="preserve">
+    <value>難度</value>
+  </data>
+  <data name="Cat_Difficulty_Desc" xml:space="preserve">
+    <value>客戶端/單人遊戲的難度預設。它對專用伺服器沒有影響，因此請保持為“無”，並使用下方的各項單獨設定（或頂部的難度預設按鈕）來設定伺服器難度。</value>
+  </data>
+  <data name="Cat_bHardcore_Label" xml:space="preserve">
+    <value>硬核模式：玩家死亡後永久丟失進度</value>
+  </data>
+  <data name="Cat_bHardcore_Desc" xml:space="preserve">
+    <value>啟用硬核模式。死亡後將無法重生。</value>
+  </data>
+  <data name="Cat_bCharacterRecreateInHardcore_Label" xml:space="preserve">
+    <value>重新建立角色（硬核）</value>
+  </data>
+  <data name="Cat_bCharacterRecreateInHardcore_Desc" xml:space="preserve">
+    <value>在硬核模式下死亡後是否可以重新建立你的角色。</value>
+  </data>
+  <data name="Cat_bIsPvP_Label" xml:space="preserve">
+    <value>PvP</value>
+  </data>
+  <data name="Cat_bIsPvP_Desc" xml:space="preserve">
+    <value>啟用 PvP。僅在同時開啟“玩家間傷害”和“對其他公會的據點防禦”時才生效。</value>
+  </data>
+  <data name="Cat_bEnablePlayerToPlayerDamage_Label" xml:space="preserve">
+    <value>玩家間傷害</value>
+  </data>
+  <data name="Cat_bEnablePlayerToPlayerDamage_Desc" xml:space="preserve">
+    <value>讓玩家可以互相造成傷害。共同啟用 PvP 的三項設定之一。</value>
+  </data>
+  <data name="Cat_bEnableFriendlyFire_Label" xml:space="preserve">
+    <value>友軍傷害</value>
+  </data>
+  <data name="Cat_bEnableFriendlyFire_Desc" xml:space="preserve">
+    <value>未記錄。社群稱它允許玩家及其帕魯對自己公會的成員造成傷害。</value>
+  </data>
+  <data name="Cat_bCanPickupOtherGuildDeathPenaltyDrop_Label" xml:space="preserve">
+    <value>拾取其他公會的掉落物</value>
+  </data>
+  <data name="Cat_bCanPickupOtherGuildDeathPenaltyDrop_Desc" xml:space="preserve">
+    <value>允許玩家拾取其他公會玩家死亡時掉落的帕魯和物品。</value>
+  </data>
+  <data name="Cat_bEnableDefenseOtherGuildPlayer_Label" xml:space="preserve">
+    <value>對其他公會的據點防禦</value>
+  </data>
+  <data name="Cat_bEnableDefenseOtherGuildPlayer_Desc" xml:space="preserve">
+    <value>據點的帕魯會攻擊擅自闖入你據點的敵對玩家。啟用 PvP 的三項設定之一。</value>
+  </data>
+  <data name="Cat_bEnableFastTravel_Label" xml:space="preserve">
+    <value>能否使用快速傳送</value>
+  </data>
+  <data name="Cat_bEnableFastTravel_Desc" xml:space="preserve">
+    <value>啟用快速傳送。</value>
+  </data>
+  <data name="Cat_bEnableFastTravelOnlyBaseCamp_Label" xml:space="preserve">
+    <value>是否將快速傳送限制在各據點之間？</value>
+  </data>
+  <data name="Cat_bEnableFastTravelOnlyBaseCamp_Desc" xml:space="preserve">
+    <value>將快速傳送限制在各據點之間。</value>
+  </data>
+  <data name="Cat_bEnableInvaderEnemy_Label" xml:space="preserve">
+    <value>是否會發生襲擊事件</value>
+  </data>
+  <data name="Cat_bEnableInvaderEnemy_Desc" xml:space="preserve">
+    <value>啟用入侵者（襲擊事件）。</value>
+  </data>
+  <data name="Cat_EnablePredatorBossPal_Label" xml:space="preserve">
+    <value>是否會出現捕食者帕魯</value>
+  </data>
+  <data name="Cat_EnablePredatorBossPal_Desc" xml:space="preserve">
+    <value>允許捕食者帕魯在世界中出現。</value>
+  </data>
+  <data name="Cat_bBuildAreaLimit_Label" xml:space="preserve">
+    <value>建造區域限制</value>
+  </data>
+  <data name="Cat_bBuildAreaLimit_Desc" xml:space="preserve">
+    <value>禁止在快速傳送點等設施附近建造。</value>
+  </data>
+  <data name="Cat_bInvisibleOtherGuildBaseCampAreaFX_Label" xml:space="preserve">
+    <value>顯示據點區域邊界</value>
+  </data>
+  <data name="Cat_bInvisibleOtherGuildBaseCampAreaFX_Desc" xml:space="preserve">
+    <value>顯示據點區域邊界。</value>
+  </data>
+  <data name="Cat_bShowPlayerList_Label" xml:space="preserve">
+    <value>ESC 選單中的玩家列表</value>
+  </data>
+  <data name="Cat_bShowPlayerList_Desc" xml:space="preserve">
+    <value>在 ESC 選單上啟用玩家列表。</value>
+  </data>
+  <data name="Cat_bExistPlayerAfterLogout_Label" xml:space="preserve">
+    <value>登出后角色保留</value>
+  </data>
+  <data name="Cat_bExistPlayerAfterLogout_Desc" xml:space="preserve">
+    <value>玩家登出時是否在當前位置進入睡眠狀態。</value>
+  </data>
+  <data name="Cat_bEnableNonLoginPenalty_Label" xml:space="preserve">
+    <value>bEnableNonLoginPenalty</value>
+  </data>
+  <data name="Cat_bEnableNonLoginPenalty_Desc" xml:space="preserve">
+    <value>未記錄。可能與你未登入時帕魯是否會獲得減益有關。未經測試。</value>
+  </data>
+  <data name="Cat_bIsStartLocationSelectByMap_Label" xml:space="preserve">
+    <value>選擇起始位置</value>
+  </data>
+  <data name="Cat_bIsStartLocationSelectByMap_Desc" xml:space="preserve">
+    <value>是否允許玩家選擇他們的起始位置。</value>
+  </data>
+  <data name="Cat_bActiveUNKO_Label" xml:space="preserve">
+    <value>bActiveUNKO</value>
+  </data>
+  <data name="Cat_bActiveUNKO_Desc" xml:space="preserve">
+    <value>未記錄。似乎未使用，可能是無用項或未實現的功能。</value>
+  </data>
+  <data name="Cat_bEnableAimAssistPad_Label" xml:space="preserve">
+    <value>瞄準輔助（手柄）</value>
+  </data>
+  <data name="Cat_bEnableAimAssistPad_Desc" xml:space="preserve">
+    <value>手柄的瞄準輔助。設為 False 可停用它。</value>
+  </data>
+  <data name="Cat_bEnableAimAssistKeyboard_Label" xml:space="preserve">
+    <value>瞄準輔助（鍵盤）</value>
+  </data>
+  <data name="Cat_bEnableAimAssistKeyboard_Desc" xml:space="preserve">
+    <value>為鍵盤滑鼠啟用瞄準輔助。</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Attack_Label" xml:space="preserve">
+    <value>允許分配屬性點：攻擊</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Attack_Desc" xml:space="preserve">
+    <value>允許將屬性點分配到攻擊。</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Health_Label" xml:space="preserve">
+    <value>允許分配屬性點：生命值</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Health_Desc" xml:space="preserve">
+    <value>允許將屬性點分配到生命值。</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Stamina_Label" xml:space="preserve">
+    <value>允許分配屬性點：耐力</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Stamina_Desc" xml:space="preserve">
+    <value>允許將屬性點分配到耐力。</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Weight_Label" xml:space="preserve">
+    <value>允許分配屬性點：負重</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Weight_Desc" xml:space="preserve">
+    <value>允許將屬性點分配到負重。</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_WorkSpeed_Label" xml:space="preserve">
+    <value>允許分配屬性點：工作速度</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_WorkSpeed_Desc" xml:space="preserve">
+    <value>允許將屬性點分配到工作速度。</value>
+  </data>
+  <data name="Cat_bAllowGlobalPalboxExport_Label" xml:space="preserve">
+    <value>允許將帕魯的遺傳資料保存到全域性帕魯盒子</value>
+  </data>
+  <data name="Cat_bAllowGlobalPalboxExport_Desc" xml:space="preserve">
+    <value>允許保存到全域性帕魯盒子。</value>
+  </data>
+  <data name="Cat_bAllowGlobalPalboxImport_Label" xml:space="preserve">
+    <value>允許從全域性帕魯盒子重建帕魯</value>
+  </data>
+  <data name="Cat_bAllowGlobalPalboxImport_Desc" xml:space="preserve">
+    <value>允許從全域性帕魯盒子載入。</value>
+  </data>
+  <data name="Cat_bAutoResetGuildNoOnlinePlayers_Label" xml:space="preserve">
+    <value>自動刪除長時間沒有玩家登入的公會的設施</value>
+  </data>
+  <data name="Cat_bAutoResetGuildNoOnlinePlayers_Desc" xml:space="preserve">
+    <value>如果沒有公會成員登入，自動刪除建築和據點帕魯。</value>
+  </data>
+  <data name="Cat_AutoResetGuildTimeNoOnlinePlayers_Label" xml:space="preserve">
+    <value>自動刪除公會設施的時限（小時）</value>
+  </data>
+  <data name="Cat_AutoResetGuildTimeNoOnlinePlayers_Desc" xml:space="preserve">
+    <value>閒置公會被自動重置前的離線時長（小時）。除非開啟“自動重置閒置公會”，否則忽略此項。</value>
+  </data>
+  <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Label" xml:space="preserve">
+    <value>在地圖上顯示據點的 PvP 物品</value>
+  </data>
+  <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Desc" xml:space="preserve">
+    <value>是否在地圖上顯示每個據點中 PvP 專屬物品的數量。</value>
+  </data>
+  <data name="Cat_bDisplayPvPItemNumOnWorldMap_Player_Label" xml:space="preserve">
+    <value>在地圖上顯示玩家的 PvP 物品</value>
+  </data>
+  <data name="Cat_bDisplayPvPItemNumOnWorldMap_Player_Desc" xml:space="preserve">
+    <value>是否在地圖上顯示玩家位置以及 PvP 專屬物品的數量。</value>
+  </data>
+  <data name="Cat_bIsRandomizerPalLevelRandom_Label" xml:space="preserve">
+    <value>隨機帕魯模式時野生帕魯的等級是否完全隨機</value>
+  </data>
+  <data name="Cat_bIsRandomizerPalLevelRandom_Desc" xml:space="preserve">
+    <value>開啟時，野生帕魯的等級完全隨機。關閉時，等級在每個區域預期的範圍內隨機。</value>
+  </data>
+  <data name="Cat_RandomizerType_Label" xml:space="preserve">
+    <value>隨機帕魯模式 ※該設定無法於世界生成後更改</value>
+  </data>
+  <data name="Cat_RandomizerType_Desc" xml:space="preserve">
+    <value>帕魯出現的隨機化方式。可選擇不隨機、按地域隨機或完全隨機。</value>
+  </data>
+  <data name="Cat_RandomizerSeed_Label" xml:space="preserve">
+    <value>種子</value>
+  </data>
+  <data name="Cat_RandomizerSeed_Desc" xml:space="preserve">
+    <value>啟用帕魯出現隨機化時使用的種子值。</value>
+  </data>
+  <data name="Cat_bEnableVoiceChat_Label" xml:space="preserve">
+    <value>語音聊天</value>
+  </data>
+  <data name="Cat_bEnableVoiceChat_Desc" xml:space="preserve">
+    <value>啟用遊戲內語音聊天。</value>
+  </data>
+  <data name="Cat_VoiceChatMaxVolumeDistance_Label" xml:space="preserve">
+    <value>語音聊天滿音量距離</value>
+  </data>
+  <data name="Cat_VoiceChatMaxVolumeDistance_Desc" xml:space="preserve">
+    <value>語音聊天音量不衰減的距離。</value>
+  </data>
+  <data name="Cat_VoiceChatZeroVolumeDistance_Label" xml:space="preserve">
+    <value>語音聊天靜音距離</value>
+  </data>
+  <data name="Cat_VoiceChatZeroVolumeDistance_Desc" xml:space="preserve">
+    <value>語音聊天音量降為零的距離。</value>
+  </data>
+  <data name="Cat_DayTimeSpeedRate_Label" xml:space="preserve">
+    <value>白天流逝速度</value>
+  </data>
+  <data name="Cat_DayTimeSpeedRate_Desc" xml:space="preserve">
+    <value>白天流逝速度。</value>
+  </data>
+  <data name="Cat_NightTimeSpeedRate_Label" xml:space="preserve">
+    <value>夜晚流逝速度</value>
+  </data>
+  <data name="Cat_NightTimeSpeedRate_Desc" xml:space="preserve">
+    <value>夜晚流逝速度。</value>
+  </data>
+  <data name="Cat_ExpRate_Label" xml:space="preserve">
+    <value>經驗值倍率</value>
+  </data>
+  <data name="Cat_ExpRate_Desc" xml:space="preserve">
+    <value>經驗值獲取倍率。</value>
+  </data>
+  <data name="Cat_PalCaptureRate_Label" xml:space="preserve">
+    <value>捕獲機率倍率</value>
+  </data>
+  <data name="Cat_PalCaptureRate_Desc" xml:space="preserve">
+    <value>捕獲機率倍率。</value>
+  </data>
+  <data name="Cat_PalSpawnNumRate_Label" xml:space="preserve">
+    <value>帕魯出現數量倍率　※提高帕魯出現數量將導致遊戲效能下降</value>
+  </data>
+  <data name="Cat_PalSpawnNumRate_Desc" xml:space="preserve">
+    <value>帕魯出現數量倍率。會影響效能。</value>
+  </data>
+  <data name="Cat_PalEggDefaultHatchingTime_Label" xml:space="preserve">
+    <value>巨大蛋孵化所需時間(小時) ※其他蛋也會相應改變孵化時間</value>
+  </data>
+  <data name="Cat_PalEggDefaultHatchingTime_Desc" xml:space="preserve">
+    <value>孵化巨大蛋所需的時間（小時）。其他蛋也需要相應的孵化時間。</value>
+  </data>
+  <data name="Cat_WorkSpeedRate_Label" xml:space="preserve">
+    <value>工作速度倍率</value>
+  </data>
+  <data name="Cat_WorkSpeedRate_Desc" xml:space="preserve">
+    <value>玩家和帕魯完成工作的速度。倍率：2.0 = 工作完成速度快一倍。</value>
+  </data>
+  <data name="Cat_MonsterFarmActionSpeedRate_Label" xml:space="preserve">
+    <value>放牧物品生產速度倍率</value>
+  </data>
+  <data name="Cat_MonsterFarmActionSpeedRate_Desc" xml:space="preserve">
+    <value>放牧的物品生產速度倍率。</value>
+  </data>
+  <data name="Cat_PalDamageRateAttack_Label" xml:space="preserve">
+    <value>帕魯攻擊傷害倍率</value>
+  </data>
+  <data name="Cat_PalDamageRateAttack_Desc" xml:space="preserve">
+    <value>帕魯造成傷害的倍率。</value>
+  </data>
+  <data name="Cat_PalDamageRateDefense_Label" xml:space="preserve">
+    <value>帕魯承受傷害倍率</value>
+  </data>
+  <data name="Cat_PalDamageRateDefense_Desc" xml:space="preserve">
+    <value>帕魯承受傷害的倍率。</value>
+  </data>
+  <data name="Cat_PlayerDamageRateAttack_Label" xml:space="preserve">
+    <value>玩家攻擊傷害倍率</value>
+  </data>
+  <data name="Cat_PlayerDamageRateAttack_Desc" xml:space="preserve">
+    <value>玩家造成傷害的倍率。</value>
+  </data>
+  <data name="Cat_PlayerDamageRateDefense_Label" xml:space="preserve">
+    <value>玩家承受傷害倍率</value>
+  </data>
+  <data name="Cat_PlayerDamageRateDefense_Desc" xml:space="preserve">
+    <value>玩家承受傷害的倍率。</value>
+  </data>
+  <data name="Cat_PlayerStomachDecreaceRate_Label" xml:space="preserve">
+    <value>玩家飽足度降低倍率</value>
+  </data>
+  <data name="Cat_PlayerStomachDecreaceRate_Desc" xml:space="preserve">
+    <value>玩家飽足度降低倍率。</value>
+  </data>
+  <data name="Cat_PlayerStaminaDecreaceRate_Label" xml:space="preserve">
+    <value>玩家耐力降低倍率</value>
+  </data>
+  <data name="Cat_PlayerStaminaDecreaceRate_Desc" xml:space="preserve">
+    <value>玩家耐力降低倍率。</value>
+  </data>
+  <data name="Cat_PlayerAutoHPRegeneRate_Label" xml:space="preserve">
+    <value>玩家生命值自然回復倍率</value>
+  </data>
+  <data name="Cat_PlayerAutoHPRegeneRate_Desc" xml:space="preserve">
+    <value>玩家生命值自然回復倍率。</value>
+  </data>
+  <data name="Cat_PlayerAutoHpRegeneRateInSleep_Label" xml:space="preserve">
+    <value>玩家睡眠時生命值回復倍率</value>
+  </data>
+  <data name="Cat_PlayerAutoHpRegeneRateInSleep_Desc" xml:space="preserve">
+    <value>玩家睡眠時生命值回復倍率。</value>
+  </data>
+  <data name="Cat_PalStomachDecreaceRate_Label" xml:space="preserve">
+    <value>帕魯飽足度降低倍率</value>
+  </data>
+  <data name="Cat_PalStomachDecreaceRate_Desc" xml:space="preserve">
+    <value>帕魯飽足度降低倍率。</value>
+  </data>
+  <data name="Cat_PalStaminaDecreaceRate_Label" xml:space="preserve">
+    <value>帕魯耐力降低倍率</value>
+  </data>
+  <data name="Cat_PalStaminaDecreaceRate_Desc" xml:space="preserve">
+    <value>帕魯耐力降低倍率。</value>
+  </data>
+  <data name="Cat_PalAutoHPRegeneRate_Label" xml:space="preserve">
+    <value>帕魯生命值自然回復倍率</value>
+  </data>
+  <data name="Cat_PalAutoHPRegeneRate_Desc" xml:space="preserve">
+    <value>帕魯生命值自然回復倍率。</value>
+  </data>
+  <data name="Cat_PalAutoHpRegeneRateInSleep_Label" xml:space="preserve">
+    <value>帕魯睡眠時生命值回復倍率（帕魯終端中的生命值回復倍率）</value>
+  </data>
+  <data name="Cat_PalAutoHpRegeneRateInSleep_Desc" xml:space="preserve">
+    <value>帕魯在帕魯盒子中睡眠時的生命值回復倍率。</value>
+  </data>
+  <data name="Cat_CollectionDropRate_Label" xml:space="preserve">
+    <value>道具採集量倍率</value>
+  </data>
+  <data name="Cat_CollectionDropRate_Desc" xml:space="preserve">
+    <value>可採集物品的獲取量倍率。</value>
+  </data>
+  <data name="Cat_CollectionObjectHpRate_Label" xml:space="preserve">
+    <value>可採集物品生命值倍率</value>
+  </data>
+  <data name="Cat_CollectionObjectHpRate_Desc" xml:space="preserve">
+    <value>可採集物品的生命值倍率。</value>
+  </data>
+  <data name="Cat_CollectionObjectRespawnSpeedRate_Label" xml:space="preserve">
+    <value>可採集物品刷新間隔</value>
+  </data>
+  <data name="Cat_CollectionObjectRespawnSpeedRate_Desc" xml:space="preserve">
+    <value>可採集物品的刷新間隔倍率。</value>
+  </data>
+  <data name="Cat_EnemyDropItemRate_Label" xml:space="preserve">
+    <value>道具掉落量倍率</value>
+  </data>
+  <data name="Cat_EnemyDropItemRate_Desc" xml:space="preserve">
+    <value>物品掉落數量倍率。</value>
+  </data>
+  <data name="Cat_DropItemAliveMaxHours_Label" xml:space="preserve">
+    <value>掉落物存留時間（小時）</value>
+  </data>
+  <data name="Cat_DropItemAliveMaxHours_Desc" xml:space="preserve">
+    <value>掉落物在世界中消失前存留的時間（小時）。降低此值有助於伺服器清理/效能。</value>
+  </data>
+  <data name="Cat_ItemWeightRate_Label" xml:space="preserve">
+    <value>道具的重量倍率</value>
+  </data>
+  <data name="Cat_ItemWeightRate_Desc" xml:space="preserve">
+    <value>物品重量倍率。</value>
+  </data>
+  <data name="Cat_ItemCorruptionMultiplier_Label" xml:space="preserve">
+    <value>物品腐壞速度倍率</value>
+  </data>
+  <data name="Cat_ItemCorruptionMultiplier_Desc" xml:space="preserve">
+    <value>物品腐壞（劣化）速度倍率。</value>
+  </data>
+  <data name="Cat_EquipmentDurabilityDamageRate_Label" xml:space="preserve">
+    <value>裝備耐久度損耗倍率</value>
+  </data>
+  <data name="Cat_EquipmentDurabilityDamageRate_Desc" xml:space="preserve">
+    <value>裝備耐久度損耗倍率。</value>
+  </data>
+  <data name="Cat_BuildObjectHpRate_Label" xml:space="preserve">
+    <value>建築生命值</value>
+  </data>
+  <data name="Cat_BuildObjectHpRate_Desc" xml:space="preserve">
+    <value>建築生命值的倍率。2.0 = 建築生命值翻倍。</value>
+  </data>
+  <data name="Cat_BuildObjectDamageRate_Label" xml:space="preserve">
+    <value>對建築傷害倍率</value>
+  </data>
+  <data name="Cat_BuildObjectDamageRate_Desc" xml:space="preserve">
+    <value>對建築造成傷害的倍率。</value>
+  </data>
+  <data name="Cat_BuildObjectDeteriorationDamageRate_Label" xml:space="preserve">
+    <value>建築物的劣化速度倍率</value>
+  </data>
+  <data name="Cat_BuildObjectDeteriorationDamageRate_Desc" xml:space="preserve">
+    <value>建築劣化速度倍率。</value>
+  </data>
+  <data name="Cat_DeathPenalty_Label" xml:space="preserve">
+    <value>死亡懲罰</value>
+  </data>
+  <data name="Cat_DeathPenalty_Desc" xml:space="preserve">
+    <value>死亡時會掉落的內容。可選擇：不掉落任何東西、掉落裝備以外的道具、掉落所有道具，或掉落所有道具及隊伍中的帕魯。</value>
+  </data>
+  <data name="Cat_bPalLost_Label" xml:space="preserve">
+    <value>硬核模式：死亡的帕魯將永久丟失</value>
+  </data>
+  <data name="Cat_bPalLost_Desc" xml:space="preserve">
+    <value>死亡時永久失去帕魯。</value>
+  </data>
+  <data name="Cat_BlockRespawnTime_Label" xml:space="preserve">
+    <value>重生冷卻時間（秒）</value>
+  </data>
+  <data name="Cat_BlockRespawnTime_Desc" xml:space="preserve">
+    <value>死亡後能夠重生前的冷卻時間（秒）。</value>
+  </data>
+  <data name="Cat_RespawnPenaltyDurationThreshold_Label" xml:space="preserve">
+    <value>重生懲罰閾值</value>
+  </data>
+  <data name="Cat_RespawnPenaltyDurationThreshold_Desc" xml:space="preserve">
+    <value>存活時間閾值（秒）。在存活達到該時長之前再次死亡，會應用下方的重生冷卻倍率。</value>
+  </data>
+  <data name="Cat_RespawnPenaltyTimeScale_Label" xml:space="preserve">
+    <value>重生懲罰倍率</value>
+  </data>
+  <data name="Cat_RespawnPenaltyTimeScale_Desc" xml:space="preserve">
+    <value>應用於重生冷卻時間的倍率。</value>
+  </data>
+  <data name="Cat_GuildPlayerMaxNum_Label" xml:space="preserve">
+    <value>公會人數上限</value>
+  </data>
+  <data name="Cat_GuildPlayerMaxNum_Desc" xml:space="preserve">
+    <value>每個公會的最大玩家數。</value>
+  </data>
+  <data name="Cat_GuildRejoinCooldownMinutes_Label" xml:space="preserve">
+    <value>公會重新加入冷卻時間（分鐘）</value>
+  </data>
+  <data name="Cat_GuildRejoinCooldownMinutes_Desc" xml:space="preserve">
+    <value>重新加入公會前的冷卻時間（分鐘）。</value>
+  </data>
+  <data name="Cat_DenyTechnologyList_Label" xml:space="preserve">
+    <value>停用的科技</value>
+  </data>
+  <data name="Cat_DenyTechnologyList_Desc" xml:space="preserve">
+    <value>停用特定科技。指定科技 ID，例如：("PALBOX", "RepairBench")。留空 = 不停用。</value>
+  </data>
+  <data name="Cat_bAdditionalDropItemWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
+    <value>PvP 擊殺：掉落物品</value>
+  </data>
+  <data name="Cat_bAdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
+    <value>在啟用 PvP 時玩家被擊殺是否掉落一個特殊物品。</value>
+  </data>
+  <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
+    <value>PvP 擊殺：物品 ID</value>
+  </data>
+  <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
+    <value>PvP 擊殺時掉落物品的 ID（在開啟“PvP 擊殺：掉落物品”時使用）。</value>
+  </data>
+  <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
+    <value>PvP 擊殺：物品數量</value>
+  </data>
+  <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
+    <value>PvP 擊殺時掉落物品的數量（在開啟“PvP 擊殺：掉落物品”時使用）。</value>
+  </data>
+  <data name="Cat_SupplyDropSpan_Label" xml:space="preserve">
+    <value>隕石・補給物資的空投間隔(分)</value>
+  </data>
+  <data name="Cat_SupplyDropSpan_Desc" xml:space="preserve">
+    <value>隕石/補給物資空投間隔（分鐘）。</value>
+  </data>
+  <data name="Cat_AutoTransferMasterCheckIntervalSeconds_Label" xml:space="preserve">
+    <value>AutoTransferMasterCheckIntervalSeconds</value>
+  </data>
+  <data name="Cat_AutoTransferMasterCheckIntervalSeconds_Desc" xml:space="preserve">
+    <value>未記錄。可能是伺服器檢查公會/據點所有權是否應從不活躍的會長自動轉移的頻率（秒）。</value>
+  </data>
+  <data name="Cat_AutoTransferMasterThresholdDays_Label" xml:space="preserve">
+    <value>AutoTransferMasterThresholdDays</value>
+  </data>
+  <data name="Cat_AutoTransferMasterThresholdDays_Desc" xml:space="preserve">
+    <value>未記錄。可能是公會/據點會長在所有權自動轉移前必須保持不活躍的天數。</value>
+  </data>
+  <data name="Cat_LogFormatType_Opt_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="Cat_LogFormatType_Opt_Json" xml:space="preserve">
+    <value>Json</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_None" xml:space="preserve">
+    <value>無</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_Casual" xml:space="preserve">
+    <value>休閒</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_Normal" xml:space="preserve">
+    <value>普通</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_Hard" xml:space="preserve">
+    <value>困難</value>
+  </data>
+  <data name="Cat_RandomizerType_Opt_None" xml:space="preserve">
+    <value>不隨機</value>
+  </data>
+  <data name="Cat_RandomizerType_Opt_Region" xml:space="preserve">
+    <value>按地域隨機</value>
+  </data>
+  <data name="Cat_RandomizerType_Opt_All" xml:space="preserve">
+    <value>完全隨機</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_None" xml:space="preserve">
+    <value>不掉落任何東西</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_Item" xml:space="preserve">
+    <value>掉落裝備以外的道具</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_ItemAndEquipment" xml:space="preserve">
+    <value>掉落所有道具</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_All" xml:space="preserve">
+    <value>掉落所有道具及隊伍內帕魯</value>
+  </data>
+  <data name="Settings_PresetCasual" xml:space="preserve">
+    <value>休閒</value>
+  </data>
+  <data name="Settings_PresetNormal" xml:space="preserve">
+    <value>普通</value>
+  </data>
+  <data name="Settings_PresetHard" xml:space="preserve">
+    <value>困難</value>
+  </data>
+  <data name="Settings_PresetHardcore" xml:space="preserve">
+    <value>硬核</value>
+  </data>
+  <data name="LauncherSettings_RestartPrompt" xml:space="preserve">
+    <value>啟動器需要重啟以應用新語言（{0}）。現在就重啟嗎？</value>
+  </data>
+  <data name="LauncherSettings_RestartPromptRunning" xml:space="preserve">
+    <value>啟動器需要重啟以應用新語言（{0}）。你的 Palworld 伺服器會繼續執行，啟動器將重新連線到它。現在就重啟嗎？</value>
+  </data>
+  <data name="LauncherSettings_RestartNow" xml:space="preserve">
+    <value>立即重啟</value>
+  </data>
+</root>

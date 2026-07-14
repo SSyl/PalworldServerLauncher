@@ -50,6 +50,24 @@ public class LocalizationSmokeTests
     }
 
     [Fact]
+    public void English_and_TraditionalChinese_resource_sets_have_the_same_keys()
+    {
+        var english = Strings.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, createIfNotExists: true, tryParents: false);
+        var zhHant = Strings.ResourceManager.GetResourceSet(CultureInfo.GetCultureInfo("zh-Hant"), createIfNotExists: true, tryParents: false);
+        Assert.NotNull(english);
+        Assert.NotNull(zhHant);
+
+        var englishKeys = english!.Cast<System.Collections.DictionaryEntry>().Select(e => (string)e.Key).ToHashSet();
+        var zhHantKeys = zhHant!.Cast<System.Collections.DictionaryEntry>().Select(e => (string)e.Key).ToHashSet();
+
+        var missingFromHant = englishKeys.Except(zhHantKeys).ToList();
+        var missingFromEnglish = zhHantKeys.Except(englishKeys).ToList();
+
+        Assert.True(missingFromHant.Count == 0, $"Keys missing from Strings.zh-Hant.resx: {string.Join(", ", missingFromHant)}");
+        Assert.True(missingFromEnglish.Count == 0, $"Keys missing from Strings.resx: {string.Join(", ", missingFromEnglish)}");
+    }
+
+    [Fact]
     public void English_and_Japanese_resource_sets_have_the_same_keys()
     {
         var english = Strings.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, createIfNotExists: true, tryParents: false);
