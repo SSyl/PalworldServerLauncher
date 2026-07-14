@@ -60,133 +60,133 @@
   </resheader>
   <!-- Japanese (ja). English placeholder values pending translation. See GitHub issue #1. -->
   <data name="Start_Button" xml:space="preserve">
-    <value>Start</value>
+    <value>起動</value>
   </data>
   <data name="FirstRun_Prompt" xml:space="preserve">
-    <value>Choose your language. You can change this later from Launcher Settings.</value>
+    <value>言語を選択してください。これは後で「ランチャー設定」から変更できます。</value>
   </data>
   <data name="LauncherSettings_Title" xml:space="preserve">
-    <value>Launcher Settings</value>
+    <value>ランチャー設定</value>
   </data>
   <data name="LauncherSettings_LanguageLabel" xml:space="preserve">
-    <value>Language</value>
+    <value>言語</value>
   </data>
   <data name="LauncherSettings_Tooltip" xml:space="preserve">
-    <value>Change the launcher's language and other launcher preferences.</value>
+    <value>ランチャーの言語やその他のランチャー設定を変更します。</value>
   </data>
   <data name="Common_AppName" xml:space="preserve">
     <value>Palworld Server Launcher</value>
   </data>
   <data name="Common_Save" xml:space="preserve">
-    <value>Save</value>
+    <value>保存</value>
   </data>
   <data name="Common_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>キャンセル</value>
   </data>
   <data name="Common_OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="Common_ForceShutdown" xml:space="preserve">
-    <value>Force Shutdown</value>
+    <value>強制シャットダウン</value>
   </data>
   <data name="Announcements_Title" xml:space="preserve">
-    <value>Announcements</value>
+    <value>アナウンス</value>
   </data>
   <data name="Announcements_Intro" xml:space="preserve">
-    <value>Shown to players before a restart. Put {minutes} where the countdown should go (it becomes the minutes remaining). Remove it for a fixed message with no time.</value>
+    <value>再起動前にプレイヤーへ表示されます。カウントダウンを表示したい位置に {minutes} を入れてください（残り分数に置き換わります）。削除すると、時間のない固定メッセージになります。</value>
   </data>
   <data name="Announcements_RestartLabel" xml:space="preserve">
-    <value>Scheduled / manual restart</value>
+    <value>スケジュール／手動 再起動</value>
   </data>
   <data name="Announcements_UpdateLabel" xml:space="preserve">
-    <value>Update restart</value>
+    <value>アップデート再起動</value>
   </data>
   <data name="Announcements_EmptyTitle" xml:space="preserve">
-    <value>Empty announcement</value>
+    <value>アナウンスが空です</value>
   </data>
   <data name="Announcements_EmptyMessage" xml:space="preserve">
-    <value>An announcement can't be empty (the server rejects a blank message):</value>
+    <value>アナウンスは空にできません（サーバーは空のメッセージを拒否します）：</value>
   </data>
   <data name="Announcements_NoTokenTitle" xml:space="preserve">
-    <value>No countdown token</value>
+    <value>カウントダウントークンがありません</value>
   </data>
   <data name="Announcements_NoTokenMessage" xml:space="preserve">
-    <value>These have no {0} token, so they won't show the minutes remaining:
+    <value>以下には {0} トークンがないため、残り分数が表示されません：
 {1}
 
-Save them as fixed messages anyway?</value>
+それでも固定メッセージとして保存しますか？</value>
   </data>
   <data name="Announcements_SaveAnyway" xml:space="preserve">
-    <value>Save anyway</value>
+    <value>それでも保存</value>
   </data>
   <data name="Announcements_KeepEditing" xml:space="preserve">
-    <value>Keep editing</value>
+    <value>編集を続ける</value>
   </data>
   <data name="Main_PrimaryTip" xml:space="preserve">
-    <value>Install the server, or start (▶) / stop (■) it once installed. Start checks for an update first (when Update on start is on), then launches.</value>
+    <value>サーバーをインストールします。インストール後は起動 (▶) / 停止 (■) できます。起動時はまずアップデートを確認し（「起動時にアップデート」が有効な場合）、その後起動します。</value>
   </data>
   <data name="Main_RestartTip" xml:space="preserve">
-    <value>Restart now: saves and restarts the server immediately, with no player countdown. Scheduled and update restarts warn players first.</value>
+    <value>今すぐ再起動：サーバーを直ちに保存して再起動します。プレイヤーへのカウントダウンはありません。スケジュール再起動やアップデートによる再起動では、事前にプレイヤーへ警告します。</value>
   </data>
   <data name="Main_ForceShutdownTip" xml:space="preserve">
-    <value>Immediately kill the server process, with no save. Appears when a start, stop, or restart has been stuck for a while. Use it only when the server has stopped responding.</value>
+    <value>サーバープロセスを保存せずに直ちに終了します。起動・停止・再起動がしばらく停滞したときに表示されます。サーバーが応答しなくなった場合のみ使用してください。</value>
   </data>
   <data name="Main_CheckForUpdate" xml:space="preserve">
-    <value>Check for Update</value>
+    <value>アップデートを確認</value>
   </data>
   <data name="Main_CheckForUpdateTip" xml:space="preserve">
-    <value>Check SteamCMD for a newer build (read-only; works while running)</value>
+    <value>SteamCMD で新しいビルドがないか確認します（読み取り専用、稼働中でも使用可能）</value>
   </data>
   <data name="Main_ValidateFiles" xml:space="preserve">
-    <value>Validate Files</value>
+    <value>ファイルを検証</value>
   </data>
   <data name="Main_ValidateFilesTip" xml:space="preserve">
-    <value>Full SteamCMD integrity check of the installed files</value>
+    <value>SteamCMD を使用した、インストール済みファイルの完全な整合性チェック</value>
   </data>
   <data name="Main_ServerSettings" xml:space="preserve">
-    <value>Server Settings</value>
+    <value>サーバー設定</value>
   </data>
   <data name="Main_ServerSettingsTip" xml:space="preserve">
-    <value>Edit the server in one tabbed editor, World Settings (gameplay and balance), Admin (name, passwords, REST / RCON), Undocumented (keys the official docs don't cover), and Launch Arguments (the command line: listen port, player cap, performance threads, community listing).</value>
+    <value>タブ形式のエディターでサーバー設定を編集します：ワールド設定（ゲームプレイとバランス）、管理（名前、パスワード、REST / RCON）、未記載（公式ドキュメントに記載されていない項目）、起動引数（コマンドライン：待ち受けポート、プレイヤー上限、パフォーマンススレッド、コミュニティ一覧への表示）。</value>
   </data>
   <data name="Main_Mods" xml:space="preserve">
-    <value>Mods</value>
+    <value>Mod</value>
   </data>
   <data name="Main_ModsTip" xml:space="preserve">
-    <value>Manage Steam Workshop server mods: add Workshop ids for the launcher to download, or scan for mods you dropped into the mods folder yourself.</value>
+    <value>Steam ワークショップのサーバー Mod を管理します：ワークショップ ID を追加してランチャーにダウンロードさせるか、自分で Mod フォルダーに入れた Mod をスキャンします。</value>
   </data>
   <data name="Main_AdvancedSettings" xml:space="preserve">
-    <value>Advanced Settings</value>
+    <value>詳細設定</value>
   </data>
   <data name="Main_AdvancedSettingsTip" xml:space="preserve">
-    <value>Low-level process tuning (priority, CPU affinity), advanced users only</value>
+    <value>低レベルのプロセス調整（優先度、CPU アフィニティ）。上級者専用</value>
   </data>
   <data name="Main_StatusLabel" xml:space="preserve">
-    <value>Status:</value>
+    <value>状態：</value>
   </data>
   <data name="Main_UpdateLabel" xml:space="preserve">
-    <value>Update:</value>
+    <value>アップデート：</value>
   </data>
   <data name="Main_PublicIpLabel" xml:space="preserve">
-    <value>Public IP:</value>
+    <value>パブリック IP：</value>
   </data>
   <data name="Main_PublicIpTip" xml:space="preserve">
-    <value>Your public IP and game port. Reveal it with the eye, then highlight to copy, or use the copy button.</value>
+    <value>パブリック IP とゲームポートです。目のアイコンをクリックして表示し、ハイライトしてコピーするか、コピーボタンを使用してください。</value>
   </data>
   <data name="Main_RevealIpTip" xml:space="preserve">
-    <value>Show or hide your public IP</value>
+    <value>パブリック IP の表示・非表示を切り替えます</value>
   </data>
   <data name="Main_CopyIpTip" xml:space="preserve">
-    <value>Copy your IP:port to the clipboard</value>
+    <value>IP:ポートをクリップボードにコピーします</value>
   </data>
   <data name="Main_PortCheck" xml:space="preserve">
-    <value>Port Check</value>
+    <value>ポートチェック</value>
   </data>
   <data name="Main_PortCheckTip" xml:space="preserve">
-    <value>Check whether your ports are reachable from the internet. The server must be stopped so the launcher can test the ports.</value>
+    <value>ポートがインターネットから到達可能かを確認します。ランチャーがポートをテストできるよう、サーバーは停止しておく必要があります。</value>
   </data>
   <data name="Main_StatVersion" xml:space="preserve">
-    <value>Version</value>
+    <value>バージョン</value>
   </data>
   <data name="Main_StatFps" xml:space="preserve">
     <value>FPS</value>
@@ -195,1214 +195,1214 @@ Save them as fixed messages anyway?</value>
     <value>CPU</value>
   </data>
   <data name="Main_StatMemory" xml:space="preserve">
-    <value>Memory</value>
+    <value>メモリ</value>
   </data>
   <data name="Main_StatPlayers" xml:space="preserve">
-    <value>Players</value>
+    <value>プレイヤー</value>
   </data>
   <data name="Main_StatUptime" xml:space="preserve">
-    <value>Uptime</value>
+    <value>稼働時間</value>
   </data>
   <data name="Main_StatNextRestart" xml:space="preserve">
-    <value>Next restart</value>
+    <value>次回の再起動</value>
   </data>
   <data name="Main_CollapseTip" xml:space="preserve">
-    <value>Show or hide the settings sections (Restarts, Backups, Misc)</value>
+    <value>設定セクション（再起動、バックアップ、その他）の表示・非表示を切り替えます</value>
   </data>
   <data name="Main_RestartsHeader" xml:space="preserve">
-    <value>Restarts</value>
+    <value>再起動</value>
   </data>
   <data name="Main_ScheduledRestartAt" xml:space="preserve">
-    <value>Scheduled restart at</value>
+    <value>スケジュール再起動：</value>
   </data>
   <data name="Main_ScheduledRestartTip" xml:space="preserve">
-    <value>Automatically restart the server at the times listed. A restart is skipped if the server hasn't been up for the minimum uptime below.</value>
+    <value>指定した時刻にサーバーを自動で再起動します。サーバーの稼働時間が下記の最短稼働時間に達していない場合、その再起動はスキップされます。</value>
   </data>
   <data name="Main_ChooseRestartTimes" xml:space="preserve">
-    <value>Choose restart times</value>
+    <value>再起動時刻を選択</value>
   </data>
   <data name="Main_MinUptime" xml:space="preserve">
-    <value>Min uptime before restart</value>
+    <value>再起動前の最短稼働時間</value>
   </data>
   <data name="Main_HourSuffix" xml:space="preserve">
-    <value>h</value>
+    <value>時間</value>
   </data>
   <data name="Main_AnnounceRestarts" xml:space="preserve">
-    <value>Announce restarts</value>
+    <value>再起動をアナウンス</value>
   </data>
   <data name="Main_AnnounceRestartsTip" xml:space="preserve">
-    <value>Warn players in-game before a scheduled or update restart, at the minute marks on the right. Skipped when nobody's online.</value>
+    <value>スケジュール再起動またはアップデート再起動の前に、右側で指定した分数のタイミングでゲーム内のプレイヤーへ警告します。誰もオンラインでない場合はスキップします。</value>
   </data>
   <data name="Main_AnnounceLeadTip" xml:space="preserve">
-    <value>Minutes before restart to announce (blank = off)</value>
+    <value>再起動の何分前にアナウンスするか（空欄 = 無効）</value>
   </data>
   <data name="Main_MinuteSuffix" xml:space="preserve">
-    <value>min</value>
+    <value>分</value>
   </data>
   <data name="Main_EditAnnouncements" xml:space="preserve">
-    <value>Edit Announcements</value>
+    <value>アナウンスを編集</value>
   </data>
   <data name="Main_EditAnnouncementsTip" xml:space="preserve">
-    <value>Edit the in-game messages players see before a restart.</value>
+    <value>再起動前にプレイヤーがゲーム内で見るメッセージを編集します。</value>
   </data>
   <data name="Main_ValidateOnRestart" xml:space="preserve">
-    <value>Validate files on restart</value>
+    <value>再起動時にファイルを検証</value>
   </data>
   <data name="Main_ValidateOnRestartTip" xml:space="preserve">
-    <value>Add a full integrity pass to the update on Start/restart (slower)</value>
+    <value>起動／再起動時のアップデートに完全な整合性チェックを追加します（低速）</value>
   </data>
   <data name="Main_BackupsHeader" xml:space="preserve">
-    <value>Backups</value>
+    <value>バックアップ</value>
   </data>
   <data name="Main_BackupOn" xml:space="preserve">
-    <value>Backup on:</value>
+    <value>バックアップのタイミング：</value>
   </data>
   <data name="Main_BackupStartup" xml:space="preserve">
-    <value>Startup</value>
+    <value>起動時</value>
   </data>
   <data name="Main_BackupStartupTip" xml:space="preserve">
-    <value>Back up when the server starts, before it checks for updates (SteamCMD can overwrite config).</value>
+    <value>サーバー起動時、アップデート確認の前にバックアップします（SteamCMD が設定を上書きする可能性があるため）。</value>
   </data>
   <data name="Main_BackupShutdown" xml:space="preserve">
-    <value>Shutdown</value>
+    <value>停止時</value>
   </data>
   <data name="Main_BackupShutdownTip" xml:space="preserve">
-    <value>Back up when the server stops or restarts (saves the world first).</value>
+    <value>サーバーの停止時または再起動時にバックアップします（先にワールドを保存します）。</value>
   </data>
   <data name="Main_BackupScheduled" xml:space="preserve">
-    <value>Scheduled</value>
+    <value>スケジュール</value>
   </data>
   <data name="Main_BackupScheduledTip" xml:space="preserve">
-    <value>Automatically back up at the times listed on the right, while the server is running.</value>
+    <value>サーバーの稼働中に、右側で指定した時刻に自動でバックアップします。</value>
   </data>
   <data name="Main_ChooseBackupTimes" xml:space="preserve">
-    <value>Choose backup times</value>
+    <value>バックアップ時刻を選択</value>
   </data>
   <data name="Main_BackupRetentionTip" xml:space="preserve">
-    <value>How long to keep automatic backups (startup / shutdown / scheduled). Manual backups and any file you add to the backups folder yourself are never deleted. 0 = keep everything.</value>
+    <value>自動バックアップ（起動／停止／スケジュール）を保持する期間です。手動バックアップや、自分でバックアップフォルダーに追加したファイルは削除されません。0 = すべて保持。</value>
   </data>
   <data name="Main_KeepFor" xml:space="preserve">
-    <value>Keep for</value>
+    <value>保持期間</value>
   </data>
   <data name="Main_DaysSuffix" xml:space="preserve">
-    <value>days</value>
+    <value>日</value>
   </data>
   <data name="Main_NextBackupLabel" xml:space="preserve">
-    <value>Next backup:</value>
+    <value>次回のバックアップ：</value>
   </data>
   <data name="Main_BackupNow" xml:space="preserve">
-    <value>Backup Now</value>
+    <value>今すぐバックアップ</value>
   </data>
   <data name="Main_BackupNowTip" xml:space="preserve">
-    <value>Take a manual backup immediately. Saves the world first if the server is running with REST on.</value>
+    <value>手動バックアップを直ちに実行します。サーバーが REST 有効な状態で稼働している場合は、先にワールドを保存します。</value>
   </data>
   <data name="Main_MiscHeader" xml:space="preserve">
-    <value>Misc.</value>
+    <value>その他</value>
   </data>
   <data name="Main_AutoUpdate" xml:space="preserve">
-    <value>Auto-update server</value>
+    <value>サーバーを自動アップデート</value>
   </data>
   <data name="Main_AutoUpdateTip" xml:space="preserve">
-    <value>Automatically restart the server when a new update is found. The Announce restarts setting adds a delay before restarting if anyone is on the server.</value>
+    <value>新しいアップデートが見つかったときにサーバーを自動で再起動します。プレイヤーがオンラインの場合、「再起動をアナウンス」設定によって再起動前に遅延が入ります。</value>
   </data>
   <data name="Main_UpdateOnStart" xml:space="preserve">
-    <value>Update on start / restart</value>
+    <value>起動／再起動時にアップデート</value>
   </data>
   <data name="Main_UpdateOnStartTip" xml:space="preserve">
-    <value>Run a SteamCMD update check each time the server starts or restarts. Uncheck to never auto-download on start. You can still update explicitly via Check for Update.</value>
+    <value>サーバーの起動または再起動のたびに SteamCMD でアップデートを確認します。チェックを外すと、起動時に自動ダウンロードしなくなります。「アップデートを確認」から手動でアップデートすることは引き続き可能です。</value>
   </data>
   <data name="Main_CheckUpdateEvery" xml:space="preserve">
-    <value>Check for update every</value>
+    <value>アップデート確認の間隔</value>
   </data>
   <data name="Main_CheckUpdateEveryTip" xml:space="preserve">
-    <value>How often to check SteamCMD for a new build while the server is running. Applies on next start.</value>
+    <value>サーバーの稼働中に、SteamCMD で新しいビルドを確認する間隔です。次回の起動時に適用されます。</value>
   </data>
   <data name="Main_HideSteamCmd" xml:space="preserve">
-    <value>Hide SteamCMD window</value>
+    <value>SteamCMD ウィンドウを非表示</value>
   </data>
   <data name="Main_HideSteamCmdTip" xml:space="preserve">
-    <value>Run SteamCMD in the background instead of opening its own console window. Live progress still appears in the SteamCMD tab.</value>
+    <value>SteamCMD を専用のコンソールウィンドウを開かずにバックグラウンドで実行します。進行状況は SteamCMD タブにリアルタイムで表示されます。</value>
   </data>
   <data name="Main_LogServerStatus" xml:space="preserve">
-    <value>Log Server Status</value>
+    <value>サーバー状態をログに記録</value>
   </data>
   <data name="Main_LogServerStatusTip" xml:space="preserve">
-    <value>Write a server stats line (FPS, players, uptime, memory) to the log every 30s. Handy when running from a terminal; adds noise to the log otherwise.</value>
+    <value>30 秒ごとにサーバーの統計情報（FPS、プレイヤー数、稼働時間、メモリ）を 1 行ログに記録します。ターミナルから実行する際に便利ですが、それ以外の場合はログのノイズになります。</value>
   </data>
   <data name="Main_ZombieCheck" xml:space="preserve">
-    <value>Zombie check: restart after</value>
+    <value>ゾンビ検知：再起動しきい値</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
-    <value>When the REST API stays unreachable or the world stays frozen for this many checks in a row, restart the server. Turn off if your REST API is flaky and you'd rather it never auto-restart.</value>
+    <value>REST API に連続してこの回数だけ到達できない、またはワールドがフリーズしたままの場合、サーバーを再起動します。REST API が不安定で自動再起動させたくない場合は、オフにしてください。</value>
   </data>
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
-    <value>How many failed health checks in a row before the server is treated as wedged and force-restarted.</value>
+    <value>連続して何回ヘルスチェックに失敗した場合に、サーバーがフリーズ（ハング）しているとみなして強制再起動するかを指定します。</value>
   </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
-    <value>checks</value>
+    <value>回</value>
   </data>
   <data name="Main_RestCheckEvery" xml:space="preserve">
-    <value>REST check every</value>
+    <value>REST 確認の間隔</value>
   </data>
   <data name="Main_RestCheckEveryTip" xml:space="preserve">
-    <value>How often (seconds) the launcher polls the REST API for status/health. 5-10 is recommended. Going below 5 just hammers the API for no real gain (allowed, but not advised); it won't go below 1. Applies on next start.</value>
+    <value>ランチャーが REST API に状態／ヘルスを問い合わせる頻度（秒）です。5〜10 を推奨します。5 未満にしても実質的な効果はなく API に負荷をかけるだけです（許可はされますが非推奨）。1 未満にはできません。次回の起動時に適用されます。</value>
   </data>
   <data name="Main_SecondsSuffix" xml:space="preserve">
-    <value>s</value>
+    <value>秒</value>
   </data>
   <data name="Main_DiscordBot" xml:space="preserve">
-    <value>Discord Bot</value>
+    <value>Discord ボット</value>
   </data>
   <data name="Main_DiscordBotTip" xml:space="preserve">
-    <value>Discord control bot + webhook notifications</value>
+    <value>Discord 操作ボット + webhook 通知</value>
   </data>
   <data name="Main_TabGeneral" xml:space="preserve">
-    <value>General</value>
+    <value>全般</value>
   </data>
   <data name="Main_TabServerLog" xml:space="preserve">
-    <value>Server Log</value>
+    <value>サーバーログ</value>
   </data>
   <data name="Main_TabChat" xml:space="preserve">
-    <value>Chat</value>
+    <value>チャット</value>
   </data>
   <data name="Main_TabPlayers" xml:space="preserve">
-    <value>Players</value>
+    <value>プレイヤー</value>
   </data>
   <data name="Main_TabSteamCmd" xml:space="preserve">
     <value>SteamCMD</value>
   </data>
   <data name="Main_ServerCommands" xml:space="preserve">
-    <value>Server Commands</value>
+    <value>サーバーコマンド</value>
   </data>
   <data name="Main_ServerCommandsTip" xml:space="preserve">
-    <value>Send live commands to the running server: announce, kick / ban / unban, save, shutdown. Available while the server is up.</value>
+    <value>稼働中のサーバーへリアルタイムでコマンドを送信します：アナウンス、キック／BAN／BAN 解除、保存、シャットダウン。サーバーが稼働中に使用できます。</value>
   </data>
   <data name="Main_MultiServerTitle" xml:space="preserve">
-    <value>Multiple servers running</value>
+    <value>複数のサーバーが稼働中</value>
   </data>
   <data name="Main_MultiServerMessage" xml:space="preserve">
-    <value>Detected {0} Palworld servers running from this folder. They share one save and set of ports, so they'll conflict, the launcher manages a single server. Shut them all down, or exit.</value>
+    <value>このフォルダーから稼働している Palworld サーバーが {0} 個検出されました。これらは同じセーブデータとポートを共有するため競合します。ランチャーは単一のサーバーのみを管理します。すべて停止するか、終了してください。</value>
   </data>
   <data name="Main_ShutDownAll" xml:space="preserve">
-    <value>Shut Down All</value>
+    <value>すべて停止</value>
   </data>
   <data name="Main_ExitLauncher" xml:space="preserve">
-    <value>Exit Launcher</value>
+    <value>ランチャーを終了</value>
   </data>
   <data name="Main_ServerRunningTitle" xml:space="preserve">
-    <value>Server already running</value>
+    <value>サーバーは既に稼働中</value>
   </data>
   <data name="Main_ServerRunningMessage" xml:space="preserve">
-    <value>A Palworld server started from this folder is already running, almost certainly yours from a previous session, since the launcher only tracks servers it started here.
+    <value>このフォルダーから起動された Palworld サーバーが既に稼働しています。ランチャーはここで起動したサーバーのみを追跡するため、ほぼ間違いなく前回のセッションで起動したものです。
 
-Reconnect to keep managing it over the REST API (live stats, scheduled restarts, backups; the Server Log tab stays empty for a server the launcher didn't start itself). Otherwise shut it down, or exit.</value>
+再接続すると、REST API 経由で引き続き管理できます（リアルタイム統計、スケジュール再起動、バックアップなど。ランチャー自身が起動していないサーバーの場合、サーバーログタブは空のままになります）。それ以外の場合は停止するか、終了してください。</value>
   </data>
   <data name="Main_Reconnect" xml:space="preserve">
-    <value>Reconnect</value>
+    <value>再接続</value>
   </data>
   <data name="Main_ShutDownServer" xml:space="preserve">
-    <value>Shut Down Server</value>
+    <value>サーバーを停止</value>
   </data>
   <data name="Main_InstallTitle" xml:space="preserve">
-    <value>Install the server?</value>
+    <value>サーバーをインストールしますか？</value>
   </data>
   <data name="Main_InstallMessage" xml:space="preserve">
-    <value>This downloads and installs the Palworld dedicated server with SteamCMD, about 4 GB, into this launcher's folder. A SteamCMD window opens to show progress.
+    <value>SteamCMD を使って Palworld 専用サーバー（約 4 GB）をこのランチャーのフォルダーにダウンロードしてインストールします。進行状況を表示する SteamCMD ウィンドウが開きます。
 
-Download and install it now?</value>
+今すぐダウンロードしてインストールしますか？</value>
   </data>
   <data name="Main_DownloadInstall" xml:space="preserve">
-    <value>Download &amp; Install</value>
+    <value>ダウンロードしてインストール</value>
   </data>
   <data name="Main_ShutdownNowTitle" xml:space="preserve">
-    <value>Shut down now?</value>
+    <value>今すぐシャットダウンしますか？</value>
   </data>
   <data name="Main_ShutdownNowMessage" xml:space="preserve">
-    <value>Skip the countdown and shut the server down now?</value>
+    <value>カウントダウンをスキップして、今すぐサーバーをシャットダウンしますか？</value>
   </data>
   <data name="Main_ShutDownNow" xml:space="preserve">
-    <value>Shut Down Now</value>
+    <value>今すぐシャットダウン</value>
   </data>
   <data name="Main_KeepWaiting" xml:space="preserve">
-    <value>Keep Waiting</value>
+    <value>待機を続ける</value>
   </data>
   <data name="Main_ShutdownTitle" xml:space="preserve">
-    <value>Shut down the server</value>
+    <value>サーバーをシャットダウン</value>
   </data>
   <data name="Main_ShutdownForceMessage" xml:space="preserve">
-    <value>REST is not enabled, so the server can't be shut down gracefully. It will be force-stopped, the process is killed directly and the last autosave limits any loss. Turn on REST for graceful shutdowns.</value>
+    <value>REST が有効でないため、サーバーを正常にシャットダウンできません。プロセスを直接終了して強制停止します。データ損失は最後のオートセーブ時点までに留まります。正常なシャットダウンを行うには REST を有効にしてください。</value>
   </data>
   <data name="Main_ForceStop" xml:space="preserve">
-    <value>Force Stop</value>
+    <value>強制停止</value>
   </data>
   <data name="Main_ShutdownChoiceMessage" xml:space="preserve">
-    <value>Shut down now, or on a timer that shows players an in-game countdown first?</value>
+    <value>今すぐシャットダウンしますか、それとも先にゲーム内でプレイヤーにカウントダウンを表示するタイマー式にしますか？</value>
   </data>
   <data name="Main_ShutdownNowButton" xml:space="preserve">
-    <value>Shutdown Now</value>
+    <value>今すぐシャットダウン</value>
   </data>
   <data name="Main_TimedShutdown" xml:space="preserve">
-    <value>Timed Shutdown</value>
+    <value>タイマー式シャットダウン</value>
   </data>
   <data name="Main_TimedShutdownTitle" xml:space="preserve">
-    <value>Timed shutdown</value>
+    <value>タイマー式シャットダウン</value>
   </data>
   <data name="Main_TimedShutdownMessage" xml:space="preserve">
-    <value>Players get an in-game countdown for this many seconds before the server shuts down.</value>
+    <value>サーバーがシャットダウンするまで、プレイヤーにはゲーム内で指定した秒数のカウントダウンが表示されます。</value>
   </data>
   <data name="Main_SecondsUnit" xml:space="preserve">
-    <value>seconds</value>
+    <value>秒</value>
   </data>
   <data name="Main_ServerInstalledTitle" xml:space="preserve">
-    <value>Server installed</value>
+    <value>サーバーをインストールしました</value>
   </data>
   <data name="Main_ServerInstalledMessage" xml:space="preserve">
-    <value>Server successfully installed.
+    <value>サーバーのインストールに成功しました。
 
-Enable the REST API? It's what lets the launcher control the server: apply game updates, gracefully save and shut down, schedule restarts and backups, and monitor server health.
+REST API を有効にしますか？ランチャーはこれを使用してサーバーを管理します（ゲームアップデートの適用、正常な保存とシャットダウン、再起動とバックアップのスケジュール、サーバーのヘルス監視など）。
 
-If you enable it, the launcher generates the server config now and sets a secure, randomly generated admin password (view or change it later under Server Settings, in the Admin tab). You can also skip this and enable it yourself later.</value>
+有効にすると、ランチャーは即座にサーバー設定を生成し、安全なランダム生成による管理者パスワードを設定します（後から「サーバー設定」の「管理」タブで確認・変更可能です）。この手順をスキップして、後で自分で有効にすることもできます。</value>
   </data>
   <data name="Main_YesEnableRest" xml:space="preserve">
-    <value>Yes, enable it</value>
+    <value>はい、有効にする</value>
   </data>
   <data name="Main_NotNow" xml:space="preserve">
-    <value>Not now</value>
+    <value>後で</value>
   </data>
   <data name="Main_EnableRestTitle" xml:space="preserve">
-    <value>Enable the REST API?</value>
+    <value>REST API を有効にしますか？</value>
   </data>
   <data name="Main_EnableRestMessage" xml:space="preserve">
-    <value>This launcher is built around Palworld's REST API and uses it for almost everything: graceful save-and-shutdown, fresh backups, live health / zombie monitoring, automatic restarts, and player join/leave logging.
+    <value>このランチャーは Palworld の REST API を中心に構築されており、ほぼすべての機能でこれを使用します：正常な保存とシャットダウン、最新のバックアップ、リアルタイムのヘルス／ゾンビ監視、自動再起動、プレイヤーの参加／退出の記録。
 
-The REST API isn't enabled on this server yet, so those features will be limited, shutdowns fall back to a hard kill, backups may be stale, and there are no automatic restarts.
+このサーバーではまだ REST API が有効になっていないため、これらの機能は制限されます：シャットダウンは強制終了にフォールバックし、バックアップは古い可能性があり、自動再起動もありません。
 
-Enable it now with a secure, randomly-generated admin password?</value>
+安全なランダム生成の管理者パスワードで今すぐ有効にしますか？</value>
   </data>
   <data name="Main_NoRunLimited" xml:space="preserve">
-    <value>No, run limited</value>
+    <value>いいえ、制限付きで実行</value>
   </data>
   <data name="Main_Exit" xml:space="preserve">
-    <value>Exit</value>
+    <value>終了</value>
   </data>
   <data name="Main_RestEnabledTitle" xml:space="preserve">
-    <value>REST API enabled</value>
+    <value>REST API を有効にしました</value>
   </data>
   <data name="Main_RestFailedTitle" xml:space="preserve">
-    <value>Couldn't enable REST</value>
+    <value>REST を有効にできませんでした</value>
   </data>
   <data name="Main_RestEnabledMessage" xml:space="preserve">
-    <value>Done, the REST API is on with a new random admin password (view or change it under Server Settings, in the Admin tab). It takes effect the next time you start the server.</value>
+    <value>完了しました。REST API が新しいランダムな管理者パスワードで有効になりました（「サーバー設定」の「管理」タブで確認・変更できます）。次回サーバーを起動したときに反映されます。</value>
   </data>
   <data name="Main_RestFailedMessage" xml:space="preserve">
-    <value>Couldn't write the server config. Make sure the server is installed and stopped, then set it manually under Server Settings, in the Admin tab.</value>
+    <value>サーバー設定を書き込めませんでした。サーバーがインストール済みかつ停止していることを確認し、「サーバー設定」の「管理」タブで手動で設定してください。</value>
   </data>
   <data name="Main_ServerStillRunningTitle" xml:space="preserve">
-    <value>Server still running</value>
+    <value>サーバーはまだ稼働中</value>
   </data>
   <data name="Main_ServerStillRunningMessage" xml:space="preserve">
-    <value>The Palworld server is still running. What should happen to it?</value>
+    <value>Palworld サーバーがまだ稼働しています。どのように処理しますか？</value>
   </data>
   <data name="Main_ShutDownGraceful" xml:space="preserve">
-    <value>Shut Down (graceful)</value>
+    <value>シャットダウン（正常）</value>
   </data>
   <data name="Main_LeaveRunning" xml:space="preserve">
-    <value>Leave Running</value>
+    <value>稼働したままにする</value>
   </data>
   <data name="Main_DangerZoneTitle" xml:space="preserve">
-    <value>Danger zone!</value>
+    <value>危険区域！</value>
   </data>
   <data name="Main_DangerZoneMessage" xml:space="preserve">
-    <value>These are advanced, low-level settings. Using the wrong values here can HURT performance, for example, setting the process priority too high can starve the rest of your system and make the server run worse, not better.
+    <value>これらは高度な低レベル設定です。ここで誤った値を使用するとパフォーマンスを損なう可能性があります。例えば、プロセスの優先度を高く設定しすぎると、システムの他の部分のリソースを奪い、サーバーの動作がかえって悪化することがあります。
 
-Don't use these unless you know what you're doing.</value>
+自分が何をしているか理解している場合を除き、これらは使用しないでください。</value>
   </data>
   <data name="Main_UnderstandContinue" xml:space="preserve">
-    <value>I understand, continue</value>
+    <value>理解しました、続行</value>
   </data>
   <data name="Main_ForceShutdownConfirmMessage" xml:space="preserve">
-    <value>This will shut the server down immediately without a save by killing the process entirely. It can cause save data loss or corruption. This is not recommended unless the server has completely stopped responding.</value>
+    <value>これはプロセスを完全に終了することで、保存せずに直ちにサーバーをシャットダウンします。セーブデータの損失や破損を引き起こす可能性があります。サーバーが完全に応答しなくなった場合を除き、推奨されません。</value>
   </data>
   <data name="Main_PortCheckConsentMessage" xml:space="preserve">
-    <value>Your public IP address will be sent to check-host.cc, a free external service, to check whether players can reach your server from outside your network. Nothing except your public IP and the ports you test is sent to their service.</value>
+    <value>パブリック IP アドレスは、無料の外部サービスである check-host.cc に送信され、ネットワーク外部からプレイヤーがサーバーに到達できるかの確認に使用されます。このサービスに送信されるのは、パブリック IP とテスト対象のポートのみです。</value>
   </data>
   <data name="Main_UpdateAvailableTitle" xml:space="preserve">
-    <value>Update available</value>
+    <value>アップデートがあります</value>
   </data>
   <data name="Main_UpdateRunningMessage" xml:space="preserve">
-    <value>A newer server build ({0}) is available. Update and restart the server now? Players get the usual restart warnings.</value>
+    <value>新しいサーバービルド（{0}）が利用可能です。今すぐサーバーをアップデートして再起動しますか？プレイヤーには通常どおり再起動の警告が表示されます。</value>
   </data>
   <data name="Main_UpdateRestart" xml:space="preserve">
-    <value>Update &amp; restart</value>
+    <value>アップデートして再起動</value>
   </data>
   <data name="Main_UpdateStoppedMessage" xml:space="preserve">
-    <value>A newer server build ({0}) is available. Download and apply it now?</value>
+    <value>新しいサーバービルド（{0}）が利用可能です。今すぐダウンロードして適用しますか？</value>
   </data>
   <data name="Main_Download" xml:space="preserve">
-    <value>Download</value>
+    <value>ダウンロード</value>
   </data>
   <data name="Secret_Show" xml:space="preserve">
-    <value>Show</value>
+    <value>表示</value>
   </data>
   <data name="Secret_Hide" xml:space="preserve">
-    <value>Hide</value>
+    <value>非表示</value>
   </data>
   <data name="Secret_Tooltip" xml:space="preserve">
-    <value>Show or hide the value</value>
+    <value>値の表示・非表示を切り替えます</value>
   </data>
   <data name="Times_RestartTitle" xml:space="preserve">
-    <value>Restart Times</value>
+    <value>再起動時刻</value>
   </data>
   <data name="Times_RestartHeader" xml:space="preserve">
-    <value>Restart times</value>
+    <value>再起動時刻</value>
   </data>
   <data name="Times_BackupTitle" xml:space="preserve">
-    <value>Backup Times</value>
+    <value>バックアップ時刻</value>
   </data>
   <data name="Times_BackupHeader" xml:space="preserve">
-    <value>Backup times</value>
+    <value>バックアップ時刻</value>
   </data>
   <data name="Times_Every" xml:space="preserve">
-    <value>Every</value>
+    <value>間隔</value>
   </data>
   <data name="Times_EveryTip" xml:space="preserve">
-    <value>Fill the whole day at this interval, stepping from midnight. Pick a preset or type a decimal like 2.5. Replaces the times below.</value>
+    <value>深夜 0 時を起点に、指定した間隔で 1 日のスケジュールを埋めます。プリセットを選ぶか、2.5 のような小数を入力してください。下記の時刻を置き換えます。</value>
   </data>
   <data name="Times_Apply" xml:space="preserve">
-    <value>Apply</value>
+    <value>適用</value>
   </data>
   <data name="Times_MinuteTip" xml:space="preserve">
-    <value>Any minute 0-59, pick a preset or type it</value>
+    <value>0〜59 の任意の分。プリセットを選ぶか入力してください</value>
   </data>
   <data name="Times_Add" xml:space="preserve">
-    <value>Add</value>
+    <value>追加</value>
   </data>
   <data name="Times_Done" xml:space="preserve">
-    <value>Done</value>
+    <value>完了</value>
   </data>
   <data name="Times_InvalidTimeTitle" xml:space="preserve">
-    <value>Invalid time</value>
+    <value>無効な時刻</value>
   </data>
   <data name="Times_InvalidTimeMessage" xml:space="preserve">
-    <value>Enter minutes as a number 0-59.</value>
+    <value>分を 0〜59 の数値で入力してください。</value>
   </data>
   <data name="Times_InvalidIntervalTitle" xml:space="preserve">
-    <value>Invalid interval</value>
+    <value>無効な間隔</value>
   </data>
   <data name="Times_InvalidIntervalMessage" xml:space="preserve">
-    <value>Enter an interval between 15 minutes and 24 hours, e.g. 30m, 2h, or 2.5 (hours).</value>
+    <value>15 分から 24 時間の間隔を入力してください。例：30m、2h、または 2.5（時間）。</value>
   </data>
   <data name="Times_ReplaceTitle" xml:space="preserve">
-    <value>Replace times</value>
+    <value>時刻を置き換え</value>
   </data>
   <data name="Times_ReplaceMessage" xml:space="preserve">
-    <value>This replaces the {0} time(s) below with a schedule every {1}. Continue?</value>
+    <value>下記の {0} 個の時刻を、{1} ごとのスケジュールに置き換えます。続行しますか？</value>
   </data>
   <data name="Times_Replace" xml:space="preserve">
-    <value>Replace</value>
+    <value>置き換え</value>
   </data>
   <data name="App_ErrorFormat" xml:space="preserve">
-    <value>An error occurred:
+    <value>エラーが発生しました：
 
 {0}
 
-Full details in:
+詳細：
 {1}</value>
   </data>
   <data name="PortCheck_Title" xml:space="preserve">
-    <value>Port Check</value>
+    <value>ポートチェック</value>
   </data>
   <data name="PortCheck_Intro" xml:space="preserve">
-    <value>Checks whether your ports can be reached from the internet, using check-host.cc. Run this with the server stopped so the launcher can bind and test the ports.</value>
+    <value>check-host.cc を使用して、ポートがインターネットから到達可能かを確認します。ランチャーがポートをバインドしてテストできるよう、サーバーを停止した状態で実行してください。</value>
   </data>
   <data name="PortCheck_YourPublicIp" xml:space="preserve">
-    <value>Your public IP</value>
+    <value>パブリック IP</value>
   </data>
   <data name="PortCheck_Results" xml:space="preserve">
-    <value>Results</value>
+    <value>結果</value>
   </data>
   <data name="PortCheck_NotCheckedYet" xml:space="preserve">
-    <value>Not checked yet.</value>
+    <value>まだチェックしていません。</value>
   </data>
   <data name="PortCheck_ServiceOnline" xml:space="preserve">
-    <value>Port check service online</value>
+    <value>ポートチェックサービス オンライン</value>
   </data>
   <data name="PortCheck_PortRowLabel" xml:space="preserve">
     <value>{0} ({1})</value>
   </data>
   <data name="PortCheck_FirewallNote" xml:space="preserve">
-    <value>This test binds a temporary listener on the launcher. If Windows Firewall prompts, allow it, otherwise ports can falsely show as unreachable. REST and RCON are admin ports: they should normally NOT be reachable from the internet, so a green result there is a warning, not a pass.</value>
+    <value>このテストはランチャー上に一時的なリスナーをバインドします。Windows ファイアウォールの確認が表示されたら許可してください。許可しないと、ポートが誤って到達不可と表示されることがあります。REST と RCON は管理用ポートです。通常はインターネットから到達可能であるべきではないため、緑色の結果は合格ではなく警告を意味します。</value>
   </data>
   <data name="PortCheck_Check" xml:space="preserve">
-    <value>Check</value>
+    <value>チェック</value>
   </data>
   <data name="PortCheck_Close" xml:space="preserve">
-    <value>Close</value>
+    <value>閉じる</value>
   </data>
   <data name="PortCheck_NoPublicIpTitle" xml:space="preserve">
-    <value>No public IP</value>
+    <value>パブリック IP がありません</value>
   </data>
   <data name="PortCheck_NoPublicIpMessage" xml:space="preserve">
-    <value>Enter your public IP first (it's normally filled in automatically).</value>
+    <value>先にパブリック IP を入力してください（通常は自動的に入力されます）。</value>
   </data>
   <data name="PortCheck_Checking" xml:space="preserve">
-    <value>Checking...</value>
+    <value>チェック中...</value>
   </data>
   <data name="PortCheck_ServiceOnlineStatus" xml:space="preserve">
-    <value>Online.</value>
+    <value>オンライン。</value>
   </data>
   <data name="PortCheck_ServiceUnavailable" xml:space="preserve">
-    <value>Unavailable, can't reach check-host.cc right now.</value>
+    <value>利用できません。現在 check-host.cc に接続できません。</value>
   </data>
   <data name="PortCheck_InvalidPort" xml:space="preserve">
-    <value>Enter a port between 1 and 65535.</value>
+    <value>1 から 65535 の間のポートを入力してください。</value>
   </data>
   <data name="PortCheck_Failed" xml:space="preserve">
-    <value>Port check failed, see the log.</value>
+    <value>ポートチェックに失敗しました。ログを確認してください。</value>
   </data>
   <data name="ServerCmd_Title" xml:space="preserve">
-    <value>Server Commands</value>
+    <value>サーバーコマンド</value>
   </data>
   <data name="ServerCmd_HeaderAnnounce" xml:space="preserve">
-    <value>Announce</value>
+    <value>アナウンス</value>
   </data>
   <data name="ServerCmd_Send" xml:space="preserve">
-    <value>Send</value>
+    <value>送信</value>
   </data>
   <data name="ServerCmd_HeaderPlayers" xml:space="preserve">
-    <value>Players</value>
+    <value>プレイヤー</value>
   </data>
   <data name="ServerCmd_Refresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>更新</value>
   </data>
   <data name="ServerCmd_ReasonLabel" xml:space="preserve">
-    <value>Reason (kick / ban)</value>
+    <value>理由（キック／BAN）</value>
   </data>
   <data name="ServerCmd_LoadingPlayers" xml:space="preserve">
-    <value>Loading players...</value>
+    <value>プレイヤーを読み込み中...</value>
   </data>
   <data name="ServerCmd_HeaderUnban" xml:space="preserve">
-    <value>Unban</value>
+    <value>BAN 解除</value>
   </data>
   <data name="ServerCmd_Unban" xml:space="preserve">
-    <value>Unban</value>
+    <value>BAN 解除</value>
   </data>
   <data name="ServerCmd_UnbanHint" xml:space="preserve">
-    <value>Unban must use the platform user id (e.g. steam_0123...).</value>
+    <value>BAN 解除にはプラットフォームのユーザー ID を使用する必要があります（例：steam_0123...）。</value>
   </data>
   <data name="ServerCmd_HeaderServer" xml:space="preserve">
-    <value>Server</value>
+    <value>サーバー</value>
   </data>
   <data name="ServerCmd_SaveWorld" xml:space="preserve">
-    <value>Save world</value>
+    <value>ワールドを保存</value>
   </data>
   <data name="ServerCmd_Close" xml:space="preserve">
-    <value>Close</value>
+    <value>閉じる</value>
   </data>
   <data name="ServerCmd_EnterMessage" xml:space="preserve">
-    <value>Enter a message to announce.</value>
+    <value>アナウンスするメッセージを入力してください。</value>
   </data>
   <data name="ServerCmd_Announced" xml:space="preserve">
-    <value>Announced.</value>
+    <value>アナウンスしました。</value>
   </data>
   <data name="ServerCmd_AnnounceFailed" xml:space="preserve">
-    <value>Couldn't announce (REST off or rejected).</value>
+    <value>アナウンスできませんでした（REST が無効か拒否されました）。</value>
   </data>
   <data name="ServerCmd_RestOff" xml:space="preserve">
-    <value>REST API is off or not responding.</value>
+    <value>REST API が無効か応答していません。</value>
   </data>
   <data name="ServerCmd_NoPlayers" xml:space="preserve">
-    <value>No players online.</value>
+    <value>オンラインのプレイヤーはいません。</value>
   </data>
   <data name="ServerCmd_EnterUserId" xml:space="preserve">
-    <value>Enter a user id to unban.</value>
+    <value>BAN 解除するユーザー ID を入力してください。</value>
   </data>
   <data name="ServerCmd_UnbanTitle" xml:space="preserve">
-    <value>Unban player</value>
+    <value>プレイヤーの BAN 解除</value>
   </data>
   <data name="ServerCmd_UnbanConfirm" xml:space="preserve">
-    <value>Unban {0}?</value>
+    <value>{0} の BAN を解除しますか？</value>
   </data>
   <data name="ServerCmd_Unbanned" xml:space="preserve">
-    <value>Unbanned {0}.</value>
+    <value>{0} の BAN を解除しました。</value>
   </data>
   <data name="ServerCmd_UnbanFailed" xml:space="preserve">
-    <value>Couldn't unban (REST off or rejected).</value>
+    <value>BAN を解除できませんでした（REST が無効か拒否されました）。</value>
   </data>
   <data name="ServerCmd_WorldSaved" xml:space="preserve">
-    <value>World saved.</value>
+    <value>ワールドを保存しました。</value>
   </data>
   <data name="ServerCmd_SaveFailed" xml:space="preserve">
-    <value>Couldn't save (REST off or rejected).</value>
+    <value>保存できませんでした（REST が無効か拒否されました）。</value>
   </data>
   <data name="ServerCmd_UnknownName" xml:space="preserve">
-    <value>(unknown)</value>
+    <value>（不明）</value>
   </data>
   <data name="ServerCmd_PlayerNameLevel" xml:space="preserve">
     <value>{0}  (Lv {1})</value>
   </data>
   <data name="ServerCmd_NoUserId" xml:space="preserve">
-    <value>(no user id)</value>
+    <value>（ユーザー ID なし）</value>
   </data>
   <data name="ServerCmd_Kick" xml:space="preserve">
-    <value>Kick</value>
+    <value>キック</value>
   </data>
   <data name="ServerCmd_Ban" xml:space="preserve">
-    <value>Ban</value>
+    <value>BAN</value>
   </data>
   <data name="ServerCmd_NoUserIdTooltip" xml:space="preserve">
-    <value>No user id reported for this player.</value>
+    <value>このプレイヤーのユーザー ID は報告されていません。</value>
   </data>
   <data name="ServerCmd_KickTitle" xml:space="preserve">
-    <value>Kick player</value>
+    <value>プレイヤーのキック</value>
   </data>
   <data name="ServerCmd_KickConfirm" xml:space="preserve">
-    <value>Kick {0} ({1})?</value>
+    <value>{0}（{1}）をキックしますか？</value>
   </data>
   <data name="ServerCmd_Kicked" xml:space="preserve">
-    <value>Kicked {0} ({1}).</value>
+    <value>{0}（{1}）をキックしました。</value>
   </data>
   <data name="ServerCmd_KickFailed" xml:space="preserve">
-    <value>Couldn't kick {0} (REST off or rejected).</value>
+    <value>{0} をキックできませんでした（REST が無効か拒否されました）。</value>
   </data>
   <data name="ServerCmd_BanTitle" xml:space="preserve">
-    <value>Ban player</value>
+    <value>プレイヤーの BAN</value>
   </data>
   <data name="ServerCmd_BanConfirm" xml:space="preserve">
-    <value>Ban {0} ({1})? They'll be kicked and blocked from rejoining.</value>
+    <value>{0}（{1}）を BAN しますか？キックされ、再参加できなくなります。</value>
   </data>
   <data name="ServerCmd_Banned" xml:space="preserve">
-    <value>Banned {0} ({1}).</value>
+    <value>{0}（{1}）を BAN しました。</value>
   </data>
   <data name="ServerCmd_BanFailed" xml:space="preserve">
-    <value>Couldn't ban {0} (REST off or rejected).</value>
+    <value>{0} を BAN できませんでした（REST が無効か拒否されました）。</value>
   </data>
   <data name="ServerCmd_CommandFailed" xml:space="preserve">
-    <value>Command failed, see the log.</value>
+    <value>コマンドが失敗しました。ログを確認してください。</value>
   </data>
   <data name="Discord_Title" xml:space="preserve">
     <value>Discord</value>
   </data>
   <data name="Discord_BlurbPrefix" xml:space="preserve">
-    <value>Control the server from Discord with slash commands, and/or post lifecycle notifications to a channel. Create a bot and copy its token from the</value>
+    <value>スラッシュコマンドで Discord からサーバーを操作したり、ライフサイクル通知をチャンネルに投稿したりできます。ボットを作成し、</value>
   </data>
   <data name="Discord_BlurbLinkText" xml:space="preserve">
-    <value>Discord Developer Portal</value>
+    <value>Discord 開発者ポータル</value>
   </data>
   <data name="Discord_BlurbSuffix" xml:space="preserve">
-    <value> (add a Bot, then invite it with the bot + applications.commands scopes).</value>
+    <value> からトークンをコピーします（ボットを追加し、bot + applications.commands スコープで招待してください）。</value>
   </data>
   <data name="Discord_ServerControlBotHeader" xml:space="preserve">
-    <value>Server control bot</value>
+    <value>サーバー操作ボット</value>
   </data>
   <data name="Discord_EnableControlBot" xml:space="preserve">
-    <value>Enable the control bot (slash commands: /status /players /save /backup /update /start /restart /stop)</value>
+    <value>操作ボットを有効にする（スラッシュコマンド：/status /players /save /backup /update /start /restart /stop）</value>
   </data>
   <data name="Discord_BotTokenLabel" xml:space="preserve">
-    <value>Bot token (secret)</value>
+    <value>ボットトークン（秘密）</value>
   </data>
   <data name="Discord_CommandChannelIdLabel" xml:space="preserve">
-    <value>Command channel ID</value>
+    <value>コマンドチャンネル ID</value>
   </data>
   <data name="Discord_RequiredRoleIdLabel" xml:space="preserve">
-    <value>Required role ID (optional)</value>
+    <value>必要なロール ID（任意）</value>
   </data>
   <data name="Discord_CommandCooldownLabel" xml:space="preserve">
-    <value>Command cooldown (seconds)</value>
+    <value>コマンドのクールダウン（秒）</value>
   </data>
   <data name="Discord_SecurityNote" xml:space="preserve">
-    <value>Security: set a command channel and/or a required role, the bot only acts when every gate you set passes (set at least one). Anyone who can post in the command channel, or has the role, can control the server, so lock it down (a private, admin-only channel and/or an admin role). Enable Discord Developer Mode, then right-click a channel or role -&gt; Copy ID. The token is stored locally in launcher.json and is never logged.</value>
+    <value>セキュリティ：コマンドチャンネルと必要なロールのいずれか（または両方）を設定してください。ボットは設定したすべての条件を満たした場合にのみ動作します（少なくとも 1 つ設定してください）。コマンドチャンネルに投稿できる人、またはそのロールを持つ人は誰でもサーバーを操作できるため、しっかり制限してください（非公開の管理者専用チャンネルや管理者ロールなど）。Discord の開発者モードを有効にし、チャンネルまたはロールを右クリック -&gt; ID をコピー してください。トークンはローカルの launcher.json に保存され、ログには記録されません。</value>
   </data>
   <data name="Discord_CommandsExposedHeader" xml:space="preserve">
-    <value>Commands the bot exposes</value>
+    <value>ボットが公開するコマンド</value>
   </data>
   <data name="Discord_CommandsExposedHint" xml:space="preserve">
-    <value>Tick the slash commands the bot should accept. Destructive ones (restart, stop, kick, ban) are off by default. Changes take effect on Save (the bot reconnects and re-registers its commands).</value>
+    <value>ボットが受け付けるスラッシュコマンドにチェックを入れてください。破壊的なコマンド（restart、stop、kick、ban）はデフォルトで無効です。変更は保存時に反映されます（ボットが再接続し、コマンドを再登録します）。</value>
   </data>
   <data name="Discord_WebhookNotificationsHeader" xml:space="preserve">
-    <value>Webhook notifications</value>
+    <value>Webhook 通知</value>
   </data>
   <data name="Discord_EnableNotifications" xml:space="preserve">
-    <value>Enable notifications</value>
+    <value>通知を有効にする</value>
   </data>
   <data name="Discord_WebhookUrlLabel" xml:space="preserve">
     <value>Webhook URL</value>
   </data>
   <data name="Discord_NotifyLifecycle" xml:space="preserve">
-    <value>Notify on up / down / update / crash</value>
+    <value>起動／停止／アップデート／クラッシュ時に通知</value>
   </data>
   <data name="Discord_NotifyPlayers" xml:space="preserve">
-    <value>Notify on player join / leave (needs REST)</value>
+    <value>プレイヤーの参加／退出時に通知（REST が必要）</value>
   </data>
   <data name="Discord_InvalidChannelIdTitle" xml:space="preserve">
-    <value>Invalid channel ID</value>
+    <value>無効なチャンネル ID</value>
   </data>
   <data name="Discord_InvalidChannelIdMessage" xml:space="preserve">
-    <value>The command channel ID must be a number (Discord Developer Mode -&gt; right-click the channel -&gt; Copy Channel ID).</value>
+    <value>コマンドチャンネル ID は数値である必要があります（Discord の開発者モード -&gt; チャンネルを右クリック -&gt; チャンネル ID をコピー）。</value>
   </data>
   <data name="Discord_InvalidRoleIdTitle" xml:space="preserve">
-    <value>Invalid role ID</value>
+    <value>無効なロール ID</value>
   </data>
   <data name="Discord_InvalidRoleIdMessage" xml:space="preserve">
-    <value>The required role ID must be a number (Discord Developer Mode -&gt; right-click the role -&gt; Copy Role ID).</value>
+    <value>必要なロール ID は数値である必要があります（Discord の開発者モード -&gt; ロールを右クリック -&gt; ロール ID をコピー）。</value>
   </data>
   <data name="Discord_BotNotReadyTitle" xml:space="preserve">
-    <value>Bot not ready</value>
+    <value>ボット未準備</value>
   </data>
   <data name="Discord_BotNotReadyMessage" xml:space="preserve">
-    <value>To enable the control bot, set a bot token and at least one gate: a command channel ID and/or a required role ID.</value>
+    <value>操作ボットを有効にするには、ボットトークンと、少なくとも 1 つの条件（コマンドチャンネル ID と必要なロール ID のいずれか、または両方）を設定してください。</value>
   </data>
   <data name="Mods_Title" xml:space="preserve">
-    <value>Mods</value>
+    <value>Mod</value>
   </data>
   <data name="Mods_Disclaimer" xml:space="preserve">
-    <value>Only mods that are built to run on servers will work here. Many mods are client-side only and can't or shouldn't be installed on the server, so check a mod's description before loading it. Use mods at your own risk, they may cause save-data corruption or crashes.</value>
+    <value>サーバー上で動作するように作られた Mod のみがここで動作します。多くの Mod はクライアント専用であり、サーバーにはインストールできない、またはすべきではないため、読み込む前に Mod の説明を確認してください。Mod の使用は自己責任です。セーブデータの破損やクラッシュを引き起こす可能性があります。</value>
   </data>
   <data name="Mods_EnableMods" xml:space="preserve">
-    <value>Enable mods on this server</value>
+    <value>このサーバーで Mod を有効にする</value>
   </data>
   <data name="Mods_SteamAccountHeader" xml:space="preserve">
-    <value>Steam account</value>
+    <value>Steam アカウント</value>
   </data>
   <data name="Mods_SteamAccountNote" xml:space="preserve">
-    <value>Only needed to download Workshop mods, dropped-in mods need no account. Steam's own SteamCMD handles the sign-in in its own window, so the launcher never sees or stores your password, it only remembers your username.</value>
+    <value>ワークショップ Mod のダウンロード時にのみ必要です。手動で配置した Mod にはアカウントは不要です。サインインは Steam 自身の SteamCMD が専用ウィンドウで処理するため、ランチャーがパスワードを見たり保存したりすることはありません。記憶するのはユーザー名のみです。</value>
   </data>
   <data name="Mods_ConnectButton" xml:space="preserve">
-    <value>Connect Steam account</value>
+    <value>Steam アカウントを接続</value>
   </data>
   <data name="Mods_DifferentAccountLink" xml:space="preserve">
-    <value>Connect with a different account?</value>
+    <value>別のアカウントで接続しますか？</value>
   </data>
   <data name="Mods_WorkshopHeader" xml:space="preserve">
-    <value>Steam Workshop mods</value>
+    <value>Steam ワークショップ Mod</value>
   </data>
   <data name="Mods_BrowsePrefix" xml:space="preserve">
-    <value>Browse mods on the </value>
+    <value>Mod は </value>
   </data>
   <data name="Mods_BrowseLinkText" xml:space="preserve">
-    <value>Palworld Steam Workshop</value>
+    <value>Palworld Steam ワークショップ</value>
   </data>
   <data name="Mods_BrowseSuffix" xml:space="preserve">
-    <value>.</value>
+    <value> で閲覧できます。</value>
   </data>
   <data name="Mods_AddButton" xml:space="preserve">
-    <value>Add</value>
+    <value>追加</value>
   </data>
   <data name="Mods_ScanFolderButton" xml:space="preserve">
-    <value>Scan folder</value>
+    <value>フォルダーをスキャン</value>
   </data>
   <data name="Mods_OpenModsFolderButton" xml:space="preserve">
-    <value>Open mods folder</value>
+    <value>Mod フォルダーを開く</value>
   </data>
   <data name="Mods_AddByIdLabel" xml:space="preserve">
-    <value>Add by Steam Workshop id or URL:</value>
+    <value>Steam ワークショップ ID または URL で追加：</value>
   </data>
   <data name="Mods_NoAccountWarning" xml:space="preserve">
-    <value>You have Workshop mods enabled but no Steam account connected. Connect one above to download them, or they'll be skipped on start (dropped-in mods still load).</value>
+    <value>ワークショップ Mod が有効になっていますが、Steam アカウントが接続されていません。ダウンロードするには上でアカウントを接続してください。接続しない場合、起動時にスキップされます（手動で配置した Mod は引き続き読み込まれます）。</value>
   </data>
   <data name="Mods_LoosePakHeader" xml:space="preserve">
-    <value>Loose .pak mods</value>
+    <value>単体 .pak Mod</value>
   </data>
   <data name="Mods_LoosePakDescription" xml:space="preserve">
-    <value>You don't need this if you're using Steam Workshop above. For raw .pak mods with no Info.json (many NexusMods downloads): drop them into the loose-paks folder and toggle them here. They're enabled/disabled by renaming (never deleted) and load on the next server start.</value>
+    <value>上の Steam ワークショップを使用している場合、これは不要です。Info.json のない生の .pak Mod（NexusMods でダウンロードした多くの Mod）の場合：単体 .pak フォルダーに配置し、ここで切り替えます。これらはファイル名の変更によって有効／無効を切り替え（削除はされません）、次回のサーバー起動時に読み込まれます。</value>
   </data>
   <data name="Mods_OpenLoosePaksFolderButton" xml:space="preserve">
-    <value>Open loose-paks folder</value>
+    <value>単体 .pak フォルダーを開く</value>
   </data>
   <data name="Mods_RescanButton" xml:space="preserve">
-    <value>Rescan</value>
+    <value>再スキャン</value>
   </data>
   <data name="Mods_OpenUe4ssFolderButton" xml:space="preserve">
-    <value>Open UE4SS mods folder</value>
+    <value>UE4SS Mod フォルダーを開く</value>
   </data>
   <data name="Mods_EnterUsernameTitle" xml:space="preserve">
-    <value>Enter a username</value>
+    <value>ユーザー名の入力</value>
   </data>
   <data name="Mods_EnterUsernameBody" xml:space="preserve">
-    <value>Enter your Steam account name first, then connect.</value>
+    <value>先に Steam のアカウント名を入力してから接続してください。</value>
   </data>
   <data name="Mods_ConnectingButton" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>接続中...</value>
   </data>
   <data name="Mods_SteamCmdWindowOpened" xml:space="preserve">
-    <value>A SteamCMD window opened. Enter your password and Steam Guard code there, it stays open so you can read the result, then close it.</value>
+    <value>SteamCMD ウィンドウが開きました。そこにパスワードと Steam Guard コードを入力してください。結果を確認できるようウィンドウは開いたままになりますので、確認後に閉じてください。</value>
   </data>
   <data name="Mods_ConfirmSignInFailed" xml:space="preserve">
-    <value>Couldn't confirm the sign-in. Connect again and watch the SteamCMD window for the error (wrong password or Steam Guard code).</value>
+    <value>サインインを確認できませんでした。もう一度接続し、SteamCMD ウィンドウのエラー（パスワードまたは Steam Guard コードの誤り）を確認してください。</value>
   </data>
   <data name="Mods_SignInFailed" xml:space="preserve">
-    <value>Sign-in failed: {0}</value>
+    <value>サインインに失敗しました：{0}</value>
   </data>
   <data name="Mods_SavedSignInInvalid" xml:space="preserve">
-    <value>Your saved sign-in isn't valid anymore, connect again.</value>
+    <value>保存されたサインイン情報は無効になりました。もう一度接続してください。</value>
   </data>
   <data name="Mods_CheckSignInFailed" xml:space="preserve">
-    <value>Couldn't check sign-in: {0}</value>
+    <value>サインインを確認できませんでした：{0}</value>
   </data>
   <data name="Mods_CheckingSignIn" xml:space="preserve">
-    <value>Checking sign-in...</value>
+    <value>サインインを確認中...</value>
   </data>
   <data name="Mods_SignedIn" xml:space="preserve">
-    <value>Signed into SteamCMD</value>
+    <value>SteamCMD にサインイン済み</value>
   </data>
   <data name="Mods_InvalidIdTitle" xml:space="preserve">
-    <value>Invalid Workshop id</value>
+    <value>無効なワークショップ ID</value>
   </data>
   <data name="Mods_InvalidIdBody" xml:space="preserve">
-    <value>Enter a numeric Steam Workshop id, or a workshop URL like https://steamcommunity.com/sharedfiles/filedetails/?id=123456.</value>
+    <value>数値の Steam ワークショップ ID、または https://steamcommunity.com/sharedfiles/filedetails/?id=123456 のようなワークショップ URL を入力してください。</value>
   </data>
   <data name="Mods_AlreadyAddedTitle" xml:space="preserve">
-    <value>Already added</value>
+    <value>追加済み</value>
   </data>
   <data name="Mods_AlreadyAddedBody" xml:space="preserve">
-    <value>That Workshop id is already in the list.</value>
+    <value>そのワークショップ ID は既にリストにあります。</value>
   </data>
   <data name="Mods_AddingButton" xml:space="preserve">
-    <value>Adding...</value>
+    <value>追加中...</value>
   </data>
   <data name="Mods_NotPalworldTitle" xml:space="preserve">
-    <value>Not a Palworld mod?</value>
+    <value>Palworld の Mod ではありませんか？</value>
   </data>
   <data name="Mods_NotPalworldBody" xml:space="preserve">
-    <value>This item's Steam app id is {0}, not Palworld's ({1}), so it may not work on your server. Add it anyway?</value>
+    <value>このアイテムの Steam アプリ ID は {0} であり、Palworld の ID（{1}）とは異なるため、サーバーで動作しない可能性があります。それでも追加しますか？</value>
   </data>
   <data name="Mods_AddAnyway" xml:space="preserve">
-    <value>Add anyway</value>
+    <value>それでも追加</value>
   </data>
   <data name="Mods_ScanNoneFound" xml:space="preserve">
-    <value>No new mods found in the mods folder.</value>
+    <value>Mod フォルダーに新しい Mod は見つかりませんでした。</value>
   </data>
   <data name="Mods_ScanAdded" xml:space="preserve">
-    <value>Added {0} mod(s) from the mods folder.</value>
+    <value>Mod フォルダーから {0} 個の Mod を追加しました。</value>
   </data>
   <data name="Mods_ScanSkipped" xml:space="preserve">
-    <value> Skipped {0} folder(s) with no readable Info.json.</value>
+    <value> 読み取り可能な Info.json のないフォルダーを {0} 個スキップしました。</value>
   </data>
   <data name="Mods_ScanTitle" xml:space="preserve">
-    <value>Scan mods folder</value>
+    <value>Mod フォルダーのスキャン</value>
   </data>
   <data name="Mods_NoAccountTitle" xml:space="preserve">
-    <value>No Steam account connected</value>
+    <value>Steam アカウント未接続</value>
   </data>
   <data name="Mods_NoAccountSaveBody" xml:space="preserve">
-    <value>You have Workshop mods enabled but no Steam account connected, so they can't be downloaded and will be skipped when the server starts (dropped-in mods still load). Save anyway?</value>
+    <value>ワークショップ Mod が有効になっていますが、Steam アカウントが接続されていないため、ダウンロードできず、サーバー起動時にスキップされます（手動で配置した Mod は引き続き読み込まれます）。それでも保存しますか？</value>
   </data>
   <data name="Mods_SaveAnyway" xml:space="preserve">
-    <value>Save anyway</value>
+    <value>それでも保存</value>
   </data>
   <data name="Mods_PackageTip" xml:space="preserve">
-    <value>Package: {0}</value>
+    <value>パッケージ：{0}</value>
   </data>
   <data name="Mods_PackageUnresolvedTip" xml:space="preserve">
-    <value>Package name not resolved yet (download or scan the mod).</value>
+    <value>パッケージ名はまだ解決されていません（Mod をダウンロードまたはスキャンしてください）。</value>
   </data>
   <data name="Mods_OpenWorkshopPageTip" xml:space="preserve">
-    <value>Open this mod's Steam Workshop page. </value>
+    <value>この Mod の Steam ワークショップページを開きます。 </value>
   </data>
   <data name="Mods_LocalLabel" xml:space="preserve">
-    <value>local</value>
+    <value>ローカル</value>
   </data>
   <data name="Mods_DeleteModTip" xml:space="preserve">
-    <value>Delete this mod (removes it from the list and deletes its downloaded files).</value>
+    <value>この Mod を削除します（リストから削除し、ダウンロードしたファイルも削除します）。</value>
   </data>
   <data name="Mods_EmptyList" xml:space="preserve">
-    <value>No mods yet. Add a Workshop id above, or drop mod folders into the mods folder and Scan.</value>
+    <value>まだ Mod はありません。上でワークショップ ID を追加するか、Mod フォルダーに Mod のフォルダーを配置してスキャンしてください。</value>
   </data>
   <data name="Mods_DeleteTitle" xml:space="preserve">
-    <value>Delete mod</value>
+    <value>Mod の削除</value>
   </data>
   <data name="Mods_DeleteBody" xml:space="preserve">
-    <value>This will delete the mod files and remove it from your mod list.
+    <value>これにより Mod のファイルが削除され、Mod リストからも削除されます。
 
 {0}</value>
   </data>
   <data name="Mods_DeleteButton" xml:space="preserve">
-    <value>Delete</value>
+    <value>削除</value>
   </data>
   <data name="Mods_DeleteFailedTitle" xml:space="preserve">
-    <value>Couldn't delete files</value>
+    <value>ファイルの削除失敗</value>
   </data>
   <data name="Mods_DeleteFailedBody" xml:space="preserve">
-    <value>Removed it from the list, but couldn't delete the files: {0}</value>
+    <value>リストからは削除しましたが、ファイルを削除できませんでした：{0}</value>
   </data>
   <data name="Mods_ThisModFallback" xml:space="preserve">
-    <value>this mod</value>
+    <value>この Mod</value>
   </data>
   <data name="Mods_LoosePakEmpty" xml:space="preserve">
-    <value>No loose .pak mods found. Drop .pak files (with any .utoc / .ucas) into the loose-paks folder, then Rescan.</value>
+    <value>単体 .pak Mod が見つかりません。.pak ファイル（.utoc / .ucas があればそれも）を単体 .pak フォルダーに配置してから、再スキャンしてください。</value>
   </data>
   <data name="Mods_LoosePakLabelSingular" xml:space="preserve">
-    <value>{0}  ({1} file)</value>
+    <value>{0}  ({1} 個のファイル)</value>
   </data>
   <data name="Mods_LoosePakLabelPlural" xml:space="preserve">
-    <value>{0}  ({1} files)</value>
+    <value>{0}  ({1} 個のファイル)</value>
   </data>
   <data name="Mods_ChangeModFailedTitle" xml:space="preserve">
-    <value>Couldn't change the mod</value>
+    <value>Mod の変更失敗</value>
   </data>
   <data name="Mods_EnablePakFailed" xml:space="preserve">
-    <value>Couldn't enable '{0}': {1}</value>
+    <value>「{0}」を有効にできませんでした：{1}</value>
   </data>
   <data name="Mods_DisablePakFailed" xml:space="preserve">
-    <value>Couldn't disable '{0}': {1}</value>
+    <value>「{0}」を無効にできませんでした：{1}</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledTitle" xml:space="preserve">
-    <value>UE4SS not installed</value>
+    <value>UE4SS 未インストール</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
-    <value>UE4SS isn't installed yet. Add a UE4SS mod from the Workshop and start the server once, then its mods folder will appear here.</value>
+    <value>UE4SS はまだインストールされていません。ワークショップから UE4SS Mod を追加してサーバーを一度起動すると、その Mod フォルダーがここに表示されます。</value>
   </data>
   <data name="Mods_ColOn" xml:space="preserve">
-    <value>On</value>
+    <value>オン</value>
   </data>
   <data name="Mods_ColName" xml:space="preserve">
-    <value>Name</value>
+    <value>名前</value>
   </data>
   <data name="Mods_ColId" xml:space="preserve">
     <value>ID</value>
   </data>
   <data name="Mods_ColNote" xml:space="preserve">
-    <value>Note</value>
+    <value>メモ</value>
   </data>
   <data name="Settings_AdvancedTitle" xml:space="preserve">
-    <value>Advanced Settings</value>
+    <value>詳細設定</value>
   </data>
   <data name="Settings_ServerTitle" xml:space="preserve">
-    <value>Server Settings</value>
+    <value>サーバー設定</value>
   </data>
   <data name="Settings_ResetToDefaults" xml:space="preserve">
-    <value>Reset to defaults</value>
+    <value>デフォルトに戻す</value>
   </data>
   <data name="Settings_WorldBlurb" xml:space="preserve">
-    <value>Gameplay and balance, difficulty, EXP / capture / drop rates, damage multipliers, and world features. Full reference:</value>
+    <value>ゲームプレイとバランス、難易度、経験値／捕獲／ドロップ倍率、ダメージ倍率、ワールド機能。詳細な参照先：</value>
   </data>
   <data name="Settings_WorldBlurbLink" xml:space="preserve">
-    <value>Features docs</value>
+    <value>機能ドキュメント</value>
   </data>
   <data name="Settings_AdminBlurb" xml:space="preserve">
-    <value>Server management, server name, passwords, player limit, and the REST / RCON APIs. Full reference:</value>
+    <value>サーバー管理、サーバー名、パスワード、プレイヤー上限、REST / RCON API。詳細な参照先：</value>
   </data>
   <data name="Settings_AdminBlurbLink" xml:space="preserve">
-    <value>Server management docs</value>
+    <value>サーバー管理ドキュメント</value>
   </data>
   <data name="Settings_TabWorld" xml:space="preserve">
-    <value>World Settings</value>
+    <value>ワールド設定</value>
   </data>
   <data name="Settings_TabAdmin" xml:space="preserve">
-    <value>Admin</value>
+    <value>管理</value>
   </data>
   <data name="Settings_TabUndocumented" xml:space="preserve">
-    <value>Undocumented</value>
+    <value>未記載</value>
   </data>
   <data name="Settings_TabLaunchArgs" xml:space="preserve">
-    <value>Launch Arguments</value>
+    <value>起動引数</value>
   </data>
   <data name="Settings_BannerServerRunning" xml:space="preserve">
-    <value>The server is running, so the game-settings tabs are read-only (a running server overwrites its own config). Launch Arguments can still be edited, and apply on the next start just like the game settings.</value>
+    <value>サーバーが稼働中のため、ゲーム設定タブは読み取り専用です（稼働中のサーバーは自身の設定を上書きします）。起動引数は引き続き編集でき、ゲーム設定と同様に次回の起動時に適用されます。</value>
   </data>
   <data name="Settings_BannerGameUnavailable" xml:space="preserve">
-    <value>Game settings unavailable, install the server first (no DefaultPalWorldSettings.ini found).</value>
+    <value>ゲーム設定は利用できません。先にサーバーをインストールしてください（DefaultPalWorldSettings.ini が見つかりません）。</value>
   </data>
   <data name="Settings_UndocumentedBlurb" xml:space="preserve">
-    <value>Settings the official docs don't cover. Each tooltip has our best guess, but we can't vouch for these, some may be internal or unused. Look them up in the</value>
+    <value>公式ドキュメントに載っていない設定です。各ツールチップには推測が記載されていますが、保証はできません。一部は内部用または未使用の可能性があります。こちらで確認してください：</value>
   </data>
   <data name="Settings_UndocumentedBlurbLink" xml:space="preserve">
-    <value>Palworld configuration reference</value>
+    <value>Palworld 設定リファレンス</value>
   </data>
   <data name="Settings_UndocKnownHeader" xml:space="preserve">
-    <value>Known to the launcher</value>
+    <value>ランチャーが認識している設定</value>
   </data>
   <data name="Settings_UndocNewHeader" xml:space="preserve">
-    <value>New in your config (not recognized)</value>
+    <value>設定内の新しい項目（認識されません）</value>
   </data>
   <data name="Settings_UndocNoneRecognized" xml:space="preserve">
-    <value>None, every key in your config is recognized.</value>
+    <value>なし。設定内のすべての項目が認識されています。</value>
   </data>
   <data name="Settings_NoEffectTitle" xml:space="preserve">
-    <value>This setting does nothing on a server</value>
+    <value>この設定はサーバーでは効果がありません</value>
   </data>
   <data name="Settings_NoEffectMessage" xml:space="preserve">
-    <value>Heads up: '{0}' is a client / single-player setting and has no effect on a dedicated server. Changing it here won't change how the server plays. Use the individual settings (or the Difficulty preset buttons at the top of World Settings) to control server difficulty.</value>
+    <value>ご注意：「{0}」はクライアント／シングルプレイヤー用の設定で、専用サーバーには効果がありません。ここで変更してもサーバーの挙動は変わりません。サーバーの難易度を調整するには、各個別設定（または「ワールド設定」上部の難易度プリセットボタン）を使用してください。</value>
   </data>
   <data name="Settings_GotIt" xml:space="preserve">
-    <value>Got it</value>
+    <value>了解</value>
   </data>
   <data name="Settings_DifficultyPreset" xml:space="preserve">
-    <value>Difficulty preset:</value>
+    <value>難易度プリセット：</value>
   </data>
   <data name="Settings_PresetTitle" xml:space="preserve">
-    <value>{0} preset</value>
+    <value>{0} プリセット</value>
   </data>
   <data name="Settings_PresetNoChanges" xml:space="preserve">
-    <value>Your settings already match the {0} preset, nothing to change.</value>
+    <value>現在の設定は既に {0} プリセットと一致しているため、変更はありません。</value>
   </data>
   <data name="Settings_PresetConfirmMessage" xml:space="preserve">
-    <value>These are the values as of Palworld 1.0. Some settings may have been added or changed since.
+    <value>以下は Palworld 1.0 時点の値です。それ以降に追加・変更された設定がある可能性があります。
 
-Here are the values that will change for the {0} preset:
+{0} プリセットで変更される値は以下のとおりです：
 
 {1}
 
-Any values not listed above will remain the same.
+上記に記載のない値は変更されません。
 
-Apply and save these changes?</value>
+これらの変更を適用して保存しますか？</value>
   </data>
   <data name="Settings_Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>はい</value>
   </data>
   <data name="Settings_No" xml:space="preserve">
-    <value>No</value>
+    <value>いいえ</value>
   </data>
   <data name="Settings_PresetAppliedTitle" xml:space="preserve">
-    <value>{0} preset applied</value>
+    <value>{0} プリセットを適用しました</value>
   </data>
   <data name="Settings_PresetAppliedMessage" xml:space="preserve">
-    <value>Applied the {0} preset. {1} setting(s) changed and saved.</value>
+    <value>{0} プリセットを適用しました。{1} 件の設定を変更して保存しました。</value>
   </data>
   <data name="Settings_LaunchArgsIntro" xml:space="preserve">
-    <value>The exact command line used to launch the dedicated server (rebuilt live below). Where an argument here and a PalWorldSettings.ini setting control the same thing, the argument wins, a field left blank, 0, or at its default is left off, so the ini value is used instead. Most game settings have no argument and live only in the ini (edit those under Server Settings). Changes take effect on the next start.</value>
+    <value>専用サーバーの起動に使用される正確なコマンドラインです（下に随時再構築されます）。ここの引数と PalWorldSettings.ini の設定が同じ項目を制御する場合は、引数が優先されます。空欄、0、またはデフォルト値のフィールドは省略され、代わりに ini の値が使用されます。ほとんどのゲーム設定には引数がなく、ini にのみ存在します（それらは「サーバー設定」で編集してください）。変更は次回の起動時に反映されます。</value>
   </data>
   <data name="Settings_ListenPortTerm" xml:space="preserve">
-    <value>Listen port</value>
+    <value>待ち受けポート</value>
   </data>
   <data name="Settings_ListenPortNote" xml:space="preserve">
-    <value> is the port the server binds to and players connect to. </value>
+    <value> はサーバーがバインドし、プレイヤーが接続するポートです。 </value>
   </data>
   <data name="Settings_PublicPortTerm" xml:space="preserve">
-    <value>Public port</value>
+    <value>パブリックポート</value>
   </data>
   <data name="Settings_PublicPortNote" xml:space="preserve">
-    <value> (community servers only) sets what the server advertises to the public list, it does NOT change the listen port.</value>
+    <value> （コミュニティサーバー専用）はサーバーが公開リストに告知する内容を設定します。待ち受けポートは変更しません。</value>
   </data>
   <data name="Settings_ValidateListenPort" xml:space="preserve">
-    <value>Listen port</value>
+    <value>待ち受けポート</value>
   </data>
   <data name="Settings_ValidateMaxPlayers" xml:space="preserve">
-    <value>Max players</value>
+    <value>最大プレイヤー数</value>
   </data>
   <data name="Settings_ValidateWorkerThreads" xml:space="preserve">
-    <value>Worker threads</value>
+    <value>ワーカースレッド</value>
   </data>
   <data name="Settings_ValidatePublicIp" xml:space="preserve">
-    <value>Public IP</value>
+    <value>パブリック IP</value>
   </data>
   <data name="Settings_ValidatePublicPort" xml:space="preserve">
-    <value>Public port</value>
+    <value>パブリックポート</value>
   </data>
   <data name="Settings_RowListenPort" xml:space="preserve">
-    <value>Listen port (-port)</value>
+    <value>待ち受けポート (-port)</value>
   </data>
   <data name="Settings_TipListenPort" xml:space="preserve">
-    <value>The UDP port the server binds to, what players connect to (Palworld default 8211). Always applied. This is not the Public port below.</value>
+    <value>サーバーがバインドする UDP ポート、つまりプレイヤーが接続するポートです（Palworld のデフォルトは 8211）。常に適用されます。これは下記のパブリックポートとは異なります。</value>
   </data>
   <data name="Settings_RowMaxPlayers" xml:space="preserve">
-    <value>Max players (-players, 0 = use game setting)</value>
+    <value>最大プレイヤー数 (-players、0 = ゲーム設定を使用)</value>
   </data>
   <data name="Settings_TipMaxPlayers" xml:space="preserve">
-    <value>Overrides ServerPlayerMaxNum in the ini when set. 0 = leave the argument off and use the game setting.</value>
+    <value>設定すると ini の ServerPlayerMaxNum を上書きします。0 = 引数を付けず、ゲーム設定を使用します。</value>
   </data>
   <data name="Settings_RowPerfThreads" xml:space="preserve">
-    <value>Performance threads</value>
+    <value>パフォーマンススレッド</value>
   </data>
   <data name="Settings_TipPerfThreads" xml:space="preserve">
-    <value>Adds -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS. Recommended on for a dedicated server.</value>
+    <value>-useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS を追加します。専用サーバーでは有効を推奨します。</value>
   </data>
   <data name="Settings_RowWorkerThreads" xml:space="preserve">
-    <value>Worker threads (0 = auto)</value>
+    <value>ワーカースレッド (0 = 自動)</value>
   </data>
   <data name="Settings_TipWorkerThreads" xml:space="preserve">
-    <value>-NumberOfWorkerThreadsServer. 0 = auto (left off). Only used when Performance threads is on.</value>
+    <value>-NumberOfWorkerThreadsServer。0 = 自動（付けません）。パフォーマンススレッドが有効な場合のみ使用されます。</value>
   </data>
   <data name="Settings_RowCommunity" xml:space="preserve">
-    <value>Community/public server (-publiclobby)</value>
+    <value>コミュニティ／公開サーバー (-publiclobby)</value>
   </data>
   <data name="Settings_TipCommunity" xml:space="preserve">
-    <value>-publiclobby: list the server on the public/community browser. Off = private (players join by IP).</value>
+    <value>-publiclobby：公開／コミュニティのブラウザーにサーバーを掲載します。オフ = 非公開（プレイヤーは IP で参加）。</value>
   </data>
   <data name="Settings_RowPublicIp" xml:space="preserve">
-    <value>Public IP (community, blank = auto)</value>
+    <value>パブリック IP (コミュニティ、空欄 = 自動)</value>
   </data>
   <data name="Settings_TipPublicIp" xml:space="preserve">
-    <value>-publicip for community servers (blank = auto-detect). Advertising only; does not change what the server binds to.</value>
+    <value>コミュニティサーバー用の -publicip（空欄 = 自動検出）。告知のみで、サーバーがバインドする対象は変更しません。</value>
   </data>
   <data name="Settings_RowPublicPort" xml:space="preserve">
-    <value>Public port (community, 0 = use game setting)</value>
+    <value>パブリックポート (コミュニティ、0 = ゲーム設定を使用)</value>
   </data>
   <data name="Settings_TipPublicPort" xml:space="preserve">
-    <value>-publicport for community servers: the external port advertised to the public list. Does NOT change the listen port. 0 = left off (use the ini value).</value>
+    <value>コミュニティサーバー用の -publicport：公開リストに告知される外部ポートです。待ち受けポートは変更しません。0 = 付けません（ini の値を使用）。</value>
   </data>
   <data name="Settings_RowLogFormat" xml:space="preserve">
-    <value>Log format</value>
+    <value>ログ形式</value>
   </data>
   <data name="Settings_TipLogFormat" xml:space="preserve">
-    <value>-logformat (Text or Json). Blank = left off; the ini/default applies.</value>
+    <value>-logformat（Text または Json）。空欄 = 付けません。ini／デフォルトが適用されます。</value>
   </data>
   <data name="Settings_ExtraArgsNote" xml:space="preserve">
-    <value>Raw arguments appended to the command line verbatim (space- or line-separated). Some Unreal servers accept map / game-class overrides here. Only change this if you know what you're doing.</value>
+    <value>コマンドラインの末尾にそのまま追加される生の引数です（スペースまたは改行で区切ります）。一部の Unreal サーバーはここでマップ／ゲームクラスの上書きを受け付けます。自分が何をしているか理解している場合のみ変更してください。</value>
   </data>
   <data name="Settings_AdvancedExpander" xml:space="preserve">
-    <value>Advanced</value>
+    <value>詳細</value>
   </data>
   <data name="Settings_AdvancedIntro" xml:space="preserve">
-    <value>Low-level settings applied to the server process after it launches. The wrong values here can hurt performance, change only if you know what you're doing. Takes effect on the next start.</value>
+    <value>サーバープロセスの起動後に適用される低レベル設定です。誤った値はパフォーマンスを損なう可能性があるため、自分が何をしているか理解している場合のみ変更してください。次回の起動時に反映されます。</value>
   </data>
   <data name="Settings_PriorityAffinityHeader" xml:space="preserve">
-    <value>Process priority &amp; CPU affinity</value>
+    <value>プロセス優先度と CPU アフィニティ</value>
   </data>
   <data name="Settings_RowPriority" xml:space="preserve">
-    <value>Process priority</value>
+    <value>プロセス優先度</value>
   </data>
   <data name="Settings_TipPriority" xml:space="preserve">
-    <value>Windows priority for the server process. Above normal / High can help under load but can starve other apps and hurt performance; RealTime isn't offered (unsafe).</value>
+    <value>サーバープロセスの Windows 優先度です。「通常以上」／「高」は高負荷時に役立つことがありますが、他のアプリのリソースを奪ってパフォーマンスを損なう可能性があります。「リアルタイム」は提供していません（安全でないため）。</value>
   </data>
   <data name="Settings_CoreLabel" xml:space="preserve">
-    <value>Core {0}</value>
+    <value>コア {0}</value>
   </data>
   <data name="Settings_CpuAffinityNote" xml:space="preserve">
-    <value>CPU affinity, pin the server to specific cores (all checked = no restriction / use every core):</value>
+    <value>CPU アフィニティ。サーバーを特定のコアに固定します（すべてチェック = 制限なし／すべてのコアを使用）：</value>
   </data>
   <data name="Settings_AdvancedArgsTitle" xml:space="preserve">
-    <value>Advanced arguments</value>
+    <value>詳細な引数</value>
   </data>
   <data name="Settings_AdvancedArgsMessage" xml:space="preserve">
-    <value>You've put custom arguments in the Advanced box. They're passed to the server exactly as typed, only keep them if you know what you're doing.</value>
+    <value>「詳細」ボックスにカスタム引数を入力しています。これらは入力したとおりにサーバーへ渡されます。自分が何をしているか理解している場合のみ残してください。</value>
   </data>
   <data name="Settings_Accept" xml:space="preserve">
-    <value>Accept</value>
+    <value>適用</value>
   </data>
   <data name="Settings_ConfirmSaveMore" xml:space="preserve">
     <value>
-...and {0} more</value>
+...他 {0} 件</value>
   </data>
   <data name="Settings_ConfirmSaveTitle" xml:space="preserve">
-    <value>Confirm save</value>
+    <value>保存の確認</value>
   </data>
   <data name="Settings_ConfirmSaveMessage" xml:space="preserve">
-    <value>These settings will change:
+    <value>以下の設定が変更されます：
 
 {0}
 
-Save these changes?</value>
+これらの変更を保存しますか？</value>
   </data>
   <data name="Settings_NotSavedTitle" xml:space="preserve">
-    <value>Not saved</value>
+    <value>保存されていません</value>
   </data>
   <data name="Settings_NotSavedMessage" xml:space="preserve">
-    <value>'{0}' has a value that would break the config format (a stray comma, quote, or unbalanced parenthesis). Nothing was saved, fix it and try again.</value>
+    <value>「{0}」の値は設定フォーマットを壊します（余分なカンマ、引用符、または対応の取れていない括弧）。何も保存されていません。修正して再試行してください。</value>
   </data>
   <data name="Settings_ValidationError" xml:space="preserve">
-    <value>{0} is invalid. Must be {1}.</value>
+    <value>{0} は無効です。{1} である必要があります。</value>
   </data>
   <data name="Settings_InvalidSettingsTitle" xml:space="preserve">
-    <value>Invalid settings</value>
+    <value>無効な設定</value>
   </data>
   <data name="Settings_ResetFieldTooltip" xml:space="preserve">
-    <value>Reset this field to its default</value>
+    <value>このフィールドをデフォルトに戻します</value>
   </data>
   <data name="Settings_UndocumentedMarker" xml:space="preserve">
-    <value>  · undocumented</value>
+    <value>  · 未記載</value>
   </data>
   <data name="Settings_ResetAllMessage" xml:space="preserve">
-    <value>Reset every field in this panel to its default value? You'll still need to Save to apply.</value>
+    <value>このパネルのすべてのフィールドをデフォルト値に戻しますか？適用するには「保存」が必要です。</value>
   </data>
   <data name="Settings_ResetAllButton" xml:space="preserve">
-    <value>Reset all</value>
+    <value>すべてリセット</value>
   </data>
   <data name="Settings_CategoryServerManagement" xml:space="preserve">
-    <value>Server management</value>
+    <value>サーバー管理</value>
   </data>
   <data name="Settings_CategoryPerformance" xml:space="preserve">
-    <value>Performance</value>
+    <value>パフォーマンス</value>
   </data>
   <data name="Settings_CategoryGameplay" xml:space="preserve">
-    <value>Gameplay</value>
+    <value>ゲームプレイ</value>
   </data>
   <data name="Settings_CategoryGameBalance" xml:space="preserve">
-    <value>Game balance</value>
+    <value>ゲームバランス</value>
   </data>
   <data name="Vm_Working" xml:space="preserve">
-    <value>Working</value>
+    <value>処理中</value>
   </data>
   <data name="Vm_TimesSummaryNone" xml:space="preserve">
-    <value>(none)</value>
+    <value>（なし）</value>
   </data>
   <data name="Vm_TimesSummaryMore" xml:space="preserve">
-    <value>{0}  +{1} more</value>
+    <value>{0}  +{1} 件</value>
   </data>
   <data name="Settings_PriorityBelowNormal" xml:space="preserve">
-    <value>Below normal</value>
+    <value>通常以下</value>
   </data>
   <data name="Settings_PriorityNormal" xml:space="preserve">
-    <value>Normal</value>
+    <value>通常</value>
   </data>
   <data name="Settings_PriorityAboveNormal" xml:space="preserve">
-    <value>Above normal</value>
+    <value>通常以上</value>
   </data>
   <data name="Settings_PriorityHigh" xml:space="preserve">
-    <value>High</value>
+    <value>高</value>
   </data>
   <data name="Btn_Working" xml:space="preserve">
-    <value>Working…</value>
+    <value>処理中…</value>
   </data>
   <data name="Btn_Install" xml:space="preserve">
-    <value>Install</value>
+    <value>インストール</value>
   </data>
   <data name="Btn_Starting" xml:space="preserve">
-    <value>Starting…</value>
+    <value>起動中…</value>
   </data>
   <data name="Btn_Stopping" xml:space="preserve">
-    <value>Stopping…</value>
+    <value>停止中…</value>
   </data>
   <data name="Btn_StoppingSeconds" xml:space="preserve">
-    <value>Stopping ({0}s)</value>
+    <value>停止中（{0} 秒）</value>
   </data>
   <data name="State_Stopped" xml:space="preserve">
-    <value>Stopped</value>
+    <value>停止</value>
   </data>
   <data name="State_Starting" xml:space="preserve">
-    <value>Starting</value>
+    <value>起動中</value>
   </data>
   <data name="State_Healthy" xml:space="preserve">
-    <value>Healthy</value>
+    <value>正常</value>
   </data>
   <data name="State_Degraded" xml:space="preserve">
-    <value>Degraded</value>
+    <value>機能低下</value>
   </data>
   <data name="State_Zombie" xml:space="preserve">
-    <value>Zombie</value>
+    <value>ゾンビ</value>
   </data>
   <data name="State_Stopping" xml:space="preserve">
-    <value>Stopping</value>
+    <value>停止中</value>
   </data>
   <data name="State_Restarting" xml:space="preserve">
-    <value>Restarting</value>
+    <value>再起動中</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>Backoff</value>
+    <value>バックオフ</value>
   </data>
   <data name="Update_AutoUpdateOff" xml:space="preserve">
-    <value>Auto-update off (build {0})</value>
+    <value>自動アップデート オフ（ビルド {0}）</value>
   </data>
   <data name="Update_Checking" xml:space="preserve">
-    <value>Checking for updates...</value>
+    <value>アップデートを確認中...</value>
   </data>
   <data name="Update_CheckFailed" xml:space="preserve">
-    <value>Update check failed (build {0})</value>
+    <value>アップデート確認に失敗（ビルド {0}）</value>
   </data>
   <data name="Update_Found" xml:space="preserve">
-    <value>New build {0} found, restarting</value>
+    <value>新しいビルド {0} を検出、再起動中</value>
   </data>
   <data name="Update_UpToDate" xml:space="preserve">
-    <value>Up to date (build {0})</value>
+    <value>最新です（ビルド {0}）</value>
   </data>
   <data name="Sched_Off" xml:space="preserve">
-    <value>off</value>
+    <value>オフ</value>
   </data>
   <data name="Sched_UntilHM" xml:space="preserve">
-    <value>{0}h {1}m</value>
+    <value>{0}時間{1}分</value>
   </data>
   <data name="Sched_UntilMS" xml:space="preserve">
-    <value>{0}m {1}s</value>
+    <value>{0}分{1}秒</value>
   </data>
   <data name="Cat_ServerName_Label" xml:space="preserve">
     <value>ワールド名</value>
@@ -1411,25 +1411,25 @@ Save these changes?</value>
     <value>サーバー名</value>
   </data>
   <data name="Cat_ServerDescription_Label" xml:space="preserve">
-    <value>Description</value>
+    <value>説明</value>
   </data>
   <data name="Cat_ServerDescription_Desc" xml:space="preserve">
     <value>サーバー説明</value>
   </data>
   <data name="Cat_ServerPassword_Label" xml:space="preserve">
-    <value>Server password</value>
+    <value>サーバーパスワード</value>
   </data>
   <data name="Cat_ServerPassword_Desc" xml:space="preserve">
     <value>サーバーのログインに必要なパスワード</value>
   </data>
   <data name="Cat_AdminPassword_Label" xml:space="preserve">
-    <value>Admin password</value>
+    <value>管理者パスワード</value>
   </data>
   <data name="Cat_AdminPassword_Desc" xml:space="preserve">
     <value>サーバーの管理者権限を取得するのに使用するパスワード</value>
   </data>
   <data name="Cat_ServerPlayerMaxNum_Label" xml:space="preserve">
-    <value>Max players</value>
+    <value>最大プレイヤー数</value>
   </data>
   <data name="Cat_ServerPlayerMaxNum_Desc" xml:space="preserve">
     <value>サーバーに参加できる最大人数</value>
@@ -1438,28 +1438,28 @@ Save these changes?</value>
     <value>CoopPlayerMaxNum</value>
   </data>
   <data name="Cat_CoopPlayerMaxNum_Desc" xml:space="preserve">
-    <value>Undocumented. Community guesses a cooperative-play party size, but this may be an internal value that has no effect on a dedicated server.</value>
+    <value>未記載。協力プレイのパーティ人数だとコミュニティは推測していますが、専用サーバーには効果のない内部値の可能性があります。</value>
   </data>
   <data name="Cat_RESTAPIEnabled_Label" xml:space="preserve">
-    <value>REST API enabled</value>
+    <value>REST API を有効化</value>
   </data>
   <data name="Cat_RESTAPIEnabled_Desc" xml:space="preserve">
     <value>REST APIの有効化</value>
   </data>
   <data name="Cat_RESTAPIPort_Label" xml:space="preserve">
-    <value>REST API port</value>
+    <value>REST API ポート</value>
   </data>
   <data name="Cat_RESTAPIPort_Desc" xml:space="preserve">
     <value>REST APIの待ち受けポート</value>
   </data>
   <data name="Cat_RCONEnabled_Label" xml:space="preserve">
-    <value>RCON enabled</value>
+    <value>RCON を有効化</value>
   </data>
   <data name="Cat_RCONEnabled_Desc" xml:space="preserve">
     <value>RCONを有効化</value>
   </data>
   <data name="Cat_RCONPort_Label" xml:space="preserve">
-    <value>RCON port</value>
+    <value>RCON ポート</value>
   </data>
   <data name="Cat_RCONPort_Desc" xml:space="preserve">
     <value>RCONで使用するポート番号</value>
@@ -1468,16 +1468,16 @@ Save these changes?</value>
     <value>bUseAuth</value>
   </data>
   <data name="Cat_bUseAuth_Desc" xml:space="preserve">
-    <value>Undocumented. Defaults to True.</value>
+    <value>未記載。デフォルトは True です。</value>
   </data>
   <data name="Cat_BanListURL_Label" xml:space="preserve">
     <value>BanListURL</value>
   </data>
   <data name="Cat_BanListURL_Desc" xml:space="preserve">
-    <value>Undocumented. Likely the ban list the server checks against, but the exact format and behavior are unconfirmed.</value>
+    <value>未記載。サーバーが照合する BAN リストと思われますが、正確な形式と動作は未確認です。</value>
   </data>
   <data name="Cat_bIsUseBackupSaveData_Label" xml:space="preserve">
-    <value>Built-in save backups</value>
+    <value>組み込みのセーブバックアップ</value>
   </data>
   <data name="Cat_bIsUseBackupSaveData_Desc" xml:space="preserve">
     <value>ワールドバックアップの有効化
@@ -1487,64 +1487,64 @@ Save these changes?</value>
     <value>オートセーブ間隔</value>
   </data>
   <data name="Cat_AutoSaveSpan_Desc" xml:space="preserve">
-    <value>How often the world auto-saves (seconds).</value>
+    <value>ワールドが自動保存される間隔（秒）。</value>
   </data>
   <data name="Cat_bIsShowJoinLeftMessage_Label" xml:space="preserve">
-    <value>Show join/leave messages</value>
+    <value>参加／退出メッセージを表示</value>
   </data>
   <data name="Cat_bIsShowJoinLeftMessage_Desc" xml:space="preserve">
     <value>サーバー環境で、プレイヤーの参加・退出時にゲーム内メッセージを表示するかどうか</value>
   </data>
   <data name="Cat_bAllowClientMod_Label" xml:space="preserve">
-    <value>Allow client mods</value>
+    <value>クライアント Mod を許可</value>
   </data>
   <data name="Cat_bAllowClientMod_Desc" xml:space="preserve">
     <value>Modを有効化しているユーザーのサーバー参加を許可するか</value>
   </data>
   <data name="Cat_ChatPostLimitPerMinute_Label" xml:space="preserve">
-    <value>Chat rate limit</value>
+    <value>チャットのレート制限</value>
   </data>
   <data name="Cat_ChatPostLimitPerMinute_Desc" xml:space="preserve">
     <value>1分間に投稿可能なチャット数</value>
   </data>
   <data name="Cat_LogFormatType_Label" xml:space="preserve">
-    <value>Log format</value>
+    <value>ログ形式</value>
   </data>
   <data name="Cat_LogFormatType_Desc" xml:space="preserve">
     <value>ログフォーマットの指定 Text または Json</value>
   </data>
   <data name="Cat_bIsMultiplay_Label" xml:space="preserve">
-    <value>マルチプレイ</value>
+    <value>bIsMultiplay</value>
   </data>
   <data name="Cat_bIsMultiplay_Desc" xml:space="preserve">
-    <value>Undocumented. Likely the game client's 'Multiplayer: Yes/No' option shown when creating a world, so it has no effect on a dedicated server. False by default.</value>
+    <value>未記載。ワールド作成時にゲームクライアントで表示される「マルチプレイ：はい／いいえ」の項目と思われるため、専用サーバーには効果がありません。デフォルトは False です。</value>
   </data>
   <data name="Cat_Region_Label" xml:space="preserve">
     <value>Region</value>
   </data>
   <data name="Cat_Region_Desc" xml:space="preserve">
-    <value>Undocumented. A region code of some kind, but the expected format (NA, US, a number?) and its purpose (matchmaking, server browser, or neither) are both unknown. Blank by default.</value>
+    <value>未記載。何らかの地域コードですが、想定される形式（NA、US、数値？）も用途（マッチメイキング、サーバーブラウザー、あるいはそのどちらでもない）も不明です。デフォルトは空欄です。</value>
   </data>
   <data name="Cat_CrossplayPlatforms_Label" xml:space="preserve">
-    <value>Crossplay platforms</value>
+    <value>クロスプレイ対応プラットフォーム</value>
   </data>
   <data name="Cat_CrossplayPlatforms_Desc" xml:space="preserve">
     <value>接続を許可するプラットフォーム デフォルト (Steam,Xbox,PS5,Mac)</value>
   </data>
   <data name="Cat_PublicIP_Label" xml:space="preserve">
-    <value>Public IP</value>
+    <value>パブリック IP</value>
   </data>
   <data name="Cat_PublicIP_Desc" xml:space="preserve">
     <value>コミュニティサーバー設定において、外部公開IPを明示的に指定</value>
   </data>
   <data name="Cat_PublicPort_Label" xml:space="preserve">
-    <value>Public port</value>
+    <value>パブリックポート</value>
   </data>
   <data name="Cat_PublicPort_Desc" xml:space="preserve">
     <value>コミュニティサーバー設定において、外部公開ポートを明示的に指定（この設定ではサーバーの待ち受けポートは変更されません）</value>
   </data>
   <data name="Cat_bEnableBuildingPlayerUIdDisplay_Label" xml:space="preserve">
-    <value>Show builder ID on structures</value>
+    <value>建築物に建築者 ID を表示</value>
   </data>
   <data name="Cat_bEnableBuildingPlayerUIdDisplay_Desc" xml:space="preserve">
     <value>建築物上に作成者のプレイヤーIDを表示するか</value>
@@ -1553,10 +1553,10 @@ Save these changes?</value>
     <value>BuildingNameDisplayCacheTTLSeconds</value>
   </data>
   <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Desc" xml:space="preserve">
-    <value>Undocumented. Likely how long a building's cached display name (see 'Show builder ID on structures') is kept before refreshing (seconds).</value>
+    <value>未記載。建築物のキャッシュされた表示名（「建築物に建築者 ID を表示」を参照）が更新されるまで保持される時間（秒）と思われます。</value>
   </data>
   <data name="Cat_BaseCampMaxNum_Label" xml:space="preserve">
-    <value>Max bases (world)</value>
+    <value>最大拠点数（ワールド）</value>
   </data>
   <data name="Cat_BaseCampMaxNum_Desc" xml:space="preserve">
     <value>サーバー全体の拠点数</value>
@@ -1585,7 +1585,7 @@ Save these changes?</value>
     <value>ワールド内のドロップアイテム最大数</value>
   </data>
   <data name="Cat_DropItemMaxNum_Desc" xml:space="preserve">
-    <value>Maximum number of items lying dropped in the world before they start to despawn.</value>
+    <value>ワールド内にドロップされたアイテムが消え始めるまでの最大数。</value>
   </data>
   <data name="Cat_PhysicsActiveDropItemMaxNum_Label" xml:space="preserve">
     <value>ワールド内の物理挙動するドロップアイテム最大数</value>
@@ -1594,19 +1594,19 @@ Save these changes?</value>
     <value>ドロップアイテムが物理挙動をする上限数</value>
   </data>
   <data name="Cat_DropItemMaxNum_UNKO_Label" xml:space="preserve">
-    <value>ワールド内の排泄物最大数</value>
+    <value>DropItemMaxNum_UNKO</value>
   </data>
   <data name="Cat_DropItemMaxNum_UNKO_Desc" xml:space="preserve">
-    <value>Undocumented. Appears unused, likely deadweight or an unimplemented feature.</value>
+    <value>未記載。未使用と思われ、不要なものか未実装の機能の可能性があります。</value>
   </data>
   <data name="Cat_ServerReplicatePawnCullDistance_Label" xml:space="preserve">
-    <value>Pal sync distance</value>
+    <value>パルの同期距離</value>
   </data>
   <data name="Cat_ServerReplicatePawnCullDistance_Desc" xml:space="preserve">
     <value>プレイヤーからのPalの同期距離（cm） 最小5000~最大15000</value>
   </data>
   <data name="Cat_ItemContainerForceMarkDirtyInterval_Label" xml:space="preserve">
-    <value>Container re-sync interval</value>
+    <value>コンテナの再同期間隔</value>
   </data>
   <data name="Cat_ItemContainerForceMarkDirtyInterval_Desc" xml:space="preserve">
     <value>コンテナを開いている際に強制的に同期しなおす頻度（秒）</value>
@@ -1615,28 +1615,28 @@ Save these changes?</value>
     <value>MaxGuildsPerFrame</value>
   </data>
   <data name="Cat_MaxGuildsPerFrame_Desc" xml:space="preserve">
-    <value>Undocumented. Likely a per-frame cap on how many guilds the server processes each tick, a performance lever.</value>
+    <value>未記載。サーバーが 1 フレームあたりに処理するギルド数の上限と思われる、パフォーマンス調整項目です。</value>
   </data>
   <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Label" xml:space="preserve">
     <value>PlayerDataPalStorageUpdateCheckTickInterval</value>
   </data>
   <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Desc" xml:space="preserve">
-    <value>Undocumented. Likely how often the server checks player Pal Box/storage data for changes to sync (seconds).</value>
+    <value>未記載。サーバーがプレイヤーのパルボックス／ストレージデータの変更を同期のために確認する間隔（秒）と思われます。</value>
   </data>
   <data name="Cat_Difficulty_Label" xml:space="preserve">
     <value>難易度</value>
   </data>
   <data name="Cat_Difficulty_Desc" xml:space="preserve">
-    <value>Client / single-player difficulty preset. It has no effect on a dedicated server, so leave it at None and use the individual settings below (or the Difficulty preset buttons at the top) to set server difficulty.</value>
+    <value>クライアント／シングルプレイヤー用の難易度プリセットです。専用サーバーには効果がないため、「なし」のままにし、サーバーの難易度は下記の各個別設定（または上部の難易度プリセットボタン）で設定してください。</value>
   </data>
   <data name="Cat_bHardcore_Label" xml:space="preserve">
-    <value>Hardcore Mode: Permanent Loss of Progress Upon Player Death</value>
+    <value>ハードコアモード：プレイヤー死亡時に進行状況を永久に失う</value>
   </data>
   <data name="Cat_bHardcore_Desc" xml:space="preserve">
     <value>ハードコアの有効化 死亡時リスポーンできなくなります。</value>
   </data>
   <data name="Cat_bCharacterRecreateInHardcore_Label" xml:space="preserve">
-    <value>Recreate character (Hardcore)</value>
+    <value>キャラクターの再作成（ハードコア）</value>
   </data>
   <data name="Cat_bCharacterRecreateInHardcore_Desc" xml:space="preserve">
     <value>ハードコア設定時の死亡時のキャラクター再作成可否</value>
@@ -1648,28 +1648,28 @@ Save these changes?</value>
     <value>PvPを有効化するかどうか</value>
   </data>
   <data name="Cat_bEnablePlayerToPlayerDamage_Label" xml:space="preserve">
-    <value>Player-vs-player damage</value>
+    <value>プレイヤー間ダメージ</value>
   </data>
   <data name="Cat_bEnablePlayerToPlayerDamage_Desc" xml:space="preserve">
-    <value>Let players harm each other. One of the three settings that together enable PvP.</value>
+    <value>プレイヤー同士がダメージを与えられるようにします。PvP を有効にする 3 つの設定のうちの 1 つです。</value>
   </data>
   <data name="Cat_bEnableFriendlyFire_Label" xml:space="preserve">
-    <value>Friendly fire</value>
+    <value>フレンドリーファイア</value>
   </data>
   <data name="Cat_bEnableFriendlyFire_Desc" xml:space="preserve">
-    <value>Undocumented. Community says it lets players and their Pals damage members of their own guild.</value>
+    <value>未記載。プレイヤーおよびそのパルが自分のギルドのメンバーにダメージを与えられるようになる、とコミュニティでは言われています。</value>
   </data>
   <data name="Cat_bCanPickupOtherGuildDeathPenaltyDrop_Label" xml:space="preserve">
-    <value>Loot other guilds' drops</value>
+    <value>他ギルドのドロップを回収</value>
   </data>
   <data name="Cat_bCanPickupOtherGuildDeathPenaltyDrop_Desc" xml:space="preserve">
-    <value>Allow players to pick up the Pals and items dropped by other guilds' players on death.</value>
+    <value>他ギルドのプレイヤーが死亡時にドロップしたパルとアイテムを拾えるようにします。</value>
   </data>
   <data name="Cat_bEnableDefenseOtherGuildPlayer_Label" xml:space="preserve">
-    <value>Base defense vs. other guilds</value>
+    <value>他ギルドに対する拠点防衛</value>
   </data>
   <data name="Cat_bEnableDefenseOtherGuildPlayer_Desc" xml:space="preserve">
-    <value>Base Pals engage hostile players who trespass into your base. One of the three settings that enable PvP.</value>
+    <value>拠点のパルが、拠点に侵入してきた敵対プレイヤーを攻撃します。PvP を有効にする 3 つの設定のうちの 1 つです。</value>
   </data>
   <data name="Cat_bEnableFastTravel_Label" xml:space="preserve">
     <value>ファストトラベル</value>
@@ -1693,28 +1693,28 @@ Save these changes?</value>
     <value>プレデターパルが出現するか</value>
   </data>
   <data name="Cat_EnablePredatorBossPal_Desc" xml:space="preserve">
-    <value>Allows Predator Pals to spawn in the world.</value>
+    <value>プレデターパルがワールドに出現するようにします。</value>
   </data>
   <data name="Cat_bBuildAreaLimit_Label" xml:space="preserve">
-    <value>Build area limit</value>
+    <value>建築エリア制限</value>
   </data>
   <data name="Cat_bBuildAreaLimit_Desc" xml:space="preserve">
     <value>ファストトラベルなどの構造物付近で建築を禁止するか</value>
   </data>
   <data name="Cat_bInvisibleOtherGuildBaseCampAreaFX_Label" xml:space="preserve">
-    <value>Show base area boundaries</value>
+    <value>拠点エリアの境界を表示</value>
   </data>
   <data name="Cat_bInvisibleOtherGuildBaseCampAreaFX_Desc" xml:space="preserve">
     <value>拠点範囲表示</value>
   </data>
   <data name="Cat_bShowPlayerList_Label" xml:space="preserve">
-    <value>Player list in ESC menu</value>
+    <value>ESC メニューのプレイヤーリスト</value>
   </data>
   <data name="Cat_bShowPlayerList_Desc" xml:space="preserve">
     <value>ESCキーで表示される画面での参加者一覧を有効化</value>
   </data>
   <data name="Cat_bExistPlayerAfterLogout_Label" xml:space="preserve">
-    <value>Body stays after logout</value>
+    <value>ログアウト後もキャラクターが残る</value>
   </data>
   <data name="Cat_bExistPlayerAfterLogout_Desc" xml:space="preserve">
     <value>ログアウト時にプレイヤーがその場で寝た状態にするか</value>
@@ -1723,70 +1723,70 @@ Save these changes?</value>
     <value>bEnableNonLoginPenalty</value>
   </data>
   <data name="Cat_bEnableNonLoginPenalty_Desc" xml:space="preserve">
-    <value>Undocumented. May relate to whether your Pals get debuffs when you haven't logged in. Untested.</value>
+    <value>未記載。ログインしていない間にパルがデバフを受けるかどうかに関連する可能性があります。未検証です。</value>
   </data>
   <data name="Cat_bIsStartLocationSelectByMap_Label" xml:space="preserve">
-    <value>Choose starting location</value>
+    <value>開始位置を選択</value>
   </data>
   <data name="Cat_bIsStartLocationSelectByMap_Desc" xml:space="preserve">
     <value>ゲーム開始地点を選べるようにするか</value>
   </data>
   <data name="Cat_bActiveUNKO_Label" xml:space="preserve">
-    <value>キャラクターの排泄有無</value>
+    <value>bActiveUNKO</value>
   </data>
   <data name="Cat_bActiveUNKO_Desc" xml:space="preserve">
-    <value>Undocumented. Appears unused, likely deadweight or an unimplemented feature.</value>
+    <value>未記載。未使用と思われ、不要なものか未実装の機能の可能性があります。</value>
   </data>
   <data name="Cat_bEnableAimAssistPad_Label" xml:space="preserve">
-    <value>Aim assist (controller)</value>
+    <value>エイムアシスト（コントローラー）</value>
   </data>
   <data name="Cat_bEnableAimAssistPad_Desc" xml:space="preserve">
-    <value>Aim assist for controllers. Set to False to disable it.</value>
+    <value>コントローラー用のエイムアシストです。無効にするには False に設定します。</value>
   </data>
   <data name="Cat_bEnableAimAssistKeyboard_Label" xml:space="preserve">
-    <value>Aim assist (keyboard)</value>
+    <value>エイムアシスト（キーボード）</value>
   </data>
   <data name="Cat_bEnableAimAssistKeyboard_Desc" xml:space="preserve">
-    <value>Enable aim assist for mouse &amp; keyboard.</value>
+    <value>マウス＆キーボード用のエイムアシストを有効にします。</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Attack_Label" xml:space="preserve">
-    <value>Allow stat points: Attack</value>
+    <value>ステータスポイントの割り振りを許可：攻撃</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Attack_Desc" xml:space="preserve">
-    <value>Allow allocating stat points to Attack.</value>
+    <value>ステータスポイントを攻撃に割り振れるようにします。</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Health_Label" xml:space="preserve">
-    <value>Allow stat points: HP</value>
+    <value>ステータスポイントの割り振りを許可：HP</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Health_Desc" xml:space="preserve">
-    <value>Allow allocating stat points to HP.</value>
+    <value>ステータスポイントを HP に割り振れるようにします。</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Stamina_Label" xml:space="preserve">
-    <value>Allow stat points: Stamina</value>
+    <value>ステータスポイントの割り振りを許可：スタミナ</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Stamina_Desc" xml:space="preserve">
-    <value>Allow allocating stat points to Stamina.</value>
+    <value>ステータスポイントをスタミナに割り振れるようにします。</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Weight_Label" xml:space="preserve">
-    <value>Allow stat points: Carry Weight</value>
+    <value>ステータスポイントの割り振りを許可：所持重量</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Weight_Desc" xml:space="preserve">
-    <value>Allow allocating stat points to Carry Weight.</value>
+    <value>ステータスポイントを所持重量に割り振れるようにします。</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_WorkSpeed_Label" xml:space="preserve">
-    <value>Allow stat points: Work Speed</value>
+    <value>ステータスポイントの割り振りを許可：作業速度</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_WorkSpeed_Desc" xml:space="preserve">
-    <value>Allow allocating stat points to Work Speed.</value>
+    <value>ステータスポイントを作業速度に割り振れるようにします。</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxExport_Label" xml:space="preserve">
-    <value>Allow Pal Genetic Data to be Saved in the Global Palbox</value>
+    <value>グローバルパルボックスへのパルの遺伝子データ保存を許可</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxExport_Desc" xml:space="preserve">
     <value>グローバルパルボックスへの保存を可能にするか</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxImport_Label" xml:space="preserve">
-    <value>Allow Pals to be Reconstructed from the Global Palbox</value>
+    <value>グローバルパルボックスからのパルの再構築を許可</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxImport_Desc" xml:space="preserve">
     <value>グローバルパルボックスからの読み込みを可能にするか</value>
@@ -1805,16 +1805,16 @@ Save these changes?</value>
 `bAutoResetGuildNoOnlinePlayers` がFalseの場合は無視されます。</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Label" xml:space="preserve">
-    <value>Show base PvP items on map</value>
+    <value>拠点の PvP アイテムをマップに表示</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Desc" xml:space="preserve">
-    <value>Whether to show, on the map, the number of PvP-exclusive items in each base.</value>
+    <value>各拠点にある PvP 専用アイテムの数をマップに表示するかどうか。</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_Player_Label" xml:space="preserve">
-    <value>Show player PvP items on map</value>
+    <value>プレイヤーの PvP アイテムをマップに表示</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_Player_Desc" xml:space="preserve">
-    <value>Whether to show player locations and the number of PvP-exclusive items on the map.</value>
+    <value>プレイヤーの位置と PvP 専用アイテムの数をマップに表示するかどうか。</value>
   </data>
   <data name="Cat_bIsRandomizerPalLevelRandom_Label" xml:space="preserve">
     <value>ランダムモードで野生パルのレベルを完全ランダムにする</value>
@@ -1836,19 +1836,19 @@ None : ランダム化しない, Region : 地域ごとにランダム化, All : 
     <value>出現パルのランダムモードを設定した際のシード値</value>
   </data>
   <data name="Cat_bEnableVoiceChat_Label" xml:space="preserve">
-    <value>Voice chat</value>
+    <value>ボイスチャット</value>
   </data>
   <data name="Cat_bEnableVoiceChat_Desc" xml:space="preserve">
     <value>ボイスチャット機能を有効化するか</value>
   </data>
   <data name="Cat_VoiceChatMaxVolumeDistance_Label" xml:space="preserve">
-    <value>Voice chat full-volume distance</value>
+    <value>ボイスチャットの最大音量距離</value>
   </data>
   <data name="Cat_VoiceChatMaxVolumeDistance_Desc" xml:space="preserve">
     <value>ボイスチャットの通話音量を減衰させない距離</value>
   </data>
   <data name="Cat_VoiceChatZeroVolumeDistance_Label" xml:space="preserve">
-    <value>Voice chat silence distance</value>
+    <value>ボイスチャットの無音距離</value>
   </data>
   <data name="Cat_VoiceChatZeroVolumeDistance_Desc" xml:space="preserve">
     <value>ボイスチャットの通話音量を0にする距離</value>
@@ -1893,10 +1893,10 @@ None : ランダム化しない, Region : 地域ごとにランダム化, All : 
     <value>作業速度倍率</value>
   </data>
   <data name="Cat_WorkSpeedRate_Desc" xml:space="preserve">
-    <value>How fast both players and Pals complete work. Multiplier: 2.0 = work completed twice as fast.</value>
+    <value>プレイヤーとパルの作業速度です。倍率：2.0 = 作業速度が 2 倍。</value>
   </data>
   <data name="Cat_MonsterFarmActionSpeedRate_Label" xml:space="preserve">
-    <value>Grazing Item Production Rate Multiplier</value>
+    <value>放牧のアイテム生産速度倍率</value>
   </data>
   <data name="Cat_MonsterFarmActionSpeedRate_Desc" xml:space="preserve">
     <value>放牧によるアイテムの生産速度倍率</value>
@@ -1998,10 +1998,10 @@ None : ランダム化しない, Region : 地域ごとにランダム化, All : 
     <value>ドロップアイテム量の倍率</value>
   </data>
   <data name="Cat_DropItemAliveMaxHours_Label" xml:space="preserve">
-    <value>Dropped item lifetime (hours)</value>
+    <value>ドロップアイテムの残存時間（時間）</value>
   </data>
   <data name="Cat_DropItemAliveMaxHours_Desc" xml:space="preserve">
-    <value>How long dropped items remain in the world before they despawn (hours). Lowering it helps server cleanup / performance.</value>
+    <value>ドロップアイテムが消えるまでワールドに残存する時間（時間）です。下げるとサーバーのクリーンアップ／パフォーマンスに役立ちます。</value>
   </data>
   <data name="Cat_ItemWeightRate_Label" xml:space="preserve">
     <value>アイテムの重量倍率</value>
@@ -2010,22 +2010,22 @@ None : ランダム化しない, Region : 地域ごとにランダム化, All : 
     <value>アイテム重量倍率</value>
   </data>
   <data name="Cat_ItemCorruptionMultiplier_Label" xml:space="preserve">
-    <value>Item Decay Rate Multiplier</value>
+    <value>アイテムの腐敗速度倍率</value>
   </data>
   <data name="Cat_ItemCorruptionMultiplier_Desc" xml:space="preserve">
     <value>アイテムの腐敗速度倍率</value>
   </data>
   <data name="Cat_EquipmentDurabilityDamageRate_Label" xml:space="preserve">
-    <value>Equipment Durability Loss Multiplier</value>
+    <value>装備の耐久度減少倍率</value>
   </data>
   <data name="Cat_EquipmentDurabilityDamageRate_Desc" xml:space="preserve">
     <value>装備品の耐久度減少倍率</value>
   </data>
   <data name="Cat_BuildObjectHpRate_Label" xml:space="preserve">
-    <value>Building HP</value>
+    <value>建築物の HP</value>
   </data>
   <data name="Cat_BuildObjectHpRate_Desc" xml:space="preserve">
-    <value>Multiplier for how much health buildings have. 2.0 = double building HP.</value>
+    <value>建築物の HP の倍率です。2.0 = 建築物の HP が 2 倍。</value>
   </data>
   <data name="Cat_BuildObjectDamageRate_Label" xml:space="preserve">
     <value>建築物に対するダメージ倍率</value>
@@ -2047,25 +2047,25 @@ None : ランダム化しない, Region : 地域ごとにランダム化, All : 
 None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment : すべての装備品とアイテム, All : 全ての装備品と装備品と手持ちパル</value>
   </data>
   <data name="Cat_bPalLost_Label" xml:space="preserve">
-    <value>Hardcore Mode: Pals Who Die Will Be Permanently Lost</value>
+    <value>ハードコアモード：死亡したパルは永久に失われる</value>
   </data>
   <data name="Cat_bPalLost_Desc" xml:space="preserve">
     <value>死亡時にパルを永久的にロストするか</value>
   </data>
   <data name="Cat_BlockRespawnTime_Label" xml:space="preserve">
-    <value>Respawn cooldown (seconds)</value>
+    <value>リスポーンのクールダウン（秒）</value>
   </data>
   <data name="Cat_BlockRespawnTime_Desc" xml:space="preserve">
     <value>死亡後リスポーンするまでのクールタイム（秒）</value>
   </data>
   <data name="Cat_RespawnPenaltyDurationThreshold_Label" xml:space="preserve">
-    <value>Respawn penalty threshold</value>
+    <value>リスポーンペナルティのしきい値</value>
   </data>
   <data name="Cat_RespawnPenaltyDurationThreshold_Desc" xml:space="preserve">
     <value>再死亡時にRespawnPenaltyTimeScaleで設定したクールタイム倍率を適用する生存時間の閾値（秒）</value>
   </data>
   <data name="Cat_RespawnPenaltyTimeScale_Label" xml:space="preserve">
-    <value>Respawn penalty multiplier</value>
+    <value>リスポーンペナルティの倍率</value>
   </data>
   <data name="Cat_RespawnPenaltyTimeScale_Desc" xml:space="preserve">
     <value>リスポーンクールタイムに適用する倍率</value>
@@ -2077,13 +2077,13 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
     <value>ギルドの最大人数</value>
   </data>
   <data name="Cat_GuildRejoinCooldownMinutes_Label" xml:space="preserve">
-    <value>Guild rejoin cooldown (min)</value>
+    <value>ギルド再加入のクールダウン（分）</value>
   </data>
   <data name="Cat_GuildRejoinCooldownMinutes_Desc" xml:space="preserve">
     <value>ギルド再加入クールタイム（分）</value>
   </data>
   <data name="Cat_DenyTechnologyList_Label" xml:space="preserve">
-    <value>Disabled technologies</value>
+    <value>無効化するテクノロジー</value>
   </data>
   <data name="Cat_DenyTechnologyList_Desc" xml:space="preserve">
     <value>無効化するテクノロジーを設定
@@ -2091,19 +2091,19 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
 例： `DenyTechnologyList=(""PALBOX"", ""RepairBench""))`</value>
   </data>
   <data name="Cat_bAdditionalDropItemWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
-    <value>PvP kill: drop item</value>
+    <value>PvP キル：アイテムをドロップ</value>
   </data>
   <data name="Cat_bAdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
     <value>PvP有効化状態でプレイヤーをキルしたとき、専用アイテムをドロップするか</value>
   </data>
   <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
-    <value>PvP kill: item ID</value>
+    <value>PvP キル：アイテム ID</value>
   </data>
   <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
     <value>`bAdditionalDropItemWhenPlayerKillingInPvPMode` が有効の時、ドロップするアイテムのID</value>
   </data>
   <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
-    <value>PvP kill: item count</value>
+    <value>PvP キル：アイテム数</value>
   </data>
   <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
     <value>`bAdditionalDropItemWhenPlayerKillingInPvPMode` が有効の時、ドロップするアイテムの量</value>
@@ -2118,13 +2118,13 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
     <value>AutoTransferMasterCheckIntervalSeconds</value>
   </data>
   <data name="Cat_AutoTransferMasterCheckIntervalSeconds_Desc" xml:space="preserve">
-    <value>Undocumented. Likely how often the server checks whether guild/base ownership should auto-transfer from an inactive master (seconds).</value>
+    <value>未記載。ギルド／拠点の所有権を非アクティブなマスターから自動移譲すべきかをサーバーが確認する間隔（秒）と思われます。</value>
   </data>
   <data name="Cat_AutoTransferMasterThresholdDays_Label" xml:space="preserve">
     <value>AutoTransferMasterThresholdDays</value>
   </data>
   <data name="Cat_AutoTransferMasterThresholdDays_Desc" xml:space="preserve">
-    <value>Undocumented. Likely the days a guild/base master must be inactive before ownership auto-transfers.</value>
+    <value>未記載。所有権が自動移譲されるまでにギルド／拠点のマスターが非アクティブでなければならない日数と思われます。</value>
   </data>
   <data name="Cat_LogFormatType_Opt_Text" xml:space="preserve">
     <value>Text</value>
@@ -2133,10 +2133,10 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
     <value>Json</value>
   </data>
   <data name="Cat_Difficulty_Opt_None" xml:space="preserve">
-    <value>None</value>
+    <value>なし</value>
   </data>
   <data name="Cat_Difficulty_Opt_Casual" xml:space="preserve">
-    <value>Casual</value>
+    <value>カジュアル</value>
   </data>
   <data name="Cat_Difficulty_Opt_Normal" xml:space="preserve">
     <value>ノーマル</value>
@@ -2166,24 +2166,24 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
     <value>全アイテムと手持ちパルをドロップ</value>
   </data>
   <data name="Settings_PresetCasual" xml:space="preserve">
-    <value>Casual</value>
+    <value>カジュアル</value>
   </data>
   <data name="Settings_PresetNormal" xml:space="preserve">
-    <value>Normal</value>
+    <value>ノーマル</value>
   </data>
   <data name="Settings_PresetHard" xml:space="preserve">
-    <value>Hard</value>
+    <value>ハード</value>
   </data>
   <data name="Settings_PresetHardcore" xml:space="preserve">
-    <value>Hardcore</value>
+    <value>ハードコア</value>
   </data>
   <data name="LauncherSettings_RestartPrompt" xml:space="preserve">
-    <value>The launcher needs to restart to apply the new language ({0}). Restart now?</value>
+    <value>新しい言語（{0}）を適用するには、ランチャーを再起動する必要があります。今すぐ再起動しますか？</value>
   </data>
   <data name="LauncherSettings_RestartPromptRunning" xml:space="preserve">
-    <value>The launcher needs to restart to apply the new language ({0}). Your Palworld server keeps running, and the launcher reconnects to it. Restart now?</value>
+    <value>新しい言語（{0}）を適用するには、ランチャーを再起動する必要があります。Palworld サーバーは稼働したままで、ランチャーが再接続します。今すぐ再起動しますか？</value>
   </data>
   <data name="LauncherSettings_RestartNow" xml:space="preserve">
-    <value>Restart now</value>
+    <value>今すぐ再起動</value>
   </data>
 </root>
