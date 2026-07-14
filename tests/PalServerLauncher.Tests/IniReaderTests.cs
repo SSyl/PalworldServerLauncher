@@ -41,6 +41,23 @@ public class IniReaderTests
     }
 
     [Fact]
+    public void Parse_handles_escaped_backslash_and_quote_in_a_password()
+    {
+        // Palworld escapes a literal backslash as \\ and a literal quote as \" inside a quoted value (verified
+        // live). The splitter must honor those escapes: an escaped \" otherwise flips quote state and the
+        // password swallows every key after it, breaking REST auth. Matches OptionSettingsBlob's escaping.
+        var withBackslash = IniReader.Parse("""OptionSettings=(AdminPassword="my\\pass",RESTAPIEnabled=True,RESTAPIPort=8212)""");
+        Assert.Equal("my\\pass", withBackslash.AdminPassword); // \\ unescapes to a single backslash
+        Assert.True(withBackslash.RestApiEnabled);             // the key after the password still parses
+        Assert.Equal(8212, withBackslash.RestApiPort);
+
+        var withQuote = IniReader.Parse("""OptionSettings=(AdminPassword="pa\"ss",RESTAPIEnabled=True,RESTAPIPort=8212)""");
+        Assert.Equal("pa\"ss", withQuote.AdminPassword);       // \" unescapes to a quote, not swallowed
+        Assert.True(withQuote.RestApiEnabled);
+        Assert.Equal(8212, withQuote.RestApiPort);
+    }
+
+    [Fact]
     public void RestApiUsable_true_when_enabled_and_password_set()
     {
         var s = IniReader.Parse(SampleIni);

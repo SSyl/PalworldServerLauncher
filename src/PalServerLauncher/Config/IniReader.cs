@@ -12,8 +12,9 @@ namespace PalServerLauncher.Config;
 /// <code>
 /// OptionSettings=(Difficulty=None,...,AdminPassword="secret",RESTAPIEnabled=True,RESTAPIPort=8212,PublicPort=8211,...)
 /// </code>
-/// We parse that blob but never rewrite it (v1 writes no game ini). The splitter is quote-aware
-/// so commas/equals inside a quoted value (e.g. a password) don't break parsing.
+/// We parse that blob but never rewrite it. The splitter is quote-, backslash-escape-, and paren-depth-aware
+/// (matching OptionSettingsBlob), so commas/equals inside a quoted value, an escaped \" in a password, and
+/// nested tuples all parse without desyncing.
 /// </summary>
 public static class IniReader
 {
@@ -84,21 +85,41 @@ public static class IniReader
         return null;
     }
 
-    /// <summary>Split on commas that are not inside a double-quoted span.</summary>
+    /// <summary>Split on commas at the top level only: not inside a double-quoted span (backslash escapes
+    /// honored, so an escaped <c>\"</c> in a value does not flip quote state) and not inside a nested
+    /// parenthesized value. Mirrors <see cref="OptionSettingsBlob"/>'s splitter.</summary>
     private static IEnumerable<string> SplitTopLevel(string inner)
     {
         var sb = new StringBuilder();
         var inQuotes = false;
+        var depth = 0;
 
         for (var i = 0; i < inner.Length; i++)
         {
             var c = inner[i];
-            if (c == '"')
+            if (inQuotes && c == '\\' && i + 1 < inner.Length)
+            {
+                // A backslash escapes the next char inside a quoted value: consume both so an escaped \"
+                // does not flip quote state and let the value swallow every following key.
+                sb.Append(c);
+                sb.Append(inner[++i]);
+            }
+            else if (c == '"')
             {
                 inQuotes = !inQuotes;
                 sb.Append(c);
             }
-            else if (c == ',' && !inQuotes)
+            else if (c == '(' && !inQuotes)
+            {
+                depth++;
+                sb.Append(c);
+            }
+            else if (c == ')' && !inQuotes)
+            {
+                if (depth > 0) depth--;
+                sb.Append(c);
+            }
+            else if (c == ',' && !inQuotes && depth == 0)
             {
                 yield return sb.ToString();
                 sb.Clear();
