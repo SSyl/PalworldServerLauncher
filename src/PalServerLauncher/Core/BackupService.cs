@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -59,7 +60,7 @@ public sealed class BackupService
         }
 
         Directory.CreateDirectory(BackupsDir);
-        var stamp = DateTime.Now.ToString("yyyyMMdd-HHmmss");
+        var stamp = DateTime.Now.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture);
         var zipPath = Path.Combine(BackupsDir, $"palworld-{stamp}-{reason.ToString().ToLowerInvariant()}.zip");
 
         try

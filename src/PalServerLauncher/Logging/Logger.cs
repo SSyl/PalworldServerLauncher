@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.IO;
 using PalServerLauncher.Config;
 
@@ -28,7 +29,8 @@ public sealed class Logger
         _echoToConsole = echoToConsole;
         var dir = Path.Combine(LauncherConfig.DataRoot, LauncherConfig.LogsFolderName);
         Directory.CreateDirectory(dir);
-        FilePath = Path.Combine(dir, $"launcher-{DateTime.Now:yyyyMMdd-HHmmss}.log");
+        var stamp = DateTime.Now.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture);
+        FilePath = Path.Combine(dir, $"launcher-{stamp}.log");
         PruneOldLogs(dir, keep: 10);
         Info($"=== Log started ({(verbose ? "verbose" : "normal")} mode) -> {FilePath} ===");
     }
