@@ -155,7 +155,7 @@
             <Button DockPanel.Dock="Left" Content="{x:Static loc:Strings.Main_ValidateFiles}" Command="{Binding ValidateFilesCommand}"
                     ToolTip="{x:Static loc:Strings.Main_ValidateFilesTip}"/>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                <Button Content="{x:Static loc:Strings.LauncherSettings_Title}" Click="OnOpenLauncherSettings"
+                <Button FontFamily="Segoe MDL2 Assets" Content="&#xE713;" FontSize="15" Padding="10,7" MinWidth="0" Click="OnOpenLauncherSettings"
                         ToolTip="{x:Static loc:Strings.LauncherSettings_Tooltip}"/>
                 <Button Content="{x:Static loc:Strings.Main_ServerSettings}" Click="OnOpenServerSettings"
                         ToolTip="{x:Static loc:Strings.Main_ServerSettingsTip}"/>
