@@ -2210,4 +2210,7 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
   <data name="LauncherSettings_RestartNow" xml:space="preserve">
     <value>今すぐ再起動</value>
   </data>
+  <data name="LauncherSettings_Copyright" xml:space="preserve">
+    <value>© 2026 Syl S. · GPLv3</value>
+  </data>
 </root>

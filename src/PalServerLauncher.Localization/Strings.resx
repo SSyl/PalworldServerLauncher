@@ -2279,4 +2279,7 @@ Save these changes?</value>
   <data name="LauncherSettings_RestartNow" xml:space="preserve">
     <value>Restart now</value>
   </data>
+  <data name="LauncherSettings_Copyright" xml:space="preserve">
+    <value>© 2026 Syl S. · GPLv3</value>
+  </data>
 </root>
