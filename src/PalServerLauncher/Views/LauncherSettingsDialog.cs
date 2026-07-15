@@ -2,6 +2,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using PalServerLauncher.Config;
 using PalServerLauncher.Localization;
@@ -53,10 +54,20 @@ public sealed class LauncherSettingsDialog : Window
         root.Children.Add(languageRow);
 
         var bottom = new DockPanel { LastChildFill = false };
-        var licenses = MakeButton(Strings.LauncherSettings_ThirdPartyLicenses, ShowLicenses);
-        licenses.Margin = new Thickness(0);
-        DockPanel.SetDock(licenses, Dock.Left);
-        bottom.Children.Add(licenses);
+
+        var info = new StackPanel { VerticalAlignment = VerticalAlignment.Center };
+        var licensesLink = new Hyperlink(new Run(Strings.LauncherSettings_ThirdPartyLicenses)) { Foreground = LinkFg };
+        licensesLink.Click += (_, _) => ShowLicenses();
+        var licensesLine = new TextBlock();
+        licensesLine.Inlines.Add(licensesLink);
+        info.Children.Add(licensesLine);
+        info.Children.Add(new TextBlock
+        {
+            Text = Strings.LauncherSettings_Copyright, Foreground = Muted, FontSize = 11, Margin = new Thickness(0, 3, 0, 0),
+        });
+        DockPanel.SetDock(info, Dock.Left);
+        bottom.Children.Add(info);
+
         var saveCancel = new StackPanel { Orientation = Orientation.Horizontal };
         saveCancel.Children.Add(MakeButton(Strings.Common_Save, OnSave));
         saveCancel.Children.Add(MakeButton(Strings.Common_Cancel, Close));
