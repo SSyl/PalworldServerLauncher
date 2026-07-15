@@ -1,3 +1,5 @@
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -52,10 +54,17 @@ public sealed class LauncherSettingsDialog : Window
         languageRow.Children.Add(_languages);
         root.Children.Add(languageRow);
 
-        var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
-        buttons.Children.Add(MakeButton(Strings.Common_Save, OnSave));
-        buttons.Children.Add(MakeButton(Strings.Common_Cancel, Close));
-        root.Children.Add(buttons);
+        var bottom = new DockPanel { LastChildFill = false };
+        var licenses = MakeButton(Strings.LauncherSettings_ThirdPartyLicenses, ShowLicenses);
+        licenses.Margin = new Thickness(0);
+        DockPanel.SetDock(licenses, Dock.Left);
+        bottom.Children.Add(licenses);
+        var saveCancel = new StackPanel { Orientation = Orientation.Horizontal };
+        saveCancel.Children.Add(MakeButton(Strings.Common_Save, OnSave));
+        saveCancel.Children.Add(MakeButton(Strings.Common_Cancel, Close));
+        DockPanel.SetDock(saveCancel, Dock.Right);
+        bottom.Children.Add(saveCancel);
+        root.Children.Add(bottom);
 
         Content = root;
     }
@@ -78,6 +87,41 @@ public sealed class LauncherSettingsDialog : Window
             _changed = true; // the caller offers to restart the launcher to apply the new language
         }
         Close();
+    }
+
+    /// <summary>Show the bundled third-party license notices in a scrollable read-only window.</summary>
+    private void ShowLicenses()
+    {
+        var box = new TextBox
+        {
+            Text = ReadNotices(), IsReadOnly = true, TextWrapping = TextWrapping.NoWrap,
+            Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E)), Foreground = Fg,
+            BorderThickness = new Thickness(0), FontFamily = new FontFamily("Consolas"), FontSize = 12,
+            Padding = new Thickness(12), CaretBrush = Brushes.Transparent,
+            VerticalScrollBarVisibility = ScrollBarVisibility.Auto, HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+        };
+        new Window
+        {
+            Title = Strings.LauncherSettings_ThirdPartyLicenses, Owner = this,
+            Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E)),
+            Width = 660, Height = 540, WindowStartupLocation = WindowStartupLocation.CenterOwner,
+            ShowInTaskbar = false, Content = box,
+        }.ShowDialog();
+    }
+
+    /// <summary>Read the embedded THIRD-PARTY-NOTICES.md (bundled from the repo root) so the license text has a
+    /// single source of truth shared with the repo file.</summary>
+    private static string ReadNotices()
+    {
+        var asm = typeof(LauncherSettingsDialog).Assembly;
+        var name = asm.GetManifestResourceNames().FirstOrDefault(n => n.EndsWith("THIRD-PARTY-NOTICES.md", System.StringComparison.OrdinalIgnoreCase));
+        if (name is null)
+            return "";
+        using var stream = asm.GetManifestResourceStream(name);
+        if (stream is null)
+            return "";
+        using var reader = new StreamReader(stream);
+        return reader.ReadToEnd();
     }
 
     private static Button MakeButton(string label, System.Action onClick)

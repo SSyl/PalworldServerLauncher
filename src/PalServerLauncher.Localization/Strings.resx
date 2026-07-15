@@ -127,6 +127,9 @@
   <data name="LauncherSettings_Title" xml:space="preserve">
     <value>Launcher Settings</value>
   </data>
+  <data name="LauncherSettings_ThirdPartyLicenses" xml:space="preserve">
+    <value>Open source licenses</value>
+  </data>
   <data name="LauncherSettings_LanguageLabel" xml:space="preserve">
     <value>Language</value>
   </data>

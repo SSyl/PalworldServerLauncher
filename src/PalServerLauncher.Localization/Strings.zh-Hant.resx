@@ -69,6 +69,9 @@
   <data name="LauncherSettings_Title" xml:space="preserve">
     <value>啟動器設定</value>
   </data>
+  <data name="LauncherSettings_ThirdPartyLicenses" xml:space="preserve">
+    <value>開源授權</value>
+  </data>
   <data name="LauncherSettings_LanguageLabel" xml:space="preserve">
     <value>語言</value>
   </data>

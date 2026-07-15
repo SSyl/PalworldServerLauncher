@@ -26,6 +26,11 @@
     <Resource Include="..\..\logo.png" Link="logo.png" />
   </ItemGroup>
 
+  <!-- The third-party license notices, embedded so Launcher Settings can show them from within the exe. -->
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\THIRD-PARTY-NOTICES.md" Link="THIRD-PARTY-NOTICES.md" />
+  </ItemGroup>
+
   <!-- Single-file self-contained publish (used by `dotnet publish`) -->
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <SelfContained>true</SelfContained>
