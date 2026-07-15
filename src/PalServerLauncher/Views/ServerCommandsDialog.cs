@@ -6,6 +6,7 @@ using PalServerLauncher.Core;
 using PalServerLauncher.Localization;
 using PalServerLauncher.Logging;
 using PalServerLauncher.Rest.Models;
+using static PalServerLauncher.Views.DarkControls;
 
 namespace PalServerLauncher.Views;
 
@@ -18,10 +19,6 @@ namespace PalServerLauncher.Views;
 /// </summary>
 public sealed class ServerCommandsDialog : Window
 {
-    private static readonly Brush Fg = Brushes.White;
-    private static readonly Brush Muted = new SolidColorBrush(Color.FromRgb(0x99, 0x99, 0x99));
-    private static readonly Brush FieldBg = new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33));
-    private static readonly Brush FieldBorder = new SolidColorBrush(Color.FromRgb(0x4A, 0x4A, 0x4A));
     private static readonly Brush Danger = new SolidColorBrush(Color.FromRgb(0xC2, 0x42, 0x38));
     private static readonly Brush Warn = new SolidColorBrush(Color.FromRgb(0xB8, 0x86, 0x0B));
 
@@ -217,11 +214,6 @@ public sealed class ServerCommandsDialog : Window
     private void SetStatus(string text) => _status.Text = text;
 
     // --- small dark-theme builders (mirrors PortCheckDialog / DiscordDialog) ---
-    private static TextBlock Header(string text) => new()
-    {
-        Text = text, Foreground = Fg, FontSize = 15, FontWeight = FontWeights.SemiBold, Margin = new Thickness(0, 16, 0, 6),
-    };
-
     private static TextBlock Line(string text, Brush colour) => new()
     {
         Text = text, Foreground = colour, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 3, 0, 0),
@@ -235,21 +227,4 @@ public sealed class ServerCommandsDialog : Window
         return panel;
     }
 
-    private static TextBox Field(string value) => new()
-    {
-        Text = value, Background = FieldBg, Foreground = Fg, BorderBrush = FieldBorder,
-        Padding = new Thickness(5, 4, 5, 4), CaretBrush = Brushes.White, VerticalContentAlignment = VerticalAlignment.Center,
-    };
-
-    private static Button MakeButton(string label, Action onClick, Brush? background = null)
-    {
-        var button = new Button
-        {
-            Content = label, Margin = new Thickness(8, 0, 0, 0), Padding = new Thickness(14, 6, 14, 6),
-            Foreground = Fg, Background = background ?? new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)),
-            BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand, MinWidth = 74,
-        };
-        button.Click += (_, _) => onClick();
-        return button;
-    }
 }

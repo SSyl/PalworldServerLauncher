@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using PalServerLauncher.Localization;
+using static PalServerLauncher.Views.DarkControls;
 
 namespace PalServerLauncher.Views;
 
@@ -18,9 +19,6 @@ namespace PalServerLauncher.Views;
 /// </summary>
 internal sealed class SecretField
 {
-    private static readonly Brush Fg = Brushes.White;
-    private static readonly Brush FieldBg = new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33));
-    private static readonly Brush FieldBorder = new SolidColorBrush(Color.FromRgb(0x4A, 0x4A, 0x4A));
     private static readonly Brush ButtonBg = new SolidColorBrush(Color.FromRgb(0x44, 0x44, 0x44));
 
     private readonly PasswordBox _masked;

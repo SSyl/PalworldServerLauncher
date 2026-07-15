@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using PalServerLauncher.Localization;
+using static PalServerLauncher.Views.DarkControls;
 
 namespace PalServerLauncher.Views;
 
@@ -12,9 +13,6 @@ namespace PalServerLauncher.Views;
 /// </summary>
 public sealed class LanguagePickerDialog : Window
 {
-    private static readonly Brush Fg = Brushes.White;
-    private static readonly Brush FieldBg = new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33));
-
     private readonly ComboBox _languages;
     private string _result;
 
@@ -69,17 +67,5 @@ public sealed class LanguagePickerDialog : Window
         if (_languages.SelectedItem is LauncherLanguage lang)
             _result = lang.Code;
         Close();
-    }
-
-    private static Button MakeButton(string label, System.Action onClick)
-    {
-        var button = new Button
-        {
-            Content = label, Margin = new Thickness(8, 0, 0, 0), Padding = new Thickness(14, 7, 14, 7),
-            Foreground = Fg, Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)),
-            BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand, MinWidth = 80,
-        };
-        button.Click += (_, _) => onClick();
-        return button;
     }
 }

@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using PalServerLauncher.Config;
 using PalServerLauncher.Localization;
+using static PalServerLauncher.Views.DarkControls;
 
 namespace PalServerLauncher.Views;
 
@@ -15,9 +16,6 @@ namespace PalServerLauncher.Views;
 /// </summary>
 public sealed class LauncherSettingsDialog : Window
 {
-    private static readonly Brush Fg = Brushes.White;
-    private static readonly Brush FieldBg = new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33));
-
     private readonly LauncherConfig _config;
     private readonly ComboBox _languages;
     private bool _changed;
@@ -88,7 +86,6 @@ public sealed class LauncherSettingsDialog : Window
         }
         Close();
     }
-
     /// <summary>Show the bundled third-party license notices in a scrollable read-only window.</summary>
     private void ShowLicenses()
     {
@@ -122,17 +119,5 @@ public sealed class LauncherSettingsDialog : Window
             return "";
         using var reader = new StreamReader(stream);
         return reader.ReadToEnd();
-    }
-
-    private static Button MakeButton(string label, System.Action onClick)
-    {
-        var button = new Button
-        {
-            Content = label, Margin = new Thickness(8, 0, 0, 0), Padding = new Thickness(14, 7, 14, 7),
-            Foreground = Fg, Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)),
-            BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand, MinWidth = 80,
-        };
-        button.Click += (_, _) => onClick();
-        return button;
     }
 }

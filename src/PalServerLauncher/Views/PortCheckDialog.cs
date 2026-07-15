@@ -9,6 +9,7 @@ using PalServerLauncher.Core;
 using PalServerLauncher.Localization;
 using PalServerLauncher.Logging;
 using PalServerLauncher.Rest;
+using static PalServerLauncher.Views.DarkControls;
 
 namespace PalServerLauncher.Views;
 
@@ -23,11 +24,6 @@ namespace PalServerLauncher.Views;
 /// </summary>
 public sealed class PortCheckDialog : Window
 {
-    private static readonly Brush Fg = Brushes.White;
-    private static readonly Brush Muted = new SolidColorBrush(Color.FromRgb(0x99, 0x99, 0x99));
-    private static readonly Brush FieldBg = new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33));
-    private static readonly Brush FieldBorder = new SolidColorBrush(Color.FromRgb(0x4A, 0x4A, 0x4A));
-
     private static readonly Brush Green = new SolidColorBrush(Color.FromRgb(0x3F, 0xB0, 0x50));
     private static readonly Brush Amber = new SolidColorBrush(Color.FromRgb(0xE0, 0xA0, 0x30));
     private static readonly Brush Red = new SolidColorBrush(Color.FromRgb(0xD0, 0x50, 0x45));
@@ -196,11 +192,6 @@ public sealed class PortCheckDialog : Window
         int.TryParse(box.Text.Trim(), NumberStyles.None, CultureInfo.InvariantCulture, out port) && port is >= 1 and <= 65535;
 
     // --- small dark-theme builders (mirrors DiscordDialog) ---
-    private static TextBlock Header(string text) => new()
-    {
-        Text = text, Foreground = Fg, FontSize = 15, FontWeight = FontWeights.SemiBold, Margin = new Thickness(0, 16, 0, 4),
-    };
-
     private static TextBlock Light() => new()
     {
         Text = "●", FontSize = 14, Foreground = Grey,
@@ -250,12 +241,6 @@ public sealed class PortCheckDialog : Window
         return grid;
     }
 
-    private static TextBox Field(string value) => new()
-    {
-        Text = value, Background = FieldBg, Foreground = Fg, BorderBrush = FieldBorder,
-        Padding = new Thickness(5, 4, 5, 4), CaretBrush = Brushes.White, VerticalContentAlignment = VerticalAlignment.Center,
-    };
-
     private static Border Note(string text) => new()
     {
         Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x2E, 0x1E)),
@@ -263,31 +248,4 @@ public sealed class PortCheckDialog : Window
         Margin = new Thickness(0, 14, 0, 0),
         Child = new TextBlock { Text = text, Foreground = new SolidColorBrush(Color.FromRgb(0xE0, 0xC0, 0x80)), TextWrapping = TextWrapping.Wrap },
     };
-
-    private static void DigitsOnly(TextBox box)
-    {
-        box.PreviewTextInput += (_, e) =>
-        {
-            foreach (var c in e.Text)
-                if (!char.IsAsciiDigit(c)) { e.Handled = true; return; }
-        };
-        DataObject.AddPastingHandler(box, (_, e) =>
-        {
-            if (e.DataObject.GetData(DataFormats.UnicodeText) is string s)
-                foreach (var c in s)
-                    if (!char.IsAsciiDigit(c)) { e.CancelCommand(); return; }
-        });
-    }
-
-    private static Button MakeButton(string label, Action onClick)
-    {
-        var button = new Button
-        {
-            Content = label, Margin = new Thickness(8, 0, 0, 0), Padding = new Thickness(16, 7, 16, 7),
-            Foreground = Fg, Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)),
-            BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand, MinWidth = 90,
-        };
-        button.Click += (_, _) => onClick();
-        return button;
-    }
 }

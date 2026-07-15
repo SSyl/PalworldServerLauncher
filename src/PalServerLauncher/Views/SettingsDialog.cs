@@ -9,6 +9,7 @@ using System.Windows.Media;
 using PalServerLauncher.Config;
 using PalServerLauncher.Core;
 using PalServerLauncher.Localization;
+using static PalServerLauncher.Views.DarkControls;
 
 namespace PalServerLauncher.Views;
 
@@ -32,12 +33,8 @@ public enum SettingsSection
 /// </summary>
 public sealed class SettingsDialog : Window
 {
-    private static readonly Brush Fg = Brushes.White;
-    private static readonly Brush Muted = new SolidColorBrush(Color.FromRgb(0x99, 0x99, 0x99));
-    private static readonly Brush FieldBg = new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33));
-    private static readonly Brush NormalBorder = new SolidColorBrush(Color.FromRgb(0x4A, 0x4A, 0x4A));
+    private static readonly Brush NormalBorder = FieldBorder;
     private static readonly Brush ErrorBorder = new SolidColorBrush(Color.FromRgb(0xE0, 0x5A, 0x5A));
-    private static readonly Brush LinkFg = new SolidColorBrush(Color.FromRgb(0x5A, 0xA0, 0xE0));
 
     private const string ConfigDocsUrl = "https://docs.palworldgame.com/settings-and-operation/configuration/";
 
@@ -987,11 +984,6 @@ public sealed class SettingsDialog : Window
     private static int ParseInt(string text, int fallback) =>
         int.TryParse(text.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, out var n) ? n : fallback;
 
-    private static TextBlock Header(string text) => new()
-    {
-        Text = text, Foreground = Fg, FontSize = 15, FontWeight = FontWeights.SemiBold, Margin = new Thickness(0, 16, 0, 6),
-    };
-
     private static Border Banner(string text) => new()
     {
         Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x2E, 0x1E)),
@@ -1009,15 +1001,6 @@ public sealed class SettingsDialog : Window
         link.RequestNavigate += (_, e) => { OpenUrl(e.Uri.AbsoluteUri); e.Handled = true; };
         block.Inlines.Add(link);
         return block;
-    }
-
-    private static void OpenUrl(string url)
-    {
-        try { Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); }
-        catch (Exception ex) when (ex is System.ComponentModel.Win32Exception or InvalidOperationException)
-        {
-            // No default browser / launch blocked, nothing useful to do here.
-        }
     }
 
     private Grid Row(string label, FrameworkElement input, string? tip = null, ResetSpec? reset = null, DocStatus doc = DocStatus.Documented, bool includeInBulkReset = true)
@@ -1090,12 +1073,7 @@ public sealed class SettingsDialog : Window
         return button;
     }
 
-    private static TextBox TextField(string value, bool enabled) => new()
-    {
-        Text = value, IsEnabled = enabled, Background = FieldBg, Foreground = Fg,
-        BorderBrush = new SolidColorBrush(Color.FromRgb(0x4A, 0x4A, 0x4A)), Padding = new Thickness(4, 3, 4, 3),
-        CaretBrush = Brushes.White,
-    };
+    private static TextBox TextField(string value, bool enabled) => Field(value, enabled);
 
     private static CheckBox CheckField(bool value, bool enabled) => new()
     {
@@ -1131,18 +1109,6 @@ public sealed class SettingsDialog : Window
 
         public object ConvertBack(object? value, System.Type targetType, object? parameter, System.Globalization.CultureInfo culture) =>
             System.Windows.Data.Binding.DoNothing;
-    }
-
-    private static Button MakeButton(string label, System.Action onClick)
-    {
-        var button = new Button
-        {
-            Content = label, Margin = new Thickness(8, 0, 0, 0), Padding = new Thickness(16, 7, 16, 7),
-            Foreground = Fg, Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)),
-            BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand, MinWidth = 90,
-        };
-        button.Click += (_, _) => onClick();
-        return button;
     }
 
     /// <summary>Reset every field in the open panel to its default (confirmed; still needs Save to apply).</summary>

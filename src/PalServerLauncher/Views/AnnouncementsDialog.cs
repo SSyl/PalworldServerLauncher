@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using PalServerLauncher.Config;
 using PalServerLauncher.Localization;
+using static PalServerLauncher.Views.DarkControls;
 
 namespace PalServerLauncher.Views;
 
@@ -16,10 +17,6 @@ namespace PalServerLauncher.Views;
 public sealed class AnnouncementsDialog : Window
 {
     private const string Token = "{minutes}";
-
-    private static readonly Brush Fg = Brushes.White;
-    private static readonly Brush Muted = new SolidColorBrush(Color.FromRgb(0x99, 0x99, 0x99));
-    private static readonly Brush FieldBg = new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33));
 
     private readonly LauncherConfig _config;
     private readonly TextBox _restart, _update;
@@ -106,24 +103,4 @@ public sealed class AnnouncementsDialog : Window
     {
         Text = text, Foreground = Fg, FontWeight = FontWeights.SemiBold, Margin = new Thickness(0, 8, 0, 4),
     };
-
-    // Single-line by default (AcceptsReturn is false), so announcements stay one line as they render in-game.
-    private static TextBox Field(string value) => new()
-    {
-        Text = value, Background = FieldBg, Foreground = Fg,
-        BorderBrush = new SolidColorBrush(Color.FromRgb(0x4A, 0x4A, 0x4A)),
-        Padding = new Thickness(6, 5, 6, 5), CaretBrush = Brushes.White,
-    };
-
-    private static Button MakeButton(string label, System.Action onClick)
-    {
-        var button = new Button
-        {
-            Content = label, Margin = new Thickness(8, 0, 0, 0), Padding = new Thickness(16, 7, 16, 7),
-            Foreground = Fg, Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)),
-            BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand, MinWidth = 90,
-        };
-        button.Click += (_, _) => onClick();
-        return button;
-    }
 }

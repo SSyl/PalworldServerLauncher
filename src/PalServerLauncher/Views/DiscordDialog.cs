@@ -8,6 +8,7 @@ using System.Windows.Media;
 using PalServerLauncher.Config;
 using PalServerLauncher.Core;
 using PalServerLauncher.Localization;
+using static PalServerLauncher.Views.DarkControls;
 
 namespace PalServerLauncher.Views;
 
@@ -18,12 +19,6 @@ namespace PalServerLauncher.Views;
 /// </summary>
 public sealed class DiscordDialog : Window
 {
-    private static readonly Brush Fg = Brushes.White;
-    private static readonly Brush Muted = new SolidColorBrush(Color.FromRgb(0x99, 0x99, 0x99));
-    private static readonly Brush FieldBg = new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33));
-    private static readonly Brush FieldBorder = new SolidColorBrush(Color.FromRgb(0x4A, 0x4A, 0x4A));
-    private static readonly Brush LinkFg = new SolidColorBrush(Color.FromRgb(0x5A, 0xA0, 0xE0));
-
     private readonly LauncherConfig _config;
     private bool _saved;
 
@@ -160,11 +155,6 @@ public sealed class DiscordDialog : Window
     }
 
     // --- small dark-theme builders ---
-    private static TextBlock Header(string text) => new()
-    {
-        Text = text, Foreground = Fg, FontSize = 15, FontWeight = FontWeights.SemiBold, Margin = new Thickness(0, 18, 0, 6),
-    };
-
     private static Grid Row(string label, FrameworkElement input)
     {
         var grid = new Grid { Margin = new Thickness(0, 4, 0, 0) };
@@ -177,12 +167,6 @@ public sealed class DiscordDialog : Window
         grid.Children.Add(input);
         return grid;
     }
-
-    private static TextBox Field(string value) => new()
-    {
-        Text = value, Background = FieldBg, Foreground = Fg, BorderBrush = FieldBorder,
-        Padding = new Thickness(5, 4, 5, 4), CaretBrush = Brushes.White,
-    };
 
     private static CheckBox Check(string text, bool value) => new()
     {
@@ -206,41 +190,5 @@ public sealed class DiscordDialog : Window
         block.Inlines.Add(link);
         block.Inlines.Add(suffix);
         return block;
-    }
-
-    private static void OpenUrl(string url)
-    {
-        try { Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); }
-        catch (Exception ex) when (ex is System.ComponentModel.Win32Exception or InvalidOperationException)
-        {
-            // No default browser / launch blocked, nothing useful to do here.
-        }
-    }
-
-    private static void DigitsOnly(TextBox box)
-    {
-        box.PreviewTextInput += (_, e) =>
-        {
-            foreach (var c in e.Text)
-                if (!char.IsAsciiDigit(c)) { e.Handled = true; return; }
-        };
-        DataObject.AddPastingHandler(box, (_, e) =>
-        {
-            if (e.DataObject.GetData(DataFormats.UnicodeText) is string s)
-                foreach (var c in s)
-                    if (!char.IsAsciiDigit(c)) { e.CancelCommand(); return; }
-        });
-    }
-
-    private static Button MakeButton(string label, Action onClick)
-    {
-        var button = new Button
-        {
-            Content = label, Margin = new Thickness(8, 0, 0, 0), Padding = new Thickness(16, 7, 16, 7),
-            Foreground = Fg, Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)),
-            BorderThickness = new Thickness(0), Cursor = Cursors.Hand, MinWidth = 90,
-        };
-        button.Click += (_, _) => onClick();
-        return button;
     }
 }
