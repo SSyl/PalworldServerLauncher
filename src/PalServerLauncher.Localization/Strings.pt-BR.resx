@@ -2239,7 +2239,7 @@ Salvar essas alterações?</value>
     <value>Difícil</value>
   </data>
   <data name="Settings_PresetHardcore" xml:space="preserve">
-    <value>Hardcore</value>
+    <value>Intenso</value>
   </data>
   <data name="LauncherSettings_RestartPrompt" xml:space="preserve">
     <value>O launcher precisa reiniciar para aplicar o novo idioma ({0}). Reiniciar agora?</value>

@@ -2203,7 +2203,7 @@ REST API на этом сервере пока не включён, поэтом
     <value>Лёгкий</value>
   </data>
   <data name="Cat_Difficulty_Opt_Normal" xml:space="preserve">
-    <value>Обычный</value>
+    <value>Нормальный</value>
   </data>
   <data name="Cat_Difficulty_Opt_Hard" xml:space="preserve">
     <value>Сложный</value>
@@ -2233,7 +2233,7 @@ REST API на этом сервере пока не включён, поэтом
     <value>Лёгкий</value>
   </data>
   <data name="Settings_PresetNormal" xml:space="preserve">
-    <value>Обычный</value>
+    <value>Нормальный</value>
   </data>
   <data name="Settings_PresetHard" xml:space="preserve">
     <value>Сложный</value>

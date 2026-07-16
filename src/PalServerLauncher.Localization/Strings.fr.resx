@@ -2200,7 +2200,7 @@ Enregistrer ces changements ?</value>
     <value>Aucune</value>
   </data>
   <data name="Cat_Difficulty_Opt_Casual" xml:space="preserve">
-    <value>Décontracté</value>
+    <value>Facile</value>
   </data>
   <data name="Cat_Difficulty_Opt_Normal" xml:space="preserve">
     <value>Normal</value>
@@ -2230,7 +2230,7 @@ Enregistrer ces changements ?</value>
     <value>Objets, équipement et Pals</value>
   </data>
   <data name="Settings_PresetCasual" xml:space="preserve">
-    <value>Décontracté</value>
+    <value>Facile</value>
   </data>
   <data name="Settings_PresetNormal" xml:space="preserve">
     <value>Normal</value>

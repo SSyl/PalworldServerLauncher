@@ -2203,10 +2203,10 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>캐주얼</value>
   </data>
   <data name="Cat_Difficulty_Opt_Normal" xml:space="preserve">
-    <value>노멀</value>
+    <value>보통</value>
   </data>
   <data name="Cat_Difficulty_Opt_Hard" xml:space="preserve">
-    <value>하드</value>
+    <value>어려움</value>
   </data>
   <data name="Cat_RandomizerType_Opt_None" xml:space="preserve">
     <value>없음</value>

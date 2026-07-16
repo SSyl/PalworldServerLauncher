@@ -2200,7 +2200,7 @@ Diese Änderungen übernehmen und speichern?</value>
     <value>Keine</value>
   </data>
   <data name="Cat_Difficulty_Opt_Casual" xml:space="preserve">
-    <value>Leicht</value>
+    <value>Entspannt</value>
   </data>
   <data name="Cat_Difficulty_Opt_Normal" xml:space="preserve">
     <value>Normal</value>
@@ -2230,7 +2230,7 @@ Diese Änderungen übernehmen und speichern?</value>
     <value>Alles (inkl. Pals)</value>
   </data>
   <data name="Settings_PresetCasual" xml:space="preserve">
-    <value>Locker</value>
+    <value>Entspannt</value>
   </data>
   <data name="Settings_PresetNormal" xml:space="preserve">
     <value>Normal</value>
