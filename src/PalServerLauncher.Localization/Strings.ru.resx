@@ -1480,715 +1480,715 @@ Save these changes?</value>
     <value>Название мира</value>
   </data>
   <data name="Cat_ServerName_Desc" xml:space="preserve">
-    <value>Server name.</value>
+    <value>Название сервера.</value>
   </data>
   <data name="Cat_ServerDescription_Label" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="Cat_ServerDescription_Desc" xml:space="preserve">
-    <value>Server description.</value>
+    <value>Описание сервера.</value>
   </data>
   <data name="Cat_ServerPassword_Label" xml:space="preserve">
     <value>Server password</value>
   </data>
   <data name="Cat_ServerPassword_Desc" xml:space="preserve">
-    <value>Password required to log in to the server. Blank = no password.</value>
+    <value>Пароль, необходимый для входа на сервер. Пусто = без пароля.</value>
   </data>
   <data name="Cat_AdminPassword_Label" xml:space="preserve">
     <value>Admin password</value>
   </data>
   <data name="Cat_AdminPassword_Desc" xml:space="preserve">
-    <value>Password used to obtain administrative privileges on the server. Required for the REST API and RCON.</value>
+    <value>Пароль для получения прав администратора на сервере. Требуется для REST API и RCON.</value>
   </data>
   <data name="Cat_ServerPlayerMaxNum_Label" xml:space="preserve">
     <value>Max players</value>
   </data>
   <data name="Cat_ServerPlayerMaxNum_Desc" xml:space="preserve">
-    <value>Maximum number of players who can join the server. The -players launch argument overrides this if set.</value>
+    <value>Максимальное количество игроков, которые могут подключиться к серверу. Если задан аргумент запуска -players, он имеет приоритет над этим значением.</value>
   </data>
   <data name="Cat_CoopPlayerMaxNum_Label" xml:space="preserve">
     <value>CoopPlayerMaxNum</value>
   </data>
   <data name="Cat_CoopPlayerMaxNum_Desc" xml:space="preserve">
-    <value>Undocumented. Community guesses a cooperative-play party size, but this may be an internal value that has no effect on a dedicated server.</value>
+    <value>Не документировано. По предположению сообщества, это размер группы для кооперативной игры, но возможно, это внутреннее значение, не влияющее на выделенный сервер.</value>
   </data>
   <data name="Cat_RESTAPIEnabled_Label" xml:space="preserve">
     <value>REST API enabled</value>
   </data>
   <data name="Cat_RESTAPIEnabled_Desc" xml:space="preserve">
-    <value>Enable the REST API. The launcher needs this for stats, graceful shutdown, and player logging.</value>
+    <value>Включить REST API. Лаунчеру он нужен для получения статистики, корректного завершения работы сервера и журналирования игроков.</value>
   </data>
   <data name="Cat_RESTAPIPort_Label" xml:space="preserve">
     <value>REST API port</value>
   </data>
   <data name="Cat_RESTAPIPort_Desc" xml:space="preserve">
-    <value>Listening port for the REST API.</value>
+    <value>Порт прослушивания для REST API.</value>
   </data>
   <data name="Cat_RCONEnabled_Label" xml:space="preserve">
     <value>RCON enabled</value>
   </data>
   <data name="Cat_RCONEnabled_Desc" xml:space="preserve">
-    <value>Enable RCON.</value>
+    <value>Включить RCON.</value>
   </data>
   <data name="Cat_RCONPort_Label" xml:space="preserve">
     <value>RCON port</value>
   </data>
   <data name="Cat_RCONPort_Desc" xml:space="preserve">
-    <value>Port number used for RCON.</value>
+    <value>Номер порта, используемый для RCON.</value>
   </data>
   <data name="Cat_bUseAuth_Label" xml:space="preserve">
     <value>bUseAuth</value>
   </data>
   <data name="Cat_bUseAuth_Desc" xml:space="preserve">
-    <value>Undocumented. Defaults to True.</value>
+    <value>Не документировано. По умолчанию включено (True).</value>
   </data>
   <data name="Cat_BanListURL_Label" xml:space="preserve">
     <value>BanListURL</value>
   </data>
   <data name="Cat_BanListURL_Desc" xml:space="preserve">
-    <value>Undocumented. Likely the ban list the server checks against, but the exact format and behavior are unconfirmed.</value>
+    <value>Не документировано. Вероятно, список банов, по которому сервер проверяет игроков, но точный формат и поведение не подтверждены.</value>
   </data>
   <data name="Cat_bIsUseBackupSaveData_Label" xml:space="preserve">
     <value>Built-in save backups</value>
   </data>
   <data name="Cat_bIsUseBackupSaveData_Desc" xml:space="preserve">
-    <value>Enable Palworld's own world backups (separate from the launcher's). Enabling this increases disk load.</value>
+    <value>Включить собственное резервное копирование мира Palworld (отдельно от резервного копирования лаунчера). Включение этой опции увеличивает нагрузку на диск.</value>
   </data>
   <data name="Cat_AutoSaveSpan_Label" xml:space="preserve">
     <value>Частота автосохранений</value>
   </data>
   <data name="Cat_AutoSaveSpan_Desc" xml:space="preserve">
-    <value>How often the world auto-saves (seconds).</value>
+    <value>Как часто выполняется автосохранение мира (в секундах).</value>
   </data>
   <data name="Cat_bIsShowJoinLeftMessage_Label" xml:space="preserve">
     <value>Show join/leave messages</value>
   </data>
   <data name="Cat_bIsShowJoinLeftMessage_Desc" xml:space="preserve">
-    <value>On dedicated servers, show in-game messages when players join or leave.</value>
+    <value>На выделенных серверах показывать внутриигровые сообщения о подключении и отключении игроков.</value>
   </data>
   <data name="Cat_bAllowClientMod_Label" xml:space="preserve">
     <value>Allow client mods</value>
   </data>
   <data name="Cat_bAllowClientMod_Desc" xml:space="preserve">
-    <value>Allow players with mods enabled to join the server.</value>
+    <value>Разрешить подключение к серверу игрокам с включёнными модами.</value>
   </data>
   <data name="Cat_ChatPostLimitPerMinute_Label" xml:space="preserve">
     <value>Chat rate limit</value>
   </data>
   <data name="Cat_ChatPostLimitPerMinute_Desc" xml:space="preserve">
-    <value>Maximum number of chat messages allowed per minute.</value>
+    <value>Максимальное количество сообщений в чате, разрешённое в минуту.</value>
   </data>
   <data name="Cat_LogFormatType_Label" xml:space="preserve">
     <value>Log format</value>
   </data>
   <data name="Cat_LogFormatType_Desc" xml:space="preserve">
-    <value>Server log file format.</value>
+    <value>Формат файла журнала сервера.</value>
   </data>
   <data name="Cat_bIsMultiplay_Label" xml:space="preserve">
     <value>bIsMultiplay</value>
   </data>
   <data name="Cat_bIsMultiplay_Desc" xml:space="preserve">
-    <value>Undocumented. Likely the game client's 'Multiplayer: Yes/No' option shown when creating a world, so it has no effect on a dedicated server. False by default.</value>
+    <value>Не документировано. Вероятно, это опция клиента игры «Многопользовательская игра: Да/Нет», отображаемая при создании мира, поэтому на выделенный сервер она не влияет. По умолчанию выключено (False).</value>
   </data>
   <data name="Cat_Region_Label" xml:space="preserve">
     <value>Region</value>
   </data>
   <data name="Cat_Region_Desc" xml:space="preserve">
-    <value>Undocumented. A region code of some kind, but the expected format (NA, US, a number?) and its purpose (matchmaking, server browser, or neither) are both unknown. Blank by default.</value>
+    <value>Не документировано. Некий код региона, но ожидаемый формат (NA, US, число?) и назначение (подбор игроков, список серверов или ни то, ни другое) неизвестны. По умолчанию пусто.</value>
   </data>
   <data name="Cat_CrossplayPlatforms_Label" xml:space="preserve">
     <value>Crossplay platforms</value>
   </data>
   <data name="Cat_CrossplayPlatforms_Desc" xml:space="preserve">
-    <value>Allowed platforms to connect to the server, as a tuple. Default: (Steam,Xbox,PS5,Mac).</value>
+    <value>Платформы, которым разрешено подключаться к серверу, в виде кортежа. По умолчанию: (Steam,Xbox,PS5,Mac).</value>
   </data>
   <data name="Cat_PublicIP_Label" xml:space="preserve">
     <value>Public IP</value>
   </data>
   <data name="Cat_PublicIP_Desc" xml:space="preserve">
-    <value>Community server: explicitly specify the external public IP. Blank = auto-detect.</value>
+    <value>Для серверов сообщества: явно указать внешний публичный IP-адрес. Пусто = определить автоматически.</value>
   </data>
   <data name="Cat_PublicPort_Label" xml:space="preserve">
     <value>Public port</value>
   </data>
   <data name="Cat_PublicPort_Desc" xml:space="preserve">
-    <value>Community server: explicitly specify the external public port. Does not change the server's listening port.</value>
+    <value>Для серверов сообщества: явно указать внешний публичный порт. Не изменяет порт прослушивания сервера.</value>
   </data>
   <data name="Cat_bEnableBuildingPlayerUIdDisplay_Label" xml:space="preserve">
     <value>Show builder ID on structures</value>
   </data>
   <data name="Cat_bEnableBuildingPlayerUIdDisplay_Desc" xml:space="preserve">
-    <value>Whether to display the creator's player ID on structures.</value>
+    <value>Отображать ли ID игрока-создателя на постройках.</value>
   </data>
   <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Label" xml:space="preserve">
     <value>BuildingNameDisplayCacheTTLSeconds</value>
   </data>
   <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Desc" xml:space="preserve">
-    <value>Undocumented. Likely how long a building's cached display name (see 'Show builder ID on structures') is kept before refreshing (seconds).</value>
+    <value>Не документировано. Вероятно, время хранения кэшированного отображаемого имени постройки (см. «Показывать ID создателя на постройках») перед обновлением (в секундах).</value>
   </data>
   <data name="Cat_BaseCampMaxNum_Label" xml:space="preserve">
     <value>Max bases (world)</value>
   </data>
   <data name="Cat_BaseCampMaxNum_Desc" xml:space="preserve">
-    <value>Maximum total number of base camps on the map (all guild bases combined).</value>
+    <value>Максимальное общее количество баз на карте (суммарно по всем базам гильдий).</value>
   </data>
   <data name="Cat_BaseCampMaxNumInGuild_Label" xml:space="preserve">
     <value>Макс. кол-во баз на гильдию</value>
   </data>
   <data name="Cat_BaseCampMaxNumInGuild_Desc" xml:space="preserve">
-    <value>Maximum number of bases per guild. Default 4 (max 10). Increasing this raises processing load.</value>
+    <value>Максимальное количество баз на гильдию. По умолчанию 4 (максимум 10). Увеличение этого значения повышает нагрузку на обработку.</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Label" xml:space="preserve">
     <value>Макс. кол-во рабочих Палов на базе</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Desc" xml:space="preserve">
-    <value>Maximum number of Pals per base (max 50). Increasing this raises processing load.</value>
+    <value>Максимальное количество Палов на базе (максимум 50). Увеличение этого значения повышает нагрузку на обработку.</value>
   </data>
   <data name="Cat_MaxBuildingLimitNum_Label" xml:space="preserve">
     <value>Макс. кол-во построек на базу</value>
   </data>
   <data name="Cat_MaxBuildingLimitNum_Desc" xml:space="preserve">
-    <value>Per-player building count cap (0 = No Limit).</value>
+    <value>Ограничение количества построек на игрока (0 = без ограничений).</value>
   </data>
   <data name="Cat_DropItemMaxNum_Label" xml:space="preserve">
     <value>Макс. количество выпавших предметов в мире</value>
   </data>
   <data name="Cat_DropItemMaxNum_Desc" xml:space="preserve">
-    <value>Maximum number of items lying dropped in the world before they start to despawn.</value>
+    <value>Максимальное количество предметов, лежащих в мире, прежде чем они начнут исчезать.</value>
   </data>
   <data name="Cat_PhysicsActiveDropItemMaxNum_Label" xml:space="preserve">
     <value>Макс. количество выпавших предметов в мире.</value>
   </data>
   <data name="Cat_PhysicsActiveDropItemMaxNum_Desc" xml:space="preserve">
-    <value>Maximum number of dropped items that can use physics behavior. -1 = No Limit. Increasing this can affect processing load.</value>
+    <value>Максимальное количество выброшенных предметов, которые могут использовать физическое поведение. -1 = без ограничений. Увеличение этого значения может повлиять на нагрузку на обработку.</value>
   </data>
   <data name="Cat_DropItemMaxNum_UNKO_Label" xml:space="preserve">
     <value>DropItemMaxNum_UNKO</value>
   </data>
   <data name="Cat_DropItemMaxNum_UNKO_Desc" xml:space="preserve">
-    <value>Undocumented. Appears unused, likely deadweight or an unimplemented feature.</value>
+    <value>Не документировано. Судя по всему, не используется, вероятно, это балласт или нереализованная функция.</value>
   </data>
   <data name="Cat_ServerReplicatePawnCullDistance_Label" xml:space="preserve">
     <value>Pal sync distance</value>
   </data>
   <data name="Cat_ServerReplicatePawnCullDistance_Desc" xml:space="preserve">
-    <value>Pal sync distance from players (cm). Minimum 5000, maximum 15000.</value>
+    <value>Дистанция синхронизации Палов от игроков (в см). Минимум 5000, максимум 15000.</value>
   </data>
   <data name="Cat_ItemContainerForceMarkDirtyInterval_Label" xml:space="preserve">
     <value>Container re-sync interval</value>
   </data>
   <data name="Cat_ItemContainerForceMarkDirtyInterval_Desc" xml:space="preserve">
-    <value>How often to force a re-sync while a container UI is open (seconds).</value>
+    <value>Как часто принудительно выполнять повторную синхронизацию, пока открыт интерфейс контейнера (в секундах).</value>
   </data>
   <data name="Cat_MaxGuildsPerFrame_Label" xml:space="preserve">
     <value>MaxGuildsPerFrame</value>
   </data>
   <data name="Cat_MaxGuildsPerFrame_Desc" xml:space="preserve">
-    <value>Undocumented. Likely a per-frame cap on how many guilds the server processes each tick, a performance lever.</value>
+    <value>Не документировано. Вероятно, ограничивает количество гильдий, обрабатываемых сервером за один тик, что влияет на производительность.</value>
   </data>
   <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Label" xml:space="preserve">
     <value>PlayerDataPalStorageUpdateCheckTickInterval</value>
   </data>
   <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Desc" xml:space="preserve">
-    <value>Undocumented. Likely how often the server checks player Pal Box/storage data for changes to sync (seconds).</value>
+    <value>Не документировано. Вероятно, как часто сервер проверяет данные Пал-бокса/хранилища игрока на изменения для синхронизации (в секундах).</value>
   </data>
   <data name="Cat_Difficulty_Label" xml:space="preserve">
     <value>Сложность</value>
   </data>
   <data name="Cat_Difficulty_Desc" xml:space="preserve">
-    <value>Client / single-player difficulty preset. It has no effect on a dedicated server, so leave it at None and use the individual settings below (or the Difficulty preset buttons at the top) to set server difficulty.</value>
+    <value>Пресет сложности клиента/одиночной игры. На выделенный сервер он не влияет, поэтому оставьте значение «Нет» и настраивайте сложность сервера через отдельные параметры ниже (или кнопки пресетов сложности вверху).</value>
   </data>
   <data name="Cat_bHardcore_Label" xml:space="preserve">
     <value>Хардкорный режим: потеря прогресса при смерти игрока.</value>
   </data>
   <data name="Cat_bHardcore_Desc" xml:space="preserve">
-    <value>Enable Hardcore. You will not be able to respawn on death.</value>
+    <value>Включить хардкор-режим. После смерти возродиться будет невозможно.</value>
   </data>
   <data name="Cat_bCharacterRecreateInHardcore_Label" xml:space="preserve">
     <value>Recreate character (Hardcore)</value>
   </data>
   <data name="Cat_bCharacterRecreateInHardcore_Desc" xml:space="preserve">
-    <value>Whether you may recreate your character upon death in Hardcore mode.</value>
+    <value>Разрешено ли пересоздавать персонажа после смерти в хардкор-режиме.</value>
   </data>
   <data name="Cat_bIsPvP_Label" xml:space="preserve">
     <value>PvP</value>
   </data>
   <data name="Cat_bIsPvP_Desc" xml:space="preserve">
-    <value>Enable PvP. Only takes effect with Player-vs-player damage and Base defense vs. other guilds also on.</value>
+    <value>Включить PvP. Действует только вместе с включёнными опциями «Урон между игроками» и «Защита базы от других гильдий».</value>
   </data>
   <data name="Cat_bEnablePlayerToPlayerDamage_Label" xml:space="preserve">
     <value>Player-vs-player damage</value>
   </data>
   <data name="Cat_bEnablePlayerToPlayerDamage_Desc" xml:space="preserve">
-    <value>Let players harm each other. One of the three settings that together enable PvP.</value>
+    <value>Разрешить игрокам наносить урон друг другу. Одна из трёх настроек, которые вместе включают PvP.</value>
   </data>
   <data name="Cat_bEnableFriendlyFire_Label" xml:space="preserve">
     <value>Friendly fire</value>
   </data>
   <data name="Cat_bEnableFriendlyFire_Desc" xml:space="preserve">
-    <value>Undocumented. Community says it lets players and their Pals damage members of their own guild.</value>
+    <value>Не документировано. По данным сообщества, позволяет игрокам и их Палам наносить урон членам собственной гильдии.</value>
   </data>
   <data name="Cat_bCanPickupOtherGuildDeathPenaltyDrop_Label" xml:space="preserve">
     <value>Loot other guilds' drops</value>
   </data>
   <data name="Cat_bCanPickupOtherGuildDeathPenaltyDrop_Desc" xml:space="preserve">
-    <value>Allow players to pick up the Pals and items dropped by other guilds' players on death.</value>
+    <value>Разрешить игрокам подбирать Палов и предметы, оставленные игроками других гильдий после смерти.</value>
   </data>
   <data name="Cat_bEnableDefenseOtherGuildPlayer_Label" xml:space="preserve">
     <value>Base defense vs. other guilds</value>
   </data>
   <data name="Cat_bEnableDefenseOtherGuildPlayer_Desc" xml:space="preserve">
-    <value>Base Pals engage hostile players who trespass into your base. One of the three settings that enable PvP.</value>
+    <value>Палы на базе атакуют враждебных игроков, вторгшихся на вашу базу. Одна из трёх настроек, включающих PvP.</value>
   </data>
   <data name="Cat_bEnableFastTravel_Label" xml:space="preserve">
     <value>Быстрое перемещение</value>
   </data>
   <data name="Cat_bEnableFastTravel_Desc" xml:space="preserve">
-    <value>Enable fast travel.</value>
+    <value>Включить быстрое перемещение.</value>
   </data>
   <data name="Cat_bEnableFastTravelOnlyBaseCamp_Label" xml:space="preserve">
     <value>Ограничить быстрое перемещение только между базами?</value>
   </data>
   <data name="Cat_bEnableFastTravelOnlyBaseCamp_Desc" xml:space="preserve">
-    <value>Restrict fast travel to between bases only.</value>
+    <value>Ограничить быстрое перемещение только между базами.</value>
   </data>
   <data name="Cat_bEnableInvaderEnemy_Label" xml:space="preserve">
     <value>Включить события нападений</value>
   </data>
   <data name="Cat_bEnableInvaderEnemy_Desc" xml:space="preserve">
-    <value>Enable Invaders (raid events).</value>
+    <value>Включить захватчиков (события набегов).</value>
   </data>
   <data name="Cat_EnablePredatorBossPal_Label" xml:space="preserve">
     <value>Появление Пала-хищника</value>
   </data>
   <data name="Cat_EnablePredatorBossPal_Desc" xml:space="preserve">
-    <value>Allows Predator Pals to spawn in the world.</value>
+    <value>Разрешить появление в мире Палов-хищников.</value>
   </data>
   <data name="Cat_bBuildAreaLimit_Label" xml:space="preserve">
     <value>Build area limit</value>
   </data>
   <data name="Cat_bBuildAreaLimit_Desc" xml:space="preserve">
-    <value>Prevent building near structures such as fast-travel points.</value>
+    <value>Запретить строительство рядом с такими объектами, как точки быстрого перемещения.</value>
   </data>
   <data name="Cat_bInvisibleOtherGuildBaseCampAreaFX_Label" xml:space="preserve">
     <value>Show base area boundaries</value>
   </data>
   <data name="Cat_bInvisibleOtherGuildBaseCampAreaFX_Desc" xml:space="preserve">
-    <value>Show base area boundaries.</value>
+    <value>Показывать границы территории базы.</value>
   </data>
   <data name="Cat_bShowPlayerList_Label" xml:space="preserve">
     <value>Player list in ESC menu</value>
   </data>
   <data name="Cat_bShowPlayerList_Desc" xml:space="preserve">
-    <value>Enable the player list on the ESC menu.</value>
+    <value>Включить список игроков в меню ESC.</value>
   </data>
   <data name="Cat_bExistPlayerAfterLogout_Label" xml:space="preserve">
     <value>Body stays after logout</value>
   </data>
   <data name="Cat_bExistPlayerAfterLogout_Desc" xml:space="preserve">
-    <value>Whether players enter a sleeping state at their current location when logging out.</value>
+    <value>Переходит ли игрок в состояние сна на текущем месте при выходе из игры.</value>
   </data>
   <data name="Cat_bEnableNonLoginPenalty_Label" xml:space="preserve">
     <value>bEnableNonLoginPenalty</value>
   </data>
   <data name="Cat_bEnableNonLoginPenalty_Desc" xml:space="preserve">
-    <value>Undocumented. May relate to whether your Pals get debuffs when you haven't logged in. Untested.</value>
+    <value>Не документировано. Возможно, связано с тем, получают ли ваши Палы дебафы, пока вы не заходите в игру. Не проверено.</value>
   </data>
   <data name="Cat_bIsStartLocationSelectByMap_Label" xml:space="preserve">
     <value>Choose starting location</value>
   </data>
   <data name="Cat_bIsStartLocationSelectByMap_Desc" xml:space="preserve">
-    <value>Whether to allow players to choose their starting location.</value>
+    <value>Разрешить ли игрокам выбирать начальное место появления.</value>
   </data>
   <data name="Cat_bActiveUNKO_Label" xml:space="preserve">
     <value>bActiveUNKO</value>
   </data>
   <data name="Cat_bActiveUNKO_Desc" xml:space="preserve">
-    <value>Undocumented. Appears unused, likely deadweight or an unimplemented feature.</value>
+    <value>Не документировано. Судя по всему, не используется, вероятно, это балласт или нереализованная функция.</value>
   </data>
   <data name="Cat_bEnableAimAssistPad_Label" xml:space="preserve">
     <value>Aim assist (controller)</value>
   </data>
   <data name="Cat_bEnableAimAssistPad_Desc" xml:space="preserve">
-    <value>Aim assist for controllers. Set to False to disable it.</value>
+    <value>Автоприцеливание для геймпадов. Установите значение False, чтобы отключить.</value>
   </data>
   <data name="Cat_bEnableAimAssistKeyboard_Label" xml:space="preserve">
     <value>Aim assist (keyboard)</value>
   </data>
   <data name="Cat_bEnableAimAssistKeyboard_Desc" xml:space="preserve">
-    <value>Enable aim assist for mouse &amp; keyboard.</value>
+    <value>Включить автоприцеливание для мыши и клавиатуры.</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Attack_Label" xml:space="preserve">
     <value>Allow stat points: Attack</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Attack_Desc" xml:space="preserve">
-    <value>Allow allocating stat points to Attack.</value>
+    <value>Разрешить распределение очков характеристик в Атаку.</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Health_Label" xml:space="preserve">
     <value>Allow stat points: HP</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Health_Desc" xml:space="preserve">
-    <value>Allow allocating stat points to HP.</value>
+    <value>Разрешить распределение очков характеристик в HP.</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Stamina_Label" xml:space="preserve">
     <value>Allow stat points: Stamina</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Stamina_Desc" xml:space="preserve">
-    <value>Allow allocating stat points to Stamina.</value>
+    <value>Разрешить распределение очков характеристик в Выносливость.</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Weight_Label" xml:space="preserve">
     <value>Allow stat points: Carry Weight</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Weight_Desc" xml:space="preserve">
-    <value>Allow allocating stat points to Carry Weight.</value>
+    <value>Разрешить распределение очков характеристик в Переносимый вес.</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_WorkSpeed_Label" xml:space="preserve">
     <value>Allow stat points: Work Speed</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_WorkSpeed_Desc" xml:space="preserve">
-    <value>Allow allocating stat points to Work Speed.</value>
+    <value>Разрешить распределение очков характеристик в Скорость работы.</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxExport_Label" xml:space="preserve">
     <value>Allow Pal Genetic Data to be Saved in the Global Palbox</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxExport_Desc" xml:space="preserve">
-    <value>Allow saving to the Global Palbox.</value>
+    <value>Разрешить сохранение в Глобальный Пал-бокс.</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxImport_Label" xml:space="preserve">
     <value>Allow Pals to be Reconstructed from the Global Palbox</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxImport_Desc" xml:space="preserve">
-    <value>Allow loading from the Global Palbox.</value>
+    <value>Разрешить загрузку из Глобального Пал-бокса.</value>
   </data>
   <data name="Cat_bAutoResetGuildNoOnlinePlayers_Label" xml:space="preserve">
     <value>Автоматическое удаление построек гильдии при длительном отсутствии входа.</value>
   </data>
   <data name="Cat_bAutoResetGuildNoOnlinePlayers_Desc" xml:space="preserve">
-    <value>If no guild members log in, automatically delete structures and base Pals.</value>
+    <value>Если ни один участник гильдии не заходит в игру, автоматически удалять постройки и Палов на базе.</value>
   </data>
   <data name="Cat_AutoResetGuildTimeNoOnlinePlayers_Label" xml:space="preserve">
     <value>Время до автоудаления построек неактивных гильдий (ч.)</value>
   </data>
   <data name="Cat_AutoResetGuildTimeNoOnlinePlayers_Desc" xml:space="preserve">
-    <value>Offline duration before an inactive guild is auto-reset (hours). Ignored unless 'Auto-reset inactive guilds' is on.</value>
+    <value>Время отсутствия в сети, после которого неактивная гильдия автоматически сбрасывается (в часах). Игнорируется, если опция «Автосброс неактивных гильдий» выключена.</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Label" xml:space="preserve">
     <value>Show base PvP items on map</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Desc" xml:space="preserve">
-    <value>Whether to show, on the map, the number of PvP-exclusive items in each base.</value>
+    <value>Показывать ли на карте количество эксклюзивных PvP-предметов на каждой базе.</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_Player_Label" xml:space="preserve">
     <value>Show player PvP items on map</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_Player_Desc" xml:space="preserve">
-    <value>Whether to show player locations and the number of PvP-exclusive items on the map.</value>
+    <value>Показывать ли на карте местоположения игроков и количество эксклюзивных PvP-предметов.</value>
   </data>
   <data name="Cat_bIsRandomizerPalLevelRandom_Label" xml:space="preserve">
     <value>В случайном режиме уровень диких Палов станет полностью случайным.</value>
   </data>
   <data name="Cat_bIsRandomizerPalLevelRandom_Desc" xml:space="preserve">
-    <value>If on, wild Pal levels are fully random. If off, levels are randomized within each area's intended range.</value>
+    <value>Если включено, уровни диких Палов полностью случайны. Если выключено, уровни рандомизируются в пределах диапазона, предусмотренного для каждой зоны.</value>
   </data>
   <data name="Cat_RandomizerType_Label" xml:space="preserve">
     <value>Рандомное появление Палов</value>
   </data>
   <data name="Cat_RandomizerType_Desc" xml:space="preserve">
-    <value>Pal spawn randomization. None = no randomization. Region = randomize per region. All = fully randomized.</value>
+    <value>Рандомизация появления Палов. Нет = без рандомизации. Регион = рандомизация по регионам. Все = полная рандомизация.</value>
   </data>
   <data name="Cat_RandomizerSeed_Label" xml:space="preserve">
     <value>Сид</value>
   </data>
   <data name="Cat_RandomizerSeed_Desc" xml:space="preserve">
-    <value>Seed value used when Pal spawn randomization is enabled.</value>
+    <value>Значение seed (зерна), используемое при включённой рандомизации появления Палов.</value>
   </data>
   <data name="Cat_bEnableVoiceChat_Label" xml:space="preserve">
     <value>Voice chat</value>
   </data>
   <data name="Cat_bEnableVoiceChat_Desc" xml:space="preserve">
-    <value>Enable in-game voice chat.</value>
+    <value>Включить внутриигровой голосовой чат.</value>
   </data>
   <data name="Cat_VoiceChatMaxVolumeDistance_Label" xml:space="preserve">
     <value>Voice chat full-volume distance</value>
   </data>
   <data name="Cat_VoiceChatMaxVolumeDistance_Desc" xml:space="preserve">
-    <value>Distance at which voice chat volume does not attenuate.</value>
+    <value>Дистанция, в пределах которой громкость голосового чата не ослабевает.</value>
   </data>
   <data name="Cat_VoiceChatZeroVolumeDistance_Label" xml:space="preserve">
     <value>Voice chat silence distance</value>
   </data>
   <data name="Cat_VoiceChatZeroVolumeDistance_Desc" xml:space="preserve">
-    <value>Distance at which voice chat volume becomes zero.</value>
+    <value>Дистанция, на которой громкость голосового чата становится нулевой.</value>
   </data>
   <data name="Cat_DayTimeSpeedRate_Label" xml:space="preserve">
     <value>Скорость времени (день)</value>
   </data>
   <data name="Cat_DayTimeSpeedRate_Desc" xml:space="preserve">
-    <value>Daytime progression speed.</value>
+    <value>Скорость течения времени днём.</value>
   </data>
   <data name="Cat_NightTimeSpeedRate_Label" xml:space="preserve">
     <value>Скорость времени (ночь)</value>
   </data>
   <data name="Cat_NightTimeSpeedRate_Desc" xml:space="preserve">
-    <value>Nighttime progression speed.</value>
+    <value>Скорость течения времени ночью.</value>
   </data>
   <data name="Cat_ExpRate_Label" xml:space="preserve">
     <value>Коэффициент получаемого опыта</value>
   </data>
   <data name="Cat_ExpRate_Desc" xml:space="preserve">
-    <value>EXP gain multiplier.</value>
+    <value>Множитель получаемого опыта (EXP).</value>
   </data>
   <data name="Cat_PalCaptureRate_Label" xml:space="preserve">
     <value>Коэффициент шанса поимки</value>
   </data>
   <data name="Cat_PalCaptureRate_Desc" xml:space="preserve">
-    <value>Capture rate multiplier.</value>
+    <value>Множитель шанса поимки.</value>
   </data>
   <data name="Cat_PalSpawnNumRate_Label" xml:space="preserve">
     <value>Коэффициент появления Палов ※Возрастает нагрузка на систему.</value>
   </data>
   <data name="Cat_PalSpawnNumRate_Desc" xml:space="preserve">
-    <value>Pal spawn rate. Impacts performance.</value>
+    <value>Частота появления Палов. Влияет на производительность.</value>
   </data>
   <data name="Cat_PalEggDefaultHatchingTime_Label" xml:space="preserve">
     <value>Время инкубации огромного яйца (h) *Для других яиц время инкубации также отличается.</value>
   </data>
   <data name="Cat_PalEggDefaultHatchingTime_Desc" xml:space="preserve">
-    <value>Time to hatch a Massive (Huge) Egg (hours). Other eggs also require time to incubate.</value>
+    <value>Время вылупления из огромного яйца (в часах). Другим яйцам также требуется время на инкубацию.</value>
   </data>
   <data name="Cat_WorkSpeedRate_Label" xml:space="preserve">
     <value>Коэффициент скорости работы</value>
   </data>
   <data name="Cat_WorkSpeedRate_Desc" xml:space="preserve">
-    <value>How fast both players and Pals complete work. Multiplier: 2.0 = work completed twice as fast.</value>
+    <value>Насколько быстро игроки и Палы выполняют работу. Множитель: 2.0 = работа выполняется вдвое быстрее.</value>
   </data>
   <data name="Cat_MonsterFarmActionSpeedRate_Label" xml:space="preserve">
     <value>Grazing Item Production Rate Multiplier</value>
   </data>
   <data name="Cat_MonsterFarmActionSpeedRate_Desc" xml:space="preserve">
-    <value>Item production speed multiplier from grazing.</value>
+    <value>Множитель скорости производства предметов на ранчо.</value>
   </data>
   <data name="Cat_PalDamageRateAttack_Label" xml:space="preserve">
     <value>Коэффициент наносимого всеми Палами урона</value>
   </data>
   <data name="Cat_PalDamageRateAttack_Desc" xml:space="preserve">
-    <value>Damage dealt by Pals multiplier.</value>
+    <value>Множитель урона, наносимого Палами.</value>
   </data>
   <data name="Cat_PalDamageRateDefense_Label" xml:space="preserve">
     <value>Коэффициент получаемого всеми Палами урона</value>
   </data>
   <data name="Cat_PalDamageRateDefense_Desc" xml:space="preserve">
-    <value>Damage taken by Pals multiplier.</value>
+    <value>Множитель урона, получаемого Палами.</value>
   </data>
   <data name="Cat_PlayerDamageRateAttack_Label" xml:space="preserve">
     <value>Коэффициент наносимого игроком урона</value>
   </data>
   <data name="Cat_PlayerDamageRateAttack_Desc" xml:space="preserve">
-    <value>Damage dealt by players multiplier.</value>
+    <value>Множитель урона, наносимого игроками.</value>
   </data>
   <data name="Cat_PlayerDamageRateDefense_Label" xml:space="preserve">
     <value>Коэффициент получаемого игроком урона</value>
   </data>
   <data name="Cat_PlayerDamageRateDefense_Desc" xml:space="preserve">
-    <value>Damage taken by players multiplier.</value>
+    <value>Множитель урона, получаемого игроками.</value>
   </data>
   <data name="Cat_PlayerStomachDecreaceRate_Label" xml:space="preserve">
     <value>Коэффициент снижения уровня сытости игрока</value>
   </data>
   <data name="Cat_PlayerStomachDecreaceRate_Desc" xml:space="preserve">
-    <value>Player hunger depletion rate multiplier.</value>
+    <value>Множитель скорости истощения голода игрока.</value>
   </data>
   <data name="Cat_PlayerStaminaDecreaceRate_Label" xml:space="preserve">
     <value>Коэффициент расхода выносливости игрока</value>
   </data>
   <data name="Cat_PlayerStaminaDecreaceRate_Desc" xml:space="preserve">
-    <value>Player stamina depletion rate multiplier.</value>
+    <value>Множитель скорости расхода выносливости игрока.</value>
   </data>
   <data name="Cat_PlayerAutoHPRegeneRate_Label" xml:space="preserve">
     <value>Коэффициент автовосстановления HP игрока</value>
   </data>
   <data name="Cat_PlayerAutoHPRegeneRate_Desc" xml:space="preserve">
-    <value>Player natural HP regen multiplier.</value>
+    <value>Множитель естественной регенерации HP игрока.</value>
   </data>
   <data name="Cat_PlayerAutoHpRegeneRateInSleep_Label" xml:space="preserve">
     <value>Коэффициент восстановления HP игрока во сне</value>
   </data>
   <data name="Cat_PlayerAutoHpRegeneRateInSleep_Desc" xml:space="preserve">
-    <value>Player HP regen while sleeping multiplier.</value>
+    <value>Множитель регенерации HP игрока во время сна.</value>
   </data>
   <data name="Cat_PalStomachDecreaceRate_Label" xml:space="preserve">
     <value>Коэффициент снижения уровня сытости Палов</value>
   </data>
   <data name="Cat_PalStomachDecreaceRate_Desc" xml:space="preserve">
-    <value>Pal hunger depletion rate multiplier.</value>
+    <value>Множитель скорости истощения голода Пала.</value>
   </data>
   <data name="Cat_PalStaminaDecreaceRate_Label" xml:space="preserve">
     <value>Коэффициент расхода выносливости Палов</value>
   </data>
   <data name="Cat_PalStaminaDecreaceRate_Desc" xml:space="preserve">
-    <value>Pal stamina depletion rate multiplier.</value>
+    <value>Множитель скорости расхода выносливости Пала.</value>
   </data>
   <data name="Cat_PalAutoHPRegeneRate_Label" xml:space="preserve">
     <value>Коэффициент естественного восстановления HP Палов</value>
   </data>
   <data name="Cat_PalAutoHPRegeneRate_Desc" xml:space="preserve">
-    <value>Pal natural HP regen multiplier.</value>
+    <value>Множитель естественной регенерации HP Пала.</value>
   </data>
   <data name="Cat_PalAutoHpRegeneRateInSleep_Label" xml:space="preserve">
     <value>Коэффициент восстановления HP Палов во сне (в Палбоксе)</value>
   </data>
   <data name="Cat_PalAutoHpRegeneRateInSleep_Desc" xml:space="preserve">
-    <value>Pal HP regen while sleeping in the Palbox multiplier.</value>
+    <value>Множитель регенерации HP Пала во время сна в Пал-боксе.</value>
   </data>
   <data name="Cat_CollectionDropRate_Label" xml:space="preserve">
     <value>Коэффициент числа получаемых предметов при сборе</value>
   </data>
   <data name="Cat_CollectionDropRate_Desc" xml:space="preserve">
-    <value>Gatherable items multiplier.</value>
+    <value>Множитель добываемых предметов.</value>
   </data>
   <data name="Cat_CollectionObjectHpRate_Label" xml:space="preserve">
     <value>Коэффициент HP объектов сбора</value>
   </data>
   <data name="Cat_CollectionObjectHpRate_Desc" xml:space="preserve">
-    <value>Gatherable objects health multiplier.</value>
+    <value>Множитель прочности (HP) собираемых объектов.</value>
   </data>
   <data name="Cat_CollectionObjectRespawnSpeedRate_Label" xml:space="preserve">
     <value>Время восстановления объектов сбора</value>
   </data>
   <data name="Cat_CollectionObjectRespawnSpeedRate_Desc" xml:space="preserve">
-    <value>Gatherable objects respawn interval multiplier.</value>
+    <value>Множитель интервала восстановления собираемых объектов.</value>
   </data>
   <data name="Cat_EnemyDropItemRate_Label" xml:space="preserve">
     <value>Коэффициент количества выпадающих предметов</value>
   </data>
   <data name="Cat_EnemyDropItemRate_Desc" xml:space="preserve">
-    <value>Dropped item quantity multiplier.</value>
+    <value>Множитель количества выпадающих предметов.</value>
   </data>
   <data name="Cat_DropItemAliveMaxHours_Label" xml:space="preserve">
     <value>Dropped item lifetime (hours)</value>
   </data>
   <data name="Cat_DropItemAliveMaxHours_Desc" xml:space="preserve">
-    <value>How long dropped items remain in the world before they despawn (hours). Lowering it helps server cleanup / performance.</value>
+    <value>Как долго выброшенные предметы остаются в мире, прежде чем исчезнуть (в часах). Уменьшение значения помогает очистке и производительности сервера.</value>
   </data>
   <data name="Cat_ItemWeightRate_Label" xml:space="preserve">
     <value>Коэффициент веса предметов</value>
   </data>
   <data name="Cat_ItemWeightRate_Desc" xml:space="preserve">
-    <value>Item weight multiplier.</value>
+    <value>Множитель веса предметов.</value>
   </data>
   <data name="Cat_ItemCorruptionMultiplier_Label" xml:space="preserve">
     <value>Item Decay Rate Multiplier</value>
   </data>
   <data name="Cat_ItemCorruptionMultiplier_Desc" xml:space="preserve">
-    <value>Item corruption (decay) speed multiplier.</value>
+    <value>Множитель скорости порчи (износа) предметов.</value>
   </data>
   <data name="Cat_EquipmentDurabilityDamageRate_Label" xml:space="preserve">
     <value>Equipment Durability Loss Multiplier</value>
   </data>
   <data name="Cat_EquipmentDurabilityDamageRate_Desc" xml:space="preserve">
-    <value>Equipment durability loss multiplier.</value>
+    <value>Множитель потери прочности снаряжения.</value>
   </data>
   <data name="Cat_BuildObjectHpRate_Label" xml:space="preserve">
     <value>Building HP</value>
   </data>
   <data name="Cat_BuildObjectHpRate_Desc" xml:space="preserve">
-    <value>Multiplier for how much health buildings have. 2.0 = double building HP.</value>
+    <value>Множитель прочности (HP) построек. 2.0 = вдвое больше HP построек.</value>
   </data>
   <data name="Cat_BuildObjectDamageRate_Label" xml:space="preserve">
     <value>Коэффициент наносимого постройкам урона</value>
   </data>
   <data name="Cat_BuildObjectDamageRate_Desc" xml:space="preserve">
-    <value>Damage multiplier to buildings.</value>
+    <value>Множитель урона по постройкам.</value>
   </data>
   <data name="Cat_BuildObjectDeteriorationDamageRate_Label" xml:space="preserve">
     <value>Коэффициент износа построек</value>
   </data>
   <data name="Cat_BuildObjectDeteriorationDamageRate_Desc" xml:space="preserve">
-    <value>Building decay speed multiplier.</value>
+    <value>Множитель скорости разрушения (износа) построек.</value>
   </data>
   <data name="Cat_DeathPenalty_Label" xml:space="preserve">
     <value>Пенальти за смерть</value>
   </data>
   <data name="Cat_DeathPenalty_Desc" xml:space="preserve">
-    <value>What you drop on death. None = nothing. Item = all items except equipment. ItemAndEquipment = all items. All = all items and all Pals in your party.</value>
+    <value>Что вы теряете при смерти. Нет = ничего. Предметы = все предметы, кроме снаряжения. Предметы и снаряжение = все предметы. Всё = все предметы и все Палы в отряде.</value>
   </data>
   <data name="Cat_bPalLost_Label" xml:space="preserve">
     <value>Хардкорный режим: Палы будут безвозвратно потеряны после смерти.</value>
   </data>
   <data name="Cat_bPalLost_Desc" xml:space="preserve">
-    <value>Permanently lose Pals on death.</value>
+    <value>Безвозвратно терять Палов при смерти.</value>
   </data>
   <data name="Cat_BlockRespawnTime_Label" xml:space="preserve">
     <value>Respawn cooldown (seconds)</value>
   </data>
   <data name="Cat_BlockRespawnTime_Desc" xml:space="preserve">
-    <value>Cooldown before you can respawn after death (seconds).</value>
+    <value>Время ожидания перед возрождением после смерти (в секундах).</value>
   </data>
   <data name="Cat_RespawnPenaltyDurationThreshold_Label" xml:space="preserve">
     <value>Respawn penalty threshold</value>
   </data>
   <data name="Cat_RespawnPenaltyDurationThreshold_Desc" xml:space="preserve">
-    <value>Survival-time threshold (seconds). Dying again before surviving this long applies the respawn cooldown multiplier below.</value>
+    <value>Порог времени выживания (в секундах). Если вы снова умрёте, не прожив столько времени, применяется множитель времени ожидания возрождения, указанный ниже.</value>
   </data>
   <data name="Cat_RespawnPenaltyTimeScale_Label" xml:space="preserve">
     <value>Respawn penalty multiplier</value>
   </data>
   <data name="Cat_RespawnPenaltyTimeScale_Desc" xml:space="preserve">
-    <value>Multiplier applied to the respawn cooldown.</value>
+    <value>Множитель, применяемый к времени ожидания возрождения.</value>
   </data>
   <data name="Cat_GuildPlayerMaxNum_Label" xml:space="preserve">
     <value>Макс. число участников гильдии</value>
   </data>
   <data name="Cat_GuildPlayerMaxNum_Desc" xml:space="preserve">
-    <value>Maximum number of players per guild.</value>
+    <value>Максимальное количество игроков в гильдии.</value>
   </data>
   <data name="Cat_GuildRejoinCooldownMinutes_Label" xml:space="preserve">
     <value>Guild rejoin cooldown (min)</value>
   </data>
   <data name="Cat_GuildRejoinCooldownMinutes_Desc" xml:space="preserve">
-    <value>Cooldown before rejoining a guild (minutes).</value>
+    <value>Время ожидания перед повторным вступлением в гильдию (в минутах).</value>
   </data>
   <data name="Cat_DenyTechnologyList_Label" xml:space="preserve">
     <value>Disabled technologies</value>
   </data>
   <data name="Cat_DenyTechnologyList_Desc" xml:space="preserve">
-    <value>Disable specific technologies. Specify Technology IDs, example: ("PALBOX", "RepairBench"). Blank = none.</value>
+    <value>Отключить определённые технологии. Укажите ID технологий, например: ("PALBOX", "RepairBench"). Пусто = ни одной.</value>
   </data>
   <data name="Cat_bAdditionalDropItemWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
     <value>PvP kill: drop item</value>
   </data>
   <data name="Cat_bAdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
-    <value>Whether to drop a special item when a player is killed while PvP is enabled.</value>
+    <value>Выпадает ли особый предмет при убийстве игрока в режиме PvP.</value>
   </data>
   <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
     <value>PvP kill: item ID</value>
   </data>
   <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
-    <value>The ID of the item to drop on a PvP kill (used when 'PvP kill: drop item' is on).</value>
+    <value>ID предмета, выпадающего при убийстве в PvP (используется, если включена опция «PvP-убийство: выпадение предмета»).</value>
   </data>
   <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
     <value>PvP kill: item count</value>
   </data>
   <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
-    <value>The quantity of the item to drop on a PvP kill (used when 'PvP kill: drop item' is on).</value>
+    <value>Количество предмета, выпадающего при убийстве в PvP (используется, если включена опция «PvP-убийство: выпадение предмета»).</value>
   </data>
   <data name="Cat_SupplyDropSpan_Label" xml:space="preserve">
     <value>Интервал падения метеоритов и сброса ресурсов (мин.)</value>
   </data>
   <data name="Cat_SupplyDropSpan_Desc" xml:space="preserve">
-    <value>Meteorite / supply drop interval (minutes).</value>
+    <value>Интервал падения метеоритов и грузовых сбросов (в минутах).</value>
   </data>
   <data name="Cat_AutoTransferMasterCheckIntervalSeconds_Label" xml:space="preserve">
     <value>AutoTransferMasterCheckIntervalSeconds</value>
   </data>
   <data name="Cat_AutoTransferMasterCheckIntervalSeconds_Desc" xml:space="preserve">
-    <value>Undocumented. Likely how often the server checks whether guild/base ownership should auto-transfer from an inactive master (seconds).</value>
+    <value>Не документировано. Вероятно, как часто сервер проверяет, следует ли автоматически передать право владения гильдией/базой от неактивного владельца (в секундах).</value>
   </data>
   <data name="Cat_AutoTransferMasterThresholdDays_Label" xml:space="preserve">
     <value>AutoTransferMasterThresholdDays</value>
   </data>
   <data name="Cat_AutoTransferMasterThresholdDays_Desc" xml:space="preserve">
-    <value>Undocumented. Likely the days a guild/base master must be inactive before ownership auto-transfers.</value>
+    <value>Не документировано. Вероятно, количество дней неактивности владельца гильдии/базы, после которых право владения передаётся автоматически.</value>
   </data>
   <data name="Cat_LogFormatType_Opt_Text" xml:space="preserve">
     <value>Text</value>
@@ -2197,37 +2197,37 @@ Save these changes?</value>
     <value>Json</value>
   </data>
   <data name="Cat_Difficulty_Opt_None" xml:space="preserve">
-    <value>None</value>
+    <value>Нет</value>
   </data>
   <data name="Cat_Difficulty_Opt_Casual" xml:space="preserve">
-    <value>Casual</value>
+    <value>Лёгкий</value>
   </data>
   <data name="Cat_Difficulty_Opt_Normal" xml:space="preserve">
-    <value>Normal</value>
+    <value>Обычный</value>
   </data>
   <data name="Cat_Difficulty_Opt_Hard" xml:space="preserve">
-    <value>Hard</value>
+    <value>Сложный</value>
   </data>
   <data name="Cat_RandomizerType_Opt_None" xml:space="preserve">
-    <value>None</value>
+    <value>Нет</value>
   </data>
   <data name="Cat_RandomizerType_Opt_Region" xml:space="preserve">
-    <value>Region</value>
+    <value>Регион</value>
   </data>
   <data name="Cat_RandomizerType_Opt_All" xml:space="preserve">
-    <value>All</value>
+    <value>Все</value>
   </data>
   <data name="Cat_DeathPenalty_Opt_None" xml:space="preserve">
-    <value>None</value>
+    <value>Нет</value>
   </data>
   <data name="Cat_DeathPenalty_Opt_Item" xml:space="preserve">
-    <value>Item</value>
+    <value>Предметы</value>
   </data>
   <data name="Cat_DeathPenalty_Opt_ItemAndEquipment" xml:space="preserve">
-    <value>ItemAndEquipment</value>
+    <value>Предметы и снаряжение</value>
   </data>
   <data name="Cat_DeathPenalty_Opt_All" xml:space="preserve">
-    <value>All</value>
+    <value>Всё</value>
   </data>
   <data name="Settings_PresetCasual" xml:space="preserve">
     <value>Casual</value>

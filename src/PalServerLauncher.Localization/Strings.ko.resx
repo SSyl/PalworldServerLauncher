@@ -1480,715 +1480,715 @@ Save these changes?</value>
     <value>월드명</value>
   </data>
   <data name="Cat_ServerName_Desc" xml:space="preserve">
-    <value>Server name.</value>
+    <value>서버 이름입니다.</value>
   </data>
   <data name="Cat_ServerDescription_Label" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="Cat_ServerDescription_Desc" xml:space="preserve">
-    <value>Server description.</value>
+    <value>서버 설명입니다.</value>
   </data>
   <data name="Cat_ServerPassword_Label" xml:space="preserve">
     <value>Server password</value>
   </data>
   <data name="Cat_ServerPassword_Desc" xml:space="preserve">
-    <value>Password required to log in to the server. Blank = no password.</value>
+    <value>서버에 접속할 때 필요한 비밀번호입니다. 비워두면 비밀번호가 없습니다.</value>
   </data>
   <data name="Cat_AdminPassword_Label" xml:space="preserve">
     <value>Admin password</value>
   </data>
   <data name="Cat_AdminPassword_Desc" xml:space="preserve">
-    <value>Password used to obtain administrative privileges on the server. Required for the REST API and RCON.</value>
+    <value>서버 관리자 권한을 얻는 데 사용되는 비밀번호입니다. REST API와 RCON을 사용하려면 필요합니다.</value>
   </data>
   <data name="Cat_ServerPlayerMaxNum_Label" xml:space="preserve">
     <value>Max players</value>
   </data>
   <data name="Cat_ServerPlayerMaxNum_Desc" xml:space="preserve">
-    <value>Maximum number of players who can join the server. The -players launch argument overrides this if set.</value>
+    <value>서버에 접속할 수 있는 최대 플레이어 수입니다. -players 실행 인자가 설정되어 있으면 이 값을 덮어씁니다.</value>
   </data>
   <data name="Cat_CoopPlayerMaxNum_Label" xml:space="preserve">
     <value>CoopPlayerMaxNum</value>
   </data>
   <data name="Cat_CoopPlayerMaxNum_Desc" xml:space="preserve">
-    <value>Undocumented. Community guesses a cooperative-play party size, but this may be an internal value that has no effect on a dedicated server.</value>
+    <value>문서화되지 않음. 커뮤니티에서는 협동 플레이 파티 인원수로 추측하지만, 데디케이트 서버에는 영향을 주지 않는 내부 값일 수 있습니다.</value>
   </data>
   <data name="Cat_RESTAPIEnabled_Label" xml:space="preserve">
     <value>REST API enabled</value>
   </data>
   <data name="Cat_RESTAPIEnabled_Desc" xml:space="preserve">
-    <value>Enable the REST API. The launcher needs this for stats, graceful shutdown, and player logging.</value>
+    <value>REST API를 활성화합니다. 런처가 통계 조회, 정상 종료, 플레이어 로그 기록을 하려면 이 기능이 필요합니다.</value>
   </data>
   <data name="Cat_RESTAPIPort_Label" xml:space="preserve">
     <value>REST API port</value>
   </data>
   <data name="Cat_RESTAPIPort_Desc" xml:space="preserve">
-    <value>Listening port for the REST API.</value>
+    <value>REST API가 사용하는 수신 포트입니다.</value>
   </data>
   <data name="Cat_RCONEnabled_Label" xml:space="preserve">
     <value>RCON enabled</value>
   </data>
   <data name="Cat_RCONEnabled_Desc" xml:space="preserve">
-    <value>Enable RCON.</value>
+    <value>RCON을 활성화합니다.</value>
   </data>
   <data name="Cat_RCONPort_Label" xml:space="preserve">
     <value>RCON port</value>
   </data>
   <data name="Cat_RCONPort_Desc" xml:space="preserve">
-    <value>Port number used for RCON.</value>
+    <value>RCON에 사용되는 포트 번호입니다.</value>
   </data>
   <data name="Cat_bUseAuth_Label" xml:space="preserve">
     <value>bUseAuth</value>
   </data>
   <data name="Cat_bUseAuth_Desc" xml:space="preserve">
-    <value>Undocumented. Defaults to True.</value>
+    <value>문서화되지 않음. 기본값은 True입니다.</value>
   </data>
   <data name="Cat_BanListURL_Label" xml:space="preserve">
     <value>BanListURL</value>
   </data>
   <data name="Cat_BanListURL_Desc" xml:space="preserve">
-    <value>Undocumented. Likely the ban list the server checks against, but the exact format and behavior are unconfirmed.</value>
+    <value>문서화되지 않음. 서버가 대조하는 밴 목록으로 추정되지만, 정확한 형식과 동작 방식은 확인되지 않았습니다.</value>
   </data>
   <data name="Cat_bIsUseBackupSaveData_Label" xml:space="preserve">
     <value>Built-in save backups</value>
   </data>
   <data name="Cat_bIsUseBackupSaveData_Desc" xml:space="preserve">
-    <value>Enable Palworld's own world backups (separate from the launcher's). Enabling this increases disk load.</value>
+    <value>Palworld 자체의 월드 백업 기능을 활성화합니다(런처의 백업 기능과는 별개입니다). 활성화하면 디스크 부하가 늘어납니다.</value>
   </data>
   <data name="Cat_AutoSaveSpan_Label" xml:space="preserve">
     <value>자동 저장 간격</value>
   </data>
   <data name="Cat_AutoSaveSpan_Desc" xml:space="preserve">
-    <value>How often the world auto-saves (seconds).</value>
+    <value>월드가 자동 저장되는 주기입니다(초).</value>
   </data>
   <data name="Cat_bIsShowJoinLeftMessage_Label" xml:space="preserve">
     <value>Show join/leave messages</value>
   </data>
   <data name="Cat_bIsShowJoinLeftMessage_Desc" xml:space="preserve">
-    <value>On dedicated servers, show in-game messages when players join or leave.</value>
+    <value>데디케이트 서버에서 플레이어가 접속하거나 퇴장할 때 게임 내 메시지를 표시합니다.</value>
   </data>
   <data name="Cat_bAllowClientMod_Label" xml:space="preserve">
     <value>Allow client mods</value>
   </data>
   <data name="Cat_bAllowClientMod_Desc" xml:space="preserve">
-    <value>Allow players with mods enabled to join the server.</value>
+    <value>모드를 활성화한 플레이어가 서버에 접속할 수 있도록 허용합니다.</value>
   </data>
   <data name="Cat_ChatPostLimitPerMinute_Label" xml:space="preserve">
     <value>Chat rate limit</value>
   </data>
   <data name="Cat_ChatPostLimitPerMinute_Desc" xml:space="preserve">
-    <value>Maximum number of chat messages allowed per minute.</value>
+    <value>1분당 허용되는 최대 채팅 메시지 수입니다.</value>
   </data>
   <data name="Cat_LogFormatType_Label" xml:space="preserve">
     <value>Log format</value>
   </data>
   <data name="Cat_LogFormatType_Desc" xml:space="preserve">
-    <value>Server log file format.</value>
+    <value>서버 로그 파일 형식입니다.</value>
   </data>
   <data name="Cat_bIsMultiplay_Label" xml:space="preserve">
     <value>bIsMultiplay</value>
   </data>
   <data name="Cat_bIsMultiplay_Desc" xml:space="preserve">
-    <value>Undocumented. Likely the game client's 'Multiplayer: Yes/No' option shown when creating a world, so it has no effect on a dedicated server. False by default.</value>
+    <value>문서화되지 않음. 월드 생성 시 게임 클라이언트에 표시되는 '멀티플레이: 예/아니오' 옵션으로 추정되며, 데디케이트 서버에는 영향을 주지 않습니다. 기본값은 False입니다.</value>
   </data>
   <data name="Cat_Region_Label" xml:space="preserve">
     <value>Region</value>
   </data>
   <data name="Cat_Region_Desc" xml:space="preserve">
-    <value>Undocumented. A region code of some kind, but the expected format (NA, US, a number?) and its purpose (matchmaking, server browser, or neither) are both unknown. Blank by default.</value>
+    <value>문서화되지 않음. 일종의 지역 코드로 보이지만, 예상 형식(NA, US, 숫자 등)과 용도(매치메이킹, 서버 브라우저, 혹은 둘 다 아닌지)가 모두 알려져 있지 않습니다. 기본값은 비어 있습니다.</value>
   </data>
   <data name="Cat_CrossplayPlatforms_Label" xml:space="preserve">
     <value>Crossplay platforms</value>
   </data>
   <data name="Cat_CrossplayPlatforms_Desc" xml:space="preserve">
-    <value>Allowed platforms to connect to the server, as a tuple. Default: (Steam,Xbox,PS5,Mac).</value>
+    <value>서버에 접속할 수 있도록 허용된 플랫폼을 튜플 형태로 지정합니다. 기본값: (Steam,Xbox,PS5,Mac).</value>
   </data>
   <data name="Cat_PublicIP_Label" xml:space="preserve">
     <value>Public IP</value>
   </data>
   <data name="Cat_PublicIP_Desc" xml:space="preserve">
-    <value>Community server: explicitly specify the external public IP. Blank = auto-detect.</value>
+    <value>커뮤니티 서버: 외부에 공개되는 공인 IP를 직접 지정합니다. 비워두면 자동으로 감지합니다.</value>
   </data>
   <data name="Cat_PublicPort_Label" xml:space="preserve">
     <value>Public port</value>
   </data>
   <data name="Cat_PublicPort_Desc" xml:space="preserve">
-    <value>Community server: explicitly specify the external public port. Does not change the server's listening port.</value>
+    <value>커뮤니티 서버: 외부에 공개되는 공인 포트를 직접 지정합니다. 서버의 수신 포트 자체는 변경되지 않습니다.</value>
   </data>
   <data name="Cat_bEnableBuildingPlayerUIdDisplay_Label" xml:space="preserve">
     <value>Show builder ID on structures</value>
   </data>
   <data name="Cat_bEnableBuildingPlayerUIdDisplay_Desc" xml:space="preserve">
-    <value>Whether to display the creator's player ID on structures.</value>
+    <value>건축물에 제작자의 플레이어 ID를 표시할지 여부입니다.</value>
   </data>
   <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Label" xml:space="preserve">
     <value>BuildingNameDisplayCacheTTLSeconds</value>
   </data>
   <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Desc" xml:space="preserve">
-    <value>Undocumented. Likely how long a building's cached display name (see 'Show builder ID on structures') is kept before refreshing (seconds).</value>
+    <value>문서화되지 않음. '건축물에 제작자 ID 표시' 기능에서 캐시된 건축물 표시 이름이 갱신되기 전까지 유지되는 시간으로 추정됩니다(초).</value>
   </data>
   <data name="Cat_BaseCampMaxNum_Label" xml:space="preserve">
     <value>Max bases (world)</value>
   </data>
   <data name="Cat_BaseCampMaxNum_Desc" xml:space="preserve">
-    <value>Maximum total number of base camps on the map (all guild bases combined).</value>
+    <value>맵에 존재할 수 있는 거점의 총 최대 개수입니다(모든 길드의 거점을 합산).</value>
   </data>
   <data name="Cat_BaseCampMaxNumInGuild_Label" xml:space="preserve">
     <value>길드당 거점 최대 수</value>
   </data>
   <data name="Cat_BaseCampMaxNumInGuild_Desc" xml:space="preserve">
-    <value>Maximum number of bases per guild. Default 4 (max 10). Increasing this raises processing load.</value>
+    <value>길드당 보유할 수 있는 최대 거점 수입니다. 기본값은 4이며(최대 10), 값을 늘리면 처리 부하가 증가합니다.</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Label" xml:space="preserve">
     <value>거점 작업 팰 최대 수</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Desc" xml:space="preserve">
-    <value>Maximum number of Pals per base (max 50). Increasing this raises processing load.</value>
+    <value>거점당 배치할 수 있는 최대 팰 수입니다(최대 50). 값을 늘리면 처리 부하가 증가합니다.</value>
   </data>
   <data name="Cat_MaxBuildingLimitNum_Label" xml:space="preserve">
     <value>각 거점당 최대 건축 수</value>
   </data>
   <data name="Cat_MaxBuildingLimitNum_Desc" xml:space="preserve">
-    <value>Per-player building count cap (0 = No Limit).</value>
+    <value>플레이어 1인당 건축물 개수 제한입니다(0 = 제한 없음).</value>
   </data>
   <data name="Cat_DropItemMaxNum_Label" xml:space="preserve">
     <value>월드 내의 드롭 아이템 최대 수</value>
   </data>
   <data name="Cat_DropItemMaxNum_Desc" xml:space="preserve">
-    <value>Maximum number of items lying dropped in the world before they start to despawn.</value>
+    <value>월드에 떨어진 아이템이 소멸되기 시작하는 기준이 되는 최대 개수입니다.</value>
   </data>
   <data name="Cat_PhysicsActiveDropItemMaxNum_Label" xml:space="preserve">
     <value>월드 내의 물리 거동 드롭 아이템 최대 수</value>
   </data>
   <data name="Cat_PhysicsActiveDropItemMaxNum_Desc" xml:space="preserve">
-    <value>Maximum number of dropped items that can use physics behavior. -1 = No Limit. Increasing this can affect processing load.</value>
+    <value>물리 효과가 적용될 수 있는 드롭 아이템의 최대 개수입니다. -1 = 제한 없음. 값을 늘리면 처리 부하에 영향을 줄 수 있습니다.</value>
   </data>
   <data name="Cat_DropItemMaxNum_UNKO_Label" xml:space="preserve">
     <value>DropItemMaxNum_UNKO</value>
   </data>
   <data name="Cat_DropItemMaxNum_UNKO_Desc" xml:space="preserve">
-    <value>Undocumented. Appears unused, likely deadweight or an unimplemented feature.</value>
+    <value>문서화되지 않음. 사용되지 않는 것으로 보이며, 남아 있는 불필요한 값이거나 아직 구현되지 않은 기능으로 추정됩니다.</value>
   </data>
   <data name="Cat_ServerReplicatePawnCullDistance_Label" xml:space="preserve">
     <value>Pal sync distance</value>
   </data>
   <data name="Cat_ServerReplicatePawnCullDistance_Desc" xml:space="preserve">
-    <value>Pal sync distance from players (cm). Minimum 5000, maximum 15000.</value>
+    <value>플레이어를 기준으로 팰을 동기화하는 거리입니다(cm). 최소 5000, 최대 15000.</value>
   </data>
   <data name="Cat_ItemContainerForceMarkDirtyInterval_Label" xml:space="preserve">
     <value>Container re-sync interval</value>
   </data>
   <data name="Cat_ItemContainerForceMarkDirtyInterval_Desc" xml:space="preserve">
-    <value>How often to force a re-sync while a container UI is open (seconds).</value>
+    <value>컨테이너 UI가 열려 있는 동안 강제로 재동기화하는 주기입니다(초).</value>
   </data>
   <data name="Cat_MaxGuildsPerFrame_Label" xml:space="preserve">
     <value>MaxGuildsPerFrame</value>
   </data>
   <data name="Cat_MaxGuildsPerFrame_Desc" xml:space="preserve">
-    <value>Undocumented. Likely a per-frame cap on how many guilds the server processes each tick, a performance lever.</value>
+    <value>문서화되지 않음. 서버가 한 틱(프레임)당 처리하는 길드 수를 제한하는 값으로 추정되며, 성능 조절용 설정으로 보입니다.</value>
   </data>
   <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Label" xml:space="preserve">
     <value>PlayerDataPalStorageUpdateCheckTickInterval</value>
   </data>
   <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Desc" xml:space="preserve">
-    <value>Undocumented. Likely how often the server checks player Pal Box/storage data for changes to sync (seconds).</value>
+    <value>문서화되지 않음. 서버가 플레이어의 팰박스/보관함 데이터 변경 여부를 확인하여 동기화하는 주기로 추정됩니다(초).</value>
   </data>
   <data name="Cat_Difficulty_Label" xml:space="preserve">
     <value>난이도</value>
   </data>
   <data name="Cat_Difficulty_Desc" xml:space="preserve">
-    <value>Client / single-player difficulty preset. It has no effect on a dedicated server, so leave it at None and use the individual settings below (or the Difficulty preset buttons at the top) to set server difficulty.</value>
+    <value>클라이언트/싱글 플레이용 난이도 프리셋입니다. 데디케이트 서버에는 영향을 주지 않으므로 None으로 두고, 아래의 개별 설정 항목(또는 상단의 난이도 프리셋 버튼)을 사용해 서버 난이도를 설정하십시오.</value>
   </data>
   <data name="Cat_bHardcore_Label" xml:space="preserve">
     <value>하드코어 모드: 플레이어 사망 시 영구적 손실</value>
   </data>
   <data name="Cat_bHardcore_Desc" xml:space="preserve">
-    <value>Enable Hardcore. You will not be able to respawn on death.</value>
+    <value>하드코어 모드를 활성화합니다. 사망 시 리스폰할 수 없습니다.</value>
   </data>
   <data name="Cat_bCharacterRecreateInHardcore_Label" xml:space="preserve">
     <value>Recreate character (Hardcore)</value>
   </data>
   <data name="Cat_bCharacterRecreateInHardcore_Desc" xml:space="preserve">
-    <value>Whether you may recreate your character upon death in Hardcore mode.</value>
+    <value>하드코어 모드에서 사망 시 캐릭터를 다시 생성할 수 있는지 여부입니다.</value>
   </data>
   <data name="Cat_bIsPvP_Label" xml:space="preserve">
     <value>PvP</value>
   </data>
   <data name="Cat_bIsPvP_Desc" xml:space="preserve">
-    <value>Enable PvP. Only takes effect with Player-vs-player damage and Base defense vs. other guilds also on.</value>
+    <value>PvP를 활성화합니다. '플레이어 간 피해'와 '다른 길드에 대한 거점 방어'도 함께 켜야 실제로 적용됩니다.</value>
   </data>
   <data name="Cat_bEnablePlayerToPlayerDamage_Label" xml:space="preserve">
     <value>Player-vs-player damage</value>
   </data>
   <data name="Cat_bEnablePlayerToPlayerDamage_Desc" xml:space="preserve">
-    <value>Let players harm each other. One of the three settings that together enable PvP.</value>
+    <value>플레이어끼리 서로 피해를 입힐 수 있도록 합니다. PvP를 구성하는 세 가지 설정 중 하나입니다.</value>
   </data>
   <data name="Cat_bEnableFriendlyFire_Label" xml:space="preserve">
     <value>Friendly fire</value>
   </data>
   <data name="Cat_bEnableFriendlyFire_Desc" xml:space="preserve">
-    <value>Undocumented. Community says it lets players and their Pals damage members of their own guild.</value>
+    <value>문서화되지 않음. 커뮤니티에서는 플레이어와 팰이 같은 길드원에게 피해를 줄 수 있게 하는 설정이라고 알려져 있습니다.</value>
   </data>
   <data name="Cat_bCanPickupOtherGuildDeathPenaltyDrop_Label" xml:space="preserve">
     <value>Loot other guilds' drops</value>
   </data>
   <data name="Cat_bCanPickupOtherGuildDeathPenaltyDrop_Desc" xml:space="preserve">
-    <value>Allow players to pick up the Pals and items dropped by other guilds' players on death.</value>
+    <value>다른 길드 플레이어가 사망 시 떨어뜨린 팰과 아이템을 주울 수 있도록 허용합니다.</value>
   </data>
   <data name="Cat_bEnableDefenseOtherGuildPlayer_Label" xml:space="preserve">
     <value>Base defense vs. other guilds</value>
   </data>
   <data name="Cat_bEnableDefenseOtherGuildPlayer_Desc" xml:space="preserve">
-    <value>Base Pals engage hostile players who trespass into your base. One of the three settings that enable PvP.</value>
+    <value>거점의 팰이 거점에 침입한 적대적인 플레이어를 공격합니다. PvP를 구성하는 세 가지 설정 중 하나입니다.</value>
   </data>
   <data name="Cat_bEnableFastTravel_Label" xml:space="preserve">
     <value>빠른 이동 가능 여부</value>
   </data>
   <data name="Cat_bEnableFastTravel_Desc" xml:space="preserve">
-    <value>Enable fast travel.</value>
+    <value>빠른 이동을 활성화합니다.</value>
   </data>
   <data name="Cat_bEnableFastTravelOnlyBaseCamp_Label" xml:space="preserve">
     <value>빠른 이동을 거점끼리만 가능하도록 제한한다</value>
   </data>
   <data name="Cat_bEnableFastTravelOnlyBaseCamp_Desc" xml:space="preserve">
-    <value>Restrict fast travel to between bases only.</value>
+    <value>빠른 이동을 거점 간 이동으로만 제한합니다.</value>
   </data>
   <data name="Cat_bEnableInvaderEnemy_Label" xml:space="preserve">
     <value>습격 이벤트 발생 여부</value>
   </data>
   <data name="Cat_bEnableInvaderEnemy_Desc" xml:space="preserve">
-    <value>Enable Invaders (raid events).</value>
+    <value>침입자(레이드 이벤트)를 활성화합니다.</value>
   </data>
   <data name="Cat_EnablePredatorBossPal_Label" xml:space="preserve">
     <value>프레데터 팰 출현 여부</value>
   </data>
   <data name="Cat_EnablePredatorBossPal_Desc" xml:space="preserve">
-    <value>Allows Predator Pals to spawn in the world.</value>
+    <value>월드에 포식자 팰이 출현할 수 있도록 허용합니다.</value>
   </data>
   <data name="Cat_bBuildAreaLimit_Label" xml:space="preserve">
     <value>Build area limit</value>
   </data>
   <data name="Cat_bBuildAreaLimit_Desc" xml:space="preserve">
-    <value>Prevent building near structures such as fast-travel points.</value>
+    <value>빠른 이동 지점 등 특정 구조물 근처에서는 건축을 제한합니다.</value>
   </data>
   <data name="Cat_bInvisibleOtherGuildBaseCampAreaFX_Label" xml:space="preserve">
     <value>Show base area boundaries</value>
   </data>
   <data name="Cat_bInvisibleOtherGuildBaseCampAreaFX_Desc" xml:space="preserve">
-    <value>Show base area boundaries.</value>
+    <value>거점 영역 경계를 표시합니다.</value>
   </data>
   <data name="Cat_bShowPlayerList_Label" xml:space="preserve">
     <value>Player list in ESC menu</value>
   </data>
   <data name="Cat_bShowPlayerList_Desc" xml:space="preserve">
-    <value>Enable the player list on the ESC menu.</value>
+    <value>ESC 메뉴의 플레이어 목록을 활성화합니다.</value>
   </data>
   <data name="Cat_bExistPlayerAfterLogout_Label" xml:space="preserve">
     <value>Body stays after logout</value>
   </data>
   <data name="Cat_bExistPlayerAfterLogout_Desc" xml:space="preserve">
-    <value>Whether players enter a sleeping state at their current location when logging out.</value>
+    <value>로그아웃 시 플레이어가 현재 위치에서 수면 상태로 남아 있을지 여부입니다.</value>
   </data>
   <data name="Cat_bEnableNonLoginPenalty_Label" xml:space="preserve">
     <value>bEnableNonLoginPenalty</value>
   </data>
   <data name="Cat_bEnableNonLoginPenalty_Desc" xml:space="preserve">
-    <value>Undocumented. May relate to whether your Pals get debuffs when you haven't logged in. Untested.</value>
+    <value>문서화되지 않음. 로그인하지 않은 동안 팰에게 디버프가 적용되는지와 관련된 설정으로 추정되나, 테스트되지 않았습니다.</value>
   </data>
   <data name="Cat_bIsStartLocationSelectByMap_Label" xml:space="preserve">
     <value>Choose starting location</value>
   </data>
   <data name="Cat_bIsStartLocationSelectByMap_Desc" xml:space="preserve">
-    <value>Whether to allow players to choose their starting location.</value>
+    <value>플레이어가 시작 위치를 직접 선택할 수 있도록 허용할지 여부입니다.</value>
   </data>
   <data name="Cat_bActiveUNKO_Label" xml:space="preserve">
     <value>bActiveUNKO</value>
   </data>
   <data name="Cat_bActiveUNKO_Desc" xml:space="preserve">
-    <value>Undocumented. Appears unused, likely deadweight or an unimplemented feature.</value>
+    <value>문서화되지 않음. 사용되지 않는 것으로 보이며, 남아 있는 불필요한 값이거나 아직 구현되지 않은 기능으로 추정됩니다.</value>
   </data>
   <data name="Cat_bEnableAimAssistPad_Label" xml:space="preserve">
     <value>Aim assist (controller)</value>
   </data>
   <data name="Cat_bEnableAimAssistPad_Desc" xml:space="preserve">
-    <value>Aim assist for controllers. Set to False to disable it.</value>
+    <value>컨트롤러용 조준 보정 기능입니다. 비활성화하려면 False로 설정하십시오.</value>
   </data>
   <data name="Cat_bEnableAimAssistKeyboard_Label" xml:space="preserve">
     <value>Aim assist (keyboard)</value>
   </data>
   <data name="Cat_bEnableAimAssistKeyboard_Desc" xml:space="preserve">
-    <value>Enable aim assist for mouse &amp; keyboard.</value>
+    <value>마우스 및 키보드용 조준 보정 기능을 활성화합니다.</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Attack_Label" xml:space="preserve">
     <value>Allow stat points: Attack</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Attack_Desc" xml:space="preserve">
-    <value>Allow allocating stat points to Attack.</value>
+    <value>공격력 스탯 포인트 분배를 허용합니다.</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Health_Label" xml:space="preserve">
     <value>Allow stat points: HP</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Health_Desc" xml:space="preserve">
-    <value>Allow allocating stat points to HP.</value>
+    <value>체력(HP) 스탯 포인트 분배를 허용합니다.</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Stamina_Label" xml:space="preserve">
     <value>Allow stat points: Stamina</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Stamina_Desc" xml:space="preserve">
-    <value>Allow allocating stat points to Stamina.</value>
+    <value>스태미나 스탯 포인트 분배를 허용합니다.</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Weight_Label" xml:space="preserve">
     <value>Allow stat points: Carry Weight</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Weight_Desc" xml:space="preserve">
-    <value>Allow allocating stat points to Carry Weight.</value>
+    <value>소지 중량 스탯 포인트 분배를 허용합니다.</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_WorkSpeed_Label" xml:space="preserve">
     <value>Allow stat points: Work Speed</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_WorkSpeed_Desc" xml:space="preserve">
-    <value>Allow allocating stat points to Work Speed.</value>
+    <value>작업 속도 스탯 포인트 분배를 허용합니다.</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxExport_Label" xml:space="preserve">
     <value>Allow Pal Genetic Data to be Saved in the Global Palbox</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxExport_Desc" xml:space="preserve">
-    <value>Allow saving to the Global Palbox.</value>
+    <value>글로벌 팰박스에 저장하는 것을 허용합니다.</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxImport_Label" xml:space="preserve">
     <value>Allow Pals to be Reconstructed from the Global Palbox</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxImport_Desc" xml:space="preserve">
-    <value>Allow loading from the Global Palbox.</value>
+    <value>글로벌 팰박스에서 불러오는 것을 허용합니다.</value>
   </data>
   <data name="Cat_bAutoResetGuildNoOnlinePlayers_Label" xml:space="preserve">
     <value>일정 시간 내 로그인 기록이 없는 길드의 시설을 자동 삭제</value>
   </data>
   <data name="Cat_bAutoResetGuildNoOnlinePlayers_Desc" xml:space="preserve">
-    <value>If no guild members log in, automatically delete structures and base Pals.</value>
+    <value>길드원이 아무도 로그인하지 않으면 건축물과 거점의 팰을 자동으로 삭제합니다.</value>
   </data>
   <data name="Cat_AutoResetGuildTimeNoOnlinePlayers_Label" xml:space="preserve">
     <value>로그인 기록이 없는 길드 시설의 자동 삭제까지 남은 시간(h)</value>
   </data>
   <data name="Cat_AutoResetGuildTimeNoOnlinePlayers_Desc" xml:space="preserve">
-    <value>Offline duration before an inactive guild is auto-reset (hours). Ignored unless 'Auto-reset inactive guilds' is on.</value>
+    <value>비활성 길드가 자동으로 초기화되기까지 걸리는 오프라인 시간입니다(시간). '비활성 길드 자동 초기화'가 켜져 있지 않으면 무시됩니다.</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Label" xml:space="preserve">
     <value>Show base PvP items on map</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Desc" xml:space="preserve">
-    <value>Whether to show, on the map, the number of PvP-exclusive items in each base.</value>
+    <value>각 거점에 있는 PvP 전용 아이템 수를 맵에 표시할지 여부입니다.</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_Player_Label" xml:space="preserve">
     <value>Show player PvP items on map</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_Player_Desc" xml:space="preserve">
-    <value>Whether to show player locations and the number of PvP-exclusive items on the map.</value>
+    <value>플레이어 위치와 PvP 전용 아이템 수를 맵에 표시할지 여부입니다.</value>
   </data>
   <data name="Cat_bIsRandomizerPalLevelRandom_Label" xml:space="preserve">
     <value>무작위 모드에서 야생 팰의 레벨을 완전히 무작위화한다</value>
   </data>
   <data name="Cat_bIsRandomizerPalLevelRandom_Desc" xml:space="preserve">
-    <value>If on, wild Pal levels are fully random. If off, levels are randomized within each area's intended range.</value>
+    <value>켜면 야생 팰의 레벨이 완전히 무작위로 결정됩니다. 끄면 각 지역에 지정된 범위 내에서 레벨이 무작위로 정해집니다.</value>
   </data>
   <data name="Cat_RandomizerType_Label" xml:space="preserve">
     <value>출현 팰 무작위 모드</value>
   </data>
   <data name="Cat_RandomizerType_Desc" xml:space="preserve">
-    <value>Pal spawn randomization. None = no randomization. Region = randomize per region. All = fully randomized.</value>
+    <value>팰 출현 랜덤화 방식입니다. None = 랜덤화 없음, Region = 지역별로 랜덤화, All = 완전 무작위.</value>
   </data>
   <data name="Cat_RandomizerSeed_Label" xml:space="preserve">
     <value>시드값</value>
   </data>
   <data name="Cat_RandomizerSeed_Desc" xml:space="preserve">
-    <value>Seed value used when Pal spawn randomization is enabled.</value>
+    <value>팰 출현 랜덤화가 활성화되었을 때 사용되는 시드 값입니다.</value>
   </data>
   <data name="Cat_bEnableVoiceChat_Label" xml:space="preserve">
     <value>Voice chat</value>
   </data>
   <data name="Cat_bEnableVoiceChat_Desc" xml:space="preserve">
-    <value>Enable in-game voice chat.</value>
+    <value>게임 내 음성 채팅을 활성화합니다.</value>
   </data>
   <data name="Cat_VoiceChatMaxVolumeDistance_Label" xml:space="preserve">
     <value>Voice chat full-volume distance</value>
   </data>
   <data name="Cat_VoiceChatMaxVolumeDistance_Desc" xml:space="preserve">
-    <value>Distance at which voice chat volume does not attenuate.</value>
+    <value>음성 채팅 음량이 감쇠하지 않는 거리입니다.</value>
   </data>
   <data name="Cat_VoiceChatZeroVolumeDistance_Label" xml:space="preserve">
     <value>Voice chat silence distance</value>
   </data>
   <data name="Cat_VoiceChatZeroVolumeDistance_Desc" xml:space="preserve">
-    <value>Distance at which voice chat volume becomes zero.</value>
+    <value>음성 채팅 음량이 0이 되는 거리입니다.</value>
   </data>
   <data name="Cat_DayTimeSpeedRate_Label" xml:space="preserve">
     <value>낮 경과 속도</value>
   </data>
   <data name="Cat_DayTimeSpeedRate_Desc" xml:space="preserve">
-    <value>Daytime progression speed.</value>
+    <value>낮 시간 진행 속도입니다.</value>
   </data>
   <data name="Cat_NightTimeSpeedRate_Label" xml:space="preserve">
     <value>밤 경과 속도</value>
   </data>
   <data name="Cat_NightTimeSpeedRate_Desc" xml:space="preserve">
-    <value>Nighttime progression speed.</value>
+    <value>밤 시간 진행 속도입니다.</value>
   </data>
   <data name="Cat_ExpRate_Label" xml:space="preserve">
     <value>경험치 획득 배율</value>
   </data>
   <data name="Cat_ExpRate_Desc" xml:space="preserve">
-    <value>EXP gain multiplier.</value>
+    <value>경험치 획득량 배율입니다.</value>
   </data>
   <data name="Cat_PalCaptureRate_Label" xml:space="preserve">
     <value>포획 확률 배율</value>
   </data>
   <data name="Cat_PalCaptureRate_Desc" xml:space="preserve">
-    <value>Capture rate multiplier.</value>
+    <value>포획 확률 배율입니다.</value>
   </data>
   <data name="Cat_PalSpawnNumRate_Label" xml:space="preserve">
     <value>팰 출현 배율 ※게임 성능에 영향을 미칩니다</value>
   </data>
   <data name="Cat_PalSpawnNumRate_Desc" xml:space="preserve">
-    <value>Pal spawn rate. Impacts performance.</value>
+    <value>팰 출현 배율입니다. 성능에 영향을 줍니다.</value>
   </data>
   <data name="Cat_PalEggDefaultHatchingTime_Label" xml:space="preserve">
     <value>거대알 부화에 걸리는 시간(h) ※ 다른 알도 상응하여 부화 시간이 변경됩니다.</value>
   </data>
   <data name="Cat_PalEggDefaultHatchingTime_Desc" xml:space="preserve">
-    <value>Time to hatch a Massive (Huge) Egg (hours). Other eggs also require time to incubate.</value>
+    <value>거대한 알이 부화하는 데 걸리는 시간입니다(시간). 다른 알들도 부화까지 시간이 필요합니다.</value>
   </data>
   <data name="Cat_WorkSpeedRate_Label" xml:space="preserve">
     <value>작업 속도 배율</value>
   </data>
   <data name="Cat_WorkSpeedRate_Desc" xml:space="preserve">
-    <value>How fast both players and Pals complete work. Multiplier: 2.0 = work completed twice as fast.</value>
+    <value>플레이어와 팰이 작업을 완료하는 속도입니다. 배율 값으로, 2.0이면 작업 속도가 두 배가 됩니다.</value>
   </data>
   <data name="Cat_MonsterFarmActionSpeedRate_Label" xml:space="preserve">
     <value>Grazing Item Production Rate Multiplier</value>
   </data>
   <data name="Cat_MonsterFarmActionSpeedRate_Desc" xml:space="preserve">
-    <value>Item production speed multiplier from grazing.</value>
+    <value>방목을 통한 아이템 생산 속도 배율입니다.</value>
   </data>
   <data name="Cat_PalDamageRateAttack_Label" xml:space="preserve">
     <value>모든 팰이 주는 피해 배율</value>
   </data>
   <data name="Cat_PalDamageRateAttack_Desc" xml:space="preserve">
-    <value>Damage dealt by Pals multiplier.</value>
+    <value>팰이 가하는 피해량 배율입니다.</value>
   </data>
   <data name="Cat_PalDamageRateDefense_Label" xml:space="preserve">
     <value>모든 팰이 받는 피해 배율</value>
   </data>
   <data name="Cat_PalDamageRateDefense_Desc" xml:space="preserve">
-    <value>Damage taken by Pals multiplier.</value>
+    <value>팰이 받는 피해량 배율입니다.</value>
   </data>
   <data name="Cat_PlayerDamageRateAttack_Label" xml:space="preserve">
     <value>플레이어가 주는 피해 배율</value>
   </data>
   <data name="Cat_PlayerDamageRateAttack_Desc" xml:space="preserve">
-    <value>Damage dealt by players multiplier.</value>
+    <value>플레이어가 가하는 피해량 배율입니다.</value>
   </data>
   <data name="Cat_PlayerDamageRateDefense_Label" xml:space="preserve">
     <value>플레이어가 받는 피해 배율</value>
   </data>
   <data name="Cat_PlayerDamageRateDefense_Desc" xml:space="preserve">
-    <value>Damage taken by players multiplier.</value>
+    <value>플레이어가 받는 피해량 배율입니다.</value>
   </data>
   <data name="Cat_PlayerStomachDecreaceRate_Label" xml:space="preserve">
     <value>플레이어 포만도 감소 배율</value>
   </data>
   <data name="Cat_PlayerStomachDecreaceRate_Desc" xml:space="preserve">
-    <value>Player hunger depletion rate multiplier.</value>
+    <value>플레이어 허기 감소 속도 배율입니다.</value>
   </data>
   <data name="Cat_PlayerStaminaDecreaceRate_Label" xml:space="preserve">
     <value>플레이어 기력 감소 배율</value>
   </data>
   <data name="Cat_PlayerStaminaDecreaceRate_Desc" xml:space="preserve">
-    <value>Player stamina depletion rate multiplier.</value>
+    <value>플레이어 스태미나 감소 속도 배율입니다.</value>
   </data>
   <data name="Cat_PlayerAutoHPRegeneRate_Label" xml:space="preserve">
     <value>플레이어 HP 자연 회복 배율</value>
   </data>
   <data name="Cat_PlayerAutoHPRegeneRate_Desc" xml:space="preserve">
-    <value>Player natural HP regen multiplier.</value>
+    <value>플레이어 자연 체력 회복 배율입니다.</value>
   </data>
   <data name="Cat_PlayerAutoHpRegeneRateInSleep_Label" xml:space="preserve">
     <value>플레이어 수면 시 HP 회복 배율</value>
   </data>
   <data name="Cat_PlayerAutoHpRegeneRateInSleep_Desc" xml:space="preserve">
-    <value>Player HP regen while sleeping multiplier.</value>
+    <value>플레이어 수면 중 체력 회복 배율입니다.</value>
   </data>
   <data name="Cat_PalStomachDecreaceRate_Label" xml:space="preserve">
     <value>팰 포만도 감소 배율</value>
   </data>
   <data name="Cat_PalStomachDecreaceRate_Desc" xml:space="preserve">
-    <value>Pal hunger depletion rate multiplier.</value>
+    <value>팰 허기 감소 속도 배율입니다.</value>
   </data>
   <data name="Cat_PalStaminaDecreaceRate_Label" xml:space="preserve">
     <value>팰 기력 감소 배율</value>
   </data>
   <data name="Cat_PalStaminaDecreaceRate_Desc" xml:space="preserve">
-    <value>Pal stamina depletion rate multiplier.</value>
+    <value>팰 스태미나 감소 속도 배율입니다.</value>
   </data>
   <data name="Cat_PalAutoHPRegeneRate_Label" xml:space="preserve">
     <value>팰 HP 자연 회복 배율</value>
   </data>
   <data name="Cat_PalAutoHPRegeneRate_Desc" xml:space="preserve">
-    <value>Pal natural HP regen multiplier.</value>
+    <value>팰 자연 체력 회복 배율입니다.</value>
   </data>
   <data name="Cat_PalAutoHpRegeneRateInSleep_Label" xml:space="preserve">
     <value>팰 수면 시 HP 회복 배율(팰 상자 내 HP 회복 배율)</value>
   </data>
   <data name="Cat_PalAutoHpRegeneRateInSleep_Desc" xml:space="preserve">
-    <value>Pal HP regen while sleeping in the Palbox multiplier.</value>
+    <value>팰박스에서 수면 중인 팰의 체력 회복 배율입니다.</value>
   </data>
   <data name="Cat_CollectionDropRate_Label" xml:space="preserve">
     <value>채집 아이템 획득량 배율</value>
   </data>
   <data name="Cat_CollectionDropRate_Desc" xml:space="preserve">
-    <value>Gatherable items multiplier.</value>
+    <value>채집 아이템 획득량 배율입니다.</value>
   </data>
   <data name="Cat_CollectionObjectHpRate_Label" xml:space="preserve">
     <value>채집 오브젝트 HP 배율</value>
   </data>
   <data name="Cat_CollectionObjectHpRate_Desc" xml:space="preserve">
-    <value>Gatherable objects health multiplier.</value>
+    <value>채집 오브젝트 체력 배율입니다.</value>
   </data>
   <data name="Cat_CollectionObjectRespawnSpeedRate_Label" xml:space="preserve">
     <value>채집 오브젝트 생성 간격</value>
   </data>
   <data name="Cat_CollectionObjectRespawnSpeedRate_Desc" xml:space="preserve">
-    <value>Gatherable objects respawn interval multiplier.</value>
+    <value>채집 오브젝트 리스폰 주기 배율입니다.</value>
   </data>
   <data name="Cat_EnemyDropItemRate_Label" xml:space="preserve">
     <value>드롭 아이템 양 배율</value>
   </data>
   <data name="Cat_EnemyDropItemRate_Desc" xml:space="preserve">
-    <value>Dropped item quantity multiplier.</value>
+    <value>적이 드롭하는 아이템 수량 배율입니다.</value>
   </data>
   <data name="Cat_DropItemAliveMaxHours_Label" xml:space="preserve">
     <value>Dropped item lifetime (hours)</value>
   </data>
   <data name="Cat_DropItemAliveMaxHours_Desc" xml:space="preserve">
-    <value>How long dropped items remain in the world before they despawn (hours). Lowering it helps server cleanup / performance.</value>
+    <value>드롭된 아이템이 소멸되기까지 월드에 남아 있는 시간입니다(시간). 값을 낮추면 서버 정리 및 성능에 도움이 됩니다.</value>
   </data>
   <data name="Cat_ItemWeightRate_Label" xml:space="preserve">
     <value>아이템 중량 배율</value>
   </data>
   <data name="Cat_ItemWeightRate_Desc" xml:space="preserve">
-    <value>Item weight multiplier.</value>
+    <value>아이템 무게 배율입니다.</value>
   </data>
   <data name="Cat_ItemCorruptionMultiplier_Label" xml:space="preserve">
     <value>Item Decay Rate Multiplier</value>
   </data>
   <data name="Cat_ItemCorruptionMultiplier_Desc" xml:space="preserve">
-    <value>Item corruption (decay) speed multiplier.</value>
+    <value>아이템 부식(열화) 속도 배율입니다.</value>
   </data>
   <data name="Cat_EquipmentDurabilityDamageRate_Label" xml:space="preserve">
     <value>Equipment Durability Loss Multiplier</value>
   </data>
   <data name="Cat_EquipmentDurabilityDamageRate_Desc" xml:space="preserve">
-    <value>Equipment durability loss multiplier.</value>
+    <value>장비 내구도 소모 배율입니다.</value>
   </data>
   <data name="Cat_BuildObjectHpRate_Label" xml:space="preserve">
     <value>Building HP</value>
   </data>
   <data name="Cat_BuildObjectHpRate_Desc" xml:space="preserve">
-    <value>Multiplier for how much health buildings have. 2.0 = double building HP.</value>
+    <value>건축물 체력 배율입니다. 2.0이면 건축물 체력이 두 배가 됩니다.</value>
   </data>
   <data name="Cat_BuildObjectDamageRate_Label" xml:space="preserve">
     <value>건축물 상대 피해 배율</value>
   </data>
   <data name="Cat_BuildObjectDamageRate_Desc" xml:space="preserve">
-    <value>Damage multiplier to buildings.</value>
+    <value>건축물이 받는 피해량 배율입니다.</value>
   </data>
   <data name="Cat_BuildObjectDeteriorationDamageRate_Label" xml:space="preserve">
     <value>건축물의 노화 속도 배율</value>
   </data>
   <data name="Cat_BuildObjectDeteriorationDamageRate_Desc" xml:space="preserve">
-    <value>Building decay speed multiplier.</value>
+    <value>건축물 노후화(열화) 속도 배율입니다.</value>
   </data>
   <data name="Cat_DeathPenalty_Label" xml:space="preserve">
     <value>데스 페널티</value>
   </data>
   <data name="Cat_DeathPenalty_Desc" xml:space="preserve">
-    <value>What you drop on death. None = nothing. Item = all items except equipment. ItemAndEquipment = all items. All = all items and all Pals in your party.</value>
+    <value>사망 시 드롭되는 항목입니다. None = 아무것도 드롭하지 않음, Item = 장비를 제외한 모든 아이템, ItemAndEquipment = 모든 아이템, All = 모든 아이템과 파티의 모든 팰.</value>
   </data>
   <data name="Cat_bPalLost_Label" xml:space="preserve">
     <value>하드코어 모드: 팰 빈사 시 영구적 손실</value>
   </data>
   <data name="Cat_bPalLost_Desc" xml:space="preserve">
-    <value>Permanently lose Pals on death.</value>
+    <value>사망 시 팰을 영구적으로 잃습니다.</value>
   </data>
   <data name="Cat_BlockRespawnTime_Label" xml:space="preserve">
     <value>Respawn cooldown (seconds)</value>
   </data>
   <data name="Cat_BlockRespawnTime_Desc" xml:space="preserve">
-    <value>Cooldown before you can respawn after death (seconds).</value>
+    <value>사망 후 리스폰할 수 있을 때까지의 대기 시간입니다(초).</value>
   </data>
   <data name="Cat_RespawnPenaltyDurationThreshold_Label" xml:space="preserve">
     <value>Respawn penalty threshold</value>
   </data>
   <data name="Cat_RespawnPenaltyDurationThreshold_Desc" xml:space="preserve">
-    <value>Survival-time threshold (seconds). Dying again before surviving this long applies the respawn cooldown multiplier below.</value>
+    <value>생존 시간 기준값입니다(초). 이 시간만큼 생존하지 못하고 다시 사망하면 아래의 리스폰 대기 시간 배율이 적용됩니다.</value>
   </data>
   <data name="Cat_RespawnPenaltyTimeScale_Label" xml:space="preserve">
     <value>Respawn penalty multiplier</value>
   </data>
   <data name="Cat_RespawnPenaltyTimeScale_Desc" xml:space="preserve">
-    <value>Multiplier applied to the respawn cooldown.</value>
+    <value>리스폰 대기 시간에 적용되는 배율입니다.</value>
   </data>
   <data name="Cat_GuildPlayerMaxNum_Label" xml:space="preserve">
     <value>길드 최대 인원 수</value>
   </data>
   <data name="Cat_GuildPlayerMaxNum_Desc" xml:space="preserve">
-    <value>Maximum number of players per guild.</value>
+    <value>길드당 최대 인원수입니다.</value>
   </data>
   <data name="Cat_GuildRejoinCooldownMinutes_Label" xml:space="preserve">
     <value>Guild rejoin cooldown (min)</value>
   </data>
   <data name="Cat_GuildRejoinCooldownMinutes_Desc" xml:space="preserve">
-    <value>Cooldown before rejoining a guild (minutes).</value>
+    <value>길드에 재가입할 수 있을 때까지의 대기 시간입니다(분).</value>
   </data>
   <data name="Cat_DenyTechnologyList_Label" xml:space="preserve">
     <value>Disabled technologies</value>
   </data>
   <data name="Cat_DenyTechnologyList_Desc" xml:space="preserve">
-    <value>Disable specific technologies. Specify Technology IDs, example: ("PALBOX", "RepairBench"). Blank = none.</value>
+    <value>특정 테크놀로지를 비활성화합니다. 테크놀로지 ID를 지정하십시오. 예: ("PALBOX", "RepairBench"). 비워두면 없음.</value>
   </data>
   <data name="Cat_bAdditionalDropItemWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
     <value>PvP kill: drop item</value>
   </data>
   <data name="Cat_bAdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
-    <value>Whether to drop a special item when a player is killed while PvP is enabled.</value>
+    <value>PvP가 활성화된 상태에서 플레이어가 사망했을 때 특수 아이템을 드롭할지 여부입니다.</value>
   </data>
   <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
     <value>PvP kill: item ID</value>
   </data>
   <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
-    <value>The ID of the item to drop on a PvP kill (used when 'PvP kill: drop item' is on).</value>
+    <value>PvP 킬 시 드롭할 아이템의 ID입니다('PvP 킬: 아이템 드롭'이 켜져 있을 때 사용됩니다).</value>
   </data>
   <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
     <value>PvP kill: item count</value>
   </data>
   <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
-    <value>The quantity of the item to drop on a PvP kill (used when 'PvP kill: drop item' is on).</value>
+    <value>PvP 킬 시 드롭할 아이템의 수량입니다('PvP 킬: 아이템 드롭'이 켜져 있을 때 사용됩니다).</value>
   </data>
   <data name="Cat_SupplyDropSpan_Label" xml:space="preserve">
     <value>운석 및 보급 물자 투하 간격 (분)</value>
   </data>
   <data name="Cat_SupplyDropSpan_Desc" xml:space="preserve">
-    <value>Meteorite / supply drop interval (minutes).</value>
+    <value>운석/보급품 드롭 주기입니다(분).</value>
   </data>
   <data name="Cat_AutoTransferMasterCheckIntervalSeconds_Label" xml:space="preserve">
     <value>AutoTransferMasterCheckIntervalSeconds</value>
   </data>
   <data name="Cat_AutoTransferMasterCheckIntervalSeconds_Desc" xml:space="preserve">
-    <value>Undocumented. Likely how often the server checks whether guild/base ownership should auto-transfer from an inactive master (seconds).</value>
+    <value>문서화되지 않음. 서버가 비활성 상태인 길드장/거점 소유자로부터 소유권을 자동으로 이전해야 하는지 확인하는 주기로 추정됩니다(초).</value>
   </data>
   <data name="Cat_AutoTransferMasterThresholdDays_Label" xml:space="preserve">
     <value>AutoTransferMasterThresholdDays</value>
   </data>
   <data name="Cat_AutoTransferMasterThresholdDays_Desc" xml:space="preserve">
-    <value>Undocumented. Likely the days a guild/base master must be inactive before ownership auto-transfers.</value>
+    <value>문서화되지 않음. 길드장/거점 소유자가 비활성 상태로 있어야 소유권이 자동으로 이전되기까지의 일수로 추정됩니다.</value>
   </data>
   <data name="Cat_LogFormatType_Opt_Text" xml:space="preserve">
     <value>Text</value>
@@ -2197,37 +2197,37 @@ Save these changes?</value>
     <value>Json</value>
   </data>
   <data name="Cat_Difficulty_Opt_None" xml:space="preserve">
-    <value>None</value>
+    <value>없음</value>
   </data>
   <data name="Cat_Difficulty_Opt_Casual" xml:space="preserve">
-    <value>Casual</value>
+    <value>캐주얼</value>
   </data>
   <data name="Cat_Difficulty_Opt_Normal" xml:space="preserve">
-    <value>Normal</value>
+    <value>노멀</value>
   </data>
   <data name="Cat_Difficulty_Opt_Hard" xml:space="preserve">
-    <value>Hard</value>
+    <value>하드</value>
   </data>
   <data name="Cat_RandomizerType_Opt_None" xml:space="preserve">
-    <value>None</value>
+    <value>없음</value>
   </data>
   <data name="Cat_RandomizerType_Opt_Region" xml:space="preserve">
-    <value>Region</value>
+    <value>지역별</value>
   </data>
   <data name="Cat_RandomizerType_Opt_All" xml:space="preserve">
-    <value>All</value>
+    <value>전체 무작위</value>
   </data>
   <data name="Cat_DeathPenalty_Opt_None" xml:space="preserve">
-    <value>None</value>
+    <value>없음</value>
   </data>
   <data name="Cat_DeathPenalty_Opt_Item" xml:space="preserve">
-    <value>Item</value>
+    <value>아이템만</value>
   </data>
   <data name="Cat_DeathPenalty_Opt_ItemAndEquipment" xml:space="preserve">
-    <value>ItemAndEquipment</value>
+    <value>아이템+장비</value>
   </data>
   <data name="Cat_DeathPenalty_Opt_All" xml:space="preserve">
-    <value>All</value>
+    <value>전체</value>
   </data>
   <data name="Settings_PresetCasual" xml:space="preserve">
     <value>Casual</value>
