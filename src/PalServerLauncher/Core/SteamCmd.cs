@@ -75,13 +75,20 @@ public sealed class SteamCmd
     /// <paramref name="validate"/> adds a full file-integrity pass (slower); <paramref name="visible"/>
     /// runs in SteamCMD's own console window (the caller tails <see cref="ConsoleLogPath"/> either way).
     /// </summary>
-    public Task<int> InstallOrUpdateServerAsync(bool validate, bool visible, IProgress<string>? log, CancellationToken ct = default)
+    public async Task<int> InstallOrUpdateServerAsync(bool validate, bool visible, IProgress<string>? log, CancellationToken ct = default)
     {
         var args = new List<string> { "+force_install_dir", InstallDir, "+login", "anonymous", "+app_update", AppId };
         if (validate)
             args.Add("validate");
         args.AddRange(["+logoff", "+quit"]);
-        return RunProcessAsync(args, visible, log, ct);
+        try
+        {
+            return await RunProcessAsync(args, visible, log, ct).ConfigureAwait(false);
+        }
+        finally
+        {
+            InvalidateBuildIdCache(); // the manifest may now hold a new build id (invalidate even on a partial run)
+        }
     }
 
     /// <summary>Query the latest published build id from Steam (null if it can't be determined).</summary>
@@ -184,9 +191,34 @@ public sealed class SteamCmd
         || output.Contains("Steam Guard", StringComparison.OrdinalIgnoreCase)
         || (output.Contains("FAILED", StringComparison.OrdinalIgnoreCase) && output.Contains("login", StringComparison.OrdinalIgnoreCase));
 
-    /// <summary>Build id currently installed on disk, read from the app manifest (null if not installed).</summary>
-    public string? ReadInstalledBuildId() =>
-        File.Exists(AppManifestPath) ? ParseBuildId(File.ReadAllText(AppManifestPath)) : null;
+    private readonly object _buildIdLock = new();
+    private string? _cachedBuildId;
+    private bool _buildIdCached;
+
+    /// <summary>Build id currently installed on disk, parsed from the app manifest (null if not installed).
+    /// Cached in memory: the manifest only changes on an app_update or a server import, both of which invalidate
+    /// the cache (<see cref="InvalidateBuildIdCache"/>), so the health probe's per-tick reads don't touch the
+    /// disk on a long-running server.</summary>
+    public string? ReadInstalledBuildId()
+    {
+        lock (_buildIdLock)
+        {
+            if (!_buildIdCached)
+            {
+                _cachedBuildId = File.Exists(AppManifestPath) ? ParseBuildId(File.ReadAllText(AppManifestPath)) : null;
+                _buildIdCached = true;
+            }
+            return _cachedBuildId;
+        }
+    }
+
+    /// <summary>Drop the cached build id so the next <see cref="ReadInstalledBuildId"/> re-parses the manifest.
+    /// Call after anything that can change the installed build: a SteamCMD app_update or a server import.</summary>
+    public void InvalidateBuildIdCache()
+    {
+        lock (_buildIdLock)
+            _buildIdCached = false;
+    }
 
     /// <summary>
     /// Extract the first <c>"buildid" "N"</c> value from ACF/app_info text. In app_info_print the

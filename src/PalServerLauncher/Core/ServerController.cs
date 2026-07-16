@@ -518,6 +518,7 @@ public sealed class ServerController : IDisposable
         try
         {
             await ServerImporter.CopyDirectoryAsync(sourceDir, dest, progress, ct).ConfigureAwait(false);
+            _steamCmd.InvalidateBuildIdCache(); // the imported install brings its own manifest / build id
             _logger.Info($"Import complete (build {_steamCmd.ReadInstalledBuildId() ?? "?"}). Once you've confirmed this copy works, you can delete the original yourself.");
             return true;
         }
