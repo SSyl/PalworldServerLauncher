@@ -2253,4 +2253,16 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
   <data name="Main_ImportFailedMessage" xml:space="preserve">
     <value>The import didn't complete. Check the log for details.</value>
   </data>
+  <data name="LauncherSettings_LoginOpen" xml:space="preserve">
+    <value>Start the server automatically at login</value>
+  </data>
+  <data name="LauncherSettings_LoginOpenTip" xml:space="preserve">
+    <value>At login, opens the launcher and starts the server, so scheduled restarts, updates, backups, and health recovery run. No admin needed. Unchecking removes the Startup shortcut.</value>
+  </data>
+  <data name="LauncherSettings_LoginOpenFailedTitle" xml:space="preserve">
+    <value>Couldn't change the login shortcut</value>
+  </data>
+  <data name="LauncherSettings_LoginOpenFailedMessage" xml:space="preserve">
+    <value>The Startup shortcut couldn't be created or removed. Check the log for details.</value>
+  </data>
 </root>

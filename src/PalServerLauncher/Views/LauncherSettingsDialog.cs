@@ -5,21 +5,24 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using PalServerLauncher.Config;
+using PalServerLauncher.Core;
 using PalServerLauncher.Localization;
 using static PalServerLauncher.Views.DarkControls;
 
 namespace PalServerLauncher.Views;
 
 /// <summary>
-/// Launcher-level preferences (currently just the UI language). A dark modal built in code, mirroring the
-/// other one-off dialogs. On Save it persists the chosen language. Returns true if the language changed, so
-/// the caller can restart the launcher to apply it (restart-to-apply, not a live switch).
+/// Launcher-level preferences (UI language, single-instance auto-reconnect, and login autostart). A dark modal
+/// built in code, mirroring the other one-off dialogs. Language and auto-reconnect persist on Save, the login
+/// autostart Startup shortcut applies immediately on click. Returns true if the language changed, so the caller
+/// can restart the launcher to apply it (restart-to-apply, not a live switch).
 /// </summary>
 public sealed class LauncherSettingsDialog : Window
 {
     private readonly LauncherConfig _config;
     private readonly ComboBox _languages;
     private readonly CheckBox _autoReconnect;
+    private readonly CheckBox _loginOpen;
     private bool _changed;
 
     private LauncherSettingsDialog(LauncherConfig config)
@@ -63,6 +66,19 @@ public sealed class LauncherSettingsDialog : Window
             Margin = new Thickness(0, 0, 0, 18),
         };
         root.Children.Add(_autoReconnect);
+
+        // Login autostart: a Startup shortcut that opens the launcher with --start-server at login, which starts
+        // the server and manages it. No elevation, so it applies immediately on click, not deferred to Save.
+        _loginOpen = new CheckBox
+        {
+            Content = Strings.LauncherSettings_LoginOpen,
+            IsChecked = LoginShortcut.Exists(Environment.ProcessPath ?? ""),
+            Foreground = Fg,
+            ToolTip = Strings.LauncherSettings_LoginOpenTip,
+            Margin = new Thickness(0, 0, 0, 18),
+        };
+        _loginOpen.Click += OnToggleLoginOpen;
+        root.Children.Add(_loginOpen);
 
         var bottom = new DockPanel { LastChildFill = false };
 
@@ -110,6 +126,21 @@ public sealed class LauncherSettingsDialog : Window
         _config.Save();
         Close();
     }
+    /// <summary>Toggle the login-open Startup shortcut (no elevation). Applies immediately, reverting the
+    /// checkbox if creating or removing the shortcut failed.</summary>
+    private void OnToggleLoginOpen(object sender, RoutedEventArgs e)
+    {
+        var want = _loginOpen.IsChecked == true;
+        var exe = Environment.ProcessPath ?? "";
+        var ok = want ? LoginShortcut.Create(exe) : LoginShortcut.Remove(exe);
+        if (!ok)
+        {
+            ChoiceDialog.Show(this, Strings.LauncherSettings_LoginOpenFailedTitle,
+                Strings.LauncherSettings_LoginOpenFailedMessage, Strings.Common_OK);
+            _loginOpen.IsChecked = !want;
+        }
+    }
+
     /// <summary>Show the bundled third-party license notices in a scrollable read-only window.</summary>
     private void ShowLicenses()
     {
