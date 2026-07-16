@@ -89,6 +89,9 @@ public class LocalizationSmokeTests
     [InlineData("de")]
     [InlineData("fr")]
     [InlineData("es")]
+    [InlineData("pt-BR")]
+    [InlineData("ko")]
+    [InlineData("ru")]
     public void English_and_satellite_resource_sets_have_the_same_keys(string cultureName)
     {
         var english = Strings.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, createIfNotExists: true, tryParents: false);
@@ -117,6 +120,9 @@ public class LocalizationSmokeTests
     [InlineData("de")]
     [InlineData("fr")]
     [InlineData("es")]
+    [InlineData("pt-BR")]
+    [InlineData("ko")]
+    [InlineData("ru")]
     public void Format_placeholders_match_english_in_every_satellite(string cultureName)
     {
         var english = Strings.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, createIfNotExists: true, tryParents: false);

@@ -18,6 +18,9 @@ public static class LauncherLanguages
         new LauncherLanguage("de", "Deutsch"),
         new LauncherLanguage("fr", "Français"),
         new LauncherLanguage("es", "Español"),
+        new LauncherLanguage("pt-BR", "Português (Brasil)"),
+        new LauncherLanguage("ko", "한국어"),
+        new LauncherLanguage("ru", "Русский"),
     };
 
     /// <summary>The entry for a code, or English if the code is unknown or blank.</summary>
