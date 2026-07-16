@@ -121,7 +121,7 @@
     <value>Start</value>
   </data>
   <data name="FirstRun_Prompt" xml:space="preserve">
-    <value>Choose your language. You can change this later from Launcher Settings.</value>
+    <value>Choose your language. You can change this later from the gear button in the top-right.</value>
   </data>
   <!-- Launcher Settings dialog + its main-window button -->
   <data name="LauncherSettings_Title" xml:space="preserve">

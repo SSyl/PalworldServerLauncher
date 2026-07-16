@@ -63,7 +63,7 @@
     <value>启动</value>
   </data>
   <data name="FirstRun_Prompt" xml:space="preserve">
-    <value>请选择语言。您以后可以在"启动器设置"中更改此设置。</value>
+    <value>选择您的语言。之后可以通过右上角的齿轮按钮更改。</value>
   </data>
   <!-- Launcher Settings dialog + its main-window button. English placeholders pending translation. -->
   <data name="LauncherSettings_Title" xml:space="preserve">

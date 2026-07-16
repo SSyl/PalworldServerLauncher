@@ -63,7 +63,7 @@
     <value>起動</value>
   </data>
   <data name="FirstRun_Prompt" xml:space="preserve">
-    <value>言語を選択してください。これは後で「ランチャー設定」から変更できます。</value>
+    <value>言語を選択してください。後で右上の歯車ボタンから変更できます。</value>
   </data>
   <data name="LauncherSettings_Title" xml:space="preserve">
     <value>ランチャー設定</value>
