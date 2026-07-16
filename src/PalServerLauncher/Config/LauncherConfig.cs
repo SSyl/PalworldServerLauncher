@@ -233,11 +233,31 @@ public sealed class LauncherConfig
         return new LauncherConfig();
     }
 
+    private static readonly object SaveLock = new();
+
+    /// <summary>
+    /// Persist to launcher.json. Thread-safe: usually called on the UI thread, but the health monitor's
+    /// version cache saves from a background thread, so the write is serialized under a lock (so two writers
+    /// can't collide on the file) and file errors are swallowed best-effort (a locked file just skips this
+    /// save, the state re-persists on the next one). Serialization still reads the collections without the
+    /// lock, so a background save can throw if a collection is replaced mid-write, callers on a background
+    /// thread must guard against that (see <c>ServerController.CacheVersion</c>).
+    /// </summary>
     public void Save(string? path = null)
     {
         path ??= DefaultPath;
-        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-        File.WriteAllText(path, JsonSerializer.Serialize(this, JsonOptions));
+        lock (SaveLock)
+        {
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+                File.WriteAllText(path, JsonSerializer.Serialize(this, JsonOptions));
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            {
+                // Locked/in-use, skip this write; the next Save persists the current state.
+            }
+        }
     }
 
     /// <summary>

@@ -390,23 +390,32 @@ public sealed class ServerController : IDisposable
         VersionFormat.Label(KnownVersionFor(buildId), buildId, Strings.Main_PinnedBuildFormat);
 
     /// <summary>Remember the version REST reported for the installed build, so it can be shown while stopped.
-    /// Ignores the health sample's non-version sentinels ("-", "REST off") and only writes on a real change.</summary>
+    /// Ignores the health sample's non-version sentinels ("-", "REST off") and only writes on a real change.
+    /// Runs on the HealthMonitor's background thread, so it must never throw: a failed persist must not fault
+    /// the health loop (that would silently stop monitoring / auto-recovery), so everything is guarded.</summary>
     private void CacheVersion(string rawVersion)
     {
-        var shortVersion = VersionFormat.ShortVersion(rawVersion);
-        if (shortVersion is null)
-            return;
-        var build = _steamCmd.ReadInstalledBuildId();
-        if (string.IsNullOrEmpty(build))
-            return;
-        if (_config.LastKnownVersion == shortVersion && _config.LastKnownVersionBuild == build)
-            return;
-        _config.LastKnownVersion = shortVersion;
-        _config.LastKnownVersionBuild = build;
-        _config.Save();
-        // The version just became known, so refresh the pinned / updates-off status line to swap build-only for
-        // "version (build)". Only fires the one time a given build is first seen (cache is a no-op after that).
-        RefreshUpdateStatusText();
+        try
+        {
+            var shortVersion = VersionFormat.ShortVersion(rawVersion);
+            if (shortVersion is null)
+                return;
+            var build = _steamCmd.ReadInstalledBuildId();
+            if (string.IsNullOrEmpty(build))
+                return;
+            if (_config.LastKnownVersion == shortVersion && _config.LastKnownVersionBuild == build)
+                return;
+            _config.LastKnownVersion = shortVersion;
+            _config.LastKnownVersionBuild = build;
+            _config.Save();
+            // The version just became known, so refresh the pinned / updates-off status line to swap build-only
+            // for "version (build)". Only fires the one time a given build is first seen (cache is a no-op after).
+            RefreshUpdateStatusText();
+        }
+        catch (Exception ex)
+        {
+            _logger.Debug($"Version cache update skipped: {ex.Message}");
+        }
     }
 
     /// <summary>True when PalWorldSettings.ini has the REST API enabled with a non-blank admin password.</summary>
@@ -768,8 +777,10 @@ public sealed class ServerController : IDisposable
     }
 
     /// <summary>Push the update-status tile text immediately when the pin or update toggles change, so a pinned
-    /// or updates-off state shows at once instead of waiting for the next server bind or monitor tick. Only
-    /// emits for the pinned / off cases, a normal auto-updating state is left to the monitor / Start / Check.</summary>
+    /// or updates-off state shows at once instead of waiting for the next server bind or monitor tick. When
+    /// auto-updating and stopped, it clears any stale pinned/off text (e.g. after unpinning), so the tile does
+    /// not keep showing "Pinned to..." once unpinned. While running and auto-updating the running monitor owns
+    /// the text, so nothing is emitted (it would clobber the live "Up to date..." line).</summary>
     public void RefreshUpdateStatusText()
     {
         if (!IsInstalled)
@@ -779,6 +790,8 @@ public sealed class ServerController : IDisposable
             UpdateStatusChanged?.Invoke(string.Format(Strings.Update_Pinned, BuildDisplay(_config.PinnedBuildId.Length > 0 ? _config.PinnedBuildId : installed)));
         else if (!_config.AutoUpdateEnabled)
             UpdateStatusChanged?.Invoke(string.Format(Strings.Update_AutoUpdateOff, BuildDisplay(installed)));
+        else if (!IsRunning())
+            UpdateStatusChanged?.Invoke("-");
     }
 
     /// <summary>Run SteamCMD app_update in place before launch (the "always current on boot" step).</summary>
