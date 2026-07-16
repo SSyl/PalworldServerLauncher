@@ -26,7 +26,7 @@ public sealed class LauncherSettingsDialog : Window
         _config = config;
 
         Title = Strings.LauncherSettings_Title;
-        Background = new SolidColorBrush(Color.FromRgb(0x2F, 0x2F, 0x2F));
+        Background = Theme.Window;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         SizeToContent = SizeToContent.WidthAndHeight;
         ResizeMode = ResizeMode.NoResize;
@@ -103,7 +103,7 @@ public sealed class LauncherSettingsDialog : Window
         var box = new TextBox
         {
             Text = ReadNotices(), IsReadOnly = true, TextWrapping = TextWrapping.NoWrap,
-            Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E)), Foreground = Fg,
+            Background = Theme.Window, Foreground = Fg,
             BorderThickness = new Thickness(0), FontFamily = new FontFamily("Consolas"), FontSize = 12,
             Padding = new Thickness(12), CaretBrush = Brushes.Transparent,
             VerticalScrollBarVisibility = ScrollBarVisibility.Auto, HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
@@ -111,7 +111,7 @@ public sealed class LauncherSettingsDialog : Window
         new Window
         {
             Title = Strings.LauncherSettings_ThirdPartyLicenses, Owner = this,
-            Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E)),
+            Background = Theme.Window,
             Width = 660, Height = 540, WindowStartupLocation = WindowStartupLocation.CenterOwner,
             ShowInTaskbar = false, Content = box,
         }.ShowDialog();

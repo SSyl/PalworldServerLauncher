@@ -13,32 +13,22 @@ using static PalServerLauncher.Views.DarkControls;
 
 namespace PalServerLauncher.Views;
 
-/// <summary>Which slice of the settings this dialog instance shows.</summary>
-public enum SettingsSection
-{
-    /// <summary>The tabbed PalWorldSettings.ini editor: World Settings, Admin, Undocumented, plus a Launch
-    /// Arguments tab (launcher.json args, always editable) folded in.</summary>
-    ServerSettings,
-    /// <summary>Low-level process tuning (priority, CPU affinity), behind a danger-zone warning.</summary>
-    Advanced,
-}
-
 /// <summary>
-/// Data-driven settings editor, opened in one of three sections (<see cref="SettingsSection"/>) so each
-/// button gets a focused dialog. Launch args write our config (apply on next start); the ini sections
-/// are grouped by category, rendered by type, grayed while the server is running (the ini must not
-/// change under a live server), and only CHANGED keys are written back (unedited keys are preserved by
-/// the round-trip writer). Typed text fields gate their input and turn red on invalid values; Save is
-/// blocked and lists any failures. Built in code to match the other dark dialogs.
+/// Data-driven settings editor: one dialog with a three-tab top strip (Game Settings, Launcher Arguments,
+/// CPU Affinity/Priority). Game Settings holds an inner sub-tab strip of the ini categories (Admin, Gameplay,
+/// Game Balance, Performance, Undocumented) plus the search box. Launch args and CPU tuning write our config
+/// (applied on the next start), the ini tabs are grouped by category, rendered by type, grayed while the
+/// server is running (the ini must not change under a live server), and only CHANGED keys are written back
+/// (unedited keys are preserved by the round-trip writer). Typed text fields gate their input and turn red on
+/// invalid values, Save is blocked and lists any failures. Built in code to match the other dark dialogs.
 /// </summary>
 public sealed class SettingsDialog : Window
 {
     private static readonly Brush NormalBorder = FieldBorder;
-    private static readonly Brush ErrorBorder = new SolidColorBrush(Color.FromRgb(0xE0, 0x5A, 0x5A));
+    private static readonly Brush ErrorBorder = Theme.Error;
 
     private const string ConfigDocsUrl = "https://docs.palworldgame.com/settings-and-operation/configuration/";
 
-    private readonly SettingsSection _section;
     private readonly LauncherConfig _config;
     private readonly GameSettingsService _gameSettings;
     private readonly bool _serverRunning;
@@ -70,11 +60,13 @@ public sealed class SettingsDialog : Window
     // Per-field reset-to-default actions (each ↺ button; also driven by the "Reset to defaults" button).
     private readonly List<System.Action> _resetActions = new();
 
-    // Server Settings search: the tab control, the search box, and the per-tab structure it filters. Only the
-    // three ini tabs (World / Admin / Undocumented) are registered here, so Launch Arguments is never filtered.
+    // Server Settings tabs. _tabs is the top strip (Game Settings / Launcher Arguments / CPU Affinity/Priority),
+    // _iniTabs is the inner strip inside Game Settings (the ini categories). Only the inner ini sub-tabs are
+    // registered in _searchTabs, so the search filters those and never Launch Arguments or CPU tuning.
     private TabControl? _tabs;
+    private TabControl? _iniTabs;
     private TextBox? _searchBox;
-    private UIElement? _presetRow; // the World tab's difficulty-preset buttons, hidden while a search is active
+    private UIElement? _presetRow; // the difficulty-preset buttons atop Game Settings, hidden while a search is active
     private readonly List<SearchTab> _searchTabs = new();
 
     // One filterable setting row: the row element plus the text the search matches against. Key is the literal
@@ -103,49 +95,26 @@ public sealed class SettingsDialog : Window
         public int LastMatchCount { get; set; }
     }
 
-    private SettingsDialog(SettingsSection section, LauncherConfig config, GameSettingsService gameSettings, bool serverRunning)
+    private SettingsDialog(LauncherConfig config, GameSettingsService gameSettings, bool serverRunning)
     {
-        _section = section;
         _config = config;
         _gameSettings = gameSettings;
         _serverRunning = serverRunning;
 
-        Title = section == SettingsSection.Advanced ? Strings.Settings_AdvancedTitle : Strings.Settings_ServerTitle;
-        Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
+        Title = Strings.Settings_ServerTitle;
+        Background = Theme.Window;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        Width = section == SettingsSection.ServerSettings ? 720 : 660;
-        Height = section == SettingsSection.Advanced ? 440 : 720;
+        Width = 720;
+        Height = 720;
         ShowInTaskbar = false;
 
-        if (section == SettingsSection.ServerSettings)
-        {
-            BuildServerSettings();
-            return;
-        }
-
-        // The only non-ServerSettings section left is Advanced (Launch Arguments is now a tab in ServerSettings).
-        var stack = new StackPanel { Margin = new Thickness(18) };
-        BuildAdvanced(stack);
-
-        var scroll = new ScrollViewer { Content = stack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
-
-        var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(18, 10, 18, 14) };
-        if (_resetActions.Count > 0)
-            buttons.Children.Add(MakeButton(Strings.Settings_ResetToDefaults, ResetAll));
-        buttons.Children.Add(MakeButton(Strings.Common_Save, OnSave));
-        buttons.Children.Add(MakeButton(Strings.Common_Cancel, Close));
-
-        var root = new DockPanel();
-        DockPanel.SetDock(buttons, Dock.Bottom);
-        root.Children.Add(buttons);
-        root.Children.Add(scroll);
-        Content = root;
+        BuildServerSettings();
     }
 
     /// <summary>
-    /// Build the tabbed PalWorldSettings.ini editor: World Settings + Admin hold the documented (and
-    /// understood-undocumented) keys grouped by category, and the Undocumented tab collects the keys we
-    /// can't confidently explain plus any the catalog doesn't recognize. One Save applies every tab.
+    /// Build the three-tab dialog: a Game Settings tab (the ini categories as an inner sub-tab strip, with the
+    /// difficulty presets and search box above it), a Launcher Arguments tab, and a CPU Affinity/Priority tab.
+    /// One Save applies every tab.
     /// </summary>
     private void BuildServerSettings()
     {
@@ -154,45 +123,88 @@ public sealed class SettingsDialog : Window
         var current = gameAvailable ? _gameSettings.Load() : new Dictionary<string, string?>();
         var defaults = gameAvailable ? _gameSettings.LoadDefaults() : new Dictionary<string, string?>();
 
+        // The five ini sub-tabs, one category each, each with its own doc blurb (in addition to the shared
+        // overview blurb hosted atop the Game Settings tab). The gameplay family link to the same features docs.
         _presetRow = BuildPresetRow(gameEnabled);
-        var world = BuildIniTab(
-            DocBlurb(Strings.Settings_WorldBlurb,
-                "https://docs.palworldgame.com/settings-and-operation/configuration#features", Strings.Settings_WorldBlurbLink),
-            new[] { SettingCategory.Performance, SettingCategory.Gameplay, SettingCategory.GameBalance },
-            s => s.Doc != DocStatus.Unknown, gameEnabled, current, defaults,
-            topExtra: _presetRow);
+        var featuresUrl = "https://docs.palworldgame.com/settings-and-operation/configuration#features";
         var admin = BuildIniTab(
             DocBlurb(Strings.Settings_AdminBlurb,
                 "https://docs.palworldgame.com/settings-and-operation/configuration#server-management", Strings.Settings_AdminBlurbLink),
-            new[] { SettingCategory.ServerAdmin },
-            s => s.Doc != DocStatus.Unknown, gameEnabled, current, defaults);
+            new[] { SettingCategory.ServerAdmin }, s => s.Doc != DocStatus.Unknown, gameEnabled, current, defaults);
+        var gameplay = BuildIniTab(
+            DocBlurb(Strings.Settings_GameplayBlurb, featuresUrl, Strings.Settings_WorldBlurbLink),
+            new[] { SettingCategory.Gameplay }, s => s.Doc != DocStatus.Unknown, gameEnabled, current, defaults);
+        var gameBalance = BuildIniTab(
+            DocBlurb(Strings.Settings_GameBalanceBlurb, featuresUrl, Strings.Settings_WorldBlurbLink),
+            new[] { SettingCategory.GameBalance }, s => s.Doc != DocStatus.Unknown, gameEnabled, current, defaults);
+        var performance = BuildIniTab(
+            DocBlurb(Strings.Settings_PerformanceBlurb, featuresUrl, Strings.Settings_WorldBlurbLink),
+            new[] { SettingCategory.Performance }, s => s.Doc != DocStatus.Unknown, gameEnabled, current, defaults);
         var undoc = BuildUndocumentedTab(gameAvailable, gameEnabled, current, defaults);
 
-        // Launch Arguments live in launcher.json (ours), so this tab stays editable even while the server runs,
-        // unlike the ini-backed tabs above. BuildLaunchArgs wires its own fields, live preview, and resets.
+        // Inner strip: the ini categories, styled lighter than the top strip. Admin first (server name and
+        // password live there), then the gameplay family, then Undocumented.
+        _iniTabs = new TabControl
+        {
+            Background = Theme.Window,
+            BorderThickness = new Thickness(0),
+        };
+        if (Application.Current?.TryFindResource("DarkSubTabItem") is Style subTabStyle)
+            _iniTabs.ItemContainerStyle = subTabStyle;
+        var adminTab = new TabItem { Header = Strings.Settings_TabAdmin, Content = admin.Content };
+        var gameplayTab = new TabItem { Header = CategoryLabel(SettingCategory.Gameplay), Content = gameplay.Content };
+        var gameBalanceTab = new TabItem { Header = CategoryLabel(SettingCategory.GameBalance), Content = gameBalance.Content };
+        var performanceTab = new TabItem { Header = CategoryLabel(SettingCategory.Performance), Content = performance.Content };
+        var undocTab = new TabItem { Header = Strings.Settings_TabUndocumented, Content = undoc.Content };
+        _iniTabs.Items.Add(adminTab);
+        _iniTabs.Items.Add(gameplayTab);
+        _iniTabs.Items.Add(gameBalanceTab);
+        _iniTabs.Items.Add(performanceTab);
+        _iniTabs.Items.Add(undocTab);
+
+        // Only the ini sub-tabs are searchable (each BaseHeader must equal its tab header string).
+        _searchTabs.Add(new SearchTab(adminTab, Strings.Settings_TabAdmin, admin.Placeholder, admin.Groups));
+        _searchTabs.Add(new SearchTab(gameplayTab, CategoryLabel(SettingCategory.Gameplay), gameplay.Placeholder, gameplay.Groups));
+        _searchTabs.Add(new SearchTab(gameBalanceTab, CategoryLabel(SettingCategory.GameBalance), gameBalance.Placeholder, gameBalance.Groups));
+        _searchTabs.Add(new SearchTab(performanceTab, CategoryLabel(SettingCategory.Performance), performance.Placeholder, performance.Groups));
+        _searchTabs.Add(new SearchTab(undocTab, Strings.Settings_TabUndocumented, undoc.Placeholder, undoc.Groups));
+
+        // Game Settings host is a DockPanel so the inner TabControl fills. A StackPanel or an outer ScrollViewer
+        // would hand the inner TabControl infinite height and break it. The blurb + preset row + search dock to
+        // the top, _iniTabs fills the rest (each sub-tab already scrolls on its own).
+        var gameTop = new StackPanel { Margin = new Thickness(18, 14, 18, 0) };
+        gameTop.Children.Add(DocBlurb(Strings.Settings_WorldBlurb,
+            "https://docs.palworldgame.com/settings-and-operation/configuration#features", Strings.Settings_WorldBlurbLink));
+        gameTop.Children.Add(_presetRow);
+        var gameHost = new DockPanel();
+        DockPanel.SetDock(gameTop, Dock.Top);
+        gameHost.Children.Add(gameTop);
+        var searchRow = BuildSearchRow();
+        DockPanel.SetDock(searchRow, Dock.Top);
+        gameHost.Children.Add(searchRow);
+        gameHost.Children.Add(_iniTabs); // fills the remaining space
+
+        // Launch Arguments and CPU Affinity/Priority are launcher.json-backed (editable even while running). CPU
+        // tuning carries the amber warning banner that used to be a pre-open modal.
         var launchStack = new StackPanel { Margin = new Thickness(18) };
         BuildLaunchArgs(launchStack);
         var launch = new ScrollViewer { Content = launchStack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
+        var advancedStack = new StackPanel { Margin = new Thickness(18) };
+        advancedStack.Children.Add(Banner(Strings.Settings_AdvancedIntro));
+        BuildAdvanced(advancedStack);
+        var advanced = new ScrollViewer { Content = advancedStack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
 
+        // Top strip: the three concerns.
         _tabs = new TabControl
         {
-            Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E)),
+            Background = Theme.Window,
             BorderThickness = new Thickness(0),
         };
         if (Application.Current?.TryFindResource("DarkTabItem") is Style tabStyle)
             _tabs.ItemContainerStyle = tabStyle;
-        var worldTab = new TabItem { Header = Strings.Settings_TabWorld, Content = world.Content };
-        var adminTab = new TabItem { Header = Strings.Settings_TabAdmin, Content = admin.Content };
-        var undocTab = new TabItem { Header = Strings.Settings_TabUndocumented, Content = undoc.Content };
-        _tabs.Items.Add(worldTab);
-        _tabs.Items.Add(adminTab);
-        _tabs.Items.Add(undocTab);
+        _tabs.Items.Add(new TabItem { Header = Strings.Settings_TabGameSettings, Content = gameHost });
         _tabs.Items.Add(new TabItem { Header = Strings.Settings_TabLaunchArgs, Content = launch });
-
-        // Only the ini tabs are searchable. Launch Arguments is deliberately left out.
-        _searchTabs.Add(new SearchTab(worldTab, Strings.Settings_TabWorld, world.Placeholder, world.Groups));
-        _searchTabs.Add(new SearchTab(adminTab, Strings.Settings_TabAdmin, admin.Placeholder, admin.Groups));
-        _searchTabs.Add(new SearchTab(undocTab, Strings.Settings_TabUndocumented, undoc.Placeholder, undoc.Groups));
+        _tabs.Items.Add(new TabItem { Header = Strings.Settings_TabCpuAffinity, Content = advanced });
 
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(18, 10, 18, 14) };
         if (_resetActions.Count > 0)
@@ -212,9 +224,6 @@ public sealed class SettingsDialog : Window
             DockPanel.SetDock(banner, Dock.Top);
             root.Children.Add(banner);
         }
-        var searchRow = BuildSearchRow();
-        DockPanel.SetDock(searchRow, Dock.Top);
-        root.Children.Add(searchRow);
         DockPanel.SetDock(buttons, Dock.Bottom);
         root.Children.Add(buttons);
         root.Children.Add(_tabs); // last child fills the remaining space
@@ -241,7 +250,7 @@ public sealed class SettingsDialog : Window
         var clear = new Button
         {
             Content = "✕", Width = 22, Height = 22, Padding = new Thickness(0), FontSize = 11,
-            Foreground = Brushes.White, Background = new SolidColorBrush(Color.FromRgb(0xC8, 0x3A, 0x3A)),
+            Foreground = Brushes.White, Background = Theme.Danger,
             Margin = new Thickness(6, 0, 2, 0), Visibility = Visibility.Collapsed,
             VerticalAlignment = VerticalAlignment.Center, ToolTip = Strings.Settings_SearchClearTooltip,
         };
@@ -318,34 +327,30 @@ public sealed class SettingsDialog : Window
     /// which is not a searchable tab).</summary>
     private void AutoSwitchToMatches()
     {
-        var selected = _searchTabs.FirstOrDefault(t => t.Tab == _tabs!.SelectedItem as TabItem);
+        var selected = _searchTabs.FirstOrDefault(t => t.Tab == _iniTabs!.SelectedItem as TabItem);
         if (selected is null || selected.LastMatchCount > 0)
             return;
         var firstWithMatches = _searchTabs.FirstOrDefault(t => t.LastMatchCount > 0);
         if (firstWithMatches is not null)
-            _tabs!.SelectedItem = firstWithMatches.Tab;
+            _iniTabs!.SelectedItem = firstWithMatches.Tab;
     }
 
-    /// <summary>One catalog tab: the doc blurb, then rows for the matching keys grouped by category (headers
-    /// are dropped for a category with no matching rows).</summary>
+    /// <summary>One ini category's sub-tab content: an optional doc blurb, then its rows. Built one category per
+    /// call now (the sub-tab header names the category), so no in-tab category header is emitted.</summary>
     private (ScrollViewer Content, List<SearchGroup> Groups, TextBlock Placeholder) BuildIniTab(
-        UIElement blurb, IEnumerable<SettingCategory> categories, Func<GameSetting, bool> filter,
-        bool gameEnabled, IReadOnlyDictionary<string, string?> current, IReadOnlyDictionary<string, string?> defaults,
-        UIElement? topExtra = null)
+        UIElement? blurb, IEnumerable<SettingCategory> categories, Func<GameSetting, bool> filter,
+        bool gameEnabled, IReadOnlyDictionary<string, string?> current, IReadOnlyDictionary<string, string?> defaults)
     {
         var stack = new StackPanel { Margin = new Thickness(18) };
-        stack.Children.Add(blurb);
-        if (topExtra is not null)
-            stack.Children.Add(topExtra);
+        if (blurb is not null)
+            stack.Children.Add(blurb);
         var groups = new List<SearchGroup>();
         foreach (var category in categories)
         {
             var settings = GameSettingsCatalog.All.Where(s => s.Category == category && filter(s)).ToList();
             if (settings.Count == 0)
                 continue;
-            var header = Header(CategoryLabel(category));
-            stack.Children.Add(header);
-            var group = new SearchGroup { Header = header };
+            var group = new SearchGroup();
             foreach (var setting in settings)
                 group.Rows.Add(AddCatalogRow(stack, setting, gameEnabled, current, defaults));
             groups.Add(group);
@@ -534,33 +539,24 @@ public sealed class SettingsDialog : Window
             string.Format(Strings.Settings_PresetAppliedMessage, label, changes.Count), Strings.Common_OK);
     }
 
-    public static bool ShowServerSettings(Window? owner, LauncherConfig config, GameSettingsService gs, bool serverRunning) =>
-        Show(owner, SettingsSection.ServerSettings, config, gs, serverRunning);
-
-    public static bool ShowAdvanced(Window? owner, LauncherConfig config, GameSettingsService gs, bool serverRunning) =>
-        Show(owner, SettingsSection.Advanced, config, gs, serverRunning);
-
-    private static bool Show(Window? owner, SettingsSection section, LauncherConfig config, GameSettingsService gs, bool serverRunning)
+    public static bool ShowServerSettings(Window? owner, LauncherConfig config, GameSettingsService gs, bool serverRunning)
     {
-        var dialog = new SettingsDialog(section, config, gs, serverRunning) { Owner = owner };
+        var dialog = new SettingsDialog(config, gs, serverRunning) { Owner = owner };
         dialog.ShowDialog();
         return dialog._saved;
     }
 
     private void BuildLaunchArgs(StackPanel stack)
     {
-        stack.Children.Add(new TextBlock
-        {
-            Text = Strings.Settings_LaunchArgsIntro,
-            Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 10),
-        });
+        stack.Children.Add(DocBlurb(Strings.Settings_LaunchArgsIntro,
+            "https://docs.palworldgame.com/settings-and-operation/arguments", Strings.Settings_LaunchArgsBlurbLink));
 
         // Live, read-only command preview: not editable, but selectable so it can be copied.
         _commandPreview = new TextBox
         {
             IsReadOnly = true, TextWrapping = TextWrapping.Wrap, MinHeight = 46,
-            Background = new SolidColorBrush(Color.FromRgb(0x14, 0x14, 0x14)),
-            Foreground = new SolidColorBrush(Color.FromRgb(0x9C, 0xD0, 0x9C)),
+            Background = Theme.Sunken,
+            Foreground = Theme.CodeFg,
             FontFamily = new FontFamily("Consolas"), BorderBrush = NormalBorder,
             Padding = new Thickness(8), Margin = new Thickness(0, 0, 0, 14),
         };
@@ -599,33 +595,35 @@ public sealed class SettingsDialog : Window
         _logFormat.SelectionChanged += OnLaunchFieldChanged;
 
         var d = new LauncherConfig(); // built-in defaults for the reset (↺) actions
+        // Launch Arguments (launcher.json) each keep their own ↺ reset but stay out of the bulk "Reset to
+        // defaults", which is scoped to the game ini tabs only (same for the Advanced tab below).
         stack.Children.Add(Row(Strings.Settings_RowListenPort, _port,
             Strings.Settings_TipListenPort,
-            TextReset(_port, d.ServerPort.ToString(CultureInfo.InvariantCulture))));
+            TextReset(_port, d.ServerPort.ToString(CultureInfo.InvariantCulture)), includeInBulkReset: false));
         stack.Children.Add(Row(Strings.Settings_RowQueryPort, _queryPort,
             Strings.Settings_TipQueryPort,
-            TextReset(_queryPort, ""))); // reset = blank = auto
+            TextReset(_queryPort, ""), includeInBulkReset: false)); // reset = blank = auto
         stack.Children.Add(Row(Strings.Settings_RowMaxPlayers, _maxPlayers,
             Strings.Settings_TipMaxPlayers,
-            TextReset(_maxPlayers, d.MaxPlayers.ToString(CultureInfo.InvariantCulture))));
+            TextReset(_maxPlayers, d.MaxPlayers.ToString(CultureInfo.InvariantCulture)), includeInBulkReset: false));
         stack.Children.Add(Row(Strings.Settings_RowPerfThreads, _perfThreads,
             Strings.Settings_TipPerfThreads,
-            CheckReset(_perfThreads, d.PerformanceThreads)));
+            CheckReset(_perfThreads, d.PerformanceThreads), includeInBulkReset: false));
         stack.Children.Add(Row(Strings.Settings_RowWorkerThreads, _workerThreads,
             Strings.Settings_TipWorkerThreads,
-            TextReset(_workerThreads, d.WorkerThreads.ToString(CultureInfo.InvariantCulture))));
+            TextReset(_workerThreads, d.WorkerThreads.ToString(CultureInfo.InvariantCulture)), includeInBulkReset: false));
         stack.Children.Add(Row(Strings.Settings_RowCommunity, _community,
             Strings.Settings_TipCommunity,
-            CheckReset(_community, d.CommunityServer)));
+            CheckReset(_community, d.CommunityServer), includeInBulkReset: false));
         stack.Children.Add(Row(Strings.Settings_RowPublicIp, _publicIp,
             Strings.Settings_TipPublicIp,
-            TextReset(_publicIp, d.PublicIp)));
+            TextReset(_publicIp, d.PublicIp), includeInBulkReset: false));
         stack.Children.Add(Row(Strings.Settings_RowPublicPort, _publicPort,
             Strings.Settings_TipPublicPort,
-            TextReset(_publicPort, d.PublicPortArg.ToString(CultureInfo.InvariantCulture))));
+            TextReset(_publicPort, d.PublicPortArg.ToString(CultureInfo.InvariantCulture)), includeInBulkReset: false));
         stack.Children.Add(Row(Strings.Settings_RowLogFormat, _logFormat,
             Strings.Settings_TipLogFormat,
-            ComboReset(_logFormat, d.LogFormat)));
+            ComboReset(_logFormat, d.LogFormat), includeInBulkReset: false));
 
         // --- Advanced (collapsed): free-form extra arguments ---
         _extraArgsOriginal = _config.ExtraServerArgs;
@@ -637,7 +635,6 @@ public sealed class SettingsDialog : Window
             Padding = new Thickness(6), CaretBrush = Brushes.White,
         };
         _extraArgs.TextChanged += OnLaunchFieldChanged;
-        _resetActions.Add(() => _extraArgs.Text = d.ExtraServerArgs); // "Reset to defaults" clears the Advanced box too
 
         var advancedBody = new StackPanel();
         advancedBody.Children.Add(new TextBlock
@@ -655,15 +652,10 @@ public sealed class SettingsDialog : Window
         UpdatePreview();
     }
 
-    /// <summary>The Advanced Settings section: low-level process tuning applied after launch (danger-zone gated).</summary>
+    /// <summary>The Advanced tab body: low-level process tuning applied after launch. The caller adds the amber
+    /// warning banner above this (see BuildServerSettings).</summary>
     private void BuildAdvanced(StackPanel stack)
     {
-        stack.Children.Add(new TextBlock
-        {
-            Text = Strings.Settings_AdvancedIntro,
-            Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 10),
-        });
-
         stack.Children.Add(Header(Strings.Settings_PriorityAffinityHeader));
 
         _priority = ComboField(
@@ -671,7 +663,7 @@ public sealed class SettingsDialog : Window
             PriorityToLabel(_config.ServerPriority), true);
         stack.Children.Add(Row(Strings.Settings_RowPriority, _priority,
             Strings.Settings_TipPriority,
-            ComboReset(_priority, Strings.Settings_PriorityNormal)));
+            ComboReset(_priority, Strings.Settings_PriorityNormal), includeInBulkReset: false));
 
         var cores = Environment.ProcessorCount;
         _affinityBoxes = new CheckBox[cores];
@@ -693,7 +685,6 @@ public sealed class SettingsDialog : Window
             Foreground = Muted, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 4),
         });
         stack.Children.Add(affinityPanel);
-        _resetActions.Add(() => { foreach (var b in _affinityBoxes) b.IsChecked = true; }); // reset = all cores
     }
 
     // The config stores the canonical ProcessPriorityClass name ("BelowNormal" / "Normal" / "AboveNormal" /
@@ -841,20 +832,12 @@ public sealed class SettingsDialog : Window
 
     private bool Apply()
     {
-        if (_section == SettingsSection.Advanced)
-        {
-            _config.ServerPriority = LabelToPriority(_priority!.SelectedItem as string);
-            _config.ServerAffinityMask = ComputeAffinityMask();
-            _config.Save();
-            return true;
-        }
-
-        // ServerSettings also hosts the Launch Arguments tab. Launch args (launcher.json) are ours and always
-        // safe to write, so we save them regardless of running state. The game ini can only be written while
+        // The launcher.json tabs (Launch Arguments + Advanced process tuning) are ours and always safe to write,
+        // so ApplyLauncherConfig saves them regardless of running state. The game ini can only be written while
         // stopped (a running server would overwrite it), so those edits are gated below.
         if (_serverRunning)
         {
-            ApplyLaunchArgs();
+            ApplyLauncherConfig();
             return true;
         }
 
@@ -869,7 +852,7 @@ public sealed class SettingsDialog : Window
 
         if (gameEdits.Count == 0 && extraEdits.Count == 0)
         {
-            ApplyLaunchArgs();
+            ApplyLauncherConfig();
             return true;
         }
 
@@ -895,14 +878,15 @@ public sealed class SettingsDialog : Window
             ShowCorruptError(badExtraKey);
             return false;
         }
-        // Launch args save only after the ini write succeeds, so cancelling the confirm above saves nothing.
-        ApplyLaunchArgs();
+        // Launcher.json saves only after the ini write succeeds, so cancelling the confirm above saves nothing.
+        ApplyLauncherConfig();
         return true;
     }
 
-    /// <summary>Persist the launch-argument fields to launcher.json. Safe to write any time (it's ours; the
-    /// running server never touches it), and applied on the next start.</summary>
-    private void ApplyLaunchArgs()
+    /// <summary>Persist the launcher.json settings: the launch-argument fields plus the Advanced tab's process
+    /// priority and CPU affinity. Safe to write any time (it's ours, the running server never touches it). Launch
+    /// args apply on the next start, the affinity re-pin picks up a live change from the health probe.</summary>
+    private void ApplyLauncherConfig()
     {
         _config.ServerPort = ParseInt(_port!.Text, _config.ServerPort);
         _config.QueryPort = ParseInt(_queryPort!.Text, 0); // blank / 0 = auto
@@ -914,6 +898,8 @@ public sealed class SettingsDialog : Window
         _config.PublicPortArg = ParseInt(_publicPort!.Text, _config.PublicPortArg);
         _config.LogFormat = (_logFormat!.SelectedItem as string) ?? "";
         _config.ExtraServerArgs = _extraArgs!.Text.Trim();
+        _config.ServerPriority = LabelToPriority(_priority!.SelectedItem as string);
+        _config.ServerAffinityMask = ComputeAffinityMask();
         _config.Save();
     }
 
@@ -986,10 +972,10 @@ public sealed class SettingsDialog : Window
 
     private static Border Banner(string text) => new()
     {
-        Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x2E, 0x1E)),
+        Background = Theme.BannerBg,
         Padding = new Thickness(10, 8, 10, 8),
         Margin = new Thickness(0, 0, 0, 8),
-        Child = new TextBlock { Text = text, Foreground = new SolidColorBrush(Color.FromRgb(0xE0, 0xC0, 0x80)), TextWrapping = TextWrapping.Wrap },
+        Child = new TextBlock { Text = text, Foreground = Theme.BannerFg, TextWrapping = TextWrapping.Wrap },
     };
 
     /// <summary>A muted description ending in a clickable link to the Palworld docs (opens the default browser).</summary>
@@ -1062,7 +1048,7 @@ public sealed class SettingsDialog : Window
         var button = new Button
         {
             Content = "↺", Width = 26, Margin = new Thickness(6, 0, 0, 0), Padding = new Thickness(0, 1, 0, 1),
-            Foreground = Fg, Background = new SolidColorBrush(Color.FromRgb(0x44, 0x44, 0x44)),
+            Foreground = Fg, Background = Theme.Control,
             BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand,
             VerticalAlignment = VerticalAlignment.Center, ToolTip = Strings.Settings_ResetFieldTooltip,
         };

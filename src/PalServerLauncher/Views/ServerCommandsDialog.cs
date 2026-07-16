@@ -19,8 +19,8 @@ namespace PalServerLauncher.Views;
 /// </summary>
 public sealed class ServerCommandsDialog : Window
 {
-    private static readonly Brush Danger = new SolidColorBrush(Color.FromRgb(0xC2, 0x42, 0x38));
-    private static readonly Brush Warn = new SolidColorBrush(Color.FromRgb(0xB8, 0x86, 0x0B));
+    private static readonly Brush Danger = Theme.Danger;
+    private static readonly Brush Warn = Theme.Warning;
 
     private readonly ServerCommandActions _actions;
     private readonly Logger _logger;
@@ -37,7 +37,7 @@ public sealed class ServerCommandsDialog : Window
         _logger = logger;
 
         Title = Strings.ServerCmd_Title;
-        Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
+        Background = Theme.Window;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         Width = 620;
         SizeToContent = SizeToContent.Height;

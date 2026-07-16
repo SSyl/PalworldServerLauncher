@@ -27,7 +27,7 @@ public sealed class AnnouncementsDialog : Window
         _config = config;
 
         Title = Strings.Announcements_Title;
-        Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
+        Background = Theme.Window;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         Width = 620;
         SizeToContent = SizeToContent.Height;

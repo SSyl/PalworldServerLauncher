@@ -1,6 +1,5 @@
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace PalServerLauncher.Views;
 
@@ -15,7 +14,7 @@ public sealed class ChoiceDialog : Window
     private ChoiceDialog(string title, string message, string[] buttons)
     {
         Title = title;
-        Background = new SolidColorBrush(Color.FromRgb(0x2F, 0x2F, 0x2F));
+        Background = Theme.Window;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         SizeToContent = SizeToContent.WidthAndHeight;
         ResizeMode = ResizeMode.NoResize;
@@ -28,7 +27,7 @@ public sealed class ChoiceDialog : Window
         root.Children.Add(new TextBlock
         {
             Text = message,
-            Foreground = Brushes.White,
+            Foreground = Theme.Text,
             FontSize = 13,
             TextWrapping = TextWrapping.Wrap,
             MaxWidth = 460,
@@ -48,11 +47,6 @@ public sealed class ChoiceDialog : Window
             {
                 Content = buttons[i],
                 Margin = new Thickness(8, 0, 0, 0),
-                Padding = new Thickness(14, 7, 14, 7),
-                Foreground = Brushes.White,
-                Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)),
-                BorderThickness = new Thickness(0),
-                Cursor = System.Windows.Input.Cursors.Hand,
                 MinWidth = 90,
             };
             button.Click += (_, _) => { _result = index; Close(); };

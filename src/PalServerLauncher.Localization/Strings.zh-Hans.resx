@@ -151,19 +151,13 @@
     <value>服务器设置</value>
   </data>
   <data name="Main_ServerSettingsTip" xml:space="preserve">
-    <value>在一个分页编辑器中编辑服务器：世界设置（玩法与平衡）、管理（名称、密码、REST / RCON）、未记录（官方文档未涵盖的设置项），以及启动参数（命令行：监听端口、玩家上限、性能线程、社区列表）。</value>
+    <value>在单个选项卡编辑器中编辑服务器：游戏设置（PalWorldSettings.ini 的游戏玩法、平衡性和管理键作为子选项卡）、启动参数（命令行：监听端口、玩家上限、性能线程、社区列表）以及 CPU 相关性/优先级（进程优先级和 CPU 绑定）。</value>
   </data>
   <data name="Main_Mods" xml:space="preserve">
     <value>模组</value>
   </data>
   <data name="Main_ModsTip" xml:space="preserve">
     <value>管理 Steam 创意工坊服务器模组：添加创意工坊 ID 让启动器下载，或扫描你自己放入模组文件夹的模组。</value>
-  </data>
-  <data name="Main_AdvancedSettings" xml:space="preserve">
-    <value>高级设置</value>
-  </data>
-  <data name="Main_AdvancedSettingsTip" xml:space="preserve">
-    <value>底层进程调优（优先级、CPU 亲和性），仅限高级用户</value>
   </data>
   <data name="Main_StatusLabel" xml:space="preserve">
     <value>状态：</value>
@@ -513,17 +507,6 @@
   <data name="Main_LeaveRunning" xml:space="preserve">
     <value>保持运行</value>
   </data>
-  <data name="Main_DangerZoneTitle" xml:space="preserve">
-    <value>危险区域！</value>
-  </data>
-  <data name="Main_DangerZoneMessage" xml:space="preserve">
-    <value>这些是高级的底层设置。在此使用错误的值可能会损害性能。例如，把进程优先级设得过高会挤占系统其余部分的资源，让服务器运行得更差而非更好。
-
-除非你清楚自己在做什么，否则请勿使用这些设置。</value>
-  </data>
-  <data name="Main_UnderstandContinue" xml:space="preserve">
-    <value>我明白，继续</value>
-  </data>
   <data name="Main_ForceShutdownConfirmMessage" xml:space="preserve">
     <value>这将通过完全终止进程立即关闭服务器，且不进行保存。可能导致存档数据丢失或损坏。除非服务器已完全停止响应，否则不建议使用。</value>
   </data>
@@ -544,12 +527,6 @@
   </data>
   <data name="Main_Download" xml:space="preserve">
     <value>下载</value>
-  </data>
-  <data name="Secret_Show" xml:space="preserve">
-    <value>显示</value>
-  </data>
-  <data name="Secret_Hide" xml:space="preserve">
-    <value>隐藏</value>
   </data>
   <data name="Secret_Tooltip" xml:space="preserve">
     <value>显示或隐藏该值</value>
@@ -1068,9 +1045,6 @@
   <data name="Mods_ColNote" xml:space="preserve">
     <value>备注</value>
   </data>
-  <data name="Settings_AdvancedTitle" xml:space="preserve">
-    <value>高级设置</value>
-  </data>
   <data name="Settings_ServerTitle" xml:space="preserve">
     <value>服务器设置</value>
   </data>
@@ -1097,9 +1071,6 @@
   </data>
   <data name="Settings_AdminBlurbLink" xml:space="preserve">
     <value>服务器管理文档</value>
-  </data>
-  <data name="Settings_TabWorld" xml:space="preserve">
-    <value>世界设置</value>
   </data>
   <data name="Settings_TabAdmin" xml:space="preserve">
     <value>管理</value>
@@ -1135,7 +1106,7 @@
     <value>此设置在服务器上无效</value>
   </data>
   <data name="Settings_NoEffectMessage" xml:space="preserve">
-    <value>提示：“{0}”是客户端/单人游戏设置，对专用服务器没有影响。在此修改它不会改变服务器的玩法。请使用各项单独设置（或“世界设置”顶部的难度预设按钮）来控制服务器难度。</value>
+    <value>请注意：“{0}”是客户端/单人游戏设置，对专用服务器无效。在此更改不会影响服务器实际游戏体验。请使用单个设置（或游戏设置选项卡顶部的难度预设按钮）来控制服务器难度。</value>
   </data>
   <data name="Settings_GotIt" xml:space="preserve">
     <value>知道了</value>
@@ -2205,5 +2176,26 @@
   </data>
   <data name="LauncherSettings_Copyright" xml:space="preserve">
     <value>© 2026 Syl S. · GPLv3</value>
+  </data>
+  <data name="Settings_TabGameSettings" xml:space="preserve">
+    <value>游戏设置</value>
+  </data>
+  <data name="Settings_TabCpuAffinity" xml:space="preserve">
+    <value>CPU 相关性/优先级</value>
+  </data>
+  <data name="Main_CompactMode" xml:space="preserve">
+    <value>紧凑模式</value>
+  </data>
+  <data name="Settings_GameplayBlurb" xml:space="preserve">
+    <value>难度、EXP / 捕获率 / 掉落率、昼夜长度以及世界功能开关。完整参考：</value>
+  </data>
+  <data name="Settings_GameBalanceBlurb" xml:space="preserve">
+    <value>伤害、掉落和属性倍率，用于调整战斗与成长平衡。完整参考：</value>
+  </data>
+  <data name="Settings_PerformanceBlurb" xml:space="preserve">
+    <value>影响服务器负载的限制：基地数量、公会规模、对象上限和生成密度。完整参考：</value>
+  </data>
+  <data name="Settings_LaunchArgsBlurbLink" xml:space="preserve">
+    <value>启动参数文档</value>
   </data>
 </root>

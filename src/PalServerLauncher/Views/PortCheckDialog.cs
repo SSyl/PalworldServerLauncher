@@ -24,11 +24,11 @@ namespace PalServerLauncher.Views;
 /// </summary>
 public sealed class PortCheckDialog : Window
 {
-    private static readonly Brush Green = new SolidColorBrush(Color.FromRgb(0x3F, 0xB0, 0x50));
-    private static readonly Brush Amber = new SolidColorBrush(Color.FromRgb(0xE0, 0xA0, 0x30));
-    private static readonly Brush Red = new SolidColorBrush(Color.FromRgb(0xD0, 0x50, 0x45));
-    private static readonly Brush Grey = new SolidColorBrush(Color.FromRgb(0x88, 0x88, 0x88));
-    private static readonly Brush Blue = new SolidColorBrush(Color.FromRgb(0x2D, 0x6C, 0xDF));
+    private static readonly Brush Green = Theme.Success;
+    private static readonly Brush Amber = Theme.Warning;
+    private static readonly Brush Red = Theme.Error;
+    private static readonly Brush Grey = Theme.TextCaption;
+    private static readonly Brush Blue = Theme.Accent;
 
     private readonly Logger _logger;
     private readonly CancellationTokenSource _cts = new();
@@ -53,7 +53,7 @@ public sealed class PortCheckDialog : Window
         _logger = logger;
 
         Title = Strings.PortCheck_Title;
-        Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
+        Background = Theme.Window;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         Width = 640;
         SizeToContent = SizeToContent.Height;
@@ -243,9 +243,9 @@ public sealed class PortCheckDialog : Window
 
     private static Border Note(string text) => new()
     {
-        Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x2E, 0x1E)),
+        Background = Theme.BannerBg,
         Padding = new Thickness(10, 8, 10, 8),
         Margin = new Thickness(0, 14, 0, 0),
-        Child = new TextBlock { Text = text, Foreground = new SolidColorBrush(Color.FromRgb(0xE0, 0xC0, 0x80)), TextWrapping = TextWrapping.Wrap },
+        Child = new TextBlock { Text = text, Foreground = Theme.BannerFg, TextWrapping = TextWrapping.Wrap },
     };
 }

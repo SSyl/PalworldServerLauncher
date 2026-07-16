@@ -9,83 +9,43 @@
         mc:Ignorable="d"
         Title="{x:Static loc:Strings.Common_AppName}" Height="656" Width="1000"
         Icon="logo.png"
-        Background="#1E1E1E" Foreground="#E0E0E0"
+        Background="{x:Static local:Theme.Window}" Foreground="{x:Static local:Theme.Text}"
         FontFamily="Segoe UI" FontSize="13"
         d:DataContext="{d:DesignInstance Type=vm:MainViewModel}">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
-        <Style TargetType="Button">
-            <Setter Property="Background" Value="#3A3A3A"/>
-            <Setter Property="Foreground" Value="#E0E0E0"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="14,7"/>
+        <!-- Reuses the app-wide Button style (App.xaml, Theme-driven fill/border/hover), only adding the row
+             gap. No duplicate template: change the button look in App.xaml and it applies here too. -->
+        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Margin" Value="0,0,8,0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="4" SnapsToDevicePixels="True">
-                            <Grid>
-                                <!-- Translucent white on hover / black on press brightens or darkens whatever the base
-                                     color is, so the colored buttons (primary Start/Stop, Force Shutdown) get feedback too. -->
-                                <Border x:Name="overlay" CornerRadius="4" Background="White" Opacity="0"/>
-                                <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="overlay" Property="Opacity" Value="0.12"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="overlay" Property="Background" Value="Black"/>
-                                <Setter TargetName="overlay" Property="Opacity" Value="0.22"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value="0.4"/>
-                                <Setter Property="Cursor" Value="Arrow"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
         </Style>
 
         <Style x:Key="Caption" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#888888"/>
+            <Setter Property="Foreground" Value="{x:Static local:Theme.TextCaption}"/>
             <Setter Property="FontSize" Value="11"/>
         </Style>
         <Style x:Key="Value" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#F0F0F0"/>
+            <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
         </Style>
 
-        <Style TargetType="TextBox">
-            <Setter Property="Background" Value="#333333"/>
-            <Setter Property="Foreground" Value="#F0F0F0"/>
-            <Setter Property="BorderBrush" Value="#4A4A4A"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="4,2"/>
-            <Setter Property="CaretBrush" Value="White"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-        </Style>
-
         <Style TargetType="CheckBox">
-            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
         <!-- Titled grouping box -->
         <Style x:Key="Box" TargetType="Border">
-            <Setter Property="BorderBrush" Value="#3A3A3A"/>
+            <Setter Property="BorderBrush" Value="{x:Static local:Theme.Divider}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="CornerRadius" Value="6"/>
             <Setter Property="Padding" Value="12,10"/>
             <Setter Property="Margin" Value="0,0,10,0"/>
         </Style>
         <Style x:Key="BoxHeader" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#C8C8C8"/>
+            <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Margin" Value="0,0,0,10"/>
@@ -111,20 +71,20 @@
                             <!-- Color the button by what it does: Install/Start green, Stop red. Busy tints blue
                                  and is listed last so it wins (PrimaryActionKind is None while busy anyway). -->
                             <DataTrigger Binding="{Binding PrimaryActionKind}" Value="Install">
-                                <Setter Property="Background" Value="#2E9E4A"/>
+                                <Setter Property="Background" Value="{x:Static local:Theme.Start}"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding PrimaryActionKind}" Value="Start">
-                                <Setter Property="Background" Value="#2E9E4A"/>
+                                <Setter Property="Background" Value="{x:Static local:Theme.Start}"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding PrimaryActionKind}" Value="Stop">
-                                <Setter Property="Background" Value="#C24238"/>
+                                <Setter Property="Background" Value="{x:Static local:Theme.Danger}"/>
                             </DataTrigger>
                             <!-- Amber while a timed shutdown counts down: the button becomes a clickable "shut down now". -->
                             <DataTrigger Binding="{Binding PrimaryActionKind}" Value="ShutdownNow">
-                                <Setter Property="Background" Value="#D99A2B"/>
+                                <Setter Property="Background" Value="{x:Static local:Theme.Countdown}"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding IsBusy}" Value="True">
-                                <Setter Property="Background" Value="#2D6CDF"/>
+                                <Setter Property="Background" Value="{x:Static local:Theme.Accent}"/>
                                 <Setter Property="Opacity" Value="1"/>
                                 <!-- Fixed width while busy so the animated "Working..." dots don't resize the button. -->
                                 <Setter Property="Width" Value="108"/>
@@ -140,11 +100,11 @@
                     ToolTip="{x:Static loc:Strings.Main_ForceShutdownTip}">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                        <Setter Property="Background" Value="#8B2620"/>
+                        <Setter Property="Background" Value="{x:Static local:Theme.Danger}"/>
                         <Setter Property="Foreground" Value="White"/>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#701E1A"/>
+                                <Setter Property="Background" Value="{x:Static local:Theme.DangerHover}"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -155,24 +115,12 @@
             <Button DockPanel.Dock="Left" Content="{x:Static loc:Strings.Main_ValidateFiles}" Command="{Binding ValidateFilesCommand}"
                     ToolTip="{x:Static loc:Strings.Main_ValidateFilesTip}"/>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                <Button FontFamily="Segoe MDL2 Assets" Content="&#xE713;" FontSize="15" Padding="10,7" MinWidth="0" Click="OnOpenLauncherSettings"
-                        ToolTip="{x:Static loc:Strings.LauncherSettings_Tooltip}"/>
                 <Button Content="{x:Static loc:Strings.Main_ServerSettings}" Click="OnOpenServerSettings"
                         ToolTip="{x:Static loc:Strings.Main_ServerSettingsTip}"/>
                 <Button Content="{x:Static loc:Strings.Main_Mods}" Click="OnOpenMods"
                         ToolTip="{x:Static loc:Strings.Main_ModsTip}"/>
-                <Button Content="{x:Static loc:Strings.Main_AdvancedSettings}" Click="OnOpenAdvanced" Margin="0"
-                        ToolTip="{x:Static loc:Strings.Main_AdvancedSettingsTip}">
-                    <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#B8860B"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
+                <Button FontFamily="Segoe MDL2 Assets" Content="&#xE713;" FontSize="15" Padding="10,7" MinWidth="0" Margin="0" Click="OnOpenLauncherSettings"
+                        ToolTip="{x:Static loc:Strings.LauncherSettings_Tooltip}"/>
             </StackPanel>
         </DockPanel>
 
@@ -182,14 +130,20 @@
                 <TextBlock Text="{x:Static loc:Strings.Main_StatusLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                 <TextBlock Text="{Binding StateText}" Style="{StaticResource Value}" FontSize="15" VerticalAlignment="Center" Margin="0,0,24,0"/>
                 <TextBlock Text="{x:Static loc:Strings.Main_UpdateLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                <TextBlock Text="{Binding UpdateStatus}" Foreground="#F0F0F0" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding UpdateStatus}" Foreground="{x:Static local:Theme.Text}" VerticalAlignment="Center"/>
             </StackPanel>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Text="{x:Static loc:Strings.Main_PublicIpLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                <TextBox Text="{Binding PublicIpDisplay, Mode=OneWay}" IsReadOnly="True" Width="150" VerticalAlignment="Center" Margin="0,0,4,0"
-                         ToolTip="{x:Static loc:Strings.Main_PublicIpTip}"/>
-                <Button Click="OnToggleIpReveal" FontFamily="Segoe MDL2 Assets" Content="&#xE7B3;" Padding="9,5" MinWidth="0" Margin="0,0,4,0"
-                        ToolTip="{x:Static loc:Strings.Main_RevealIpTip}"/>
+                <Border Background="{x:Static local:Theme.Field}" BorderBrush="{x:Static local:Theme.FieldBorder}" BorderThickness="1"
+                        Width="185" VerticalAlignment="Center" Margin="0,0,4,0">
+                    <DockPanel>
+                        <Button DockPanel.Dock="Right" Click="OnToggleIpReveal" FontFamily="Segoe MDL2 Assets" Content="&#xE7B3;"
+                                Background="Transparent" BorderThickness="0" MinWidth="0" Margin="0" Padding="9,0" FontSize="13"
+                                VerticalAlignment="Stretch" ToolTip="{x:Static loc:Strings.Main_RevealIpTip}"/>
+                        <TextBox Text="{Binding PublicIpDisplay, Mode=OneWay}" IsReadOnly="True" Background="Transparent"
+                                 BorderThickness="0" VerticalContentAlignment="Center" ToolTip="{x:Static loc:Strings.Main_PublicIpTip}"/>
+                    </DockPanel>
+                </Border>
                 <Button Click="OnCopyConnectionInfo" FontFamily="Segoe MDL2 Assets" Content="&#xE8C8;" Padding="9,5" MinWidth="0" IsEnabled="{Binding CanCopyConnectionInfo}"
                         ToolTip="{x:Static loc:Strings.Main_CopyIpTip}"/>
                 <Button Content="{x:Static loc:Strings.Main_PortCheck}" Click="OnCheckPorts" IsEnabled="{Binding CanCheckPorts}" ToolTipService.ShowOnDisabled="True" Margin="8,0,0,0"
@@ -198,7 +152,7 @@
         </DockPanel>
 
         <!-- Bottom status bar: live server stats, under the log terminal -->
-        <Border Grid.Row="4" BorderBrush="#3A3A3A" BorderThickness="0,1,0,0" Padding="0,7,0,0" Margin="0,8,0,0">
+        <Border Grid.Row="4" BorderBrush="{x:Static local:Theme.Divider}" BorderThickness="0,1,0,0" Padding="0,7,0,0" Margin="0,8,0,0">
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="{x:Static loc:Strings.Main_StatVersion}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Version}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="{x:Static loc:Strings.Main_StatFps}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Fps}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
@@ -212,10 +166,12 @@
 
         <!-- Settings sections (Restarts / Backups / Misc) with a collapse bar; hidden in Compact mode -->
         <StackPanel Grid.Row="2" Margin="0,0,0,14">
-            <DockPanel Background="Transparent" Cursor="Hand" MouseLeftButtonUp="OnToggleCompact" Margin="0,0,0,8"
-                       ToolTip="{x:Static loc:Strings.Main_CollapseTip}">
-                <TextBlock Text="{Binding CompactChevron}" DockPanel.Dock="Left" Foreground="#BBBBBB" FontSize="28" VerticalAlignment="Center" Margin="2,0,10,0"/>
-                <Border Height="1" Background="#3A3A3A" VerticalAlignment="Center"/>
+            <DockPanel Margin="0,0,0,8">
+                <ToggleButton DockPanel.Dock="Left" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding CompactMode}"
+                              VerticalAlignment="Center" Margin="2,0,8,0" ToolTip="{x:Static loc:Strings.Main_CollapseTip}"/>
+                <TextBlock DockPanel.Dock="Left" Text="{x:Static loc:Strings.Main_CompactMode}" Style="{StaticResource Caption}"
+                           VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <Border Height="1" Background="{x:Static local:Theme.Divider}" VerticalAlignment="Center"/>
             </DockPanel>
         <Grid Visibility="{Binding ShowConfigBoxes, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions>
@@ -277,7 +233,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{x:Static loc:Strings.Main_NextBackupLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                        <TextBlock Text="{Binding NextBackup}" Foreground="#F0F0F0" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <TextBlock Text="{Binding NextBackup}" Foreground="{x:Static local:Theme.Text}" VerticalAlignment="Center" Margin="0,0,10,0"/>
                         <Button Content="{x:Static loc:Strings.Main_BackupNow}" Command="{Binding BackupNowCommand}" Margin="0"
                                 ToolTip="{x:Static loc:Strings.Main_BackupNowTip}"/>
                     </StackPanel>
@@ -321,11 +277,11 @@
                         <Button Content="{x:Static loc:Strings.Main_DiscordBot}" Click="OnOpenDiscord" Margin="0,0,0,4" ToolTip="{x:Static loc:Strings.Main_DiscordBotTip}">
                             <Button.Style>
                                 <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                    <Setter Property="Background" Value="#5865F2"/>
+                                    <Setter Property="Background" Value="{x:Static local:Theme.Discord}"/>
                                     <Setter Property="Foreground" Value="White"/>
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#4752C4"/>
+                                            <Setter Property="Background" Value="{x:Static local:Theme.DiscordHover}"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -339,13 +295,13 @@
 
         <!-- Log tabs, with Server Commands docked to the far right of the tab strip -->
         <Grid Grid.Row="3">
-        <TabControl Background="#1E1E1E" BorderThickness="0" Padding="0,8,0,0">
+        <TabControl Background="{x:Static local:Theme.Window}" BorderThickness="0" Padding="0,8,0,0">
             <TabControl.Resources>
                 <Style TargetType="TabItem" BasedOn="{StaticResource DarkTabItem}"/>
                 <Style TargetType="ListBox" x:Key="LogListStyle">
-                    <Setter Property="Background" Value="#141414"/>
+                    <Setter Property="Background" Value="{x:Static local:Theme.Sunken}"/>
                     <Setter Property="BorderThickness" Value="0"/>
-                    <Setter Property="Foreground" Value="#C8C8C8"/>
+                    <Setter Property="Foreground" Value="{x:Static local:Theme.LogText}"/>
                     <Setter Property="FontFamily" Value="Consolas"/>
                     <Setter Property="FontSize" Value="12"/>
                     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>

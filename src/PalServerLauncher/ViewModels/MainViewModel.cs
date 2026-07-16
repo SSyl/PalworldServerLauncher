@@ -378,15 +378,11 @@ public partial class MainViewModel : ObservableObject
             _config.Save();
             OnPropertyChanged();
             OnPropertyChanged(nameof(ShowConfigBoxes));
-            OnPropertyChanged(nameof(CompactChevron));
         }
     }
 
     /// <summary>Inverse of <see cref="CompactMode"/>, drives the settings-boxes Visibility.</summary>
     public bool ShowConfigBoxes => !_config.CompactMode;
-
-    /// <summary>Disclosure triangle for the settings-sections collapse bar: down when shown, right when hidden.</summary>
-    public string CompactChevron => _config.CompactMode ? "▸" : "▾";
 
     public bool VerifyOnUpdate
     {

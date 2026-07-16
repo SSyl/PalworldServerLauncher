@@ -38,7 +38,7 @@ public sealed class DiscordDialog : Window
         _config = config;
 
         Title = Strings.Discord_Title;
-        Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
+        Background = Theme.Window;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         Width = 640;
         SizeToContent = SizeToContent.Height;
@@ -175,10 +175,10 @@ public sealed class DiscordDialog : Window
 
     private static Border Note(string text) => new()
     {
-        Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x2E, 0x1E)),
+        Background = Theme.BannerBg,
         Padding = new Thickness(10, 8, 10, 8),
         Margin = new Thickness(0, 8, 0, 0),
-        Child = new TextBlock { Text = text, Foreground = new SolidColorBrush(Color.FromRgb(0xE0, 0xC0, 0x80)), TextWrapping = TextWrapping.Wrap },
+        Child = new TextBlock { Text = text, Foreground = Theme.BannerFg, TextWrapping = TextWrapping.Wrap },
     };
 
     private static TextBlock Blurb(string prefix, string url, string linkText, string suffix)

@@ -21,7 +21,7 @@ public sealed class LanguagePickerDialog : Window
         _result = LauncherLanguages.ForCode(currentCode).Code;
 
         Title = Strings.Common_AppName;
-        Background = new SolidColorBrush(Color.FromRgb(0x2F, 0x2F, 0x2F));
+        Background = Theme.Window;
         WindowStartupLocation = WindowStartupLocation.CenterScreen;
         SizeToContent = SizeToContent.WidthAndHeight;
         ResizeMode = ResizeMode.NoResize;

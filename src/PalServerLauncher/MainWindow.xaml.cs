@@ -275,15 +275,6 @@ public partial class MainWindow : Window
     private void OnOpenServerSettings(object sender, RoutedEventArgs e) =>
         SettingsDialog.ShowServerSettings(this, _viewModel.Config, _viewModel.GameSettings, _viewModel.IsServerRunning);
 
-    private void OnOpenAdvanced(object sender, RoutedEventArgs e)
-    {
-        var proceed = ChoiceDialog.Show(this, Strings.Main_DangerZoneTitle,
-            Strings.Main_DangerZoneMessage,
-            Strings.Main_UnderstandContinue, Strings.Common_Cancel);
-        if (proceed == 0)
-            SettingsDialog.ShowAdvanced(this, _viewModel.Config, _viewModel.GameSettings, _viewModel.IsServerRunning);
-    }
-
     private void OnOpenMods(object sender, RoutedEventArgs e)
     {
         if (ModsDialog.Show(this, _viewModel.Config, _viewModel.ModService, _viewModel.ConnectSteamAsync, _viewModel.CheckSteamLoginAsync))
@@ -323,9 +314,6 @@ public partial class MainWindow : Window
 
     private void OnToggleIpReveal(object sender, RoutedEventArgs e) =>
         _viewModel.IsIpRevealed = !_viewModel.IsIpRevealed;
-
-    private void OnToggleCompact(object sender, MouseButtonEventArgs e) =>
-        _viewModel.CompactMode = !_viewModel.CompactMode;
 
     private void OnCopyConnectionInfo(object sender, RoutedEventArgs e)
     {

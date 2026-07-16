@@ -20,12 +20,12 @@ namespace PalServerLauncher.Views;
 /// </summary>
 internal static class DarkControls
 {
-    // ---- palette (the dark theme's core brushes) ----
-    public static readonly Brush Fg = Brushes.White;
-    public static readonly Brush Muted = new SolidColorBrush(Color.FromRgb(0x99, 0x99, 0x99));
-    public static readonly Brush FieldBg = new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33));
-    public static readonly Brush FieldBorder = new SolidColorBrush(Color.FromRgb(0x4A, 0x4A, 0x4A));
-    public static readonly Brush LinkFg = new SolidColorBrush(Color.FromRgb(0x5A, 0xA0, 0xE0));
+    // ---- palette: aliases into the central Theme so each colour is defined once (Theme.cs) ----
+    public static readonly Brush Fg = Theme.Text;
+    public static readonly Brush Muted = Theme.TextMuted;
+    public static readonly Brush FieldBg = Theme.Field;
+    public static readonly Brush FieldBorder = Theme.FieldBorder;
+    public static readonly Brush LinkFg = Theme.Link;
 
     // ---- builders (one canonical style, shared by every dialog) ----
 
@@ -35,24 +35,26 @@ internal static class DarkControls
         Text = text, Foreground = Fg, FontSize = 15, FontWeight = FontWeights.SemiBold, Margin = new Thickness(0, 16, 0, 6),
     };
 
-    /// <summary>A dark dialog button. <paramref name="background"/> overrides the default grey for colored buttons.</summary>
+    /// <summary>A dark dialog button. Its fill, border, padding, and hover come from the app-wide Button style
+    /// (App.xaml), so this only sets layout. <paramref name="background"/> overrides the grey fill for colored
+    /// (e.g. danger) buttons.</summary>
     public static Button MakeButton(string label, Action onClick, Brush? background = null)
     {
         var button = new Button
         {
-            Content = label, Margin = new Thickness(8, 0, 0, 0), Padding = new Thickness(16, 7, 16, 7),
-            Foreground = Fg, Background = background ?? new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)),
-            BorderThickness = new Thickness(0), Cursor = Cursors.Hand, MinWidth = 90,
+            Content = label, Margin = new Thickness(8, 0, 0, 0), MinWidth = 90,
         };
+        if (background is not null)
+            button.Background = background;
         button.Click += (_, _) => onClick();
         return button;
     }
 
-    /// <summary>A dark single-line text box. <paramref name="enabled"/> greys it out when false.</summary>
+    /// <summary>A dark single-line text box. Colours, padding, and the Accent hover come from the app-wide
+    /// TextBox style (App.xaml), so this only sets content. <paramref name="enabled"/> greys it out when false.</summary>
     public static TextBox Field(string value, bool enabled = true) => new()
     {
-        Text = value, IsEnabled = enabled, Background = FieldBg, Foreground = Fg, BorderBrush = FieldBorder,
-        Padding = new Thickness(5, 4, 5, 4), CaretBrush = Brushes.White,
+        Text = value, IsEnabled = enabled,
     };
 
     /// <summary>Open a URL in the default browser, silently ignoring a missing or blocked browser.</summary>

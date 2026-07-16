@@ -166,13 +166,13 @@
     <value>Update restart</value>
   </data>
   <data name="Announcements_EmptyTitle" xml:space="preserve">
-    <value>Empty announcement</value>
+    <value>Empty Announcement</value>
   </data>
   <data name="Announcements_EmptyMessage" xml:space="preserve">
     <value>An announcement can't be empty (the server rejects a blank message):</value>
   </data>
   <data name="Announcements_NoTokenTitle" xml:space="preserve">
-    <value>No countdown token</value>
+    <value>No Countdown Token</value>
   </data>
   <data name="Announcements_NoTokenMessage" xml:space="preserve">
     <value>These have no {0} token, so they won't show the minutes remaining:
@@ -181,10 +181,10 @@
 Save them as fixed messages anyway?</value>
   </data>
   <data name="Announcements_SaveAnyway" xml:space="preserve">
-    <value>Save anyway</value>
+    <value>Save Anyway</value>
   </data>
   <data name="Announcements_KeepEditing" xml:space="preserve">
-    <value>Keep editing</value>
+    <value>Keep Editing</value>
   </data>
   <!-- Main window -->
   <data name="Main_PrimaryTip" xml:space="preserve">
@@ -212,19 +212,13 @@ Save them as fixed messages anyway?</value>
     <value>Server Settings</value>
   </data>
   <data name="Main_ServerSettingsTip" xml:space="preserve">
-    <value>Edit the server in one tabbed editor, World Settings (gameplay and balance), Admin (name, passwords, REST / RCON), Undocumented (keys the official docs don't cover), and Launch Arguments (the command line: listen port, player cap, performance threads, community listing).</value>
+    <value>Edit the server in one tabbed editor: Game Settings (the PalWorldSettings.ini gameplay, balance, and admin keys as sub-tabs), Launch Arguments (the command line: listen port, player cap, performance threads, community listing), and CPU Affinity/Priority (process priority and CPU pinning).</value>
   </data>
   <data name="Main_Mods" xml:space="preserve">
     <value>Mods</value>
   </data>
   <data name="Main_ModsTip" xml:space="preserve">
     <value>Manage Steam Workshop server mods: add Workshop ids for the launcher to download, or scan for mods you dropped into the mods folder yourself.</value>
-  </data>
-  <data name="Main_AdvancedSettings" xml:space="preserve">
-    <value>Advanced Settings</value>
-  </data>
-  <data name="Main_AdvancedSettingsTip" xml:space="preserve">
-    <value>Low-level process tuning (priority, CPU affinity), advanced users only</value>
   </data>
   <data name="Main_StatusLabel" xml:space="preserve">
     <value>Status:</value>
@@ -284,7 +278,7 @@ Save them as fixed messages anyway?</value>
     <value>Automatically restart the server at the times listed. A restart is skipped if the server hasn't been up for the minimum uptime below.</value>
   </data>
   <data name="Main_ChooseRestartTimes" xml:space="preserve">
-    <value>Choose restart times</value>
+    <value>Choose Restart Times</value>
   </data>
   <data name="Main_MinUptime" xml:space="preserve">
     <value>Min uptime before restart</value>
@@ -341,7 +335,7 @@ Save them as fixed messages anyway?</value>
     <value>Automatically back up at the times listed on the right, while the server is running.</value>
   </data>
   <data name="Main_ChooseBackupTimes" xml:space="preserve">
-    <value>Choose backup times</value>
+    <value>Choose Backup Times</value>
   </data>
   <data name="Main_BackupRetentionTip" xml:space="preserve">
     <value>How long to keep automatic backups (startup / shutdown / scheduled). Manual backups and any file you add to the backups folder yourself are never deleted. 0 = keep everything.</value>
@@ -444,7 +438,7 @@ Save them as fixed messages anyway?</value>
   </data>
   <!-- Main window prompts (code-behind dialogs) -->
   <data name="Main_MultiServerTitle" xml:space="preserve">
-    <value>Multiple servers running</value>
+    <value>Multiple Servers Running</value>
   </data>
   <data name="Main_MultiServerMessage" xml:space="preserve">
     <value>Detected {0} Palworld servers running from this folder. They share one save and set of ports, so they'll conflict, the launcher manages a single server. Shut them all down, or exit.</value>
@@ -456,7 +450,7 @@ Save them as fixed messages anyway?</value>
     <value>Exit Launcher</value>
   </data>
   <data name="Main_ServerRunningTitle" xml:space="preserve">
-    <value>Server already running</value>
+    <value>Server Already Running</value>
   </data>
   <data name="Main_ServerRunningMessage" xml:space="preserve">
     <value>A Palworld server started from this folder is already running, almost certainly yours from a previous session, since the launcher only tracks servers it started here.
@@ -493,7 +487,7 @@ Download and install it now?</value>
     <value>Keep Waiting</value>
   </data>
   <data name="Main_ShutdownTitle" xml:space="preserve">
-    <value>Shut down the server</value>
+    <value>Shut Down the Server</value>
   </data>
   <data name="Main_ShutdownForceMessage" xml:space="preserve">
     <value>REST is not enabled, so the server can't be shut down gracefully. It will be force-stopped, the process is killed directly and the last autosave limits any loss. Turn on REST for graceful shutdowns.</value>
@@ -511,7 +505,7 @@ Download and install it now?</value>
     <value>Timed Shutdown</value>
   </data>
   <data name="Main_TimedShutdownTitle" xml:space="preserve">
-    <value>Timed shutdown</value>
+    <value>Timed Shutdown</value>
   </data>
   <data name="Main_TimedShutdownMessage" xml:space="preserve">
     <value>Players get an in-game countdown for this many seconds before the server shuts down.</value>
@@ -520,7 +514,7 @@ Download and install it now?</value>
     <value>seconds</value>
   </data>
   <data name="Main_ServerInstalledTitle" xml:space="preserve">
-    <value>Server installed</value>
+    <value>Server Installed</value>
   </data>
   <data name="Main_ServerInstalledMessage" xml:space="preserve">
     <value>Server successfully installed.
@@ -530,10 +524,10 @@ Enable the REST API? It's what lets the launcher control the server: apply game 
 If you enable it, the launcher generates the server config now and sets a secure, randomly generated admin password (view or change it later under Server Settings, in the Admin tab). You can also skip this and enable it yourself later.</value>
   </data>
   <data name="Main_YesEnableRest" xml:space="preserve">
-    <value>Yes, enable it</value>
+    <value>Yes, Enable It</value>
   </data>
   <data name="Main_NotNow" xml:space="preserve">
-    <value>Not now</value>
+    <value>Not Now</value>
   </data>
   <data name="Main_EnableRestTitle" xml:space="preserve">
     <value>Enable the REST API?</value>
@@ -546,16 +540,16 @@ The REST API isn't enabled on this server yet, so those features will be limited
 Enable it now with a secure, randomly-generated admin password?</value>
   </data>
   <data name="Main_NoRunLimited" xml:space="preserve">
-    <value>No, run limited</value>
+    <value>No, Run Limited</value>
   </data>
   <data name="Main_Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
   <data name="Main_RestEnabledTitle" xml:space="preserve">
-    <value>REST API enabled</value>
+    <value>REST API Enabled</value>
   </data>
   <data name="Main_RestFailedTitle" xml:space="preserve">
-    <value>Couldn't enable REST</value>
+    <value>Couldn't Enable REST</value>
   </data>
   <data name="Main_RestEnabledMessage" xml:space="preserve">
     <value>Done, the REST API is on with a new random admin password (view or change it under Server Settings, in the Admin tab). It takes effect the next time you start the server.</value>
@@ -564,7 +558,7 @@ Enable it now with a secure, randomly-generated admin password?</value>
     <value>Couldn't write the server config. Make sure the server is installed and stopped, then set it manually under Server Settings, in the Admin tab.</value>
   </data>
   <data name="Main_ServerStillRunningTitle" xml:space="preserve">
-    <value>Server still running</value>
+    <value>Server Still Running</value>
   </data>
   <data name="Main_ServerStillRunningMessage" xml:space="preserve">
     <value>The Palworld server is still running. What should happen to it?</value>
@@ -575,17 +569,6 @@ Enable it now with a secure, randomly-generated admin password?</value>
   <data name="Main_LeaveRunning" xml:space="preserve">
     <value>Leave Running</value>
   </data>
-  <data name="Main_DangerZoneTitle" xml:space="preserve">
-    <value>Danger zone!</value>
-  </data>
-  <data name="Main_DangerZoneMessage" xml:space="preserve">
-    <value>These are advanced, low-level settings. Using the wrong values here can HURT performance, for example, setting the process priority too high can starve the rest of your system and make the server run worse, not better.
-
-Don't use these unless you know what you're doing.</value>
-  </data>
-  <data name="Main_UnderstandContinue" xml:space="preserve">
-    <value>I understand, continue</value>
-  </data>
   <data name="Main_ForceShutdownConfirmMessage" xml:space="preserve">
     <value>This will shut the server down immediately without a save by killing the process entirely. It can cause save data loss or corruption. This is not recommended unless the server has completely stopped responding.</value>
   </data>
@@ -593,13 +576,13 @@ Don't use these unless you know what you're doing.</value>
     <value>Your public IP address will be sent to check-host.cc, a free external service, to check whether players can reach your server from outside your network. Nothing except your public IP and the ports you test is sent to their service.</value>
   </data>
   <data name="Main_UpdateAvailableTitle" xml:space="preserve">
-    <value>Update available</value>
+    <value>Update Available</value>
   </data>
   <data name="Main_UpdateRunningMessage" xml:space="preserve">
     <value>A newer server build ({0}) is available. Update and restart the server now? Players get the usual restart warnings.</value>
   </data>
   <data name="Main_UpdateRestart" xml:space="preserve">
-    <value>Update &amp; restart</value>
+    <value>Update &amp; Restart</value>
   </data>
   <data name="Main_UpdateStoppedMessage" xml:space="preserve">
     <value>A newer server build ({0}) is available. Download and apply it now?</value>
@@ -608,12 +591,6 @@ Don't use these unless you know what you're doing.</value>
     <value>Download</value>
   </data>
   <!-- Secret field (masked password / token) -->
-  <data name="Secret_Show" xml:space="preserve">
-    <value>Show</value>
-  </data>
-  <data name="Secret_Hide" xml:space="preserve">
-    <value>Hide</value>
-  </data>
   <data name="Secret_Tooltip" xml:space="preserve">
     <value>Show or hide the value</value>
   </data>
@@ -622,13 +599,13 @@ Don't use these unless you know what you're doing.</value>
     <value>Restart Times</value>
   </data>
   <data name="Times_RestartHeader" xml:space="preserve">
-    <value>Restart times</value>
+    <value>Restart Times</value>
   </data>
   <data name="Times_BackupTitle" xml:space="preserve">
     <value>Backup Times</value>
   </data>
   <data name="Times_BackupHeader" xml:space="preserve">
-    <value>Backup times</value>
+    <value>Backup Times</value>
   </data>
   <data name="Times_Every" xml:space="preserve">
     <value>Every</value>
@@ -649,19 +626,19 @@ Don't use these unless you know what you're doing.</value>
     <value>Done</value>
   </data>
   <data name="Times_InvalidTimeTitle" xml:space="preserve">
-    <value>Invalid time</value>
+    <value>Invalid Time</value>
   </data>
   <data name="Times_InvalidTimeMessage" xml:space="preserve">
     <value>Enter minutes as a number 0-59.</value>
   </data>
   <data name="Times_InvalidIntervalTitle" xml:space="preserve">
-    <value>Invalid interval</value>
+    <value>Invalid Interval</value>
   </data>
   <data name="Times_InvalidIntervalMessage" xml:space="preserve">
     <value>Enter an interval between 15 minutes and 24 hours, e.g. 30m, 2h, or 2.5 (hours).</value>
   </data>
   <data name="Times_ReplaceTitle" xml:space="preserve">
-    <value>Replace times</value>
+    <value>Replace Times</value>
   </data>
   <data name="Times_ReplaceMessage" xml:space="preserve">
     <value>This replaces the {0} time(s) below with a schedule every {1}. Continue?</value>
@@ -710,7 +687,7 @@ Full details in:
     <value>Close</value>
   </data>
   <data name="PortCheck_NoPublicIpTitle" xml:space="preserve">
-    <value>No public IP</value>
+    <value>No Public IP</value>
   </data>
   <data name="PortCheck_NoPublicIpMessage" xml:space="preserve">
     <value>Enter your public IP first (it's normally filled in automatically).</value>
@@ -765,7 +742,7 @@ Full details in:
     <value>Server</value>
   </data>
   <data name="ServerCmd_SaveWorld" xml:space="preserve">
-    <value>Save world</value>
+    <value>Save World</value>
   </data>
   <data name="ServerCmd_Close" xml:space="preserve">
     <value>Close</value>
@@ -789,7 +766,7 @@ Full details in:
     <value>Enter a user id to unban.</value>
   </data>
   <data name="ServerCmd_UnbanTitle" xml:space="preserve">
-    <value>Unban player</value>
+    <value>Unban Player</value>
   </data>
   <data name="ServerCmd_UnbanConfirm" xml:space="preserve">
     <value>Unban {0}?</value>
@@ -825,7 +802,7 @@ Full details in:
     <value>No user id reported for this player.</value>
   </data>
   <data name="ServerCmd_KickTitle" xml:space="preserve">
-    <value>Kick player</value>
+    <value>Kick Player</value>
   </data>
   <data name="ServerCmd_KickConfirm" xml:space="preserve">
     <value>Kick {0} ({1})?</value>
@@ -837,7 +814,7 @@ Full details in:
     <value>Couldn't kick {0} (REST off or rejected).</value>
   </data>
   <data name="ServerCmd_BanTitle" xml:space="preserve">
-    <value>Ban player</value>
+    <value>Ban Player</value>
   </data>
   <data name="ServerCmd_BanConfirm" xml:space="preserve">
     <value>Ban {0} ({1})? They'll be kicked and blocked from rejoining.</value>
@@ -865,7 +842,7 @@ Full details in:
     <value> (add a Bot, then invite it with the bot + applications.commands scopes).</value>
   </data>
   <data name="Discord_ServerControlBotHeader" xml:space="preserve">
-    <value>Server control bot</value>
+    <value>Server Control Bot</value>
   </data>
   <data name="Discord_EnableControlBot" xml:space="preserve">
     <value>Enable the control bot (slash commands: /status /players /save /backup /update /start /restart /stop)</value>
@@ -886,13 +863,13 @@ Full details in:
     <value>Security: set a command channel and/or a required role, the bot only acts when every gate you set passes (set at least one). Anyone who can post in the command channel, or has the role, can control the server, so lock it down (a private, admin-only channel and/or an admin role). Enable Discord Developer Mode, then right-click a channel or role -&gt; Copy ID. The token is stored locally in launcher.json and is never logged.</value>
   </data>
   <data name="Discord_CommandsExposedHeader" xml:space="preserve">
-    <value>Commands the bot exposes</value>
+    <value>Commands the Bot Exposes</value>
   </data>
   <data name="Discord_CommandsExposedHint" xml:space="preserve">
     <value>Tick the slash commands the bot should accept. Destructive ones (restart, stop, kick, ban) are off by default. Changes take effect on Save (the bot reconnects and re-registers its commands).</value>
   </data>
   <data name="Discord_WebhookNotificationsHeader" xml:space="preserve">
-    <value>Webhook notifications</value>
+    <value>Webhook Notifications</value>
   </data>
   <data name="Discord_EnableNotifications" xml:space="preserve">
     <value>Enable notifications</value>
@@ -907,19 +884,19 @@ Full details in:
     <value>Notify on player join / leave (needs REST)</value>
   </data>
   <data name="Discord_InvalidChannelIdTitle" xml:space="preserve">
-    <value>Invalid channel ID</value>
+    <value>Invalid Channel ID</value>
   </data>
   <data name="Discord_InvalidChannelIdMessage" xml:space="preserve">
     <value>The command channel ID must be a number (Discord Developer Mode -&gt; right-click the channel -&gt; Copy Channel ID).</value>
   </data>
   <data name="Discord_InvalidRoleIdTitle" xml:space="preserve">
-    <value>Invalid role ID</value>
+    <value>Invalid Role ID</value>
   </data>
   <data name="Discord_InvalidRoleIdMessage" xml:space="preserve">
     <value>The required role ID must be a number (Discord Developer Mode -&gt; right-click the role -&gt; Copy Role ID).</value>
   </data>
   <data name="Discord_BotNotReadyTitle" xml:space="preserve">
-    <value>Bot not ready</value>
+    <value>Bot Not Ready</value>
   </data>
   <data name="Discord_BotNotReadyMessage" xml:space="preserve">
     <value>To enable the control bot, set a bot token and at least one gate: a command channel ID and/or a required role ID.</value>
@@ -935,19 +912,19 @@ Full details in:
     <value>Enable mods on this server</value>
   </data>
   <data name="Mods_SteamAccountHeader" xml:space="preserve">
-    <value>Steam account</value>
+    <value>Steam Account</value>
   </data>
   <data name="Mods_SteamAccountNote" xml:space="preserve">
     <value>Only needed to download Workshop mods, dropped-in mods need no account. Steam's own SteamCMD handles the sign-in in its own window, so the launcher never sees or stores your password, it only remembers your username.</value>
   </data>
   <data name="Mods_ConnectButton" xml:space="preserve">
-    <value>Connect Steam account</value>
+    <value>Connect Steam Account</value>
   </data>
   <data name="Mods_DifferentAccountLink" xml:space="preserve">
     <value>Connect with a different account?</value>
   </data>
   <data name="Mods_WorkshopHeader" xml:space="preserve">
-    <value>Steam Workshop mods</value>
+    <value>Steam Workshop Mods</value>
   </data>
   <data name="Mods_BrowsePrefix" xml:space="preserve">
     <value>Browse mods on the </value>
@@ -962,10 +939,10 @@ Full details in:
     <value>Add</value>
   </data>
   <data name="Mods_ScanFolderButton" xml:space="preserve">
-    <value>Scan folder</value>
+    <value>Scan Folder</value>
   </data>
   <data name="Mods_OpenModsFolderButton" xml:space="preserve">
-    <value>Open mods folder</value>
+    <value>Open Mods Folder</value>
   </data>
   <data name="Mods_AddByIdLabel" xml:space="preserve">
     <value>Add by Steam Workshop id or URL:</value>
@@ -974,22 +951,22 @@ Full details in:
     <value>You have Workshop mods enabled but no Steam account connected. Connect one above to download them, or they'll be skipped on start (dropped-in mods still load).</value>
   </data>
   <data name="Mods_LoosePakHeader" xml:space="preserve">
-    <value>Loose .pak mods</value>
+    <value>Loose .pak Mods</value>
   </data>
   <data name="Mods_LoosePakDescription" xml:space="preserve">
     <value>You don't need this if you're using Steam Workshop above. For raw .pak mods with no Info.json (many NexusMods downloads): drop them into the loose-paks folder and toggle them here. They're enabled/disabled by renaming (never deleted) and load on the next server start.</value>
   </data>
   <data name="Mods_OpenLoosePaksFolderButton" xml:space="preserve">
-    <value>Open loose-paks folder</value>
+    <value>Open Loose-Paks Folder</value>
   </data>
   <data name="Mods_RescanButton" xml:space="preserve">
     <value>Rescan</value>
   </data>
   <data name="Mods_OpenUe4ssFolderButton" xml:space="preserve">
-    <value>Open UE4SS mods folder</value>
+    <value>Open UE4SS Mods Folder</value>
   </data>
   <data name="Mods_EnterUsernameTitle" xml:space="preserve">
-    <value>Enter a username</value>
+    <value>Enter a Username</value>
   </data>
   <data name="Mods_EnterUsernameBody" xml:space="preserve">
     <value>Enter your Steam account name first, then connect.</value>
@@ -1019,13 +996,13 @@ Full details in:
     <value>Signed into SteamCMD</value>
   </data>
   <data name="Mods_InvalidIdTitle" xml:space="preserve">
-    <value>Invalid Workshop id</value>
+    <value>Invalid Workshop ID</value>
   </data>
   <data name="Mods_InvalidIdBody" xml:space="preserve">
     <value>Enter a numeric Steam Workshop id, or a workshop URL like https://steamcommunity.com/sharedfiles/filedetails/?id=123456.</value>
   </data>
   <data name="Mods_AlreadyAddedTitle" xml:space="preserve">
-    <value>Already added</value>
+    <value>Already Added</value>
   </data>
   <data name="Mods_AlreadyAddedBody" xml:space="preserve">
     <value>That Workshop id is already in the list.</value>
@@ -1040,7 +1017,7 @@ Full details in:
     <value>This item's Steam app id is {0}, not Palworld's ({1}), so it may not work on your server. Add it anyway?</value>
   </data>
   <data name="Mods_AddAnyway" xml:space="preserve">
-    <value>Add anyway</value>
+    <value>Add Anyway</value>
   </data>
   <data name="Mods_ScanNoneFound" xml:space="preserve">
     <value>No new mods found in the mods folder.</value>
@@ -1052,16 +1029,16 @@ Full details in:
     <value> Skipped {0} folder(s) with no readable Info.json.</value>
   </data>
   <data name="Mods_ScanTitle" xml:space="preserve">
-    <value>Scan mods folder</value>
+    <value>Scan Mods Folder</value>
   </data>
   <data name="Mods_NoAccountTitle" xml:space="preserve">
-    <value>No Steam account connected</value>
+    <value>No Steam Account Connected</value>
   </data>
   <data name="Mods_NoAccountSaveBody" xml:space="preserve">
     <value>You have Workshop mods enabled but no Steam account connected, so they can't be downloaded and will be skipped when the server starts (dropped-in mods still load). Save anyway?</value>
   </data>
   <data name="Mods_SaveAnyway" xml:space="preserve">
-    <value>Save anyway</value>
+    <value>Save Anyway</value>
   </data>
   <data name="Mods_PackageTip" xml:space="preserve">
     <value>Package: {0}</value>
@@ -1082,7 +1059,7 @@ Full details in:
     <value>No mods yet. Add a Workshop id above, or drop mod folders into the mods folder and Scan.</value>
   </data>
   <data name="Mods_DeleteTitle" xml:space="preserve">
-    <value>Delete mod</value>
+    <value>Delete Mod</value>
   </data>
   <data name="Mods_DeleteBody" xml:space="preserve">
     <value>This will delete the mod files and remove it from your mod list.
@@ -1093,7 +1070,7 @@ Full details in:
     <value>Delete</value>
   </data>
   <data name="Mods_DeleteFailedTitle" xml:space="preserve">
-    <value>Couldn't delete files</value>
+    <value>Couldn't Delete Files</value>
   </data>
   <data name="Mods_DeleteFailedBody" xml:space="preserve">
     <value>Removed it from the list, but couldn't delete the files: {0}</value>
@@ -1111,7 +1088,7 @@ Full details in:
     <value>{0}  ({1} files)</value>
   </data>
   <data name="Mods_ChangeModFailedTitle" xml:space="preserve">
-    <value>Couldn't change the mod</value>
+    <value>Couldn't Change the Mod</value>
   </data>
   <data name="Mods_EnablePakFailed" xml:space="preserve">
     <value>Couldn't enable '{0}': {1}</value>
@@ -1120,7 +1097,7 @@ Full details in:
     <value>Couldn't disable '{0}': {1}</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledTitle" xml:space="preserve">
-    <value>UE4SS not installed</value>
+    <value>UE4SS Not Installed</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
     <value>UE4SS isn't installed yet. Add a UE4SS mod from the Workshop and start the server once, then its mods folder will appear here.</value>
@@ -1138,14 +1115,11 @@ Full details in:
     <value>Note</value>
   </data>
   <!-- SettingsDialog -->
-  <data name="Settings_AdvancedTitle" xml:space="preserve">
-    <value>Advanced Settings</value>
-  </data>
   <data name="Settings_ServerTitle" xml:space="preserve">
     <value>Server Settings</value>
   </data>
   <data name="Settings_ResetToDefaults" xml:space="preserve">
-    <value>Reset to defaults</value>
+    <value>Reset to Defaults</value>
   </data>
   <data name="Settings_SearchPlaceholder" xml:space="preserve">
     <value>Search settings...</value>
@@ -1167,9 +1141,6 @@ Full details in:
   </data>
   <data name="Settings_AdminBlurbLink" xml:space="preserve">
     <value>Server management docs</value>
-  </data>
-  <data name="Settings_TabWorld" xml:space="preserve">
-    <value>World Settings</value>
   </data>
   <data name="Settings_TabAdmin" xml:space="preserve">
     <value>Admin</value>
@@ -1193,10 +1164,10 @@ Full details in:
     <value>Palworld configuration reference</value>
   </data>
   <data name="Settings_UndocKnownHeader" xml:space="preserve">
-    <value>Known to the launcher</value>
+    <value>Known to the Launcher</value>
   </data>
   <data name="Settings_UndocNewHeader" xml:space="preserve">
-    <value>New in your config (not recognized)</value>
+    <value>New in Your Config (Not Recognized)</value>
   </data>
   <data name="Settings_UndocNoneRecognized" xml:space="preserve">
     <value>None, every key in your config is recognized.</value>
@@ -1205,10 +1176,10 @@ Full details in:
     <value>This setting does nothing on a server</value>
   </data>
   <data name="Settings_NoEffectMessage" xml:space="preserve">
-    <value>Heads up: '{0}' is a client / single-player setting and has no effect on a dedicated server. Changing it here won't change how the server plays. Use the individual settings (or the Difficulty preset buttons at the top of World Settings) to control server difficulty.</value>
+    <value>Heads up: '{0}' is a client / single-player setting and has no effect on a dedicated server. Changing it here won't change how the server plays. Use the individual settings (or the Difficulty preset buttons at the top of the Game Settings tab) to control server difficulty.</value>
   </data>
   <data name="Settings_GotIt" xml:space="preserve">
-    <value>Got it</value>
+    <value>Got It</value>
   </data>
   <data name="Settings_DifficultyPreset" xml:space="preserve">
     <value>Difficulty preset:</value>
@@ -1258,31 +1229,31 @@ Apply and save these changes?</value>
     <value> (community servers only) sets what the server advertises to the public list, it does NOT change the listen port.</value>
   </data>
   <data name="Settings_ValidateListenPort" xml:space="preserve">
-    <value>Listen port</value>
+    <value>Listen Port</value>
   </data>
   <data name="Settings_RowQueryPort" xml:space="preserve">
-    <value>Query port (-QueryPort)</value>
+    <value>Query Port (-QueryPort)</value>
   </data>
   <data name="Settings_TipQueryPort" xml:space="preserve">
     <value>The Steam query port. Blank or 0 auto-picks the first free port from 27015 (so several servers on one PC don't collide). Set a fixed one if you forward it.</value>
   </data>
   <data name="Settings_ValidateQueryPort" xml:space="preserve">
-    <value>Query port</value>
+    <value>Query Port</value>
   </data>
   <data name="Settings_ValidateMaxPlayers" xml:space="preserve">
-    <value>Max players</value>
+    <value>Max Players</value>
   </data>
   <data name="Settings_ValidateWorkerThreads" xml:space="preserve">
-    <value>Worker threads</value>
+    <value>Worker Threads</value>
   </data>
   <data name="Settings_ValidatePublicIp" xml:space="preserve">
     <value>Public IP</value>
   </data>
   <data name="Settings_ValidatePublicPort" xml:space="preserve">
-    <value>Public port</value>
+    <value>Public Port</value>
   </data>
   <data name="Settings_RowListenPort" xml:space="preserve">
-    <value>Listen port (-port)</value>
+    <value>Listen Port (-port)</value>
   </data>
   <data name="Settings_TipListenPort" xml:space="preserve">
     <value>The UDP port the server binds to, what players connect to (Palworld default 8211). Always applied. This is not the Public port below.</value>
@@ -1294,19 +1265,19 @@ Apply and save these changes?</value>
     <value>Overrides ServerPlayerMaxNum in the ini when set. 0 = leave the argument off and use the game setting.</value>
   </data>
   <data name="Settings_RowPerfThreads" xml:space="preserve">
-    <value>Performance threads</value>
+    <value>Performance Threads</value>
   </data>
   <data name="Settings_TipPerfThreads" xml:space="preserve">
     <value>Adds -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS. Recommended on for a dedicated server.</value>
   </data>
   <data name="Settings_RowWorkerThreads" xml:space="preserve">
-    <value>Worker threads (0 = auto)</value>
+    <value>Worker Threads (0 = auto)</value>
   </data>
   <data name="Settings_TipWorkerThreads" xml:space="preserve">
     <value>-NumberOfWorkerThreadsServer. 0 = auto (left off). Only used when Performance threads is on.</value>
   </data>
   <data name="Settings_RowCommunity" xml:space="preserve">
-    <value>Community/public server (-publiclobby)</value>
+    <value>Community/Public Server (-publiclobby)</value>
   </data>
   <data name="Settings_TipCommunity" xml:space="preserve">
     <value>-publiclobby: list the server on the public/community browser. Off = private (players join by IP).</value>
@@ -1324,7 +1295,7 @@ Apply and save these changes?</value>
     <value>-publicport for community servers: the external port advertised to the public list. Does NOT change the listen port. 0 = left off (use the ini value).</value>
   </data>
   <data name="Settings_RowLogFormat" xml:space="preserve">
-    <value>Log format</value>
+    <value>Log Format</value>
   </data>
   <data name="Settings_TipLogFormat" xml:space="preserve">
     <value>-logformat (Text or Json). Blank = left off; the ini/default applies.</value>
@@ -1339,10 +1310,10 @@ Apply and save these changes?</value>
     <value>Low-level settings applied to the server process after it launches. The wrong values here can hurt performance, change only if you know what you're doing. Takes effect on the next start.</value>
   </data>
   <data name="Settings_PriorityAffinityHeader" xml:space="preserve">
-    <value>Process priority &amp; CPU affinity</value>
+    <value>Process Priority &amp; CPU Affinity</value>
   </data>
   <data name="Settings_RowPriority" xml:space="preserve">
-    <value>Process priority</value>
+    <value>Process Priority</value>
   </data>
   <data name="Settings_TipPriority" xml:space="preserve">
     <value>Windows priority for the server process. Above normal / High can help under load but can starve other apps and hurt performance; RealTime isn't offered (unsafe).</value>
@@ -1354,7 +1325,7 @@ Apply and save these changes?</value>
     <value>CPU affinity, pin the server to specific cores (all checked = no restriction / use every core):</value>
   </data>
   <data name="Settings_AdvancedArgsTitle" xml:space="preserve">
-    <value>Advanced arguments</value>
+    <value>Advanced Arguments</value>
   </data>
   <data name="Settings_AdvancedArgsMessage" xml:space="preserve">
     <value>You've put custom arguments in the Advanced box. They're passed to the server exactly as typed, only keep them if you know what you're doing.</value>
@@ -1367,7 +1338,7 @@ Apply and save these changes?</value>
 ...and {0} more</value>
   </data>
   <data name="Settings_ConfirmSaveTitle" xml:space="preserve">
-    <value>Confirm save</value>
+    <value>Confirm Save</value>
   </data>
   <data name="Settings_ConfirmSaveMessage" xml:space="preserve">
     <value>These settings will change:
@@ -1377,7 +1348,7 @@ Apply and save these changes?</value>
 Save these changes?</value>
   </data>
   <data name="Settings_NotSavedTitle" xml:space="preserve">
-    <value>Not saved</value>
+    <value>Not Saved</value>
   </data>
   <data name="Settings_NotSavedMessage" xml:space="preserve">
     <value>'{0}' has a value that would break the config format (a stray comma, quote, or unbalanced parenthesis). Nothing was saved, fix it and try again.</value>
@@ -1386,7 +1357,7 @@ Save these changes?</value>
     <value>{0} is invalid. Must be {1}.</value>
   </data>
   <data name="Settings_InvalidSettingsTitle" xml:space="preserve">
-    <value>Invalid settings</value>
+    <value>Invalid Settings</value>
   </data>
   <data name="Settings_ResetFieldTooltip" xml:space="preserve">
     <value>Reset this field to its default</value>
@@ -1398,10 +1369,10 @@ Save these changes?</value>
     <value>Reset every field in this panel to its default value? You'll still need to Save to apply.</value>
   </data>
   <data name="Settings_ResetAllButton" xml:space="preserve">
-    <value>Reset all</value>
+    <value>Reset All</value>
   </data>
   <data name="Settings_CategoryServerManagement" xml:space="preserve">
-    <value>Server management</value>
+    <value>Server Management</value>
   </data>
   <data name="Settings_CategoryPerformance" xml:space="preserve">
     <value>Performance</value>
@@ -1410,7 +1381,7 @@ Save these changes?</value>
     <value>Gameplay</value>
   </data>
   <data name="Settings_CategoryGameBalance" xml:space="preserve">
-    <value>Game balance</value>
+    <value>Game Balance</value>
   </data>
   <!-- MainViewModel -->
   <data name="Vm_Working" xml:space="preserve">
@@ -2277,9 +2248,30 @@ Save these changes?</value>
     <value>The launcher needs to restart to apply the new language ({0}). Your Palworld server keeps running, and the launcher reconnects to it. Restart now?</value>
   </data>
   <data name="LauncherSettings_RestartNow" xml:space="preserve">
-    <value>Restart now</value>
+    <value>Restart Now</value>
   </data>
   <data name="LauncherSettings_Copyright" xml:space="preserve">
     <value>© 2026 Syl S. · GPLv3</value>
+  </data>
+  <data name="Settings_TabGameSettings" xml:space="preserve">
+    <value>Game Settings</value>
+  </data>
+  <data name="Settings_TabCpuAffinity" xml:space="preserve">
+    <value>CPU Affinity/Priority</value>
+  </data>
+  <data name="Main_CompactMode" xml:space="preserve">
+    <value>Compact Mode</value>
+  </data>
+  <data name="Settings_GameplayBlurb" xml:space="preserve">
+    <value>Difficulty, EXP / capture / drop rates, day-night length, and world feature toggles. Full reference:</value>
+  </data>
+  <data name="Settings_GameBalanceBlurb" xml:space="preserve">
+    <value>Damage, drop, and stat multipliers that tune combat and progression balance. Full reference:</value>
+  </data>
+  <data name="Settings_PerformanceBlurb" xml:space="preserve">
+    <value>Limits that affect server load: base camps, guild size, object caps, and spawn density. Full reference:</value>
+  </data>
+  <data name="Settings_LaunchArgsBlurbLink" xml:space="preserve">
+    <value>Launch arguments docs</value>
   </data>
 </root>

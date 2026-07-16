@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using PalServerLauncher.Localization;
 using static PalServerLauncher.Views.DarkControls;
@@ -19,8 +18,6 @@ namespace PalServerLauncher.Views;
 /// </summary>
 internal sealed class SecretField
 {
-    private static readonly Brush ButtonBg = new SolidColorBrush(Color.FromRgb(0x44, 0x44, 0x44));
-
     private readonly PasswordBox _masked;
     private readonly TextBox _revealed;
 
@@ -29,42 +26,49 @@ internal sealed class SecretField
 
     public SecretField(string value, bool editable)
     {
-        // Masked view: disabled (grayed, non-editable) when not editable, matching the rest of the dialog.
+        // The masked and revealed views are transparent and borderless. The outer Border (built at the end)
+        // draws the field box, so the eye toggle sits INSIDE it like a native Windows password box, not beside it.
+        // Masked view: disabled (grayed) when not editable, matching the rest of the dialog.
         _masked = new PasswordBox
         {
-            Password = value, IsEnabled = editable, Background = FieldBg, Foreground = Fg, BorderBrush = FieldBorder,
-            Padding = new Thickness(4, 3, 4, 3), CaretBrush = Brushes.White, VerticalContentAlignment = VerticalAlignment.Center,
+            Password = value, IsEnabled = editable, Background = Brushes.Transparent, Foreground = Fg,
+            BorderThickness = new Thickness(0), Padding = new Thickness(5, 4, 5, 4), CaretBrush = Brushes.White,
+            VerticalContentAlignment = VerticalAlignment.Center,
         };
         // Revealed view: read-only (not disabled) when not editable, so the value stays selectable and copyable.
         _revealed = new TextBox
         {
-            Text = value, IsReadOnly = !editable, Visibility = Visibility.Collapsed, Background = FieldBg, Foreground = Fg,
-            BorderBrush = FieldBorder, Padding = new Thickness(4, 3, 4, 3), CaretBrush = Brushes.White,
-            VerticalContentAlignment = VerticalAlignment.Center,
+            Text = value, IsReadOnly = !editable, Visibility = Visibility.Collapsed, Background = Brushes.Transparent,
+            Foreground = Fg, BorderThickness = new Thickness(0), Padding = new Thickness(5, 4, 5, 4),
+            CaretBrush = Brushes.White, VerticalContentAlignment = VerticalAlignment.Center,
         };
         GateText(_revealed);
         StripPassword(_masked);
 
-        // Always enabled, even when read-only, so you can reveal a password to view it while the server runs.
-        var toggle = new ToggleButton
+        // The eye toggle, inside the field on the right. Transparent + borderless so it blends into the box (it
+        // still uses the app-wide Button template for the square hover feedback). Always enabled, even when the
+        // field is read-only, so a password can be revealed to view it while the server runs.
+        var toggle = new Button
         {
-            Content = Strings.Secret_Show, Width = 52, Margin = new Thickness(6, 0, 0, 0), Foreground = Fg,
-            Background = ButtonBg, BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand,
+            Content = "", FontFamily = new FontFamily("Segoe MDL2 Assets"), FontSize = 13, Foreground = Fg,
+            Background = Brushes.Transparent, BorderThickness = new Thickness(0), MinWidth = 0,
+            Padding = new Thickness(9, 0, 9, 0), Cursor = System.Windows.Input.Cursors.Hand,
             VerticalAlignment = VerticalAlignment.Stretch, ToolTip = Strings.Secret_Tooltip,
         };
-        toggle.Checked += (_, _) =>
+        toggle.Click += (_, _) =>
         {
-            _revealed.Text = _masked.Password;
-            _masked.Visibility = Visibility.Collapsed;
-            _revealed.Visibility = Visibility.Visible;
-            toggle.Content = Strings.Secret_Hide;
-        };
-        toggle.Unchecked += (_, _) =>
-        {
-            _masked.Password = _revealed.Text;
-            _revealed.Visibility = Visibility.Collapsed;
-            _masked.Visibility = Visibility.Visible;
-            toggle.Content = Strings.Secret_Show;
+            if (_masked.Visibility == Visibility.Visible) // currently masked -> reveal
+            {
+                _revealed.Text = _masked.Password;
+                _masked.Visibility = Visibility.Collapsed;
+                _revealed.Visibility = Visibility.Visible;
+            }
+            else // currently revealed -> mask again
+            {
+                _masked.Password = _revealed.Text;
+                _revealed.Visibility = Visibility.Collapsed;
+                _masked.Visibility = Visibility.Visible;
+            }
         };
 
         var grid = new Grid();
@@ -76,7 +80,12 @@ internal sealed class SecretField
         grid.Children.Add(_masked);
         grid.Children.Add(_revealed);
         grid.Children.Add(toggle);
-        Element = grid;
+
+        // The field box: the border + background that make the input and eye read as one native-style field.
+        Element = new Border
+        {
+            Background = FieldBg, BorderBrush = FieldBorder, BorderThickness = new Thickness(1), Child = grid,
+        };
     }
 
     /// <summary>The current value, read from whichever view (masked or revealed) is active.</summary>

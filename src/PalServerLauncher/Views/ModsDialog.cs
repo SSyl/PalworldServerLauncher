@@ -25,11 +25,11 @@ namespace PalServerLauncher.Views;
 /// </summary>
 public sealed class ModsDialog : Window
 {
-    private static readonly Brush RowBorder = new SolidColorBrush(Color.FromRgb(0x2C, 0x2C, 0x2C));
-    private static readonly Brush GreenFg = new SolidColorBrush(Color.FromRgb(0x4C, 0xC9, 0x4C));
-    private static readonly Brush AmberFg = new SolidColorBrush(Color.FromRgb(0xE0, 0xB8, 0x4C));
-    private static readonly Brush RedFg = new SolidColorBrush(Color.FromRgb(0xE8, 0x6A, 0x6A));
-    private static readonly Brush InsetBg = new SolidColorBrush(Color.FromRgb(0x25, 0x25, 0x25));
+    private static readonly Brush RowBorder = Theme.Divider;
+    private static readonly Brush GreenFg = Theme.Success;
+    private static readonly Brush AmberFg = Theme.Warning;
+    private static readonly Brush RedFg = Theme.Error;
+    private static readonly Brush InsetBg = Theme.Inset;
 
     private readonly LauncherConfig _config;
     private readonly ModService _modService;
@@ -67,7 +67,7 @@ public sealed class ModsDialog : Window
         _checkLogin = checkLogin;
 
         Title = Strings.Mods_Title;
-        Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
+        Background = Theme.Window;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
         Width = 720;
         Height = 706;
@@ -418,7 +418,7 @@ public sealed class ModsDialog : Window
         var remove = new Button
         {
             Content = "✕", Width = 30, Height = 26, Padding = new Thickness(0), Foreground = Fg,
-            Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)), BorderThickness = new Thickness(0),
+            Background = Theme.Control, BorderThickness = new Thickness(0),
             Cursor = Cursors.Hand, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(6, 0, 0, 0),
             ToolTip = Strings.Mods_DeleteModTip,
         };
@@ -552,7 +552,7 @@ public sealed class ModsDialog : Window
 
     private static Border Separator() => new()
     {
-        Height = 1, Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x3A, 0x3A)), Margin = new Thickness(0, 18, 0, 0),
+        Height = 1, Background = Theme.Divider, Margin = new Thickness(0, 18, 0, 0),
     };
 
     private void RefreshWarning()
@@ -577,16 +577,16 @@ public sealed class ModsDialog : Window
 
     private static Border Note(string text) => new()
     {
-        Background = new SolidColorBrush(Color.FromRgb(0x2A, 0x2A, 0x2A)),
+        Background = Theme.Inset,
         Padding = new Thickness(10, 8, 10, 8), Margin = new Thickness(0, 6, 0, 0),
         Child = new TextBlock { Text = text, Foreground = Muted, TextWrapping = TextWrapping.Wrap },
     };
 
     private static Border Warning(string text) => new()
     {
-        Background = new SolidColorBrush(Color.FromRgb(0x3A, 0x2E, 0x1E)),
+        Background = Theme.BannerBg,
         Padding = new Thickness(10, 8, 10, 8), Margin = new Thickness(0, 8, 0, 0), Visibility = Visibility.Collapsed,
-        Child = new TextBlock { Text = text, Foreground = new SolidColorBrush(Color.FromRgb(0xE0, 0xC0, 0x80)), TextWrapping = TextWrapping.Wrap },
+        Child = new TextBlock { Text = text, Foreground = Theme.BannerFg, TextWrapping = TextWrapping.Wrap },
     };
 
     private static Grid ListHeader()
