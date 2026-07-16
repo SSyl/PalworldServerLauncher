@@ -2257,7 +2257,7 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
     <value>Windows ログイン時にランチャーを開いてサーバーを起動する</value>
   </data>
   <data name="LauncherSettings_LoginOpenTip" xml:space="preserve">
-    <value>ログイン時にランチャーを開きサーバーを起動することで、スケジュールされた再起動、アップデート、バックアップ、修復機能が実行されます。管理者権限は不要です。チェックを外すとスタートアップのショートカットが削除されます。</value>
+    <value>ログイン時にランチャーを開きサーバーを起動することで、スケジュールされた再起動、アップデート、バックアップ、自動復旧が実行されます。管理者権限は不要です。チェックを外すとスタートアップのショートカットが削除されます。</value>
   </data>
   <data name="LauncherSettings_LoginOpenFailedTitle" xml:space="preserve">
     <value>ログインのショートカットを変更できませんでした</value>
