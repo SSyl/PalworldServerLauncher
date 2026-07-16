@@ -611,7 +611,7 @@ Ativar agora com uma senha de administrador segura e gerada aleatoriamente?</val
     <value>A cada</value>
   </data>
   <data name="Times_EveryTip" xml:space="preserve">
-    <value>Preenche o dia inteiro com esse intervalo, começando à meia-noite. Escolha um valor predefinido ou digite um decimal como 2,5. Substitui os horários abaixo.</value>
+    <value>Preenche o dia inteiro com esse intervalo, começando à meia-noite. Escolha um valor predefinido ou digite um decimal como 2.5. Substitui os horários abaixo.</value>
   </data>
   <data name="Times_Apply" xml:space="preserve">
     <value>Aplicar</value>
@@ -635,7 +635,7 @@ Ativar agora com uma senha de administrador segura e gerada aleatoriamente?</val
     <value>Intervalo Inválido</value>
   </data>
   <data name="Times_InvalidIntervalMessage" xml:space="preserve">
-    <value>Digite um intervalo entre 15 minutos e 24 horas, por exemplo 30m, 2h, ou 2,5 (horas).</value>
+    <value>Digite um intervalo entre 15 minutos e 24 horas, por exemplo 30m, 2h, ou 2.5 (horas).</value>
   </data>
   <data name="Times_ReplaceTitle" xml:space="preserve">
     <value>Substituir Horários</value>
