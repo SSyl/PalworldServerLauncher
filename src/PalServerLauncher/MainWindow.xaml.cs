@@ -85,6 +85,14 @@ public partial class MainWindow : Window
             return true;
         }
 
+        // Auto-reconnect (opt-in): a lone running server is almost certainly ours from a previous session,
+        // adopt it silently instead of prompting. Multiple instances always prompt (they conflict).
+        if (_viewModel.Config.AutoReconnectSingleInstance)
+        {
+            _viewModel.Attach();
+            return true;
+        }
+
         var choice = ChoiceDialog.Show(this, Strings.Main_ServerRunningTitle,
             Strings.Main_ServerRunningMessage,
             Strings.Main_Reconnect, Strings.Main_ShutDownServer, Strings.Main_ExitLauncher);

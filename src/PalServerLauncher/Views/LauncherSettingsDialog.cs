@@ -19,6 +19,7 @@ public sealed class LauncherSettingsDialog : Window
 {
     private readonly LauncherConfig _config;
     private readonly ComboBox _languages;
+    private readonly CheckBox _autoReconnect;
     private bool _changed;
 
     private LauncherSettingsDialog(LauncherConfig config)
@@ -52,6 +53,16 @@ public sealed class LauncherSettingsDialog : Window
         _languages.SelectedItem = LauncherLanguages.ForCode(config.Language);
         languageRow.Children.Add(_languages);
         root.Children.Add(languageRow);
+
+        _autoReconnect = new CheckBox
+        {
+            Content = Strings.LauncherSettings_AutoReconnect,
+            IsChecked = config.AutoReconnectSingleInstance,
+            Foreground = Fg,
+            ToolTip = Strings.LauncherSettings_AutoReconnectTip,
+            Margin = new Thickness(0, 0, 0, 18),
+        };
+        root.Children.Add(_autoReconnect);
 
         var bottom = new DockPanel { LastChildFill = false };
 
@@ -88,13 +99,15 @@ public sealed class LauncherSettingsDialog : Window
 
     private void OnSave()
     {
+        _config.AutoReconnectSingleInstance = _autoReconnect.IsChecked == true;
+
         if (_languages.SelectedItem is LauncherLanguage lang &&
             !string.Equals(lang.Code, _config.Language, StringComparison.OrdinalIgnoreCase))
         {
             _config.Language = lang.Code;
-            _config.Save();
             _changed = true; // the caller offers to restart the launcher to apply the new language
         }
+        _config.Save();
         Close();
     }
     /// <summary>Show the bundled third-party license notices in a scrollable read-only window.</summary>

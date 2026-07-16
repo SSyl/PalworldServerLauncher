@@ -2223,4 +2223,10 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
   <data name="Main_PinnedBuildFormat" xml:space="preserve">
     <value>build {0}</value>
   </data>
+  <data name="LauncherSettings_AutoReconnect" xml:space="preserve">
+    <value>Reconnect to a running server automatically</value>
+  </data>
+  <data name="LauncherSettings_AutoReconnectTip" xml:space="preserve">
+    <value>When exactly one managed server is found running at startup, adopt it without asking. If several are found, you'll still be prompted.</value>
+  </data>
 </root>

@@ -35,6 +35,7 @@ public class LauncherConfigTests
         Assert.Equal("Server update available. Restarting server in {minutes} minutes", cfg.UpdateAnnounceMessage);
 
         Assert.Equal("en", cfg.Language);
+        Assert.False(cfg.AutoReconnectSingleInstance);
     }
 
     [Fact]
@@ -60,6 +61,7 @@ public class LauncherConfigTests
                 HideSteamCmdWindow = true,
                 VerifyOnUpdate = true,
                 LogHealthStats = true,
+                AutoReconnectSingleInstance = true,
                 BackupOnStartup = false,
                 ScheduledBackupEnabled = true,
                 BackupTimes = new() { new TimeOnly(4, 0) },
@@ -85,6 +87,7 @@ public class LauncherConfigTests
             Assert.True(loaded.HideSteamCmdWindow);
             Assert.True(loaded.VerifyOnUpdate);
             Assert.True(loaded.LogHealthStats);
+            Assert.True(loaded.AutoReconnectSingleInstance);
             Assert.False(loaded.BackupOnStartup);
             Assert.True(loaded.ScheduledBackupEnabled);
             Assert.Equal(new[] { new TimeOnly(4, 0) }, loaded.BackupTimes);

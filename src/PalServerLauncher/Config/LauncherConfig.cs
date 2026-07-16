@@ -171,6 +171,11 @@ public sealed class LauncherConfig
     /// <summary>Collapse the settings sections (Restarts / Backups / Misc) for a compact, log-focused window.</summary>
     public bool CompactMode { get; set; } = false;
 
+    // --- Startup ---
+    /// <summary>When exactly one managed server is found already running at startup, adopt it automatically
+    /// instead of prompting (reconnect / shut down / exit). Several running servers still prompt. Default off.</summary>
+    public bool AutoReconnectSingleInstance { get; set; } = false;
+
     // --- Modding (Steam Workshop + bring-your-own, deployed via Mods/PalModSettings.ini) ---
     /// <summary>Master switch: when on, the launcher manages mods (downloads Workshop ids + writes PalModSettings.ini on start).</summary>
     public bool ModsEnabled { get; set; } = false;
