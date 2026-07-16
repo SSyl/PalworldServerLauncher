@@ -118,134 +118,134 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Start_Button" xml:space="preserve">
-    <value>Start</value>
+    <value>Iniciar</value>
   </data>
   <data name="FirstRun_Prompt" xml:space="preserve">
-    <value>Choose your language. You can change this later from the gear button in the top-right.</value>
+    <value>Elija su idioma. Puede cambiarlo más tarde desde el botón de engranaje en la esquina superior derecha.</value>
   </data>
   <!-- Launcher Settings dialog + its main-window button -->
   <data name="LauncherSettings_Title" xml:space="preserve">
-    <value>Launcher Settings</value>
+    <value>Configuración del launcher</value>
   </data>
   <data name="LauncherSettings_ThirdPartyLicenses" xml:space="preserve">
-    <value>Open source licenses</value>
+    <value>Licencias de código abierto</value>
   </data>
   <data name="LauncherSettings_LanguageLabel" xml:space="preserve">
-    <value>Language</value>
+    <value>Idioma</value>
   </data>
   <data name="LauncherSettings_Tooltip" xml:space="preserve">
-    <value>Change the launcher's language and other launcher preferences.</value>
+    <value>Cambie el idioma del launcher y otras preferencias del launcher.</value>
   </data>
   <!-- Shared across dialogs (dedupe: one key reused everywhere the word appears) -->
   <data name="Common_AppName" xml:space="preserve">
     <value>Palworld Server Launcher</value>
   </data>
   <data name="Common_Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Guardar</value>
   </data>
   <data name="Common_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Cancelar</value>
   </data>
   <data name="Common_OK" xml:space="preserve">
-    <value>OK</value>
+    <value>Aceptar</value>
   </data>
   <data name="Common_ForceShutdown" xml:space="preserve">
-    <value>Force Shutdown</value>
+    <value>Forzar apagado</value>
   </data>
   <!-- Announcements dialog -->
   <data name="Announcements_Title" xml:space="preserve">
-    <value>Announcements</value>
+    <value>Anuncios</value>
   </data>
   <data name="Announcements_Intro" xml:space="preserve">
-    <value>Shown to players before a restart. Put {minutes} where the countdown should go (it becomes the minutes remaining). Remove it for a fixed message with no time.</value>
+    <value>Se muestra a los jugadores antes de un reinicio. Coloque {minutes} donde deba ir la cuenta regresiva (se convierte en los minutos restantes). Quítelo para un mensaje fijo sin indicar el tiempo.</value>
   </data>
   <data name="Announcements_RestartLabel" xml:space="preserve">
-    <value>Scheduled / manual restart</value>
+    <value>Reinicio programado / manual</value>
   </data>
   <data name="Announcements_UpdateLabel" xml:space="preserve">
-    <value>Update restart</value>
+    <value>Reinicio por actualización</value>
   </data>
   <data name="Announcements_EmptyTitle" xml:space="preserve">
-    <value>Empty Announcement</value>
+    <value>Anuncio vacío</value>
   </data>
   <data name="Announcements_EmptyMessage" xml:space="preserve">
-    <value>An announcement can't be empty (the server rejects a blank message):</value>
+    <value>Un anuncio no puede estar vacío (el servidor rechaza un mensaje en blanco):</value>
   </data>
   <data name="Announcements_NoTokenTitle" xml:space="preserve">
-    <value>No Countdown Token</value>
+    <value>Sin token de cuenta regresiva</value>
   </data>
   <data name="Announcements_NoTokenMessage" xml:space="preserve">
-    <value>These have no {0} token, so they won't show the minutes remaining:
+    <value>Estos no tienen el token {0}, por lo que no mostrarán los minutos restantes:
 {1}
 
-Save them as fixed messages anyway?</value>
+¿Guardarlos igualmente como mensajes fijos?</value>
   </data>
   <data name="Announcements_SaveAnyway" xml:space="preserve">
-    <value>Save Anyway</value>
+    <value>Guardar de todos modos</value>
   </data>
   <data name="Announcements_KeepEditing" xml:space="preserve">
-    <value>Keep Editing</value>
+    <value>Seguir editando</value>
   </data>
   <!-- Main window -->
   <data name="Main_PrimaryTip" xml:space="preserve">
-    <value>Install the server, or start (▶) / stop (■) it once installed. Start checks for an update first (when Update on start is on), then launches.</value>
+    <value>Instale el servidor, o inícielo (▶) / deténgalo (■) una vez instalado. Iniciar primero busca una actualización (cuando Actualizar al iniciar está activado) y luego lo inicia.</value>
   </data>
   <data name="Main_RestartTip" xml:space="preserve">
-    <value>Restart now: saves and restarts the server immediately, with no player countdown. Scheduled and update restarts warn players first.</value>
+    <value>Reiniciar ahora: guarda y reinicia el servidor de inmediato, sin cuenta regresiva para los jugadores. Los reinicios programados y por actualización avisan primero a los jugadores.</value>
   </data>
   <data name="Main_ForceShutdownTip" xml:space="preserve">
-    <value>Immediately kill the server process, with no save. Appears when a start, stop, or restart has been stuck for a while. Use it only when the server has stopped responding.</value>
+    <value>Termina de inmediato el proceso del servidor, sin guardar. Aparece cuando un inicio, detención o reinicio lleva un tiempo atascado. Úselo solo cuando el servidor haya dejado de responder.</value>
   </data>
   <data name="Main_CheckForUpdate" xml:space="preserve">
-    <value>Check for Update</value>
+    <value>Buscar actualización</value>
   </data>
   <data name="Main_CheckForUpdateTip" xml:space="preserve">
-    <value>Check SteamCMD for a newer build (read-only; works while running)</value>
+    <value>Consulta SteamCMD en busca de una build más reciente (solo lectura, funciona mientras se ejecuta)</value>
   </data>
   <data name="Main_ValidateFiles" xml:space="preserve">
-    <value>Validate Files</value>
+    <value>Validar archivos</value>
   </data>
   <data name="Main_ValidateFilesTip" xml:space="preserve">
-    <value>Full SteamCMD integrity check of the installed files</value>
+    <value>Comprobación completa de integridad de los archivos instalados con SteamCMD</value>
   </data>
   <data name="Main_ServerSettings" xml:space="preserve">
-    <value>Server Settings</value>
+    <value>Configuración del servidor</value>
   </data>
   <data name="Main_ServerSettingsTip" xml:space="preserve">
-    <value>Edit the server in one tabbed editor: Game Settings (the PalWorldSettings.ini gameplay, balance, and admin keys as sub-tabs), Launch Arguments (the command line: listen port, player cap, performance threads, community listing), and CPU Affinity/Priority (process priority and CPU pinning).</value>
+    <value>Edite el servidor en un único editor con pestañas: Configuración del juego (las claves de jugabilidad, balance y administración de PalWorldSettings.ini, en subpestañas), Argumentos de inicio (la línea de comandos: puerto de escucha, límite de jugadores, hilos de rendimiento, listado en la comunidad) y Afinidad/Prioridad de CPU (prioridad del proceso y asignación de núcleos de CPU).</value>
   </data>
   <data name="Main_Mods" xml:space="preserve">
     <value>Mods</value>
   </data>
   <data name="Main_ModsTip" xml:space="preserve">
-    <value>Manage Steam Workshop server mods: add Workshop ids for the launcher to download, or scan for mods you dropped into the mods folder yourself.</value>
+    <value>Administre los mods del servidor del Taller de Steam: agregue los ID del Taller para que el launcher los descargue, o busque mods que haya colocado usted mismo en la carpeta de mods.</value>
   </data>
   <data name="Main_StatusLabel" xml:space="preserve">
-    <value>Status:</value>
+    <value>Estado:</value>
   </data>
   <data name="Main_UpdateLabel" xml:space="preserve">
-    <value>Update:</value>
+    <value>Actualización:</value>
   </data>
   <data name="Main_PublicIpLabel" xml:space="preserve">
-    <value>Public IP:</value>
+    <value>IP pública:</value>
   </data>
   <data name="Main_PublicIpTip" xml:space="preserve">
-    <value>Your public IP and game port. Reveal it with the eye, then highlight to copy, or use the copy button.</value>
+    <value>Su IP pública y el puerto del juego. Revélela con el icono de ojo, luego selecciónela para copiarla, o use el botón de copiar.</value>
   </data>
   <data name="Main_RevealIpTip" xml:space="preserve">
-    <value>Show or hide your public IP</value>
+    <value>Mostrar u ocultar su IP pública</value>
   </data>
   <data name="Main_CopyIpTip" xml:space="preserve">
-    <value>Copy your IP:port to the clipboard</value>
+    <value>Copiar su IP:puerto al portapapeles</value>
   </data>
   <data name="Main_PortCheck" xml:space="preserve">
-    <value>Port Check</value>
+    <value>Comprobación de puertos</value>
   </data>
   <data name="Main_PortCheckTip" xml:space="preserve">
-    <value>Check whether your ports are reachable from the internet. The server must be stopped so the launcher can test the ports.</value>
+    <value>Compruebe si sus puertos son accesibles desde internet. El servidor debe estar detenido para que el launcher pueda probar los puertos.</value>
   </data>
   <data name="Main_StatVersion" xml:space="preserve">
-    <value>Version</value>
+    <value>Versión</value>
   </data>
   <data name="Main_StatFps" xml:space="preserve">
     <value>FPS</value>
@@ -254,1221 +254,1221 @@ Save them as fixed messages anyway?</value>
     <value>CPU</value>
   </data>
   <data name="Main_StatMemory" xml:space="preserve">
-    <value>Memory</value>
+    <value>Memoria</value>
   </data>
   <data name="Main_StatPlayers" xml:space="preserve">
-    <value>Players</value>
+    <value>Jugadores</value>
   </data>
   <data name="Main_StatUptime" xml:space="preserve">
-    <value>Uptime</value>
+    <value>Tiempo activo</value>
   </data>
   <data name="Main_StatNextRestart" xml:space="preserve">
-    <value>Next restart</value>
+    <value>Próximo reinicio</value>
   </data>
   <data name="Main_CollapseTip" xml:space="preserve">
-    <value>Show or hide the settings sections (Restarts, Backups, Misc)</value>
+    <value>Mostrar u ocultar las secciones de configuración (Reinicios, Copias de seguridad, Varios)</value>
   </data>
   <data name="Main_RestartsHeader" xml:space="preserve">
-    <value>Restarts</value>
+    <value>Reinicios</value>
   </data>
   <data name="Main_ScheduledRestartAt" xml:space="preserve">
-    <value>Scheduled restart at</value>
+    <value>Reinicio programado a las</value>
   </data>
   <data name="Main_ScheduledRestartTip" xml:space="preserve">
-    <value>Automatically restart the server at the times listed. A restart is skipped if the server hasn't been up for the minimum uptime below.</value>
+    <value>Reinicia automáticamente el servidor en los horarios indicados. Un reinicio se omite si el servidor no ha estado activo durante el tiempo mínimo indicado abajo.</value>
   </data>
   <data name="Main_ChooseRestartTimes" xml:space="preserve">
-    <value>Choose Restart Times</value>
+    <value>Elegir horarios de reinicio</value>
   </data>
   <data name="Main_MinUptime" xml:space="preserve">
-    <value>Min uptime before restart</value>
+    <value>Tiempo activo mínimo antes de reiniciar</value>
   </data>
   <data name="Main_HourSuffix" xml:space="preserve">
     <value>h</value>
   </data>
   <data name="Main_AnnounceRestarts" xml:space="preserve">
-    <value>Announce restarts</value>
+    <value>Anunciar reinicios</value>
   </data>
   <data name="Main_AnnounceRestartsTip" xml:space="preserve">
-    <value>Warn players in-game before a scheduled or update restart, at the minute marks on the right. Skipped when nobody's online.</value>
+    <value>Avisa a los jugadores dentro del juego antes de un reinicio programado o por actualización, en las marcas de minutos de la derecha. Se omite si no hay nadie conectado.</value>
   </data>
   <data name="Main_AnnounceLeadTip" xml:space="preserve">
-    <value>Minutes before restart to announce (blank = off)</value>
+    <value>Minutos antes del reinicio para anunciar (en blanco = desactivado)</value>
   </data>
   <data name="Main_MinuteSuffix" xml:space="preserve">
     <value>min</value>
   </data>
   <data name="Main_EditAnnouncements" xml:space="preserve">
-    <value>Edit Announcements</value>
+    <value>Editar anuncios</value>
   </data>
   <data name="Main_EditAnnouncementsTip" xml:space="preserve">
-    <value>Edit the in-game messages players see before a restart.</value>
+    <value>Edite los mensajes dentro del juego que ven los jugadores antes de un reinicio.</value>
   </data>
   <data name="Main_ValidateOnRestart" xml:space="preserve">
-    <value>Validate files on restart</value>
+    <value>Validar archivos al reiniciar</value>
   </data>
   <data name="Main_ValidateOnRestartTip" xml:space="preserve">
-    <value>Add a full integrity pass to the update on Start/restart (slower)</value>
+    <value>Añade una comprobación completa de integridad a la actualización al iniciar/reiniciar (más lento)</value>
   </data>
   <data name="Main_BackupsHeader" xml:space="preserve">
-    <value>Backups</value>
+    <value>Copias de seguridad</value>
   </data>
   <data name="Main_BackupOn" xml:space="preserve">
-    <value>Backup on:</value>
+    <value>Copia de seguridad en:</value>
   </data>
   <data name="Main_BackupStartup" xml:space="preserve">
-    <value>Startup</value>
+    <value>Inicio</value>
   </data>
   <data name="Main_BackupStartupTip" xml:space="preserve">
-    <value>Back up when the server starts, before it checks for updates (SteamCMD can overwrite config).</value>
+    <value>Hace copia de seguridad cuando el servidor arranca, antes de buscar actualizaciones (SteamCMD puede sobrescribir la configuración).</value>
   </data>
   <data name="Main_BackupShutdown" xml:space="preserve">
-    <value>Shutdown</value>
+    <value>Apagado</value>
   </data>
   <data name="Main_BackupShutdownTip" xml:space="preserve">
-    <value>Back up when the server stops or restarts (saves the world first).</value>
+    <value>Hace copia de seguridad cuando el servidor se detiene o reinicia (guarda el mundo primero).</value>
   </data>
   <data name="Main_BackupScheduled" xml:space="preserve">
-    <value>Scheduled</value>
+    <value>Programada</value>
   </data>
   <data name="Main_BackupScheduledTip" xml:space="preserve">
-    <value>Automatically back up at the times listed on the right, while the server is running.</value>
+    <value>Hace copia de seguridad automáticamente en los horarios indicados a la derecha, mientras el servidor está en ejecución.</value>
   </data>
   <data name="Main_ChooseBackupTimes" xml:space="preserve">
-    <value>Choose Backup Times</value>
+    <value>Elegir horarios de copia de seguridad</value>
   </data>
   <data name="Main_BackupRetentionTip" xml:space="preserve">
-    <value>How long to keep automatic backups (startup / shutdown / scheduled). Manual backups and any file you add to the backups folder yourself are never deleted. 0 = keep everything.</value>
+    <value>Cuánto tiempo conservar las copias de seguridad automáticas (inicio / apagado / programadas). Las copias de seguridad manuales y cualquier archivo que agregue usted mismo a la carpeta de copias de seguridad nunca se eliminan. 0 = conservar todo.</value>
   </data>
   <data name="Main_KeepFor" xml:space="preserve">
-    <value>Keep for</value>
+    <value>Conservar durante</value>
   </data>
   <data name="Main_DaysSuffix" xml:space="preserve">
-    <value>days</value>
+    <value>días</value>
   </data>
   <data name="Main_NextBackupLabel" xml:space="preserve">
-    <value>Next backup:</value>
+    <value>Próxima copia de seguridad:</value>
   </data>
   <data name="Main_BackupNow" xml:space="preserve">
-    <value>Backup Now</value>
+    <value>Copia de seguridad ahora</value>
   </data>
   <data name="Main_BackupNowTip" xml:space="preserve">
-    <value>Take a manual backup immediately. Saves the world first if the server is running with REST on.</value>
+    <value>Realiza una copia de seguridad manual de inmediato. Guarda el mundo primero si el servidor está en ejecución con REST activado.</value>
   </data>
   <data name="Main_MiscHeader" xml:space="preserve">
-    <value>Misc.</value>
+    <value>Varios</value>
   </data>
   <data name="Main_AutoUpdate" xml:space="preserve">
-    <value>Auto-update server</value>
+    <value>Actualizar servidor automáticamente</value>
   </data>
   <data name="Main_AutoUpdateTip" xml:space="preserve">
-    <value>Automatically restart the server when a new update is found. The Announce restarts setting adds a delay before restarting if anyone is on the server.</value>
+    <value>Reinicia automáticamente el servidor cuando se encuentra una nueva actualización. La opción Anunciar reinicios añade una demora antes de reiniciar si hay alguien en el servidor.</value>
   </data>
   <data name="Main_UpdateOnStart" xml:space="preserve">
-    <value>Update on start / restart</value>
+    <value>Actualizar al iniciar / reiniciar</value>
   </data>
   <data name="Main_UpdateOnStartTip" xml:space="preserve">
-    <value>Run a SteamCMD update check each time the server starts or restarts. Uncheck to never auto-download on start. You can still update explicitly via Check for Update.</value>
+    <value>Ejecuta una comprobación de actualización con SteamCMD cada vez que el servidor inicia o reinicia. Desactive esta opción para que nunca se descargue automáticamente al iniciar. Aun así puede actualizar manualmente con Buscar actualización.</value>
   </data>
   <data name="Main_CheckUpdateEvery" xml:space="preserve">
-    <value>Check for update every</value>
+    <value>Buscar actualización cada</value>
   </data>
   <data name="Main_CheckUpdateEveryTip" xml:space="preserve">
-    <value>How often to check SteamCMD for a new build while the server is running. Applies on next start.</value>
+    <value>Con qué frecuencia consultar SteamCMD en busca de una nueva build mientras el servidor está en ejecución. Se aplica en el próximo inicio.</value>
   </data>
   <data name="Main_HideSteamCmd" xml:space="preserve">
-    <value>Hide SteamCMD window</value>
+    <value>Ocultar ventana de SteamCMD</value>
   </data>
   <data name="Main_HideSteamCmdTip" xml:space="preserve">
-    <value>Run SteamCMD in the background instead of opening its own console window. Live progress still appears in the SteamCMD tab.</value>
+    <value>Ejecuta SteamCMD en segundo plano en lugar de abrir su propia ventana de consola. El progreso en vivo sigue apareciendo en la pestaña de SteamCMD.</value>
   </data>
   <data name="Main_LogServerStatus" xml:space="preserve">
-    <value>Log Server Status</value>
+    <value>Registrar estado del servidor</value>
   </data>
   <data name="Main_LogServerStatusTip" xml:space="preserve">
-    <value>Write a server stats line (FPS, players, uptime, memory) to the log every 30s. Handy when running from a terminal; adds noise to the log otherwise.</value>
+    <value>Escribe una línea de estadísticas del servidor (FPS, jugadores, tiempo activo, memoria) en el registro cada 30 s. Útil al ejecutar desde una terminal, en otro caso añade ruido al registro.</value>
   </data>
   <data name="Main_ZombieCheck" xml:space="preserve">
-    <value>Zombie check: restart after</value>
+    <value>Comprobación de zombi: reiniciar tras</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
-    <value>When the REST API stays unreachable or the world stays frozen for this many checks in a row, restart the server. Turn off if your REST API is flaky and you'd rather it never auto-restart.</value>
+    <value>Cuando la API REST permanece inaccesible o el mundo se mantiene congelado durante esta cantidad de comprobaciones seguidas, reinicia el servidor. Desactívelo si su API REST es inestable y prefiere que nunca se reinicie automáticamente.</value>
   </data>
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
-    <value>How many failed health checks in a row before the server is treated as wedged and force-restarted.</value>
+    <value>Cuántas comprobaciones de estado fallidas seguidas antes de considerar el servidor bloqueado y forzar su reinicio.</value>
   </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
-    <value>checks</value>
+    <value>comprobaciones</value>
   </data>
   <data name="Main_RestCheckEvery" xml:space="preserve">
-    <value>REST check every</value>
+    <value>Comprobación REST cada</value>
   </data>
   <data name="Main_RestCheckEveryTip" xml:space="preserve">
-    <value>How often (seconds) the launcher polls the REST API for status/health. 5-10 is recommended. Going below 5 just hammers the API for no real gain (allowed, but not advised); it won't go below 1. Applies on next start.</value>
+    <value>Con qué frecuencia (en segundos) el launcher consulta la API REST para conocer el estado/salud. Se recomienda entre 5 y 10. Bajar de 5 solo satura la API sin ninguna ventaja real (permitido, pero no recomendado); no bajará de 1. Se aplica en el próximo inicio.</value>
   </data>
   <data name="Main_SecondsSuffix" xml:space="preserve">
     <value>s</value>
   </data>
   <data name="Main_DiscordBot" xml:space="preserve">
-    <value>Discord Bot</value>
+    <value>Bot de Discord</value>
   </data>
   <data name="Main_DiscordBotTip" xml:space="preserve">
-    <value>Discord control bot + webhook notifications</value>
+    <value>Bot de control de Discord + notificaciones por webhook</value>
   </data>
   <data name="Main_TabGeneral" xml:space="preserve">
     <value>General</value>
   </data>
   <data name="Main_TabServerLog" xml:space="preserve">
-    <value>Server Log</value>
+    <value>Registro del servidor</value>
   </data>
   <data name="Main_TabChat" xml:space="preserve">
     <value>Chat</value>
   </data>
   <data name="Main_TabPlayers" xml:space="preserve">
-    <value>Players</value>
+    <value>Jugadores</value>
   </data>
   <data name="Main_TabSteamCmd" xml:space="preserve">
     <value>SteamCMD</value>
   </data>
   <data name="Main_ServerCommands" xml:space="preserve">
-    <value>Server Commands</value>
+    <value>Comandos del servidor</value>
   </data>
   <data name="Main_ServerCommandsTip" xml:space="preserve">
-    <value>Send live commands to the running server: announce, kick / ban / unban, save, shutdown. Available while the server is up.</value>
+    <value>Envíe comandos en vivo al servidor en ejecución: anunciar, expulsar / banear / desbanear, guardar, apagar. Disponible mientras el servidor está activo.</value>
   </data>
   <!-- Main window prompts (code-behind dialogs) -->
   <data name="Main_MultiServerTitle" xml:space="preserve">
-    <value>Multiple Servers Running</value>
+    <value>Varios servidores en ejecución</value>
   </data>
   <data name="Main_MultiServerMessage" xml:space="preserve">
-    <value>Detected {0} Palworld servers running from this folder. They share one save and set of ports, so they'll conflict, the launcher manages a single server. Shut them all down, or exit.</value>
+    <value>Se detectaron {0} servidores de Palworld en ejecución desde esta carpeta. Comparten una misma partida guardada y conjunto de puertos, por lo que entrarán en conflicto, el launcher administra un único servidor. Apáguelos todos, o salga.</value>
   </data>
   <data name="Main_ShutDownAll" xml:space="preserve">
-    <value>Shut Down All</value>
+    <value>Apagar todos</value>
   </data>
   <data name="Main_ExitLauncher" xml:space="preserve">
-    <value>Exit Launcher</value>
+    <value>Salir del launcher</value>
   </data>
   <data name="Main_ServerRunningTitle" xml:space="preserve">
-    <value>Server Already Running</value>
+    <value>El servidor ya está en ejecución</value>
   </data>
   <data name="Main_ServerRunningMessage" xml:space="preserve">
-    <value>A Palworld server started from this folder is already running, almost certainly yours from a previous session, since the launcher only tracks servers it started here.
+    <value>Ya hay en ejecución un servidor de Palworld iniciado desde esta carpeta, casi con certeza el suyo de una sesión anterior, ya que el launcher solo hace seguimiento de los servidores que él mismo inició.
 
-Reconnect to keep managing it over the REST API (live stats, scheduled restarts, backups; the Server Log tab stays empty for a server the launcher didn't start itself). Otherwise shut it down, or exit.</value>
+Reconéctese para seguir administrándolo mediante la API REST (estadísticas en vivo, reinicios programados, copias de seguridad; la pestaña Registro del servidor permanece vacía para un servidor que el launcher no inició él mismo). De lo contrario, apáguelo, o salga.</value>
   </data>
   <data name="Main_Reconnect" xml:space="preserve">
-    <value>Reconnect</value>
+    <value>Reconectar</value>
   </data>
   <data name="Main_ShutDownServer" xml:space="preserve">
-    <value>Shut Down Server</value>
+    <value>Apagar servidor</value>
   </data>
   <data name="Main_InstallTitle" xml:space="preserve">
-    <value>Install the server?</value>
+    <value>¿Instalar el servidor?</value>
   </data>
   <data name="Main_InstallMessage" xml:space="preserve">
-    <value>This downloads and installs the Palworld dedicated server with SteamCMD, about 4 GB, into this launcher's folder. A SteamCMD window opens to show progress.
+    <value>Esto descarga e instala el servidor dedicado de Palworld con SteamCMD, unos 4 GB, en la carpeta de este launcher. Se abrirá una ventana de SteamCMD para mostrar el progreso.
 
-Download and install it now?</value>
+¿Descargarlo e instalarlo ahora?</value>
   </data>
   <data name="Main_DownloadInstall" xml:space="preserve">
-    <value>Download &amp; Install</value>
+    <value>Descargar e instalar</value>
   </data>
   <data name="Main_ShutdownNowTitle" xml:space="preserve">
-    <value>Shut down now?</value>
+    <value>¿Apagar ahora?</value>
   </data>
   <data name="Main_ShutdownNowMessage" xml:space="preserve">
-    <value>Skip the countdown and shut the server down now?</value>
+    <value>¿Omitir la cuenta regresiva y apagar el servidor ahora?</value>
   </data>
   <data name="Main_ShutDownNow" xml:space="preserve">
-    <value>Shut Down Now</value>
+    <value>Apagar ahora</value>
   </data>
   <data name="Main_KeepWaiting" xml:space="preserve">
-    <value>Keep Waiting</value>
+    <value>Seguir esperando</value>
   </data>
   <data name="Main_ShutdownTitle" xml:space="preserve">
-    <value>Shut Down the Server</value>
+    <value>Apagar el servidor</value>
   </data>
   <data name="Main_ShutdownForceMessage" xml:space="preserve">
-    <value>REST is not enabled, so the server can't be shut down gracefully. It will be force-stopped, the process is killed directly and the last autosave limits any loss. Turn on REST for graceful shutdowns.</value>
+    <value>REST no está activado, por lo que el servidor no se puede apagar de forma controlada. Se forzará su detención, el proceso se termina directamente y el último autoguardado limita cualquier pérdida. Active REST para apagados controlados.</value>
   </data>
   <data name="Main_ForceStop" xml:space="preserve">
-    <value>Force Stop</value>
+    <value>Forzar detención</value>
   </data>
   <data name="Main_ShutdownChoiceMessage" xml:space="preserve">
-    <value>Shut down now, or on a timer that shows players an in-game countdown first?</value>
+    <value>¿Apagar ahora, o con un temporizador que primero muestre a los jugadores una cuenta regresiva dentro del juego?</value>
   </data>
   <data name="Main_ShutdownNowButton" xml:space="preserve">
-    <value>Shutdown Now</value>
+    <value>Apagar ahora</value>
   </data>
   <data name="Main_TimedShutdown" xml:space="preserve">
-    <value>Timed Shutdown</value>
+    <value>Apagado programado</value>
   </data>
   <data name="Main_TimedShutdownTitle" xml:space="preserve">
-    <value>Timed Shutdown</value>
+    <value>Apagado programado</value>
   </data>
   <data name="Main_TimedShutdownMessage" xml:space="preserve">
-    <value>Players get an in-game countdown for this many seconds before the server shuts down.</value>
+    <value>Los jugadores reciben una cuenta regresiva dentro del juego durante esta cantidad de segundos antes de que el servidor se apague.</value>
   </data>
   <data name="Main_SecondsUnit" xml:space="preserve">
-    <value>seconds</value>
+    <value>segundos</value>
   </data>
   <data name="Main_ServerInstalledTitle" xml:space="preserve">
-    <value>Server Installed</value>
+    <value>Servidor instalado</value>
   </data>
   <data name="Main_ServerInstalledMessage" xml:space="preserve">
-    <value>Server successfully installed.
+    <value>Servidor instalado correctamente.
 
-Enable the REST API? It's what lets the launcher control the server: apply game updates, gracefully save and shut down, schedule restarts and backups, and monitor server health.
+¿Activar la API REST? Es lo que permite que el launcher controle el servidor: aplicar actualizaciones del juego, guardar y apagar de forma controlada, programar reinicios y copias de seguridad, y supervisar el estado del servidor.
 
-If you enable it, the launcher generates the server config now and sets a secure, randomly generated admin password (view or change it later under Server Settings, in the Admin tab). You can also skip this and enable it yourself later.</value>
+Si la activa, el launcher genera ahora la configuración del servidor y establece una contraseña de administrador segura, generada aleatoriamente (podrá verla o cambiarla más tarde en Configuración del servidor, en la pestaña Administración). También puede omitir esto y activarla usted mismo más tarde.</value>
   </data>
   <data name="Main_YesEnableRest" xml:space="preserve">
-    <value>Yes, Enable It</value>
+    <value>Sí, activarla</value>
   </data>
   <data name="Main_NotNow" xml:space="preserve">
-    <value>Not Now</value>
+    <value>Ahora no</value>
   </data>
   <data name="Main_EnableRestTitle" xml:space="preserve">
-    <value>Enable the REST API?</value>
+    <value>¿Activar la API REST?</value>
   </data>
   <data name="Main_EnableRestMessage" xml:space="preserve">
-    <value>This launcher is built around Palworld's REST API and uses it for almost everything: graceful save-and-shutdown, fresh backups, live health / zombie monitoring, automatic restarts, and player join/leave logging.
+    <value>Este launcher está construido en torno a la API REST de Palworld y la usa para casi todo: guardado y apagado controlados, copias de seguridad actualizadas, supervisión en vivo de estado / zombi, reinicios automáticos y registro de entradas/salidas de jugadores.
 
-The REST API isn't enabled on this server yet, so those features will be limited, shutdowns fall back to a hard kill, backups may be stale, and there are no automatic restarts.
+La API REST aún no está activada en este servidor, por lo que estas funciones estarán limitadas, los apagados recurrirán a una terminación forzada, las copias de seguridad pueden quedar desactualizadas y no habrá reinicios automáticos.
 
-Enable it now with a secure, randomly-generated admin password?</value>
+¿Activarla ahora con una contraseña de administrador segura, generada aleatoriamente?</value>
   </data>
   <data name="Main_NoRunLimited" xml:space="preserve">
-    <value>No, Run Limited</value>
+    <value>No, ejecutar en modo limitado</value>
   </data>
   <data name="Main_Exit" xml:space="preserve">
-    <value>Exit</value>
+    <value>Salir</value>
   </data>
   <data name="Main_RestEnabledTitle" xml:space="preserve">
-    <value>REST API Enabled</value>
+    <value>API REST activada</value>
   </data>
   <data name="Main_RestFailedTitle" xml:space="preserve">
-    <value>Couldn't Enable REST</value>
+    <value>No se pudo activar REST</value>
   </data>
   <data name="Main_RestEnabledMessage" xml:space="preserve">
-    <value>Done, the REST API is on with a new random admin password (view or change it under Server Settings, in the Admin tab). It takes effect the next time you start the server.</value>
+    <value>Listo, la API REST está activada con una nueva contraseña de administrador aleatoria (puede verla o cambiarla en Configuración del servidor, en la pestaña Administración). Tendrá efecto la próxima vez que inicie el servidor.</value>
   </data>
   <data name="Main_RestFailedMessage" xml:space="preserve">
-    <value>Couldn't write the server config. Make sure the server is installed and stopped, then set it manually under Server Settings, in the Admin tab.</value>
+    <value>No se pudo escribir la configuración del servidor. Asegúrese de que el servidor esté instalado y detenido, y luego configúrela manualmente en Configuración del servidor, en la pestaña Administración.</value>
   </data>
   <data name="Main_ServerStillRunningTitle" xml:space="preserve">
-    <value>Server Still Running</value>
+    <value>El servidor sigue en ejecución</value>
   </data>
   <data name="Main_ServerStillRunningMessage" xml:space="preserve">
-    <value>The Palworld server is still running. What should happen to it?</value>
+    <value>El servidor de Palworld sigue en ejecución. ¿Qué debe hacerse con él?</value>
   </data>
   <data name="Main_ShutDownGraceful" xml:space="preserve">
-    <value>Shut Down (graceful)</value>
+    <value>Apagar (controlado)</value>
   </data>
   <data name="Main_LeaveRunning" xml:space="preserve">
-    <value>Leave Running</value>
+    <value>Dejar en ejecución</value>
   </data>
   <data name="Main_ForceShutdownConfirmMessage" xml:space="preserve">
-    <value>This will shut the server down immediately without a save by killing the process entirely. It can cause save data loss or corruption. This is not recommended unless the server has completely stopped responding.</value>
+    <value>Esto apagará el servidor de inmediato sin guardar, terminando el proceso por completo. Puede causar pérdida o corrupción de los datos guardados. No se recomienda salvo que el servidor haya dejado de responder por completo.</value>
   </data>
   <data name="Main_PortCheckConsentMessage" xml:space="preserve">
-    <value>Your public IP address will be sent to check-host.cc, a free external service, to check whether players can reach your server from outside your network. Nothing except your public IP and the ports you test is sent to their service.</value>
+    <value>Su dirección IP pública se enviará a check-host.cc, un servicio externo gratuito, para comprobar si los jugadores pueden acceder a su servidor desde fuera de su red. Solo se envía a su servicio su IP pública y los puertos que pruebe, nada más.</value>
   </data>
   <data name="Main_UpdateAvailableTitle" xml:space="preserve">
-    <value>Update Available</value>
+    <value>Actualización disponible</value>
   </data>
   <data name="Main_UpdateRunningMessage" xml:space="preserve">
-    <value>A newer server build ({0}) is available. Update and restart the server now? Players get the usual restart warnings.</value>
+    <value>Hay una build más reciente del servidor disponible ({0}). ¿Actualizar y reiniciar el servidor ahora? Los jugadores recibirán los avisos de reinicio habituales.</value>
   </data>
   <data name="Main_UpdateRestart" xml:space="preserve">
-    <value>Update &amp; Restart</value>
+    <value>Actualizar y reiniciar</value>
   </data>
   <data name="Main_UpdateStoppedMessage" xml:space="preserve">
-    <value>A newer server build ({0}) is available. Download and apply it now?</value>
+    <value>Hay una build más reciente del servidor disponible ({0}). ¿Descargarla y aplicarla ahora?</value>
   </data>
   <data name="Main_Download" xml:space="preserve">
-    <value>Download</value>
+    <value>Descargar</value>
   </data>
   <!-- Secret field (masked password / token) -->
   <data name="Secret_Tooltip" xml:space="preserve">
-    <value>Show or hide the value</value>
+    <value>Mostrar u ocultar el valor</value>
   </data>
   <!-- Restart / Backup times dialog -->
   <data name="Times_RestartTitle" xml:space="preserve">
-    <value>Restart Times</value>
+    <value>Horarios de reinicio</value>
   </data>
   <data name="Times_RestartHeader" xml:space="preserve">
-    <value>Restart Times</value>
+    <value>Horarios de reinicio</value>
   </data>
   <data name="Times_BackupTitle" xml:space="preserve">
-    <value>Backup Times</value>
+    <value>Horarios de copia de seguridad</value>
   </data>
   <data name="Times_BackupHeader" xml:space="preserve">
-    <value>Backup Times</value>
+    <value>Horarios de copia de seguridad</value>
   </data>
   <data name="Times_Every" xml:space="preserve">
-    <value>Every</value>
+    <value>Cada</value>
   </data>
   <data name="Times_EveryTip" xml:space="preserve">
-    <value>Fill the whole day at this interval, stepping from midnight. Pick a preset or type a decimal like 2.5. Replaces the times below.</value>
+    <value>Rellena todo el día con este intervalo, a partir de la medianoche. Elija un valor predefinido o escriba un decimal como 2.5. Reemplaza los horarios de abajo.</value>
   </data>
   <data name="Times_Apply" xml:space="preserve">
-    <value>Apply</value>
+    <value>Aplicar</value>
   </data>
   <data name="Times_MinuteTip" xml:space="preserve">
-    <value>Any minute 0-59, pick a preset or type it</value>
+    <value>Cualquier minuto de 0 a 59, elija un valor predefinido o escríbalo</value>
   </data>
   <data name="Times_Add" xml:space="preserve">
-    <value>Add</value>
+    <value>Agregar</value>
   </data>
   <data name="Times_Done" xml:space="preserve">
-    <value>Done</value>
+    <value>Hecho</value>
   </data>
   <data name="Times_InvalidTimeTitle" xml:space="preserve">
-    <value>Invalid Time</value>
+    <value>Hora no válida</value>
   </data>
   <data name="Times_InvalidTimeMessage" xml:space="preserve">
-    <value>Enter minutes as a number 0-59.</value>
+    <value>Introduzca los minutos como un número de 0 a 59.</value>
   </data>
   <data name="Times_InvalidIntervalTitle" xml:space="preserve">
-    <value>Invalid Interval</value>
+    <value>Intervalo no válido</value>
   </data>
   <data name="Times_InvalidIntervalMessage" xml:space="preserve">
-    <value>Enter an interval between 15 minutes and 24 hours, e.g. 30m, 2h, or 2.5 (hours).</value>
+    <value>Introduzca un intervalo entre 15 minutos y 24 horas, por ejemplo 30m, 2h o 2.5 (horas).</value>
   </data>
   <data name="Times_ReplaceTitle" xml:space="preserve">
-    <value>Replace Times</value>
+    <value>Reemplazar horarios</value>
   </data>
   <data name="Times_ReplaceMessage" xml:space="preserve">
-    <value>This replaces the {0} time(s) below with a schedule every {1}. Continue?</value>
+    <value>Esto reemplaza los {0} horario(s) de abajo por una programación cada {1}. ¿Continuar?</value>
   </data>
   <data name="Times_Replace" xml:space="preserve">
-    <value>Replace</value>
+    <value>Reemplazar</value>
   </data>
   <!-- App-level -->
   <data name="App_ErrorFormat" xml:space="preserve">
-    <value>An error occurred:
+    <value>Se produjo un error:
 
 {0}
 
-Full details in:
+Detalles completos en:
 {1}</value>
   </data>
   <!-- PortCheckDialog -->
   <data name="PortCheck_Title" xml:space="preserve">
-    <value>Port Check</value>
+    <value>Comprobación de puertos</value>
   </data>
   <data name="PortCheck_Intro" xml:space="preserve">
-    <value>Checks whether your ports can be reached from the internet, using check-host.cc. Run this with the server stopped so the launcher can bind and test the ports.</value>
+    <value>Comprueba si sus puertos son accesibles desde internet, usando check-host.cc. Ejecute esto con el servidor detenido para que el launcher pueda enlazar y probar los puertos.</value>
   </data>
   <data name="PortCheck_YourPublicIp" xml:space="preserve">
-    <value>Your public IP</value>
+    <value>Su IP pública</value>
   </data>
   <data name="PortCheck_Results" xml:space="preserve">
-    <value>Results</value>
+    <value>Resultados</value>
   </data>
   <data name="PortCheck_NotCheckedYet" xml:space="preserve">
-    <value>Not checked yet.</value>
+    <value>Aún no se ha comprobado.</value>
   </data>
   <data name="PortCheck_ServiceOnline" xml:space="preserve">
-    <value>Port check service online</value>
+    <value>Servicio de comprobación de puertos en línea</value>
   </data>
   <data name="PortCheck_PortRowLabel" xml:space="preserve">
     <value>{0} ({1})</value>
   </data>
   <data name="PortCheck_FirewallNote" xml:space="preserve">
-    <value>This test binds a temporary listener on the launcher. If Windows Firewall prompts, allow it, otherwise ports can falsely show as unreachable. REST and RCON are admin ports: they should normally NOT be reachable from the internet, so a green result there is a warning, not a pass.</value>
+    <value>Esta prueba enlaza un receptor temporal en el launcher. Si el Firewall de Windows solicita permiso, permítalo, de lo contrario los puertos pueden mostrarse falsamente como inaccesibles. REST y RCON son puertos de administración: normalmente NO deberían ser accesibles desde internet, por lo que un resultado en verde ahí es una advertencia, no un resultado correcto.</value>
   </data>
   <data name="PortCheck_Check" xml:space="preserve">
-    <value>Check</value>
+    <value>Comprobar</value>
   </data>
   <data name="PortCheck_Close" xml:space="preserve">
-    <value>Close</value>
+    <value>Cerrar</value>
   </data>
   <data name="PortCheck_NoPublicIpTitle" xml:space="preserve">
-    <value>No Public IP</value>
+    <value>Sin IP pública</value>
   </data>
   <data name="PortCheck_NoPublicIpMessage" xml:space="preserve">
-    <value>Enter your public IP first (it's normally filled in automatically).</value>
+    <value>Introduzca primero su IP pública (normalmente se completa automáticamente).</value>
   </data>
   <data name="PortCheck_Checking" xml:space="preserve">
-    <value>Checking...</value>
+    <value>Comprobando...</value>
   </data>
   <data name="PortCheck_ServiceOnlineStatus" xml:space="preserve">
-    <value>Online.</value>
+    <value>En línea.</value>
   </data>
   <data name="PortCheck_ServiceUnavailable" xml:space="preserve">
-    <value>Unavailable, can't reach check-host.cc right now.</value>
+    <value>No disponible, no se puede contactar con check-host.cc en este momento.</value>
   </data>
   <data name="PortCheck_InvalidPort" xml:space="preserve">
-    <value>Enter a port between 1 and 65535.</value>
+    <value>Introduzca un puerto entre 1 y 65535.</value>
   </data>
   <data name="PortCheck_Failed" xml:space="preserve">
-    <value>Port check failed, see the log.</value>
+    <value>La comprobación de puertos falló, consulte el registro.</value>
   </data>
   <!-- ServerCommandsDialog -->
   <data name="ServerCmd_Title" xml:space="preserve">
-    <value>Server Commands</value>
+    <value>Comandos del servidor</value>
   </data>
   <data name="ServerCmd_HeaderAnnounce" xml:space="preserve">
-    <value>Announce</value>
+    <value>Anunciar</value>
   </data>
   <data name="ServerCmd_Send" xml:space="preserve">
-    <value>Send</value>
+    <value>Enviar</value>
   </data>
   <data name="ServerCmd_HeaderPlayers" xml:space="preserve">
-    <value>Players</value>
+    <value>Jugadores</value>
   </data>
   <data name="ServerCmd_Refresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Actualizar</value>
   </data>
   <data name="ServerCmd_ReasonLabel" xml:space="preserve">
-    <value>Reason (kick / ban)</value>
+    <value>Motivo (expulsar / banear)</value>
   </data>
   <data name="ServerCmd_LoadingPlayers" xml:space="preserve">
-    <value>Loading players...</value>
+    <value>Cargando jugadores...</value>
   </data>
   <data name="ServerCmd_HeaderUnban" xml:space="preserve">
-    <value>Unban</value>
+    <value>Desbanear</value>
   </data>
   <data name="ServerCmd_Unban" xml:space="preserve">
-    <value>Unban</value>
+    <value>Desbanear</value>
   </data>
   <data name="ServerCmd_UnbanHint" xml:space="preserve">
-    <value>Unban must use the platform user id (e.g. steam_0123...).</value>
+    <value>Para desbanear debe usarse el ID de usuario de la plataforma (por ejemplo, steam_0123...).</value>
   </data>
   <data name="ServerCmd_HeaderServer" xml:space="preserve">
-    <value>Server</value>
+    <value>Servidor</value>
   </data>
   <data name="ServerCmd_SaveWorld" xml:space="preserve">
-    <value>Save World</value>
+    <value>Guardar mundo</value>
   </data>
   <data name="ServerCmd_Close" xml:space="preserve">
-    <value>Close</value>
+    <value>Cerrar</value>
   </data>
   <data name="ServerCmd_EnterMessage" xml:space="preserve">
-    <value>Enter a message to announce.</value>
+    <value>Introduzca un mensaje para anunciar.</value>
   </data>
   <data name="ServerCmd_Announced" xml:space="preserve">
-    <value>Announced.</value>
+    <value>Anunciado.</value>
   </data>
   <data name="ServerCmd_AnnounceFailed" xml:space="preserve">
-    <value>Couldn't announce (REST off or rejected).</value>
+    <value>No se pudo anunciar (REST desactivado o rechazado).</value>
   </data>
   <data name="ServerCmd_RestOff" xml:space="preserve">
-    <value>REST API is off or not responding.</value>
+    <value>La API REST está desactivada o no responde.</value>
   </data>
   <data name="ServerCmd_NoPlayers" xml:space="preserve">
-    <value>No players online.</value>
+    <value>No hay jugadores conectados.</value>
   </data>
   <data name="ServerCmd_EnterUserId" xml:space="preserve">
-    <value>Enter a user id to unban.</value>
+    <value>Introduzca un ID de usuario para desbanear.</value>
   </data>
   <data name="ServerCmd_UnbanTitle" xml:space="preserve">
-    <value>Unban Player</value>
+    <value>Desbanear jugador</value>
   </data>
   <data name="ServerCmd_UnbanConfirm" xml:space="preserve">
-    <value>Unban {0}?</value>
+    <value>¿Desbanear a {0}?</value>
   </data>
   <data name="ServerCmd_Unbanned" xml:space="preserve">
-    <value>Unbanned {0}.</value>
+    <value>Se desbaneó a {0}.</value>
   </data>
   <data name="ServerCmd_UnbanFailed" xml:space="preserve">
-    <value>Couldn't unban (REST off or rejected).</value>
+    <value>No se pudo desbanear (REST desactivado o rechazado).</value>
   </data>
   <data name="ServerCmd_WorldSaved" xml:space="preserve">
-    <value>World saved.</value>
+    <value>Mundo guardado.</value>
   </data>
   <data name="ServerCmd_SaveFailed" xml:space="preserve">
-    <value>Couldn't save (REST off or rejected).</value>
+    <value>No se pudo guardar (REST desactivado o rechazado).</value>
   </data>
   <data name="ServerCmd_UnknownName" xml:space="preserve">
-    <value>(unknown)</value>
+    <value>(desconocido)</value>
   </data>
   <data name="ServerCmd_PlayerNameLevel" xml:space="preserve">
-    <value>{0}  (Lv {1})</value>
+    <value>{0}  (Nv. {1})</value>
   </data>
   <data name="ServerCmd_NoUserId" xml:space="preserve">
-    <value>(no user id)</value>
+    <value>(sin ID de usuario)</value>
   </data>
   <data name="ServerCmd_Kick" xml:space="preserve">
-    <value>Kick</value>
+    <value>Expulsar</value>
   </data>
   <data name="ServerCmd_Ban" xml:space="preserve">
-    <value>Ban</value>
+    <value>Banear</value>
   </data>
   <data name="ServerCmd_NoUserIdTooltip" xml:space="preserve">
-    <value>No user id reported for this player.</value>
+    <value>No se reportó ID de usuario para este jugador.</value>
   </data>
   <data name="ServerCmd_KickTitle" xml:space="preserve">
-    <value>Kick Player</value>
+    <value>Expulsar jugador</value>
   </data>
   <data name="ServerCmd_KickConfirm" xml:space="preserve">
-    <value>Kick {0} ({1})?</value>
+    <value>¿Expulsar a {0} ({1})?</value>
   </data>
   <data name="ServerCmd_Kicked" xml:space="preserve">
-    <value>Kicked {0} ({1}).</value>
+    <value>Se expulsó a {0} ({1}).</value>
   </data>
   <data name="ServerCmd_KickFailed" xml:space="preserve">
-    <value>Couldn't kick {0} (REST off or rejected).</value>
+    <value>No se pudo expulsar a {0} (REST desactivado o rechazado).</value>
   </data>
   <data name="ServerCmd_BanTitle" xml:space="preserve">
-    <value>Ban Player</value>
+    <value>Banear jugador</value>
   </data>
   <data name="ServerCmd_BanConfirm" xml:space="preserve">
-    <value>Ban {0} ({1})? They'll be kicked and blocked from rejoining.</value>
+    <value>¿Banear a {0} ({1})? Será expulsado y no podrá volver a unirse.</value>
   </data>
   <data name="ServerCmd_Banned" xml:space="preserve">
-    <value>Banned {0} ({1}).</value>
+    <value>Se baneó a {0} ({1}).</value>
   </data>
   <data name="ServerCmd_BanFailed" xml:space="preserve">
-    <value>Couldn't ban {0} (REST off or rejected).</value>
+    <value>No se pudo banear a {0} (REST desactivado o rechazado).</value>
   </data>
   <data name="ServerCmd_CommandFailed" xml:space="preserve">
-    <value>Command failed, see the log.</value>
+    <value>El comando falló, consulte el registro.</value>
   </data>
   <!-- DiscordDialog -->
   <data name="Discord_Title" xml:space="preserve">
     <value>Discord</value>
   </data>
   <data name="Discord_BlurbPrefix" xml:space="preserve">
-    <value>Control the server from Discord with slash commands, and/or post lifecycle notifications to a channel. Create a bot and copy its token from the</value>
+    <value>Controle el servidor desde Discord con comandos de barra diagonal, o publique notificaciones del ciclo de vida en un canal. Cree un bot y copie su token desde el</value>
   </data>
   <data name="Discord_BlurbLinkText" xml:space="preserve">
-    <value>Discord Developer Portal</value>
+    <value>Portal de desarrolladores de Discord</value>
   </data>
   <data name="Discord_BlurbSuffix" xml:space="preserve">
-    <value> (add a Bot, then invite it with the bot + applications.commands scopes).</value>
+    <value> (agregue un Bot y luego invítelo con los permisos bot + applications.commands).</value>
   </data>
   <data name="Discord_ServerControlBotHeader" xml:space="preserve">
-    <value>Server Control Bot</value>
+    <value>Bot de control del servidor</value>
   </data>
   <data name="Discord_EnableControlBot" xml:space="preserve">
-    <value>Enable the control bot (slash commands: /status /players /save /backup /update /start /restart /stop)</value>
+    <value>Activar el bot de control (comandos de barra diagonal: /status /players /save /backup /update /start /restart /stop)</value>
   </data>
   <data name="Discord_BotTokenLabel" xml:space="preserve">
-    <value>Bot token (secret)</value>
+    <value>Token del bot (secreto)</value>
   </data>
   <data name="Discord_CommandChannelIdLabel" xml:space="preserve">
-    <value>Command channel ID</value>
+    <value>ID del canal de comandos</value>
   </data>
   <data name="Discord_RequiredRoleIdLabel" xml:space="preserve">
-    <value>Required role ID (optional)</value>
+    <value>ID del rol requerido (opcional)</value>
   </data>
   <data name="Discord_CommandCooldownLabel" xml:space="preserve">
-    <value>Command cooldown (seconds)</value>
+    <value>Tiempo de espera entre comandos (segundos)</value>
   </data>
   <data name="Discord_SecurityNote" xml:space="preserve">
-    <value>Security: set a command channel and/or a required role, the bot only acts when every gate you set passes (set at least one). Anyone who can post in the command channel, or has the role, can control the server, so lock it down (a private, admin-only channel and/or an admin role). Enable Discord Developer Mode, then right-click a channel or role -&gt; Copy ID. The token is stored locally in launcher.json and is never logged.</value>
+    <value>Seguridad: establezca un canal de comandos o un rol requerido (o ambos); el bot solo actúa cuando se cumplen todas las condiciones establecidas (defina al menos una). Cualquiera que pueda publicar en el canal de comandos, o que tenga el rol, podrá controlar el servidor, así que restrínjalo bien (un canal privado solo para administradores o un rol de administrador). Active el modo de desarrollador de Discord y luego haga clic derecho en un canal o rol -&gt; Copiar ID. El token se almacena localmente en launcher.json y nunca aparece en el registro.</value>
   </data>
   <data name="Discord_CommandsExposedHeader" xml:space="preserve">
-    <value>Commands the Bot Exposes</value>
+    <value>Comandos que expone el bot</value>
   </data>
   <data name="Discord_CommandsExposedHint" xml:space="preserve">
-    <value>Tick the slash commands the bot should accept. Destructive ones (restart, stop, kick, ban) are off by default. Changes take effect on Save (the bot reconnects and re-registers its commands).</value>
+    <value>Marque los comandos de barra diagonal que el bot debe aceptar. Los destructivos (reiniciar, detener, expulsar, banear) están desactivados de forma predeterminada. Los cambios se aplican al Guardar (el bot se reconecta y vuelve a registrar sus comandos).</value>
   </data>
   <data name="Discord_WebhookNotificationsHeader" xml:space="preserve">
-    <value>Webhook Notifications</value>
+    <value>Notificaciones por webhook</value>
   </data>
   <data name="Discord_EnableNotifications" xml:space="preserve">
-    <value>Enable notifications</value>
+    <value>Activar notificaciones</value>
   </data>
   <data name="Discord_WebhookUrlLabel" xml:space="preserve">
-    <value>Webhook URL</value>
+    <value>URL del webhook</value>
   </data>
   <data name="Discord_NotifyLifecycle" xml:space="preserve">
-    <value>Notify on up / down / update / crash</value>
+    <value>Notificar al iniciar / apagar / actualizar / fallar</value>
   </data>
   <data name="Discord_NotifyPlayers" xml:space="preserve">
-    <value>Notify on player join / leave (needs REST)</value>
+    <value>Notificar cuando un jugador entra o sale (requiere REST)</value>
   </data>
   <data name="Discord_InvalidChannelIdTitle" xml:space="preserve">
-    <value>Invalid Channel ID</value>
+    <value>ID de canal no válido</value>
   </data>
   <data name="Discord_InvalidChannelIdMessage" xml:space="preserve">
-    <value>The command channel ID must be a number (Discord Developer Mode -&gt; right-click the channel -&gt; Copy Channel ID).</value>
+    <value>El ID del canal de comandos debe ser un número (modo de desarrollador de Discord -&gt; clic derecho en el canal -&gt; Copiar ID del canal).</value>
   </data>
   <data name="Discord_InvalidRoleIdTitle" xml:space="preserve">
-    <value>Invalid Role ID</value>
+    <value>ID de rol no válido</value>
   </data>
   <data name="Discord_InvalidRoleIdMessage" xml:space="preserve">
-    <value>The required role ID must be a number (Discord Developer Mode -&gt; right-click the role -&gt; Copy Role ID).</value>
+    <value>El ID del rol requerido debe ser un número (modo de desarrollador de Discord -&gt; clic derecho en el rol -&gt; Copiar ID del rol).</value>
   </data>
   <data name="Discord_BotNotReadyTitle" xml:space="preserve">
-    <value>Bot Not Ready</value>
+    <value>El bot no está listo</value>
   </data>
   <data name="Discord_BotNotReadyMessage" xml:space="preserve">
-    <value>To enable the control bot, set a bot token and at least one gate: a command channel ID and/or a required role ID.</value>
+    <value>Para activar el bot de control, defina un token de bot y al menos una condición: un ID de canal de comandos o un ID de rol requerido.</value>
   </data>
   <!-- ModsDialog -->
   <data name="Mods_Title" xml:space="preserve">
     <value>Mods</value>
   </data>
   <data name="Mods_Disclaimer" xml:space="preserve">
-    <value>Only mods that are built to run on servers will work here. Many mods are client-side only and can't or shouldn't be installed on the server, so check a mod's description before loading it. Use mods at your own risk, they may cause save-data corruption or crashes.</value>
+    <value>Aquí solo funcionarán los mods diseñados para ejecutarse en servidores. Muchos mods son solo del lado del cliente y no se pueden, o no se deben, instalar en el servidor, así que revise la descripción de un mod antes de cargarlo. Use mods bajo su propio riesgo, pueden causar corrupción de los datos guardados o fallos.</value>
   </data>
   <data name="Mods_EnableMods" xml:space="preserve">
-    <value>Enable mods on this server</value>
+    <value>Activar mods en este servidor</value>
   </data>
   <data name="Mods_SteamAccountHeader" xml:space="preserve">
-    <value>Steam Account</value>
+    <value>Cuenta de Steam</value>
   </data>
   <data name="Mods_SteamAccountNote" xml:space="preserve">
-    <value>Only needed to download Workshop mods, dropped-in mods need no account. Steam's own SteamCMD handles the sign-in in its own window, so the launcher never sees or stores your password, it only remembers your username.</value>
+    <value>Solo es necesaria para descargar mods del Taller, los mods colocados manualmente no requieren cuenta. El propio SteamCMD de Steam gestiona el inicio de sesión en su propia ventana, por lo que el launcher nunca ve ni almacena su contraseña, solo recuerda su nombre de usuario.</value>
   </data>
   <data name="Mods_ConnectButton" xml:space="preserve">
-    <value>Connect Steam Account</value>
+    <value>Conectar cuenta de Steam</value>
   </data>
   <data name="Mods_DifferentAccountLink" xml:space="preserve">
-    <value>Connect with a different account?</value>
+    <value>¿Conectar con una cuenta diferente?</value>
   </data>
   <data name="Mods_WorkshopHeader" xml:space="preserve">
-    <value>Steam Workshop Mods</value>
+    <value>Mods del Taller de Steam</value>
   </data>
   <data name="Mods_BrowsePrefix" xml:space="preserve">
-    <value>Browse mods on the </value>
+    <value>Explore mods en el </value>
   </data>
   <data name="Mods_BrowseLinkText" xml:space="preserve">
-    <value>Palworld Steam Workshop</value>
+    <value>Taller de Steam de Palworld</value>
   </data>
   <data name="Mods_BrowseSuffix" xml:space="preserve">
     <value>.</value>
   </data>
   <data name="Mods_AddButton" xml:space="preserve">
-    <value>Add</value>
+    <value>Agregar</value>
   </data>
   <data name="Mods_ScanFolderButton" xml:space="preserve">
-    <value>Scan Folder</value>
+    <value>Buscar en la carpeta</value>
   </data>
   <data name="Mods_OpenModsFolderButton" xml:space="preserve">
-    <value>Open Mods Folder</value>
+    <value>Abrir carpeta de mods</value>
   </data>
   <data name="Mods_AddByIdLabel" xml:space="preserve">
-    <value>Add by Steam Workshop id or URL:</value>
+    <value>Agregar por ID o URL del Taller de Steam:</value>
   </data>
   <data name="Mods_NoAccountWarning" xml:space="preserve">
-    <value>You have Workshop mods enabled but no Steam account connected. Connect one above to download them, or they'll be skipped on start (dropped-in mods still load).</value>
+    <value>Tiene mods del Taller activados pero no hay ninguna cuenta de Steam conectada. Conecte una arriba para descargarlos, de lo contrario se omitirán al iniciar (los mods colocados manualmente sí se cargarán).</value>
   </data>
   <data name="Mods_LoosePakHeader" xml:space="preserve">
-    <value>Loose .pak Mods</value>
+    <value>Mods .pak sueltos</value>
   </data>
   <data name="Mods_LoosePakDescription" xml:space="preserve">
-    <value>You don't need this if you're using Steam Workshop above. For raw .pak mods with no Info.json (many NexusMods downloads): drop them into the loose-paks folder and toggle them here. They're enabled/disabled by renaming (never deleted) and load on the next server start.</value>
+    <value>No necesita esto si está usando el Taller de Steam de arriba. Para mods .pak sin procesar sin Info.json (muchas descargas de NexusMods): colóquelos en la carpeta loose-paks y actívelos o desactívelos aquí. Se activan o desactivan renombrándolos (nunca se eliminan) y se cargan en el próximo inicio del servidor.</value>
   </data>
   <data name="Mods_OpenLoosePaksFolderButton" xml:space="preserve">
-    <value>Open Loose-Paks Folder</value>
+    <value>Abrir carpeta loose-paks</value>
   </data>
   <data name="Mods_RescanButton" xml:space="preserve">
-    <value>Rescan</value>
+    <value>Volver a buscar</value>
   </data>
   <data name="Mods_OpenUe4ssFolderButton" xml:space="preserve">
-    <value>Open UE4SS Mods Folder</value>
+    <value>Abrir carpeta de mods de UE4SS</value>
   </data>
   <data name="Mods_EnterUsernameTitle" xml:space="preserve">
-    <value>Enter a Username</value>
+    <value>Introduzca un nombre de usuario</value>
   </data>
   <data name="Mods_EnterUsernameBody" xml:space="preserve">
-    <value>Enter your Steam account name first, then connect.</value>
+    <value>Introduzca primero el nombre de su cuenta de Steam y luego conecte.</value>
   </data>
   <data name="Mods_ConnectingButton" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>Conectando...</value>
   </data>
   <data name="Mods_SteamCmdWindowOpened" xml:space="preserve">
-    <value>A SteamCMD window opened. Enter your password and Steam Guard code there, it stays open so you can read the result, then close it.</value>
+    <value>Se abrió una ventana de SteamCMD. Introduzca allí su contraseña y el código de Steam Guard, permanecerá abierta para que pueda leer el resultado, luego ciérrela.</value>
   </data>
   <data name="Mods_ConfirmSignInFailed" xml:space="preserve">
-    <value>Couldn't confirm the sign-in. Connect again and watch the SteamCMD window for the error (wrong password or Steam Guard code).</value>
+    <value>No se pudo confirmar el inicio de sesión. Conecte de nuevo y observe la ventana de SteamCMD para ver el error (contraseña o código de Steam Guard incorrectos).</value>
   </data>
   <data name="Mods_SignInFailed" xml:space="preserve">
-    <value>Sign-in failed: {0}</value>
+    <value>Error al iniciar sesión: {0}</value>
   </data>
   <data name="Mods_SavedSignInInvalid" xml:space="preserve">
-    <value>Your saved sign-in isn't valid anymore, connect again.</value>
+    <value>Su inicio de sesión guardado ya no es válido, conecte de nuevo.</value>
   </data>
   <data name="Mods_CheckSignInFailed" xml:space="preserve">
-    <value>Couldn't check sign-in: {0}</value>
+    <value>No se pudo comprobar el inicio de sesión: {0}</value>
   </data>
   <data name="Mods_CheckingSignIn" xml:space="preserve">
-    <value>Checking sign-in...</value>
+    <value>Comprobando inicio de sesión...</value>
   </data>
   <data name="Mods_SignedIn" xml:space="preserve">
-    <value>Signed into SteamCMD</value>
+    <value>Sesión iniciada en SteamCMD</value>
   </data>
   <data name="Mods_InvalidIdTitle" xml:space="preserve">
-    <value>Invalid Workshop ID</value>
+    <value>ID de Taller no válido</value>
   </data>
   <data name="Mods_InvalidIdBody" xml:space="preserve">
-    <value>Enter a numeric Steam Workshop id, or a workshop URL like https://steamcommunity.com/sharedfiles/filedetails/?id=123456.</value>
+    <value>Introduzca un ID numérico del Taller de Steam, o una URL del Taller como https://steamcommunity.com/sharedfiles/filedetails/?id=123456.</value>
   </data>
   <data name="Mods_AlreadyAddedTitle" xml:space="preserve">
-    <value>Already Added</value>
+    <value>Ya agregado</value>
   </data>
   <data name="Mods_AlreadyAddedBody" xml:space="preserve">
-    <value>That Workshop id is already in the list.</value>
+    <value>Ese ID del Taller ya está en la lista.</value>
   </data>
   <data name="Mods_AddingButton" xml:space="preserve">
-    <value>Adding...</value>
+    <value>Agregando...</value>
   </data>
   <data name="Mods_NotPalworldTitle" xml:space="preserve">
-    <value>Not a Palworld mod?</value>
+    <value>¿No es un mod de Palworld?</value>
   </data>
   <data name="Mods_NotPalworldBody" xml:space="preserve">
-    <value>This item's Steam app id is {0}, not Palworld's ({1}), so it may not work on your server. Add it anyway?</value>
+    <value>El ID de aplicación de Steam de este elemento es {0}, no el de Palworld ({1}), por lo que puede que no funcione en su servidor. ¿Agregarlo de todos modos?</value>
   </data>
   <data name="Mods_AddAnyway" xml:space="preserve">
-    <value>Add Anyway</value>
+    <value>Agregar de todos modos</value>
   </data>
   <data name="Mods_ScanNoneFound" xml:space="preserve">
-    <value>No new mods found in the mods folder.</value>
+    <value>No se encontraron mods nuevos en la carpeta de mods.</value>
   </data>
   <data name="Mods_ScanAdded" xml:space="preserve">
-    <value>Added {0} mod(s) from the mods folder.</value>
+    <value>Se agregaron {0} mod(s) desde la carpeta de mods.</value>
   </data>
   <data name="Mods_ScanSkipped" xml:space="preserve">
-    <value> Skipped {0} folder(s) with no readable Info.json.</value>
+    <value> Se omitieron {0} carpeta(s) sin un Info.json legible.</value>
   </data>
   <data name="Mods_ScanTitle" xml:space="preserve">
-    <value>Scan Mods Folder</value>
+    <value>Buscar en la carpeta de mods</value>
   </data>
   <data name="Mods_NoAccountTitle" xml:space="preserve">
-    <value>No Steam Account Connected</value>
+    <value>No hay cuenta de Steam conectada</value>
   </data>
   <data name="Mods_NoAccountSaveBody" xml:space="preserve">
-    <value>You have Workshop mods enabled but no Steam account connected, so they can't be downloaded and will be skipped when the server starts (dropped-in mods still load). Save anyway?</value>
+    <value>Tiene mods del Taller activados pero no hay ninguna cuenta de Steam conectada, por lo que no se podrán descargar y se omitirán al iniciar el servidor (los mods colocados manualmente sí se cargarán). ¿Guardar de todos modos?</value>
   </data>
   <data name="Mods_SaveAnyway" xml:space="preserve">
-    <value>Save Anyway</value>
+    <value>Guardar de todos modos</value>
   </data>
   <data name="Mods_PackageTip" xml:space="preserve">
-    <value>Package: {0}</value>
+    <value>Paquete: {0}</value>
   </data>
   <data name="Mods_PackageUnresolvedTip" xml:space="preserve">
-    <value>Package name not resolved yet (download or scan the mod).</value>
+    <value>El nombre del paquete aún no se ha resuelto (descargue o busque el mod).</value>
   </data>
   <data name="Mods_OpenWorkshopPageTip" xml:space="preserve">
-    <value>Open this mod's Steam Workshop page. </value>
+    <value>Abrir la página del Taller de Steam de este mod. </value>
   </data>
   <data name="Mods_LocalLabel" xml:space="preserve">
     <value>local</value>
   </data>
   <data name="Mods_DeleteModTip" xml:space="preserve">
-    <value>Delete this mod (removes it from the list and deletes its downloaded files).</value>
+    <value>Eliminar este mod (lo quita de la lista y elimina sus archivos descargados).</value>
   </data>
   <data name="Mods_EmptyList" xml:space="preserve">
-    <value>No mods yet. Add a Workshop id above, or drop mod folders into the mods folder and Scan.</value>
+    <value>Aún no hay mods. Agregue un ID del Taller arriba, o coloque carpetas de mods en la carpeta de mods y busque.</value>
   </data>
   <data name="Mods_DeleteTitle" xml:space="preserve">
-    <value>Delete Mod</value>
+    <value>Eliminar mod</value>
   </data>
   <data name="Mods_DeleteBody" xml:space="preserve">
-    <value>This will delete the mod files and remove it from your mod list.
+    <value>Esto eliminará los archivos del mod y lo quitará de su lista de mods.
 
 {0}</value>
   </data>
   <data name="Mods_DeleteButton" xml:space="preserve">
-    <value>Delete</value>
+    <value>Eliminar</value>
   </data>
   <data name="Mods_DeleteFailedTitle" xml:space="preserve">
-    <value>Couldn't Delete Files</value>
+    <value>No se pudieron eliminar los archivos</value>
   </data>
   <data name="Mods_DeleteFailedBody" xml:space="preserve">
-    <value>Removed it from the list, but couldn't delete the files: {0}</value>
+    <value>Se quitó de la lista, pero no se pudieron eliminar los archivos: {0}</value>
   </data>
   <data name="Mods_ThisModFallback" xml:space="preserve">
-    <value>this mod</value>
+    <value>este mod</value>
   </data>
   <data name="Mods_LoosePakEmpty" xml:space="preserve">
-    <value>No loose .pak mods found. Drop .pak files (with any .utoc / .ucas) into the loose-paks folder, then Rescan.</value>
+    <value>No se encontraron mods .pak sueltos. Coloque archivos .pak (junto con sus .utoc / .ucas) en la carpeta loose-paks y luego vuelva a buscar.</value>
   </data>
   <data name="Mods_LoosePakLabelSingular" xml:space="preserve">
-    <value>{0}  ({1} file)</value>
+    <value>{0}  ({1} archivo)</value>
   </data>
   <data name="Mods_LoosePakLabelPlural" xml:space="preserve">
-    <value>{0}  ({1} files)</value>
+    <value>{0}  ({1} archivos)</value>
   </data>
   <data name="Mods_ChangeModFailedTitle" xml:space="preserve">
-    <value>Couldn't Change the Mod</value>
+    <value>No se pudo cambiar el mod</value>
   </data>
   <data name="Mods_EnablePakFailed" xml:space="preserve">
-    <value>Couldn't enable '{0}': {1}</value>
+    <value>No se pudo activar '{0}': {1}</value>
   </data>
   <data name="Mods_DisablePakFailed" xml:space="preserve">
-    <value>Couldn't disable '{0}': {1}</value>
+    <value>No se pudo desactivar '{0}': {1}</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledTitle" xml:space="preserve">
-    <value>UE4SS Not Installed</value>
+    <value>UE4SS no está instalado</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
-    <value>UE4SS isn't installed yet. Add a UE4SS mod from the Workshop and start the server once, then its mods folder will appear here.</value>
+    <value>UE4SS aún no está instalado. Agregue un mod de UE4SS desde el Taller e inicie el servidor una vez, luego su carpeta de mods aparecerá aquí.</value>
   </data>
   <data name="Mods_ColOn" xml:space="preserve">
-    <value>On</value>
+    <value>Activo</value>
   </data>
   <data name="Mods_ColName" xml:space="preserve">
-    <value>Name</value>
+    <value>Nombre</value>
   </data>
   <data name="Mods_ColId" xml:space="preserve">
     <value>ID</value>
   </data>
   <data name="Mods_ColNote" xml:space="preserve">
-    <value>Note</value>
+    <value>Nota</value>
   </data>
   <!-- SettingsDialog -->
   <data name="Settings_ServerTitle" xml:space="preserve">
-    <value>Server Settings</value>
+    <value>Configuración del servidor</value>
   </data>
   <data name="Settings_ResetToDefaults" xml:space="preserve">
-    <value>Reset to Defaults</value>
+    <value>Restablecer valores predeterminados</value>
   </data>
   <data name="Settings_SearchPlaceholder" xml:space="preserve">
-    <value>Search settings...</value>
+    <value>Buscar configuración...</value>
   </data>
   <data name="Settings_SearchNoMatches" xml:space="preserve">
-    <value>No settings match your search.</value>
+    <value>Ninguna configuración coincide con su búsqueda.</value>
   </data>
   <data name="Settings_SearchClearTooltip" xml:space="preserve">
-    <value>Clear search</value>
+    <value>Borrar búsqueda</value>
   </data>
   <data name="Settings_WorldBlurb" xml:space="preserve">
-    <value>Gameplay and balance, difficulty, EXP / capture / drop rates, damage multipliers, and world features. Full reference:</value>
+    <value>Jugabilidad y balance, dificultad, tasas de EXP / captura / drop, multiplicadores de daño y funciones del mundo. Referencia completa:</value>
   </data>
   <data name="Settings_WorldBlurbLink" xml:space="preserve">
-    <value>Features docs</value>
+    <value>Documentación de funciones</value>
   </data>
   <data name="Settings_AdminBlurb" xml:space="preserve">
-    <value>Server management, server name, passwords, player limit, and the REST / RCON APIs. Full reference:</value>
+    <value>Administración del servidor, nombre del servidor, contraseñas, límite de jugadores y las API REST / RCON. Referencia completa:</value>
   </data>
   <data name="Settings_AdminBlurbLink" xml:space="preserve">
-    <value>Server management docs</value>
+    <value>Documentación de administración del servidor</value>
   </data>
   <data name="Settings_TabAdmin" xml:space="preserve">
-    <value>Admin</value>
+    <value>Administración</value>
   </data>
   <data name="Settings_TabUndocumented" xml:space="preserve">
-    <value>Undocumented</value>
+    <value>Sin documentar</value>
   </data>
   <data name="Settings_TabLaunchArgs" xml:space="preserve">
-    <value>Launch Arguments</value>
+    <value>Argumentos de inicio</value>
   </data>
   <data name="Settings_BannerServerRunning" xml:space="preserve">
-    <value>The server is running, so the game-settings tabs are read-only (a running server overwrites its own config). Launch Arguments can still be edited, and apply on the next start just like the game settings.</value>
+    <value>El servidor está en ejecución, por lo que las pestañas de configuración del juego son de solo lectura (un servidor en ejecución sobrescribe su propia configuración). Los argumentos de inicio se pueden seguir editando, y se aplicarán en el próximo inicio, igual que la configuración del juego.</value>
   </data>
   <data name="Settings_BannerGameUnavailable" xml:space="preserve">
-    <value>Game settings unavailable, install the server first (no DefaultPalWorldSettings.ini found).</value>
+    <value>Configuración del juego no disponible, instale primero el servidor (no se encontró DefaultPalWorldSettings.ini).</value>
   </data>
   <data name="Settings_UndocumentedBlurb" xml:space="preserve">
-    <value>Settings the official docs don't cover. Each tooltip has our best guess, but we can't vouch for these, some may be internal or unused. Look them up in the</value>
+    <value>Configuraciones que la documentación oficial no cubre. Cada información sobre herramientas contiene nuestra mejor estimación, pero no podemos garantizarlas, algunas pueden ser internas o no usarse. Consúltelas en la</value>
   </data>
   <data name="Settings_UndocumentedBlurbLink" xml:space="preserve">
-    <value>Palworld configuration reference</value>
+    <value>referencia de configuración de Palworld</value>
   </data>
   <data name="Settings_UndocKnownHeader" xml:space="preserve">
-    <value>Known to the Launcher</value>
+    <value>Conocidas por el launcher</value>
   </data>
   <data name="Settings_UndocNewHeader" xml:space="preserve">
-    <value>New in Your Config (Not Recognized)</value>
+    <value>Nuevas en su configuración (no reconocidas)</value>
   </data>
   <data name="Settings_UndocNoneRecognized" xml:space="preserve">
-    <value>None, every key in your config is recognized.</value>
+    <value>Ninguna, todas las claves de su configuración son reconocidas.</value>
   </data>
   <data name="Settings_NoEffectTitle" xml:space="preserve">
-    <value>This setting does nothing on a server</value>
+    <value>Esta configuración no tiene efecto en un servidor</value>
   </data>
   <data name="Settings_NoEffectMessage" xml:space="preserve">
-    <value>Heads up: '{0}' is a client / single-player setting and has no effect on a dedicated server. Changing it here won't change how the server plays. Use the individual settings (or the Difficulty preset buttons at the top of the Game Settings tab) to control server difficulty.</value>
+    <value>Aviso: '{0}' es una configuración de cliente / un jugador y no tiene efecto en un servidor dedicado. Cambiarla aquí no modificará cómo se juega en el servidor. Use las configuraciones individuales (o los botones de valores predefinidos de dificultad en la parte superior de la pestaña Configuración del juego) para controlar la dificultad del servidor.</value>
   </data>
   <data name="Settings_GotIt" xml:space="preserve">
-    <value>Got It</value>
+    <value>Entendido</value>
   </data>
   <data name="Settings_DifficultyPreset" xml:space="preserve">
-    <value>Difficulty preset:</value>
+    <value>Valor predefinido de dificultad:</value>
   </data>
   <data name="Settings_PresetTitle" xml:space="preserve">
-    <value>{0} preset</value>
+    <value>Valor predefinido {0}</value>
   </data>
   <data name="Settings_PresetNoChanges" xml:space="preserve">
-    <value>Your settings already match the {0} preset, nothing to change.</value>
+    <value>Su configuración ya coincide con el valor predefinido {0}, no hay nada que cambiar.</value>
   </data>
   <data name="Settings_PresetConfirmMessage" xml:space="preserve">
-    <value>These are the values as of Palworld 1.0. Some settings may have been added or changed since.
+    <value>Estos son los valores correspondientes a Palworld 1.0. Es posible que se hayan agregado o cambiado algunas configuraciones desde entonces.
 
-Here are the values that will change for the {0} preset:
+Estos son los valores que cambiarán para el valor predefinido {0}:
 
 {1}
 
-Any values not listed above will remain the same.
+Cualquier valor no listado arriba permanecerá igual.
 
-Apply and save these changes?</value>
+¿Aplicar y guardar estos cambios?</value>
   </data>
   <data name="Settings_Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Sí</value>
   </data>
   <data name="Settings_No" xml:space="preserve">
     <value>No</value>
   </data>
   <data name="Settings_PresetAppliedTitle" xml:space="preserve">
-    <value>{0} preset applied</value>
+    <value>Valor predefinido {0} aplicado</value>
   </data>
   <data name="Settings_PresetAppliedMessage" xml:space="preserve">
-    <value>Applied the {0} preset. {1} setting(s) changed and saved.</value>
+    <value>Se aplicó el valor predefinido {0}. Se cambiaron y guardaron {1} configuración(es).</value>
   </data>
   <data name="Settings_LaunchArgsIntro" xml:space="preserve">
-    <value>The exact command line used to launch the dedicated server (rebuilt live below). Where an argument here and a PalWorldSettings.ini setting control the same thing, the argument wins, a field left blank, 0, or at its default is left off, so the ini value is used instead. Most game settings have no argument and live only in the ini (edit those under Server Settings). Changes take effect on the next start.</value>
+    <value>La línea de comandos exacta usada para iniciar el servidor dedicado (se reconstruye en vivo abajo). Cuando un argumento aquí y una configuración de PalWorldSettings.ini controlan lo mismo, el argumento tiene prioridad; un campo dejado en blanco, en 0, o en su valor predeterminado se omite, por lo que se usa en su lugar el valor del ini. La mayoría de las configuraciones del juego no tienen argumento y solo existen en el ini (edítelas en Configuración del servidor). Los cambios tienen efecto en el próximo inicio.</value>
   </data>
   <data name="Settings_ListenPortTerm" xml:space="preserve">
-    <value>Listen port</value>
+    <value>Puerto de escucha</value>
   </data>
   <data name="Settings_ListenPortNote" xml:space="preserve">
-    <value> is the port the server binds to and players connect to. </value>
+    <value> es el puerto al que se enlaza el servidor y al que se conectan los jugadores. </value>
   </data>
   <data name="Settings_PublicPortTerm" xml:space="preserve">
-    <value>Public port</value>
+    <value>Puerto público</value>
   </data>
   <data name="Settings_PublicPortNote" xml:space="preserve">
-    <value> (community servers only) sets what the server advertises to the public list, it does NOT change the listen port.</value>
+    <value> (solo servidores comunitarios) establece lo que el servidor anuncia en la lista pública, NO cambia el puerto de escucha.</value>
   </data>
   <data name="Settings_ValidateListenPort" xml:space="preserve">
-    <value>Listen Port</value>
+    <value>Puerto de escucha</value>
   </data>
   <data name="Settings_RowQueryPort" xml:space="preserve">
-    <value>Query Port (-QueryPort)</value>
+    <value>Puerto de consulta (-QueryPort)</value>
   </data>
   <data name="Settings_TipQueryPort" xml:space="preserve">
-    <value>The Steam query port. Blank or 0 auto-picks the first free port from 27015 (so several servers on one PC don't collide). Set a fixed one if you forward it.</value>
+    <value>El puerto de consulta de Steam. En blanco o 0 elige automáticamente el primer puerto libre a partir de 27015 (para que varios servidores en un mismo PC no choquen). Establezca uno fijo si lo reenvía en su router.</value>
   </data>
   <data name="Settings_ValidateQueryPort" xml:space="preserve">
-    <value>Query Port</value>
+    <value>Puerto de consulta</value>
   </data>
   <data name="Settings_ValidateMaxPlayers" xml:space="preserve">
-    <value>Max Players</value>
+    <value>Máximo de jugadores</value>
   </data>
   <data name="Settings_ValidateWorkerThreads" xml:space="preserve">
-    <value>Worker Threads</value>
+    <value>Hilos de trabajo</value>
   </data>
   <data name="Settings_ValidatePublicIp" xml:space="preserve">
-    <value>Public IP</value>
+    <value>IP pública</value>
   </data>
   <data name="Settings_ValidatePublicPort" xml:space="preserve">
-    <value>Public Port</value>
+    <value>Puerto público</value>
   </data>
   <data name="Settings_RowListenPort" xml:space="preserve">
-    <value>Listen Port (-port)</value>
+    <value>Puerto de escucha (-port)</value>
   </data>
   <data name="Settings_TipListenPort" xml:space="preserve">
-    <value>The UDP port the server binds to, what players connect to (Palworld default 8211). Always applied. This is not the Public port below.</value>
+    <value>El puerto UDP al que se enlaza el servidor, al que se conectan los jugadores (valor predeterminado de Palworld: 8211). Siempre se aplica. No es el Puerto público de abajo.</value>
   </data>
   <data name="Settings_RowMaxPlayers" xml:space="preserve">
-    <value>Max players (-players, 0 = use game setting)</value>
+    <value>Máximo de jugadores (-players, 0 = usar configuración del juego)</value>
   </data>
   <data name="Settings_TipMaxPlayers" xml:space="preserve">
-    <value>Overrides ServerPlayerMaxNum in the ini when set. 0 = leave the argument off and use the game setting.</value>
+    <value>Reemplaza ServerPlayerMaxNum del ini cuando se establece. 0 = omitir el argumento y usar la configuración del juego.</value>
   </data>
   <data name="Settings_RowPerfThreads" xml:space="preserve">
-    <value>Performance Threads</value>
+    <value>Hilos de rendimiento</value>
   </data>
   <data name="Settings_TipPerfThreads" xml:space="preserve">
-    <value>Adds -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS. Recommended on for a dedicated server.</value>
+    <value>Añade -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS. Se recomienda activarlo para un servidor dedicado.</value>
   </data>
   <data name="Settings_RowWorkerThreads" xml:space="preserve">
-    <value>Worker Threads (0 = auto)</value>
+    <value>Hilos de trabajo (0 = automático)</value>
   </data>
   <data name="Settings_TipWorkerThreads" xml:space="preserve">
-    <value>-NumberOfWorkerThreadsServer. 0 = auto (left off). Only used when Performance threads is on.</value>
+    <value>-NumberOfWorkerThreadsServer. 0 = automático (se omite). Solo se usa cuando Hilos de rendimiento está activado.</value>
   </data>
   <data name="Settings_RowCommunity" xml:space="preserve">
-    <value>Community/Public Server (-publiclobby)</value>
+    <value>Servidor comunitario/público (-publiclobby)</value>
   </data>
   <data name="Settings_TipCommunity" xml:space="preserve">
-    <value>-publiclobby: list the server on the public/community browser. Off = private (players join by IP).</value>
+    <value>-publiclobby: lista el servidor en el navegador público/comunitario. Desactivado = privado (los jugadores se unen por IP).</value>
   </data>
   <data name="Settings_RowPublicIp" xml:space="preserve">
-    <value>Public IP (community, blank = auto)</value>
+    <value>IP pública (comunitario, en blanco = automático)</value>
   </data>
   <data name="Settings_TipPublicIp" xml:space="preserve">
-    <value>-publicip for community servers (blank = auto-detect). Advertising only; does not change what the server binds to.</value>
+    <value>-publicip para servidores comunitarios (en blanco = detección automática). Solo para anunciarlo, no cambia a qué se enlaza el servidor.</value>
   </data>
   <data name="Settings_RowPublicPort" xml:space="preserve">
-    <value>Public port (community, 0 = use game setting)</value>
+    <value>Puerto público (comunitario, 0 = usar configuración del juego)</value>
   </data>
   <data name="Settings_TipPublicPort" xml:space="preserve">
-    <value>-publicport for community servers: the external port advertised to the public list. Does NOT change the listen port. 0 = left off (use the ini value).</value>
+    <value>-publicport para servidores comunitarios: el puerto externo anunciado en la lista pública. NO cambia el puerto de escucha. 0 = se omite (usa el valor del ini).</value>
   </data>
   <data name="Settings_RowLogFormat" xml:space="preserve">
-    <value>Log Format</value>
+    <value>Formato de registro</value>
   </data>
   <data name="Settings_TipLogFormat" xml:space="preserve">
-    <value>-logformat (Text or Json). Blank = left off; the ini/default applies.</value>
+    <value>-logformat (Text o Json). En blanco = se omite; se aplica el valor del ini o predeterminado.</value>
   </data>
   <data name="Settings_ExtraArgsNote" xml:space="preserve">
-    <value>Raw arguments appended to the command line verbatim (space- or line-separated). Some Unreal servers accept map / game-class overrides here. Only change this if you know what you're doing.</value>
+    <value>Argumentos sin procesar añadidos textualmente a la línea de comandos (separados por espacios o saltos de línea). Algunos servidores de Unreal aceptan aquí reemplazos de mapa o clase de juego. Cambie esto solo si sabe lo que hace.</value>
   </data>
   <data name="Settings_AdvancedExpander" xml:space="preserve">
-    <value>Advanced</value>
+    <value>Avanzado</value>
   </data>
   <data name="Settings_AdvancedIntro" xml:space="preserve">
-    <value>Low-level settings applied to the server process after it launches. The wrong values here can hurt performance, change only if you know what you're doing. Takes effect on the next start.</value>
+    <value>Configuraciones de bajo nivel aplicadas al proceso del servidor después de que se inicia. Valores incorrectos aquí pueden perjudicar el rendimiento, cámbielos solo si sabe lo que hace. Tiene efecto en el próximo inicio.</value>
   </data>
   <data name="Settings_PriorityAffinityHeader" xml:space="preserve">
-    <value>Process Priority &amp; CPU Affinity</value>
+    <value>Prioridad del proceso y afinidad de CPU</value>
   </data>
   <data name="Settings_RowPriority" xml:space="preserve">
-    <value>Process Priority</value>
+    <value>Prioridad del proceso</value>
   </data>
   <data name="Settings_TipPriority" xml:space="preserve">
-    <value>Windows priority for the server process. Above normal / High can help under load but can starve other apps and hurt performance; RealTime isn't offered (unsafe).</value>
+    <value>Prioridad de Windows para el proceso del servidor. Por encima de lo normal / Alta puede ayudar bajo carga, pero puede saturar otras aplicaciones y perjudicar el rendimiento; Tiempo real no está disponible (no es seguro).</value>
   </data>
   <data name="Settings_CoreLabel" xml:space="preserve">
-    <value>Core {0}</value>
+    <value>Núcleo {0}</value>
   </data>
   <data name="Settings_CpuAffinityNote" xml:space="preserve">
-    <value>CPU affinity, pin the server to specific cores (all checked = no restriction / use every core):</value>
+    <value>Afinidad de CPU, fije el servidor a núcleos específicos (todos marcados = sin restricción / usar todos los núcleos):</value>
   </data>
   <data name="Settings_AdvancedArgsTitle" xml:space="preserve">
-    <value>Advanced Arguments</value>
+    <value>Argumentos avanzados</value>
   </data>
   <data name="Settings_AdvancedArgsMessage" xml:space="preserve">
-    <value>You've put custom arguments in the Advanced box. They're passed to the server exactly as typed, only keep them if you know what you're doing.</value>
+    <value>Ha puesto argumentos personalizados en el cuadro Avanzado. Se pasan al servidor exactamente como se escribieron, consérvelos solo si sabe lo que hace.</value>
   </data>
   <data name="Settings_Accept" xml:space="preserve">
-    <value>Accept</value>
+    <value>Aceptar</value>
   </data>
   <data name="Settings_ConfirmSaveMore" xml:space="preserve">
     <value>
-...and {0} more</value>
+...y {0} más</value>
   </data>
   <data name="Settings_ConfirmSaveTitle" xml:space="preserve">
-    <value>Confirm Save</value>
+    <value>Confirmar guardado</value>
   </data>
   <data name="Settings_ConfirmSaveMessage" xml:space="preserve">
-    <value>These settings will change:
+    <value>Estas configuraciones cambiarán:
 
 {0}
 
-Save these changes?</value>
+¿Guardar estos cambios?</value>
   </data>
   <data name="Settings_NotSavedTitle" xml:space="preserve">
-    <value>Not Saved</value>
+    <value>No guardado</value>
   </data>
   <data name="Settings_NotSavedMessage" xml:space="preserve">
-    <value>'{0}' has a value that would break the config format (a stray comma, quote, or unbalanced parenthesis). Nothing was saved, fix it and try again.</value>
+    <value>'{0}' tiene un valor que rompería el formato de configuración (una coma, comilla o paréntesis desbalanceado de más). No se guardó nada, corríjalo e inténtelo de nuevo.</value>
   </data>
   <data name="Settings_ValidationError" xml:space="preserve">
-    <value>{0} is invalid. Must be {1}.</value>
+    <value>{0} no es válido. Debe ser {1}.</value>
   </data>
   <data name="Settings_InvalidSettingsTitle" xml:space="preserve">
-    <value>Invalid Settings</value>
+    <value>Configuración no válida</value>
   </data>
   <data name="Settings_ResetFieldTooltip" xml:space="preserve">
-    <value>Reset this field to its default</value>
+    <value>Restablecer este campo a su valor predeterminado</value>
   </data>
   <data name="Settings_UndocumentedMarker" xml:space="preserve">
-    <value>  · undocumented</value>
+    <value>  · sin documentar</value>
   </data>
   <data name="Settings_ResetAllMessage" xml:space="preserve">
-    <value>Reset every field in this panel to its default value? You'll still need to Save to apply.</value>
+    <value>¿Restablecer todos los campos de este panel a su valor predeterminado? Aún deberá Guardar para aplicarlo.</value>
   </data>
   <data name="Settings_ResetAllButton" xml:space="preserve">
-    <value>Reset All</value>
+    <value>Restablecer todo</value>
   </data>
   <data name="Settings_CategoryServerManagement" xml:space="preserve">
-    <value>Server Management</value>
+    <value>Administración del servidor</value>
   </data>
   <data name="Settings_CategoryPerformance" xml:space="preserve">
-    <value>Performance</value>
+    <value>Rendimiento</value>
   </data>
   <data name="Settings_CategoryGameplay" xml:space="preserve">
-    <value>Gameplay</value>
+    <value>Jugabilidad</value>
   </data>
   <data name="Settings_CategoryGameBalance" xml:space="preserve">
-    <value>Game Balance</value>
+    <value>Balance del juego</value>
   </data>
   <!-- MainViewModel -->
   <data name="Vm_Working" xml:space="preserve">
-    <value>Working</value>
+    <value>Procesando</value>
   </data>
   <data name="Vm_TimesSummaryNone" xml:space="preserve">
-    <value>(none)</value>
+    <value>(ninguno)</value>
   </data>
   <data name="Vm_TimesSummaryMore" xml:space="preserve">
-    <value>{0}  +{1} more</value>
+    <value>{0}  +{1} más</value>
   </data>
   <!-- SettingsDialog process-priority dropdown (canonical value stored in config, label translated). Match Windows Task Manager wording per locale. -->
   <data name="Settings_PriorityBelowNormal" xml:space="preserve">
-    <value>Below normal</value>
+    <value>Por debajo de lo normal</value>
   </data>
   <data name="Settings_PriorityNormal" xml:space="preserve">
     <value>Normal</value>
   </data>
   <data name="Settings_PriorityAboveNormal" xml:space="preserve">
-    <value>Above normal</value>
+    <value>Por encima de lo normal</value>
   </data>
   <data name="Settings_PriorityHigh" xml:space="preserve">
-    <value>High</value>
+    <value>Alta</value>
   </data>
   <!-- Primary button transitional labels (glyphs stay literal) -->
   <data name="Btn_Working" xml:space="preserve">
-    <value>Working…</value>
+    <value>Procesando…</value>
   </data>
   <data name="Btn_Install" xml:space="preserve">
-    <value>Install</value>
+    <value>Instalar</value>
   </data>
   <data name="Btn_Starting" xml:space="preserve">
-    <value>Starting…</value>
+    <value>Iniciando…</value>
   </data>
   <data name="Btn_Stopping" xml:space="preserve">
-    <value>Stopping…</value>
+    <value>Deteniendo…</value>
   </data>
   <data name="Btn_StoppingSeconds" xml:space="preserve">
-    <value>Stopping ({0}s)</value>
+    <value>Deteniendo ({0}s)</value>
   </data>
   <!-- Server state (Status tile) -->
   <data name="State_Stopped" xml:space="preserve">
-    <value>Stopped</value>
+    <value>Detenido</value>
   </data>
   <data name="State_Starting" xml:space="preserve">
-    <value>Starting</value>
+    <value>Iniciando</value>
   </data>
   <data name="State_Healthy" xml:space="preserve">
-    <value>Healthy</value>
+    <value>Saludable</value>
   </data>
   <data name="State_Degraded" xml:space="preserve">
-    <value>Degraded</value>
+    <value>Degradado</value>
   </data>
   <data name="State_Zombie" xml:space="preserve">
-    <value>Zombie</value>
+    <value>Zombi</value>
   </data>
   <data name="State_Stopping" xml:space="preserve">
-    <value>Stopping</value>
+    <value>Deteniendo</value>
   </data>
   <data name="State_Restarting" xml:space="preserve">
-    <value>Restarting</value>
+    <value>Reiniciando</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>Backoff</value>
+    <value>En espera</value>
   </data>
   <!-- Update status line -->
   <data name="Update_AutoUpdateOff" xml:space="preserve">
-    <value>Auto-update off · {0}</value>
+    <value>Actualización automática desactivada · {0}</value>
   </data>
   <data name="Update_Checking" xml:space="preserve">
-    <value>Checking for updates...</value>
+    <value>Buscando actualizaciones...</value>
   </data>
   <data name="Update_CheckFailed" xml:space="preserve">
-    <value>Update check failed · {0}</value>
+    <value>Error al buscar actualizaciones · {0}</value>
   </data>
   <data name="Update_Found" xml:space="preserve">
-    <value>New build {0} found, restarting</value>
+    <value>Se encontró la nueva build {0}, reiniciando</value>
   </data>
   <data name="Update_UpToDate" xml:space="preserve">
-    <value>Up to date · {0}</value>
+    <value>Actualizado · {0}</value>
   </data>
   <data name="Update_Available" xml:space="preserve">
-    <value>New build {0} available</value>
+    <value>Nueva build {0} disponible</value>
   </data>
   <!-- Next restart / backup schedule text -->
   <data name="Sched_Off" xml:space="preserve">
-    <value>off</value>
+    <value>desactivado</value>
   </data>
   <data name="Sched_UntilHM" xml:space="preserve">
     <value>{0}h {1}m</value>
@@ -2236,102 +2236,102 @@ Save these changes?</value>
     <value>Normal</value>
   </data>
   <data name="Settings_PresetHard" xml:space="preserve">
-    <value>Hard</value>
+    <value>Difícil</value>
   </data>
   <data name="Settings_PresetHardcore" xml:space="preserve">
     <value>Hardcore</value>
   </data>
   <data name="LauncherSettings_RestartPrompt" xml:space="preserve">
-    <value>The launcher needs to restart to apply the new language ({0}). Restart now?</value>
+    <value>El launcher debe reiniciarse para aplicar el nuevo idioma ({0}). ¿Reiniciar ahora?</value>
   </data>
   <data name="LauncherSettings_RestartPromptRunning" xml:space="preserve">
-    <value>The launcher needs to restart to apply the new language ({0}). Your Palworld server keeps running, and the launcher reconnects to it. Restart now?</value>
+    <value>El launcher debe reiniciarse para aplicar el nuevo idioma ({0}). Su servidor de Palworld seguirá en ejecución, y el launcher se reconectará a él. ¿Reiniciar ahora?</value>
   </data>
   <data name="LauncherSettings_RestartNow" xml:space="preserve">
-    <value>Restart Now</value>
+    <value>Reiniciar ahora</value>
   </data>
   <data name="LauncherSettings_Copyright" xml:space="preserve">
     <value>© 2026 Syl S. · GPLv3</value>
   </data>
   <data name="Settings_TabGameSettings" xml:space="preserve">
-    <value>Game Settings</value>
+    <value>Configuración del juego</value>
   </data>
   <data name="Settings_TabCpuAffinity" xml:space="preserve">
-    <value>CPU Affinity/Priority</value>
+    <value>Afinidad/Prioridad de CPU</value>
   </data>
   <data name="Main_CompactMode" xml:space="preserve">
-    <value>Compact Mode</value>
+    <value>Modo compacto</value>
   </data>
   <data name="Settings_GameplayBlurb" xml:space="preserve">
-    <value>Difficulty, EXP / capture / drop rates, day-night length, and world feature toggles. Full reference:</value>
+    <value>Dificultad, tasas de EXP / captura / drop, duración del ciclo día-noche y opciones de funciones del mundo. Referencia completa:</value>
   </data>
   <data name="Settings_GameBalanceBlurb" xml:space="preserve">
-    <value>Damage, drop, and stat multipliers that tune combat and progression balance. Full reference:</value>
+    <value>Multiplicadores de daño, drop y estadísticas que ajustan el balance de combate y progresión. Referencia completa:</value>
   </data>
   <data name="Settings_PerformanceBlurb" xml:space="preserve">
-    <value>Limits that affect server load: base camps, guild size, object caps, and spawn density. Full reference:</value>
+    <value>Límites que afectan la carga del servidor: bases, tamaño del gremio, límites de objetos y densidad de aparición. Referencia completa:</value>
   </data>
   <data name="Settings_LaunchArgsBlurbLink" xml:space="preserve">
-    <value>Launch arguments docs</value>
+    <value>Documentación de argumentos de inicio</value>
   </data>
   <data name="Update_Pinned" xml:space="preserve">
-    <value>Pinned to {0}</value>
+    <value>Fijado en {0}</value>
   </data>
   <data name="Main_PinVersion" xml:space="preserve">
-    <value>Pin server version</value>
+    <value>Fijar versión del servidor</value>
   </data>
   <data name="Main_PinVersionTip" xml:space="preserve">
-    <value>Freeze the server on its current build. While pinned, automatic updates are turned off. Uncheck to resume updating.</value>
+    <value>Congela el servidor en su build actual. Mientras esté fijado, las actualizaciones automáticas estarán desactivadas. Desmárquelo para reanudar las actualizaciones.</value>
   </data>
   <data name="Main_AutomaticUpdates" xml:space="preserve">
-    <value>Automatic updates</value>
+    <value>Actualizaciones automáticas</value>
   </data>
   <data name="Main_AutomaticUpdatesTip" xml:space="preserve">
-    <value>Download updates automatically. When off, the launcher won't update on start or while running. You can still check for updates manually.</value>
+    <value>Descarga actualizaciones automáticamente. Cuando está desactivado, el launcher no actualizará al iniciar ni durante la ejecución. Aun así puede buscar actualizaciones manualmente.</value>
   </data>
   <data name="Main_PinnedBuildFormat" xml:space="preserve">
     <value>build {0}</value>
   </data>
   <data name="LauncherSettings_AutoReconnect" xml:space="preserve">
-    <value>Reconnect to a running server on launcher startup without asking</value>
+    <value>Reconectar a un servidor en ejecución al iniciar el launcher sin preguntar</value>
   </data>
   <data name="LauncherSettings_AutoReconnectTip" xml:space="preserve">
-    <value>When exactly one managed server is found running at startup, adopt it without asking. If several are found, you'll still be prompted.</value>
+    <value>Cuando se encuentra exactamente un servidor administrado en ejecución al iniciar, se adopta sin preguntar. Si se encuentran varios, igualmente se le preguntará.</value>
   </data>
   <data name="Main_ImportServer" xml:space="preserve">
-    <value>Import server</value>
+    <value>Importar servidor</value>
   </data>
   <data name="Main_ImportServerTip" xml:space="preserve">
-    <value>Copy an existing Palworld dedicated server you installed elsewhere into this launcher. The original is left untouched.</value>
+    <value>Copie a este launcher un servidor dedicado de Palworld ya instalado en otro lugar. El original queda intacto.</value>
   </data>
   <data name="Main_ImportPickTitle" xml:space="preserve">
-    <value>Select your Palworld dedicated server folder (usually named PalServer)</value>
+    <value>Seleccione la carpeta de su servidor dedicado de Palworld (normalmente llamada PalServer)</value>
   </data>
   <data name="Main_ImportTitle" xml:space="preserve">
-    <value>Import server</value>
+    <value>Importar servidor</value>
   </data>
   <data name="Main_ImportInvalidMessage" xml:space="preserve">
-    <value>That folder doesn't look like a Palworld dedicated server install. It's typically installed in a folder named PalServer. If you're using Steam, it's under Steam\steamapps\common\PalServer.</value>
+    <value>Esa carpeta no parece ser una instalación de un servidor dedicado de Palworld. Normalmente se instala en una carpeta llamada PalServer. Si usa Steam, está en Steam\steamapps\common\PalServer.</value>
   </data>
   <data name="Main_ImportConfirmMessage" xml:space="preserve">
-    <value>Copy this server into the launcher from '{0}'? The original is left in place, so once you've confirmed the launcher-managed copy works you can delete the original yourself.</value>
+    <value>¿Copiar este servidor al launcher desde '{0}'? El original se deja en su lugar, así que una vez que confirme que la copia administrada por el launcher funciona, puede eliminar el original usted mismo.</value>
   </data>
   <data name="Main_ImportCopyButton" xml:space="preserve">
-    <value>Import</value>
+    <value>Importar</value>
   </data>
   <data name="Main_ImportFailedMessage" xml:space="preserve">
-    <value>The import didn't complete. Check the log for details.</value>
+    <value>La importación no se completó. Consulte el registro para más detalles.</value>
   </data>
   <data name="LauncherSettings_LoginOpen" xml:space="preserve">
-    <value>Open the launcher and start the server at Windows login</value>
+    <value>Abrir el launcher e iniciar el servidor al iniciar sesión en Windows</value>
   </data>
   <data name="LauncherSettings_LoginOpenTip" xml:space="preserve">
-    <value>At login, opens the launcher and starts the server, so scheduled restarts, updates, backups, and health recovery run. No admin needed. Unchecking removes the Startup shortcut.</value>
+    <value>Al iniciar sesión, abre el launcher e inicia el servidor, para que se ejecuten los reinicios programados, actualizaciones, copias de seguridad y la recuperación de estado. No requiere permisos de administrador. Al desmarcarlo se elimina el acceso directo de Inicio.</value>
   </data>
   <data name="LauncherSettings_LoginOpenFailedTitle" xml:space="preserve">
-    <value>Couldn't change the login shortcut</value>
+    <value>No se pudo cambiar el acceso directo de inicio de sesión</value>
   </data>
   <data name="LauncherSettings_LoginOpenFailedMessage" xml:space="preserve">
-    <value>The Startup shortcut couldn't be created or removed. Check the log for details.</value>
+    <value>No se pudo crear ni eliminar el acceso directo de Inicio. Consulte el registro para más detalles.</value>
   </data>
 </root>
