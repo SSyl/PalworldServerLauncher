@@ -134,7 +134,7 @@
     <value>Idioma</value>
   </data>
   <data name="LauncherSettings_Tooltip" xml:space="preserve">
-    <value>Cambie el idioma del launcher y otras preferencias del launcher.</value>
+    <value>Cambie el idioma y otras preferencias del launcher.</value>
   </data>
   <!-- Shared across dialogs (dedupe: one key reused everywhere the word appears) -->
   <data name="Common_AppName" xml:space="preserve">
@@ -281,7 +281,7 @@
     <value>Elegir horarios de reinicio</value>
   </data>
   <data name="Main_MinUptime" xml:space="preserve">
-    <value>Tiempo activo mínimo antes de reiniciar</value>
+    <value>Tiempo mínimo antes de reiniciar</value>
   </data>
   <data name="Main_HourSuffix" xml:space="preserve">
     <value>h</value>
@@ -540,7 +540,7 @@ La API REST aún no está activada en este servidor, por lo que estas funciones 
 ¿Activarla ahora con una contraseña de administrador segura, generada aleatoriamente?</value>
   </data>
   <data name="Main_NoRunLimited" xml:space="preserve">
-    <value>No, ejecutar en modo limitado</value>
+    <value>No, modo limitado</value>
   </data>
   <data name="Main_Exit" xml:space="preserve">
     <value>Salir</value>
@@ -833,7 +833,7 @@ Detalles completos en:
     <value>Discord</value>
   </data>
   <data name="Discord_BlurbPrefix" xml:space="preserve">
-    <value>Controle el servidor desde Discord con comandos de barra diagonal, o publique notificaciones del ciclo de vida en un canal. Cree un bot y copie su token desde el</value>
+    <value>Controle el servidor desde Discord con comandos de barra, o publique notificaciones del ciclo de vida en un canal. Cree un bot y copie su token desde el</value>
   </data>
   <data name="Discord_BlurbLinkText" xml:space="preserve">
     <value>Portal de desarrolladores de Discord</value>
@@ -845,7 +845,7 @@ Detalles completos en:
     <value>Bot de control del servidor</value>
   </data>
   <data name="Discord_EnableControlBot" xml:space="preserve">
-    <value>Activar el bot de control (comandos de barra diagonal: /status /players /save /backup /update /start /restart /stop)</value>
+    <value>Activar el bot de control (comandos de barra: /status /players /save /backup /update /start /restart /stop)</value>
   </data>
   <data name="Discord_BotTokenLabel" xml:space="preserve">
     <value>Token del bot (secreto)</value>
@@ -857,7 +857,7 @@ Detalles completos en:
     <value>ID del rol requerido (opcional)</value>
   </data>
   <data name="Discord_CommandCooldownLabel" xml:space="preserve">
-    <value>Tiempo de espera entre comandos (segundos)</value>
+    <value>Espera entre comandos (segundos)</value>
   </data>
   <data name="Discord_SecurityNote" xml:space="preserve">
     <value>Seguridad: establezca un canal de comandos o un rol requerido (o ambos); el bot solo actúa cuando se cumplen todas las condiciones establecidas (defina al menos una). Cualquiera que pueda publicar en el canal de comandos, o que tenga el rol, podrá controlar el servidor, así que restrínjalo bien (un canal privado solo para administradores o un rol de administrador). Active el modo de desarrollador de Discord y luego haga clic derecho en un canal o rol -&gt; Copiar ID. El token se almacena localmente en launcher.json y nunca aparece en el registro.</value>
@@ -866,7 +866,7 @@ Detalles completos en:
     <value>Comandos que expone el bot</value>
   </data>
   <data name="Discord_CommandsExposedHint" xml:space="preserve">
-    <value>Marque los comandos de barra diagonal que el bot debe aceptar. Los destructivos (reiniciar, detener, expulsar, banear) están desactivados de forma predeterminada. Los cambios se aplican al Guardar (el bot se reconecta y vuelve a registrar sus comandos).</value>
+    <value>Marque los comandos de barra que el bot debe aceptar. Los destructivos (reiniciar, detener, expulsar, banear) están desactivados de forma predeterminada. Los cambios se aplican al Guardar (el bot se reconecta y vuelve a registrar sus comandos).</value>
   </data>
   <data name="Discord_WebhookNotificationsHeader" xml:space="preserve">
     <value>Notificaciones por webhook</value>
@@ -881,7 +881,7 @@ Detalles completos en:
     <value>Notificar al iniciar / apagar / actualizar / fallar</value>
   </data>
   <data name="Discord_NotifyPlayers" xml:space="preserve">
-    <value>Notificar cuando un jugador entra o sale (requiere REST)</value>
+    <value>Notificar entradas / salidas de jugadores (requiere REST)</value>
   </data>
   <data name="Discord_InvalidChannelIdTitle" xml:space="preserve">
     <value>ID de canal no válido</value>

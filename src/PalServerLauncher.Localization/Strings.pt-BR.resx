@@ -281,7 +281,7 @@ Salvar mesmo assim como mensagens fixas?</value>
     <value>Escolher Horários de Reinício</value>
   </data>
   <data name="Main_MinUptime" xml:space="preserve">
-    <value>Tempo mínimo ativo antes de reiniciar</value>
+    <value>Tempo mínimo antes de reiniciar</value>
   </data>
   <data name="Main_HourSuffix" xml:space="preserve">
     <value>h</value>
@@ -314,7 +314,7 @@ Salvar mesmo assim como mensagens fixas?</value>
     <value>Backups</value>
   </data>
   <data name="Main_BackupOn" xml:space="preserve">
-    <value>Fazer backup em:</value>
+    <value>Backup em:</value>
   </data>
   <data name="Main_BackupStartup" xml:space="preserve">
     <value>Inicialização</value>
@@ -881,7 +881,7 @@ Detalhes completos em:
     <value>Notificar quando iniciar / parar / atualizar / travar</value>
   </data>
   <data name="Discord_NotifyPlayers" xml:space="preserve">
-    <value>Notificar quando um jogador entrar / sair (requer REST API)</value>
+    <value>Notificar entrada / saída de jogador (requer REST API)</value>
   </data>
   <data name="Discord_InvalidChannelIdTitle" xml:space="preserve">
     <value>ID de Canal Inválido</value>
@@ -2323,7 +2323,7 @@ Salvar essas alterações?</value>
     <value>A importação não foi concluída. Veja o log para mais detalhes.</value>
   </data>
   <data name="LauncherSettings_LoginOpen" xml:space="preserve">
-    <value>Abrir o launcher e iniciar o servidor ao fazer login no Windows</value>
+    <value>Abrir o launcher e iniciar o servidor no login do Windows</value>
   </data>
   <data name="LauncherSettings_LoginOpenTip" xml:space="preserve">
     <value>No login, abre o launcher e inicia o servidor, para que reinícios agendados, atualizações, backups e recuperação de saúde funcionem. Não requer permissões de administrador. Desmarcar remove o atalho de Inicialização.</value>

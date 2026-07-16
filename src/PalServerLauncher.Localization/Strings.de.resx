@@ -163,7 +163,7 @@
     <value>Geplanter / manueller Neustart</value>
   </data>
   <data name="Announcements_UpdateLabel" xml:space="preserve">
-    <value>Neustart durch Update</value>
+    <value>Update-Neustart</value>
   </data>
   <data name="Announcements_EmptyTitle" xml:space="preserve">
     <value>Leere Ankündigung</value>
@@ -191,7 +191,7 @@ Trotzdem als feste Nachrichten speichern?</value>
     <value>Installiert den Server oder startet (▶) / stoppt (■) ihn nach der Installation. Start prüft zuerst auf ein Update (wenn „Update bei Start“ aktiviert ist) und startet dann den Server.</value>
   </data>
   <data name="Main_RestartTip" xml:space="preserve">
-    <value>Jetzt neu starten: Speichert die Welt und startet den Server sofort neu, ohne Countdown für die Spieler. Geplante Neustarts und Neustarts durch Updates warnen die Spieler vorher.</value>
+    <value>Jetzt neu starten: Speichert die Welt und startet den Server sofort neu, ohne Countdown für die Spieler. Geplante und Update-Neustarts warnen die Spieler vorher.</value>
   </data>
   <data name="Main_ForceShutdownTip" xml:space="preserve">
     <value>Beendet den Serverprozess sofort, ohne zu speichern. Erscheint, wenn ein Start, Stopp oder Neustart längere Zeit hängen bleibt. Nur verwenden, wenn der Server nicht mehr reagiert.</value>
@@ -200,7 +200,7 @@ Trotzdem als feste Nachrichten speichern?</value>
     <value>Nach Update suchen</value>
   </data>
   <data name="Main_CheckForUpdateTip" xml:space="preserve">
-    <value>Prüft über SteamCMD auf eine neuere Version (nur lesend, funktioniert auch während der Server läuft)</value>
+    <value>Prüft über SteamCMD auf eine neuere Version (nur lesend, auch im laufenden Betrieb)</value>
   </data>
   <data name="Main_ValidateFiles" xml:space="preserve">
     <value>Dateien überprüfen</value>
@@ -290,10 +290,10 @@ Trotzdem als feste Nachrichten speichern?</value>
     <value>Neustarts ankündigen</value>
   </data>
   <data name="Main_AnnounceRestartsTip" xml:space="preserve">
-    <value>Warnt Spieler im Spiel vor einem geplanten Neustart oder einem Neustart durch ein Update, zu den rechts angegebenen Minutenmarken. Wird übersprungen, wenn niemand online ist.</value>
+    <value>Warnt Spieler im Spiel vor einem geplanten oder Update-Neustart, zu den rechts angegebenen Minutenmarken. Wird übersprungen, wenn niemand online ist.</value>
   </data>
   <data name="Main_AnnounceLeadTip" xml:space="preserve">
-    <value>Minuten vor dem Neustart, zu denen angekündigt wird (leer = aus)</value>
+    <value>Minuten vor dem Neustart für Ankündigungen (leer = aus)</value>
   </data>
   <data name="Main_MinuteSuffix" xml:space="preserve">
     <value>min</value>
@@ -972,7 +972,7 @@ Alle Details unter:
     <value>Geben Sie zuerst Ihren Steam-Kontonamen ein und verbinden Sie dann.</value>
   </data>
   <data name="Mods_ConnectingButton" xml:space="preserve">
-    <value>Verbindung wird hergestellt...</value>
+    <value>Wird verbunden...</value>
   </data>
   <data name="Mods_SteamCmdWindowOpened" xml:space="preserve">
     <value>Ein SteamCMD-Fenster wurde geöffnet. Geben Sie dort Ihr Passwort und Ihren Steam-Guard-Code ein, es bleibt geöffnet, damit Sie das Ergebnis lesen können, schließen Sie es danach.</value>
@@ -1241,7 +1241,7 @@ Diese Änderungen übernehmen und speichern?</value>
     <value>Query-Port</value>
   </data>
   <data name="Settings_ValidateMaxPlayers" xml:space="preserve">
-    <value>Maximale Spieleranzahl</value>
+    <value>Max. Spieler</value>
   </data>
   <data name="Settings_ValidateWorkerThreads" xml:space="preserve">
     <value>Worker-Threads</value>
@@ -1259,7 +1259,7 @@ Diese Änderungen übernehmen und speichern?</value>
     <value>Der UDP-Port, an den sich der Server bindet und über den Spieler sich verbinden (Palworld-Standard 8211). Wird immer angewendet. Nicht zu verwechseln mit dem öffentlichen Port unten.</value>
   </data>
   <data name="Settings_RowMaxPlayers" xml:space="preserve">
-    <value>Maximale Spieler (-players, 0 = Spieleinstellung verwenden)</value>
+    <value>Max. Spieler (-players, 0 = Spieleinstellung verwenden)</value>
   </data>
   <data name="Settings_TipMaxPlayers" xml:space="preserve">
     <value>Überschreibt ServerPlayerMaxNum in der ini, wenn gesetzt. 0 = Argument weglassen und die Spieleinstellung verwenden.</value>

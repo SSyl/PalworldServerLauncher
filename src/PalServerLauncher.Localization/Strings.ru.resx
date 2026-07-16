@@ -281,7 +281,7 @@
     <value>Выбрать время перезапуска</value>
   </data>
   <data name="Main_MinUptime" xml:space="preserve">
-    <value>Мин. время работы перед перезапуском</value>
+    <value>Мин. время до перезапуска</value>
   </data>
   <data name="Main_HourSuffix" xml:space="preserve">
     <value>ч</value>
@@ -383,7 +383,7 @@
     <value>Запускать SteamCMD в фоне вместо открытия отдельного окна консоли. Ход выполнения по-прежнему отображается на вкладке SteamCMD.</value>
   </data>
   <data name="Main_LogServerStatus" xml:space="preserve">
-    <value>Записывать статус сервера в журнал</value>
+    <value>Логировать статус сервера</value>
   </data>
   <data name="Main_LogServerStatusTip" xml:space="preserve">
     <value>Записывать строку статистики сервера (FPS, игроки, время работы, память) в журнал каждые 30 с. Полезно при запуске из терминала, в остальных случаях засоряет журнал.</value>
@@ -669,7 +669,7 @@ REST API на этом сервере пока не включён, поэтом
     <value>Результаты</value>
   </data>
   <data name="PortCheck_NotCheckedYet" xml:space="preserve">
-    <value>Проверка ещё не выполнялась.</value>
+    <value>Ещё не проверено.</value>
   </data>
   <data name="PortCheck_ServiceOnline" xml:space="preserve">
     <value>Сервис проверки портов доступен</value>
@@ -1056,7 +1056,7 @@ REST API на этом сервере пока не включён, поэтом
     <value>Удалить этот мод (удаляет его из списка и удаляет скачанные файлы).</value>
   </data>
   <data name="Mods_EmptyList" xml:space="preserve">
-    <value>Модов пока нет. Добавьте id из Мастерской выше или поместите папки модов в папку модов и выполните сканирование.</value>
+    <value>Модов пока нет. Добавьте id из Мастерской выше или поместите папки модов в папку модов и просканируйте.</value>
   </data>
   <data name="Mods_DeleteTitle" xml:space="preserve">
     <value>Удаление мода</value>
@@ -1119,13 +1119,13 @@ REST API на этом сервере пока не включён, поэтом
     <value>Настройки сервера</value>
   </data>
   <data name="Settings_ResetToDefaults" xml:space="preserve">
-    <value>Сбросить к значениям по умолчанию</value>
+    <value>Сбросить по умолчанию</value>
   </data>
   <data name="Settings_SearchPlaceholder" xml:space="preserve">
     <value>Поиск настроек...</value>
   </data>
   <data name="Settings_SearchNoMatches" xml:space="preserve">
-    <value>По вашему запросу настроек не найдено.</value>
+    <value>Настройки не найдены.</value>
   </data>
   <data name="Settings_SearchClearTooltip" xml:space="preserve">
     <value>Очистить поиск</value>
@@ -1271,19 +1271,19 @@ REST API на этом сервере пока не включён, поэтом
     <value>Добавляет -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS. Рекомендуется включить для выделенного сервера.</value>
   </data>
   <data name="Settings_RowWorkerThreads" xml:space="preserve">
-    <value>Рабочие потоки (0 = автоматически)</value>
+    <value>Рабочие потоки (0 = авто)</value>
   </data>
   <data name="Settings_TipWorkerThreads" xml:space="preserve">
-    <value>-NumberOfWorkerThreadsServer. 0 = автоматически (аргумент не добавляется). Используется только при включённых потоках производительности.</value>
+    <value>-NumberOfWorkerThreadsServer. 0 = авто (аргумент не добавляется). Используется только при включённых потоках производительности.</value>
   </data>
   <data name="Settings_RowCommunity" xml:space="preserve">
-    <value>Сервер сообщества/публичный сервер (-publiclobby)</value>
+    <value>Сервер сообщества/публичный (-publiclobby)</value>
   </data>
   <data name="Settings_TipCommunity" xml:space="preserve">
     <value>-publiclobby: показывать сервер в публичном списке/списке сообщества. Отключено = приватный сервер (игроки подключаются по IP).</value>
   </data>
   <data name="Settings_RowPublicIp" xml:space="preserve">
-    <value>Публичный IP (для сообщества, пусто = автоматически)</value>
+    <value>Публичный IP (сообщество, пусто = авто)</value>
   </data>
   <data name="Settings_TipPublicIp" xml:space="preserve">
     <value>-publicip для серверов сообщества (пусто = автоопределение). Используется только для рекламы сервера, не изменяет то, к чему привязывается сервер.</value>
@@ -1360,7 +1360,7 @@ REST API на этом сервере пока не включён, поэтом
     <value>Недопустимые настройки</value>
   </data>
   <data name="Settings_ResetFieldTooltip" xml:space="preserve">
-    <value>Сбросить это поле к значению по умолчанию</value>
+    <value>Сбросить поле по умолчанию</value>
   </data>
   <data name="Settings_UndocumentedMarker" xml:space="preserve">
     <value>  · недокументировано</value>
@@ -1458,7 +1458,7 @@ REST API на этом сервере пока не включён, поэтом
     <value>Ошибка проверки обновлений · {0}</value>
   </data>
   <data name="Update_Found" xml:space="preserve">
-    <value>Найдена новая сборка {0}, выполняется перезапуск</value>
+    <value>Найдена новая сборка {0}, перезапуск</value>
   </data>
   <data name="Update_UpToDate" xml:space="preserve">
     <value>Актуальная версия · {0}</value>

@@ -121,7 +121,7 @@
     <value>Démarrer</value>
   </data>
   <data name="FirstRun_Prompt" xml:space="preserve">
-    <value>Choisissez votre langue. Vous pourrez la modifier plus tard depuis le bouton en forme d'engrenage en haut à droite.</value>
+    <value>Choisissez votre langue. Vous pourrez la modifier plus tard via le bouton engrenage en haut à droite.</value>
   </data>
   <!-- Launcher Settings dialog + its main-window button -->
   <data name="LauncherSettings_Title" xml:space="preserve">
@@ -134,7 +134,7 @@
     <value>Langue</value>
   </data>
   <data name="LauncherSettings_Tooltip" xml:space="preserve">
-    <value>Modifiez la langue du lanceur et d'autres préférences du lanceur.</value>
+    <value>Modifiez la langue et les autres préférences du lanceur.</value>
   </data>
   <!-- Shared across dialogs (dedupe: one key reused everywhere the word appears) -->
   <data name="Common_AppName" xml:space="preserve">
@@ -200,7 +200,7 @@ Les enregistrer quand même comme messages fixes ?</value>
     <value>Vérifier les mises à jour</value>
   </data>
   <data name="Main_CheckForUpdateTip" xml:space="preserve">
-    <value>Vérifie auprès de SteamCMD si une version plus récente est disponible (lecture seule, fonctionne pendant l'exécution)</value>
+    <value>Recherche une version plus récente via SteamCMD (lecture seule, fonctionne pendant l'exécution)</value>
   </data>
   <data name="Main_ValidateFiles" xml:space="preserve">
     <value>Valider les fichiers</value>
@@ -230,7 +230,7 @@ Les enregistrer quand même comme messages fixes ?</value>
     <value>IP publique :</value>
   </data>
   <data name="Main_PublicIpTip" xml:space="preserve">
-    <value>Votre IP publique et le port du jeu. Révélez-la avec l'icône en forme d'œil, puis sélectionnez pour copier, ou utilisez le bouton de copie.</value>
+    <value>Votre IP publique et le port du jeu. Révélez-la avec l'icône œil, puis sélectionnez pour copier, ou utilisez le bouton de copie.</value>
   </data>
   <data name="Main_RevealIpTip" xml:space="preserve">
     <value>Afficher ou masquer votre IP publique</value>
@@ -293,7 +293,7 @@ Les enregistrer quand même comme messages fixes ?</value>
     <value>Prévient les joueurs en jeu avant un redémarrage planifié ou lié à une mise à jour, aux minutes indiquées à droite. Ignoré si personne n'est connecté.</value>
   </data>
   <data name="Main_AnnounceLeadTip" xml:space="preserve">
-    <value>Minutes avant le redémarrage auxquelles annoncer (vide = désactivé)</value>
+    <value>Minutes avant redémarrage pour annoncer (vide = désactivé)</value>
   </data>
   <data name="Main_MinuteSuffix" xml:space="preserve">
     <value>min</value>
@@ -438,7 +438,7 @@ Les enregistrer quand même comme messages fixes ?</value>
   </data>
   <!-- Main window prompts (code-behind dialogs) -->
   <data name="Main_MultiServerTitle" xml:space="preserve">
-    <value>Plusieurs serveurs en cours d'exécution</value>
+    <value>Plusieurs serveurs actifs</value>
   </data>
   <data name="Main_MultiServerMessage" xml:space="preserve">
     <value>{0} serveurs Palworld en cours d'exécution ont été détectés depuis ce dossier. Ils partagent une même sauvegarde et les mêmes ports, ils vont donc entrer en conflit, le lanceur ne gère qu'un seul serveur. Arrêtez-les tous, ou quittez.</value>
@@ -450,7 +450,7 @@ Les enregistrer quand même comme messages fixes ?</value>
     <value>Quitter le lanceur</value>
   </data>
   <data name="Main_ServerRunningTitle" xml:space="preserve">
-    <value>Serveur déjà en cours d'exécution</value>
+    <value>Serveur déjà actif</value>
   </data>
   <data name="Main_ServerRunningMessage" xml:space="preserve">
     <value>Un serveur Palworld démarré depuis ce dossier est déjà en cours d'exécution, presque certainement le vôtre issu d'une session précédente, car le lanceur ne suit que les serveurs qu'il a lui-même démarrés ici.
@@ -540,7 +540,7 @@ L'API REST n'est pas encore activée sur ce serveur, ces fonctionnalités seront
 L'activer maintenant avec un mot de passe administrateur sécurisé généré aléatoirement ?</value>
   </data>
   <data name="Main_NoRunLimited" xml:space="preserve">
-    <value>Non, fonctionner en mode limité</value>
+    <value>Non, mode limité</value>
   </data>
   <data name="Main_Exit" xml:space="preserve">
     <value>Quitter</value>
@@ -558,16 +558,16 @@ L'activer maintenant avec un mot de passe administrateur sécurisé généré al
     <value>Impossible d'écrire la configuration du serveur. Assurez-vous que le serveur est installé et arrêté, puis définissez-la manuellement dans Paramètres du serveur, onglet Admin.</value>
   </data>
   <data name="Main_ServerStillRunningTitle" xml:space="preserve">
-    <value>Le serveur est toujours en cours d'exécution</value>
+    <value>Serveur encore actif</value>
   </data>
   <data name="Main_ServerStillRunningMessage" xml:space="preserve">
-    <value>Le serveur Palworld est toujours en cours d'exécution. Que faut-il en faire ?</value>
+    <value>Le serveur Palworld est encore actif. Que faut-il en faire ?</value>
   </data>
   <data name="Main_ShutDownGraceful" xml:space="preserve">
     <value>Arrêter (proprement)</value>
   </data>
   <data name="Main_LeaveRunning" xml:space="preserve">
-    <value>Laisser en cours d'exécution</value>
+    <value>Laisser actif</value>
   </data>
   <data name="Main_ForceShutdownConfirmMessage" xml:space="preserve">
     <value>Cette action arrête immédiatement le serveur sans sauvegarde en terminant complètement le processus. Elle peut entraîner une perte ou une corruption des données de sauvegarde. Déconseillé, sauf si le serveur a complètement cessé de répondre.</value>
@@ -878,10 +878,10 @@ Détails complets dans :
     <value>URL du webhook</value>
   </data>
   <data name="Discord_NotifyLifecycle" xml:space="preserve">
-    <value>Notifier au démarrage / à l'arrêt / à la mise à jour / au plantage</value>
+    <value>Notifier : démarrage / arrêt / mise à jour / plantage</value>
   </data>
   <data name="Discord_NotifyPlayers" xml:space="preserve">
-    <value>Notifier aux connexions/déconnexions des joueurs (nécessite REST)</value>
+    <value>Notifier : connexions / déconnexions des joueurs (nécessite REST)</value>
   </data>
   <data name="Discord_InvalidChannelIdTitle" xml:space="preserve">
     <value>ID de salon invalide</value>
@@ -2293,7 +2293,7 @@ Enregistrer ces changements ?</value>
     <value>version {0}</value>
   </data>
   <data name="LauncherSettings_AutoReconnect" xml:space="preserve">
-    <value>Se reconnecter à un serveur en cours d'exécution au démarrage du lanceur sans demander</value>
+    <value>Se reconnecter à un serveur actif au démarrage du lanceur sans demander</value>
   </data>
   <data name="LauncherSettings_AutoReconnectTip" xml:space="preserve">
     <value>Lorsqu'un seul serveur géré est trouvé en cours d'exécution au démarrage, il est adopté sans demande de confirmation. Si plusieurs sont trouvés, une confirmation vous sera tout de même demandée.</value>
