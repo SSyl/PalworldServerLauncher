@@ -471,7 +471,7 @@
     <value>啟用 REST API？</value>
   </data>
   <data name="Main_EnableRestMessage" xml:space="preserve">
-    <value>此啟動器圍繞 Palworld 的 REST API 構建，幾乎所有功能都依賴它：正常保存並關閉、最新備份、即時健康/假死監控、自動重啟，以及玩家加入/離開的記錄。
+    <value>此啟動器圍繞 Palworld 的 REST API 建構，幾乎所有功能都依賴它：正常保存並關閉、最新備份、即時健康/假死監控、自動重啟，以及玩家加入/離開的記錄。
 
 此伺服器尚未啟用 REST API，因此這些功能會受到限制：關閉將退而使用強制終止，備份可能不是最新的，也沒有自動重啟。
 
@@ -1374,22 +1374,22 @@
     <value>退避中</value>
   </data>
   <data name="Update_AutoUpdateOff" xml:space="preserve">
-    <value>自動更新已關閉（構建 {0}）</value>
+    <value>自動更新已關閉（建構 {0}）</value>
   </data>
   <data name="Update_Checking" xml:space="preserve">
     <value>正在檢查更新...</value>
   </data>
   <data name="Update_CheckFailed" xml:space="preserve">
-    <value>更新檢查失敗（構建 {0}）</value>
+    <value>更新檢查失敗（建構 {0}）</value>
   </data>
   <data name="Update_Found" xml:space="preserve">
-    <value>發現新構建 {0}，正在重啟</value>
+    <value>發現新建構 {0}，正在重啟</value>
   </data>
   <data name="Update_UpToDate" xml:space="preserve">
-    <value>已是最新（構建 {0}）</value>
+    <value>已是最新（建構 {0}）</value>
   </data>
   <data name="Update_Available" xml:space="preserve">
-    <value>有新構建 {0} 可用</value>
+    <value>有新建構 {0} 可用</value>
   </data>
   <data name="Sched_Off" xml:space="preserve">
     <value>關閉</value>
@@ -2199,13 +2199,13 @@
     <value>啟動引數文件</value>
   </data>
   <data name="Update_Pinned" xml:space="preserve">
-    <value>固定到構建 {0}</value>
+    <value>固定到建構 {0}</value>
   </data>
   <data name="Main_PinVersion" xml:space="preserve">
     <value>固定伺服器版本</value>
   </data>
   <data name="Main_PinVersionTip" xml:space="preserve">
-    <value>將伺服器固定在當前構建版本。固定後，自動更新將關閉。取消勾選以恢復更新。</value>
+    <value>將伺服器固定在當前建構版本。固定後，自動更新將關閉。取消勾選以恢復更新。</value>
   </data>
   <data name="Main_AutomaticUpdates" xml:space="preserve">
     <value>自動更新</value>
@@ -2214,7 +2214,7 @@
     <value>自動下載更新。關閉後，啟動器在啟動或執行時不會更新。您仍可手動檢查更新。</value>
   </data>
   <data name="Main_PinnedBuildFormat" xml:space="preserve">
-    <value>構建 {0}</value>
+    <value>建構 {0}</value>
   </data>
   <data name="LauncherSettings_AutoReconnect" xml:space="preserve">
     <value>啟動器啟動時自動重新連接到執行中的伺服器，無需詢問</value>
