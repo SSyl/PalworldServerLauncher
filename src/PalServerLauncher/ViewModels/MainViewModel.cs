@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
@@ -104,6 +105,13 @@ public partial class MainViewModel : ObservableObject
     /// <summary>Set by the View: confirm accelerating a timed shutdown before it skips the countdown.</summary>
     public Func<bool>? ConfirmShutdownNow { get; set; }
 
+    /// <summary>Set by the View: on Start, if a WorldOption.sav is detected, ask whether to rename it to .bak,
+    /// start anyway, or cancel. Keeps the dialog in the View. Returns the user's choice.</summary>
+    public Func<WorldOptionChoice>? ConfirmWorldOption { get; set; }
+
+    /// <summary>Set by the View: show a confirmation/error message after handling a detected WorldOption.sav.</summary>
+    public Action<string>? ShowWorldOptionRenamed { get; set; }
+
     /// <summary>Label for the multi-state primary button (animated dots while busy, so it's clearly not frozen).</summary>
     public string PrimaryActionText => IsBusy
         ? Strings.Vm_Working + new string('.', _busyDots)
@@ -120,6 +128,7 @@ public partial class MainViewModel : ObservableObject
         ServerState.Healthy => Strings.State_Healthy,
         ServerState.Degraded => Strings.State_Degraded,
         ServerState.Zombie => Strings.State_Zombie,
+        ServerState.RestUnreachable => Strings.State_RestUnreachable,
         ServerState.Stopping => Strings.State_Stopping,
         ServerState.Restarting => Strings.State_Restarting,
         ServerState.Backoff => Strings.State_Backoff,
@@ -549,7 +558,7 @@ public partial class MainViewModel : ObservableObject
         return Guard(() => kind switch
         {
             PrimaryActionKind.Install => ConfirmedInstallAsync(),
-            PrimaryActionKind.Start => StartCoreAsync(),
+            PrimaryActionKind.Start => StartCoreAsync(interactive: true),
             PrimaryActionKind.Stop => StopWithPromptAsync(),
             PrimaryActionKind.ShutdownNow => ShutdownNowAsync(),
             _ => Task.CompletedTask,
@@ -602,7 +611,7 @@ public partial class MainViewModel : ObservableObject
         return Guard(() => _controller.RestartAsync(RestartReason.Manual));
     }
 
-    private bool CanRestart() => !IsBusy && State is ServerState.Healthy or ServerState.Degraded or ServerState.Zombie;
+    private bool CanRestart() => !IsBusy && State is ServerState.Healthy or ServerState.Degraded or ServerState.Zombie or ServerState.RestUnreachable;
 
     /// <summary>Validate Files is stopped-only (it re-verifies / can rewrite locked files).</summary>
     public bool UpdateActionsEnabled => IsInstalled && !IsBusy && State == ServerState.Stopped;
@@ -720,12 +729,15 @@ public partial class MainViewModel : ObservableObject
     }
 
     /// <summary>Programmatically start the server (used by --start-server on load). Same path as the Start button,
-    /// wrapped in Guard so a failure logs instead of crashing.</summary>
-    public Task StartServerAsync() => Guard(StartCoreAsync);
+    /// wrapped in Guard so a failure logs instead of crashing. Non-interactive: can't prompt an unattended start.</summary>
+    public Task StartServerAsync() => Guard(() => StartCoreAsync(interactive: false));
 
     // Start now runs a SteamCMD update check before launching, so it's a long op, show "Working...".
-    private async Task StartCoreAsync()
+    private async Task StartCoreAsync(bool interactive)
     {
+        if (!PrepareForStart(interactive))
+            return; // user cancelled at the WorldOption.sav prompt, or a rename failed
+
         IsBusy = true;
         try
         {
@@ -735,6 +747,50 @@ public partial class MainViewModel : ObservableObject
         {
             IsBusy = false;
         }
+    }
+
+    /// <summary>
+    /// Pre-launch WorldOption.sav guard. That file (from a save converted off a local/co-op world) overrides
+    /// PalWorldSettings.ini on a dedicated server, so the launcher's REST settings can be silently ignored,
+    /// leaving the server up but uncontrollable. Returns true to proceed with the launch, false to abort.
+    /// Runs on the UI thread before any await, so the synchronous View prompt can ShowDialog.
+    /// </summary>
+    private bool PrepareForStart(bool interactive)
+    {
+        var savs = _controller.FindWorldOptionSavs();
+        if (savs.Count == 0)
+            return true;
+
+        if (!interactive)
+        {
+            // Headless (--start-server): can't show a modal on an unattended start. Warn and start anyway;
+            // if the override blocks REST, the status tile surfaces "REST not responding".
+            _logger.Info("WorldOption.sav found in the save folder. It can override PalWorldSettings.ini and leave the server uncontrollable. Rename it to .bak, or start the launcher normally to be prompted.");
+            return true;
+        }
+
+        var choice = ConfirmWorldOption?.Invoke() ?? WorldOptionChoice.Cancel;
+        if (choice == WorldOptionChoice.Cancel)
+            return false;
+        if (choice == WorldOptionChoice.ContinueAnyway)
+            return true;
+
+        // RenameToBak: rename each, abort (without starting) on the first failure.
+        var renamed = new List<string>();
+        foreach (var sav in savs)
+        {
+            if (_controller.TryRenameWorldOptionSav(sav, out var bak, out var error))
+            {
+                renamed.Add(string.Format(Strings.WorldOpt_RenamedFormat, Path.GetFileName(bak), Path.GetDirectoryName(sav)));
+            }
+            else
+            {
+                ShowWorldOptionRenamed?.Invoke(string.Format(Strings.WorldOpt_RenameFailedFormat, error));
+                return false;
+            }
+        }
+        ShowWorldOptionRenamed?.Invoke(string.Join(Environment.NewLine, renamed));
+        return true;
     }
 
     /// <summary>Run a command body, logging any failure instead of crashing the app.</summary>

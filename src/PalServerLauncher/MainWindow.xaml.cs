@@ -43,6 +43,8 @@ public partial class MainWindow : Window
         _viewModel.ConfirmInstall = ConfirmInstall;
         _viewModel.RequestShutdownDecision = PromptShutdownDecision;
         _viewModel.ConfirmShutdownNow = ConfirmShutdownNow;
+        _viewModel.ConfirmWorldOption = PromptWorldOption;
+        _viewModel.ShowWorldOptionRenamed = ShowWorldOptionRenamed;
 
         Loaded += OnLoaded;
         Closing += OnClosing;
@@ -166,6 +168,21 @@ public partial class MainWindow : Window
         if (!imported)
             ChoiceDialog.Show(this, Strings.Main_ImportTitle, Strings.Main_ImportFailedMessage, Strings.Common_OK);
     }
+
+    /// <summary>On Start, if a WorldOption.sav is detected, ask whether to rename it to .bak, start anyway, or
+    /// cancel. That file overrides PalWorldSettings.ini on a dedicated server. The dialog lives here, not the VM.</summary>
+    private WorldOptionChoice PromptWorldOption() =>
+        ChoiceDialog.Show(this, Strings.WorldOpt_Title, Strings.WorldOpt_Message,
+            Strings.WorldOpt_Rename, Strings.WorldOpt_Continue, Strings.Common_Cancel) switch
+        {
+            0 => WorldOptionChoice.RenameToBak,
+            1 => WorldOptionChoice.ContinueAnyway,
+            _ => WorldOptionChoice.Cancel, // Cancel button or dialog dismissed (-1)
+        };
+
+    /// <summary>Confirm (or report an error) after handling a detected WorldOption.sav on Start.</summary>
+    private void ShowWorldOptionRenamed(string message) =>
+        ChoiceDialog.Show(this, Strings.WorldOpt_RenamedTitle, message, Strings.Common_OK);
 
     /// <summary>Confirm skipping a timed shutdown's countdown to shut the server down immediately.</summary>
     private bool ConfirmShutdownNow() =>

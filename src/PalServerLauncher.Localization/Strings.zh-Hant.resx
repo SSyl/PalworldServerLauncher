@@ -90,6 +90,27 @@
   <data name="Common_OK" xml:space="preserve">
     <value>確定</value>
   </data>
+  <data name="WorldOpt_Title" xml:space="preserve">
+    <value>WorldOption.sav detected</value>
+  </data>
+  <data name="WorldOpt_Message" xml:space="preserve">
+    <value>The launcher found a WorldOption.sav file in this server's save folder. On a dedicated server, Palworld lets that file override your PalWorldSettings.ini, so the launcher's settings (including the REST API it needs to monitor and control the server) can be silently ignored, which may leave the server running but uncontrollable. Renaming it to .bak makes the server read PalWorldSettings.ini instead. Your world is not affected.</value>
+  </data>
+  <data name="WorldOpt_Rename" xml:space="preserve">
+    <value>Rename to .bak (recommended)</value>
+  </data>
+  <data name="WorldOpt_Continue" xml:space="preserve">
+    <value>Start anyway (not recommended)</value>
+  </data>
+  <data name="WorldOpt_RenamedTitle" xml:space="preserve">
+    <value>WorldOption.sav renamed</value>
+  </data>
+  <data name="WorldOpt_RenamedFormat" xml:space="preserve">
+    <value>WorldOption.sav renamed to {0} in {1}</value>
+  </data>
+  <data name="WorldOpt_RenameFailedFormat" xml:space="preserve">
+    <value>Couldn't rename WorldOption.sav: {0}</value>
+  </data>
   <data name="Announcements_Title" xml:space="preserve">
     <value>公告</value>
   </data>
@@ -1363,6 +1384,9 @@
   </data>
   <data name="State_Zombie" xml:space="preserve">
     <value>假死</value>
+  </data>
+  <data name="State_RestUnreachable" xml:space="preserve">
+    <value>REST not responding</value>
   </data>
   <data name="State_Stopping" xml:space="preserve">
     <value>停止中</value>

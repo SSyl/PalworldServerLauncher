@@ -309,6 +309,46 @@ public sealed class ServerController : IDisposable
     private string PalWorldSettingsPath => Path.Combine(
         _config.ServerRoot, LauncherConfig.ServerFolderName, "Pal", "Saved", "Config", "WindowsServer", "PalWorldSettings.ini");
 
+    private string SaveGamesDir => Path.Combine(
+        _config.ServerRoot, LauncherConfig.ServerFolderName, "Pal", "Saved", "SaveGames");
+
+    /// <summary>
+    /// Every <c>WorldOption.sav</c> under the save folder (usually one, empty on a fresh install with no saves
+    /// yet). Present when a save was converted from a local/co-op world, this file overrides
+    /// PalWorldSettings.ini on a dedicated server and can leave the launcher unable to reach REST. Copies inside
+    /// Palworld's nested rolling "backup" folders are skipped.
+    /// </summary>
+    public IReadOnlyList<string> FindWorldOptionSavs()
+    {
+        if (!Directory.Exists(SaveGamesDir))
+            return Array.Empty<string>();
+        return Directory.EnumerateFiles(SaveGamesDir, WorldOptionSav.FileName, SearchOption.AllDirectories)
+            .Where(path => !BackupService.ShouldSkipEntry(Path.GetRelativePath(SaveGamesDir, path)))
+            .ToList();
+    }
+
+    /// <summary>
+    /// Rename a <c>WorldOption.sav</c> to a non-clobbering <c>.bak</c> so the server reads PalWorldSettings.ini
+    /// instead. Returns false with <paramref name="error"/> set (and nothing renamed) on an IO/permission failure.
+    /// </summary>
+    public bool TryRenameWorldOptionSav(string path, out string bakPath, out string? error)
+    {
+        bakPath = WorldOptionSav.BakTargetPath(path, File.Exists);
+        error = null;
+        try
+        {
+            File.Move(path, bakPath);
+            _logger.Info($"WorldOption.sav renamed to {Path.GetFileName(bakPath)} in {Path.GetDirectoryName(path)}");
+            return true;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            error = ex.Message;
+            _logger.Error($"Couldn't rename WorldOption.sav: {ex.Message}");
+            return false;
+        }
+    }
+
     /// <summary>
     /// Scan for an already-running managed server WITHOUT adopting it, so the UI can prompt (reconnect / shut
     /// down / exit) before the launcher binds and starts monitoring. Sets <see cref="RunningInstanceCount"/>.
