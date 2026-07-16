@@ -1483,25 +1483,25 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>서버 이름입니다.</value>
   </data>
   <data name="Cat_ServerDescription_Label" xml:space="preserve">
-    <value>Description</value>
+    <value>설명</value>
   </data>
   <data name="Cat_ServerDescription_Desc" xml:space="preserve">
     <value>서버 설명입니다.</value>
   </data>
   <data name="Cat_ServerPassword_Label" xml:space="preserve">
-    <value>Server password</value>
+    <value>서버 비밀번호</value>
   </data>
   <data name="Cat_ServerPassword_Desc" xml:space="preserve">
     <value>서버에 접속할 때 필요한 비밀번호입니다. 비워두면 비밀번호가 없습니다.</value>
   </data>
   <data name="Cat_AdminPassword_Label" xml:space="preserve">
-    <value>Admin password</value>
+    <value>관리자 비밀번호</value>
   </data>
   <data name="Cat_AdminPassword_Desc" xml:space="preserve">
     <value>서버 관리자 권한을 얻는 데 사용되는 비밀번호입니다. REST API와 RCON을 사용하려면 필요합니다.</value>
   </data>
   <data name="Cat_ServerPlayerMaxNum_Label" xml:space="preserve">
-    <value>Max players</value>
+    <value>최대 플레이어 수</value>
   </data>
   <data name="Cat_ServerPlayerMaxNum_Desc" xml:space="preserve">
     <value>서버에 접속할 수 있는 최대 플레이어 수입니다. -players 실행 인자가 설정되어 있으면 이 값을 덮어씁니다.</value>
@@ -1513,25 +1513,25 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>문서화되지 않음. 커뮤니티에서는 협동 플레이 파티 인원수로 추측하지만, 데디케이트 서버에는 영향을 주지 않는 내부 값일 수 있습니다.</value>
   </data>
   <data name="Cat_RESTAPIEnabled_Label" xml:space="preserve">
-    <value>REST API enabled</value>
+    <value>REST API 활성화</value>
   </data>
   <data name="Cat_RESTAPIEnabled_Desc" xml:space="preserve">
     <value>REST API를 활성화합니다. 런처가 통계 조회, 정상 종료, 플레이어 로그 기록을 하려면 이 기능이 필요합니다.</value>
   </data>
   <data name="Cat_RESTAPIPort_Label" xml:space="preserve">
-    <value>REST API port</value>
+    <value>REST API 포트</value>
   </data>
   <data name="Cat_RESTAPIPort_Desc" xml:space="preserve">
     <value>REST API가 사용하는 수신 포트입니다.</value>
   </data>
   <data name="Cat_RCONEnabled_Label" xml:space="preserve">
-    <value>RCON enabled</value>
+    <value>RCON 활성화</value>
   </data>
   <data name="Cat_RCONEnabled_Desc" xml:space="preserve">
     <value>RCON을 활성화합니다.</value>
   </data>
   <data name="Cat_RCONPort_Label" xml:space="preserve">
-    <value>RCON port</value>
+    <value>RCON 포트</value>
   </data>
   <data name="Cat_RCONPort_Desc" xml:space="preserve">
     <value>RCON에 사용되는 포트 번호입니다.</value>
@@ -1549,7 +1549,7 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>문서화되지 않음. 서버가 대조하는 밴 목록으로 추정되지만, 정확한 형식과 동작 방식은 확인되지 않았습니다.</value>
   </data>
   <data name="Cat_bIsUseBackupSaveData_Label" xml:space="preserve">
-    <value>Built-in save backups</value>
+    <value>내장 세이브 백업</value>
   </data>
   <data name="Cat_bIsUseBackupSaveData_Desc" xml:space="preserve">
     <value>Palworld 자체의 월드 백업 기능을 활성화합니다(런처의 백업 기능과는 별개입니다). 활성화하면 디스크 부하가 늘어납니다.</value>
@@ -1561,25 +1561,25 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>월드가 자동 저장되는 주기입니다(초).</value>
   </data>
   <data name="Cat_bIsShowJoinLeftMessage_Label" xml:space="preserve">
-    <value>Show join/leave messages</value>
+    <value>접속/퇴장 메시지 표시</value>
   </data>
   <data name="Cat_bIsShowJoinLeftMessage_Desc" xml:space="preserve">
     <value>데디케이트 서버에서 플레이어가 접속하거나 퇴장할 때 게임 내 메시지를 표시합니다.</value>
   </data>
   <data name="Cat_bAllowClientMod_Label" xml:space="preserve">
-    <value>Allow client mods</value>
+    <value>클라이언트 모드 허용</value>
   </data>
   <data name="Cat_bAllowClientMod_Desc" xml:space="preserve">
     <value>모드를 활성화한 플레이어가 서버에 접속할 수 있도록 허용합니다.</value>
   </data>
   <data name="Cat_ChatPostLimitPerMinute_Label" xml:space="preserve">
-    <value>Chat rate limit</value>
+    <value>채팅 속도 제한</value>
   </data>
   <data name="Cat_ChatPostLimitPerMinute_Desc" xml:space="preserve">
     <value>1분당 허용되는 최대 채팅 메시지 수입니다.</value>
   </data>
   <data name="Cat_LogFormatType_Label" xml:space="preserve">
-    <value>Log format</value>
+    <value>로그 형식</value>
   </data>
   <data name="Cat_LogFormatType_Desc" xml:space="preserve">
     <value>서버 로그 파일 형식입니다.</value>
@@ -1597,25 +1597,25 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>문서화되지 않음. 일종의 지역 코드로 보이지만, 예상 형식(NA, US, 숫자 등)과 용도(매치메이킹, 서버 브라우저, 혹은 둘 다 아닌지)가 모두 알려져 있지 않습니다. 기본값은 비어 있습니다.</value>
   </data>
   <data name="Cat_CrossplayPlatforms_Label" xml:space="preserve">
-    <value>Crossplay platforms</value>
+    <value>크로스플레이 플랫폼</value>
   </data>
   <data name="Cat_CrossplayPlatforms_Desc" xml:space="preserve">
     <value>서버에 접속할 수 있도록 허용된 플랫폼을 튜플 형태로 지정합니다. 기본값: (Steam,Xbox,PS5,Mac).</value>
   </data>
   <data name="Cat_PublicIP_Label" xml:space="preserve">
-    <value>Public IP</value>
+    <value>공인 IP</value>
   </data>
   <data name="Cat_PublicIP_Desc" xml:space="preserve">
     <value>커뮤니티 서버: 외부에 공개되는 공인 IP를 직접 지정합니다. 비워두면 자동으로 감지합니다.</value>
   </data>
   <data name="Cat_PublicPort_Label" xml:space="preserve">
-    <value>Public port</value>
+    <value>공인 포트</value>
   </data>
   <data name="Cat_PublicPort_Desc" xml:space="preserve">
     <value>커뮤니티 서버: 외부에 공개되는 공인 포트를 직접 지정합니다. 서버의 수신 포트 자체는 변경되지 않습니다.</value>
   </data>
   <data name="Cat_bEnableBuildingPlayerUIdDisplay_Label" xml:space="preserve">
-    <value>Show builder ID on structures</value>
+    <value>건축물에 제작자 ID 표시</value>
   </data>
   <data name="Cat_bEnableBuildingPlayerUIdDisplay_Desc" xml:space="preserve">
     <value>건축물에 제작자의 플레이어 ID를 표시할지 여부입니다.</value>
@@ -1627,7 +1627,7 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>문서화되지 않음. '건축물에 제작자 ID 표시' 기능에서 캐시된 건축물 표시 이름이 갱신되기 전까지 유지되는 시간으로 추정됩니다(초).</value>
   </data>
   <data name="Cat_BaseCampMaxNum_Label" xml:space="preserve">
-    <value>Max bases (world)</value>
+    <value>최대 거점 수(월드)</value>
   </data>
   <data name="Cat_BaseCampMaxNum_Desc" xml:space="preserve">
     <value>맵에 존재할 수 있는 거점의 총 최대 개수입니다(모든 길드의 거점을 합산).</value>
@@ -1669,13 +1669,13 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>문서화되지 않음. 사용되지 않는 것으로 보이며, 남아 있는 불필요한 값이거나 아직 구현되지 않은 기능으로 추정됩니다.</value>
   </data>
   <data name="Cat_ServerReplicatePawnCullDistance_Label" xml:space="preserve">
-    <value>Pal sync distance</value>
+    <value>팰 동기화 거리</value>
   </data>
   <data name="Cat_ServerReplicatePawnCullDistance_Desc" xml:space="preserve">
     <value>플레이어를 기준으로 팰을 동기화하는 거리입니다(cm). 최소 5000, 최대 15000.</value>
   </data>
   <data name="Cat_ItemContainerForceMarkDirtyInterval_Label" xml:space="preserve">
-    <value>Container re-sync interval</value>
+    <value>컨테이너 재동기화 주기</value>
   </data>
   <data name="Cat_ItemContainerForceMarkDirtyInterval_Desc" xml:space="preserve">
     <value>컨테이너 UI가 열려 있는 동안 강제로 재동기화하는 주기입니다(초).</value>
@@ -1705,7 +1705,7 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>하드코어 모드를 활성화합니다. 사망 시 리스폰할 수 없습니다.</value>
   </data>
   <data name="Cat_bCharacterRecreateInHardcore_Label" xml:space="preserve">
-    <value>Recreate character (Hardcore)</value>
+    <value>캐릭터 재생성(하드코어)</value>
   </data>
   <data name="Cat_bCharacterRecreateInHardcore_Desc" xml:space="preserve">
     <value>하드코어 모드에서 사망 시 캐릭터를 다시 생성할 수 있는지 여부입니다.</value>
@@ -1717,25 +1717,25 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>PvP를 활성화합니다. '플레이어 간 피해'와 '다른 길드에 대한 거점 방어'도 함께 켜야 실제로 적용됩니다.</value>
   </data>
   <data name="Cat_bEnablePlayerToPlayerDamage_Label" xml:space="preserve">
-    <value>Player-vs-player damage</value>
+    <value>플레이어 간 피해</value>
   </data>
   <data name="Cat_bEnablePlayerToPlayerDamage_Desc" xml:space="preserve">
     <value>플레이어끼리 서로 피해를 입힐 수 있도록 합니다. PvP를 구성하는 세 가지 설정 중 하나입니다.</value>
   </data>
   <data name="Cat_bEnableFriendlyFire_Label" xml:space="preserve">
-    <value>Friendly fire</value>
+    <value>아군 피해</value>
   </data>
   <data name="Cat_bEnableFriendlyFire_Desc" xml:space="preserve">
     <value>문서화되지 않음. 커뮤니티에서는 플레이어와 팰이 같은 길드원에게 피해를 줄 수 있게 하는 설정이라고 알려져 있습니다.</value>
   </data>
   <data name="Cat_bCanPickupOtherGuildDeathPenaltyDrop_Label" xml:space="preserve">
-    <value>Loot other guilds' drops</value>
+    <value>다른 길드의 드롭 획득</value>
   </data>
   <data name="Cat_bCanPickupOtherGuildDeathPenaltyDrop_Desc" xml:space="preserve">
     <value>다른 길드 플레이어가 사망 시 떨어뜨린 팰과 아이템을 주울 수 있도록 허용합니다.</value>
   </data>
   <data name="Cat_bEnableDefenseOtherGuildPlayer_Label" xml:space="preserve">
-    <value>Base defense vs. other guilds</value>
+    <value>다른 길드에 대한 거점 방어</value>
   </data>
   <data name="Cat_bEnableDefenseOtherGuildPlayer_Desc" xml:space="preserve">
     <value>거점의 팰이 거점에 침입한 적대적인 플레이어를 공격합니다. PvP를 구성하는 세 가지 설정 중 하나입니다.</value>
@@ -1765,25 +1765,25 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>월드에 포식자 팰이 출현할 수 있도록 허용합니다.</value>
   </data>
   <data name="Cat_bBuildAreaLimit_Label" xml:space="preserve">
-    <value>Build area limit</value>
+    <value>건축 구역 제한</value>
   </data>
   <data name="Cat_bBuildAreaLimit_Desc" xml:space="preserve">
     <value>빠른 이동 지점 등 특정 구조물 근처에서는 건축을 제한합니다.</value>
   </data>
   <data name="Cat_bInvisibleOtherGuildBaseCampAreaFX_Label" xml:space="preserve">
-    <value>Show base area boundaries</value>
+    <value>거점 영역 경계 표시</value>
   </data>
   <data name="Cat_bInvisibleOtherGuildBaseCampAreaFX_Desc" xml:space="preserve">
     <value>거점 영역 경계를 표시합니다.</value>
   </data>
   <data name="Cat_bShowPlayerList_Label" xml:space="preserve">
-    <value>Player list in ESC menu</value>
+    <value>ESC 메뉴 플레이어 목록</value>
   </data>
   <data name="Cat_bShowPlayerList_Desc" xml:space="preserve">
     <value>ESC 메뉴의 플레이어 목록을 활성화합니다.</value>
   </data>
   <data name="Cat_bExistPlayerAfterLogout_Label" xml:space="preserve">
-    <value>Body stays after logout</value>
+    <value>로그아웃 후 몸 유지</value>
   </data>
   <data name="Cat_bExistPlayerAfterLogout_Desc" xml:space="preserve">
     <value>로그아웃 시 플레이어가 현재 위치에서 수면 상태로 남아 있을지 여부입니다.</value>
@@ -1795,7 +1795,7 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>문서화되지 않음. 로그인하지 않은 동안 팰에게 디버프가 적용되는지와 관련된 설정으로 추정되나, 테스트되지 않았습니다.</value>
   </data>
   <data name="Cat_bIsStartLocationSelectByMap_Label" xml:space="preserve">
-    <value>Choose starting location</value>
+    <value>시작 위치 선택</value>
   </data>
   <data name="Cat_bIsStartLocationSelectByMap_Desc" xml:space="preserve">
     <value>플레이어가 시작 위치를 직접 선택할 수 있도록 허용할지 여부입니다.</value>
@@ -1807,55 +1807,55 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>문서화되지 않음. 사용되지 않는 것으로 보이며, 남아 있는 불필요한 값이거나 아직 구현되지 않은 기능으로 추정됩니다.</value>
   </data>
   <data name="Cat_bEnableAimAssistPad_Label" xml:space="preserve">
-    <value>Aim assist (controller)</value>
+    <value>조준 보정(컨트롤러)</value>
   </data>
   <data name="Cat_bEnableAimAssistPad_Desc" xml:space="preserve">
     <value>컨트롤러용 조준 보정 기능입니다. 비활성화하려면 False로 설정하십시오.</value>
   </data>
   <data name="Cat_bEnableAimAssistKeyboard_Label" xml:space="preserve">
-    <value>Aim assist (keyboard)</value>
+    <value>조준 보정(키보드)</value>
   </data>
   <data name="Cat_bEnableAimAssistKeyboard_Desc" xml:space="preserve">
     <value>마우스 및 키보드용 조준 보정 기능을 활성화합니다.</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Attack_Label" xml:space="preserve">
-    <value>Allow stat points: Attack</value>
+    <value>스탯 포인트 허용: 공격력</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Attack_Desc" xml:space="preserve">
     <value>공격력 스탯 포인트 분배를 허용합니다.</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Health_Label" xml:space="preserve">
-    <value>Allow stat points: HP</value>
+    <value>스탯 포인트 허용: 체력(HP)</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Health_Desc" xml:space="preserve">
     <value>체력(HP) 스탯 포인트 분배를 허용합니다.</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Stamina_Label" xml:space="preserve">
-    <value>Allow stat points: Stamina</value>
+    <value>스탯 포인트 허용: 스태미나</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Stamina_Desc" xml:space="preserve">
     <value>스태미나 스탯 포인트 분배를 허용합니다.</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Weight_Label" xml:space="preserve">
-    <value>Allow stat points: Carry Weight</value>
+    <value>스탯 포인트 허용: 소지 중량</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_Weight_Desc" xml:space="preserve">
     <value>소지 중량 스탯 포인트 분배를 허용합니다.</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_WorkSpeed_Label" xml:space="preserve">
-    <value>Allow stat points: Work Speed</value>
+    <value>스탯 포인트 허용: 작업 속도</value>
   </data>
   <data name="Cat_bAllowEnhanceStat_WorkSpeed_Desc" xml:space="preserve">
     <value>작업 속도 스탯 포인트 분배를 허용합니다.</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxExport_Label" xml:space="preserve">
-    <value>Allow Pal Genetic Data to be Saved in the Global Palbox</value>
+    <value>팰 유전자 데이터를 글로벌 팰박스에 저장 허용</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxExport_Desc" xml:space="preserve">
     <value>글로벌 팰박스에 저장하는 것을 허용합니다.</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxImport_Label" xml:space="preserve">
-    <value>Allow Pals to be Reconstructed from the Global Palbox</value>
+    <value>글로벌 팰박스에서 팰 복원 허용</value>
   </data>
   <data name="Cat_bAllowGlobalPalboxImport_Desc" xml:space="preserve">
     <value>글로벌 팰박스에서 불러오는 것을 허용합니다.</value>
@@ -1873,13 +1873,13 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>비활성 길드가 자동으로 초기화되기까지 걸리는 오프라인 시간입니다(시간). '비활성 길드 자동 초기화'가 켜져 있지 않으면 무시됩니다.</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Label" xml:space="preserve">
-    <value>Show base PvP items on map</value>
+    <value>거점 PvP 아이템을 맵에 표시</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Desc" xml:space="preserve">
     <value>각 거점에 있는 PvP 전용 아이템 수를 맵에 표시할지 여부입니다.</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_Player_Label" xml:space="preserve">
-    <value>Show player PvP items on map</value>
+    <value>플레이어 PvP 아이템을 맵에 표시</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_Player_Desc" xml:space="preserve">
     <value>플레이어 위치와 PvP 전용 아이템 수를 맵에 표시할지 여부입니다.</value>
@@ -1903,19 +1903,19 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>팰 출현 랜덤화가 활성화되었을 때 사용되는 시드 값입니다.</value>
   </data>
   <data name="Cat_bEnableVoiceChat_Label" xml:space="preserve">
-    <value>Voice chat</value>
+    <value>음성 채팅</value>
   </data>
   <data name="Cat_bEnableVoiceChat_Desc" xml:space="preserve">
     <value>게임 내 음성 채팅을 활성화합니다.</value>
   </data>
   <data name="Cat_VoiceChatMaxVolumeDistance_Label" xml:space="preserve">
-    <value>Voice chat full-volume distance</value>
+    <value>음성 채팅 최대 음량 거리</value>
   </data>
   <data name="Cat_VoiceChatMaxVolumeDistance_Desc" xml:space="preserve">
     <value>음성 채팅 음량이 감쇠하지 않는 거리입니다.</value>
   </data>
   <data name="Cat_VoiceChatZeroVolumeDistance_Label" xml:space="preserve">
-    <value>Voice chat silence distance</value>
+    <value>음성 채팅 무음 거리</value>
   </data>
   <data name="Cat_VoiceChatZeroVolumeDistance_Desc" xml:space="preserve">
     <value>음성 채팅 음량이 0이 되는 거리입니다.</value>
@@ -1963,7 +1963,7 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>플레이어와 팰이 작업을 완료하는 속도입니다. 배율 값으로, 2.0이면 작업 속도가 두 배가 됩니다.</value>
   </data>
   <data name="Cat_MonsterFarmActionSpeedRate_Label" xml:space="preserve">
-    <value>Grazing Item Production Rate Multiplier</value>
+    <value>방목 아이템 생산 속도 배율</value>
   </data>
   <data name="Cat_MonsterFarmActionSpeedRate_Desc" xml:space="preserve">
     <value>방목을 통한 아이템 생산 속도 배율입니다.</value>
@@ -2065,7 +2065,7 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>적이 드롭하는 아이템 수량 배율입니다.</value>
   </data>
   <data name="Cat_DropItemAliveMaxHours_Label" xml:space="preserve">
-    <value>Dropped item lifetime (hours)</value>
+    <value>드롭 아이템 유지 시간(시간)</value>
   </data>
   <data name="Cat_DropItemAliveMaxHours_Desc" xml:space="preserve">
     <value>드롭된 아이템이 소멸되기까지 월드에 남아 있는 시간입니다(시간). 값을 낮추면 서버 정리 및 성능에 도움이 됩니다.</value>
@@ -2077,19 +2077,19 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>아이템 무게 배율입니다.</value>
   </data>
   <data name="Cat_ItemCorruptionMultiplier_Label" xml:space="preserve">
-    <value>Item Decay Rate Multiplier</value>
+    <value>아이템 부식 속도 배율</value>
   </data>
   <data name="Cat_ItemCorruptionMultiplier_Desc" xml:space="preserve">
     <value>아이템 부식(열화) 속도 배율입니다.</value>
   </data>
   <data name="Cat_EquipmentDurabilityDamageRate_Label" xml:space="preserve">
-    <value>Equipment Durability Loss Multiplier</value>
+    <value>장비 내구도 소모 배율</value>
   </data>
   <data name="Cat_EquipmentDurabilityDamageRate_Desc" xml:space="preserve">
     <value>장비 내구도 소모 배율입니다.</value>
   </data>
   <data name="Cat_BuildObjectHpRate_Label" xml:space="preserve">
-    <value>Building HP</value>
+    <value>건축물 체력</value>
   </data>
   <data name="Cat_BuildObjectHpRate_Desc" xml:space="preserve">
     <value>건축물 체력 배율입니다. 2.0이면 건축물 체력이 두 배가 됩니다.</value>
@@ -2119,19 +2119,19 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>사망 시 팰을 영구적으로 잃습니다.</value>
   </data>
   <data name="Cat_BlockRespawnTime_Label" xml:space="preserve">
-    <value>Respawn cooldown (seconds)</value>
+    <value>리스폰 대기 시간(초)</value>
   </data>
   <data name="Cat_BlockRespawnTime_Desc" xml:space="preserve">
     <value>사망 후 리스폰할 수 있을 때까지의 대기 시간입니다(초).</value>
   </data>
   <data name="Cat_RespawnPenaltyDurationThreshold_Label" xml:space="preserve">
-    <value>Respawn penalty threshold</value>
+    <value>리스폰 페널티 기준값</value>
   </data>
   <data name="Cat_RespawnPenaltyDurationThreshold_Desc" xml:space="preserve">
     <value>생존 시간 기준값입니다(초). 이 시간만큼 생존하지 못하고 다시 사망하면 아래의 리스폰 대기 시간 배율이 적용됩니다.</value>
   </data>
   <data name="Cat_RespawnPenaltyTimeScale_Label" xml:space="preserve">
-    <value>Respawn penalty multiplier</value>
+    <value>리스폰 페널티 배율</value>
   </data>
   <data name="Cat_RespawnPenaltyTimeScale_Desc" xml:space="preserve">
     <value>리스폰 대기 시간에 적용되는 배율입니다.</value>
@@ -2143,31 +2143,31 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>길드당 최대 인원수입니다.</value>
   </data>
   <data name="Cat_GuildRejoinCooldownMinutes_Label" xml:space="preserve">
-    <value>Guild rejoin cooldown (min)</value>
+    <value>길드 재가입 대기 시간(분)</value>
   </data>
   <data name="Cat_GuildRejoinCooldownMinutes_Desc" xml:space="preserve">
     <value>길드에 재가입할 수 있을 때까지의 대기 시간입니다(분).</value>
   </data>
   <data name="Cat_DenyTechnologyList_Label" xml:space="preserve">
-    <value>Disabled technologies</value>
+    <value>비활성화된 테크놀로지</value>
   </data>
   <data name="Cat_DenyTechnologyList_Desc" xml:space="preserve">
     <value>특정 테크놀로지를 비활성화합니다. 테크놀로지 ID를 지정하십시오. 예: ("PALBOX", "RepairBench"). 비워두면 없음.</value>
   </data>
   <data name="Cat_bAdditionalDropItemWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
-    <value>PvP kill: drop item</value>
+    <value>PvP 킬: 아이템 드롭</value>
   </data>
   <data name="Cat_bAdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
     <value>PvP가 활성화된 상태에서 플레이어가 사망했을 때 특수 아이템을 드롭할지 여부입니다.</value>
   </data>
   <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
-    <value>PvP kill: item ID</value>
+    <value>PvP 킬: 아이템 ID</value>
   </data>
   <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
     <value>PvP 킬 시 드롭할 아이템의 ID입니다('PvP 킬: 아이템 드롭'이 켜져 있을 때 사용됩니다).</value>
   </data>
   <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
-    <value>PvP kill: item count</value>
+    <value>PvP 킬: 아이템 수량</value>
   </data>
   <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
     <value>PvP 킬 시 드롭할 아이템의 수량입니다('PvP 킬: 아이템 드롭'이 켜져 있을 때 사용됩니다).</value>
