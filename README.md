@@ -32,7 +32,11 @@ Other languages are available: Simplified Chinese, Traditional Chinese, and Japa
 - Installs SteamCMD and the server for you. **Start** checks for an update first (can be turned off).
 - **Auto-updates when a new build drops**, restarting gracefully to apply it. Version-agnostic, so it keeps
   working across game updates without needing to be told about them.
+- **Pin the server to its current build** to hold it there and pause updates, handy if a game update breaks
+  something until you're ready for it.
 - **Check for Update** (safe while running) and **Validate Files** buttons.
+- **Import an existing server** you installed elsewhere: it's copied into the launcher so it can manage it,
+  and your original is left where it was.
 
 ### Restarts and recovery
 - **Scheduled restarts** at the times you set, with a minimum-uptime guard so a server that just came up
@@ -66,7 +70,9 @@ Other languages are available: Simplified Chinese, Traditional Chinese, and Japa
 
 ### Background and logs
 - Runs the server quietly in the background, no console window. Survives the launcher closing or crashing,
-  and picks the server back up next time you open it.
+  and offers to pick the server back up next time you open it, or does it automatically if you turn that on.
+- **Start at login** (optional): opens the launcher and starts the server when you sign into Windows, so
+  restarts, backups, and recovery keep running without you.
 - Logs from the launcher, SteamCMD, and the server show up in-app and to a rotating log file (last ten kept).
   `--debug` and `--console` give more detail, see [Command-line options](#command-line-options).
 
@@ -180,6 +186,9 @@ You can double-click the launcher, or start it from a terminal with a couple of 
 - `--debug` (or `--verbose`): write more detailed logs.
 - `--console`: mirror the launcher's logs into the terminal you started it from, handy for keeping an eye on
   a server from the command line.
+- `--start-server`: open the launcher and bring the server up on load, adopting one that's already running.
+  Good for a scheduled task or a hands-off start.
+- `--install-server`: install SteamCMD and the server without opening the window, then exit.
 
 ```powershell
 PalworldServerLauncher.exe --console --debug
@@ -187,9 +196,10 @@ PalworldServerLauncher.exe --console --debug
 
 ## Upcoming features
 
-- A system-tray icon and a copy-the-connection-info button.
-- Maybe a headless command-line mode, if there's demand for it. For now you can run the launcher hidden with a
-  small PowerShell script if you want it out of the way.
+- A system-tray icon.
+- A fuller headless / command-line mode. There's already `--install-server` and `--start-server` (see
+  [Command-line options](#command-line-options)), and you can run the launcher hidden with a small PowerShell
+  script if you want it out of the way.
 
 ## Building from source
 
