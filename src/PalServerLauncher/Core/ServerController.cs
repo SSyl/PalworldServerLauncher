@@ -690,6 +690,8 @@ public sealed class ServerController : IDisposable
         await _steamGate.WaitAsync(ct).ConfigureAwait(false);
         try
         {
+            // Self-heal a missing SteamCMD (e.g. an imported server with no steamcmd/ folder) before updating.
+            await _steamCmd.EnsureSteamCmdAsync(steamLog, ct, visible: !_config.HideSteamCmdWindow).ConfigureAwait(false);
             var exit = await _steamCmd.InstallOrUpdateServerAsync(
                 validate: _config.VerifyOnUpdate, visible: !_config.HideSteamCmdWindow, steamLog, ct).ConfigureAwait(false);
             var buildId = _steamCmd.ReadInstalledBuildId() ?? "?";
@@ -1334,9 +1336,12 @@ public sealed class ServerController : IDisposable
     /// <summary>Read the latest published build id under the SteamCMD gate (so it can't overlap another run).</summary>
     private async Task<string?> QueryLatestBuildIdGatedAsync(CancellationToken ct)
     {
+        var steamLog = new Progress<string>(_logger.SteamCmd);
         await _steamGate.WaitAsync(ct).ConfigureAwait(false);
         try
         {
+            // Self-heal a missing SteamCMD before the build-id query, hidden so a background check stays silent.
+            await _steamCmd.EnsureSteamCmdAsync(steamLog, ct, visible: false).ConfigureAwait(false);
             return await _steamCmd.QueryLatestBuildIdAsync(null, ct).ConfigureAwait(false);
         }
         finally

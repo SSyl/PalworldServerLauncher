@@ -41,8 +41,11 @@ public sealed class SteamCmd
     public string WorkshopContentDir(string workshopId) =>
         Path.Combine(SteamCmdDir, "steamapps", "workshop", "content", GameAppId, workshopId);
 
-    /// <summary>Download + unzip + prime SteamCMD if it isn't present yet. Small (~few MB) download.</summary>
-    public async Task EnsureSteamCmdAsync(IProgress<string>? log, CancellationToken ct = default)
+    /// <summary>Download + unzip + prime SteamCMD if it isn't present yet. Small (~few MB) download. No-op when
+    /// it's already there, so it's safe to call before any SteamCMD operation to self-heal a missing install
+    /// (e.g. a server imported or hand-placed without SteamCMD). <paramref name="visible"/> shows the priming
+    /// run in its own console window (reassuring during an explicit install, suppressed for a silent build-id check).</summary>
+    public async Task EnsureSteamCmdAsync(IProgress<string>? log, CancellationToken ct = default, bool visible = true)
     {
         if (File.Exists(SteamCmdExe))
             return;
@@ -58,10 +61,10 @@ public sealed class SteamCmd
 
         ZipFile.ExtractToDirectory(zipPath, SteamCmdDir, overwriteFiles: true);
         File.Delete(zipPath);
-        log?.Report("SteamCMD installed. Priming (a console window will open)...");
+        log?.Report(visible ? "SteamCMD installed. Priming (a console window will open)..." : "SteamCMD installed. Priming...");
 
-        // First run primes SteamCMD's own self-update; shown so the user sees it working.
-        await RunProcessAsync(["+login", "anonymous", "+quit"], visible: true, log, ct).ConfigureAwait(false);
+        // First run primes SteamCMD's own self-update.
+        await RunProcessAsync(["+login", "anonymous", "+quit"], visible, log, ct).ConfigureAwait(false);
         log?.Report("SteamCMD ready.");
     }
 
