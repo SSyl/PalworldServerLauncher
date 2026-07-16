@@ -2275,7 +2275,7 @@ Save these changes?</value>
     <value>Launch arguments docs</value>
   </data>
   <data name="Update_Pinned" xml:space="preserve">
-    <value>Pinned to build {0}</value>
+    <value>Pinned to {0}</value>
   </data>
   <data name="Main_PinVersion" xml:space="preserve">
     <value>Pin server version</value>

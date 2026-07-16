@@ -2199,7 +2199,7 @@
     <value>啟動引數文件</value>
   </data>
   <data name="Update_Pinned" xml:space="preserve">
-    <value>固定到建構 {0}</value>
+    <value>固定到 {0}</value>
   </data>
   <data name="Main_PinVersion" xml:space="preserve">
     <value>固定伺服器版本</value>

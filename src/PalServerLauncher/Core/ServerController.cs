@@ -374,6 +374,41 @@ public sealed class ServerController : IDisposable
     /// Read when the version pin is enabled to capture the build being frozen.</summary>
     public string? InstalledBuildId => _steamCmd.ReadInstalledBuildId();
 
+    /// <summary>The cached game version (e.g. v1.0.0) known for <paramref name="buildId"/>, or null if none is
+    /// cached for that exact build. REST only reports the version while the server runs, so this lets the pinned
+    /// caption and update status show the friendly version even when stopped. A build change invalidates the
+    /// cache (the stored build no longer matches), so it falls back to build-only until REST reports again.</summary>
+    public string? KnownVersionFor(string? buildId) =>
+        !string.IsNullOrEmpty(buildId)
+        && string.Equals(_config.LastKnownVersionBuild, buildId, StringComparison.Ordinal)
+        && _config.LastKnownVersion.Length > 0
+            ? _config.LastKnownVersion : null;
+
+    /// <summary>A build's display label: "v1.0.1 (24181105)" when the version is known for it, else the localized
+    /// "build 24181105". Used for the pinned caption and the pinned status line.</summary>
+    public string BuildDisplay(string? buildId) =>
+        VersionFormat.Label(KnownVersionFor(buildId), buildId, Strings.Main_PinnedBuildFormat);
+
+    /// <summary>Remember the version REST reported for the installed build, so it can be shown while stopped.
+    /// Ignores the health sample's non-version sentinels ("-", "REST off") and only writes on a real change.</summary>
+    private void CacheVersion(string rawVersion)
+    {
+        var shortVersion = VersionFormat.ShortVersion(rawVersion);
+        if (shortVersion is null)
+            return;
+        var build = _steamCmd.ReadInstalledBuildId();
+        if (string.IsNullOrEmpty(build))
+            return;
+        if (_config.LastKnownVersion == shortVersion && _config.LastKnownVersionBuild == build)
+            return;
+        _config.LastKnownVersion = shortVersion;
+        _config.LastKnownVersionBuild = build;
+        _config.Save();
+        // The version just became known, so refresh the pinned / updates-off status line to swap build-only for
+        // "version (build)". Only fires the one time a given build is first seen (cache is a no-op after that).
+        RefreshUpdateStatusText();
+    }
+
     /// <summary>True when PalWorldSettings.ini has the REST API enabled with a non-blank admin password.</summary>
     public bool IsRestApiConfigured => IniReader.ReadFile(PalWorldSettingsPath).RestApiUsable;
 
@@ -741,7 +776,7 @@ public sealed class ServerController : IDisposable
             return;
         var installed = _steamCmd.ReadInstalledBuildId() ?? "?";
         if (_config.VersionPinEnabled)
-            UpdateStatusChanged?.Invoke(string.Format(Strings.Update_Pinned, _config.PinnedBuildId.Length > 0 ? _config.PinnedBuildId : installed));
+            UpdateStatusChanged?.Invoke(string.Format(Strings.Update_Pinned, BuildDisplay(_config.PinnedBuildId.Length > 0 ? _config.PinnedBuildId : installed)));
         else if (!_config.AutoUpdateEnabled)
             UpdateStatusChanged?.Invoke(string.Format(Strings.Update_AutoUpdateOff, installed));
     }
@@ -1308,7 +1343,7 @@ public sealed class ServerController : IDisposable
         // Hand ReapplyAffinity this monitor's own process, not the _process field. It's the exact process this
         // monitor samples and is non-null for the monitor's whole life, so the re-pin needs no lock, no shared
         // field read, and no null check (an earlier version reached into _process under the gate for no reason).
-        _health.Sampled += s => { HealthUpdated?.Invoke(s); ReapplyAffinity(process); };
+        _health.Sampled += s => { CacheVersion(s.Version); HealthUpdated?.Invoke(s); ReapplyAffinity(process); };
         _health.ZombieDetected += HandleZombie;
         _health.PlayerChanged += NotifyDiscordOnPlayerChange;
         _health.Start();
@@ -1330,7 +1365,7 @@ public sealed class ServerController : IDisposable
             // No monitor: reflect why in the update-status tile so it isn't stale.
             var installed = _steamCmd.ReadInstalledBuildId() ?? "?";
             UpdateStatusChanged?.Invoke(_config.VersionPinEnabled
-                ? string.Format(Strings.Update_Pinned, _config.PinnedBuildId.Length > 0 ? _config.PinnedBuildId : installed)
+                ? string.Format(Strings.Update_Pinned, BuildDisplay(_config.PinnedBuildId.Length > 0 ? _config.PinnedBuildId : installed))
                 : string.Format(Strings.Update_AutoUpdateOff, installed));
         }
     }

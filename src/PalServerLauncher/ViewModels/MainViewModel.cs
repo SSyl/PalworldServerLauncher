@@ -396,11 +396,18 @@ public partial class MainViewModel : ObservableObject
     /// <summary>The pin can be toggled once a build is installed (there must be a build to freeze).</summary>
     public bool CanTogglePin => IsInstalled;
 
-    /// <summary>Caption next to the pin: the pinned build id, or empty when unpinned.</summary>
-    public string PinnedBuildDisplay =>
-        !_config.VersionPinEnabled ? ""
-        : _config.PinnedBuildId.Length > 0 ? string.Format(Strings.Main_PinnedBuildFormat, _config.PinnedBuildId)
-        : "";
+    /// <summary>Caption next to the pin: "v1.0.1 (24181105)" when the version is known for the build, else
+    /// "build 24181105". Empty when unpinned.</summary>
+    public string PinnedBuildDisplay
+    {
+        get
+        {
+            if (!_config.VersionPinEnabled)
+                return "";
+            var build = _config.PinnedBuildId.Length > 0 ? _config.PinnedBuildId : _controller.InstalledBuildId;
+            return string.IsNullOrEmpty(build) ? "" : _controller.BuildDisplay(build);
+        }
+    }
 
     public bool AutoUpdateEnabled
     {
@@ -752,13 +759,27 @@ public partial class MainViewModel : ObservableObject
 
     private void OnHealthUpdated(HealthSample s) => _dispatcher.BeginInvoke(() =>
     {
-        Version = s.Version;
+        Version = FormatVersionTile(s.Version);
         Fps = s.Fps;
         Cpu = s.Cpu;
         Players = s.Players;
         Uptime = s.Uptime;
         Memory = s.Memory;
+        // Once REST reports the version (a few seconds after a pinned start), the cache fills in, so refresh the
+        // pin caption to swap build-only for "version (build)".
+        OnPropertyChanged(nameof(PinnedBuildDisplay));
     });
+
+    /// <summary>The Version tile text: "v1.0.1 (24181105)" (short version + installed build) when REST reports a
+    /// version, else the raw sample text (e.g. the "-" / "REST off" sentinels).</summary>
+    private string FormatVersionTile(string rawVersion)
+    {
+        var shortVersion = VersionFormat.ShortVersion(rawVersion);
+        if (shortVersion is null)
+            return rawVersion;
+        var build = _controller.InstalledBuildId;
+        return string.IsNullOrEmpty(build) ? shortVersion : $"{shortVersion} ({build})";
+    }
 
     private void ResetTiles()
     {

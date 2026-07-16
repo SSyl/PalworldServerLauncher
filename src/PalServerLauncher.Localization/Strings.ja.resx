@@ -2206,7 +2206,7 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
     <value>起動引数ドキュメント</value>
   </data>
   <data name="Update_Pinned" xml:space="preserve">
-    <value>ビルド {0} に固定</value>
+    <value>{0} に固定</value>
   </data>
   <data name="Main_PinVersion" xml:space="preserve">
     <value>サーバーバージョンを固定</value>

@@ -2199,7 +2199,7 @@
     <value>启动参数文档</value>
   </data>
   <data name="Update_Pinned" xml:space="preserve">
-    <value>固定到构建 {0}</value>
+    <value>固定到 {0}</value>
   </data>
   <data name="Main_PinVersion" xml:space="preserve">
     <value>固定服务器版本</value>

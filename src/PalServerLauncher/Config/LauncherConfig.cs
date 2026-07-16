@@ -108,9 +108,19 @@ public sealed class LauncherConfig
     /// manual check is disabled). Cleared to resume updates. The build it's pinned to is <see cref="PinnedBuildId"/>.</summary>
     public bool VersionPinEnabled { get; set; } = false;
 
-    /// <summary>The build id the server is pinned to (shown in the UI and, later, the download_depot rollback
-    /// target). Set from the installed build when the pin is enabled, empty when not pinned or the id is unknown.</summary>
+    /// <summary>The build id the server is pinned to (shown in the UI). Set from the installed build when the pin
+    /// is enabled, empty when not pinned or the id is unknown.</summary>
     public string PinnedBuildId { get; set; } = "";
+
+    /// <summary>Last game version (e.g. v1.0.0) seen from the REST <c>/info</c> endpoint, cached so it can be shown
+    /// next to the build id even while the server is stopped. Paired with <see cref="LastKnownVersionBuild"/>: the
+    /// version is only shown for a build that still matches, so an update (new build) drops back to build-only
+    /// until REST reports the new version.</summary>
+    public string LastKnownVersion { get; set; } = "";
+
+    /// <summary>The build id <see cref="LastKnownVersion"/> was observed on. When it no longer matches the
+    /// installed build the cached version is stale and ignored.</summary>
+    public string LastKnownVersionBuild { get; set; } = "";
 
     // --- Backup ---
     public bool BackupOnStartup { get; set; } = true;
