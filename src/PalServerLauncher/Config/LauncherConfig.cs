@@ -102,6 +102,16 @@ public sealed class LauncherConfig
     /// <summary>Add <c>validate</c> to the automatic update on Start (full file verification; slower).</summary>
     public bool VerifyOnUpdate { get; set; } = false;
 
+    // --- Version pin (freezes the installed build, suppressing all update activity while set) ---
+    /// <summary>Pin the server to a fixed build. While on, all automatic update activity is suppressed and the
+    /// update controls gray out (the background monitor never starts, Start/restart won't app_update, and the
+    /// manual check is disabled). Cleared to resume updates. The build it's pinned to is <see cref="PinnedBuildId"/>.</summary>
+    public bool VersionPinEnabled { get; set; } = false;
+
+    /// <summary>The build id the server is pinned to (shown in the UI and, later, the download_depot rollback
+    /// target). Set from the installed build when the pin is enabled, empty when not pinned or the id is unknown.</summary>
+    public string PinnedBuildId { get; set; } = "";
+
     // --- Backup ---
     public bool BackupOnStartup { get; set; } = true;
     public bool BackupOnShutdown { get; set; } = true;

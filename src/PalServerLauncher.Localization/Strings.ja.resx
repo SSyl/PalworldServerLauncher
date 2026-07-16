@@ -2205,4 +2205,22 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
   <data name="Settings_LaunchArgsBlurbLink" xml:space="preserve">
     <value>起動引数ドキュメント</value>
   </data>
+  <data name="Update_Pinned" xml:space="preserve">
+    <value>Pinned to build {0}</value>
+  </data>
+  <data name="Main_PinVersion" xml:space="preserve">
+    <value>Pin server version</value>
+  </data>
+  <data name="Main_PinVersionTip" xml:space="preserve">
+    <value>Freeze the server on its current build. While pinned, automatic updates are turned off. Uncheck to resume updating.</value>
+  </data>
+  <data name="Main_AutomaticUpdates" xml:space="preserve">
+    <value>Automatic updates</value>
+  </data>
+  <data name="Main_AutomaticUpdatesTip" xml:space="preserve">
+    <value>Download updates automatically. When off, the launcher won't update on start or while running. You can still check for updates manually.</value>
+  </data>
+  <data name="Main_PinnedBuildFormat" xml:space="preserve">
+    <value>build {0}</value>
+  </data>
 </root>

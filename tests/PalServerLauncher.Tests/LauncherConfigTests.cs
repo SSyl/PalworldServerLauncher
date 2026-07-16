@@ -18,6 +18,8 @@ public class LauncherConfigTests
         Assert.True(cfg.RestartBroadcastEnabled);
         Assert.Equal(new[] { 15, 5, 1 }, cfg.RestartBroadcastLeadMinutes);
         Assert.True(cfg.AutoUpdateEnabled);
+        Assert.False(cfg.VersionPinEnabled);
+        Assert.Equal("", cfg.PinnedBuildId);
         Assert.True(cfg.HideSteamCmdWindow);
         Assert.False(cfg.VerifyOnUpdate);
         Assert.False(cfg.LogHealthStats);
@@ -53,6 +55,8 @@ public class LauncherConfigTests
                 RestartBroadcastEnabled = false,
                 RestartBroadcastLeadMinutes = new() { 15, 5 },
                 AutoUpdateEnabled = false,
+                VersionPinEnabled = true,
+                PinnedBuildId = "12345678",
                 HideSteamCmdWindow = true,
                 VerifyOnUpdate = true,
                 LogHealthStats = true,
@@ -76,6 +80,8 @@ public class LauncherConfigTests
             Assert.False(loaded.RestartBroadcastEnabled);
             Assert.Equal(new[] { 15, 5 }, loaded.RestartBroadcastLeadMinutes);
             Assert.False(loaded.AutoUpdateEnabled);
+            Assert.True(loaded.VersionPinEnabled);
+            Assert.Equal("12345678", loaded.PinnedBuildId);
             Assert.True(loaded.HideSteamCmdWindow);
             Assert.True(loaded.VerifyOnUpdate);
             Assert.True(loaded.LogHealthStats);

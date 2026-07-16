@@ -243,11 +243,20 @@
             <Border Grid.Column="2" Style="{StaticResource Box}" Margin="0">
                 <StackPanel>
                     <TextBlock Text="{x:Static loc:Strings.Main_MiscHeader}" Style="{StaticResource BoxHeader}"/>
-                    <CheckBox Content="{x:Static loc:Strings.Main_AutoUpdate}" IsChecked="{Binding AutoUpdateEnabled}" Margin="0,0,0,7"
-                              ToolTip="{x:Static loc:Strings.Main_AutoUpdateTip}"/>
-                    <CheckBox Content="{x:Static loc:Strings.Main_UpdateOnStart}" IsChecked="{Binding UpdateOnStart}" Margin="0,0,0,7"
-                              ToolTip="{x:Static loc:Strings.Main_UpdateOnStartTip}"/>
+                    <!-- Version pin (item 2a): freezes the build and grays the update options below. -->
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
+                        <CheckBox Content="{x:Static loc:Strings.Main_PinVersion}" IsChecked="{Binding VersionPinEnabled}"
+                                  IsEnabled="{Binding CanTogglePin}" ToolTip="{x:Static loc:Strings.Main_PinVersionTip}"/>
+                        <TextBlock Text="{Binding PinnedBuildDisplay}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="6,0,0,0"/>
+                    </StackPanel>
+                    <CheckBox Content="{x:Static loc:Strings.Main_AutomaticUpdates}" IsChecked="{Binding AutomaticUpdatesOn}"
+                              IsEnabled="{Binding IsNotPinned}" Margin="0,0,0,7"
+                              ToolTip="{x:Static loc:Strings.Main_AutomaticUpdatesTip}"/>
+                    <CheckBox Content="{x:Static loc:Strings.Main_UpdateOnStart}" IsChecked="{Binding UpdateOnStart}" Margin="16,0,0,7"
+                              IsEnabled="{Binding IsNotPinned}" ToolTip="{x:Static loc:Strings.Main_UpdateOnStartTip}"/>
+                    <CheckBox Content="{x:Static loc:Strings.Main_AutoUpdate}" IsChecked="{Binding AutoUpdateEnabled}" Margin="16,0,0,7"
+                              IsEnabled="{Binding IsNotPinned}" ToolTip="{x:Static loc:Strings.Main_AutoUpdateTip}"/>
+                    <StackPanel Orientation="Horizontal" Margin="16,0,0,7" IsEnabled="{Binding AutoUpdateEnabled}">
                         <TextBlock Text="{x:Static loc:Strings.Main_CheckUpdateEvery}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                         <TextBox Text="{Binding UpdateCheckMinutes}" Width="40" MaxLength="4" VerticalAlignment="Center"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"

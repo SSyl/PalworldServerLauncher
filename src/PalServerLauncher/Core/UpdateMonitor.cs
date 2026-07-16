@@ -73,9 +73,14 @@ public sealed class UpdateMonitor : IDisposable
         if (string.IsNullOrWhiteSpace(installed))
             return; // not installed (shouldn't happen while running) - nothing to compare
 
-        if (!_config.AutoUpdateEnabled)
+        // Respect live config changes: while the pin/master/auto-update policy says no, don't poll SteamCMD.
+        // The monitor isn't created when these are already off at launch, this covers flipping one mid-run
+        // (e.g. pinning a running server), which stops the polling without a restart.
+        if (!UpdatePolicy.ShouldRunUpdateMonitor(_config.VersionPinEnabled, _config.AutoUpdateEnabled))
         {
-            StatusChanged?.Invoke(string.Format(Strings.Update_AutoUpdateOff, installed));
+            StatusChanged?.Invoke(_config.VersionPinEnabled
+                ? string.Format(Strings.Update_Pinned, _config.PinnedBuildId.Length > 0 ? _config.PinnedBuildId : installed)
+                : string.Format(Strings.Update_AutoUpdateOff, installed));
             return;
         }
 

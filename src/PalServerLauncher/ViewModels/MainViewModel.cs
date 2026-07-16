@@ -43,7 +43,7 @@ public partial class MainViewModel : ObservableObject
     private ServerState _state = ServerState.Stopped;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate))]
+    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate), nameof(CanTogglePin))]
     [NotifyCanExecuteChangedFor(nameof(PrimaryActionCommand), nameof(RestartCommand), nameof(ValidateFilesCommand), nameof(BackupNowCommand))]
     private bool _isInstalled;
 
@@ -349,16 +349,69 @@ public partial class MainViewModel : ObservableObject
     }
 
     // --- Update / broadcast settings (persist to launcher.json on change; the controller reads config live) ---
+
+    /// <summary>"Automatic updates" master (item 1). Derived: on only when a trigger is actually on, so it can't
+    /// sit "on" doing nothing, it auto-unchecks when both sub-options are off. Checking it enables both triggers,
+    /// unchecking disables both. A pin forces it off.</summary>
+    public bool AutomaticUpdatesOn
+    {
+        get => UpdatePolicy.AnyAutomaticUpdate(_config.VersionPinEnabled, _config.UpdateOnStart, _config.AutoUpdateEnabled);
+        set
+        {
+            _config.UpdateOnStart = value;
+            _config.AutoUpdateEnabled = value;
+            _config.Save();
+            _controller.RefreshUpdateStatusText();
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(UpdateOnStart));
+            OnPropertyChanged(nameof(AutoUpdateEnabled));
+        }
+    }
+
+    /// <summary>Freeze the server on its current build (item 2a). Captures the installed build id on enable, clears it on
+    /// disable, and grays every update control while set.</summary>
+    public bool VersionPinEnabled
+    {
+        get => _config.VersionPinEnabled;
+        set
+        {
+            _config.VersionPinEnabled = value;
+            _config.PinnedBuildId = value ? (_controller.InstalledBuildId ?? "") : "";
+            _config.Save();
+            _controller.RefreshUpdateStatusText();
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(IsNotPinned));
+            OnPropertyChanged(nameof(CanCheckForUpdate));
+            OnPropertyChanged(nameof(PinnedBuildDisplay));
+            OnPropertyChanged(nameof(AutomaticUpdatesOn));
+            OnPropertyChanged(nameof(UpdateOnStart));
+            OnPropertyChanged(nameof(AutoUpdateEnabled));
+        }
+    }
+
+    /// <summary>Update controls (the master and the two sub-options) are interactable only when no pin is holding
+    /// the build. The pin checkbox itself additionally needs an install (<see cref="CanTogglePin"/>).</summary>
+    public bool IsNotPinned => !_config.VersionPinEnabled;
+
+    /// <summary>The pin can be toggled once a build is installed (there must be a build to freeze).</summary>
+    public bool CanTogglePin => IsInstalled;
+
+    /// <summary>Caption next to the pin, e.g. "build 12345". Empty when not pinned or the build id is unknown.</summary>
+    public string PinnedBuildDisplay =>
+        _config.VersionPinEnabled && _config.PinnedBuildId.Length > 0
+            ? string.Format(Strings.Main_PinnedBuildFormat, _config.PinnedBuildId)
+            : "";
+
     public bool AutoUpdateEnabled
     {
-        get => _config.AutoUpdateEnabled;
-        set { _config.AutoUpdateEnabled = value; _config.Save(); OnPropertyChanged(); }
+        get => !_config.VersionPinEnabled && _config.AutoUpdateEnabled; // masked to unchecked while pinned
+        set { _config.AutoUpdateEnabled = value; _config.Save(); _controller.RefreshUpdateStatusText(); OnPropertyChanged(); OnPropertyChanged(nameof(AutomaticUpdatesOn)); }
     }
 
     public bool UpdateOnStart
     {
-        get => _config.UpdateOnStart;
-        set { _config.UpdateOnStart = value; _config.Save(); OnPropertyChanged(); }
+        get => !_config.VersionPinEnabled && _config.UpdateOnStart;
+        set { _config.UpdateOnStart = value; _config.Save(); OnPropertyChanged(); OnPropertyChanged(nameof(AutomaticUpdatesOn)); }
     }
 
     public bool HideSteamCmdWindow
@@ -560,7 +613,7 @@ public partial class MainViewModel : ObservableObject
     public bool UpdateActionsEnabled => IsInstalled && !IsBusy && State == ServerState.Stopped;
 
     /// <summary>Check for Update is a read-only build-id check, so it's allowed while the server runs too.</summary>
-    public bool CanCheckForUpdate => IsInstalled && !IsBusy;
+    public bool CanCheckForUpdate => IsInstalled && !IsBusy && !_config.VersionPinEnabled;
 
     // --- External IP + Port Accessibility ---
 

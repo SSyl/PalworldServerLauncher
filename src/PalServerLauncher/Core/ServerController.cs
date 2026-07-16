@@ -370,6 +370,10 @@ public sealed class ServerController : IDisposable
     /// <summary>True when the server binary exists on disk.</summary>
     public bool IsInstalled => File.Exists(ProcessScanner.ExpectedExePath(_config.ServerRoot));
 
+    /// <summary>The build id currently installed on disk (from the SteamCMD app manifest), or null if not installed.
+    /// Read when the version pin is enabled to capture the build being frozen.</summary>
+    public string? InstalledBuildId => _steamCmd.ReadInstalledBuildId();
+
     /// <summary>True when PalWorldSettings.ini has the REST API enabled with a non-blank admin password.</summary>
     public bool IsRestApiConfigured => IniReader.ReadFile(PalWorldSettingsPath).RestApiUsable;
 
@@ -496,11 +500,17 @@ public sealed class ServerController : IDisposable
         if (_config.BackupOnStartup)
             await _backup.BackupNowAsync(BackupReason.Startup, rest: null, serverRunning: false, ct).ConfigureAwait(false);
 
-        // The per-start update is optional; an explicit update-restart forces it regardless of the toggle.
-        if (forceUpdate || _config.UpdateOnStart)
+        // The per-start update respects the version pin (blocks all updates) and the Update-on-start toggle. An
+        // explicit update-restart (forceUpdate) overrides Update-on-start being off but never the pin. See UpdatePolicy.
+        if (UpdatePolicy.ShouldUpdateBeforeLaunch(forceUpdate, _config.VersionPinEnabled, _config.UpdateOnStart))
             await UpdateInPlaceAsync(ct).ConfigureAwait(false);
         else
-            _logger.Info("Skipping the start-time update check (Update on start is off).");
+        {
+            var skipReason = _config.VersionPinEnabled
+                ? $"version pinned to build {(_config.PinnedBuildId.Length > 0 ? _config.PinnedBuildId : "current")}"
+                : "Update on start is off";
+            _logger.Info($"Skipping the start-time update ({skipReason}).");
+        }
 
         // Download + enable mods (or reconcile them off) so this boot reflects the current mod config. A
         // restart routes through here too, so it re-syncs. A failed sync never blocks the launch.
@@ -654,6 +664,20 @@ public sealed class ServerController : IDisposable
     {
         _scheduler.Refresh();
         _backupScheduler.Refresh();
+    }
+
+    /// <summary>Push the update-status tile text immediately when the pin or update toggles change, so a pinned
+    /// or updates-off state shows at once instead of waiting for the next server bind or monitor tick. Only
+    /// emits for the pinned / off cases, a normal auto-updating state is left to the monitor / Start / Check.</summary>
+    public void RefreshUpdateStatusText()
+    {
+        if (!IsInstalled)
+            return;
+        var installed = _steamCmd.ReadInstalledBuildId() ?? "?";
+        if (_config.VersionPinEnabled)
+            UpdateStatusChanged?.Invoke(string.Format(Strings.Update_Pinned, _config.PinnedBuildId.Length > 0 ? _config.PinnedBuildId : installed));
+        else if (!_config.AutoUpdateEnabled)
+            UpdateStatusChanged?.Invoke(string.Format(Strings.Update_AutoUpdateOff, installed));
     }
 
     /// <summary>Run SteamCMD app_update in place before launch (the "always current on boot" step).</summary>
@@ -1221,13 +1245,26 @@ public sealed class ServerController : IDisposable
         _health.PlayerChanged += NotifyDiscordOnPlayerChange;
         _health.Start();
 
-        // Update monitor polls SteamCMD's build id while the server runs; on a new build it triggers
-        // an update restart. Disposed on stop/exit, so it never touches SteamCMD while stopped.
+        // Update monitor polls SteamCMD's build id while the server runs and triggers an update restart on a
+        // new build. Disposed on stop/exit, so it never touches SteamCMD while stopped. Skipped entirely while
+        // pinned or with automatic updates off, so a held build is never polled or nudged.
         _updateMonitor?.Dispose();
-        _updateMonitor = new UpdateMonitor(_config, QueryLatestBuildIdGatedAsync, _steamCmd.ReadInstalledBuildId, _logger);
-        _updateMonitor.UpdateFound += HandleUpdateFound;
-        _updateMonitor.StatusChanged += s => UpdateStatusChanged?.Invoke(s);
-        _updateMonitor.Start();
+        _updateMonitor = null;
+        if (UpdatePolicy.ShouldRunUpdateMonitor(_config.VersionPinEnabled, _config.AutoUpdateEnabled))
+        {
+            _updateMonitor = new UpdateMonitor(_config, QueryLatestBuildIdGatedAsync, _steamCmd.ReadInstalledBuildId, _logger);
+            _updateMonitor.UpdateFound += HandleUpdateFound;
+            _updateMonitor.StatusChanged += s => UpdateStatusChanged?.Invoke(s);
+            _updateMonitor.Start();
+        }
+        else
+        {
+            // No monitor: reflect why in the update-status tile so it isn't stale.
+            var installed = _steamCmd.ReadInstalledBuildId() ?? "?";
+            UpdateStatusChanged?.Invoke(_config.VersionPinEnabled
+                ? string.Format(Strings.Update_Pinned, _config.PinnedBuildId.Length > 0 ? _config.PinnedBuildId : installed)
+                : string.Format(Strings.Update_AutoUpdateOff, installed));
+        }
     }
 
     /// <summary>
