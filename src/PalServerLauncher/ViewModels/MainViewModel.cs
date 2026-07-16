@@ -396,11 +396,11 @@ public partial class MainViewModel : ObservableObject
     /// <summary>The pin can be toggled once a build is installed (there must be a build to freeze).</summary>
     public bool CanTogglePin => IsInstalled;
 
-    /// <summary>Caption next to the pin, e.g. "build 12345". Empty when not pinned or the build id is unknown.</summary>
+    /// <summary>Caption next to the pin: the pinned build id, or empty when unpinned.</summary>
     public string PinnedBuildDisplay =>
-        _config.VersionPinEnabled && _config.PinnedBuildId.Length > 0
-            ? string.Format(Strings.Main_PinnedBuildFormat, _config.PinnedBuildId)
-            : "";
+        !_config.VersionPinEnabled ? ""
+        : _config.PinnedBuildId.Length > 0 ? string.Format(Strings.Main_PinnedBuildFormat, _config.PinnedBuildId)
+        : "";
 
     public bool AutoUpdateEnabled
     {
@@ -412,12 +412,6 @@ public partial class MainViewModel : ObservableObject
     {
         get => !_config.VersionPinEnabled && _config.UpdateOnStart;
         set { _config.UpdateOnStart = value; _config.Save(); OnPropertyChanged(); OnPropertyChanged(nameof(AutomaticUpdatesOn)); }
-    }
-
-    public bool HideSteamCmdWindow
-    {
-        get => _config.HideSteamCmdWindow;
-        set { _config.HideSteamCmdWindow = value; _config.Save(); OnPropertyChanged(); }
     }
 
     /// <summary>Compact view: hide the settings sections (Restarts / Backups / Misc) so the log area fills the
@@ -454,12 +448,6 @@ public partial class MainViewModel : ObservableObject
     {
         get => _config.RestartBroadcastEnabled;
         set { _config.RestartBroadcastEnabled = value; _config.Save(); OnPropertyChanged(); }
-    }
-
-    public bool LogHealthStats
-    {
-        get => _config.LogHealthStats;
-        set { _config.LogHealthStats = value; _config.Save(); OnPropertyChanged(); }
     }
 
     public bool ZombieCheckEnabled

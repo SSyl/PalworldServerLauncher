@@ -23,6 +23,8 @@ public sealed class LauncherSettingsDialog : Window
     private readonly ComboBox _languages;
     private readonly CheckBox _autoReconnect;
     private readonly CheckBox _loginOpen;
+    private readonly CheckBox _hideSteamCmd;
+    private readonly CheckBox _logHealthStats;
     private bool _changed;
 
     private LauncherSettingsDialog(LauncherConfig config)
@@ -80,6 +82,27 @@ public sealed class LauncherSettingsDialog : Window
         _loginOpen.Click += OnToggleLoginOpen;
         root.Children.Add(_loginOpen);
 
+        // Server-behavior toggles (persist on Save). Moved here from the main-window Misc box to free room there.
+        _hideSteamCmd = new CheckBox
+        {
+            Content = Strings.Main_HideSteamCmd,
+            IsChecked = config.HideSteamCmdWindow,
+            Foreground = Fg,
+            ToolTip = Strings.Main_HideSteamCmdTip,
+            Margin = new Thickness(0, 0, 0, 18),
+        };
+        root.Children.Add(_hideSteamCmd);
+
+        _logHealthStats = new CheckBox
+        {
+            Content = Strings.Main_LogServerStatus,
+            IsChecked = config.LogHealthStats,
+            Foreground = Fg,
+            ToolTip = Strings.Main_LogServerStatusTip,
+            Margin = new Thickness(0, 0, 0, 18),
+        };
+        root.Children.Add(_logHealthStats);
+
         var bottom = new DockPanel { LastChildFill = false };
 
         var info = new StackPanel { VerticalAlignment = VerticalAlignment.Center };
@@ -116,6 +139,8 @@ public sealed class LauncherSettingsDialog : Window
     private void OnSave()
     {
         _config.AutoReconnectSingleInstance = _autoReconnect.IsChecked == true;
+        _config.HideSteamCmdWindow = _hideSteamCmd.IsChecked == true;
+        _config.LogHealthStats = _logHealthStats.IsChecked == true;
 
         if (_languages.SelectedItem is LauncherLanguage lang &&
             !string.Equals(lang.Code, _config.Language, StringComparison.OrdinalIgnoreCase))

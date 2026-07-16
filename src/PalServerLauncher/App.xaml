@@ -144,6 +144,18 @@
             </Style.Triggers>
         </Style>
 
+        <!-- Dark checkbox, app-wide: default text colour, and dim the WHOLE control when disabled (matching the
+             buttons' 0.4 opacity) so a grayed-out option clearly reads as unavailable. The default template's
+             disabled cue is a light-theme grey that's nearly invisible on the dark background. -->
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.4"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <!-- Fluent-style toggle switch (a retemplated ToggleButton): grey track with the thumb left when off,
              Accent (blue) track with the thumb right when on. Used for the compact-mode toggle. -->
         <Style x:Key="ToggleSwitch" TargetType="ToggleButton">

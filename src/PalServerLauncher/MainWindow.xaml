@@ -30,10 +30,20 @@
             <Setter Property="FontWeight" Value="SemiBold"/>
         </Style>
 
-        <Style TargetType="CheckBox">
-            <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
+        <!-- BasedOn the app-wide CheckBox style so the IsEnabled=False -> Opacity 0.4 dimming trigger carries
+             over (a plain local style would replace it and leave disabled boxes looking active). -->
+        <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Dim a non-checkbox row (e.g. the update-interval field row) to match when it's disabled. -->
+        <Style x:Key="DimWhenDisabled" TargetType="StackPanel">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.4"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <!-- Titled grouping box -->
@@ -122,6 +132,19 @@
                         ToolTip="{x:Static loc:Strings.Main_ServerSettingsTip}"/>
                 <Button Content="{x:Static loc:Strings.Main_Mods}" Click="OnOpenMods"
                         ToolTip="{x:Static loc:Strings.Main_ModsTip}"/>
+                <Button Content="{x:Static loc:Strings.Main_DiscordBot}" Click="OnOpenDiscord" ToolTip="{x:Static loc:Strings.Main_DiscordBotTip}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Background" Value="{x:Static local:Theme.Discord}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{x:Static local:Theme.DiscordHover}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
                 <Button FontFamily="Segoe MDL2 Assets" Content="&#xE713;" FontSize="15" Padding="10,7" MinWidth="0" Margin="0" Click="OnOpenLauncherSettings"
                         ToolTip="{x:Static loc:Strings.LauncherSettings_Tooltip}"/>
             </StackPanel>
@@ -259,17 +282,13 @@
                               IsEnabled="{Binding IsNotPinned}" ToolTip="{x:Static loc:Strings.Main_UpdateOnStartTip}"/>
                     <CheckBox Content="{x:Static loc:Strings.Main_AutoUpdate}" IsChecked="{Binding AutoUpdateEnabled}" Margin="16,0,0,7"
                               IsEnabled="{Binding IsNotPinned}" ToolTip="{x:Static loc:Strings.Main_AutoUpdateTip}"/>
-                    <StackPanel Orientation="Horizontal" Margin="16,0,0,7" IsEnabled="{Binding AutoUpdateEnabled}">
+                    <StackPanel Orientation="Horizontal" Margin="16,0,0,7" IsEnabled="{Binding AutoUpdateEnabled}" Style="{StaticResource DimWhenDisabled}">
                         <TextBlock Text="{x:Static loc:Strings.Main_CheckUpdateEvery}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                         <TextBox Text="{Binding UpdateCheckMinutes}" Width="40" MaxLength="4" VerticalAlignment="Center"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"
                                  ToolTip="{x:Static loc:Strings.Main_CheckUpdateEveryTip}"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_MinuteSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
-                    <CheckBox Content="{x:Static loc:Strings.Main_HideSteamCmd}" IsChecked="{Binding HideSteamCmdWindow}" Margin="0,0,0,7"
-                              ToolTip="{x:Static loc:Strings.Main_HideSteamCmdTip}"/>
-                    <CheckBox Content="{x:Static loc:Strings.Main_LogServerStatus}" IsChecked="{Binding LogHealthStats}" Margin="0,0,0,7"
-                              ToolTip="{x:Static loc:Strings.Main_LogServerStatusTip}"/>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
                         <CheckBox Content="{x:Static loc:Strings.Main_ZombieCheck}" IsChecked="{Binding ZombieCheckEnabled}"
                                   ToolTip="{x:Static loc:Strings.Main_ZombieCheckTip}"/>
@@ -285,21 +304,6 @@
                                  ToolTip="{x:Static loc:Strings.Main_RestCheckEveryTip}"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_SecondsSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
-                    <WrapPanel>
-                        <Button Content="{x:Static loc:Strings.Main_DiscordBot}" Click="OnOpenDiscord" Margin="0,0,0,4" ToolTip="{x:Static loc:Strings.Main_DiscordBotTip}">
-                            <Button.Style>
-                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                    <Setter Property="Background" Value="{x:Static local:Theme.Discord}"/>
-                                    <Setter Property="Foreground" Value="White"/>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="{x:Static local:Theme.DiscordHover}"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                    </WrapPanel>
                 </StackPanel>
             </Border>
         </Grid>
