@@ -238,12 +238,15 @@ public sealed class SettingsDialog : Window
         {
             Background = FieldBg, Foreground = Fg, BorderThickness = new Thickness(0), CaretBrush = Brushes.White,
             VerticalContentAlignment = VerticalAlignment.Center,
+            // Explicit left padding (not the app-wide 5px) so the caret sits just left of the placeholder below,
+            // instead of on top of its first letter.
+            Padding = new Thickness(4, 4, 0, 4),
         };
 
         var placeholder = new TextBlock
         {
             Text = Strings.Settings_SearchPlaceholder, Foreground = Muted, IsHitTestVisible = false,
-            VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(2, 0, 0, 0),
+            VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(6, 0, 0, 0),
         };
 
         // A prominent red button with a white ✕ (the app-wide Button style rounds it and adds hover feedback).
