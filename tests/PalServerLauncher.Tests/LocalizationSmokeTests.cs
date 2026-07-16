@@ -85,6 +85,27 @@ public class LocalizationSmokeTests
         Assert.True(missingFromEnglish.Count == 0, $"Keys missing from Strings.resx: {string.Join(", ", missingFromEnglish)}");
     }
 
+    [Theory]
+    [InlineData("de")]
+    [InlineData("fr")]
+    [InlineData("es")]
+    public void English_and_satellite_resource_sets_have_the_same_keys(string cultureName)
+    {
+        var english = Strings.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, createIfNotExists: true, tryParents: false);
+        var satellite = Strings.ResourceManager.GetResourceSet(CultureInfo.GetCultureInfo(cultureName), createIfNotExists: true, tryParents: false);
+        Assert.NotNull(english);
+        Assert.NotNull(satellite);
+
+        var englishKeys = english!.Cast<System.Collections.DictionaryEntry>().Select(e => (string)e.Key).ToHashSet();
+        var satelliteKeys = satellite!.Cast<System.Collections.DictionaryEntry>().Select(e => (string)e.Key).ToHashSet();
+
+        var missingFromSatellite = englishKeys.Except(satelliteKeys).ToList();
+        var missingFromEnglish = satelliteKeys.Except(englishKeys).ToList();
+
+        Assert.True(missingFromSatellite.Count == 0, $"Keys missing from Strings.{cultureName}.resx: {string.Join(", ", missingFromSatellite)}");
+        Assert.True(missingFromEnglish.Count == 0, $"Keys missing from Strings.resx: {string.Join(", ", missingFromEnglish)}");
+    }
+
     // A translated string.Format template that uses a different set of {N} placeholders than the English one
     // throws FormatException at runtime. Several of these format calls run in background loops (uptime display,
     // schedulers) whose only catch is OperationCanceledException, so a bad translation would silently kill
@@ -93,6 +114,9 @@ public class LocalizationSmokeTests
     [InlineData("zh-Hans")]
     [InlineData("zh-Hant")]
     [InlineData("ja")]
+    [InlineData("de")]
+    [InlineData("fr")]
+    [InlineData("es")]
     public void Format_placeholders_match_english_in_every_satellite(string cultureName)
     {
         var english = Strings.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, createIfNotExists: true, tryParents: false);
