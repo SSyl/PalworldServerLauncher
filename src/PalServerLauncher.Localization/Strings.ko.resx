@@ -1445,7 +1445,7 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>재시작 중</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>재시도 대기</value>
+    <value>백오프</value>
   </data>
   <!-- Update status line -->
   <data name="Update_AutoUpdateOff" xml:space="preserve">

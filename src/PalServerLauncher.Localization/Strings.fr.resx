@@ -1445,7 +1445,7 @@ Enregistrer ces changements ?</value>
     <value>Redémarrage</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>Attente</value>
+    <value>Temporisation</value>
   </data>
   <!-- Update status line -->
   <data name="Update_AutoUpdateOff" xml:space="preserve">

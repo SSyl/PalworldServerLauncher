@@ -1430,7 +1430,7 @@ Cualquier valor no listado arriba permanecerá igual.
     <value>Iniciando</value>
   </data>
   <data name="State_Healthy" xml:space="preserve">
-    <value>Saludable</value>
+    <value>Operativo</value>
   </data>
   <data name="State_Degraded" xml:space="preserve">
     <value>Degradado</value>
@@ -1445,7 +1445,7 @@ Cualquier valor no listado arriba permanecerá igual.
     <value>Reiniciando</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>En espera</value>
+    <value>Espera de reintento</value>
   </data>
   <!-- Update status line -->
   <data name="Update_AutoUpdateOff" xml:space="preserve">

@@ -1398,7 +1398,7 @@ REST API на этом сервере пока не включён, поэтом
     <value>Ниже среднего</value>
   </data>
   <data name="Settings_PriorityNormal" xml:space="preserve">
-    <value>Средний</value>
+    <value>Обычный</value>
   </data>
   <data name="Settings_PriorityAboveNormal" xml:space="preserve">
     <value>Выше среднего</value>
@@ -1433,10 +1433,10 @@ REST API на этом сервере пока не включён, поэтом
     <value>Исправен</value>
   </data>
   <data name="State_Degraded" xml:space="preserve">
-    <value>Нестабилен</value>
+    <value>Деградация</value>
   </data>
   <data name="State_Zombie" xml:space="preserve">
-    <value>Завис</value>
+    <value>Зомби</value>
   </data>
   <data name="State_Stopping" xml:space="preserve">
     <value>Останавливается</value>
@@ -1445,7 +1445,7 @@ REST API на этом сервере пока не включён, поэтом
     <value>Перезапускается</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>Пауза</value>
+    <value>Ожидание повтора</value>
   </data>
   <!-- Update status line -->
   <data name="Update_AutoUpdateOff" xml:space="preserve">

@@ -1395,13 +1395,13 @@ Diese Änderungen übernehmen und speichern?</value>
   </data>
   <!-- SettingsDialog process-priority dropdown (canonical value stored in config, label translated). Match Windows Task Manager wording per locale. -->
   <data name="Settings_PriorityBelowNormal" xml:space="preserve">
-    <value>Unter normal</value>
+    <value>Niedriger als normal</value>
   </data>
   <data name="Settings_PriorityNormal" xml:space="preserve">
     <value>Normal</value>
   </data>
   <data name="Settings_PriorityAboveNormal" xml:space="preserve">
-    <value>Über normal</value>
+    <value>Höher als normal</value>
   </data>
   <data name="Settings_PriorityHigh" xml:space="preserve">
     <value>Hoch</value>
@@ -1445,7 +1445,7 @@ Diese Änderungen übernehmen und speichern?</value>
     <value>Wird neu gestartet</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>Wartezeit</value>
+    <value>Wartephase</value>
   </data>
   <!-- Update status line -->
   <data name="Update_AutoUpdateOff" xml:space="preserve">

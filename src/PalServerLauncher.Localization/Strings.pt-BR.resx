@@ -1430,7 +1430,7 @@ Salvar essas alterações?</value>
     <value>Iniciando</value>
   </data>
   <data name="State_Healthy" xml:space="preserve">
-    <value>Saudável</value>
+    <value>Íntegro</value>
   </data>
   <data name="State_Degraded" xml:space="preserve">
     <value>Degradado</value>
@@ -1445,7 +1445,7 @@ Salvar essas alterações?</value>
     <value>Reiniciando</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>Aguardando</value>
+    <value>Backoff</value>
   </data>
   <!-- Update status line -->
   <data name="Update_AutoUpdateOff" xml:space="preserve">
