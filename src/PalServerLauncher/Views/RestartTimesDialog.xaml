@@ -13,17 +13,17 @@
 
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <TextBlock Text="{x:Static loc:Strings.Times_Every}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-            <ComboBox x:Name="EveryBox" Width="72" IsEditable="True"
+            <ComboBox x:Name="EveryBox" Width="72" Height="26" VerticalAlignment="Center" IsEditable="True"
                       ToolTip="{x:Static loc:Strings.Times_EveryTip}"/>
             <Button Content="{x:Static loc:Strings.Times_Apply}" Click="ApplyEvery" Margin="8,0,0,0" MinWidth="52"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <ComboBox x:Name="HourBox" Width="52"/>
+            <ComboBox x:Name="HourBox" Width="52" Height="26" VerticalAlignment="Center"/>
             <TextBlock Text=":" VerticalAlignment="Center" Margin="4,0"/>
-            <ComboBox x:Name="MinuteBox" Width="52" IsEditable="True" PreviewTextInput="MinuteDigitsOnly"
+            <ComboBox x:Name="MinuteBox" Width="52" Height="26" VerticalAlignment="Center" IsEditable="True" PreviewTextInput="MinuteDigitsOnly"
                       ToolTip="{x:Static loc:Strings.Times_MinuteTip}"/>
-            <ComboBox x:Name="AmPmBox" Width="52" Margin="6,0,0,0"/>
+            <ComboBox x:Name="AmPmBox" Width="52" Height="26" VerticalAlignment="Center" Margin="6,0,0,0"/>
             <Button Content="{x:Static loc:Strings.Times_Add}" Click="AddTime" Margin="10,0,0,0" MinWidth="52"/>
         </StackPanel>
 
