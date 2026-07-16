@@ -25,6 +25,7 @@ public class PrimaryButtonTests
     [InlineData(ServerState.Healthy)]
     [InlineData(ServerState.Degraded)]
     [InlineData(ServerState.Zombie)]
+    [InlineData(ServerState.RestUnreachable)]
     public void Running_shows_Stop(ServerState state)
     {
         Assert.Equal(PrimaryActionKind.Stop, PrimaryButton.Resolve(true, false, state));

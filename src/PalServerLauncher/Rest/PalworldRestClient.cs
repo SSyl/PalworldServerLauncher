@@ -20,8 +20,12 @@ public sealed class PalworldRestClient : IDisposable
 
     private readonly HttpClient _http;
 
+    /// <summary>The REST API port this client targets (for diagnostics/log messages).</summary>
+    public int Port { get; }
+
     public PalworldRestClient(int restApiPort, string adminPassword, string host = "127.0.0.1", TimeSpan? timeout = null)
     {
+        Port = restApiPort;
         _http = new HttpClient
         {
             BaseAddress = new Uri($"http://{host}:{restApiPort}/v1/api/"),

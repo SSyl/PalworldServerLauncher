@@ -14,19 +14,28 @@ namespace PalServerLauncher.Core;
 /// <summary>Snapshot of live server stats for the status tiles.</summary>
 public sealed record HealthSample(string Version, string Fps, string Players, string Uptime, string Memory, string Cpu);
 
-/// <summary>The state action a metrics reading should drive: fire nothing, flag a failure, or mark healthy.</summary>
-public enum ProbeAction { Ignore, Failure, Healthy }
+/// <summary>The state action a metrics reading should drive: fire nothing, flag a failure, mark healthy, or
+/// (REST expected but never answered past the boot grace) flag the server as up-but-unreachable.</summary>
+public enum ProbeAction { Ignore, Failure, Healthy, Unreachable }
 
 /// <summary>
 /// Polls one running server instance (via REST /metrics + /info) to drive state transitions and
 /// the status tiles. Promotes Starting -> Healthy once the server responds; flags Degraded then
-/// Zombie when the REST API goes unreachable or the simulation freezes (uptime not advancing / fps 0).
-/// When REST isn't enabled it can't read stats, so it just marks the process "running" after a short
+/// Zombie when the REST API goes unreachable or the simulation freezes (uptime not advancing / fps 0)
+/// AFTER it had been healthy. When REST is enabled in the ini but never answers within the boot grace
+/// (e.g. a WorldOption.sav overriding the settings, a wrong port, or a password mismatch), it flags
+/// RestUnreachable instead of hanging on Starting forever, without triggering recovery (the game is fine).
+/// When REST isn't enabled at all it can't read stats, so it just marks the process "running" after a short
 /// boot grace so the UI isn't stuck. One monitor per launched process; created/disposed by the controller.
 /// </summary>
 public sealed class HealthMonitor : IDisposable
 {
     private static readonly TimeSpan NoRestGrace = TimeSpan.FromSeconds(15);
+
+    // REST is enabled in the ini but the server may still be booting. Wait generously before deciding it
+    // will never answer, so a slow-booting server isn't falsely flagged (the state self-corrects to Healthy
+    // the instant metrics arrive anyway).
+    private static readonly TimeSpan RestExpectedGrace = TimeSpan.FromSeconds(60);
 
     private readonly Process _process;
     private readonly Func<PalworldRestClient?> _getRest;
@@ -40,6 +49,7 @@ public sealed class HealthMonitor : IDisposable
     private DateTime _lastCpuSampleUtc;
     private int _consecutiveFailures;
     private bool _reachedHealthy;
+    private bool _restUnreachableLogged; // one-shot guard so the "REST not responding" warning logs once
     private bool _disposed;
 
     // Player roster for join/leave logging, keyed by a stable id (userId). Baselined silently on the
@@ -116,12 +126,30 @@ public sealed class HealthMonitor : IDisposable
 
         // frozen needs the metrics plus the pre-update healthy/uptime state, so compute it before deciding.
         var frozen = metrics is not null && _reachedHealthy && (metrics.Uptime <= _lastUptime || metrics.Fps <= 0);
-        var action = EvaluateMetricsProbe(ct.IsCancellationRequested, metrics is not null, _reachedHealthy, frozen);
+        var bootGraceElapsed = DateTime.UtcNow - _startedUtc > RestExpectedGrace;
+        var action = EvaluateMetricsProbe(ct.IsCancellationRequested, metrics is not null, _reachedHealthy, frozen, bootGraceElapsed);
 
         // Ignore = fire nothing: either the probe was cancelled by disposal (the swallowed cancellation comes
-        // back as a null "failure", see PalworldRestClient) or the server is still booting with no metrics yet.
+        // back as a null "failure", see PalworldRestClient) or the server is still booting within the grace.
         if (action == ProbeAction.Ignore)
             return;
+
+        // Unreachable = REST was enabled but never answered past the boot grace, and we never went healthy.
+        // Surface it (once) instead of hanging on Starting, but keep probing so a late boot still promotes to
+        // Healthy below. Deliberately NOT RegisterFailure: the game server is fine, we must not kill+relaunch it.
+        if (action == ProbeAction.Unreachable)
+        {
+            if (ct.IsCancellationRequested)
+                return; // disposed mid-probe, don't fire a stale state / sample
+            if (!_restUnreachableLogged)
+            {
+                _restUnreachableLogged = true;
+                _logger.Info($"Server is up but its REST API isn't responding on port {rest.Port}. Check RESTAPIEnabled / RESTAPIPort / AdminPassword, and whether a WorldOption.sav in the save folder is overriding your settings.");
+            }
+            StateChanged?.Invoke(ServerState.RestUnreachable);
+            Sampled?.Invoke(new HealthSample("REST ?", "-", "-", "-", memory, cpu));
+            return;
+        }
 
         if (metrics is null)
         {
@@ -232,15 +260,19 @@ public sealed class HealthMonitor : IDisposable
     /// Decide what a metrics reading should do. Pure so the disposal-race guard is unit-testable. A cancelled
     /// probe (the monitor was disposed mid-read, which the REST client turns into a null result) always yields
     /// <see cref="ProbeAction.Ignore"/>, so it can never be mistaken for a real failure and fire a spurious
-    /// Degraded / Zombie. No metrics = a failure only once we'd been healthy (before that we're still booting),
-    /// and a live-but-frozen reading is a failure too.
+    /// Degraded / Zombie. No metrics after we'd been healthy is a <see cref="ProbeAction.Failure"/>; no metrics
+    /// before that means we're still booting -> <see cref="ProbeAction.Ignore"/> until the boot grace elapses,
+    /// after which it's <see cref="ProbeAction.Unreachable"/> (REST was expected but never answered) so the UI
+    /// stops hanging on Starting. A live-but-frozen reading is a failure too.
     /// </summary>
-    public static ProbeAction EvaluateMetricsProbe(bool cancelled, bool hasMetrics, bool reachedHealthy, bool frozen)
+    public static ProbeAction EvaluateMetricsProbe(bool cancelled, bool hasMetrics, bool reachedHealthy, bool frozen, bool bootGraceElapsed)
     {
         if (cancelled)
             return ProbeAction.Ignore;
         if (!hasMetrics)
-            return reachedHealthy ? ProbeAction.Failure : ProbeAction.Ignore;
+            return reachedHealthy ? ProbeAction.Failure
+                : bootGraceElapsed ? ProbeAction.Unreachable
+                : ProbeAction.Ignore;
         return frozen ? ProbeAction.Failure : ProbeAction.Healthy;
     }
 
