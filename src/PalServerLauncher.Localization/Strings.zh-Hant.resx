@@ -2199,63 +2199,63 @@
     <value>啟動引數文件</value>
   </data>
   <data name="Update_Pinned" xml:space="preserve">
-    <value>Pinned to build {0}</value>
+    <value>固定到構建 {0}</value>
   </data>
   <data name="Main_PinVersion" xml:space="preserve">
-    <value>Pin server version</value>
+    <value>固定伺服器版本</value>
   </data>
   <data name="Main_PinVersionTip" xml:space="preserve">
-    <value>Freeze the server on its current build. While pinned, automatic updates are turned off. Uncheck to resume updating.</value>
+    <value>將伺服器固定在當前構建版本。固定後，自動更新將關閉。取消勾選以恢復更新。</value>
   </data>
   <data name="Main_AutomaticUpdates" xml:space="preserve">
-    <value>Automatic updates</value>
+    <value>自動更新</value>
   </data>
   <data name="Main_AutomaticUpdatesTip" xml:space="preserve">
-    <value>Download updates automatically. When off, the launcher won't update on start or while running. You can still check for updates manually.</value>
+    <value>自動下載更新。關閉後，啟動器在啟動或執行時不會更新。您仍可手動檢查更新。</value>
   </data>
   <data name="Main_PinnedBuildFormat" xml:space="preserve">
-    <value>build {0}</value>
+    <value>構建 {0}</value>
   </data>
   <data name="LauncherSettings_AutoReconnect" xml:space="preserve">
-    <value>Reconnect to a running server automatically</value>
+    <value>啟動器啟動時自動重新連接到執行中的伺服器，無需詢問</value>
   </data>
   <data name="LauncherSettings_AutoReconnectTip" xml:space="preserve">
-    <value>When exactly one managed server is found running at startup, adopt it without asking. If several are found, you'll still be prompted.</value>
+    <value>啟動時如果恰好找到一個受管伺服器正在執行，則自動採用，無需詢問。如果找到多個，仍會提示。</value>
   </data>
   <data name="Main_ImportServer" xml:space="preserve">
-    <value>Import server</value>
+    <value>匯入伺服器</value>
   </data>
   <data name="Main_ImportServerTip" xml:space="preserve">
-    <value>Copy an existing Palworld dedicated server you installed elsewhere into this launcher. The original is left untouched.</value>
+    <value>將您在其他位置安裝的現有 Palworld 專用伺服器複製到此啟動器中。原始檔案保持不變。</value>
   </data>
   <data name="Main_ImportPickTitle" xml:space="preserve">
-    <value>Select your Palworld dedicated server folder (usually named PalServer)</value>
+    <value>選擇您的 Palworld 專用伺服器資料夾（通常名為 PalServer）</value>
   </data>
   <data name="Main_ImportTitle" xml:space="preserve">
-    <value>Import server</value>
+    <value>匯入伺服器</value>
   </data>
   <data name="Main_ImportInvalidMessage" xml:space="preserve">
-    <value>That folder doesn't look like a Palworld dedicated server install. It's typically installed in a folder named PalServer. If you're using Steam, it's under Steam\steamapps\common\PalServer.</value>
+    <value>該資料夾看起來不像 Palworld 專用伺服器安裝目錄。它通常安裝在名為 PalServer 的資料夾中。如果您使用 Steam，它位於 Steam\steamapps\common\PalServer。</value>
   </data>
   <data name="Main_ImportConfirmMessage" xml:space="preserve">
-    <value>Copy this server into the launcher from '{0}'? The original is left in place, so once you've confirmed the launcher-managed copy works you can delete the original yourself.</value>
+    <value>將伺服器從 '{0}' 複製到啟動器中嗎？原始檔案保留在原位，因此一旦您確認啟動器管理的副本正常工作，您可以自行刪除原始檔案。</value>
   </data>
   <data name="Main_ImportCopyButton" xml:space="preserve">
-    <value>Import</value>
+    <value>匯入</value>
   </data>
   <data name="Main_ImportFailedMessage" xml:space="preserve">
-    <value>The import didn't complete. Check the log for details.</value>
+    <value>匯入未完成。請查看日誌以獲取詳細資訊。</value>
   </data>
   <data name="LauncherSettings_LoginOpen" xml:space="preserve">
-    <value>Start the server automatically at login</value>
+    <value>在 Windows 登入時打開啟動器並啟動伺服器</value>
   </data>
   <data name="LauncherSettings_LoginOpenTip" xml:space="preserve">
-    <value>At login, opens the launcher and starts the server, so scheduled restarts, updates, backups, and health recovery run. No admin needed. Unchecking removes the Startup shortcut.</value>
+    <value>登入時，打開啟動器並啟動伺服器，以便執行計劃的重新啟動、更新、備份和健康恢復。無需管理員權限。取消勾選將刪除啟動項捷徑。</value>
   </data>
   <data name="LauncherSettings_LoginOpenFailedTitle" xml:space="preserve">
-    <value>Couldn't change the login shortcut</value>
+    <value>無法更改登入捷徑</value>
   </data>
   <data name="LauncherSettings_LoginOpenFailedMessage" xml:space="preserve">
-    <value>The Startup shortcut couldn't be created or removed. Check the log for details.</value>
+    <value>無法建立或刪除啟動項捷徑。請查看日誌以獲取詳細資訊。</value>
   </data>
 </root>

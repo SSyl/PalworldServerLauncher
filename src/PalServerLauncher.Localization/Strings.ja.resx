@@ -2206,63 +2206,63 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
     <value>起動引数ドキュメント</value>
   </data>
   <data name="Update_Pinned" xml:space="preserve">
-    <value>Pinned to build {0}</value>
+    <value>ビルド {0} に固定</value>
   </data>
   <data name="Main_PinVersion" xml:space="preserve">
-    <value>Pin server version</value>
+    <value>サーバーバージョンを固定</value>
   </data>
   <data name="Main_PinVersionTip" xml:space="preserve">
-    <value>Freeze the server on its current build. While pinned, automatic updates are turned off. Uncheck to resume updating.</value>
+    <value>サーバーを現在のビルドに固定します。固定中は自動アップデートがオフになります。アップデートを再開するにはチェックを外してください。</value>
   </data>
   <data name="Main_AutomaticUpdates" xml:space="preserve">
-    <value>Automatic updates</value>
+    <value>自動アップデート</value>
   </data>
   <data name="Main_AutomaticUpdatesTip" xml:space="preserve">
-    <value>Download updates automatically. When off, the launcher won't update on start or while running. You can still check for updates manually.</value>
+    <value>アップデートを自動的にダウンロードします。オフの場合、ランチャーの起動時や実行中にアップデートを行いません。手動でアップデートを確認することは可能です。</value>
   </data>
   <data name="Main_PinnedBuildFormat" xml:space="preserve">
-    <value>build {0}</value>
+    <value>ビルド {0}</value>
   </data>
   <data name="LauncherSettings_AutoReconnect" xml:space="preserve">
-    <value>Reconnect to a running server automatically</value>
+    <value>ランチャー起動時に確認なしで実行中のサーバーに再接続する</value>
   </data>
   <data name="LauncherSettings_AutoReconnectTip" xml:space="preserve">
-    <value>When exactly one managed server is found running at startup, adopt it without asking. If several are found, you'll still be prompted.</value>
+    <value>起動時に実行中の管理サーバーが1つだけ見つかった場合、確認なしでそれに接続します。複数見つかった場合は確認プロンプトが表示されます。</value>
   </data>
   <data name="Main_ImportServer" xml:space="preserve">
-    <value>Import server</value>
+    <value>サーバーをインポート</value>
   </data>
   <data name="Main_ImportServerTip" xml:space="preserve">
-    <value>Copy an existing Palworld dedicated server you installed elsewhere into this launcher. The original is left untouched.</value>
+    <value>他の場所にインストールした既存の Palworld 専用サーバーをこのランチャーにコピーします。元のファイルは変更されません。</value>
   </data>
   <data name="Main_ImportPickTitle" xml:space="preserve">
-    <value>Select your Palworld dedicated server folder (usually named PalServer)</value>
+    <value>Palworld 専用サーバーのフォルダーを選択してください（通常は PalServer という名前です）</value>
   </data>
   <data name="Main_ImportTitle" xml:space="preserve">
-    <value>Import server</value>
+    <value>サーバーをインポート</value>
   </data>
   <data name="Main_ImportInvalidMessage" xml:space="preserve">
-    <value>That folder doesn't look like a Palworld dedicated server install. It's typically installed in a folder named PalServer. If you're using Steam, it's under Steam\steamapps\common\PalServer.</value>
+    <value>そのフォルダーは Palworld 専用サーバーのインストール先ではないようです。通常は PalServer という名前のフォルダーにインストールされます。Steam を使用している場合は、Steam\steamapps\common\PalServer にあります。</value>
   </data>
   <data name="Main_ImportConfirmMessage" xml:space="preserve">
-    <value>Copy this server into the launcher from '{0}'? The original is left in place, so once you've confirmed the launcher-managed copy works you can delete the original yourself.</value>
+    <value>'{0}' からランチャーにこのサーバーをコピーしますか？元のファイルはそのまま残るため、ランチャーで管理されるコピーが動作することを確認した後に、ご自身で元のファイルを削除できます。</value>
   </data>
   <data name="Main_ImportCopyButton" xml:space="preserve">
-    <value>Import</value>
+    <value>インポート</value>
   </data>
   <data name="Main_ImportFailedMessage" xml:space="preserve">
-    <value>The import didn't complete. Check the log for details.</value>
+    <value>インポートが完了しませんでした。詳細はログを確認してください。</value>
   </data>
   <data name="LauncherSettings_LoginOpen" xml:space="preserve">
-    <value>Start the server automatically at login</value>
+    <value>Windows ログイン時にランチャーを開いてサーバーを起動する</value>
   </data>
   <data name="LauncherSettings_LoginOpenTip" xml:space="preserve">
-    <value>At login, opens the launcher and starts the server, so scheduled restarts, updates, backups, and health recovery run. No admin needed. Unchecking removes the Startup shortcut.</value>
+    <value>ログイン時にランチャーを開きサーバーを起動することで、スケジュールされた再起動、アップデート、バックアップ、修復機能が実行されます。管理者権限は不要です。チェックを外すとスタートアップのショートカットが削除されます。</value>
   </data>
   <data name="LauncherSettings_LoginOpenFailedTitle" xml:space="preserve">
-    <value>Couldn't change the login shortcut</value>
+    <value>ログインのショートカットを変更できませんでした</value>
   </data>
   <data name="LauncherSettings_LoginOpenFailedMessage" xml:space="preserve">
-    <value>The Startup shortcut couldn't be created or removed. Check the log for details.</value>
+    <value>スタートアップのショートカットを作成または削除できませんでした。詳細はログを確認してください。</value>
   </data>
 </root>
