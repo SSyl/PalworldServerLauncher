@@ -1316,7 +1316,7 @@ Diese Änderungen übernehmen und speichern?</value>
     <value>Prozesspriorität</value>
   </data>
   <data name="Settings_TipPriority" xml:space="preserve">
-    <value>Windows-Priorität für den Serverprozess. Über normal / Hoch kann unter Last helfen, kann aber anderen Apps Ressourcen entziehen und die Leistung beeinträchtigen; Echtzeit wird nicht angeboten (unsicher).</value>
+    <value>Windows-Priorität für den Serverprozess. Höher als normal / Hoch kann unter Last helfen, kann aber anderen Apps Ressourcen entziehen und die Leistung beeinträchtigen; Echtzeit wird nicht angeboten (unsicher).</value>
   </data>
   <data name="Settings_CoreLabel" xml:space="preserve">
     <value>Kern {0}</value>
