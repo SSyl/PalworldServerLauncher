@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Microsoft.Win32;
 using PalServerLauncher.Config;
 using PalServerLauncher.Core;
 using PalServerLauncher.Localization;
@@ -117,6 +118,31 @@ public partial class MainWindow : Window
         ChoiceDialog.Show(this, Strings.Main_InstallTitle,
             Strings.Main_InstallMessage,
             Strings.Main_DownloadInstall, Strings.Common_Cancel) == 0;
+
+    /// <summary>Import an existing (non-launcher) server: browse to it, validate, confirm the copy, then copy it in.
+    /// On success the VM fires InstallFinished, which offers REST setup like a fresh install.</summary>
+    private async void OnImportServer(object sender, RoutedEventArgs e)
+    {
+        var picker = new OpenFolderDialog { Title = Strings.Main_ImportPickTitle };
+        if (picker.ShowDialog(this) != true)
+            return;
+
+        var source = picker.FolderName;
+        if (!ServerImporter.LooksLikeServerInstall(source))
+        {
+            ChoiceDialog.Show(this, Strings.Main_ImportTitle, Strings.Main_ImportInvalidMessage, Strings.Common_OK);
+            return;
+        }
+
+        if (ChoiceDialog.Show(this, Strings.Main_ImportTitle,
+                string.Format(Strings.Main_ImportConfirmMessage, source),
+                Strings.Main_ImportCopyButton, Strings.Common_Cancel) != 0)
+            return;
+
+        var imported = await _viewModel.ImportServerAsync(source);
+        if (!imported)
+            ChoiceDialog.Show(this, Strings.Main_ImportTitle, Strings.Main_ImportFailedMessage, Strings.Common_OK);
+    }
 
     /// <summary>Confirm skipping a timed shutdown's countdown to shut the server down immediately.</summary>
     private bool ConfirmShutdownNow() =>

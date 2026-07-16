@@ -43,12 +43,12 @@ public partial class MainViewModel : ObservableObject
     private ServerState _state = ServerState.Stopped;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate), nameof(CanTogglePin))]
+    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate), nameof(CanTogglePin), nameof(CanImport), nameof(ImportVisible))]
     [NotifyCanExecuteChangedFor(nameof(PrimaryActionCommand), nameof(RestartCommand), nameof(ValidateFilesCommand), nameof(BackupNowCommand))]
     private bool _isInstalled;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate), nameof(CanCheckPorts))]
+    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate), nameof(CanCheckPorts), nameof(CanImport))]
     [NotifyCanExecuteChangedFor(nameof(PrimaryActionCommand), nameof(RestartCommand), nameof(ValidateFilesCommand), nameof(BackupNowCommand))]
     private bool _isBusy;
 
@@ -615,6 +615,11 @@ public partial class MainViewModel : ObservableObject
     /// <summary>Check for Update is a read-only build-id check, so it's allowed while the server runs too.</summary>
     public bool CanCheckForUpdate => IsInstalled && !IsBusy && !_config.VersionPinEnabled;
 
+    /// <summary>Import an existing server is offered only when no managed server exists yet (it copies one in),
+    /// so it's hidden once installed and disabled while busy.</summary>
+    public bool CanImport => !IsInstalled && !IsBusy;
+    public bool ImportVisible => !IsInstalled;
+
     // --- External IP + Port Accessibility ---
 
     /// <summary>The IP:port a player connects to (public IP + game port), or empty until the IP is known.</summary>
@@ -696,6 +701,27 @@ public partial class MainViewModel : ObservableObject
         // Only after a genuine first install (not a re-validate / update on an existing one).
         if (!wasInstalled && IsInstalled)
             InstallFinished?.Invoke();
+    }
+
+    /// <summary>Import an existing (non-launcher) server by copying it into the managed folder. Shows "Working..."
+    /// during the copy, then on success fires InstallFinished so the View offers REST setup like a fresh install.</summary>
+    public async Task<bool> ImportServerAsync(string sourceDir)
+    {
+        var wasInstalled = IsInstalled;
+        IsBusy = true;
+        bool imported;
+        try
+        {
+            imported = await _controller.ImportServerAsync(sourceDir);
+        }
+        finally
+        {
+            IsBusy = false;
+            IsInstalled = _controller.IsInstalled;
+        }
+        if (imported && !wasInstalled && IsInstalled)
+            InstallFinished?.Invoke();
+        return imported;
     }
 
     // Start now runs a SteamCMD update check before launching, so it's a long op, show "Working...".

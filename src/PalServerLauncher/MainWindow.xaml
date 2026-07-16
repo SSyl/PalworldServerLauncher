@@ -93,6 +93,9 @@
                     </Style>
                 </Button.Style>
             </Button>
+            <Button DockPanel.Dock="Left" Content="{x:Static loc:Strings.Main_ImportServer}" Click="OnImportServer"
+                    IsEnabled="{Binding CanImport}" Visibility="{Binding ImportVisible, Converter={StaticResource BoolToVis}}"
+                    ToolTip="{x:Static loc:Strings.Main_ImportServerTip}"/>
             <Button DockPanel.Dock="Left" Content="↻" Command="{Binding RestartCommand}" FontSize="16" MinWidth="40"
                     ToolTip="{x:Static loc:Strings.Main_RestartTip}"/>
             <Button DockPanel.Dock="Left" Content="{x:Static loc:Strings.Common_ForceShutdown}" Click="OnForceShutdown"

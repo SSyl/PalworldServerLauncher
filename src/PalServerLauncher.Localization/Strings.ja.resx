@@ -2229,4 +2229,28 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
   <data name="LauncherSettings_AutoReconnectTip" xml:space="preserve">
     <value>When exactly one managed server is found running at startup, adopt it without asking. If several are found, you'll still be prompted.</value>
   </data>
+  <data name="Main_ImportServer" xml:space="preserve">
+    <value>Import server</value>
+  </data>
+  <data name="Main_ImportServerTip" xml:space="preserve">
+    <value>Copy an existing Palworld dedicated server you installed elsewhere into this launcher. The original is left untouched.</value>
+  </data>
+  <data name="Main_ImportPickTitle" xml:space="preserve">
+    <value>Select your Palworld dedicated server folder (usually named PalServer)</value>
+  </data>
+  <data name="Main_ImportTitle" xml:space="preserve">
+    <value>Import server</value>
+  </data>
+  <data name="Main_ImportInvalidMessage" xml:space="preserve">
+    <value>That folder doesn't look like a Palworld dedicated server install. It's typically installed in a folder named PalServer. If you're using Steam, it's under Steam\steamapps\common\PalServer.</value>
+  </data>
+  <data name="Main_ImportConfirmMessage" xml:space="preserve">
+    <value>Copy this server into the launcher from '{0}'? The original is left in place, so once you've confirmed the launcher-managed copy works you can delete the original yourself.</value>
+  </data>
+  <data name="Main_ImportCopyButton" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Main_ImportFailedMessage" xml:space="preserve">
+    <value>The import didn't complete. Check the log for details.</value>
+  </data>
 </root>

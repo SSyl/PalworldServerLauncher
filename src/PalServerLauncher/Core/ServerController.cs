@@ -438,6 +438,72 @@ public sealed class ServerController : IDisposable
         }
     }
 
+    /// <summary>
+    /// Copy an existing (non-launcher) server install from <paramref name="sourceDir"/> into the managed folder,
+    /// leaving the original in place. Refuses if the server is running, a managed server already exists, the
+    /// source doesn't look like a real install, or the source contains the destination. The caller offers REST
+    /// setup afterwards (like a fresh install). Returns true on a completed copy.
+    /// </summary>
+    public async Task<bool> ImportServerAsync(string sourceDir, CancellationToken ct = default)
+    {
+        if (IsRunning())
+        {
+            _logger.Info("Stop the server before importing.");
+            return false;
+        }
+        if (IsInstalled)
+        {
+            _logger.Info("A server is already installed here. Remove it before importing another.");
+            return false;
+        }
+        if (!ServerImporter.LooksLikeServerInstall(sourceDir))
+        {
+            _logger.Info("That folder doesn't look like a Palworld dedicated server install (no server exe found).");
+            return false;
+        }
+
+        var dest = _steamCmd.InstallDir;
+        if (ProcessScanner.IsUnder(dest, sourceDir) || PathsEqual(sourceDir, dest))
+        {
+            _logger.Info("Can't import a folder into itself. Pick the existing install, not the launcher's own server folder.");
+            return false;
+        }
+
+        _logger.Info($"Importing server from {sourceDir} into {dest} (the original is left in place)...");
+        var progress = new Progress<string>(_logger.Info);
+        try
+        {
+            await ServerImporter.CopyDirectoryAsync(sourceDir, dest, progress, ct).ConfigureAwait(false);
+            _logger.Info($"Import complete (build {_steamCmd.ReadInstalledBuildId() ?? "?"}). Once you've confirmed this copy works, you can delete the original yourself.");
+            return true;
+        }
+        catch (OperationCanceledException)
+        {
+            _logger.Info("Import cancelled.");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            _logger.Error("Import failed", ex);
+            return false;
+        }
+    }
+
+    private static bool PathsEqual(string a, string b)
+    {
+        try
+        {
+            return string.Equals(
+                Path.TrimEndingDirectorySeparator(Path.GetFullPath(a)),
+                Path.TrimEndingDirectorySeparator(Path.GetFullPath(b)),
+                StringComparison.OrdinalIgnoreCase);
+        }
+        catch (Exception ex) when (ex is ArgumentException or PathTooLongException)
+        {
+            return false;
+        }
+    }
+
     /// <summary>Outcome of a read-only manual update check (the "Check for Update" button).</summary>
     public enum UpdateCheckResult { UpToDate, UpdateAvailable, CheckFailed }
 
