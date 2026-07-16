@@ -8,7 +8,8 @@ Inspired by [Conan Exiles' Dedicated Server Launcher](https://forums.funcom.com/
 
 **[Download the latest release](https://github.com/SSyl/PalworldServerLauncher/releases/latest)** to get started.
 
-Other languages are available: Simplified Chinese, Traditional Chinese, and Japanese. See [Languages](#languages).
+Other languages are available: Simplified Chinese, Traditional Chinese, Japanese, German, French, and Spanish.
+See [Languages](#languages).
 
 > [!NOTE]
 > **Status:** Pre-release but mostly feature complete
@@ -84,9 +85,9 @@ Other languages are available: Simplified Chinese, Traditional Chinese, and Japa
   [docs/discord-bot-setup.md](docs/discord-bot-setup.md).
 
 ### Languages
-- Available in **English**, **Simplified Chinese** (简体中文), **Traditional Chinese** (繁體中文), and **Japanese**
-  (日本語). Pick your language on first run, or any time from Launcher Settings (the gear icon in the
-  top-right), then it restarts to apply.
+- Available in **English**, **Simplified Chinese** (简体中文), **Traditional Chinese** (繁體中文), **Japanese**
+  (日本語), **German** (Deutsch), **French** (Français), and **Spanish** (Español). Pick your language on first
+  run, or any time from Launcher Settings (the gear icon in the top-right), then it restarts to apply.
 - The non-English translations are machine-generated, so if something reads oddly, corrections via an issue or
   pull request are welcome.
 
@@ -126,7 +127,8 @@ Other languages are available: Simplified Chinese, Traditional Chinese, and Japa
 
 ![Discord settings](docs/images/app-screenshots/discord-bot-settings.png)
 
-**Available in several languages.** English, Simplified Chinese (shown here), Traditional Chinese, and Japanese.
+**Available in several languages.** English, Simplified Chinese (shown here), Traditional Chinese, Japanese,
+German, French, and Spanish.
 
 ![The main window in Simplified Chinese](docs/images/app-screenshots/main-window-simplified-chinese.png)
 
