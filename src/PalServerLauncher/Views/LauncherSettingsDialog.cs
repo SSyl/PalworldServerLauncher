@@ -1,5 +1,6 @@
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -113,7 +114,7 @@ public sealed class LauncherSettingsDialog : Window
         info.Children.Add(licensesLine);
         info.Children.Add(new TextBlock
         {
-            Text = Strings.LauncherSettings_Copyright, Foreground = Muted, FontSize = 11, Margin = new Thickness(0, 3, 0, 0),
+            Text = $"v{AppVersion()} · {Strings.LauncherSettings_Copyright}", Foreground = Muted, FontSize = 11, Margin = new Thickness(0, 3, 0, 0),
         });
         DockPanel.SetDock(info, Dock.Left);
         bottom.Children.Add(info);
@@ -164,6 +165,20 @@ public sealed class LauncherSettingsDialog : Window
                 Strings.LauncherSettings_LoginOpenFailedMessage, Strings.Common_OK);
             _loginOpen.IsChecked = !want;
         }
+    }
+
+    /// <summary>The app version, read from the assembly (baked in from the csproj &lt;Version&gt; at build time,
+    /// so it never drifts). Strips the SDK's <c>+&lt;commit&gt;</c> build-metadata suffix, giving e.g. "0.4.0".</summary>
+    private static string AppVersion()
+    {
+        var info = typeof(LauncherSettingsDialog).Assembly
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+        if (!string.IsNullOrWhiteSpace(info))
+        {
+            var plus = info.IndexOf('+');
+            return plus >= 0 ? info[..plus] : info;
+        }
+        return typeof(LauncherSettingsDialog).Assembly.GetName().Version?.ToString(3) ?? "?";
     }
 
     /// <summary>Show the bundled third-party license notices in a scrollable read-only window.</summary>
