@@ -134,7 +134,7 @@
     <value>Sprache</value>
   </data>
   <data name="LauncherSettings_Tooltip" xml:space="preserve">
-    <value>Sprache des Launchers und weitere Launcher-Einstellungen ändern.</value>
+    <value>Sprache und Einstellungen des Launchers ändern.</value>
   </data>
   <!-- Shared across dialogs (dedupe: one key reused everywhere the word appears) -->
   <data name="Common_AppName" xml:space="preserve">
@@ -157,7 +157,7 @@
     <value>Ankündigungen</value>
   </data>
   <data name="Announcements_Intro" xml:space="preserve">
-    <value>Wird Spielern vor einem Neustart angezeigt. Setzen Sie {minutes} an die Stelle, an der der Countdown erscheinen soll (wird durch die verbleibenden Minuten ersetzt). Entfernen Sie es für eine feste Nachricht ohne Zeitangabe.</value>
+    <value>Wird Spielern vor dem Neustart angezeigt. {minutes} für den Countdown (verbleibende Minuten) einfügen. Für eine feste Nachricht ohne Zeitangabe entfernen.</value>
   </data>
   <data name="Announcements_RestartLabel" xml:space="preserve">
     <value>Geplanter / manueller Neustart</value>
@@ -320,19 +320,19 @@ Trotzdem als feste Nachrichten speichern?</value>
     <value>Start</value>
   </data>
   <data name="Main_BackupStartupTip" xml:space="preserve">
-    <value>Erstellt eine Sicherung beim Start des Servers, bevor auf Updates geprüft wird (SteamCMD kann die Konfiguration überschreiben).</value>
+    <value>Sichert beim Serverstart, vor der Update-Prüfung (SteamCMD kann Konfigurationen überschreiben).</value>
   </data>
   <data name="Main_BackupShutdown" xml:space="preserve">
     <value>Herunterfahren</value>
   </data>
   <data name="Main_BackupShutdownTip" xml:space="preserve">
-    <value>Erstellt eine Sicherung, wenn der Server stoppt oder neu startet (speichert vorher die Welt).</value>
+    <value>Sichert beim Stoppen oder Neustarten (speichert vorher die Welt).</value>
   </data>
   <data name="Main_BackupScheduled" xml:space="preserve">
     <value>Geplant</value>
   </data>
   <data name="Main_BackupScheduledTip" xml:space="preserve">
-    <value>Erstellt automatisch Sicherungen zu den rechts aufgeführten Zeiten, solange der Server läuft.</value>
+    <value>Sichert automatisch zu den rechts aufgeführten Zeiten bei laufendem Server.</value>
   </data>
   <data name="Main_ChooseBackupTimes" xml:space="preserve">
     <value>Sicherungszeiten wählen</value>
@@ -362,7 +362,7 @@ Trotzdem als feste Nachrichten speichern?</value>
     <value>Server automatisch aktualisieren</value>
   </data>
   <data name="Main_AutoUpdateTip" xml:space="preserve">
-    <value>Startet den Server automatisch neu, sobald ein neues Update gefunden wird. Die Einstellung „Neustarts ankündigen“ fügt eine Verzögerung vor dem Neustart hinzu, falls Spieler online sind.</value>
+    <value>Startet bei neuen Updates automatisch neu. „Neustarts ankündigen“ verzögert dies, falls Spieler online sind.</value>
   </data>
   <data name="Main_UpdateOnStart" xml:space="preserve">
     <value>Update bei Start / Neustart</value>

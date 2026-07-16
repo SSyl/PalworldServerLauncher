@@ -157,7 +157,7 @@
     <value>Annonces</value>
   </data>
   <data name="Announcements_Intro" xml:space="preserve">
-    <value>Affiché aux joueurs avant un redémarrage. Placez {minutes} à l'endroit où le compte à rebours doit apparaître (il sera remplacé par le nombre de minutes restantes). Retirez-le pour un message fixe sans minuterie.</value>
+    <value>Affiché aux joueurs avant un redémarrage. Placez {minutes} pour indiquer les minutes restantes. Retirez-le pour un message fixe.</value>
   </data>
   <data name="Announcements_RestartLabel" xml:space="preserve">
     <value>Redémarrage planifié / manuel</value>

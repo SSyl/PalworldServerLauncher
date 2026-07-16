@@ -389,7 +389,7 @@
     <value>서버 통계(FPS, 플레이어 수, 가동 시간, 메모리)를 30초마다 로그에 기록합니다. 터미널에서 실행할 때 유용하지만, 그 외에는 로그에 잡음이 늘어납니다.</value>
   </data>
   <data name="Main_ZombieCheck" xml:space="preserve">
-    <value>좀비 확인: 다음 이후 재시작</value>
+    <value>좀비 확인: 재시작 기준</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
     <value>REST API가 연속으로 이 횟수만큼 응답하지 않거나 월드가 멈춰 있으면 서버를 재시작합니다. REST API가 불안정해서 자동 재시작을 원하지 않으면 꺼두십시오.</value>

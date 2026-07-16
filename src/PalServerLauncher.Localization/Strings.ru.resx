@@ -134,7 +134,7 @@
     <value>Язык</value>
   </data>
   <data name="LauncherSettings_Tooltip" xml:space="preserve">
-    <value>Изменение языка лаунчера и других его настроек.</value>
+    <value>Изменение языка и других настроек лаунчера.</value>
   </data>
   <!-- Shared across dialogs (dedupe: one key reused everywhere the word appears) -->
   <data name="Common_AppName" xml:space="preserve">
@@ -157,7 +157,7 @@
     <value>Объявления</value>
   </data>
   <data name="Announcements_Intro" xml:space="preserve">
-    <value>Показывается игрокам перед перезапуском. Вставьте {minutes} там, где должен быть обратный отсчёт (он заменяется оставшимися минутами). Уберите его для фиксированного сообщения без указания времени.</value>
+    <value>Показывается игрокам перед перезапуском. Вставьте {minutes} для обратного отсчёта. Уберите для фиксированного сообщения.</value>
   </data>
   <data name="Announcements_RestartLabel" xml:space="preserve">
     <value>Плановый/ручной перезапуск</value>
