@@ -281,7 +281,7 @@ Les enregistrer quand même comme messages fixes ?</value>
     <value>Choisir les horaires de redémarrage</value>
   </data>
   <data name="Main_MinUptime" xml:space="preserve">
-    <value>Temps de fonctionnement minimal avant redémarrage</value>
+    <value>Temps minimal avant redémarrage</value>
   </data>
   <data name="Main_HourSuffix" xml:space="preserve">
     <value>h</value>
