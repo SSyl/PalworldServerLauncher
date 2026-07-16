@@ -103,11 +103,11 @@ Other languages are available: Simplified Chinese, Traditional Chinese, and Japa
 
 **Launch arguments**, with a live preview of the exact command line.
 
-![Launch arguments](docs/images/app-screenshots/launcher-args.png)
+![Launch arguments](docs/images/app-screenshots/launch-args.png)
 
-**Advanced settings.** Set the server process priority and pin it to specific CPU cores.
+**CPU affinity and priority.** Set the server process priority and pin it to specific CPU cores.
 
-![Advanced settings](docs/images/app-screenshots/advanced-settings.png)
+![CPU affinity and priority](docs/images/app-screenshots/cpu-affinity-priority.png)
 
 **Picking restart and backup times.**
 
