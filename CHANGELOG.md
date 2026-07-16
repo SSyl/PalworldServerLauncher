@@ -2,6 +2,42 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [0.4.0] - 2026-07-16
+
+### Added
+- **Automatic-updates switch and a version pin.** A single Automatic Updates toggle turns the launcher's
+  automatic updating on or off (you can still check manually), and a new Pin Server Version option freezes the
+  server on its current build and holds off every update until you unpin.
+- **Import an existing server.** Already have a Palworld dedicated server installed somewhere else? The Import
+  button copies it into the launcher, leaving your original in place until you've confirmed the managed copy
+  works.
+- **Start at Windows login.** An option in Launcher Settings drops a Startup shortcut so the launcher opens and
+  starts your server when you sign in to Windows, keeping scheduled restarts, updates, backups, and recovery
+  running. No admin rights needed.
+- **Auto-reconnect on startup.** An opt-in setting to silently reconnect to a single already-running server
+  when the launcher starts, instead of asking each time. Several running servers still prompt.
+- **Command-line startup options.** `--install-server` installs SteamCMD and the server with no window, and
+  `--start-server` opens the launcher and brings the server up on load, handy for scripts and scheduled tasks.
+- **The game version shows next to the build number.** The Version stat and the pinned-build display now show
+  the release version (like v1.0.1) alongside the build id, so you can tell which update a build is.
+- **Open-source licenses and a copyright line** in Launcher Settings.
+
+### Changed
+- **Server Settings reorganized.** Game Settings now has its own sub-tabs (Admin, Gameplay, Game Balance,
+  Performance, Undocumented), and the old Advanced dialog for process priority and CPU affinity is now a tab in
+  the same window. The look of the app was tidied and unified throughout.
+- **Launcher Settings is a gear icon** now, in the top-right, and it has gained the Hide SteamCMD Window and Log
+  Server Status options that used to sit in the main window.
+- **The Discord bot button** moved up next to Server Settings and Mods.
+- **SteamCMD reinstalls itself if it goes missing** before an update or version check, so an imported or
+  hand-placed server without it still updates.
+
+### Fixed
+- **Disabled update options gray out properly** when a version pin is on, instead of looking like you can still
+  click them.
+- **The schedule picker's time dropdowns** are no longer oversized.
+- **The Server Settings search box** no longer draws the text cursor on top of the "Search" placeholder.
+
 ## [0.3.1] - 2026-07-14
 
 ### Added
