@@ -153,7 +153,7 @@
     <value>WorldOption.sav detected</value>
   </data>
   <data name="WorldOpt_Message" xml:space="preserve">
-    <value>The launcher found a WorldOption.sav file in this server's save folder. On a dedicated server, Palworld lets that file override your PalWorldSettings.ini, so the launcher's settings (including the REST API it needs to monitor and control the server) can be silently ignored, which may leave the server running but uncontrollable. Renaming it to .bak makes the server read PalWorldSettings.ini instead. Your world is not affected.</value>
+    <value>⚠ A WorldOption.sav in this save folder overrides your PalWorldSettings.ini, so the launcher may not be able to monitor or control the server. Renaming it to .bak fixes this and does not affect your world.</value>
   </data>
   <data name="WorldOpt_Rename" xml:space="preserve">
     <value>Rename to .bak (recommended)</value>
@@ -165,7 +165,7 @@
     <value>WorldOption.sav renamed</value>
   </data>
   <data name="WorldOpt_RenamedFormat" xml:space="preserve">
-    <value>WorldOption.sav renamed to {0} in {1}</value>
+    <value>WorldOption.sav renamed to {0} in:</value>
   </data>
   <data name="WorldOpt_RenameFailedFormat" xml:space="preserve">
     <value>Couldn't rename WorldOption.sav: {0}</value>
@@ -1435,10 +1435,10 @@ Save these changes?</value>
     <value>Install</value>
   </data>
   <data name="Btn_Starting" xml:space="preserve">
-    <value>Starting…</value>
+    <value>Starting</value>
   </data>
   <data name="Btn_Stopping" xml:space="preserve">
-    <value>Stopping…</value>
+    <value>Stopping</value>
   </data>
   <data name="Btn_StoppingSeconds" xml:space="preserve">
     <value>Stopping ({0}s)</value>

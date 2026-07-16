@@ -44,7 +44,7 @@ public partial class MainWindow : Window
         _viewModel.RequestShutdownDecision = PromptShutdownDecision;
         _viewModel.ConfirmShutdownNow = ConfirmShutdownNow;
         _viewModel.ConfirmWorldOption = PromptWorldOption;
-        _viewModel.ShowWorldOptionRenamed = ShowWorldOptionRenamed;
+        _viewModel.ShowWorldOptionResult = ShowWorldOptionResult;
 
         Loaded += OnLoaded;
         Closing += OnClosing;
@@ -180,9 +180,16 @@ public partial class MainWindow : Window
             _ => WorldOptionChoice.Cancel, // Cancel button or dialog dismissed (-1)
         };
 
-    /// <summary>Confirm (or report an error) after handling a detected WorldOption.sav on Start.</summary>
-    private void ShowWorldOptionRenamed(string message) =>
-        ChoiceDialog.Show(this, Strings.WorldOpt_RenamedTitle, message, Strings.Common_OK);
+    /// <summary>Show the outcome after handling a detected WorldOption.sav on Start: the renamed file(s) with a
+    /// reveal-in-Explorer link, or a plain error.</summary>
+    private void ShowWorldOptionResult(WorldOptionRenameResult result)
+    {
+        if (result.Success)
+            WorldOptionRenamedDialog.Show(this, result.BakPaths);
+        else
+            ChoiceDialog.Show(this, Strings.WorldOpt_RenamedTitle,
+                string.Format(Strings.WorldOpt_RenameFailedFormat, result.Error), Strings.Common_OK);
+    }
 
     /// <summary>Confirm skipping a timed shutdown's countdown to shut the server down immediately.</summary>
     private bool ConfirmShutdownNow() =>

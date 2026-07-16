@@ -11,3 +11,7 @@ public enum WorldOptionChoice
     /// <summary>Leave the file in place and start anyway (not recommended).</summary>
     ContinueAnyway,
 }
+
+/// <summary>Outcome of a RenameToBak choice: the .bak paths that were renamed (for the View to show as
+/// reveal-in-Explorer links), or a failure carrying its error message.</summary>
+public readonly record struct WorldOptionRenameResult(bool Success, IReadOnlyList<string> BakPaths, string? Error);

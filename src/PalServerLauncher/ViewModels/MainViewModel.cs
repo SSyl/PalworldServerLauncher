@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
@@ -109,13 +108,26 @@ public partial class MainViewModel : ObservableObject
     /// start anyway, or cancel. Keeps the dialog in the View. Returns the user's choice.</summary>
     public Func<WorldOptionChoice>? ConfirmWorldOption { get; set; }
 
-    /// <summary>Set by the View: show a confirmation/error message after handling a detected WorldOption.sav.</summary>
-    public Action<string>? ShowWorldOptionRenamed { get; set; }
+    /// <summary>Set by the View: show the outcome after handling a detected WorldOption.sav (the renamed files
+    /// as reveal-in-Explorer links, or an error).</summary>
+    public Action<WorldOptionRenameResult>? ShowWorldOptionResult { get; set; }
 
-    /// <summary>Label for the multi-state primary button (animated dots while busy, so it's clearly not frozen).</summary>
-    public string PrimaryActionText => IsBusy
-        ? Strings.Vm_Working + new string('.', _busyDots)
-        : PrimaryButton.Label(IsInstalled, IsBusy, State, ShutdownRemainingSeconds);
+    /// <summary>Label for the multi-state primary button, with an animated ellipsis while busy or transitioning
+    /// (Starting/Stopping/Restarting) so it's clearly not frozen.</summary>
+    public string PrimaryActionText
+    {
+        get
+        {
+            if (IsBusy)
+                return Strings.Vm_Working + new string('.', _busyDots);
+            var label = PrimaryButton.Label(IsInstalled, IsBusy, State, ShutdownRemainingSeconds);
+            // Animate the ellipsis on transitional labels. Skipped during a timed shutdown, where the label is
+            // a live "(Ns)" countdown that changes on its own.
+            return ShutdownRemainingSeconds is null && IsTransitional(State)
+                ? label + new string('.', _busyDots)
+                : label;
+        }
+    }
 
     /// <summary>What the primary button currently represents, drives its color via XAML (Install/Start = green, Stop = red).</summary>
     public PrimaryActionKind PrimaryActionKind => PrimaryButton.Resolve(IsInstalled, IsBusy, State, ShutdownRemainingSeconds);
@@ -167,13 +179,28 @@ public partial class MainViewModel : ObservableObject
         _logger.Info($"Launcher UI ready. Server root: {_config.ServerRoot}");
     }
 
-    // Run the "Working..." dot animation only while a long operation is in progress.
-    partial void OnIsBusyChanged(bool value)
+    // Run the animated-dots ellipsis while a long op is in progress (Working) or the server is transitioning
+    // (Starting/Stopping/Restarting), so the button is clearly not frozen. Not during a timed shutdown, whose
+    // label already shows a live countdown.
+    private void RefreshBusyAnimation()
     {
-        _busyDots = 0;
-        _busyAnimationTimer.IsEnabled = value;
+        var animate = IsBusy || (ShutdownRemainingSeconds is null && IsTransitional(State));
+        if (animate && !_busyAnimationTimer.IsEnabled)
+        {
+            _busyDots = 0;
+            _busyAnimationTimer.Start();
+        }
+        else if (!animate && _busyAnimationTimer.IsEnabled)
+        {
+            _busyAnimationTimer.Stop();
+            _busyDots = 0;
+        }
         OnPropertyChanged(nameof(PrimaryActionText));
     }
+
+    partial void OnIsBusyChanged(bool value) => RefreshBusyAnimation();
+
+    partial void OnShutdownRemainingSecondsChanged(int? value) => RefreshBusyAnimation();
 
     /// <summary>
     /// Detect an already-running server WITHOUT adopting it (so the View can prompt first), and reflect
@@ -249,7 +276,11 @@ public partial class MainViewModel : ObservableObject
     /// (Starting / Stopping / Restarting) starts a one-shot countdown, and the button appears only if the
     /// server is still transitional when it elapses. Leaving those states hides it again at once.
     /// </summary>
-    partial void OnStateChanged(ServerState value) => RefreshForceShutdownReveal();
+    partial void OnStateChanged(ServerState value)
+    {
+        RefreshForceShutdownReveal();
+        RefreshBusyAnimation();
+    }
 
     private static bool IsTransitional(ServerState state) =>
         state is ServerState.Starting or ServerState.Stopping or ServerState.Restarting;
@@ -776,20 +807,20 @@ public partial class MainViewModel : ObservableObject
             return true;
 
         // RenameToBak: rename each, abort (without starting) on the first failure.
-        var renamed = new List<string>();
+        var bakPaths = new List<string>();
         foreach (var sav in savs)
         {
             if (_controller.TryRenameWorldOptionSav(sav, out var bak, out var error))
             {
-                renamed.Add(string.Format(Strings.WorldOpt_RenamedFormat, Path.GetFileName(bak), Path.GetDirectoryName(sav)));
+                bakPaths.Add(bak);
             }
             else
             {
-                ShowWorldOptionRenamed?.Invoke(string.Format(Strings.WorldOpt_RenameFailedFormat, error));
+                ShowWorldOptionResult?.Invoke(new WorldOptionRenameResult(false, bakPaths, error));
                 return false;
             }
         }
-        ShowWorldOptionRenamed?.Invoke(string.Join(Environment.NewLine, renamed));
+        ShowWorldOptionResult?.Invoke(new WorldOptionRenameResult(true, bakPaths, null));
         return true;
     }
 
