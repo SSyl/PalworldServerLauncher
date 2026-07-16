@@ -1477,7 +1477,7 @@ Enregistrer ces changements ?</value>
     <value>{0}min {1}s</value>
   </data>
   <data name="Cat_ServerName_Label" xml:space="preserve">
-    <value>Server name</value>
+    <value>Nom du monde</value>
   </data>
   <data name="Cat_ServerName_Desc" xml:space="preserve">
     <value>Server name.</value>
@@ -1555,7 +1555,7 @@ Enregistrer ces changements ?</value>
     <value>Enable Palworld's own world backups (separate from the launcher's). Enabling this increases disk load.</value>
   </data>
   <data name="Cat_AutoSaveSpan_Label" xml:space="preserve">
-    <value>Auto save interval</value>
+    <value>Intervalle de sauvegarde auto</value>
   </data>
   <data name="Cat_AutoSaveSpan_Desc" xml:space="preserve">
     <value>How often the world auto-saves (seconds).</value>
@@ -1633,31 +1633,31 @@ Enregistrer ces changements ?</value>
     <value>Maximum total number of base camps on the map (all guild bases combined).</value>
   </data>
   <data name="Cat_BaseCampMaxNumInGuild_Label" xml:space="preserve">
-    <value>Maximum Number of Bases for Each Guild</value>
+    <value>Nombre max de bases par guilde</value>
   </data>
   <data name="Cat_BaseCampMaxNumInGuild_Desc" xml:space="preserve">
     <value>Maximum number of bases per guild. Default 4 (max 10). Increasing this raises processing load.</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Label" xml:space="preserve">
-    <value>Maximum Number of Work Pals at the Base</value>
+    <value>Nombre max de Pals actifs dans la base</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Desc" xml:space="preserve">
     <value>Maximum number of Pals per base (max 50). Increasing this raises processing load.</value>
   </data>
   <data name="Cat_MaxBuildingLimitNum_Label" xml:space="preserve">
-    <value>Maximum Number of Structures per Base</value>
+    <value>Nombre max de structures par base</value>
   </data>
   <data name="Cat_MaxBuildingLimitNum_Desc" xml:space="preserve">
     <value>Per-player building count cap (0 = No Limit).</value>
   </data>
   <data name="Cat_DropItemMaxNum_Label" xml:space="preserve">
-    <value>Maximum Number of Dropped Items in a World</value>
+    <value>Nombre maximal d'objets lâchés au sol</value>
   </data>
   <data name="Cat_DropItemMaxNum_Desc" xml:space="preserve">
     <value>Maximum number of items lying dropped in the world before they start to despawn.</value>
   </data>
   <data name="Cat_PhysicsActiveDropItemMaxNum_Label" xml:space="preserve">
-    <value>Maximum Number of Dropped Active Items in a World</value>
+    <value>Nombre max d'objets soumis à la physique lâchés dans le monde</value>
   </data>
   <data name="Cat_PhysicsActiveDropItemMaxNum_Desc" xml:space="preserve">
     <value>Maximum number of dropped items that can use physics behavior. -1 = No Limit. Increasing this can affect processing load.</value>
@@ -1693,13 +1693,13 @@ Enregistrer ces changements ?</value>
     <value>Undocumented. Likely how often the server checks player Pal Box/storage data for changes to sync (seconds).</value>
   </data>
   <data name="Cat_Difficulty_Label" xml:space="preserve">
-    <value>Difficulty</value>
+    <value>Difficulté</value>
   </data>
   <data name="Cat_Difficulty_Desc" xml:space="preserve">
     <value>Client / single-player difficulty preset. It has no effect on a dedicated server, so leave it at None and use the individual settings below (or the Difficulty preset buttons at the top) to set server difficulty.</value>
   </data>
   <data name="Cat_bHardcore_Label" xml:space="preserve">
-    <value>Hardcore Mode: Permanent Loss of Progress Upon Player Death</value>
+    <value>Mode hardcore : Mort définitive du joueur</value>
   </data>
   <data name="Cat_bHardcore_Desc" xml:space="preserve">
     <value>Enable Hardcore. You will not be able to respawn on death.</value>
@@ -1741,25 +1741,25 @@ Enregistrer ces changements ?</value>
     <value>Base Pals engage hostile players who trespass into your base. One of the three settings that enable PvP.</value>
   </data>
   <data name="Cat_bEnableFastTravel_Label" xml:space="preserve">
-    <value>Enable Fast Travel</value>
+    <value>Permettre ou non le voyage rapide</value>
   </data>
   <data name="Cat_bEnableFastTravel_Desc" xml:space="preserve">
     <value>Enable fast travel.</value>
   </data>
   <data name="Cat_bEnableFastTravelOnlyBaseCamp_Label" xml:space="preserve">
-    <value>Restrict Fast Travel to Bases Only</value>
+    <value>Limiter le voyage rapide aux bases uniquement</value>
   </data>
   <data name="Cat_bEnableFastTravelOnlyBaseCamp_Desc" xml:space="preserve">
     <value>Restrict fast travel to between bases only.</value>
   </data>
   <data name="Cat_bEnableInvaderEnemy_Label" xml:space="preserve">
-    <value>Enable Raid Events</value>
+    <value>Événements de raid</value>
   </data>
   <data name="Cat_bEnableInvaderEnemy_Desc" xml:space="preserve">
     <value>Enable Invaders (raid events).</value>
   </data>
   <data name="Cat_EnablePredatorBossPal_Label" xml:space="preserve">
-    <value>Enable Predator Pals</value>
+    <value>Apparition de Pals prédateurs</value>
   </data>
   <data name="Cat_EnablePredatorBossPal_Desc" xml:space="preserve">
     <value>Allows Predator Pals to spawn in the world.</value>
@@ -1861,13 +1861,13 @@ Enregistrer ces changements ?</value>
     <value>Allow loading from the Global Palbox.</value>
   </data>
   <data name="Cat_bAutoResetGuildNoOnlinePlayers_Label" xml:space="preserve">
-    <value>Auto-reset inactive guilds</value>
+    <value>Suppression automatique des guildes inactives</value>
   </data>
   <data name="Cat_bAutoResetGuildNoOnlinePlayers_Desc" xml:space="preserve">
     <value>If no guild members log in, automatically delete structures and base Pals.</value>
   </data>
   <data name="Cat_AutoResetGuildTimeNoOnlinePlayers_Label" xml:space="preserve">
-    <value>Auto-reset guild after (hours)</value>
+    <value>Délai avant suppression des guildes inactives (h)</value>
   </data>
   <data name="Cat_AutoResetGuildTimeNoOnlinePlayers_Desc" xml:space="preserve">
     <value>Offline duration before an inactive guild is auto-reset (hours). Ignored unless 'Auto-reset inactive guilds' is on.</value>
@@ -1885,19 +1885,19 @@ Enregistrer ces changements ?</value>
     <value>Whether to show player locations and the number of PvP-exclusive items on the map.</value>
   </data>
   <data name="Cat_bIsRandomizerPalLevelRandom_Label" xml:space="preserve">
-    <value>Randomize Pal levels</value>
+    <value>Rendre les niveaux des Pals sauvages totalement aléatoires en mode aléatoire.</value>
   </data>
   <data name="Cat_bIsRandomizerPalLevelRandom_Desc" xml:space="preserve">
     <value>If on, wild Pal levels are fully random. If off, levels are randomized within each area's intended range.</value>
   </data>
   <data name="Cat_RandomizerType_Label" xml:space="preserve">
-    <value>Random Pal Mode</value>
+    <value>Mode d'apparition aléatoire des Pals</value>
   </data>
   <data name="Cat_RandomizerType_Desc" xml:space="preserve">
     <value>Pal spawn randomization. None = no randomization. Region = randomize per region. All = fully randomized.</value>
   </data>
   <data name="Cat_RandomizerSeed_Label" xml:space="preserve">
-    <value>Randomizer seed</value>
+    <value>Code de génération</value>
   </data>
   <data name="Cat_RandomizerSeed_Desc" xml:space="preserve">
     <value>Seed value used when Pal spawn randomization is enabled.</value>
@@ -1921,43 +1921,43 @@ Enregistrer ces changements ?</value>
     <value>Distance at which voice chat volume becomes zero.</value>
   </data>
   <data name="Cat_DayTimeSpeedRate_Label" xml:space="preserve">
-    <value>Day Time Speed</value>
+    <value>Vitesse du jour</value>
   </data>
   <data name="Cat_DayTimeSpeedRate_Desc" xml:space="preserve">
     <value>Daytime progression speed.</value>
   </data>
   <data name="Cat_NightTimeSpeedRate_Label" xml:space="preserve">
-    <value>Night Time Speed</value>
+    <value>Vitesse de la nuit</value>
   </data>
   <data name="Cat_NightTimeSpeedRate_Desc" xml:space="preserve">
     <value>Nighttime progression speed.</value>
   </data>
   <data name="Cat_ExpRate_Label" xml:space="preserve">
-    <value>EXP Rate</value>
+    <value>Gain d'expérience</value>
   </data>
   <data name="Cat_ExpRate_Desc" xml:space="preserve">
     <value>EXP gain multiplier.</value>
   </data>
   <data name="Cat_PalCaptureRate_Label" xml:space="preserve">
-    <value>Pal Capture Rate</value>
+    <value>Taux de capture des Pals</value>
   </data>
   <data name="Cat_PalCaptureRate_Desc" xml:space="preserve">
     <value>Capture rate multiplier.</value>
   </data>
   <data name="Cat_PalSpawnNumRate_Label" xml:space="preserve">
-    <value>Pal Appearance Rate</value>
+    <value>Taux d'apparition des Pals</value>
   </data>
   <data name="Cat_PalSpawnNumRate_Desc" xml:space="preserve">
     <value>Pal spawn rate. Impacts performance.</value>
   </data>
   <data name="Cat_PalEggDefaultHatchingTime_Label" xml:space="preserve">
-    <value>Time (h) to incubate Massive Egg</value>
+    <value>Temps d'éclosion des œufs géants (h) * Le temps d'éclosion des autres œufs sera modifié en conséquence.</value>
   </data>
   <data name="Cat_PalEggDefaultHatchingTime_Desc" xml:space="preserve">
     <value>Time to hatch a Massive (Huge) Egg (hours). Other eggs also require time to incubate.</value>
   </data>
   <data name="Cat_WorkSpeedRate_Label" xml:space="preserve">
-    <value>Work Speed Multiplier</value>
+    <value>Multiplicateur de vitesse de travail</value>
   </data>
   <data name="Cat_WorkSpeedRate_Desc" xml:space="preserve">
     <value>How fast both players and Pals complete work. Multiplier: 2.0 = work completed twice as fast.</value>
@@ -1969,97 +1969,97 @@ Enregistrer ces changements ?</value>
     <value>Item production speed multiplier from grazing.</value>
   </data>
   <data name="Cat_PalDamageRateAttack_Label" xml:space="preserve">
-    <value>Damage from Pals Multiplier</value>
+    <value>Dégâts infligés par les Pals</value>
   </data>
   <data name="Cat_PalDamageRateAttack_Desc" xml:space="preserve">
     <value>Damage dealt by Pals multiplier.</value>
   </data>
   <data name="Cat_PalDamageRateDefense_Label" xml:space="preserve">
-    <value>Damage to Pals Multiplier</value>
+    <value>Dégâts subis par les Pals</value>
   </data>
   <data name="Cat_PalDamageRateDefense_Desc" xml:space="preserve">
     <value>Damage taken by Pals multiplier.</value>
   </data>
   <data name="Cat_PlayerDamageRateAttack_Label" xml:space="preserve">
-    <value>Damage from Player Multiplier</value>
+    <value>Dégâts infligés par le joueur</value>
   </data>
   <data name="Cat_PlayerDamageRateAttack_Desc" xml:space="preserve">
     <value>Damage dealt by players multiplier.</value>
   </data>
   <data name="Cat_PlayerDamageRateDefense_Label" xml:space="preserve">
-    <value>Damage to Player Multiplier</value>
+    <value>Dégâts subis par le joueur</value>
   </data>
   <data name="Cat_PlayerDamageRateDefense_Desc" xml:space="preserve">
     <value>Damage taken by players multiplier.</value>
   </data>
   <data name="Cat_PlayerStomachDecreaceRate_Label" xml:space="preserve">
-    <value>Player Hunger Depletion Rate</value>
+    <value>Vitesse à laquelle la faim du joueur augmente</value>
   </data>
   <data name="Cat_PlayerStomachDecreaceRate_Desc" xml:space="preserve">
     <value>Player hunger depletion rate multiplier.</value>
   </data>
   <data name="Cat_PlayerStaminaDecreaceRate_Label" xml:space="preserve">
-    <value>Player Stamina Reduction Rate</value>
+    <value>Vitesse à laquelle l'endurance du joueur diminue</value>
   </data>
   <data name="Cat_PlayerStaminaDecreaceRate_Desc" xml:space="preserve">
     <value>Player stamina depletion rate multiplier.</value>
   </data>
   <data name="Cat_PlayerAutoHPRegeneRate_Label" xml:space="preserve">
-    <value>Player Auto Health Regeneration Rate</value>
+    <value>Régénération naturelle des PV du joueur</value>
   </data>
   <data name="Cat_PlayerAutoHPRegeneRate_Desc" xml:space="preserve">
     <value>Player natural HP regen multiplier.</value>
   </data>
   <data name="Cat_PlayerAutoHpRegeneRateInSleep_Label" xml:space="preserve">
-    <value>Player Sleep Health Regeneration Rate</value>
+    <value>Régénération des PV du joueur pendant le sommeil</value>
   </data>
   <data name="Cat_PlayerAutoHpRegeneRateInSleep_Desc" xml:space="preserve">
     <value>Player HP regen while sleeping multiplier.</value>
   </data>
   <data name="Cat_PalStomachDecreaceRate_Label" xml:space="preserve">
-    <value>Pal Hunger Depletion Rate</value>
+    <value>Vitesse à laquelle la faim des Pals augmente</value>
   </data>
   <data name="Cat_PalStomachDecreaceRate_Desc" xml:space="preserve">
     <value>Pal hunger depletion rate multiplier.</value>
   </data>
   <data name="Cat_PalStaminaDecreaceRate_Label" xml:space="preserve">
-    <value>Pal Stamina Reduction Rate</value>
+    <value>Vitesse à laquelle l'endurance des Pals diminue</value>
   </data>
   <data name="Cat_PalStaminaDecreaceRate_Desc" xml:space="preserve">
     <value>Pal stamina depletion rate multiplier.</value>
   </data>
   <data name="Cat_PalAutoHPRegeneRate_Label" xml:space="preserve">
-    <value>Pal Auto Health Regeneration Rate</value>
+    <value>Régénération naturelle des PV des Pals</value>
   </data>
   <data name="Cat_PalAutoHPRegeneRate_Desc" xml:space="preserve">
     <value>Pal natural HP regen multiplier.</value>
   </data>
   <data name="Cat_PalAutoHpRegeneRateInSleep_Label" xml:space="preserve">
-    <value>Pal Sleep Health Regeneration Rate</value>
+    <value>Régénération des PV des Pals dans la Boîte à Pals</value>
   </data>
   <data name="Cat_PalAutoHpRegeneRateInSleep_Desc" xml:space="preserve">
     <value>Pal HP regen while sleeping in the Palbox multiplier.</value>
   </data>
   <data name="Cat_CollectionDropRate_Label" xml:space="preserve">
-    <value>Gatherable Items Multiplier</value>
+    <value>Quantité de ressources récoltées</value>
   </data>
   <data name="Cat_CollectionDropRate_Desc" xml:space="preserve">
     <value>Gatherable items multiplier.</value>
   </data>
   <data name="Cat_CollectionObjectHpRate_Label" xml:space="preserve">
-    <value>Gatherable Objects Health Multiplier</value>
+    <value>PV des ressources récoltables</value>
   </data>
   <data name="Cat_CollectionObjectHpRate_Desc" xml:space="preserve">
     <value>Gatherable objects health multiplier.</value>
   </data>
   <data name="Cat_CollectionObjectRespawnSpeedRate_Label" xml:space="preserve">
-    <value>Gatherable Objects Respawn Interval</value>
+    <value>Temps de réapparition des ressources</value>
   </data>
   <data name="Cat_CollectionObjectRespawnSpeedRate_Desc" xml:space="preserve">
     <value>Gatherable objects respawn interval multiplier.</value>
   </data>
   <data name="Cat_EnemyDropItemRate_Label" xml:space="preserve">
-    <value>Dropped Items Multiplier</value>
+    <value>Quantité d'objets obtenus sur les ennemis</value>
   </data>
   <data name="Cat_EnemyDropItemRate_Desc" xml:space="preserve">
     <value>Dropped item quantity multiplier.</value>
@@ -2071,7 +2071,7 @@ Enregistrer ces changements ?</value>
     <value>How long dropped items remain in the world before they despawn (hours). Lowering it helps server cleanup / performance.</value>
   </data>
   <data name="Cat_ItemWeightRate_Label" xml:space="preserve">
-    <value>Item Weight Rate</value>
+    <value>Poids des objets</value>
   </data>
   <data name="Cat_ItemWeightRate_Desc" xml:space="preserve">
     <value>Item weight multiplier.</value>
@@ -2095,25 +2095,25 @@ Enregistrer ces changements ?</value>
     <value>Multiplier for how much health buildings have. 2.0 = double building HP.</value>
   </data>
   <data name="Cat_BuildObjectDamageRate_Label" xml:space="preserve">
-    <value>Damage to Structure Multiplier</value>
+    <value>Dégâts infligés aux structures</value>
   </data>
   <data name="Cat_BuildObjectDamageRate_Desc" xml:space="preserve">
     <value>Damage multiplier to buildings.</value>
   </data>
   <data name="Cat_BuildObjectDeteriorationDamageRate_Label" xml:space="preserve">
-    <value>Structure Deterioration Rate</value>
+    <value>Vitesse de détérioration des structures</value>
   </data>
   <data name="Cat_BuildObjectDeteriorationDamageRate_Desc" xml:space="preserve">
     <value>Building decay speed multiplier.</value>
   </data>
   <data name="Cat_DeathPenalty_Label" xml:space="preserve">
-    <value>Death Penalty</value>
+    <value>Pénalité de mort</value>
   </data>
   <data name="Cat_DeathPenalty_Desc" xml:space="preserve">
     <value>What you drop on death. None = nothing. Item = all items except equipment. ItemAndEquipment = all items. All = all items and all Pals in your party.</value>
   </data>
   <data name="Cat_bPalLost_Label" xml:space="preserve">
-    <value>Hardcore Mode: Pals Who Die Will Be Permanently Lost</value>
+    <value>Mode hardcore : Mort définitive des Pals</value>
   </data>
   <data name="Cat_bPalLost_Desc" xml:space="preserve">
     <value>Permanently lose Pals on death.</value>
@@ -2137,7 +2137,7 @@ Enregistrer ces changements ?</value>
     <value>Multiplier applied to the respawn cooldown.</value>
   </data>
   <data name="Cat_GuildPlayerMaxNum_Label" xml:space="preserve">
-    <value>Maximum Number of Guild Members</value>
+    <value>Nombre maximal de membres de guilde</value>
   </data>
   <data name="Cat_GuildPlayerMaxNum_Desc" xml:space="preserve">
     <value>Maximum number of players per guild.</value>
@@ -2173,7 +2173,7 @@ Enregistrer ces changements ?</value>
     <value>The quantity of the item to drop on a PvP kill (used when 'PvP kill: drop item' is on).</value>
   </data>
   <data name="Cat_SupplyDropSpan_Label" xml:space="preserve">
-    <value>Meteorite/Supplies Drop Interval</value>
+    <value>Intervalle de chute de météorites/ressources (m)</value>
   </data>
   <data name="Cat_SupplyDropSpan_Desc" xml:space="preserve">
     <value>Meteorite / supply drop interval (minutes).</value>
