@@ -19,12 +19,16 @@ public partial class MainWindow : Window
 {
     private readonly MainViewModel _viewModel;
     private readonly Logger _logger;
+    private readonly bool _startServer;
+    private readonly bool _ignoreRestApi;
     private bool _forceClose;
 
-    public MainWindow(Logger logger, LauncherConfig config)
+    public MainWindow(Logger logger, LauncherConfig config, bool startServer = false, bool ignoreRestApi = false)
     {
         InitializeComponent();
         _logger = logger;
+        _startServer = startServer;
+        _ignoreRestApi = ignoreRestApi;
         _viewModel = new MainViewModel(logger, config);
         DataContext = _viewModel;
 
@@ -57,7 +61,26 @@ public partial class MainWindow : Window
         if (_viewModel.DetectRunningInstances() > 0 && !await HandleAlreadyRunningAsync())
             return; // the user chose Exit, the launcher is closing
 
-        PromptRestSetupIfNeeded();
+        if (_startServer)
+            await AutoStartServerAsync();
+        else
+            PromptRestSetupIfNeeded();
+    }
+
+    /// <summary>--start-server: bring the server up on load. If we adopted an already-running one above, do
+    /// nothing. Otherwise auto-configure the REST API (with a random admin password) unless --ignore-rest-api
+    /// was passed, then start. StartServerAsync no-ops with a log if the server isn't installed.</summary>
+    private async Task AutoStartServerAsync()
+    {
+        if (_viewModel.IsServerRunning)
+            return;
+
+        if (!_ignoreRestApi && _viewModel.ShouldPromptRestSetup())
+            _logger.Info(_viewModel.EnableRestApi()
+                ? "Auto-enabled the REST API with a random admin password (--start-server)."
+                : "Couldn't auto-enable the REST API, starting without it.");
+
+        await _viewModel.StartServerAsync();
     }
 
     /// <summary>
@@ -86,9 +109,9 @@ public partial class MainWindow : Window
             return true;
         }
 
-        // Auto-reconnect (opt-in): a lone running server is almost certainly ours from a previous session,
-        // adopt it silently instead of prompting. Multiple instances always prompt (they conflict).
-        if (_viewModel.Config.AutoReconnectSingleInstance)
+        // Auto-reconnect (opt-in), or --start-server: a lone running server is almost certainly ours, adopt it
+        // silently instead of prompting. Multiple instances always prompt (they conflict).
+        if (_viewModel.Config.AutoReconnectSingleInstance || _startServer)
         {
             _viewModel.Attach();
             return true;

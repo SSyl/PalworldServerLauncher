@@ -27,6 +27,11 @@ public partial class App : Application
         // implies a console so the progress is visible.
         var installServer = HasFlag("--install-server", "-install-server");
 
+        // --start-server opens the GUI as usual and auto-starts (or adopts) the server once loaded, and
+        // auto-configures the REST API with a random admin password unless --ignore-rest-api is also passed.
+        var startServer = HasFlag("--start-server", "-start-server");
+        var ignoreRestApi = HasFlag("--ignore-rest-api", "-ignore-rest-api");
+
         // --console mirrors all log output to a terminal (the launching one, or a new window), so the
         // launcher can be watched from the command line. The GUI window still opens.
         var console = (HasFlag("--console", "-console", "-c") || installServer) && ConsoleBridge.Enable();
@@ -83,7 +88,7 @@ public partial class App : Application
         }
         ApplyUiCulture(config.Language);
 
-        new MainWindow(_logger, config).Show();
+        new MainWindow(_logger, config, startServer, ignoreRestApi).Show();
         ShutdownMode = ShutdownMode.OnLastWindowClose;
     }
 

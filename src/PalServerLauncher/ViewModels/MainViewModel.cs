@@ -724,6 +724,10 @@ public partial class MainViewModel : ObservableObject
         return imported;
     }
 
+    /// <summary>Programmatically start the server (used by --start-server on load). Same path as the Start button,
+    /// wrapped in Guard so a failure logs instead of crashing.</summary>
+    public Task StartServerAsync() => Guard(StartCoreAsync);
+
     // Start now runs a SteamCMD update check before launching, so it's a long op, show "Working...".
     private async Task StartCoreAsync()
     {
