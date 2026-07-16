@@ -21,6 +21,7 @@ public sealed class UpdateMonitor : IDisposable
     private readonly LauncherConfig _config;
     private readonly Func<CancellationToken, Task<string?>> _queryLatestBuildId;
     private readonly Func<string?> _readInstalledBuildId;
+    private readonly Func<string?, string> _buildDisplay;
     private readonly Logger _logger;
     private readonly CancellationTokenSource _cts = new();
     private bool _fired;
@@ -33,11 +34,13 @@ public sealed class UpdateMonitor : IDisposable
         LauncherConfig config,
         Func<CancellationToken, Task<string?>> queryLatestBuildId,
         Func<string?> readInstalledBuildId,
+        Func<string?, string> buildDisplay,
         Logger logger)
     {
         _config = config;
         _queryLatestBuildId = queryLatestBuildId;
         _readInstalledBuildId = readInstalledBuildId;
+        _buildDisplay = buildDisplay;
         _logger = logger;
     }
 
@@ -79,8 +82,8 @@ public sealed class UpdateMonitor : IDisposable
         if (!UpdatePolicy.ShouldRunUpdateMonitor(_config.VersionPinEnabled, _config.AutoUpdateEnabled))
         {
             StatusChanged?.Invoke(_config.VersionPinEnabled
-                ? string.Format(Strings.Update_Pinned, _config.PinnedBuildId.Length > 0 ? _config.PinnedBuildId : installed)
-                : string.Format(Strings.Update_AutoUpdateOff, installed));
+                ? string.Format(Strings.Update_Pinned, _buildDisplay(_config.PinnedBuildId.Length > 0 ? _config.PinnedBuildId : installed))
+                : string.Format(Strings.Update_AutoUpdateOff, _buildDisplay(installed)));
             return;
         }
 
@@ -90,7 +93,7 @@ public sealed class UpdateMonitor : IDisposable
         if (string.IsNullOrWhiteSpace(latest))
         {
             _logger.Debug("Update check: could not read latest build id (will retry next interval).");
-            StatusChanged?.Invoke(string.Format(Strings.Update_CheckFailed, installed));
+            StatusChanged?.Invoke(string.Format(Strings.Update_CheckFailed, _buildDisplay(installed)));
             return;
         }
 
@@ -104,7 +107,7 @@ public sealed class UpdateMonitor : IDisposable
         else
         {
             _logger.Debug($"Update check: up to date (build {installed}).");
-            StatusChanged?.Invoke(string.Format(Strings.Update_UpToDate, installed));
+            StatusChanged?.Invoke(string.Format(Strings.Update_UpToDate, _buildDisplay(installed)));
         }
     }
 

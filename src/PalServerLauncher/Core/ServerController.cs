@@ -555,7 +555,7 @@ public sealed class ServerController : IDisposable
 
         if (string.IsNullOrWhiteSpace(latest))
         {
-            UpdateStatusChanged?.Invoke(string.Format(Strings.Update_CheckFailed, installed ?? "?"));
+            UpdateStatusChanged?.Invoke(string.Format(Strings.Update_CheckFailed, BuildDisplay(installed)));
             return (UpdateCheckResult.CheckFailed, null);
         }
         if (UpdateMonitor.IsUpdateAvailable(installed, latest))
@@ -563,7 +563,7 @@ public sealed class ServerController : IDisposable
             UpdateStatusChanged?.Invoke(string.Format(Strings.Update_Available, latest));
             return (UpdateCheckResult.UpdateAvailable, latest);
         }
-        UpdateStatusChanged?.Invoke(string.Format(Strings.Update_UpToDate, installed ?? "?"));
+        UpdateStatusChanged?.Invoke(string.Format(Strings.Update_UpToDate, BuildDisplay(installed)));
         return (UpdateCheckResult.UpToDate, latest);
     }
 
@@ -778,7 +778,7 @@ public sealed class ServerController : IDisposable
         if (_config.VersionPinEnabled)
             UpdateStatusChanged?.Invoke(string.Format(Strings.Update_Pinned, BuildDisplay(_config.PinnedBuildId.Length > 0 ? _config.PinnedBuildId : installed)));
         else if (!_config.AutoUpdateEnabled)
-            UpdateStatusChanged?.Invoke(string.Format(Strings.Update_AutoUpdateOff, installed));
+            UpdateStatusChanged?.Invoke(string.Format(Strings.Update_AutoUpdateOff, BuildDisplay(installed)));
     }
 
     /// <summary>Run SteamCMD app_update in place before launch (the "always current on boot" step).</summary>
@@ -799,7 +799,7 @@ public sealed class ServerController : IDisposable
             if (exit == 0)
             {
                 _logger.Info($"Server up to date (build {buildId}).");
-                UpdateStatusChanged?.Invoke(string.Format(Strings.Update_UpToDate, buildId));
+                UpdateStatusChanged?.Invoke(string.Format(Strings.Update_UpToDate, BuildDisplay(buildId)));
             }
             else
             {
@@ -1355,7 +1355,7 @@ public sealed class ServerController : IDisposable
         _updateMonitor = null;
         if (UpdatePolicy.ShouldRunUpdateMonitor(_config.VersionPinEnabled, _config.AutoUpdateEnabled))
         {
-            _updateMonitor = new UpdateMonitor(_config, QueryLatestBuildIdGatedAsync, _steamCmd.ReadInstalledBuildId, _logger);
+            _updateMonitor = new UpdateMonitor(_config, QueryLatestBuildIdGatedAsync, _steamCmd.ReadInstalledBuildId, BuildDisplay, _logger);
             _updateMonitor.UpdateFound += HandleUpdateFound;
             _updateMonitor.StatusChanged += s => UpdateStatusChanged?.Invoke(s);
             _updateMonitor.Start();
@@ -1366,7 +1366,7 @@ public sealed class ServerController : IDisposable
             var installed = _steamCmd.ReadInstalledBuildId() ?? "?";
             UpdateStatusChanged?.Invoke(_config.VersionPinEnabled
                 ? string.Format(Strings.Update_Pinned, BuildDisplay(_config.PinnedBuildId.Length > 0 ? _config.PinnedBuildId : installed))
-                : string.Format(Strings.Update_AutoUpdateOff, installed));
+                : string.Format(Strings.Update_AutoUpdateOff, BuildDisplay(installed)));
         }
     }
 

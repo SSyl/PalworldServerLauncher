@@ -1449,19 +1449,19 @@ Save these changes?</value>
   </data>
   <!-- Update status line -->
   <data name="Update_AutoUpdateOff" xml:space="preserve">
-    <value>Auto-update off (build {0})</value>
+    <value>Auto-update off · {0}</value>
   </data>
   <data name="Update_Checking" xml:space="preserve">
     <value>Checking for updates...</value>
   </data>
   <data name="Update_CheckFailed" xml:space="preserve">
-    <value>Update check failed (build {0})</value>
+    <value>Update check failed · {0}</value>
   </data>
   <data name="Update_Found" xml:space="preserve">
     <value>New build {0} found, restarting</value>
   </data>
   <data name="Update_UpToDate" xml:space="preserve">
-    <value>Up to date (build {0})</value>
+    <value>Up to date · {0}</value>
   </data>
   <data name="Update_Available" xml:space="preserve">
     <value>New build {0} available</value>

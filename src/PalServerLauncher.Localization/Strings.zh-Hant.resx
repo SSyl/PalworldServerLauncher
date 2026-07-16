@@ -1374,19 +1374,19 @@
     <value>退避中</value>
   </data>
   <data name="Update_AutoUpdateOff" xml:space="preserve">
-    <value>自動更新已關閉（建構 {0}）</value>
+    <value>自動更新已關閉 · {0}</value>
   </data>
   <data name="Update_Checking" xml:space="preserve">
     <value>正在檢查更新...</value>
   </data>
   <data name="Update_CheckFailed" xml:space="preserve">
-    <value>更新檢查失敗（建構 {0}）</value>
+    <value>更新檢查失敗 · {0}</value>
   </data>
   <data name="Update_Found" xml:space="preserve">
     <value>發現新建構 {0}，正在重啟</value>
   </data>
   <data name="Update_UpToDate" xml:space="preserve">
-    <value>已是最新（建構 {0}）</value>
+    <value>已是最新 · {0}</value>
   </data>
   <data name="Update_Available" xml:space="preserve">
     <value>有新建構 {0} 可用</value>
