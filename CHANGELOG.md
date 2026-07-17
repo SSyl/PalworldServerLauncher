@@ -2,6 +2,21 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [0.6.0] - 2026-07-17
+
+### Added
+- **An RCON console.** With RCON enabled on your server, the Server Commands window gains an RCON tab: a simple
+  terminal for sending raw RCON commands and reading the responses, with your recent commands remembered and a
+  saved log. It is reachable even on a server that has only RCON on and not the REST API. Note that Palworld has
+  deprecated RCON in favor of the REST API and plans to remove it in a future update, so prefer the REST-based
+  commands where they cover what you need.
+- **Server memory in the Discord `/status` command,** alongside the FPS, players, uptime, and version it
+  already reports.
+
+### Changed
+- **Server Commands opens whenever the server is running,** not only when the REST API is connected, so the RCON
+  tab is reachable without REST. When the REST API isn't connected, its tab grays out with a short notice.
+
 ## [0.5.0] - 2026-07-17
 
 ### Added
