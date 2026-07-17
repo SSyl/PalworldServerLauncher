@@ -2293,33 +2293,33 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
     <value>スタートアップのショートカットを作成または削除できませんでした。詳細はログを確認してください。</value>
   </data>
   <data name="UnknownServer_Title" xml:space="preserve">
-    <value>Warning!</value>
+    <value>警告</value>
   </data>
   <data name="UnknownServer_Intro" xml:space="preserve">
-    <value>The launcher detected other Palworld servers running on this machine. If this isn't intended, click the terminate button below to shut down the other server(s).</value>
+    <value>ランチャーは、このマシン上で他に実行中の Palworld サーバーを検出しました。意図しない場合は、下の「強制終了」ボタンをクリックして他のサーバーを終了してください。</value>
   </data>
   <data name="UnknownServer_Unreadable" xml:space="preserve">
-    <value>A running server the launcher couldn't identify (it may be running as administrator)</value>
+    <value>ランチャーが識別できなかった実行中のサーバー(管理者として実行されている可能性があります)</value>
   </data>
   <data name="UnknownServer_SettingsHint" xml:space="preserve">
-    <value>Note: You can disable this warning in Launcher Settings by clicking on the gear in the top right of the main window.</value>
+    <value>注: この警告は、メイン画面右上の歯車ボタンから「ランチャー設定」を開き、無効にできます。</value>
   </data>
   <data name="UnknownServer_Terminate" xml:space="preserve">
-    <value>Terminate</value>
+    <value>強制終了</value>
   </data>
   <data name="UnknownServer_LeaveRunning" xml:space="preserve">
-    <value>Leave it running</value>
+    <value>実行を続ける</value>
   </data>
   <data name="UnknownServer_TerminateFailedTitle" xml:space="preserve">
-    <value>Couldn't terminate the server</value>
+    <value>サーバーを強制終了できませんでした</value>
   </data>
   <data name="UnknownServer_TerminateFailedHint" xml:space="preserve">
-    <value>It may be running as administrator. Close it manually, or run the launcher as administrator.</value>
+    <value>管理者として実行されている可能性があります。手動で終了するか、ランチャーを管理者として実行してください。</value>
   </data>
   <data name="LauncherSettings_NeverAskUnknownServers" xml:space="preserve">
-    <value>Never ask about terminating unknown servers</value>
+    <value>不明なサーバーの強制終了について確認しない</value>
   </data>
   <data name="LauncherSettings_NeverAskUnknownServersTip" xml:space="preserve">
-    <value>When a Palworld server this launcher didn't start is already running, start without warning about it.</value>
+    <value>このランチャーが起動していない Palworld サーバーがすでに実行されている場合、警告せずに起動します。</value>
   </data>
 </root>

@@ -2362,33 +2362,33 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>Couldn't rename WorldOption.sav: {0}</value>
   </data>
   <data name="UnknownServer_Title" xml:space="preserve">
-    <value>Warning!</value>
+    <value>경고!</value>
   </data>
   <data name="UnknownServer_Intro" xml:space="preserve">
-    <value>The launcher detected other Palworld servers running on this machine. If this isn't intended, click the terminate button below to shut down the other server(s).</value>
+    <value>런처가 이 컴퓨터에서 실행 중인 다른 Palworld 서버를 감지했습니다. 의도한 상황이 아니라면 아래의 강제 종료 버튼을 클릭하여 해당 서버를 종료하십시오.</value>
   </data>
   <data name="UnknownServer_Unreadable" xml:space="preserve">
-    <value>A running server the launcher couldn't identify (it may be running as administrator)</value>
+    <value>런처가 식별할 수 없는 실행 중인 서버(관리자 권한으로 실행 중일 수 있음)</value>
   </data>
   <data name="UnknownServer_SettingsHint" xml:space="preserve">
-    <value>Note: You can disable this warning in Launcher Settings by clicking on the gear in the top right of the main window.</value>
+    <value>참고: 메인 창 오른쪽 위의 톱니바퀴를 클릭하여 런처 설정에서 이 경고를 비활성화할 수 있습니다.</value>
   </data>
   <data name="UnknownServer_Terminate" xml:space="preserve">
-    <value>Terminate</value>
+    <value>강제 종료</value>
   </data>
   <data name="UnknownServer_LeaveRunning" xml:space="preserve">
-    <value>Leave it running</value>
+    <value>계속 실행</value>
   </data>
   <data name="UnknownServer_TerminateFailedTitle" xml:space="preserve">
-    <value>Couldn't terminate the server</value>
+    <value>서버를 강제 종료하지 못했습니다</value>
   </data>
   <data name="UnknownServer_TerminateFailedHint" xml:space="preserve">
-    <value>It may be running as administrator. Close it manually, or run the launcher as administrator.</value>
+    <value>관리자 권한으로 실행 중일 수 있습니다. 수동으로 종료하거나, 런처를 관리자 권한으로 실행하십시오.</value>
   </data>
   <data name="LauncherSettings_NeverAskUnknownServers" xml:space="preserve">
-    <value>Never ask about terminating unknown servers</value>
+    <value>알 수 없는 서버 강제 종료를 묻지 않음</value>
   </data>
   <data name="LauncherSettings_NeverAskUnknownServersTip" xml:space="preserve">
-    <value>When a Palworld server this launcher didn't start is already running, start without warning about it.</value>
+    <value>이 런처로 시작하지 않은 Palworld 서버가 이미 실행 중이어도 경고 없이 시작합니다.</value>
   </data>
 </root>

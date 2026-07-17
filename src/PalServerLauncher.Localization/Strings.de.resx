@@ -2362,33 +2362,33 @@ Diese Änderungen übernehmen und speichern?</value>
     <value>Couldn't rename WorldOption.sav: {0}</value>
   </data>
   <data name="UnknownServer_Title" xml:space="preserve">
-    <value>Warning!</value>
+    <value>Warnung!</value>
   </data>
   <data name="UnknownServer_Intro" xml:space="preserve">
-    <value>The launcher detected other Palworld servers running on this machine. If this isn't intended, click the terminate button below to shut down the other server(s).</value>
+    <value>Der Launcher hat auf diesem Rechner weitere laufende Palworld-Server erkannt. Falls das nicht beabsichtigt ist, klicken Sie unten auf die Schaltfläche „Beenden“, um sie zu beenden.</value>
   </data>
   <data name="UnknownServer_Unreadable" xml:space="preserve">
-    <value>A running server the launcher couldn't identify (it may be running as administrator)</value>
+    <value>Ein laufender Server, den der Launcher nicht identifizieren konnte (er läuft möglicherweise als Administrator)</value>
   </data>
   <data name="UnknownServer_SettingsHint" xml:space="preserve">
-    <value>Note: You can disable this warning in Launcher Settings by clicking on the gear in the top right of the main window.</value>
+    <value>Hinweis: Sie können diese Warnung in den Launcher-Einstellungen deaktivieren, indem Sie oben rechts im Hauptfenster auf die Zahnrad-Schaltfläche klicken.</value>
   </data>
   <data name="UnknownServer_Terminate" xml:space="preserve">
-    <value>Terminate</value>
+    <value>Beenden</value>
   </data>
   <data name="UnknownServer_LeaveRunning" xml:space="preserve">
-    <value>Leave it running</value>
+    <value>Weiterlaufen lassen</value>
   </data>
   <data name="UnknownServer_TerminateFailedTitle" xml:space="preserve">
-    <value>Couldn't terminate the server</value>
+    <value>Server konnte nicht beendet werden</value>
   </data>
   <data name="UnknownServer_TerminateFailedHint" xml:space="preserve">
-    <value>It may be running as administrator. Close it manually, or run the launcher as administrator.</value>
+    <value>Er läuft möglicherweise als Administrator. Schließen Sie ihn manuell, oder führen Sie den Launcher als Administrator aus.</value>
   </data>
   <data name="LauncherSettings_NeverAskUnknownServers" xml:space="preserve">
-    <value>Never ask about terminating unknown servers</value>
+    <value>Nie nach dem Beenden unbekannter Server fragen</value>
   </data>
   <data name="LauncherSettings_NeverAskUnknownServersTip" xml:space="preserve">
-    <value>When a Palworld server this launcher didn't start is already running, start without warning about it.</value>
+    <value>Wenn bereits ein Palworld-Server läuft, den dieser Launcher nicht selbst gestartet hat, wird ohne Warnung gestartet.</value>
   </data>
 </root>

@@ -2286,33 +2286,33 @@
     <value>無法建立或刪除啟動項捷徑。請查看日誌以獲取詳細資訊。</value>
   </data>
   <data name="UnknownServer_Title" xml:space="preserve">
-    <value>Warning!</value>
+    <value>警告！</value>
   </data>
   <data name="UnknownServer_Intro" xml:space="preserve">
-    <value>The launcher detected other Palworld servers running on this machine. If this isn't intended, click the terminate button below to shut down the other server(s).</value>
+    <value>啟動器檢測到此機器上有其他 Palworld 伺服器正在執行。如果這並非你的本意，請點擊下方的終止按鈕以關閉這些伺服器。</value>
   </data>
   <data name="UnknownServer_Unreadable" xml:space="preserve">
-    <value>A running server the launcher couldn't identify (it may be running as administrator)</value>
+    <value>一個啟動器無法識別的執行中伺服器（可能以管理員身分執行）</value>
   </data>
   <data name="UnknownServer_SettingsHint" xml:space="preserve">
-    <value>Note: You can disable this warning in Launcher Settings by clicking on the gear in the top right of the main window.</value>
+    <value>注意：你可以透過點擊主視窗右上角的齒輪按鈕，在啟動器設定中停用此警告。</value>
   </data>
   <data name="UnknownServer_Terminate" xml:space="preserve">
-    <value>Terminate</value>
+    <value>終止</value>
   </data>
   <data name="UnknownServer_LeaveRunning" xml:space="preserve">
-    <value>Leave it running</value>
+    <value>繼續執行</value>
   </data>
   <data name="UnknownServer_TerminateFailedTitle" xml:space="preserve">
-    <value>Couldn't terminate the server</value>
+    <value>無法終止伺服器</value>
   </data>
   <data name="UnknownServer_TerminateFailedHint" xml:space="preserve">
-    <value>It may be running as administrator. Close it manually, or run the launcher as administrator.</value>
+    <value>它可能以管理員身分執行。請手動關閉它，或以管理員身分執行啟動器。</value>
   </data>
   <data name="LauncherSettings_NeverAskUnknownServers" xml:space="preserve">
-    <value>Never ask about terminating unknown servers</value>
+    <value>不再詢問是否終止未知伺服器</value>
   </data>
   <data name="LauncherSettings_NeverAskUnknownServersTip" xml:space="preserve">
-    <value>When a Palworld server this launcher didn't start is already running, start without warning about it.</value>
+    <value>如果已有一個非此啟動器啟動的 Palworld 伺服器正在執行，啟動時將不會顯示此警告。</value>
   </data>
 </root>
