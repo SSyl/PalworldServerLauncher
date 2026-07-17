@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 using PalServerLauncher.Config;
 
 namespace PalServerLauncher.Core;
@@ -121,9 +122,12 @@ public static class ProcessScanner
                 catch { /* access denied / exited */ }
                 if (string.IsNullOrWhiteSpace(path))
                 {
-                    // MainModule can transiently fail while a process is still initializing. Retry once so our own server
-                    // is not misclassified Unreadable on a momentary read failure (a persistent elevated one stays Unreadable).
-                    try { candidate.Refresh(); path = candidate.MainModule?.FileName; }
+                    // A MainModule read can transiently fail while a process is still building its module list. Wait
+                    // briefly and read once more so our own server is not misclassified Unreadable on a momentary glitch.
+                    // A persistent failure (e.g. an elevated process we can't open) stays Unreadable, which is correct.
+                    // This only runs for a process we couldn't read (rare), so the short wait is not felt.
+                    Thread.Sleep(150);
+                    try { path = candidate.MainModule?.FileName; }
                     catch { }
                 }
 
@@ -138,9 +142,21 @@ public static class ProcessScanner
         return result;
     }
 
-    /// <summary>Terminate a server process by pid. Returns false with <paramref name="error"/> set when it can't be
-    /// killed (e.g. Access Denied because it is running elevated). A process that is already gone counts as success.</summary>
-    public static bool TryTerminate(int pid, out string? error)
+    /// <summary>What happened when we tried to terminate a server pid.</summary>
+    public enum TerminateResult
+    {
+        /// <summary>We killed the process tree and it exited.</summary>
+        Killed,
+        /// <summary>The target was already gone (it had exited, or its pid was recycled onto another process).</summary>
+        AlreadyGone,
+        /// <summary>We could not kill it, see the error (Access Denied on an elevated server, or it did not exit in time).</summary>
+        Failed,
+    }
+
+    /// <summary>Terminate a server process by pid. <see cref="TerminateResult.Failed"/> sets <paramref name="error"/>
+    /// (e.g. Access Denied because it is running elevated, or it did not exit after being killed). A process that is
+    /// already gone is <see cref="TerminateResult.AlreadyGone"/>, not a failure.</summary>
+    public static TerminateResult TryTerminate(int pid, out string? error)
     {
         error = null;
         try
@@ -150,25 +166,44 @@ public static class ProcessScanner
             // could have exited and Windows recycled the pid onto something unrelated. Never kill a pid that is no
             // longer a Palworld server.
             if (!process.ProcessName.Equals(ServerProcessName, StringComparison.OrdinalIgnoreCase))
-                return true; // our target is already gone, the pid now belongs to a different process
+                return TerminateResult.AlreadyGone; // the pid now belongs to a different process
             process.Kill(entireProcessTree: true);
-            process.WaitForExit(5000);
-            return true;
+            if (!process.WaitForExit(5000))
+            {
+                error = "the process did not exit within 5 seconds of being killed";
+                return TerminateResult.Failed;
+            }
+            return TerminateResult.Killed;
         }
         catch (ArgumentException)
         {
-            return true; // no such process: already gone
+            return TerminateResult.AlreadyGone; // no such process
         }
         catch (InvalidOperationException)
         {
-            return true; // process exited between scan and kill: goal already achieved
+            return TerminateResult.AlreadyGone; // process exited between scan and kill
         }
         catch (System.ComponentModel.Win32Exception ex)
         {
             error = ex.Message; // e.g. Access Denied on an elevated process
-            return false;
+            return TerminateResult.Failed;
         }
     }
+
+    /// <summary>How a caller should report a <see cref="TryTerminate"/> outcome: whether Start may proceed
+    /// (<see cref="Succeeded"/>), whether to log it as an error, and the message.</summary>
+    public readonly record struct TerminateReport(bool Succeeded, bool IsError, string LogMessage);
+
+    /// <summary>Map a <see cref="TryTerminate"/> result to a log message and a proceed/abort decision. Already-gone
+    /// counts as success (the goal, that server not running, is met), only <see cref="TerminateResult.Failed"/> aborts
+    /// Start. Pure and unit-tested.</summary>
+    public static TerminateReport DescribeTerminate(TerminateResult result, int pid, string? error) => result switch
+    {
+        TerminateResult.Killed => new(true, false, $"Terminated an unmanaged server process (PID {pid})."),
+        TerminateResult.AlreadyGone => new(true, false, $"Unmanaged server process (PID {pid}) was already gone, nothing to terminate."),
+        TerminateResult.Failed => new(false, true, $"Couldn't terminate server process PID {pid}: {error}"),
+        _ => new(false, true, $"Unexpected terminate result '{result}' for PID {pid}."),
+    };
 
     /// <summary>Read the process I/O counters, or null if the handle can't be queried.</summary>
     public static IoCounters? TryGetIoCounters(Process process)

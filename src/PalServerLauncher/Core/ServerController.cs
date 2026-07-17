@@ -364,16 +364,17 @@ public sealed class ServerController : IDisposable
     public IReadOnlyList<ProcessScanner.UnmanagedServer> FindUnmanagedServers() =>
         ProcessScanner.FindUnmanagedServers(_config.ServerRoot);
 
-    /// <summary>Terminate a server process by pid (for the unmanaged-server prompt). Logs the outcome; returns
+    /// <summary>Terminate a server process by pid (for the unmanaged-server prompt). Logs the outcome, returns
     /// false with <paramref name="error"/> set if it can't (e.g. it's running elevated).</summary>
     public bool TryTerminateServer(int pid, out string? error)
     {
-        var ok = ProcessScanner.TryTerminate(pid, out error);
-        if (ok)
-            _logger.Info($"Terminated an unmanaged server process (PID {pid}).");
+        var result = ProcessScanner.TryTerminate(pid, out error);
+        var report = ProcessScanner.DescribeTerminate(result, pid, error);
+        if (report.IsError)
+            _logger.Error(report.LogMessage);
         else
-            _logger.Error($"Couldn't terminate server process PID {pid}: {error}");
-        return ok;
+            _logger.Info(report.LogMessage);
+        return report.Succeeded;
     }
 
     /// <summary>

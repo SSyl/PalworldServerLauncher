@@ -60,15 +60,7 @@ public partial class App : Application
             // Discord.Net's reconnect loop throws transient connect/HTTP failures (e.g. a Discord 500) into
             // background tasks that surface here. They self-heal on retry, so log one concise line instead of a
             // full ERROR stack trace per attempt. A genuine bad-token failure is caught in DiscordBotService.
-            var flat = args.Exception.Flatten();
-            Exception? discordInner = null;
-            foreach (var inner in flat.InnerExceptions)
-                if ((inner.GetType().Namespace?.StartsWith("Discord", StringComparison.Ordinal) == true)
-                    || (inner.StackTrace?.Contains("Discord.", StringComparison.Ordinal) == true))
-                {
-                    discordInner = inner;
-                    break;
-                }
+            var discordInner = DiscordNoiseFilter.FindConnectionNoise(args.Exception);
 
             if (discordInner is not null)
             {

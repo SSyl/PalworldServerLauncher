@@ -82,4 +82,33 @@ public class ProcessScannerTests
         // MainModule unreadable (e.g. the process is elevated), so we can neither confirm it's ours nor attach.
         Assert.Equal(ProcessScanner.ServerOwnership.Unreadable, ProcessScanner.ClassifyServerPath(exePath, @"D:\Palworld"));
     }
+
+    [Fact]
+    public void DescribeTerminate_killed_succeeds_logged_as_info()
+    {
+        var report = ProcessScanner.DescribeTerminate(ProcessScanner.TerminateResult.Killed, 4242, error: null);
+        Assert.True(report.Succeeded);
+        Assert.False(report.IsError);
+        Assert.Contains("4242", report.LogMessage);
+    }
+
+    [Fact]
+    public void DescribeTerminate_already_gone_succeeds_and_says_so()
+    {
+        // A recycled/exited pid is not a failure: the goal (that server not running) is already met, so Start proceeds.
+        var report = ProcessScanner.DescribeTerminate(ProcessScanner.TerminateResult.AlreadyGone, 4242, error: null);
+        Assert.True(report.Succeeded);
+        Assert.False(report.IsError);
+        Assert.Contains("already gone", report.LogMessage);
+    }
+
+    [Fact]
+    public void DescribeTerminate_failed_aborts_and_logs_error_with_reason()
+    {
+        var report = ProcessScanner.DescribeTerminate(ProcessScanner.TerminateResult.Failed, 4242, "Access is denied");
+        Assert.False(report.Succeeded);
+        Assert.True(report.IsError);
+        Assert.Contains("4242", report.LogMessage);
+        Assert.Contains("Access is denied", report.LogMessage);
+    }
 }
