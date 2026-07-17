@@ -287,7 +287,7 @@ Trotzdem als feste Nachrichten speichern?</value>
     <value>h</value>
   </data>
   <data name="Main_AnnounceRestarts" xml:space="preserve">
-    <value>Neustarts ankündigen</value>
+    <value>Ankündigen:</value>
   </data>
   <data name="Main_AnnounceRestartsTip" xml:space="preserve">
     <value>Warnt Spieler im Spiel vor einem geplanten oder Update-Neustart, zu den rechts angegebenen Minutenmarken. Wird übersprungen, wenn niemand online ist.</value>

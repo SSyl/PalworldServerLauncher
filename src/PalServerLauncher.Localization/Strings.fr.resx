@@ -287,7 +287,7 @@ Les enregistrer quand même comme messages fixes ?</value>
     <value>h</value>
   </data>
   <data name="Main_AnnounceRestarts" xml:space="preserve">
-    <value>Annoncer les redémarrages</value>
+    <value>Annoncer :</value>
   </data>
   <data name="Main_AnnounceRestartsTip" xml:space="preserve">
     <value>Prévient les joueurs en jeu avant un redémarrage planifié ou lié à une mise à jour, aux minutes indiquées à droite. Ignoré si personne n'est connecté.</value>

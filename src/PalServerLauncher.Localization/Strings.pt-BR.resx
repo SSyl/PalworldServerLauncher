@@ -287,7 +287,7 @@ Salvar mesmo assim como mensagens fixas?</value>
     <value>h</value>
   </data>
   <data name="Main_AnnounceRestarts" xml:space="preserve">
-    <value>Avisar sobre reinícios</value>
+    <value>Avisar:</value>
   </data>
   <data name="Main_AnnounceRestartsTip" xml:space="preserve">
     <value>Avisa os jogadores dentro do jogo antes de um reinício agendado ou por atualização, nos marcos de minutos à direita. Ignorado quando não há ninguém online.</value>
