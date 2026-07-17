@@ -12,10 +12,15 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
   commands where they cover what you need.
 - **Server memory in the Discord `/status` command,** alongside the FPS, players, uptime, and version it
   already reports.
+- **Choose where backups are saved.** A Backup Location button in the Backups section lets you pick a custom
+  folder for your backup archives, or keep the default (a backups folder next to the launcher). It checks the
+  folder is writable before saving, and your existing backups stay where they are.
 
 ### Changed
 - **Server Commands opens whenever the server is running,** not only when the REST API is connected, so the RCON
   tab is reachable without REST. When the REST API isn't connected, its tab grays out with a short notice.
+- **Backups now include only `PalWorldSettings.ini`** from the server config, alongside the world save, instead
+  of the whole config folder. The other config files aren't part of a normal server's state.
 
 ## [0.5.0] - 2026-07-17
 

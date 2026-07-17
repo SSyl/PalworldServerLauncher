@@ -52,6 +52,7 @@ Chinese, Traditional Chinese, and Korean. See [Languages](#languages).
 - Zips the world save and config, timestamped. Runs on startup, shutdown, a schedule, or on demand.
 - Triggers a fresh in-game save first when the REST API is on, so the backup is actually current. Old
   automatic backups age out after a set number of days, manual ones are left alone.
+- Save backups to a folder of your choice, or keep the default next to the launcher.
 
 ### Keeping an eye on things
 - Live tiles for FPS, players, uptime, memory, version, and when the next restart and backup are due.
