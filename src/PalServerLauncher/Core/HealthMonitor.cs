@@ -308,8 +308,7 @@ public sealed class HealthMonitor : IDisposable
         try
         {
             process.Refresh();
-            var mb = process.WorkingSet64 / 1024d / 1024d;
-            return mb >= 1024 ? $"{mb / 1024:F2} GB" : $"{mb:F0} MB";
+            return MemoryFormat.Format(process.WorkingSet64);
         }
         catch
         {

@@ -119,6 +119,7 @@ public sealed class ServerController : IDisposable
         var info = await rest.GetInfoAsync().ConfigureAwait(false);
         var uptime = TimeSpan.FromSeconds(metrics.Uptime);
         var uptimeText = uptime.TotalHours >= 1 ? $"{(int)uptime.TotalHours}h {uptime.Minutes}m" : $"{uptime.Minutes}m";
+        var memory = CurrentServerMemory();
 
         return $"### 🖥️ Server status\n"
              + $"**State:** {state}\n"
@@ -126,9 +127,28 @@ public sealed class ServerController : IDisposable
              + $"**Players:** {metrics.CurrentPlayerNum} / {metrics.MaxPlayerNum}\n"
              + $"**FPS:** {metrics.ServerFps}\n"
              + $"**Frame time:** {metrics.ServerFrameTime:0.##} ms\n"
+             + (memory is null ? "" : $"**Memory:** {memory}\n")
              + $"**Uptime:** {uptimeText}\n"
              + $"**In-game days:** {metrics.Days}\n"
              + $"**Base camps:** {metrics.BaseCampNum}";
+    }
+
+    /// <summary>The running server's current memory (working set), formatted like the status tile, or null if
+    /// there's no process or it can't be read. Memory isn't a REST field, so this reads the OS process directly.</summary>
+    private string? CurrentServerMemory()
+    {
+        var process = _process;
+        if (process is null)
+            return null;
+        try
+        {
+            process.Refresh();
+            return MemoryFormat.Format(process.WorkingSet64);
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     /// <summary>The online-player list for the Discord /players command.</summary>
