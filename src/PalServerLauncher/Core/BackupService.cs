@@ -97,23 +97,25 @@ public sealed class BackupService
         }
 
         var stamp = DateTime.Now.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture);
+        // Resolve the folder once so a config change mid-backup can't split the write and the prune across folders.
+        var backupsDir = BackupsDir;
         string zipPath;
 
         try
         {
             // Inside the try: a custom backup folder could be invalid or unwritable (bad path, missing drive).
-            Directory.CreateDirectory(BackupsDir);
-            zipPath = Path.Combine(BackupsDir, $"palworld-{stamp}-{reason.ToString().ToLowerInvariant()}.zip");
+            Directory.CreateDirectory(backupsDir);
+            zipPath = Path.Combine(backupsDir, $"palworld-{stamp}-{reason.ToString().ToLowerInvariant()}.zip");
             CreateArchive(zipPath);
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or ArgumentException or PathTooLongException)
         {
-            _logger.Error($"Backup ({reason}) failed to write to {BackupsDir}", ex);
+            _logger.Error($"Backup ({reason}) failed to write to {backupsDir}", ex);
             return null;
         }
 
         _logger.Info($"Backup ({reason}) written: {Path.GetFileName(zipPath)} ({new FileInfo(zipPath).Length / 1024d:F0} KB).");
-        PruneOldBackups();
+        PruneOldBackups(backupsDir);
         return zipPath;
     }
 
@@ -177,11 +179,11 @@ public sealed class BackupService
             && !match.Groups[1].Value.Equals(nameof(BackupReason.Manual), StringComparison.OrdinalIgnoreCase);
     }
 
-    private void PruneOldBackups()
+    private void PruneOldBackups(string dir)
     {
         try
         {
-            var files = Directory.GetFiles(BackupsDir, "palworld-*.zip")
+            var files = Directory.GetFiles(dir, "palworld-*.zip")
                 .Where(f => IsPrunableAutoBackup(Path.GetFileName(f)))
                 .Select(f => (path: f, writtenUtc: File.GetLastWriteTimeUtc(f)));
             foreach (var expired in SelectExpired(files, _config.BackupRetentionDays, DateTime.UtcNow))
