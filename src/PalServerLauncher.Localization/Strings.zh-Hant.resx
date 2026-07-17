@@ -2286,16 +2286,16 @@
     <value>無法建立或刪除啟動項捷徑。請查看日誌以獲取詳細資訊。</value>
   </data>
   <data name="UnknownServer_Title" xml:space="preserve">
-    <value>Another server is running</value>
+    <value>Warning!</value>
   </data>
   <data name="UnknownServer_Intro" xml:space="preserve">
-    <value>This launcher didn't start the following Palworld server(s). They can conflict on ports or start a competing duplicate when you click Start:</value>
+    <value>The launcher detected other Palworld servers running on this machine. If this isn't intended, click the terminate button below to shut down the other server(s).</value>
   </data>
   <data name="UnknownServer_Unreadable" xml:space="preserve">
     <value>A running server the launcher couldn't identify (it may be running as administrator)</value>
   </data>
   <data name="UnknownServer_SettingsHint" xml:space="preserve">
-    <value>You can turn this check off in Launcher Settings (the gear icon, top-right).</value>
+    <value>Note: You can disable this warning in Launcher Settings by clicking on the gear in the top right of the main window.</value>
   </data>
   <data name="UnknownServer_Terminate" xml:space="preserve">
     <value>Terminate</value>
