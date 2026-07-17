@@ -187,7 +187,7 @@ public partial class MainWindow : Window
         if (result.Success)
             WorldOptionRenamedDialog.Show(this, result.BakPaths);
         else
-            ChoiceDialog.Show(this, Strings.WorldOpt_RenamedTitle,
+            ChoiceDialog.Show(this, Strings.WorldOpt_RenameFailedTitle,
                 string.Format(Strings.WorldOpt_RenameFailedFormat, result.Error), Strings.Common_OK);
     }
 

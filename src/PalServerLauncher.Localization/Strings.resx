@@ -164,6 +164,9 @@
   <data name="WorldOpt_RenamedTitle" xml:space="preserve">
     <value>WorldOption.sav renamed</value>
   </data>
+  <data name="WorldOpt_RenameFailedTitle" xml:space="preserve">
+    <value>Couldn't rename WorldOption.sav</value>
+  </data>
   <data name="WorldOpt_RenamedFormat" xml:space="preserve">
     <value>WorldOption.sav renamed to {0} in:</value>
   </data>
