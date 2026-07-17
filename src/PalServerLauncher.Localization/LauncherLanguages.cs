@@ -12,15 +12,15 @@ public static class LauncherLanguages
     public static readonly IReadOnlyList<LauncherLanguage> All = new[]
     {
         new LauncherLanguage("en", "English"),
+        new LauncherLanguage("de", "Deutsch"),
+        new LauncherLanguage("es", "Español"),
+        new LauncherLanguage("fr", "Français"),
+        new LauncherLanguage("pt-BR", "Português (Brasil)"),
+        new LauncherLanguage("ru", "Русский"),
+        new LauncherLanguage("ja", "日本語"),
         new LauncherLanguage("zh-Hans", "简体中文"),
         new LauncherLanguage("zh-Hant", "繁體中文"),
-        new LauncherLanguage("ja", "日本語"),
-        new LauncherLanguage("de", "Deutsch"),
-        new LauncherLanguage("fr", "Français"),
-        new LauncherLanguage("es", "Español"),
-        new LauncherLanguage("pt-BR", "Português (Brasil)"),
         new LauncherLanguage("ko", "한국어"),
-        new LauncherLanguage("ru", "Русский"),
     };
 
     /// <summary>The entry for a code, or English if the code is unknown or blank.</summary>
