@@ -2322,30 +2322,30 @@
     <value>RCON</value>
   </data>
   <data name="ServerCmd_RconDeprecated" xml:space="preserve">
-    <value>Palworld has officially deprecated RCON and has said it will be removed in a future update. You should use the REST API instead when possible.</value>
+    <value>Palworld 已正式棄用 RCON，並表示未來版本會將其移除。請盡量改用 REST API。</value>
   </data>
   <data name="ServerCmd_RconRecent" xml:space="preserve">
-    <value>Recent commands</value>
+    <value>最近的命令</value>
   </data>
   <data name="ServerCmd_RconConnecting" xml:space="preserve">
-    <value>Connecting to {0}...</value>
+    <value>正在連線至 {0}...</value>
   </data>
   <data name="ServerCmd_RconConnected" xml:space="preserve">
-    <value>Connected to {0}.</value>
+    <value>已連線至 {0}。</value>
   </data>
   <data name="ServerCmd_RconUnreachable" xml:space="preserve">
-    <value>Couldn't reach RCON at {0}. Is the server running with RCONEnabled=True and the right RCONPort?</value>
+    <value>無法連線至 {0} 的 RCON。伺服器是否已啟用 RCONEnabled=True，且 RCONPort 設定正確？</value>
   </data>
   <data name="ServerCmd_RconAuthFailed" xml:space="preserve">
-    <value>RCON rejected the password. It uses your AdminPassword, so check that's set correctly.</value>
+    <value>RCON 拒絕了該密碼。它使用你的 AdminPassword，請確認設定正確。</value>
   </data>
   <data name="ServerCmd_RconError" xml:space="preserve">
-    <value>RCON error. Check the launcher log for details.</value>
+    <value>RCON 發生錯誤，詳情請查看啟動器日誌。</value>
   </data>
   <data name="ServerCmd_RconNoHistory" xml:space="preserve">
-    <value>No recent commands yet.</value>
+    <value>尚無最近的命令。</value>
   </data>
   <data name="ServerCmd_RestUnavailable" xml:space="preserve">
-    <value>The REST API isn't connected, so these commands are unavailable right now.</value>
+    <value>REST API 尚未連線，因此目前無法使用這些命令。</value>
   </data>
 </root>

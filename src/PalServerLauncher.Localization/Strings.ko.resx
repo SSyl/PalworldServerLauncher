@@ -2398,30 +2398,30 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>RCON</value>
   </data>
   <data name="ServerCmd_RconDeprecated" xml:space="preserve">
-    <value>Palworld has officially deprecated RCON and has said it will be removed in a future update. You should use the REST API instead when possible.</value>
+    <value>Palworld는 RCON을 공식적으로 지원 중단했으며, 향후 업데이트에서 제거할 예정이라고 밝혔습니다. 가능하면 REST API를 대신 사용하십시오.</value>
   </data>
   <data name="ServerCmd_RconRecent" xml:space="preserve">
-    <value>Recent commands</value>
+    <value>최근 명령</value>
   </data>
   <data name="ServerCmd_RconConnecting" xml:space="preserve">
-    <value>Connecting to {0}...</value>
+    <value>{0}에 연결하는 중...</value>
   </data>
   <data name="ServerCmd_RconConnected" xml:space="preserve">
-    <value>Connected to {0}.</value>
+    <value>{0}에 연결되었습니다.</value>
   </data>
   <data name="ServerCmd_RconUnreachable" xml:space="preserve">
-    <value>Couldn't reach RCON at {0}. Is the server running with RCONEnabled=True and the right RCONPort?</value>
+    <value>{0}에서 RCON에 연결할 수 없습니다. 서버가 RCONEnabled=True로 실행 중이고 RCONPort가 올바른지 확인하십시오.</value>
   </data>
   <data name="ServerCmd_RconAuthFailed" xml:space="preserve">
-    <value>RCON rejected the password. It uses your AdminPassword, so check that's set correctly.</value>
+    <value>RCON이 비밀번호를 거부했습니다. RCON은 AdminPassword를 사용하므로 올바르게 설정되어 있는지 확인하십시오.</value>
   </data>
   <data name="ServerCmd_RconError" xml:space="preserve">
-    <value>RCON error. Check the launcher log for details.</value>
+    <value>RCON 오류입니다. 자세한 내용은 런처 로그를 확인하십시오.</value>
   </data>
   <data name="ServerCmd_RconNoHistory" xml:space="preserve">
-    <value>No recent commands yet.</value>
+    <value>아직 최근 명령이 없습니다.</value>
   </data>
   <data name="ServerCmd_RestUnavailable" xml:space="preserve">
-    <value>The REST API isn't connected, so these commands are unavailable right now.</value>
+    <value>REST API가 연결되어 있지 않아 지금은 이 명령을 사용할 수 없습니다.</value>
   </data>
 </root>

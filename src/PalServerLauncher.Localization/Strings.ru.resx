@@ -2398,30 +2398,30 @@ REST API на этом сервере пока не включён, поэтом
     <value>RCON</value>
   </data>
   <data name="ServerCmd_RconDeprecated" xml:space="preserve">
-    <value>Palworld has officially deprecated RCON and has said it will be removed in a future update. You should use the REST API instead when possible.</value>
+    <value>Разработчики Palworld официально объявили RCON устаревшим и заявили, что он будет удалён в одном из будущих обновлений. По возможности используйте вместо него REST API.</value>
   </data>
   <data name="ServerCmd_RconRecent" xml:space="preserve">
-    <value>Recent commands</value>
+    <value>Последние команды</value>
   </data>
   <data name="ServerCmd_RconConnecting" xml:space="preserve">
-    <value>Connecting to {0}...</value>
+    <value>Подключение к {0}...</value>
   </data>
   <data name="ServerCmd_RconConnected" xml:space="preserve">
-    <value>Connected to {0}.</value>
+    <value>Подключено к {0}.</value>
   </data>
   <data name="ServerCmd_RconUnreachable" xml:space="preserve">
-    <value>Couldn't reach RCON at {0}. Is the server running with RCONEnabled=True and the right RCONPort?</value>
+    <value>Не удалось подключиться к RCON по адресу {0}. Убедитесь, что сервер запущен с RCONEnabled=True и указан правильный RCONPort.</value>
   </data>
   <data name="ServerCmd_RconAuthFailed" xml:space="preserve">
-    <value>RCON rejected the password. It uses your AdminPassword, so check that's set correctly.</value>
+    <value>RCON отклонил пароль. Используется ваш AdminPassword, проверьте, что он указан верно.</value>
   </data>
   <data name="ServerCmd_RconError" xml:space="preserve">
-    <value>RCON error. Check the launcher log for details.</value>
+    <value>Ошибка RCON. Подробности смотрите в журнале лаунчера.</value>
   </data>
   <data name="ServerCmd_RconNoHistory" xml:space="preserve">
-    <value>No recent commands yet.</value>
+    <value>Пока нет недавних команд.</value>
   </data>
   <data name="ServerCmd_RestUnavailable" xml:space="preserve">
-    <value>The REST API isn't connected, so these commands are unavailable right now.</value>
+    <value>REST API не подключён, поэтому эти команды сейчас недоступны.</value>
   </data>
 </root>

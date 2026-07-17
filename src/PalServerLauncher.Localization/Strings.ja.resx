@@ -2329,30 +2329,30 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
     <value>RCON</value>
   </data>
   <data name="ServerCmd_RconDeprecated" xml:space="preserve">
-    <value>Palworld has officially deprecated RCON and has said it will be removed in a future update. You should use the REST API instead when possible.</value>
+    <value>Palworld は RCON を正式に非推奨とし、将来のアップデートで削除すると発表しています。可能な場合は代わりに REST API を使用してください。</value>
   </data>
   <data name="ServerCmd_RconRecent" xml:space="preserve">
-    <value>Recent commands</value>
+    <value>最近のコマンド</value>
   </data>
   <data name="ServerCmd_RconConnecting" xml:space="preserve">
-    <value>Connecting to {0}...</value>
+    <value>{0} に接続中...</value>
   </data>
   <data name="ServerCmd_RconConnected" xml:space="preserve">
-    <value>Connected to {0}.</value>
+    <value>{0} に接続しました。</value>
   </data>
   <data name="ServerCmd_RconUnreachable" xml:space="preserve">
-    <value>Couldn't reach RCON at {0}. Is the server running with RCONEnabled=True and the right RCONPort?</value>
+    <value>{0} の RCON に接続できませんでした。サーバーが RCONEnabled=True で、正しい RCONPort で起動しているか確認してください。</value>
   </data>
   <data name="ServerCmd_RconAuthFailed" xml:space="preserve">
-    <value>RCON rejected the password. It uses your AdminPassword, so check that's set correctly.</value>
+    <value>RCON がパスワードを拒否しました。RCON は AdminPassword を使用するため、正しく設定されているか確認してください。</value>
   </data>
   <data name="ServerCmd_RconError" xml:space="preserve">
-    <value>RCON error. Check the launcher log for details.</value>
+    <value>RCON エラーが発生しました。詳細はランチャーログを確認してください。</value>
   </data>
   <data name="ServerCmd_RconNoHistory" xml:space="preserve">
-    <value>No recent commands yet.</value>
+    <value>まだ最近のコマンドはありません。</value>
   </data>
   <data name="ServerCmd_RestUnavailable" xml:space="preserve">
-    <value>The REST API isn't connected, so these commands are unavailable right now.</value>
+    <value>REST API が接続されていないため、これらのコマンドは現在使用できません。</value>
   </data>
 </root>
