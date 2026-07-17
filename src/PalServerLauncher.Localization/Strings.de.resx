@@ -1414,10 +1414,10 @@ Diese Änderungen übernehmen und speichern?</value>
     <value>Installieren</value>
   </data>
   <data name="Btn_Starting" xml:space="preserve">
-    <value>Wird gestartet…</value>
+    <value>Wird gestartet</value>
   </data>
   <data name="Btn_Stopping" xml:space="preserve">
-    <value>Wird beendet…</value>
+    <value>Wird beendet</value>
   </data>
   <data name="Btn_StoppingSeconds" xml:space="preserve">
     <value>Wird beendet ({0}s)</value>
@@ -2333,5 +2333,32 @@ Diese Änderungen übernehmen und speichern?</value>
   </data>
   <data name="LauncherSettings_LoginOpenFailedMessage" xml:space="preserve">
     <value>Die Autostart-Verknüpfung konnte nicht erstellt oder entfernt werden. Details finden Sie im Protokoll.</value>
+  </data>
+  <data name="State_RestUnreachable" xml:space="preserve">
+    <value>REST not responding</value>
+  </data>
+  <data name="WorldOpt_Title" xml:space="preserve">
+    <value>WorldOption.sav detected</value>
+  </data>
+  <data name="WorldOpt_Message" xml:space="preserve">
+    <value>⚠ A WorldOption.sav in this save folder overrides your PalWorldSettings.ini, so the launcher may not be able to monitor or control the server. Renaming it to .bak fixes this and does not affect your world.</value>
+  </data>
+  <data name="WorldOpt_Rename" xml:space="preserve">
+    <value>Rename to .bak (recommended)</value>
+  </data>
+  <data name="WorldOpt_Continue" xml:space="preserve">
+    <value>Start anyway (not recommended)</value>
+  </data>
+  <data name="WorldOpt_RenamedTitle" xml:space="preserve">
+    <value>WorldOption.sav renamed</value>
+  </data>
+  <data name="WorldOpt_RenameFailedTitle" xml:space="preserve">
+    <value>Couldn't rename WorldOption.sav</value>
+  </data>
+  <data name="WorldOpt_RenamedFormat" xml:space="preserve">
+    <value>WorldOption.sav renamed to {0} in:</value>
+  </data>
+  <data name="WorldOpt_RenameFailedFormat" xml:space="preserve">
+    <value>Couldn't rename WorldOption.sav: {0}</value>
   </data>
 </root>
