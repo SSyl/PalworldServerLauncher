@@ -14,7 +14,8 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
   already reports.
 - **Choose where backups are saved.** A Backup Location button in the Backups section lets you pick a custom
   folder for your backup archives, or keep the default (a backups folder next to the launcher). It checks the
-  folder is writable before saving, and your existing backups stay where they are.
+  folder is writable before saving, and your existing backups stay where they are. Inspired by a PR from
+  @Notplying (#6).
 
 ### Changed
 - **Server Commands opens whenever the server is running,** not only when the REST API is connected, so the RCON
