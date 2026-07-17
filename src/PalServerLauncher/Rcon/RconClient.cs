@@ -48,8 +48,8 @@ public sealed class RconClient : IDisposable
             opCts.CancelAfter(_timeout);
 
             var tcp = new TcpClient();
+            _tcp = tcp; // assign before ConnectAsync so a failed connect is still torn down (no leaked socket)
             await tcp.ConnectAsync(_host, _port, opCts.Token).ConfigureAwait(false);
-            _tcp = tcp;
             _stream = tcp.GetStream();
 
             var authId = NextId();

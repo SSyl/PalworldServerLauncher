@@ -53,7 +53,9 @@ public sealed class ServerCommandsDialog : Window
     private readonly string _rconLogPath = Path.Combine(LauncherConfig.DataRoot, "rcon-log.txt");
     private TextBox? _rconTerminal;
     private TextBox? _rconInput;
+    private Button? _rconSend;
     private RconClient? _rconClient;
+    private bool _rconBusy; // guards against a second send while a command/connect is in flight (one shared client)
     private List<string> _rconHistory = new();
 
     private ServerCommandsDialog(ServerCommandActions actions, RconConnectionInfo rcon, bool restReady, Logger logger)
@@ -78,11 +80,11 @@ public sealed class ServerCommandsDialog : Window
         announceRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         announceRow.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
         Grid.SetColumn(_announce, 0);
-        var sendButton = MakeButton(Strings.ServerCmd_Send, OnSendAnnounce);
-        sendButton.Margin = new Thickness(8, 0, 0, 0);
-        Grid.SetColumn(sendButton, 1);
+        var _rconSend = MakeButton(Strings.ServerCmd_Send, OnSendAnnounce);
+        _rconSend.Margin = new Thickness(8, 0, 0, 0);
+        Grid.SetColumn(_rconSend, 1);
         announceRow.Children.Add(_announce);
-        announceRow.Children.Add(sendButton);
+        announceRow.Children.Add(_rconSend);
         stack.Children.Add(announceRow);
 
         var playersHeader = new Grid { Margin = new Thickness(0, 16, 0, 4) };
@@ -295,15 +297,15 @@ public sealed class ServerCommandsDialog : Window
         _rconInput.KeyDown += (_, e) => { if (e.Key == Key.Enter) OnRconSend(); };
         Grid.SetColumn(_rconInput, 0);
 
-        var sendButton = IconButton("", Strings.ServerCmd_Send, OnRconSend); // MDL2 "Send"
-        Grid.SetColumn(sendButton, 1);
+        _rconSend = IconButton("", Strings.ServerCmd_Send, OnRconSend); // MDL2 "Send"
+        Grid.SetColumn(_rconSend, 1);
 
         var historyButton = IconButton("", Strings.ServerCmd_RconRecent, null); // MDL2 "History"
         historyButton.Click += (_, _) => ShowHistoryMenu(historyButton);
         Grid.SetColumn(historyButton, 2);
 
         inputRow.Children.Add(_rconInput);
-        inputRow.Children.Add(sendButton);
+        inputRow.Children.Add(_rconSend);
         inputRow.Children.Add(historyButton);
         DockPanel.SetDock(inputRow, Dock.Bottom);
         panel.Children.Add(inputRow);
@@ -337,18 +339,23 @@ public sealed class ServerCommandsDialog : Window
 
     private async void OnRconSend()
     {
-        if (_rconInput is null || _rconTerminal is null)
+        // One shared client and stream, so a second send while a command or connect is in flight would clobber
+        // it (concurrent NetworkStream reads, or disposing the client mid-connect). Serialize sends.
+        if (_rconBusy || _rconInput is null || _rconTerminal is null)
             return;
 
         var command = _rconInput.Text.Trim();
         if (command.Length == 0)
             return;
-        _rconInput.Clear();
-        AppendTerminal($"> {command}");
-        RememberCommand(command);
 
+        _rconBusy = true;
+        SetRconInputEnabled(false);
         try
         {
+            _rconInput.Clear();
+            AppendTerminal($"> {command}");
+            RememberCommand(command);
+
             if (!await EnsureRconConnectedAsync())
                 return;
             var response = (await _rconClient!.ExecuteAsync(command)).TrimEnd();
@@ -361,6 +368,18 @@ public sealed class ServerCommandsDialog : Window
             AppendTerminal(Strings.ServerCmd_RconError);
             DropRcon(); // force a fresh connect on the next command
         }
+        finally
+        {
+            _rconBusy = false;
+            SetRconInputEnabled(true);
+            _rconInput.Focus();
+        }
+    }
+
+    private void SetRconInputEnabled(bool enabled)
+    {
+        if (_rconInput is not null) _rconInput.IsEnabled = enabled;
+        if (_rconSend is not null) _rconSend.IsEnabled = enabled;
     }
 
     private async Task<bool> EnsureRconConnectedAsync()
