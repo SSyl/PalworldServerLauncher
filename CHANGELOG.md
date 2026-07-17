@@ -2,6 +2,14 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [0.6.1] - 2026-07-17
+
+### Fixed
+- **The RCON console no longer garbles its output if you send a second command before the first one finishes.**
+  Commands are sent one at a time now (the box briefly greys out while a command runs).
+- **The memory stat shows in your regional number format again.** 0.6.0 briefly rendered it with a dot decimal
+  regardless of locale.
+
 ## [0.6.0] - 2026-07-17
 
 ### Added
