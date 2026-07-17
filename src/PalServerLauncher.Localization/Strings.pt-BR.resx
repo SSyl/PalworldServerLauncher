@@ -389,7 +389,7 @@ Salvar mesmo assim como mensagens fixas?</value>
     <value>Grava uma linha de estatísticas do servidor (FPS, jogadores, tempo ativo, memória) no log a cada 30s. Útil ao rodar em um terminal; do contrário, só polui o log.</value>
   </data>
   <data name="Main_ZombieCheck" xml:space="preserve">
-    <value>Verificação de zumbi: reiniciar após</value>
+    <value>Verificação de zumbi:</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
     <value>Quando a REST API fica inacessível ou o mundo fica congelado por esse número de verificações seguidas, reinicia o servidor. Desative se sua REST API for instável e você preferir que ele nunca reinicie automaticamente.</value>

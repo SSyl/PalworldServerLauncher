@@ -389,7 +389,7 @@
     <value>Escribe una línea de estadísticas del servidor (FPS, jugadores, tiempo activo, memoria) en el registro cada 30 s. Útil al ejecutar desde una terminal, en otro caso añade ruido al registro.</value>
   </data>
   <data name="Main_ZombieCheck" xml:space="preserve">
-    <value>Comprobación de zombi: reiniciar tras</value>
+    <value>Comprobación de zombi:</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
     <value>Cuando la API REST permanece inaccesible o el mundo se mantiene congelado durante esta cantidad de comprobaciones seguidas, reinicia el servidor. Desactívelo si su API REST es inestable y prefiere que nunca se reinicie automáticamente.</value>

@@ -389,7 +389,7 @@ Les enregistrer quand même comme messages fixes ?</value>
     <value>Écrit une ligne de statistiques du serveur (FPS, joueurs, temps de fonctionnement, mémoire) dans le journal toutes les 30 s. Pratique en exécution depuis un terminal ; alourdit le journal sinon.</value>
   </data>
   <data name="Main_ZombieCheck" xml:space="preserve">
-    <value>Détection de blocage : redémarrer après</value>
+    <value>Détection de blocage :</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
     <value>Redémarre le serveur lorsque l'API REST reste injoignable ou que le monde reste figé pendant ce nombre de vérifications consécutives. Désactivez si votre API REST est instable et que vous préférez qu'il ne redémarre jamais automatiquement.</value>
