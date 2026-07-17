@@ -359,6 +359,23 @@ public sealed class ServerController : IDisposable
             _logger.Info("WorldOption.sav found in the save folder. It can override PalWorldSettings.ini and leave the server uncontrollable. Rename it to .bak, or start the launcher normally to be prompted.");
     }
 
+    /// <summary>Running Palworld servers this launcher doesn't manage (a foreign install, or one whose path we
+    /// can't read). Starting while one runs risks a port conflict or a competing duplicate.</summary>
+    public IReadOnlyList<ProcessScanner.UnmanagedServer> FindUnmanagedServers() =>
+        ProcessScanner.FindUnmanagedServers(_config.ServerRoot);
+
+    /// <summary>Terminate a server process by pid (for the unmanaged-server prompt). Logs the outcome; returns
+    /// false with <paramref name="error"/> set if it can't (e.g. it's running elevated).</summary>
+    public bool TryTerminateServer(int pid, out string? error)
+    {
+        var ok = ProcessScanner.TryTerminate(pid, out error);
+        if (ok)
+            _logger.Info($"Terminated an unmanaged server process (PID {pid}).");
+        else
+            _logger.Error($"Couldn't terminate server process PID {pid}: {error}");
+        return ok;
+    }
+
     /// <summary>
     /// Scan for an already-running managed server WITHOUT adopting it, so the UI can prompt (reconnect / shut
     /// down / exit) before the launcher binds and starts monitoring. Sets <see cref="RunningInstanceCount"/>.

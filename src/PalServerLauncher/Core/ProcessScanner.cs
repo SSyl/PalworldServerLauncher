@@ -86,6 +86,74 @@ public static class ProcessScanner
         return full;
     }
 
+    /// <summary>Whether a running server process is one we manage (path under our root), a foreign one (readable
+    /// path outside our root), or one whose path we couldn't read (so we can neither confirm it is ours nor attach
+    /// to it, meaning a Start would spawn a competing duplicate).</summary>
+    public enum ServerOwnership { Managed, Foreign, Unreadable }
+
+    /// <summary>Classify a server process by its exe path relative to our root. A null/blank path (MainModule
+    /// unreadable, e.g. it is running elevated) is <see cref="ServerOwnership.Unreadable"/>. Pure and unit-tested.</summary>
+    public static ServerOwnership ClassifyServerPath(string? exePath, string serverRoot)
+    {
+        if (string.IsNullOrWhiteSpace(exePath))
+            return ServerOwnership.Unreadable;
+        return IsUnder(exePath, serverRoot) ? ServerOwnership.Managed : ServerOwnership.Foreign;
+    }
+
+    /// <summary>A running Palworld server the launcher does not manage: <see cref="Path"/> is the exe path for
+    /// a foreign install, or null when it couldn't be read.</summary>
+    public readonly record struct UnmanagedServer(int Pid, string? Path);
+
+    /// <summary>
+    /// Every running Palworld server process that is NOT managed under <paramref name="serverRoot"/> (Foreign or
+    /// Unreadable). Starting a server while one of these runs risks a port conflict or a competing duplicate.
+    /// Handles are disposed internally; terminate by <see cref="UnmanagedServer.Pid"/> via <see cref="TryTerminate"/>.
+    /// </summary>
+    public static IReadOnlyList<UnmanagedServer> FindUnmanagedServers(string serverRoot)
+    {
+        var result = new List<UnmanagedServer>();
+        foreach (var candidate in Process.GetProcessesByName(ServerProcessName))
+        {
+            try
+            {
+                string? path = null;
+                try { path = candidate.MainModule?.FileName; }
+                catch { /* access denied / exited: leave path null -> Unreadable */ }
+
+                if (ClassifyServerPath(path, serverRoot) != ServerOwnership.Managed)
+                    result.Add(new UnmanagedServer(candidate.Id, path));
+            }
+            finally
+            {
+                candidate.Dispose();
+            }
+        }
+        return result;
+    }
+
+    /// <summary>Terminate a server process by pid. Returns false with <paramref name="error"/> set when it can't be
+    /// killed (e.g. Access Denied because it is running elevated). A process that is already gone counts as success.</summary>
+    public static bool TryTerminate(int pid, out string? error)
+    {
+        error = null;
+        try
+        {
+            using var process = Process.GetProcessById(pid);
+            process.Kill(entireProcessTree: true);
+            process.WaitForExit(5000);
+            return true;
+        }
+        catch (ArgumentException)
+        {
+            return true; // no such process: already gone
+        }
+        catch (Exception ex) when (ex is System.ComponentModel.Win32Exception or InvalidOperationException)
+        {
+            error = ex.Message;
+            return false;
+        }
+    }
+
     /// <summary>Read the process I/O counters, or null if the handle can't be queried.</summary>
     public static IoCounters? TryGetIoCounters(Process process)
     {

@@ -25,6 +25,10 @@ public sealed class LauncherConfig
     /// <summary>Folder that contains (or will contain) the server install, <c>steamcmd/</c>, and <c>backups/</c>.</summary>
     public string ServerRoot { get; set; } = DataRoot;
 
+    /// <summary>Before Start, warn when another Palworld server this launcher didn't start is already running,
+    /// since it can conflict on ports or become a competing duplicate. Off = start without asking.</summary>
+    public bool WarnUnknownServers { get; set; } = true;
+
     // --- Server launch arguments (command-line; https://docs.palworldgame.com/settings-and-operation/arguments) ---
     /// <summary><c>-port</c>: the port the server listens on.</summary>
     public int ServerPort { get; set; } = 8211;
