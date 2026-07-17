@@ -801,7 +801,7 @@ public partial class MainViewModel : ObservableObject
         {
             // Headless (--start-server): can't show a modal on an unattended start. Warn and start anyway;
             // if the override blocks REST, the status tile surfaces "REST not responding".
-            _logger.Info("WorldOption.sav found in the save folder. It can override PalWorldSettings.ini and leave the server uncontrollable. Rename it to .bak, or start the launcher normally to be prompted.");
+            _controller.WarnIfWorldOptionPresent();
             return true;
         }
 

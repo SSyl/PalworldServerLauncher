@@ -202,6 +202,7 @@ public sealed class ServerController : IDisposable
             return Task.FromResult("Server is already running.");
         if (!IsInstalled)
             return Task.FromResult("Server isn't installed, install it from the launcher first.");
+        WarnIfWorldOptionPresent(); // unattended start, can't prompt; warn like the headless path does
         FireAndForget(() => StartAsync(), "Discord start");
         return Task.FromResult("Starting the server (updating first if needed)...");
     }
@@ -347,6 +348,15 @@ public sealed class ServerController : IDisposable
             _logger.Error($"Couldn't rename WorldOption.sav: {ex.Message}");
             return false;
         }
+    }
+
+    /// <summary>Log a warning if a WorldOption.sav is present, for unattended start paths (headless start,
+    /// Discord /start) that can't show the interactive prompt. It overrides PalWorldSettings.ini and can
+    /// disable the REST API the launcher needs.</summary>
+    public void WarnIfWorldOptionPresent()
+    {
+        if (FindWorldOptionSavs().Count > 0)
+            _logger.Info("WorldOption.sav found in the save folder. It can override PalWorldSettings.ini and leave the server uncontrollable. Rename it to .bak, or start the launcher normally to be prompted.");
     }
 
     /// <summary>
@@ -1530,7 +1540,7 @@ public sealed class ServerController : IDisposable
         {
             var message = state switch
             {
-                ServerState.Healthy when _lastNotifiedState is ServerState.Starting or ServerState.Restarting => "🟢 Palworld server is up.",
+                ServerState.Healthy when _lastNotifiedState is ServerState.Starting or ServerState.Restarting or ServerState.RestUnreachable => "🟢 Palworld server is up.",
                 ServerState.Stopped => "🔴 Palworld server stopped.",
                 ServerState.Backoff => "⚠️ Palworld server crashed repeatedly, auto-restart suspended.",
                 _ => null,
