@@ -82,4 +82,20 @@ public class HealthMonitorTests
         Assert.Equal(ProbeAction.Failure,
             HealthMonitor.EvaluateMetricsProbe(cancelled: false, hasMetrics: true, reachedHealthy: true, frozen: true, bootGraceElapsed: false));
     }
+
+    [Theory]
+    [InlineData(false, false)] // still booting, within the grace
+    [InlineData(false, true)]  // still booting, past the grace
+    [InlineData(true, false)]  // cancelled mid-boot
+    [InlineData(true, true)]
+    public void A_server_that_never_went_healthy_is_never_escalated_to_a_failure(bool cancelled, bool bootGraceElapsed)
+    {
+        // Safety invariant behind the RestUnreachable fix: a server that has never responded (never healthy)
+        // with no metrics must never resolve to Failure, the only action that drives Degraded/Zombie recovery.
+        // So a slow-booting or REST-misconfigured server is surfaced (Ignore/Unreachable) but never killed and
+        // relaunched. Guards against a future change that folds the Unreachable case back into Failure.
+        var action = HealthMonitor.EvaluateMetricsProbe(
+            cancelled: cancelled, hasMetrics: false, reachedHealthy: false, frozen: false, bootGraceElapsed: bootGraceElapsed);
+        Assert.NotEqual(ProbeAction.Failure, action);
+    }
 }
