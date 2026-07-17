@@ -1498,7 +1498,7 @@ Enregistrer ces changements ?</value>
     <value>Mot de passe administrateur</value>
   </data>
   <data name="Cat_AdminPassword_Desc" xml:space="preserve">
-    <value>Mot de passe utilisé pour obtenir les privilèges administrateur sur le serveur. Requis pour la REST API et RCON.</value>
+    <value>Mot de passe utilisé pour obtenir les privilèges administrateur sur le serveur. Requis pour l'API REST et RCON.</value>
   </data>
   <data name="Cat_ServerPlayerMaxNum_Label" xml:space="preserve">
     <value>Joueurs max</value>
@@ -1513,16 +1513,16 @@ Enregistrer ces changements ?</value>
     <value>Non documenté. La communauté suppose qu'il s'agit de la taille d'un groupe en jeu coopératif, mais il pourrait s'agir d'une valeur interne sans effet sur un serveur dédié.</value>
   </data>
   <data name="Cat_RESTAPIEnabled_Label" xml:space="preserve">
-    <value>REST API activée</value>
+    <value>API REST activée</value>
   </data>
   <data name="Cat_RESTAPIEnabled_Desc" xml:space="preserve">
-    <value>Active la REST API. Le launcher en a besoin pour les statistiques, l'arrêt en douceur et le suivi des joueurs.</value>
+    <value>Active l'API REST. Le lanceur en a besoin pour les statistiques, l'arrêt en douceur et le suivi des joueurs.</value>
   </data>
   <data name="Cat_RESTAPIPort_Label" xml:space="preserve">
-    <value>Port REST API</value>
+    <value>Port API REST</value>
   </data>
   <data name="Cat_RESTAPIPort_Desc" xml:space="preserve">
-    <value>Port d'écoute de la REST API.</value>
+    <value>Port d'écoute de l'API REST.</value>
   </data>
   <data name="Cat_RCONEnabled_Label" xml:space="preserve">
     <value>RCON activé</value>
@@ -1552,7 +1552,7 @@ Enregistrer ces changements ?</value>
     <value>Sauvegardes intégrées</value>
   </data>
   <data name="Cat_bIsUseBackupSaveData_Desc" xml:space="preserve">
-    <value>Active les sauvegardes de monde propres à Palworld (distinctes de celles du launcher). L'activer augmente la charge disque.</value>
+    <value>Active les sauvegardes de monde propres à Palworld (distinctes de celles du lanceur). L'activer augmente la charge disque.</value>
   </data>
   <data name="Cat_AutoSaveSpan_Label" xml:space="preserve">
     <value>Intervalle de sauvegarde auto</value>
@@ -1588,7 +1588,7 @@ Enregistrer ces changements ?</value>
     <value>bIsMultiplay</value>
   </data>
   <data name="Cat_bIsMultiplay_Desc" xml:space="preserve">
-    <value>Non documenté. Correspond probablement à l'option client 'Multijoueur : Oui/Non' affichée lors de la création d'un monde, donc sans effet sur un serveur dédié. Faux par défaut.</value>
+    <value>Non documenté. Correspond probablement à l'option client « Multijoueur : Oui/Non » affichée lors de la création d'un monde, donc sans effet sur un serveur dédié. Faux par défaut.</value>
   </data>
   <data name="Cat_Region_Label" xml:space="preserve">
     <value>Region</value>
@@ -1624,7 +1624,7 @@ Enregistrer ces changements ?</value>
     <value>BuildingNameDisplayCacheTTLSeconds</value>
   </data>
   <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Desc" xml:space="preserve">
-    <value>Non documenté. Correspond probablement à la durée pendant laquelle le nom d'affichage mis en cache d'un bâtiment (voir 'Afficher l'ID du constructeur sur les structures') est conservé avant actualisation (secondes).</value>
+    <value>Non documenté. Correspond probablement à la durée pendant laquelle le nom d'affichage mis en cache d'un bâtiment (voir « Afficher l'ID du constructeur sur les structures ») est conservé avant actualisation (secondes).</value>
   </data>
   <data name="Cat_BaseCampMaxNum_Label" xml:space="preserve">
     <value>Bases max (monde)</value>
@@ -1870,7 +1870,7 @@ Enregistrer ces changements ?</value>
     <value>Délai avant suppression des guildes inactives (h)</value>
   </data>
   <data name="Cat_AutoResetGuildTimeNoOnlinePlayers_Desc" xml:space="preserve">
-    <value>Durée hors ligne avant la réinitialisation automatique d'une guilde inactive (heures). Ignoré sauf si 'Réinitialisation automatique des guildes inactives' est activé.</value>
+    <value>Durée hors ligne avant la réinitialisation automatique d'une guilde inactive (heures). Ignoré sauf si « Réinitialisation automatique des guildes inactives » est activé.</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Label" xml:space="preserve">
     <value>Objets PvP des bases sur la carte</value>
@@ -2164,13 +2164,13 @@ Enregistrer ces changements ?</value>
     <value>Élimination PvP : ID de l'objet</value>
   </data>
   <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
-    <value>L'ID de l'objet à abandonner lors d'une élimination en PvP (utilisé lorsque 'Élimination PvP : objet abandonné' est activé).</value>
+    <value>L'ID de l'objet à abandonner lors d'une élimination en PvP (utilisé lorsque « Élimination PvP : objet abandonné » est activé).</value>
   </data>
   <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
     <value>Élimination PvP : quantité d'objets</value>
   </data>
   <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
-    <value>La quantité de l'objet à abandonner lors d'une élimination en PvP (utilisé lorsque 'Élimination PvP : objet abandonné' est activé).</value>
+    <value>La quantité de l'objet à abandonner lors d'une élimination en PvP (utilisé lorsque « Élimination PvP : objet abandonné » est activé).</value>
   </data>
   <data name="Cat_SupplyDropSpan_Label" xml:space="preserve">
     <value>Intervalle de chute de météorites/ressources (m)</value>

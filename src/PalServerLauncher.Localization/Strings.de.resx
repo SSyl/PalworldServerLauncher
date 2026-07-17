@@ -1519,7 +1519,7 @@ Diese Änderungen übernehmen und speichern?</value>
     <value>Aktiviert die REST API. Der Launcher benötigt sie für Statistiken, das kontrollierte Herunterfahren und die Spielerprotokollierung.</value>
   </data>
   <data name="Cat_RESTAPIPort_Label" xml:space="preserve">
-    <value>REST API-Port</value>
+    <value>REST-API-Port</value>
   </data>
   <data name="Cat_RESTAPIPort_Desc" xml:space="preserve">
     <value>Port, auf dem die REST API lauscht.</value>
@@ -1549,10 +1549,10 @@ Diese Änderungen übernehmen und speichern?</value>
     <value>Nicht dokumentiert. Vermutlich die Bannliste, gegen die der Server prüft, das genaue Format und Verhalten sind jedoch nicht bestätigt.</value>
   </data>
   <data name="Cat_bIsUseBackupSaveData_Label" xml:space="preserve">
-    <value>Integrierte Spielstand-Backups</value>
+    <value>Integrierte Spielstand-Sicherungen</value>
   </data>
   <data name="Cat_bIsUseBackupSaveData_Desc" xml:space="preserve">
-    <value>Aktiviert Palworlds eigene Welt-Backups (getrennt von denen des Launchers). Die Aktivierung erhöht die Festplattenauslastung.</value>
+    <value>Aktiviert Palworlds eigene Welt-Sicherungen (getrennt von denen des Launchers). Die Aktivierung erhöht die Festplattenauslastung.</value>
   </data>
   <data name="Cat_AutoSaveSpan_Label" xml:space="preserve">
     <value>Autosave-Häufigkeit</value>
@@ -1696,7 +1696,7 @@ Diese Änderungen übernehmen und speichern?</value>
     <value>Schwierigkeitsgrad</value>
   </data>
   <data name="Cat_Difficulty_Desc" xml:space="preserve">
-    <value>Schwierigkeitsvoreinstellung für Client / Einzelspieler. Hat keine Wirkung auf einem dedizierten Server, daher auf None belassen und stattdessen die einzelnen Einstellungen unten (oder die Schwierigkeits-Voreinstellungsschaltflächen oben) verwenden, um die Serverschwierigkeit festzulegen.</value>
+    <value>Schwierigkeitsgrad-Voreinstellung für Client / Einzelspieler. Hat keine Wirkung auf einem dedizierten Server, daher auf None belassen und stattdessen die einzelnen Einstellungen unten (oder die Schwierigkeitsgrad-Voreinstellungen oben) verwenden, um die Serverschwierigkeit festzulegen.</value>
   </data>
   <data name="Cat_bHardcore_Label" xml:space="preserve">
     <value>Hardcore-Modus: Spieler sterben permanent.</value>

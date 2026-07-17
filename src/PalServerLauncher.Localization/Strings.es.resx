@@ -441,7 +441,7 @@
     <value>Varios servidores en ejecución</value>
   </data>
   <data name="Main_MultiServerMessage" xml:space="preserve">
-    <value>Se detectaron {0} servidores de Palworld en ejecución desde esta carpeta. Comparten una misma partida guardada y conjunto de puertos, por lo que entrarán en conflicto, el launcher administra un único servidor. Apáguelos todos, o salga.</value>
+    <value>Se detectaron {0} servidores de Palworld en ejecución desde esta carpeta. Comparten la misma partida guardada y el mismo conjunto de puertos, por lo que entrarán en conflicto, el launcher administra un único servidor. Apáguelos todos, o salga.</value>
   </data>
   <data name="Main_ShutDownAll" xml:space="preserve">
     <value>Apagar todos</value>
@@ -573,7 +573,7 @@ La API REST aún no está activada en este servidor, por lo que estas funciones 
     <value>Esto apagará el servidor de inmediato sin guardar, terminando el proceso por completo. Puede causar pérdida o corrupción de los datos guardados. No se recomienda salvo que el servidor haya dejado de responder por completo.</value>
   </data>
   <data name="Main_PortCheckConsentMessage" xml:space="preserve">
-    <value>Su dirección IP pública se enviará a check-host.cc, un servicio externo gratuito, para comprobar si los jugadores pueden acceder a su servidor desde fuera de su red. Solo se envía a su servicio su IP pública y los puertos que pruebe, nada más.</value>
+    <value>Su dirección IP pública se enviará a check-host.cc, un servicio externo gratuito, para comprobar si los jugadores pueden acceder a su servidor desde fuera de su red. Solo se envían a su servicio su IP pública y los puertos que pruebe.</value>
   </data>
   <data name="Main_UpdateAvailableTitle" xml:space="preserve">
     <value>Actualización disponible</value>
@@ -1158,7 +1158,7 @@ Detalles completos en:
     <value>Configuración del juego no disponible, instale primero el servidor (no se encontró DefaultPalWorldSettings.ini).</value>
   </data>
   <data name="Settings_UndocumentedBlurb" xml:space="preserve">
-    <value>Configuraciones que la documentación oficial no cubre. Cada información sobre herramientas contiene nuestra mejor estimación, pero no podemos garantizarlas, algunas pueden ser internas o no usarse. Consúltelas en la</value>
+    <value>Configuraciones que la documentación oficial no cubre. Cada una tiene nuestra mejor estimación en su información sobre herramientas, pero no podemos garantizarlas, algunas pueden ser internas o no usarse. Consúltelas en la</value>
   </data>
   <data name="Settings_UndocumentedBlurbLink" xml:space="preserve">
     <value>referencia de configuración de Palworld</value>

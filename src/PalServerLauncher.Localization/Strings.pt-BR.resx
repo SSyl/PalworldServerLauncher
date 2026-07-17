@@ -281,7 +281,7 @@ Salvar mesmo assim como mensagens fixas?</value>
     <value>Escolher Horários de Reinício</value>
   </data>
   <data name="Main_MinUptime" xml:space="preserve">
-    <value>Tempo mínimo antes de reiniciar</value>
+    <value>Tempo ativo mínimo antes de reiniciar</value>
   </data>
   <data name="Main_HourSuffix" xml:space="preserve">
     <value>h</value>
@@ -857,7 +857,7 @@ Detalhes completos em:
     <value>ID do cargo exigido (opcional)</value>
   </data>
   <data name="Discord_CommandCooldownLabel" xml:space="preserve">
-    <value>Intervalo entre comandos (segundos)</value>
+    <value>Tempo de espera entre comandos (segundos)</value>
   </data>
   <data name="Discord_SecurityNote" xml:space="preserve">
     <value>Segurança: defina um canal de comandos e/ou um cargo exigido, o bot só age quando todas as condições definidas são atendidas (defina ao menos uma). Qualquer pessoa que possa postar no canal de comandos, ou tenha o cargo, pode controlar o servidor, então restrinja o acesso (um canal privado, só para administradores, e/ou um cargo de administrador). Ative o Modo Desenvolvedor do Discord, depois clique com o botão direito em um canal ou cargo -&gt; Copiar ID. O token é armazenado localmente no launcher.json e nunca é registrado no log.</value>
@@ -1351,7 +1351,7 @@ Salvar essas alterações?</value>
     <value>Não Salvo</value>
   </data>
   <data name="Settings_NotSavedMessage" xml:space="preserve">
-    <value>'{0}' tem um valor que quebraria o formato da configuração (uma vírgula, aspas ou parêntese desbalanceado). Nada foi salvo, corrija e tente novamente.</value>
+    <value>'{0}' tem um valor que quebraria o formato da configuração (uma vírgula ou aspas fora do lugar, ou um parêntese desbalanceado). Nada foi salvo, corrija e tente novamente.</value>
   </data>
   <data name="Settings_ValidationError" xml:space="preserve">
     <value>O valor de {0} é inválido. Deve ser {1}.</value>
@@ -1516,7 +1516,7 @@ Salvar essas alterações?</value>
     <value>REST API ativada</value>
   </data>
   <data name="Cat_RESTAPIEnabled_Desc" xml:space="preserve">
-    <value>Ativa a REST API. O launcher precisa disso para estatísticas, desligamento gracioso e registro de jogadores.</value>
+    <value>Ativa a REST API. O launcher precisa disso para estatísticas, desligamento seguro e registro de jogadores.</value>
   </data>
   <data name="Cat_RESTAPIPort_Label" xml:space="preserve">
     <value>Porta da REST API</value>
