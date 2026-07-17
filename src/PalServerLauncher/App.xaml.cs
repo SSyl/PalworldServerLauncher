@@ -14,6 +14,11 @@ public partial class App : Application
 {
     private Logger _logger = null!;
 
+    // Throttle repeated Discord reconnect failures: an outage can surface many identical unobserved exceptions
+    // in a single garbage-collection burst, so log the first and suppress the same one for a few minutes.
+    private string? _lastDiscordNoise;
+    private DateTime _lastDiscordNoiseUtc;
+
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
@@ -52,7 +57,30 @@ public partial class App : Application
         };
         TaskScheduler.UnobservedTaskException += (_, args) =>
         {
-            _logger.Error("Unobserved task exception", args.Exception);
+            // Discord.Net's reconnect loop throws transient connect/HTTP failures (e.g. a Discord 500) into
+            // background tasks that surface here. They self-heal on retry, so log one concise line instead of a
+            // full ERROR stack trace per attempt. A genuine bad-token failure is caught in DiscordBotService.
+            var flat = args.Exception.Flatten();
+            var fromDiscord = false;
+            foreach (var inner in flat.InnerExceptions)
+                if (inner.GetType().Namespace?.StartsWith("Discord", StringComparison.Ordinal) == true)
+                {
+                    fromDiscord = true;
+                    break;
+                }
+
+            if (fromDiscord)
+            {
+                var msg = flat.InnerException?.Message ?? "connection error";
+                if (msg != _lastDiscordNoise || DateTime.UtcNow - _lastDiscordNoiseUtc > TimeSpan.FromMinutes(5))
+                {
+                    _lastDiscordNoise = msg;
+                    _lastDiscordNoiseUtc = DateTime.UtcNow;
+                    _logger.Info($"Discord bot connection error, will keep retrying: {msg}");
+                }
+            }
+            else
+                _logger.Error("Unobserved task exception", args.Exception);
             args.SetObserved();
         };
 
