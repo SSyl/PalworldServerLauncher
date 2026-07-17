@@ -2,7 +2,7 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
-## [Unreleased]
+## [0.5.0] - 2026-07-17
 
 ### Added
 - **Six more languages: German, French, Spanish, Brazilian Portuguese, Korean, and Russian.** The launcher is
@@ -15,12 +15,19 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
   that overrides your PalWorldSettings.ini on a dedicated server, which can leave the launcher unable to monitor
   or control the server. The launcher now spots it before starting and offers to rename it to .bak (with a link
   to the file) so your ini takes effect.
+- **Warns about another running server before Start.** If a Palworld server this launcher didn't start is
+  already running (a leftover process, or one it can't identify), hitting Start would launch a second server
+  that competes for the same ports. The launcher now spots that before Start and offers to shut the other one
+  down first. Can be turned off in Launcher Settings.
 
 ### Fixed
 - **An imported server no longer gets stuck on "Starting..." indefinitely** when its REST API never answers
   (often a WorldOption.sav override, a wrong REST port, or a password mismatch). The status now reads "REST not
   responding" and points at what to check, instead of hanging, and it never force-restarts a server that is
   actually up.
+- **Discord connection hiccups no longer flood the log.** A transient Discord API error (like a 500 during the
+  bot's connect) used to log a full stack trace on every retry. Now it's a single concise line, and repeats are
+  throttled, so a Discord outage doesn't bury the log.
 
 ## [0.4.0] - 2026-07-16
 
