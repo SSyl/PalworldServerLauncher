@@ -11,6 +11,16 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
   and Japanese. Pick one on first run or any time from Launcher Settings. The Game Settings names come from
   Palworld's own translations, the rest is machine-generated, so corrections via an issue or pull request are
   welcome.
+- **A WorldOption.sav check on Start.** Worlds converted from co-op or single-player carry a WorldOption.sav
+  that overrides your PalWorldSettings.ini on a dedicated server, which can leave the launcher unable to monitor
+  or control the server. The launcher now spots it before starting and offers to rename it to .bak (with a link
+  to the file) so your ini takes effect.
+
+### Fixed
+- **An imported server no longer gets stuck on "Starting..." indefinitely** when its REST API never answers
+  (often a WorldOption.sav override, a wrong REST port, or a password mismatch). The status now reads "REST not
+  responding" and points at what to check, instead of hanging, and it never force-restarts a server that is
+  actually up.
 
 ## [0.4.0] - 2026-07-16
 
