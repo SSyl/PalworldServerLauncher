@@ -26,6 +26,7 @@ public sealed class LauncherSettingsDialog : Window
     private readonly CheckBox _loginOpen;
     private readonly CheckBox _hideSteamCmd;
     private readonly CheckBox _logHealthStats;
+    private readonly CheckBox _neverAskUnknownServers;
     private bool _changed;
 
     private LauncherSettingsDialog(LauncherConfig config)
@@ -104,6 +105,16 @@ public sealed class LauncherSettingsDialog : Window
         };
         root.Children.Add(_logHealthStats);
 
+        _neverAskUnknownServers = new CheckBox
+        {
+            Content = Strings.LauncherSettings_NeverAskUnknownServers,
+            IsChecked = !config.WarnUnknownServers,
+            Foreground = Fg,
+            ToolTip = Strings.LauncherSettings_NeverAskUnknownServersTip,
+            Margin = new Thickness(0, 0, 0, 18),
+        };
+        root.Children.Add(_neverAskUnknownServers);
+
         var bottom = new DockPanel { LastChildFill = false };
 
         var info = new StackPanel { VerticalAlignment = VerticalAlignment.Center };
@@ -142,6 +153,7 @@ public sealed class LauncherSettingsDialog : Window
         _config.AutoReconnectSingleInstance = _autoReconnect.IsChecked == true;
         _config.HideSteamCmdWindow = _hideSteamCmd.IsChecked == true;
         _config.LogHealthStats = _logHealthStats.IsChecked == true;
+        _config.WarnUnknownServers = _neverAskUnknownServers.IsChecked != true;
 
         if (_languages.SelectedItem is LauncherLanguage lang &&
             !string.Equals(lang.Code, _config.Language, StringComparison.OrdinalIgnoreCase))

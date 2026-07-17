@@ -45,6 +45,8 @@ public partial class MainWindow : Window
         _viewModel.ConfirmShutdownNow = ConfirmShutdownNow;
         _viewModel.ConfirmWorldOption = PromptWorldOption;
         _viewModel.ShowWorldOptionResult = ShowWorldOptionResult;
+        _viewModel.ConfirmUnknownServers = PromptUnknownServers;
+        _viewModel.ShowTerminateFailure = ShowTerminateFailure;
 
         Loaded += OnLoaded;
         Closing += OnClosing;
@@ -189,6 +191,30 @@ public partial class MainWindow : Window
         else
             ChoiceDialog.Show(this, Strings.WorldOpt_RenameFailedTitle,
                 string.Format(Strings.WorldOpt_RenameFailedFormat, result.Error), Strings.Common_OK);
+    }
+
+    /// <summary>Before Start, when a Palworld server this launcher didn't start is running, ask whether to
+    /// terminate it, leave it running, or cancel. The dialog lives here, not the VM.</summary>
+    private UnknownServerChoice PromptUnknownServers(IReadOnlyList<ProcessScanner.UnmanagedServer> servers)
+    {
+        var lines = new List<string>();
+        foreach (var s in servers)
+            lines.Add($"  • {s.Path ?? Strings.UnknownServer_Unreadable}  (PID {s.Pid})");
+        var message = $"{Strings.UnknownServer_Intro}\n\n{string.Join("\n", lines)}\n\n{Strings.UnknownServer_SettingsHint}";
+        return ChoiceDialog.Show(this, Strings.UnknownServer_Title, message,
+            Strings.UnknownServer_Terminate, Strings.UnknownServer_LeaveRunning, Strings.Common_Cancel) switch
+        {
+            0 => UnknownServerChoice.Terminate,
+            1 => UnknownServerChoice.LeaveRunning,
+            _ => UnknownServerChoice.Cancel, // Cancel button or dialog dismissed (-1)
+        };
+    }
+
+    /// <summary>Report which unmanaged servers couldn't be terminated (e.g. running elevated), so the user can act.</summary>
+    private void ShowTerminateFailure(IReadOnlyList<string> failures)
+    {
+        var message = $"{string.Join("\n", failures)}\n\n{Strings.UnknownServer_TerminateFailedHint}";
+        ChoiceDialog.Show(this, Strings.UnknownServer_TerminateFailedTitle, message, Strings.Common_OK);
     }
 
     /// <summary>Confirm skipping a timed shutdown's countdown to shut the server down immediately.</summary>

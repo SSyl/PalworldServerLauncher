@@ -2361,4 +2361,34 @@ Diese Änderungen übernehmen und speichern?</value>
   <data name="WorldOpt_RenameFailedFormat" xml:space="preserve">
     <value>Couldn't rename WorldOption.sav: {0}</value>
   </data>
+  <data name="UnknownServer_Title" xml:space="preserve">
+    <value>Another server is running</value>
+  </data>
+  <data name="UnknownServer_Intro" xml:space="preserve">
+    <value>This launcher didn't start the following Palworld server(s). They can conflict on ports or start a competing duplicate when you click Start:</value>
+  </data>
+  <data name="UnknownServer_Unreadable" xml:space="preserve">
+    <value>A running server the launcher couldn't identify (it may be running as administrator)</value>
+  </data>
+  <data name="UnknownServer_SettingsHint" xml:space="preserve">
+    <value>You can turn this check off in Launcher Settings (the gear icon, top-right).</value>
+  </data>
+  <data name="UnknownServer_Terminate" xml:space="preserve">
+    <value>Terminate</value>
+  </data>
+  <data name="UnknownServer_LeaveRunning" xml:space="preserve">
+    <value>Leave it running</value>
+  </data>
+  <data name="UnknownServer_TerminateFailedTitle" xml:space="preserve">
+    <value>Couldn't terminate the server</value>
+  </data>
+  <data name="UnknownServer_TerminateFailedHint" xml:space="preserve">
+    <value>It may be running as administrator. Close it manually, or run the launcher as administrator.</value>
+  </data>
+  <data name="LauncherSettings_NeverAskUnknownServers" xml:space="preserve">
+    <value>Never ask about terminating unknown servers</value>
+  </data>
+  <data name="LauncherSettings_NeverAskUnknownServersTip" xml:space="preserve">
+    <value>When a Palworld server this launcher didn't start is already running, start without warning about it.</value>
+  </data>
 </root>

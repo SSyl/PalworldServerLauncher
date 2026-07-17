@@ -112,6 +112,13 @@ public partial class MainViewModel : ObservableObject
     /// as reveal-in-Explorer links, or an error).</summary>
     public Action<WorldOptionRenameResult>? ShowWorldOptionResult { get; set; }
 
+    /// <summary>Set by the View: before Start, if a Palworld server this launcher didn't start is already running,
+    /// ask whether to terminate it, leave it, or cancel. The list carries each process's pid + path (null = unidentifiable).</summary>
+    public Func<IReadOnlyList<ProcessScanner.UnmanagedServer>, UnknownServerChoice>? ConfirmUnknownServers { get; set; }
+
+    /// <summary>Set by the View: report which unmanaged servers couldn't be terminated (e.g. running elevated).</summary>
+    public Action<IReadOnlyList<string>>? ShowTerminateFailure { get; set; }
+
     /// <summary>Label for the multi-state primary button, with an animated ellipsis while busy or transitioning
     /// (Starting/Stopping/Restarting) so it's clearly not frozen.</summary>
     public string PrimaryActionText
@@ -793,6 +800,9 @@ public partial class MainViewModel : ObservableObject
     /// </summary>
     private bool PrepareForStart(bool interactive)
     {
+        if (!HandleUnmanagedServers(interactive))
+            return false;
+
         var savs = _controller.FindWorldOptionSavs();
         if (savs.Count == 0)
             return true;
@@ -826,6 +836,43 @@ public partial class MainViewModel : ObservableObject
             }
         }
         ShowWorldOptionResult?.Invoke(new WorldOptionRenameResult(true, bakPaths, null));
+        return true;
+    }
+
+    /// <summary>
+    /// Pre-Start guard for a running Palworld server this launcher didn't start (a foreign install, or one whose
+    /// path we can't read so we can't attach to it). Starting alongside it risks a port conflict or a competing
+    /// duplicate. Returns true to proceed with the launch, false to abort.
+    /// </summary>
+    private bool HandleUnmanagedServers(bool interactive)
+    {
+        var unmanaged = _controller.FindUnmanagedServers();
+        if (unmanaged.Count == 0)
+            return true;
+
+        if (!interactive || !_config.WarnUnknownServers)
+        {
+            // Headless (can't show a modal) or the user turned the check off: don't block, just note it.
+            _logger.Info($"{unmanaged.Count} other Palworld server(s) are running that this launcher didn't start. Starting anyway; they may conflict on ports.");
+            return true;
+        }
+
+        var choice = ConfirmUnknownServers?.Invoke(unmanaged) ?? UnknownServerChoice.Cancel;
+        if (choice == UnknownServerChoice.Cancel)
+            return false;
+        if (choice == UnknownServerChoice.LeaveRunning)
+            return true;
+
+        // Terminate: kill each; if any fails (e.g. it's elevated), report and abort rather than start into a conflict.
+        var failures = new List<string>();
+        foreach (var server in unmanaged)
+            if (!_controller.TryTerminateServer(server.Pid, out var error))
+                failures.Add($"PID {server.Pid}: {error}");
+        if (failures.Count > 0)
+        {
+            ShowTerminateFailure?.Invoke(failures);
+            return false;
+        }
         return true;
     }
 
