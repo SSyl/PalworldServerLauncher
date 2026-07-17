@@ -2322,4 +2322,19 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
   <data name="LauncherSettings_NeverAskUnknownServersTip" xml:space="preserve">
     <value>このランチャーが起動していない Palworld サーバーがすでに実行されている場合、警告せずに起動します。</value>
   </data>
+  <data name="Main_BackupFolderLabel" xml:space="preserve">
+    <value>Backup folder:</value>
+  </data>
+  <data name="Main_BackupFolderTip" xml:space="preserve">
+    <value>Where backup archives are written. Leave blank to use the default folder (&lt;ServerRoot&gt;\backups).</value>
+  </data>
+  <data name="Main_Browse" xml:space="preserve">
+    <value>Browse…</value>
+  </data>
+  <data name="Main_BackupFolderBrowseTip" xml:space="preserve">
+    <value>Choose a custom folder for backup archives.</value>
+  </data>
+  <data name="Main_BackupFolderPickTitle" xml:space="preserve">
+    <value>Choose Backup Folder</value>
+  </data>
 </root>

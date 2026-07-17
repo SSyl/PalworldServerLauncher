@@ -557,6 +557,13 @@ public partial class MainViewModel : ObservableObject
     public IReadOnlyList<TimeOnly> BackupTimes => _config.BackupTimes;
     public string BackupTimesSummary => FormatTimesSummary(_config.BackupTimes);
 
+    /// <summary>Custom folder where backup archives are written. Empty = the default <c>&lt;ServerRoot&gt;\backups</c>.</summary>
+    public string BackupFolder
+    {
+        get => _config.BackupFolder;
+        set { _config.BackupFolder = value; _config.Save(); OnPropertyChanged(); }
+    }
+
     public void SetBackupTimes(IEnumerable<TimeOnly> times)
     {
         _config.BackupTimes = times.Distinct().OrderBy(t => t).ToList();

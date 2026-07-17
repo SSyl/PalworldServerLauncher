@@ -131,6 +131,10 @@ public sealed class LauncherConfig
     public bool BackupOnShutdown { get; set; } = true;
     public int BackupRetentionDays { get; set; } = 7;
 
+    /// <summary>Custom folder where backup archives are written. Empty (default) = <c>&lt;ServerRoot&gt;\backups</c>.
+    /// The folder is created on demand when a backup is taken.</summary>
+    public string BackupFolder { get; set; } = "";
+
     /// <summary>Enable scheduled backups at the explicit <see cref="BackupTimes"/>.</summary>
     public bool ScheduledBackupEnabled { get; set; } = false;
 

@@ -262,6 +262,13 @@
                         <TextBox Text="{Binding BackupRetentionDays}" Width="38" VerticalAlignment="Center"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_DaysSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7"
+                                ToolTip="{x:Static loc:Strings.Main_BackupFolderTip}">
+                        <TextBlock Text="{x:Static loc:Strings.Main_BackupFolderLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                        <TextBox Text="{Binding BackupFolder}" Width="200" VerticalAlignment="Center"/>
+                        <Button Content="{x:Static loc:Strings.Main_Browse}" Click="OnBrowseBackupFolder" Margin="6,0,0,0"
+                                ToolTip="{x:Static loc:Strings.Main_BackupFolderBrowseTip}"/>
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{x:Static loc:Strings.Main_NextBackupLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                         <TextBlock Text="{Binding NextBackup}" Foreground="{x:Static local:Theme.Text}" VerticalAlignment="Center" Margin="0,0,10,0"/>

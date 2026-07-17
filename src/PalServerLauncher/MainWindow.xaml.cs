@@ -335,6 +335,16 @@ public partial class MainWindow : Window
             _viewModel.SetBackupTimes(result);
     }
 
+    /// <summary>Browse for a custom backup folder. The chosen path is stored in the config; an empty path
+    /// falls back to the default <c>&lt;ServerRoot&gt;\backups</c>.</summary>
+    private void OnBrowseBackupFolder(object sender, RoutedEventArgs e)
+    {
+        var picker = new OpenFolderDialog { Title = Strings.Main_BackupFolderPickTitle };
+        if (picker.ShowDialog(this) != true)
+            return;
+        _viewModel.BackupFolder = picker.FolderName;
+    }
+
     private void OnOpenLauncherSettings(object sender, RoutedEventArgs e)
     {
         if (LauncherSettingsDialog.Show(this, _viewModel.Config))

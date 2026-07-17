@@ -2315,4 +2315,19 @@
   <data name="LauncherSettings_NeverAskUnknownServersTip" xml:space="preserve">
     <value>如果已有一個非此啟動器啟動的 Palworld 伺服器正在執行，啟動時將不會顯示此警告。</value>
   </data>
+  <data name="Main_BackupFolderLabel" xml:space="preserve">
+    <value>Backup folder:</value>
+  </data>
+  <data name="Main_BackupFolderTip" xml:space="preserve">
+    <value>Where backup archives are written. Leave blank to use the default folder (&lt;ServerRoot&gt;\backups).</value>
+  </data>
+  <data name="Main_Browse" xml:space="preserve">
+    <value>Browse…</value>
+  </data>
+  <data name="Main_BackupFolderBrowseTip" xml:space="preserve">
+    <value>Choose a custom folder for backup archives.</value>
+  </data>
+  <data name="Main_BackupFolderPickTitle" xml:space="preserve">
+    <value>Choose Backup Folder</value>
+  </data>
 </root>

@@ -33,7 +33,12 @@ public sealed class BackupService
     private string SavedDir => Path.Combine(_config.ServerRoot, LauncherConfig.ServerFolderName, "Pal", "Saved");
     private string SaveGamesDir => Path.Combine(SavedDir, "SaveGames");
     private string ConfigDir => Path.Combine(SavedDir, "Config", "WindowsServer");
-    private string BackupsDir => Path.Combine(_config.ServerRoot, "backups");
+
+    /// <summary>Where backup archives are written. Uses <see cref="LauncherConfig.BackupFolder"/> when set,
+    /// otherwise the default <c>&lt;ServerRoot&gt;\backups</c>.</summary>
+    private string BackupsDir => string.IsNullOrWhiteSpace(_config.BackupFolder)
+        ? Path.Combine(_config.ServerRoot, "backups")
+        : _config.BackupFolder;
 
     /// <summary>
     /// Take a backup. A fresh <c>/save</c> is issued only when the server is running AND REST is usable;

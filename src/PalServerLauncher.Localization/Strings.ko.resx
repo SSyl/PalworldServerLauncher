@@ -2391,4 +2391,19 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
   <data name="LauncherSettings_NeverAskUnknownServersTip" xml:space="preserve">
     <value>이 런처로 시작하지 않은 Palworld 서버가 이미 실행 중이어도 경고 없이 시작합니다.</value>
   </data>
+  <data name="Main_BackupFolderLabel" xml:space="preserve">
+    <value>Backup folder:</value>
+  </data>
+  <data name="Main_BackupFolderTip" xml:space="preserve">
+    <value>Where backup archives are written. Leave blank to use the default folder (&lt;ServerRoot&gt;\backups).</value>
+  </data>
+  <data name="Main_Browse" xml:space="preserve">
+    <value>Browse…</value>
+  </data>
+  <data name="Main_BackupFolderBrowseTip" xml:space="preserve">
+    <value>Choose a custom folder for backup archives.</value>
+  </data>
+  <data name="Main_BackupFolderPickTitle" xml:space="preserve">
+    <value>Choose Backup Folder</value>
+  </data>
 </root>
