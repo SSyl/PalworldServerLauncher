@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using PalServerLauncher.Config;
@@ -308,7 +309,8 @@ public sealed class HealthMonitor : IDisposable
         try
         {
             process.Refresh();
-            return MemoryFormat.Format(process.WorkingSet64);
+            // The in-app tile follows the user's regional format; the Discord /status memory line stays invariant.
+            return MemoryFormat.Format(process.WorkingSet64, CultureInfo.CurrentCulture);
         }
         catch
         {
