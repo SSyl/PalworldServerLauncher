@@ -36,9 +36,14 @@ public sealed class BackupService
 
     /// <summary>Where backup archives are written. Uses <see cref="LauncherConfig.BackupFolder"/> when set,
     /// otherwise the default <c>&lt;ServerRoot&gt;\backups</c>.</summary>
-    private string BackupsDir => string.IsNullOrWhiteSpace(_config.BackupFolder)
-        ? Path.Combine(_config.ServerRoot, "backups")
-        : _config.BackupFolder;
+    private string BackupsDir => ResolveBackupsDir(_config.ServerRoot, _config.BackupFolder);
+
+    /// <summary>Resolves the backup folder for a given server root and custom backup folder setting.
+    /// Extracted as an internal static so the resolution logic is unit-testable.</summary>
+    internal static string ResolveBackupsDir(string serverRoot, string? backupFolder) =>
+        string.IsNullOrWhiteSpace(backupFolder)
+            ? Path.Combine(serverRoot, LauncherConfig.BackupsFolderName)
+            : backupFolder;
 
     /// <summary>
     /// Take a backup. A fresh <c>/save</c> is issued only when the server is running AND REST is usable;
@@ -64,15 +69,15 @@ public sealed class BackupService
             _logger.Info($"Backup ({reason}): no fresh save (REST off or server stopped), archiving the current on-disk save, which may not include the latest changes.");
         }
 
-        Directory.CreateDirectory(BackupsDir);
         var stamp = DateTime.Now.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture);
         var zipPath = Path.Combine(BackupsDir, $"palworld-{stamp}-{reason.ToString().ToLowerInvariant()}.zip");
 
         try
         {
+            Directory.CreateDirectory(BackupsDir);
             CreateArchive(zipPath);
         }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or ArgumentException or PathTooLongException)
         {
             _logger.Error($"Backup ({reason}) failed to write {Path.GetFileName(zipPath)}", ex);
             return null;
@@ -140,18 +145,23 @@ public sealed class BackupService
     {
         try
         {
-            var files = Directory.GetFiles(BackupsDir, "palworld-*.zip")
-                .Where(f => IsPrunableAutoBackup(Path.GetFileName(f)))
-                .Select(f => (path: f, writtenUtc: File.GetLastWriteTimeUtc(f)));
-            foreach (var expired in SelectExpired(files, _config.BackupRetentionDays, DateTime.UtcNow))
-            {
-                File.Delete(expired);
-                _logger.Debug($"Pruned old backup: {Path.GetFileName(expired)}");
-            }
+            PruneFolder(BackupsDir);
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
             _logger.Debug($"Backup prune skipped: {ex.Message}");
+        }
+    }
+
+    private void PruneFolder(string dir)
+    {
+        var files = Directory.GetFiles(dir, "palworld-*.zip")
+            .Where(f => IsPrunableAutoBackup(Path.GetFileName(f)))
+            .Select(f => (path: f, writtenUtc: File.GetLastWriteTimeUtc(f)));
+        foreach (var expired in SelectExpired(files, _config.BackupRetentionDays, DateTime.UtcNow))
+        {
+            File.Delete(expired);
+            _logger.Debug($"Pruned old backup: {Path.GetFileName(expired)}");
         }
     }
 

@@ -43,6 +43,13 @@
     <PackageReference Include="Discord.Net" Version="3.20.1" />
   </ItemGroup>
 
+  <!-- Expose internals to the test project so the backup-folder resolution logic is unit-testable. -->
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>PalServerLauncher.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
   <!-- UI strings live in a separate class library so the app can reference the generated Strings class
        from its own code (a resx in the app project is invisible to WPF's _wpftmp markup pass). -->
   <ItemGroup>

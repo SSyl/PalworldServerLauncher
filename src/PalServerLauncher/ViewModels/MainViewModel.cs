@@ -558,15 +558,35 @@ public partial class MainViewModel : ObservableObject
     public IReadOnlyList<TimeOnly> BackupTimes => _config.BackupTimes;
     public string BackupTimesSummary => FormatTimesSummary(_config.BackupTimes);
 
-    /// <summary>Custom folder where backup archives are written. Empty = the default <c>&lt;ServerRoot&gt;\backups</c>.</summary>
+    /// <summary>Custom folder where backup archives are written. Empty = the default <c>&lt;ServerRoot&gt;\backups</c>.
+    /// Whitespace-only input is treated as empty; valid paths are normalized to absolute via <c>Path.GetFullPath</c>
+    /// (matching the convention used by <c>SteamCmd</c> and <c>ProcessScanner</c> for <see cref="LauncherConfig.ServerRoot"/>).</summary>
     public string BackupFolder
     {
         get => _config.BackupFolder;
-        set { _config.BackupFolder = value; _config.Save(); OnPropertyChanged(); OnPropertyChanged(nameof(BackupFolderDefault)); }
+        set
+        {
+            var cleaned = string.IsNullOrWhiteSpace(value) ? "" : value.Trim();
+            if (!string.IsNullOrEmpty(cleaned))
+            {
+                try
+                {
+                    cleaned = Path.GetFullPath(cleaned);
+                }
+                catch (Exception ex) when (ex is ArgumentException or PathTooLongException or NotSupportedException)
+                {
+                    _logger.Info($"Backup folder path rejected: {ex.Message}");
+                    cleaned = "";
+                }
+            }
+            _config.BackupFolder = cleaned;
+            _config.Save();
+            OnPropertyChanged();
+        }
     }
 
     /// <summary>The default backup folder shown as a watermark in the custom-path box when it's empty.</summary>
-    public string BackupFolderDefault => Path.Combine(_config.ServerRoot, "backups");
+    public string BackupFolderDefault => Path.Combine(_config.ServerRoot, LauncherConfig.BackupsFolderName);
 
     public void SetBackupTimes(IEnumerable<TimeOnly> times)
     {

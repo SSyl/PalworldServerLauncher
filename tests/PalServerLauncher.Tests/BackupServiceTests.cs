@@ -1,9 +1,26 @@
+using PalServerLauncher.Config;
 using PalServerLauncher.Core;
 
 namespace PalServerLauncher.Tests;
 
 public class BackupServiceTests
 {
+    [Theory]
+    [InlineData("", "C:\\ServerRoot")]
+    [InlineData("   ", "C:\\ServerRoot")]
+    [InlineData(null, "C:\\ServerRoot")]
+    public void ResolveBackupsDir_empty_or_whitespace_uses_default(string? backupFolder, string serverRoot)
+    {
+        var result = BackupService.ResolveBackupsDir(serverRoot, backupFolder);
+        Assert.Equal(Path.Combine(serverRoot, LauncherConfig.BackupsFolderName), result);
+    }
+
+    [Fact]
+    public void ResolveBackupsDir_custom_uses_custom_path_verbatim()
+    {
+        Assert.Equal("D:\\CustomBackups", BackupService.ResolveBackupsDir("C:\\ServerRoot", "D:\\CustomBackups"));
+    }
+
     [Theory]
     [InlineData("0/ABC/backup/world/2026.07.08/Level.sav", true)]  // Palworld's own rolling backups
     [InlineData("0/ABC/backup", true)]

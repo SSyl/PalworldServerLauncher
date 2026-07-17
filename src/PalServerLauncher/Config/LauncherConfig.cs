@@ -22,6 +22,9 @@ public sealed class LauncherConfig
     /// <summary>Name of the launcher's own log subfolder under <see cref="DataRoot"/>.</summary>
     public const string LogsFolderName = "LauncherLogs";
 
+    /// <summary>Name of the backup archives subfolder under <see cref="ServerRoot"/> (used when <see cref="BackupFolder"/> is empty).</summary>
+    public const string BackupsFolderName = "backups";
+
     /// <summary>Folder that contains (or will contain) the server install, <c>steamcmd/</c>, and <c>backups/</c>.</summary>
     public string ServerRoot { get; set; } = DataRoot;
 
@@ -286,7 +289,7 @@ public sealed class LauncherConfig
         {
             ("launcher.json", "launcher.json"),
             ("steamcmd", "steamcmd"),
-            ("backups", "backups"),
+            ("backups", BackupsFolderName),
             ("server", ServerFolderName),
             ("logs", LogsFolderName),
         };
