@@ -61,17 +61,18 @@ public partial class App : Application
             // background tasks that surface here. They self-heal on retry, so log one concise line instead of a
             // full ERROR stack trace per attempt. A genuine bad-token failure is caught in DiscordBotService.
             var flat = args.Exception.Flatten();
-            var fromDiscord = false;
+            Exception? discordInner = null;
             foreach (var inner in flat.InnerExceptions)
-                if (inner.GetType().Namespace?.StartsWith("Discord", StringComparison.Ordinal) == true)
+                if ((inner.GetType().Namespace?.StartsWith("Discord", StringComparison.Ordinal) == true)
+                    || (inner.StackTrace?.Contains("Discord.", StringComparison.Ordinal) == true))
                 {
-                    fromDiscord = true;
+                    discordInner = inner;
                     break;
                 }
 
-            if (fromDiscord)
+            if (discordInner is not null)
             {
-                var msg = flat.InnerException?.Message ?? "connection error";
+                var msg = discordInner.Message;
                 if (msg != _lastDiscordNoise || DateTime.UtcNow - _lastDiscordNoiseUtc > TimeSpan.FromMinutes(5))
                 {
                     _lastDiscordNoise = msg;

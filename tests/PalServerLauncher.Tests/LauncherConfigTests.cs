@@ -36,6 +36,7 @@ public class LauncherConfigTests
 
         Assert.Equal("en", cfg.Language);
         Assert.False(cfg.AutoReconnectSingleInstance);
+        Assert.True(cfg.WarnUnknownServers);
     }
 
     [Fact]

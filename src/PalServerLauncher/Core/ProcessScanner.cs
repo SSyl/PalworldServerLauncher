@@ -107,7 +107,7 @@ public static class ProcessScanner
     /// <summary>
     /// Every running Palworld server process that is NOT managed under <paramref name="serverRoot"/> (Foreign or
     /// Unreadable). Starting a server while one of these runs risks a port conflict or a competing duplicate.
-    /// Handles are disposed internally; terminate by <see cref="UnmanagedServer.Pid"/> via <see cref="TryTerminate"/>.
+    /// Handles are disposed internally, terminate by <see cref="UnmanagedServer.Pid"/> via <see cref="TryTerminate"/>.
     /// </summary>
     public static IReadOnlyList<UnmanagedServer> FindUnmanagedServers(string serverRoot)
     {
@@ -118,7 +118,14 @@ public static class ProcessScanner
             {
                 string? path = null;
                 try { path = candidate.MainModule?.FileName; }
-                catch { /* access denied / exited: leave path null -> Unreadable */ }
+                catch { /* access denied / exited */ }
+                if (string.IsNullOrWhiteSpace(path))
+                {
+                    // MainModule can transiently fail while a process is still initializing. Retry once so our own server
+                    // is not misclassified Unreadable on a momentary read failure (a persistent elevated one stays Unreadable).
+                    try { candidate.Refresh(); path = candidate.MainModule?.FileName; }
+                    catch { }
+                }
 
                 if (ClassifyServerPath(path, serverRoot) != ServerOwnership.Managed)
                     result.Add(new UnmanagedServer(candidate.Id, path));
@@ -139,6 +146,11 @@ public static class ProcessScanner
         try
         {
             using var process = Process.GetProcessById(pid);
+            // The pid was captured at scan time and the handle released, so between the prompt and now the process
+            // could have exited and Windows recycled the pid onto something unrelated. Never kill a pid that is no
+            // longer a Palworld server.
+            if (!process.ProcessName.Equals(ServerProcessName, StringComparison.OrdinalIgnoreCase))
+                return true; // our target is already gone, the pid now belongs to a different process
             process.Kill(entireProcessTree: true);
             process.WaitForExit(5000);
             return true;
@@ -147,9 +159,13 @@ public static class ProcessScanner
         {
             return true; // no such process: already gone
         }
-        catch (Exception ex) when (ex is System.ComponentModel.Win32Exception or InvalidOperationException)
+        catch (InvalidOperationException)
         {
-            error = ex.Message;
+            return true; // process exited between scan and kill: goal already achieved
+        }
+        catch (System.ComponentModel.Win32Exception ex)
+        {
+            error = ex.Message; // e.g. Access Denied on an elevated process
             return false;
         }
     }

@@ -853,7 +853,7 @@ public partial class MainViewModel : ObservableObject
         if (!interactive || !_config.WarnUnknownServers)
         {
             // Headless (can't show a modal) or the user turned the check off: don't block, just note it.
-            _logger.Info($"{unmanaged.Count} other Palworld server(s) are running that this launcher didn't start. Starting anyway; they may conflict on ports.");
+            _logger.Info($"{unmanaged.Count} other Palworld server(s) are running that this launcher didn't start. Starting anyway, they may conflict on ports.");
             return true;
         }
 
@@ -863,7 +863,7 @@ public partial class MainViewModel : ObservableObject
         if (choice == UnknownServerChoice.LeaveRunning)
             return true;
 
-        // Terminate: kill each; if any fails (e.g. it's elevated), report and abort rather than start into a conflict.
+        // Terminate: kill each, if any fails (e.g. it's elevated), report and abort rather than start into a conflict.
         var failures = new List<string>();
         foreach (var server in unmanaged)
             if (!_controller.TryTerminateServer(server.Pid, out var error))
