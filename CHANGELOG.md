@@ -11,7 +11,7 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
   deprecated RCON in favor of the REST API and plans to remove it in a future update, so prefer the REST-based
   commands where they cover what you need.
 - **Server memory in the Discord `/status` command,** alongside the FPS, players, uptime, and version it
-  already reports.
+  already reports. Requested in #5.
 - **Choose where backups are saved.** A Backup Location button in the Backups section lets you pick a custom
   folder for your backup archives, or keep the default (a backups folder next to the launcher). It checks the
   folder is writable before saving, and your existing backups stay where they are. Inspired by a PR from
