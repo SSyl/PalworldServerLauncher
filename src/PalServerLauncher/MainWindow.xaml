@@ -93,6 +93,11 @@
                             <DataTrigger Binding="{Binding PrimaryActionKind}" Value="ShutdownNow">
                                 <Setter Property="Background" Value="{x:Static local:Theme.Countdown}"/>
                             </DataTrigger>
+                            <!-- Fixed width while a transitional label animates its dots (Starting/Stopping/
+                                 Restarting), same idea as the busy state, so the button doesn't resize. -->
+                            <DataTrigger Binding="{Binding IsTransitionalAnimating}" Value="True">
+                                <Setter Property="Width" Value="124"/>
+                            </DataTrigger>
                             <DataTrigger Binding="{Binding IsBusy}" Value="True">
                                 <Setter Property="Background" Value="{x:Static local:Theme.Accent}"/>
                                 <Setter Property="Opacity" Value="1"/>

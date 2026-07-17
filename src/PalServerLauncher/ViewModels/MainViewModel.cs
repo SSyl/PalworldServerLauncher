@@ -132,6 +132,10 @@ public partial class MainViewModel : ObservableObject
     /// <summary>What the primary button currently represents, drives its color via XAML (Install/Start = green, Stop = red).</summary>
     public PrimaryActionKind PrimaryActionKind => PrimaryButton.Resolve(IsInstalled, IsBusy, State, ShutdownRemainingSeconds);
 
+    /// <summary>True while the button shows an animated transitional label (Starting/Stopping/Restarting). XAML
+    /// pins the button width on this so the animated dots don't resize it, the same way the busy state does.</summary>
+    public bool IsTransitionalAnimating => !IsBusy && ShutdownRemainingSeconds is null && IsTransitional(State);
+
     /// <summary>Localized display text for the Status tile (the raw ServerState enum, translated).</summary>
     public string StateText => State switch
     {
@@ -196,6 +200,7 @@ public partial class MainViewModel : ObservableObject
             _busyDots = 0;
         }
         OnPropertyChanged(nameof(PrimaryActionText));
+        OnPropertyChanged(nameof(IsTransitionalAnimating));
     }
 
     partial void OnIsBusyChanged(bool value) => RefreshBusyAnimation();
