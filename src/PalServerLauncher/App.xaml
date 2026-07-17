@@ -156,6 +156,48 @@
             </Style.Triggers>
         </Style>
 
+        <!-- Dark context menu + items, app-wide. The default light template reserves an icon/checkmark gutter
+             that reads as a stray white box on the dark theme, so MenuItem is retemplated to a header-only leaf
+             row (grey hover) with no gutter, and the menu gets the dark Sunken backdrop. Flat leaf menus only
+             (no submenus/icons). Reused by any code-built ContextMenu (the RCON recent-commands list, and the
+             planned system-tray menu). -->
+        <Style TargetType="ContextMenu">
+            <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ContextMenu">
+                        <Border Background="{x:Static local:Theme.Sunken}" BorderBrush="{x:Static local:Theme.FieldBorder}"
+                                BorderThickness="1" SnapsToDevicePixels="True">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="300">
+                                <ItemsPresenter Margin="0,3"/>
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="MenuItem">
+            <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+                        <Border x:Name="bd" Background="Transparent" Padding="12,5" SnapsToDevicePixels="True">
+                            <ContentPresenter ContentSource="Header" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="{x:Static local:Theme.Button}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{x:Static local:Theme.TextMuted}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <!-- Fluent-style toggle switch (a retemplated ToggleButton): grey track with the thumb left when off,
              Accent (blue) track with the thumb right when on. Used for the compact-mode toggle. -->
         <Style x:Key="ToggleSwitch" TargetType="ToggleButton">

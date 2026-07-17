@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using PalServerLauncher.Config;
@@ -42,7 +43,14 @@ public sealed class ServerCommandsDialog : Window
     private readonly TextBlock _status;
 
     // RCON tab (only built when _rcon.Enabled).
+    private const int MaxTerminalLines = 500;
+    // The console transcript. Static so it survives closing and reopening the window within a session, seeded
+    // once per session from rcon-log.txt and saved back on every line, and bounded to the last MaxTerminalLines
+    // both in memory and on disk so it can't grow without end.
+    private static readonly List<string> _rconTranscript = new();
+    private static bool _rconTranscriptLoaded;
     private readonly string _rconHistoryPath = Path.Combine(LauncherConfig.DataRoot, "rcon-history.json");
+    private readonly string _rconLogPath = Path.Combine(LauncherConfig.DataRoot, "rcon-log.txt");
     private TextBox? _rconTerminal;
     private TextBox? _rconInput;
     private RconClient? _rconClient;
@@ -142,6 +150,12 @@ public sealed class ServerCommandsDialog : Window
         if (_rcon.Enabled)
         {
             _rconHistory = RconHistory.Load(_rconHistoryPath);
+            if (!_rconTranscriptLoaded)
+            {
+                _rconTranscriptLoaded = true;
+                _rconTranscript.AddRange(RconTranscript.Load(_rconLogPath));
+                CapTranscript();
+            }
             var tabs = new TabControl { Background = Brushes.Transparent, BorderThickness = new Thickness(0) };
             if (Application.Current?.TryFindResource("DarkTabItem") is Style tabStyle)
                 tabs.ItemContainerStyle = tabStyle;
@@ -267,11 +281,8 @@ public sealed class ServerCommandsDialog : Window
     {
         var panel = new DockPanel { Margin = new Thickness(18) };
 
-        var blurb = new TextBlock
-        {
-            Text = Strings.ServerCmd_RconDeprecated, Foreground = Warn, TextWrapping = TextWrapping.Wrap,
-            Margin = new Thickness(0, 0, 0, 10),
-        };
+        var blurb = Banner(Strings.ServerCmd_RconDeprecated); // amber notice box, matching the CPU Affinity/Priority tab
+        blurb.Margin = new Thickness(0, 0, 0, 10);
         DockPanel.SetDock(blurb, Dock.Top);
         panel.Children.Add(blurb);
 
@@ -297,14 +308,17 @@ public sealed class ServerCommandsDialog : Window
         DockPanel.SetDock(inputRow, Dock.Bottom);
         panel.Children.Add(inputRow);
 
-        _rconTerminal = new TextBox
+        var terminal = new TextBox
         {
             IsReadOnly = true, IsReadOnlyCaretVisible = false, AcceptsReturn = true, TextWrapping = TextWrapping.Wrap,
             VerticalScrollBarVisibility = ScrollBarVisibility.Auto, FontFamily = new FontFamily("Consolas"),
             Background = Theme.Sunken, Foreground = Fg, BorderBrush = FieldBorder, BorderThickness = new Thickness(1),
             Padding = new Thickness(6), Height = 260,
+            Text = string.Join("\n", _rconTranscript), // restore this session's earlier output
         };
-        panel.Children.Add(_rconTerminal); // fills between the blurb and the input row
+        terminal.Loaded += (_, _) => terminal.ScrollToEnd(); // show the latest line when the tab first opens
+        _rconTerminal = terminal;
+        panel.Children.Add(terminal); // fills between the blurb and the input row
         return panel;
     }
 
@@ -381,12 +395,25 @@ public sealed class ServerCommandsDialog : Window
 
     private void AppendTerminal(string text)
     {
+        // Timestamp the entry's first line; align continuation lines of a multi-line response under it.
+        var stamp = $"[{DateTime.Now:HH:mm:ss}] ";
+        var indent = new string(' ', stamp.Length);
+        var lines = text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+        for (var i = 0; i < lines.Length; i++)
+            _rconTranscript.Add((i == 0 ? stamp : indent) + lines[i]);
+        CapTranscript();
+        RconTranscript.Save(_rconLogPath, _rconTranscript);
+
         if (_rconTerminal is null)
             return;
-        if (_rconTerminal.Text.Length > 0)
-            _rconTerminal.AppendText("\n");
-        _rconTerminal.AppendText(text);
+        _rconTerminal.Text = string.Join("\n", _rconTranscript);
         _rconTerminal.ScrollToEnd();
+    }
+
+    private static void CapTranscript()
+    {
+        if (_rconTranscript.Count > MaxTerminalLines)
+            _rconTranscript.RemoveRange(0, _rconTranscript.Count - MaxTerminalLines);
     }
 
     private void RememberCommand(string command)
@@ -395,24 +422,25 @@ public sealed class ServerCommandsDialog : Window
         RconHistory.Save(_rconHistoryPath, _rconHistory);
     }
 
+    // A dropdown of recent commands. Clicking one fills the input (it doesn't run it). The menu is themed by the
+    // app-wide ContextMenu / MenuItem styles in App.xaml, so there's no unthemed icon gutter.
     private void ShowHistoryMenu(Button anchor)
     {
-        var menu = new ContextMenu { Background = FieldBg, PlacementTarget = anchor };
+        var menu = new ContextMenu { PlacementTarget = anchor, Placement = PlacementMode.Bottom };
         if (_rconHistory.Count == 0)
         {
-            menu.Items.Add(new MenuItem { Header = Strings.ServerCmd_RconNoHistory, IsEnabled = false, Foreground = Muted });
+            menu.Items.Add(new MenuItem { Header = Strings.ServerCmd_RconNoHistory, IsEnabled = false });
         }
         else
         {
             foreach (var command in _rconHistory)
             {
-                var captured = command;
-                var item = new MenuItem { Header = captured, Foreground = Fg };
+                var item = new MenuItem { Header = command };
                 item.Click += (_, _) =>
                 {
                     if (_rconInput is null) return;
-                    _rconInput.Text = captured;
-                    _rconInput.CaretIndex = captured.Length;
+                    _rconInput.Text = command;
+                    _rconInput.CaretIndex = command.Length;
                     _rconInput.Focus();
                 };
                 menu.Items.Add(item);
