@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
@@ -561,8 +562,11 @@ public partial class MainViewModel : ObservableObject
     public string BackupFolder
     {
         get => _config.BackupFolder;
-        set { _config.BackupFolder = value; _config.Save(); OnPropertyChanged(); }
+        set { _config.BackupFolder = value; _config.Save(); OnPropertyChanged(); OnPropertyChanged(nameof(BackupFolderDefault)); }
     }
+
+    /// <summary>The default backup folder shown as a watermark in the custom-path box when it's empty.</summary>
+    public string BackupFolderDefault => Path.Combine(_config.ServerRoot, "backups");
 
     public void SetBackupTimes(IEnumerable<TimeOnly> times)
     {
