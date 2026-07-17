@@ -8,7 +8,8 @@ Inspired by [Conan Exiles' Dedicated Server Launcher](https://forums.funcom.com/
 
 **[Download the latest release](https://github.com/SSyl/PalworldServerLauncher/releases/latest)** to get started.
 
-Other languages are available: Simplified Chinese, Traditional Chinese, and Japanese. See [Languages](#languages).
+Other languages are available: German, Spanish, French, Brazilian Portuguese, Russian, Japanese, Simplified
+Chinese, Traditional Chinese, and Korean. See [Languages](#languages).
 
 > [!NOTE]
 > **Status:** Pre-release but mostly feature complete
@@ -84,11 +85,13 @@ Other languages are available: Simplified Chinese, Traditional Chinese, and Japa
   [docs/discord-bot-setup.md](docs/discord-bot-setup.md).
 
 ### Languages
-- Available in **English**, **Simplified Chinese** (简体中文), **Traditional Chinese** (繁體中文), and **Japanese**
-  (日本語). Pick your language on first run, or any time from Launcher Settings (the gear icon in the
-  top-right), then it restarts to apply.
-- The non-English translations are machine-generated, so if something reads oddly, corrections via an issue or
-  pull request are welcome.
+- Available in **English**, **German** (Deutsch), **Spanish** (Español), **French** (Français),
+  **Brazilian Portuguese** (Português (Brasil)), **Russian** (Русский), **Japanese** (日本語),
+  **Simplified Chinese** (简体中文), **Traditional Chinese** (繁體中文), and **Korean** (한국어). Pick your
+  language on first run, or any time from Launcher Settings (the gear icon in the top-right), then it restarts
+  to apply.
+- Every language except English is machine-translated (the in-game setting names come from Palworld's own
+  translations), so if something reads oddly, corrections via an issue or pull request are welcome.
 
 ---
 
@@ -126,7 +129,8 @@ Other languages are available: Simplified Chinese, Traditional Chinese, and Japa
 
 ![Discord settings](docs/images/app-screenshots/discord-bot-settings.png)
 
-**Available in several languages.** English, Simplified Chinese (shown here), Traditional Chinese, and Japanese.
+**Available in several languages.** English, German, Spanish, French, Brazilian Portuguese, Russian, Japanese,
+Simplified Chinese (shown here), Traditional Chinese, and Korean.
 
 ![The main window in Simplified Chinese](docs/images/app-screenshots/main-window-simplified-chinese.png)
 

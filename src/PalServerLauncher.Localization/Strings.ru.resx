@@ -1,0 +1,2337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Start_Button" xml:space="preserve">
+    <value>Запустить</value>
+  </data>
+  <data name="FirstRun_Prompt" xml:space="preserve">
+    <value>Выберите язык. Изменить его можно позже с помощью кнопки-шестерёнки в правом верхнем углу.</value>
+  </data>
+  <!-- Launcher Settings dialog + its main-window button -->
+  <data name="LauncherSettings_Title" xml:space="preserve">
+    <value>Настройки лаунчера</value>
+  </data>
+  <data name="LauncherSettings_ThirdPartyLicenses" xml:space="preserve">
+    <value>Лицензии открытого ПО</value>
+  </data>
+  <data name="LauncherSettings_LanguageLabel" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="LauncherSettings_Tooltip" xml:space="preserve">
+    <value>Изменение языка и других настроек лаунчера.</value>
+  </data>
+  <!-- Shared across dialogs (dedupe: one key reused everywhere the word appears) -->
+  <data name="Common_AppName" xml:space="preserve">
+    <value>Palworld Server Launcher</value>
+  </data>
+  <data name="Common_Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="Common_OK" xml:space="preserve">
+    <value>ОК</value>
+  </data>
+  <data name="Common_ForceShutdown" xml:space="preserve">
+    <value>Принудительная остановка</value>
+  </data>
+  <!-- Announcements dialog -->
+  <data name="Announcements_Title" xml:space="preserve">
+    <value>Объявления</value>
+  </data>
+  <data name="Announcements_Intro" xml:space="preserve">
+    <value>Показывается игрокам перед перезапуском. Вставьте {minutes} для обратного отсчёта. Уберите для фиксированного сообщения.</value>
+  </data>
+  <data name="Announcements_RestartLabel" xml:space="preserve">
+    <value>Плановый/ручной перезапуск</value>
+  </data>
+  <data name="Announcements_UpdateLabel" xml:space="preserve">
+    <value>Перезапуск для обновления</value>
+  </data>
+  <data name="Announcements_EmptyTitle" xml:space="preserve">
+    <value>Пустое объявление</value>
+  </data>
+  <data name="Announcements_EmptyMessage" xml:space="preserve">
+    <value>Объявление не может быть пустым (сервер отклоняет пустое сообщение):</value>
+  </data>
+  <data name="Announcements_NoTokenTitle" xml:space="preserve">
+    <value>Нет метки обратного отсчёта</value>
+  </data>
+  <data name="Announcements_NoTokenMessage" xml:space="preserve">
+    <value>В этих сообщениях нет метки {0}, поэтому оставшиеся минуты не будут отображаться:
+{1}
+
+Всё равно сохранить их как фиксированные сообщения?</value>
+  </data>
+  <data name="Announcements_SaveAnyway" xml:space="preserve">
+    <value>Всё равно сохранить</value>
+  </data>
+  <data name="Announcements_KeepEditing" xml:space="preserve">
+    <value>Продолжить редактирование</value>
+  </data>
+  <!-- Main window -->
+  <data name="Main_PrimaryTip" xml:space="preserve">
+    <value>Установка сервера, либо запуск (▶) / остановка (■) после установки. При запуске сначала проверяется обновление (если включена опция «Обновлять при запуске»), затем сервер запускается.</value>
+  </data>
+  <data name="Main_RestartTip" xml:space="preserve">
+    <value>Перезапустить сейчас: сохраняет мир и немедленно перезапускает сервер без обратного отсчёта для игроков. Плановые перезапуски и перезапуски для обновления сначала предупреждают игроков.</value>
+  </data>
+  <data name="Main_ForceShutdownTip" xml:space="preserve">
+    <value>Немедленно завершает процесс сервера без сохранения. Появляется, если запуск, остановка или перезапуск зависли на какое-то время. Используйте это только когда сервер перестал отвечать.</value>
+  </data>
+  <data name="Main_CheckForUpdate" xml:space="preserve">
+    <value>Проверить обновления</value>
+  </data>
+  <data name="Main_CheckForUpdateTip" xml:space="preserve">
+    <value>Проверка SteamCMD на наличие более новой сборки (только чтение, работает и во время работы сервера)</value>
+  </data>
+  <data name="Main_ValidateFiles" xml:space="preserve">
+    <value>Проверить файлы</value>
+  </data>
+  <data name="Main_ValidateFilesTip" xml:space="preserve">
+    <value>Полная проверка целостности установленных файлов через SteamCMD</value>
+  </data>
+  <data name="Main_ServerSettings" xml:space="preserve">
+    <value>Настройки сервера</value>
+  </data>
+  <data name="Main_ServerSettingsTip" xml:space="preserve">
+    <value>Редактирование сервера в одном окне с вкладками: «Игровые настройки» (геймплей, баланс и административные ключи PalWorldSettings.ini на отдельных вкладках), «Аргументы запуска» (командная строка: порт прослушивания, лимит игроков, потоки производительности, отображение в списке сообщества) и «Приоритет/привязка ЦП» (приоритет процесса и привязка к ядрам ЦП).</value>
+  </data>
+  <data name="Main_Mods" xml:space="preserve">
+    <value>Моды</value>
+  </data>
+  <data name="Main_ModsTip" xml:space="preserve">
+    <value>Управление модами сервера из Мастерской Steam: добавляйте id из Мастерской, чтобы лаунчер их скачал, или просканируйте папку модов, куда вы поместили их сами.</value>
+  </data>
+  <data name="Main_StatusLabel" xml:space="preserve">
+    <value>Статус:</value>
+  </data>
+  <data name="Main_UpdateLabel" xml:space="preserve">
+    <value>Обновление:</value>
+  </data>
+  <data name="Main_PublicIpLabel" xml:space="preserve">
+    <value>Внешний IP:</value>
+  </data>
+  <data name="Main_PublicIpTip" xml:space="preserve">
+    <value>Ваш внешний IP-адрес и игровой порт. Откройте его значком глаза, затем выделите для копирования или используйте кнопку копирования.</value>
+  </data>
+  <data name="Main_RevealIpTip" xml:space="preserve">
+    <value>Показать или скрыть ваш внешний IP-адрес</value>
+  </data>
+  <data name="Main_CopyIpTip" xml:space="preserve">
+    <value>Скопировать IP:порт в буфер обмена</value>
+  </data>
+  <data name="Main_PortCheck" xml:space="preserve">
+    <value>Проверка портов</value>
+  </data>
+  <data name="Main_PortCheckTip" xml:space="preserve">
+    <value>Проверка доступности ваших портов из интернета. Сервер должен быть остановлен, чтобы лаунчер мог протестировать порты.</value>
+  </data>
+  <data name="Main_StatVersion" xml:space="preserve">
+    <value>Версия</value>
+  </data>
+  <data name="Main_StatFps" xml:space="preserve">
+    <value>FPS</value>
+  </data>
+  <data name="Main_StatCpu" xml:space="preserve">
+    <value>CPU</value>
+  </data>
+  <data name="Main_StatMemory" xml:space="preserve">
+    <value>Память</value>
+  </data>
+  <data name="Main_StatPlayers" xml:space="preserve">
+    <value>Игроки</value>
+  </data>
+  <data name="Main_StatUptime" xml:space="preserve">
+    <value>Время работы</value>
+  </data>
+  <data name="Main_StatNextRestart" xml:space="preserve">
+    <value>Следующий перезапуск</value>
+  </data>
+  <data name="Main_CollapseTip" xml:space="preserve">
+    <value>Показать или скрыть разделы настроек (Перезапуски, Резервные копии, Разное)</value>
+  </data>
+  <data name="Main_RestartsHeader" xml:space="preserve">
+    <value>Перезапуски</value>
+  </data>
+  <data name="Main_ScheduledRestartAt" xml:space="preserve">
+    <value>Плановый перезапуск в</value>
+  </data>
+  <data name="Main_ScheduledRestartTip" xml:space="preserve">
+    <value>Автоматический перезапуск сервера в указанное время. Перезапуск пропускается, если сервер не проработал минимальное время, указанное ниже.</value>
+  </data>
+  <data name="Main_ChooseRestartTimes" xml:space="preserve">
+    <value>Выбрать время перезапуска</value>
+  </data>
+  <data name="Main_MinUptime" xml:space="preserve">
+    <value>Мин. время работы до перезапуска</value>
+  </data>
+  <data name="Main_HourSuffix" xml:space="preserve">
+    <value>ч</value>
+  </data>
+  <data name="Main_AnnounceRestarts" xml:space="preserve">
+    <value>Объявлять:</value>
+  </data>
+  <data name="Main_AnnounceRestartsTip" xml:space="preserve">
+    <value>Предупреждать игроков в игре перед плановым перезапуском или перезапуском для обновления, за указанное справа число минут. Пропускается, если никого нет на сервере.</value>
+  </data>
+  <data name="Main_AnnounceLeadTip" xml:space="preserve">
+    <value>За сколько минут до перезапуска объявлять (пусто = отключено)</value>
+  </data>
+  <data name="Main_MinuteSuffix" xml:space="preserve">
+    <value>мин</value>
+  </data>
+  <data name="Main_EditAnnouncements" xml:space="preserve">
+    <value>Изменить объявления</value>
+  </data>
+  <data name="Main_EditAnnouncementsTip" xml:space="preserve">
+    <value>Изменение внутриигровых сообщений, которые видят игроки перед перезапуском.</value>
+  </data>
+  <data name="Main_ValidateOnRestart" xml:space="preserve">
+    <value>Проверять файлы при перезапуске</value>
+  </data>
+  <data name="Main_ValidateOnRestartTip" xml:space="preserve">
+    <value>Добавляет полную проверку целостности к обновлению при запуске/перезапуске (медленнее)</value>
+  </data>
+  <data name="Main_BackupsHeader" xml:space="preserve">
+    <value>Резервные копии</value>
+  </data>
+  <data name="Main_BackupOn" xml:space="preserve">
+    <value>Резервное копирование при:</value>
+  </data>
+  <data name="Main_BackupStartup" xml:space="preserve">
+    <value>Запуске</value>
+  </data>
+  <data name="Main_BackupStartupTip" xml:space="preserve">
+    <value>Создавать резервную копию при запуске сервера, до проверки обновлений (SteamCMD может перезаписать конфигурацию).</value>
+  </data>
+  <data name="Main_BackupShutdown" xml:space="preserve">
+    <value>Остановке</value>
+  </data>
+  <data name="Main_BackupShutdownTip" xml:space="preserve">
+    <value>Создавать резервную копию при остановке или перезапуске сервера (сначала сохраняется мир).</value>
+  </data>
+  <data name="Main_BackupScheduled" xml:space="preserve">
+    <value>По расписанию</value>
+  </data>
+  <data name="Main_BackupScheduledTip" xml:space="preserve">
+    <value>Автоматическое резервное копирование в указанное справа время, пока сервер работает.</value>
+  </data>
+  <data name="Main_ChooseBackupTimes" xml:space="preserve">
+    <value>Выбрать время резервного копирования</value>
+  </data>
+  <data name="Main_BackupRetentionTip" xml:space="preserve">
+    <value>Как долго хранить автоматические резервные копии (при запуске/остановке/по расписанию). Резервные копии, созданные вручную, и любые файлы, добавленные вами в папку резервных копий, никогда не удаляются. 0 = хранить всё.</value>
+  </data>
+  <data name="Main_KeepFor" xml:space="preserve">
+    <value>Хранить</value>
+  </data>
+  <data name="Main_DaysSuffix" xml:space="preserve">
+    <value>дн.</value>
+  </data>
+  <data name="Main_NextBackupLabel" xml:space="preserve">
+    <value>Следующая резервная копия:</value>
+  </data>
+  <data name="Main_BackupNow" xml:space="preserve">
+    <value>Создать копию сейчас</value>
+  </data>
+  <data name="Main_BackupNowTip" xml:space="preserve">
+    <value>Немедленно создать резервную копию вручную. Если сервер работает с включённым REST API, сначала сохраняется мир.</value>
+  </data>
+  <data name="Main_MiscHeader" xml:space="preserve">
+    <value>Разное</value>
+  </data>
+  <data name="Main_AutoUpdate" xml:space="preserve">
+    <value>Автообновление сервера</value>
+  </data>
+  <data name="Main_AutoUpdateTip" xml:space="preserve">
+    <value>Автоматически перезапускать сервер при обнаружении нового обновления. Настройка «Объявлять о перезапусках» добавляет задержку перед перезапуском, если на сервере есть игроки.</value>
+  </data>
+  <data name="Main_UpdateOnStart" xml:space="preserve">
+    <value>Обновлять при запуске/перезапуске</value>
+  </data>
+  <data name="Main_UpdateOnStartTip" xml:space="preserve">
+    <value>Запускать проверку обновлений через SteamCMD при каждом запуске или перезапуске сервера. Отключите, чтобы никогда не скачивать обновления автоматически при запуске. Обновить сервер вручную по-прежнему можно через «Проверить обновления».</value>
+  </data>
+  <data name="Main_CheckUpdateEvery" xml:space="preserve">
+    <value>Проверять обновления каждые</value>
+  </data>
+  <data name="Main_CheckUpdateEveryTip" xml:space="preserve">
+    <value>Как часто проверять SteamCMD на наличие новой сборки, пока сервер работает. Применяется при следующем запуске.</value>
+  </data>
+  <data name="Main_HideSteamCmd" xml:space="preserve">
+    <value>Скрывать окно SteamCMD</value>
+  </data>
+  <data name="Main_HideSteamCmdTip" xml:space="preserve">
+    <value>Запускать SteamCMD в фоне вместо открытия отдельного окна консоли. Ход выполнения по-прежнему отображается на вкладке SteamCMD.</value>
+  </data>
+  <data name="Main_LogServerStatus" xml:space="preserve">
+    <value>Логировать статус сервера</value>
+  </data>
+  <data name="Main_LogServerStatusTip" xml:space="preserve">
+    <value>Записывать строку статистики сервера (FPS, игроки, время работы, память) в журнал каждые 30 с. Полезно при запуске из терминала, в остальных случаях засоряет журнал.</value>
+  </data>
+  <data name="Main_ZombieCheck" xml:space="preserve">
+    <value>Проверка на зависание:</value>
+  </data>
+  <data name="Main_ZombieCheckTip" xml:space="preserve">
+    <value>Перезапускать сервер, если REST API остаётся недоступным или мир остаётся замороженным столько проверок подряд. Отключите, если ваш REST API нестабилен и вы не хотите автоматических перезапусков.</value>
+  </data>
+  <data name="Main_ZombieThresholdTip" xml:space="preserve">
+    <value>Сколько неудачных проверок состояния подряд должно пройти, прежде чем сервер будет считаться зависшим и принудительно перезапущен.</value>
+  </data>
+  <data name="Main_ChecksSuffix" xml:space="preserve">
+    <value>провер.</value>
+  </data>
+  <data name="Main_RestCheckEvery" xml:space="preserve">
+    <value>Проверка REST каждые</value>
+  </data>
+  <data name="Main_RestCheckEveryTip" xml:space="preserve">
+    <value>Как часто (в секундах) лаунчер опрашивает REST API для получения статуса/состояния. Рекомендуется 5-10. Значение ниже 5 просто перегружает API без реальной пользы (допустимо, но не рекомендуется), меньше 1 выставить нельзя. Применяется при следующем запуске.</value>
+  </data>
+  <data name="Main_SecondsSuffix" xml:space="preserve">
+    <value>с</value>
+  </data>
+  <data name="Main_DiscordBot" xml:space="preserve">
+    <value>Discord-бот</value>
+  </data>
+  <data name="Main_DiscordBotTip" xml:space="preserve">
+    <value>Discord-бот управления и уведомления через вебхук</value>
+  </data>
+  <data name="Main_TabGeneral" xml:space="preserve">
+    <value>Общее</value>
+  </data>
+  <data name="Main_TabServerLog" xml:space="preserve">
+    <value>Журнал сервера</value>
+  </data>
+  <data name="Main_TabChat" xml:space="preserve">
+    <value>Чат</value>
+  </data>
+  <data name="Main_TabPlayers" xml:space="preserve">
+    <value>Игроки</value>
+  </data>
+  <data name="Main_TabSteamCmd" xml:space="preserve">
+    <value>SteamCMD</value>
+  </data>
+  <data name="Main_ServerCommands" xml:space="preserve">
+    <value>Команды сервера</value>
+  </data>
+  <data name="Main_ServerCommandsTip" xml:space="preserve">
+    <value>Отправка команд работающему серверу в реальном времени: объявление, исключение/бан/разбан, сохранение, остановка. Доступно, пока сервер запущен.</value>
+  </data>
+  <!-- Main window prompts (code-behind dialogs) -->
+  <data name="Main_MultiServerTitle" xml:space="preserve">
+    <value>Запущено несколько серверов</value>
+  </data>
+  <data name="Main_MultiServerMessage" xml:space="preserve">
+    <value>Обнаружено {0} запущенных серверов Palworld из этой папки. Они используют одно сохранение и один набор портов, поэтому будут конфликтовать, лаунчер управляет только одним сервером. Остановите их все или выйдите.</value>
+  </data>
+  <data name="Main_ShutDownAll" xml:space="preserve">
+    <value>Остановить все</value>
+  </data>
+  <data name="Main_ExitLauncher" xml:space="preserve">
+    <value>Выйти из лаунчера</value>
+  </data>
+  <data name="Main_ServerRunningTitle" xml:space="preserve">
+    <value>Сервер уже запущен</value>
+  </data>
+  <data name="Main_ServerRunningMessage" xml:space="preserve">
+    <value>Сервер Palworld, запущенный из этой папки, уже работает, почти наверняка это ваш сервер из предыдущего сеанса, поскольку лаунчер отслеживает только те серверы, которые сам запустил.
+
+Переподключитесь, чтобы продолжить управлять им через REST API (статистика в реальном времени, плановые перезапуски, резервные копии; вкладка «Журнал сервера» останется пустой для сервера, который лаунчер не запускал сам). В противном случае остановите его или выйдите.</value>
+  </data>
+  <data name="Main_Reconnect" xml:space="preserve">
+    <value>Переподключиться</value>
+  </data>
+  <data name="Main_ShutDownServer" xml:space="preserve">
+    <value>Остановить сервер</value>
+  </data>
+  <data name="Main_InstallTitle" xml:space="preserve">
+    <value>Установить сервер?</value>
+  </data>
+  <data name="Main_InstallMessage" xml:space="preserve">
+    <value>Это скачает и установит выделенный сервер Palworld через SteamCMD (около 4 ГБ) в папку лаунчера. Откроется окно SteamCMD с ходом выполнения.
+
+Скачать и установить сейчас?</value>
+  </data>
+  <data name="Main_DownloadInstall" xml:space="preserve">
+    <value>Скачать и установить</value>
+  </data>
+  <data name="Main_ShutdownNowTitle" xml:space="preserve">
+    <value>Остановить сейчас?</value>
+  </data>
+  <data name="Main_ShutdownNowMessage" xml:space="preserve">
+    <value>Пропустить обратный отсчёт и остановить сервер сейчас?</value>
+  </data>
+  <data name="Main_ShutDownNow" xml:space="preserve">
+    <value>Остановить сейчас</value>
+  </data>
+  <data name="Main_KeepWaiting" xml:space="preserve">
+    <value>Продолжить ожидание</value>
+  </data>
+  <data name="Main_ShutdownTitle" xml:space="preserve">
+    <value>Остановка сервера</value>
+  </data>
+  <data name="Main_ShutdownForceMessage" xml:space="preserve">
+    <value>REST API не включён, поэтому корректно остановить сервер нельзя. Он будет остановлен принудительно, процесс будет завершён напрямую, а возможные потери ограничатся последним автосохранением. Включите REST API для корректной остановки.</value>
+  </data>
+  <data name="Main_ForceStop" xml:space="preserve">
+    <value>Принудительная остановка</value>
+  </data>
+  <data name="Main_ShutdownChoiceMessage" xml:space="preserve">
+    <value>Остановить сейчас или по таймеру с предварительным обратным отсчётом для игроков в игре?</value>
+  </data>
+  <data name="Main_ShutdownNowButton" xml:space="preserve">
+    <value>Остановить сейчас</value>
+  </data>
+  <data name="Main_TimedShutdown" xml:space="preserve">
+    <value>Остановка по таймеру</value>
+  </data>
+  <data name="Main_TimedShutdownTitle" xml:space="preserve">
+    <value>Остановка по таймеру</value>
+  </data>
+  <data name="Main_TimedShutdownMessage" xml:space="preserve">
+    <value>Игроки увидят обратный отсчёт в игре в течение указанного числа секунд перед остановкой сервера.</value>
+  </data>
+  <data name="Main_SecondsUnit" xml:space="preserve">
+    <value>секунд</value>
+  </data>
+  <data name="Main_ServerInstalledTitle" xml:space="preserve">
+    <value>Сервер установлен</value>
+  </data>
+  <data name="Main_ServerInstalledMessage" xml:space="preserve">
+    <value>Сервер успешно установлен.
+
+Включить REST API? Именно он позволяет лаунчеру управлять сервером: применять игровые обновления, корректно сохранять и останавливать сервер, планировать перезапуски и резервные копии, отслеживать его состояние.
+
+Если включить его сейчас, лаунчер сгенерирует конфигурацию сервера и установит надёжный, случайно сгенерированный пароль администратора (посмотреть или изменить его позже можно в «Настройках сервера» на вкладке «Администрирование»). Также можно пропустить это и включить REST API самостоятельно позже.</value>
+  </data>
+  <data name="Main_YesEnableRest" xml:space="preserve">
+    <value>Да, включить</value>
+  </data>
+  <data name="Main_NotNow" xml:space="preserve">
+    <value>Не сейчас</value>
+  </data>
+  <data name="Main_EnableRestTitle" xml:space="preserve">
+    <value>Включить REST API?</value>
+  </data>
+  <data name="Main_EnableRestMessage" xml:space="preserve">
+    <value>Этот лаунчер построен вокруг REST API Palworld и использует его почти для всего: корректного сохранения и остановки, свежих резервных копий, отслеживания состояния и зависаний в реальном времени, автоматических перезапусков и записи входов/выходов игроков в журнал.
+
+REST API на этом сервере пока не включён, поэтому эти функции будут ограничены: остановка сведётся к принудительному завершению, резервные копии могут быть неактуальными, а автоматических перезапусков не будет.
+
+Включить его сейчас с надёжным, случайно сгенерированным паролем администратора?</value>
+  </data>
+  <data name="Main_NoRunLimited" xml:space="preserve">
+    <value>Нет, работать в ограниченном режиме</value>
+  </data>
+  <data name="Main_Exit" xml:space="preserve">
+    <value>Выход</value>
+  </data>
+  <data name="Main_RestEnabledTitle" xml:space="preserve">
+    <value>REST API включён</value>
+  </data>
+  <data name="Main_RestFailedTitle" xml:space="preserve">
+    <value>Не удалось включить REST API</value>
+  </data>
+  <data name="Main_RestEnabledMessage" xml:space="preserve">
+    <value>Готово, REST API включён с новым случайным паролем администратора (посмотреть или изменить его можно в «Настройках сервера» на вкладке «Администрирование»). Изменения вступят в силу при следующем запуске сервера.</value>
+  </data>
+  <data name="Main_RestFailedMessage" xml:space="preserve">
+    <value>Не удалось записать конфигурацию сервера. Убедитесь, что сервер установлен и остановлен, затем настройте это вручную в «Настройках сервера» на вкладке «Администрирование».</value>
+  </data>
+  <data name="Main_ServerStillRunningTitle" xml:space="preserve">
+    <value>Сервер всё ещё работает</value>
+  </data>
+  <data name="Main_ServerStillRunningMessage" xml:space="preserve">
+    <value>Сервер Palworld всё ещё работает. Что с ним сделать?</value>
+  </data>
+  <data name="Main_ShutDownGraceful" xml:space="preserve">
+    <value>Остановить (корректно)</value>
+  </data>
+  <data name="Main_LeaveRunning" xml:space="preserve">
+    <value>Оставить работать</value>
+  </data>
+  <data name="Main_ForceShutdownConfirmMessage" xml:space="preserve">
+    <value>Это немедленно остановит сервер без сохранения, полностью завершив процесс. Это может привести к потере или повреждению данных сохранения. Не рекомендуется, если сервер не перестал отвечать полностью.</value>
+  </data>
+  <data name="Main_PortCheckConsentMessage" xml:space="preserve">
+    <value>Ваш внешний IP-адрес будет отправлен на check-host.cc, бесплатный внешний сервис, для проверки, могут ли игроки подключиться к вашему серверу извне вашей сети. На этот сервис отправляется только ваш внешний IP-адрес и проверяемые порты.</value>
+  </data>
+  <data name="Main_UpdateAvailableTitle" xml:space="preserve">
+    <value>Доступно обновление</value>
+  </data>
+  <data name="Main_UpdateRunningMessage" xml:space="preserve">
+    <value>Доступна более новая сборка сервера ({0}). Обновить и перезапустить сервер сейчас? Игроки получат обычные предупреждения о перезапуске.</value>
+  </data>
+  <data name="Main_UpdateRestart" xml:space="preserve">
+    <value>Обновить и перезапустить</value>
+  </data>
+  <data name="Main_UpdateStoppedMessage" xml:space="preserve">
+    <value>Доступна более новая сборка сервера ({0}). Скачать и применить её сейчас?</value>
+  </data>
+  <data name="Main_Download" xml:space="preserve">
+    <value>Скачать</value>
+  </data>
+  <!-- Secret field (masked password / token) -->
+  <data name="Secret_Tooltip" xml:space="preserve">
+    <value>Показать или скрыть значение</value>
+  </data>
+  <!-- Restart / Backup times dialog -->
+  <data name="Times_RestartTitle" xml:space="preserve">
+    <value>Время перезапуска</value>
+  </data>
+  <data name="Times_RestartHeader" xml:space="preserve">
+    <value>Время перезапуска</value>
+  </data>
+  <data name="Times_BackupTitle" xml:space="preserve">
+    <value>Время резервного копирования</value>
+  </data>
+  <data name="Times_BackupHeader" xml:space="preserve">
+    <value>Время резервного копирования</value>
+  </data>
+  <data name="Times_Every" xml:space="preserve">
+    <value>Каждые</value>
+  </data>
+  <data name="Times_EveryTip" xml:space="preserve">
+    <value>Заполняет весь день этим интервалом, начиная с полуночи. Выберите готовый вариант или введите дробное число, например 2.5. Заменяет время, указанное ниже.</value>
+  </data>
+  <data name="Times_Apply" xml:space="preserve">
+    <value>Применить</value>
+  </data>
+  <data name="Times_MinuteTip" xml:space="preserve">
+    <value>Любая минута от 0 до 59, выберите готовый вариант или введите вручную</value>
+  </data>
+  <data name="Times_Add" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="Times_Done" xml:space="preserve">
+    <value>Готово</value>
+  </data>
+  <data name="Times_InvalidTimeTitle" xml:space="preserve">
+    <value>Неверное время</value>
+  </data>
+  <data name="Times_InvalidTimeMessage" xml:space="preserve">
+    <value>Введите минуты числом от 0 до 59.</value>
+  </data>
+  <data name="Times_InvalidIntervalTitle" xml:space="preserve">
+    <value>Неверный интервал</value>
+  </data>
+  <data name="Times_InvalidIntervalMessage" xml:space="preserve">
+    <value>Введите интервал от 15 минут до 24 часов, например 30m, 2h или 2.5 (часа).</value>
+  </data>
+  <data name="Times_ReplaceTitle" xml:space="preserve">
+    <value>Замена времени</value>
+  </data>
+  <data name="Times_ReplaceMessage" xml:space="preserve">
+    <value>Это заменит {0} указанных ниже значений времени расписанием каждые {1}. Продолжить?</value>
+  </data>
+  <data name="Times_Replace" xml:space="preserve">
+    <value>Заменить</value>
+  </data>
+  <!-- App-level -->
+  <data name="App_ErrorFormat" xml:space="preserve">
+    <value>Произошла ошибка:
+
+{0}
+
+Подробности в файле:
+{1}</value>
+  </data>
+  <!-- PortCheckDialog -->
+  <data name="PortCheck_Title" xml:space="preserve">
+    <value>Проверка портов</value>
+  </data>
+  <data name="PortCheck_Intro" xml:space="preserve">
+    <value>Проверяет, доступны ли ваши порты из интернета, используя check-host.cc. Запускайте эту проверку при остановленном сервере, чтобы лаунчер мог привязаться к портам и протестировать их.</value>
+  </data>
+  <data name="PortCheck_YourPublicIp" xml:space="preserve">
+    <value>Ваш внешний IP-адрес</value>
+  </data>
+  <data name="PortCheck_Results" xml:space="preserve">
+    <value>Результаты</value>
+  </data>
+  <data name="PortCheck_NotCheckedYet" xml:space="preserve">
+    <value>Ещё не проверено.</value>
+  </data>
+  <data name="PortCheck_ServiceOnline" xml:space="preserve">
+    <value>Сервис проверки портов доступен</value>
+  </data>
+  <data name="PortCheck_PortRowLabel" xml:space="preserve">
+    <value>{0} ({1})</value>
+  </data>
+  <data name="PortCheck_FirewallNote" xml:space="preserve">
+    <value>Этот тест временно открывает прослушиватель в лаунчере. Если Брандмауэр Windows запросит разрешение, разрешите его, иначе порты могут ошибочно отображаться как недоступные. REST и RCON - административные порты: в норме они НЕ должны быть доступны из интернета, поэтому зелёный результат по ним - это предупреждение, а не подтверждение успеха.</value>
+  </data>
+  <data name="PortCheck_Check" xml:space="preserve">
+    <value>Проверить</value>
+  </data>
+  <data name="PortCheck_Close" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="PortCheck_NoPublicIpTitle" xml:space="preserve">
+    <value>Нет внешнего IP-адреса</value>
+  </data>
+  <data name="PortCheck_NoPublicIpMessage" xml:space="preserve">
+    <value>Сначала введите ваш внешний IP-адрес (обычно он заполняется автоматически).</value>
+  </data>
+  <data name="PortCheck_Checking" xml:space="preserve">
+    <value>Проверка...</value>
+  </data>
+  <data name="PortCheck_ServiceOnlineStatus" xml:space="preserve">
+    <value>Доступен.</value>
+  </data>
+  <data name="PortCheck_ServiceUnavailable" xml:space="preserve">
+    <value>Недоступен, сейчас нет связи с check-host.cc.</value>
+  </data>
+  <data name="PortCheck_InvalidPort" xml:space="preserve">
+    <value>Введите порт от 1 до 65535.</value>
+  </data>
+  <data name="PortCheck_Failed" xml:space="preserve">
+    <value>Проверка портов не удалась, см. журнал.</value>
+  </data>
+  <!-- ServerCommandsDialog -->
+  <data name="ServerCmd_Title" xml:space="preserve">
+    <value>Команды сервера</value>
+  </data>
+  <data name="ServerCmd_HeaderAnnounce" xml:space="preserve">
+    <value>Объявление</value>
+  </data>
+  <data name="ServerCmd_Send" xml:space="preserve">
+    <value>Отправить</value>
+  </data>
+  <data name="ServerCmd_HeaderPlayers" xml:space="preserve">
+    <value>Игроки</value>
+  </data>
+  <data name="ServerCmd_Refresh" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="ServerCmd_ReasonLabel" xml:space="preserve">
+    <value>Причина (исключение/бан)</value>
+  </data>
+  <data name="ServerCmd_LoadingPlayers" xml:space="preserve">
+    <value>Загрузка списка игроков...</value>
+  </data>
+  <data name="ServerCmd_HeaderUnban" xml:space="preserve">
+    <value>Разбан</value>
+  </data>
+  <data name="ServerCmd_Unban" xml:space="preserve">
+    <value>Разбанить</value>
+  </data>
+  <data name="ServerCmd_UnbanHint" xml:space="preserve">
+    <value>Для разбана нужен id пользователя платформы (например, steam_0123...).</value>
+  </data>
+  <data name="ServerCmd_HeaderServer" xml:space="preserve">
+    <value>Сервер</value>
+  </data>
+  <data name="ServerCmd_SaveWorld" xml:space="preserve">
+    <value>Сохранить мир</value>
+  </data>
+  <data name="ServerCmd_Close" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="ServerCmd_EnterMessage" xml:space="preserve">
+    <value>Введите текст объявления.</value>
+  </data>
+  <data name="ServerCmd_Announced" xml:space="preserve">
+    <value>Объявлено.</value>
+  </data>
+  <data name="ServerCmd_AnnounceFailed" xml:space="preserve">
+    <value>Не удалось отправить объявление (REST API отключён или отклонил запрос).</value>
+  </data>
+  <data name="ServerCmd_RestOff" xml:space="preserve">
+    <value>REST API отключён или не отвечает.</value>
+  </data>
+  <data name="ServerCmd_NoPlayers" xml:space="preserve">
+    <value>На сервере нет игроков.</value>
+  </data>
+  <data name="ServerCmd_EnterUserId" xml:space="preserve">
+    <value>Введите id пользователя для разбана.</value>
+  </data>
+  <data name="ServerCmd_UnbanTitle" xml:space="preserve">
+    <value>Разбан игрока</value>
+  </data>
+  <data name="ServerCmd_UnbanConfirm" xml:space="preserve">
+    <value>Разбанить {0}?</value>
+  </data>
+  <data name="ServerCmd_Unbanned" xml:space="preserve">
+    <value>{0} разбанен.</value>
+  </data>
+  <data name="ServerCmd_UnbanFailed" xml:space="preserve">
+    <value>Не удалось разбанить (REST API отключён или отклонил запрос).</value>
+  </data>
+  <data name="ServerCmd_WorldSaved" xml:space="preserve">
+    <value>Мир сохранён.</value>
+  </data>
+  <data name="ServerCmd_SaveFailed" xml:space="preserve">
+    <value>Не удалось сохранить (REST API отключён или отклонил запрос).</value>
+  </data>
+  <data name="ServerCmd_UnknownName" xml:space="preserve">
+    <value>(неизвестно)</value>
+  </data>
+  <data name="ServerCmd_PlayerNameLevel" xml:space="preserve">
+    <value>{0}  (ур. {1})</value>
+  </data>
+  <data name="ServerCmd_NoUserId" xml:space="preserve">
+    <value>(нет id пользователя)</value>
+  </data>
+  <data name="ServerCmd_Kick" xml:space="preserve">
+    <value>Исключить</value>
+  </data>
+  <data name="ServerCmd_Ban" xml:space="preserve">
+    <value>Забанить</value>
+  </data>
+  <data name="ServerCmd_NoUserIdTooltip" xml:space="preserve">
+    <value>Для этого игрока не указан id пользователя.</value>
+  </data>
+  <data name="ServerCmd_KickTitle" xml:space="preserve">
+    <value>Исключение игрока</value>
+  </data>
+  <data name="ServerCmd_KickConfirm" xml:space="preserve">
+    <value>Исключить {0} ({1})?</value>
+  </data>
+  <data name="ServerCmd_Kicked" xml:space="preserve">
+    <value>{0} ({1}) исключён.</value>
+  </data>
+  <data name="ServerCmd_KickFailed" xml:space="preserve">
+    <value>Не удалось исключить {0} (REST API отключён или отклонил запрос).</value>
+  </data>
+  <data name="ServerCmd_BanTitle" xml:space="preserve">
+    <value>Бан игрока</value>
+  </data>
+  <data name="ServerCmd_BanConfirm" xml:space="preserve">
+    <value>Забанить {0} ({1})? Игрок будет исключён и не сможет вернуться на сервер.</value>
+  </data>
+  <data name="ServerCmd_Banned" xml:space="preserve">
+    <value>{0} ({1}) забанен.</value>
+  </data>
+  <data name="ServerCmd_BanFailed" xml:space="preserve">
+    <value>Не удалось забанить {0} (REST API отключён или отклонил запрос).</value>
+  </data>
+  <data name="ServerCmd_CommandFailed" xml:space="preserve">
+    <value>Команда не выполнена, см. журнал.</value>
+  </data>
+  <!-- DiscordDialog -->
+  <data name="Discord_Title" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="Discord_BlurbPrefix" xml:space="preserve">
+    <value>Управляйте сервером из Discord с помощью слэш-команд и/или публикуйте в канале уведомления о работе сервера. Создайте бота и скопируйте его токен с</value>
+  </data>
+  <data name="Discord_BlurbLinkText" xml:space="preserve">
+    <value>портала разработчиков Discord</value>
+  </data>
+  <data name="Discord_BlurbSuffix" xml:space="preserve">
+    <value> (добавьте бота, затем пригласите его с правами bot и applications.commands).</value>
+  </data>
+  <data name="Discord_ServerControlBotHeader" xml:space="preserve">
+    <value>Бот управления сервером</value>
+  </data>
+  <data name="Discord_EnableControlBot" xml:space="preserve">
+    <value>Включить бота управления (слэш-команды: /status /players /save /backup /update /start /restart /stop)</value>
+  </data>
+  <data name="Discord_BotTokenLabel" xml:space="preserve">
+    <value>Токен бота (секретный)</value>
+  </data>
+  <data name="Discord_CommandChannelIdLabel" xml:space="preserve">
+    <value>ID канала команд</value>
+  </data>
+  <data name="Discord_RequiredRoleIdLabel" xml:space="preserve">
+    <value>ID требуемой роли (необязательно)</value>
+  </data>
+  <data name="Discord_CommandCooldownLabel" xml:space="preserve">
+    <value>Задержка между командами (секунд)</value>
+  </data>
+  <data name="Discord_SecurityNote" xml:space="preserve">
+    <value>Безопасность: укажите канал команд и/или требуемую роль, бот реагирует только когда пройдены все заданные вами условия (укажите хотя бы одно). Управлять сервером сможет любой, кто может писать в канале команд или имеет указанную роль, поэтому ограничьте доступ (приватный канал только для администраторов и/или административная роль). Включите режим разработчика Discord, затем щёлкните правой кнопкой по каналу или роли -&gt; «Копировать ID». Токен хранится локально в launcher.json и никогда не записывается в журнал.</value>
+  </data>
+  <data name="Discord_CommandsExposedHeader" xml:space="preserve">
+    <value>Команды, доступные боту</value>
+  </data>
+  <data name="Discord_CommandsExposedHint" xml:space="preserve">
+    <value>Отметьте слэш-команды, которые бот должен принимать. Разрушительные команды (перезапуск, остановка, исключение, бан) по умолчанию отключены. Изменения вступают в силу после сохранения (бот переподключается и заново регистрирует команды).</value>
+  </data>
+  <data name="Discord_WebhookNotificationsHeader" xml:space="preserve">
+    <value>Уведомления через вебхук</value>
+  </data>
+  <data name="Discord_EnableNotifications" xml:space="preserve">
+    <value>Включить уведомления</value>
+  </data>
+  <data name="Discord_WebhookUrlLabel" xml:space="preserve">
+    <value>URL вебхука</value>
+  </data>
+  <data name="Discord_NotifyLifecycle" xml:space="preserve">
+    <value>Уведомлять о запуске/остановке/обновлении/сбое</value>
+  </data>
+  <data name="Discord_NotifyPlayers" xml:space="preserve">
+    <value>Уведомлять о входе/выходе игроков (нужен REST API)</value>
+  </data>
+  <data name="Discord_InvalidChannelIdTitle" xml:space="preserve">
+    <value>Неверный ID канала</value>
+  </data>
+  <data name="Discord_InvalidChannelIdMessage" xml:space="preserve">
+    <value>ID канала команд должен быть числом (режим разработчика Discord -&gt; щёлкните правой кнопкой по каналу -&gt; «Копировать ID канала»).</value>
+  </data>
+  <data name="Discord_InvalidRoleIdTitle" xml:space="preserve">
+    <value>Неверный ID роли</value>
+  </data>
+  <data name="Discord_InvalidRoleIdMessage" xml:space="preserve">
+    <value>ID требуемой роли должен быть числом (режим разработчика Discord -&gt; щёлкните правой кнопкой по роли -&gt; «Копировать ID роли»).</value>
+  </data>
+  <data name="Discord_BotNotReadyTitle" xml:space="preserve">
+    <value>Бот не готов</value>
+  </data>
+  <data name="Discord_BotNotReadyMessage" xml:space="preserve">
+    <value>Чтобы включить бота управления, укажите токен бота и хотя бы одно условие: ID канала команд и/или ID требуемой роли.</value>
+  </data>
+  <!-- ModsDialog -->
+  <data name="Mods_Title" xml:space="preserve">
+    <value>Моды</value>
+  </data>
+  <data name="Mods_Disclaimer" xml:space="preserve">
+    <value>Здесь будут работать только моды, предназначенные для серверов. Многие моды работают только на стороне клиента и не могут или не должны устанавливаться на сервер, поэтому перед загрузкой мода проверяйте его описание. Используйте моды на свой страх и риск, они могут привести к повреждению сохранений или сбоям.</value>
+  </data>
+  <data name="Mods_EnableMods" xml:space="preserve">
+    <value>Включить моды на этом сервере</value>
+  </data>
+  <data name="Mods_SteamAccountHeader" xml:space="preserve">
+    <value>Аккаунт Steam</value>
+  </data>
+  <data name="Mods_SteamAccountNote" xml:space="preserve">
+    <value>Нужен только для скачивания модов из Мастерской, моды, добавленные вручную, аккаунта не требуют. Вход выполняется через собственное окно SteamCMD, поэтому лаунчер никогда не видит и не хранит ваш пароль, а запоминает только имя пользователя.</value>
+  </data>
+  <data name="Mods_ConnectButton" xml:space="preserve">
+    <value>Подключить аккаунт Steam</value>
+  </data>
+  <data name="Mods_DifferentAccountLink" xml:space="preserve">
+    <value>Подключить другой аккаунт?</value>
+  </data>
+  <data name="Mods_WorkshopHeader" xml:space="preserve">
+    <value>Моды из Мастерской Steam</value>
+  </data>
+  <data name="Mods_BrowsePrefix" xml:space="preserve">
+    <value>Просмотрите моды в </value>
+  </data>
+  <data name="Mods_BrowseLinkText" xml:space="preserve">
+    <value>Мастерской Steam для Palworld</value>
+  </data>
+  <data name="Mods_BrowseSuffix" xml:space="preserve">
+    <value>.</value>
+  </data>
+  <data name="Mods_AddButton" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="Mods_ScanFolderButton" xml:space="preserve">
+    <value>Сканировать папку</value>
+  </data>
+  <data name="Mods_OpenModsFolderButton" xml:space="preserve">
+    <value>Открыть папку модов</value>
+  </data>
+  <data name="Mods_AddByIdLabel" xml:space="preserve">
+    <value>Добавить по id или URL из Мастерской Steam:</value>
+  </data>
+  <data name="Mods_NoAccountWarning" xml:space="preserve">
+    <value>У вас включены моды из Мастерской, но не подключён аккаунт Steam. Подключите его выше, чтобы скачать моды, иначе они будут пропущены при запуске (моды, добавленные вручную, всё равно загрузятся).</value>
+  </data>
+  <data name="Mods_LoosePakHeader" xml:space="preserve">
+    <value>Отдельные .pak-моды</value>
+  </data>
+  <data name="Mods_LoosePakDescription" xml:space="preserve">
+    <value>Это не нужно, если вы используете Мастерскую Steam выше. Для необработанных .pak-модов без Info.json (многие загрузки с NexusMods): поместите их в папку loose-paks и включайте/выключайте здесь. Они включаются и отключаются переименованием (никогда не удаляются) и загружаются при следующем запуске сервера.</value>
+  </data>
+  <data name="Mods_OpenLoosePaksFolderButton" xml:space="preserve">
+    <value>Открыть папку loose-paks</value>
+  </data>
+  <data name="Mods_RescanButton" xml:space="preserve">
+    <value>Пересканировать</value>
+  </data>
+  <data name="Mods_OpenUe4ssFolderButton" xml:space="preserve">
+    <value>Открыть папку модов UE4SS</value>
+  </data>
+  <data name="Mods_EnterUsernameTitle" xml:space="preserve">
+    <value>Введите имя пользователя</value>
+  </data>
+  <data name="Mods_EnterUsernameBody" xml:space="preserve">
+    <value>Сначала введите имя вашего аккаунта Steam, затем подключитесь.</value>
+  </data>
+  <data name="Mods_ConnectingButton" xml:space="preserve">
+    <value>Подключение...</value>
+  </data>
+  <data name="Mods_SteamCmdWindowOpened" xml:space="preserve">
+    <value>Открылось окно SteamCMD. Введите там ваш пароль и код Steam Guard, окно останется открытым, чтобы вы могли увидеть результат, затем закройте его.</value>
+  </data>
+  <data name="Mods_ConfirmSignInFailed" xml:space="preserve">
+    <value>Не удалось подтвердить вход. Подключитесь снова и следите за окном SteamCMD на предмет ошибки (неверный пароль или код Steam Guard).</value>
+  </data>
+  <data name="Mods_SignInFailed" xml:space="preserve">
+    <value>Не удалось войти: {0}</value>
+  </data>
+  <data name="Mods_SavedSignInInvalid" xml:space="preserve">
+    <value>Сохранённые данные для входа больше недействительны, подключитесь снова.</value>
+  </data>
+  <data name="Mods_CheckSignInFailed" xml:space="preserve">
+    <value>Не удалось проверить вход: {0}</value>
+  </data>
+  <data name="Mods_CheckingSignIn" xml:space="preserve">
+    <value>Проверка входа...</value>
+  </data>
+  <data name="Mods_SignedIn" xml:space="preserve">
+    <value>Выполнен вход в SteamCMD</value>
+  </data>
+  <data name="Mods_InvalidIdTitle" xml:space="preserve">
+    <value>Неверный ID Мастерской</value>
+  </data>
+  <data name="Mods_InvalidIdBody" xml:space="preserve">
+    <value>Введите числовой id Мастерской Steam или URL вида https://steamcommunity.com/sharedfiles/filedetails/?id=123456.</value>
+  </data>
+  <data name="Mods_AlreadyAddedTitle" xml:space="preserve">
+    <value>Уже добавлено</value>
+  </data>
+  <data name="Mods_AlreadyAddedBody" xml:space="preserve">
+    <value>Этот id Мастерской уже есть в списке.</value>
+  </data>
+  <data name="Mods_AddingButton" xml:space="preserve">
+    <value>Добавление...</value>
+  </data>
+  <data name="Mods_NotPalworldTitle" xml:space="preserve">
+    <value>Не мод для Palworld?</value>
+  </data>
+  <data name="Mods_NotPalworldBody" xml:space="preserve">
+    <value>У этого объекта id приложения Steam {0}, а не Palworld ({1}), поэтому он может не работать на вашем сервере. Всё равно добавить?</value>
+  </data>
+  <data name="Mods_AddAnyway" xml:space="preserve">
+    <value>Всё равно добавить</value>
+  </data>
+  <data name="Mods_ScanNoneFound" xml:space="preserve">
+    <value>В папке модов не найдено новых модов.</value>
+  </data>
+  <data name="Mods_ScanAdded" xml:space="preserve">
+    <value>Добавлено модов из папки модов: {0}.</value>
+  </data>
+  <data name="Mods_ScanSkipped" xml:space="preserve">
+    <value> Пропущено папок без читаемого Info.json: {0}.</value>
+  </data>
+  <data name="Mods_ScanTitle" xml:space="preserve">
+    <value>Сканирование папки модов</value>
+  </data>
+  <data name="Mods_NoAccountTitle" xml:space="preserve">
+    <value>Аккаунт Steam не подключён</value>
+  </data>
+  <data name="Mods_NoAccountSaveBody" xml:space="preserve">
+    <value>У вас включены моды из Мастерской, но аккаунт Steam не подключён, поэтому их нельзя скачать, и они будут пропущены при запуске сервера (моды, добавленные вручную, всё равно загрузятся). Всё равно сохранить?</value>
+  </data>
+  <data name="Mods_SaveAnyway" xml:space="preserve">
+    <value>Всё равно сохранить</value>
+  </data>
+  <data name="Mods_PackageTip" xml:space="preserve">
+    <value>Пакет: {0}</value>
+  </data>
+  <data name="Mods_PackageUnresolvedTip" xml:space="preserve">
+    <value>Имя пакета ещё не определено (скачайте или просканируйте мод).</value>
+  </data>
+  <data name="Mods_OpenWorkshopPageTip" xml:space="preserve">
+    <value>Открыть страницу этого мода в Мастерской Steam. </value>
+  </data>
+  <data name="Mods_LocalLabel" xml:space="preserve">
+    <value>локальный</value>
+  </data>
+  <data name="Mods_DeleteModTip" xml:space="preserve">
+    <value>Удалить этот мод (удаляет его из списка и удаляет скачанные файлы).</value>
+  </data>
+  <data name="Mods_EmptyList" xml:space="preserve">
+    <value>Модов пока нет. Добавьте id из Мастерской выше или поместите папки модов в папку модов и просканируйте.</value>
+  </data>
+  <data name="Mods_DeleteTitle" xml:space="preserve">
+    <value>Удаление мода</value>
+  </data>
+  <data name="Mods_DeleteBody" xml:space="preserve">
+    <value>Это удалит файлы мода и уберёт его из списка модов.
+
+{0}</value>
+  </data>
+  <data name="Mods_DeleteButton" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="Mods_DeleteFailedTitle" xml:space="preserve">
+    <value>Не удалось удалить файлы</value>
+  </data>
+  <data name="Mods_DeleteFailedBody" xml:space="preserve">
+    <value>Удалено из списка, но не удалось удалить файлы: {0}</value>
+  </data>
+  <data name="Mods_ThisModFallback" xml:space="preserve">
+    <value>этот мод</value>
+  </data>
+  <data name="Mods_LoosePakEmpty" xml:space="preserve">
+    <value>Отдельные .pak-моды не найдены. Поместите файлы .pak (с любыми .utoc/.ucas) в папку loose-paks, затем выполните пересканирование.</value>
+  </data>
+  <data name="Mods_LoosePakLabelSingular" xml:space="preserve">
+    <value>{0}  ({1} файл)</value>
+  </data>
+  <data name="Mods_LoosePakLabelPlural" xml:space="preserve">
+    <value>{0}  ({1} файлов)</value>
+  </data>
+  <data name="Mods_ChangeModFailedTitle" xml:space="preserve">
+    <value>Не удалось изменить мод</value>
+  </data>
+  <data name="Mods_EnablePakFailed" xml:space="preserve">
+    <value>Не удалось включить «{0}»: {1}</value>
+  </data>
+  <data name="Mods_DisablePakFailed" xml:space="preserve">
+    <value>Не удалось отключить «{0}»: {1}</value>
+  </data>
+  <data name="Mods_Ue4ssNotInstalledTitle" xml:space="preserve">
+    <value>UE4SS не установлен</value>
+  </data>
+  <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
+    <value>UE4SS пока не установлен. Добавьте мод UE4SS из Мастерской и один раз запустите сервер, после этого здесь появится его папка модов.</value>
+  </data>
+  <data name="Mods_ColOn" xml:space="preserve">
+    <value>Вкл</value>
+  </data>
+  <data name="Mods_ColName" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="Mods_ColId" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Mods_ColNote" xml:space="preserve">
+    <value>Примечание</value>
+  </data>
+  <!-- SettingsDialog -->
+  <data name="Settings_ServerTitle" xml:space="preserve">
+    <value>Настройки сервера</value>
+  </data>
+  <data name="Settings_ResetToDefaults" xml:space="preserve">
+    <value>Сбросить по умолчанию</value>
+  </data>
+  <data name="Settings_SearchPlaceholder" xml:space="preserve">
+    <value>Поиск настроек...</value>
+  </data>
+  <data name="Settings_SearchNoMatches" xml:space="preserve">
+    <value>Настройки не найдены.</value>
+  </data>
+  <data name="Settings_SearchClearTooltip" xml:space="preserve">
+    <value>Очистить поиск</value>
+  </data>
+  <data name="Settings_WorldBlurb" xml:space="preserve">
+    <value>Геймплей и баланс: сложность, скорость опыта/поимки/выпадения предметов, множители урона и особенности мира. Полный справочник:</value>
+  </data>
+  <data name="Settings_WorldBlurbLink" xml:space="preserve">
+    <value>документация по функциям</value>
+  </data>
+  <data name="Settings_AdminBlurb" xml:space="preserve">
+    <value>Управление сервером: название сервера, пароли, лимит игроков и REST/RCON API. Полный справочник:</value>
+  </data>
+  <data name="Settings_AdminBlurbLink" xml:space="preserve">
+    <value>документация по управлению сервером</value>
+  </data>
+  <data name="Settings_TabAdmin" xml:space="preserve">
+    <value>Администрирование</value>
+  </data>
+  <data name="Settings_TabUndocumented" xml:space="preserve">
+    <value>Недокументированные</value>
+  </data>
+  <data name="Settings_TabLaunchArgs" xml:space="preserve">
+    <value>Аргументы запуска</value>
+  </data>
+  <data name="Settings_BannerServerRunning" xml:space="preserve">
+    <value>Сервер запущен, поэтому вкладки игровых настроек доступны только для чтения (работающий сервер перезаписывает собственную конфигурацию). Аргументы запуска по-прежнему можно редактировать, они применятся при следующем запуске, как и игровые настройки.</value>
+  </data>
+  <data name="Settings_BannerGameUnavailable" xml:space="preserve">
+    <value>Игровые настройки недоступны, сначала установите сервер (файл DefaultPalWorldSettings.ini не найден).</value>
+  </data>
+  <data name="Settings_UndocumentedBlurb" xml:space="preserve">
+    <value>Настройки, не описанные в официальной документации. В каждой подсказке приведено наше предположение, но мы не можем за них поручиться, некоторые могут быть внутренними или неиспользуемыми. Ищите их в</value>
+  </data>
+  <data name="Settings_UndocumentedBlurbLink" xml:space="preserve">
+    <value>справочнике по конфигурации Palworld</value>
+  </data>
+  <data name="Settings_UndocKnownHeader" xml:space="preserve">
+    <value>Известные лаунчеру</value>
+  </data>
+  <data name="Settings_UndocNewHeader" xml:space="preserve">
+    <value>Новые в вашей конфигурации (не распознаны)</value>
+  </data>
+  <data name="Settings_UndocNoneRecognized" xml:space="preserve">
+    <value>Таких нет, все ключи в вашей конфигурации распознаны.</value>
+  </data>
+  <data name="Settings_NoEffectTitle" xml:space="preserve">
+    <value>Эта настройка не действует на сервере</value>
+  </data>
+  <data name="Settings_NoEffectMessage" xml:space="preserve">
+    <value>Обратите внимание: «{0}» - это клиентская настройка/настройка одиночной игры, она не действует на выделенном сервере. Изменение здесь не повлияет на игровой процесс на сервере. Используйте отдельные настройки (или кнопки пресетов сложности вверху вкладки «Игровые настройки»), чтобы управлять сложностью сервера.</value>
+  </data>
+  <data name="Settings_GotIt" xml:space="preserve">
+    <value>Понятно</value>
+  </data>
+  <data name="Settings_DifficultyPreset" xml:space="preserve">
+    <value>Пресет сложности:</value>
+  </data>
+  <data name="Settings_PresetTitle" xml:space="preserve">
+    <value>Пресет «{0}»</value>
+  </data>
+  <data name="Settings_PresetNoChanges" xml:space="preserve">
+    <value>Ваши настройки уже соответствуют пресету «{0}», менять нечего.</value>
+  </data>
+  <data name="Settings_PresetConfirmMessage" xml:space="preserve">
+    <value>Это значения по состоянию на Palworld 1.0. С тех пор некоторые настройки могли быть добавлены или изменены.
+
+Вот значения, которые изменятся для пресета «{0}»:
+
+{1}
+
+Все не перечисленные выше значения останутся прежними.
+
+Применить и сохранить эти изменения?</value>
+  </data>
+  <data name="Settings_Yes" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="Settings_No" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="Settings_PresetAppliedTitle" xml:space="preserve">
+    <value>Пресет «{0}» применён</value>
+  </data>
+  <data name="Settings_PresetAppliedMessage" xml:space="preserve">
+    <value>Применён пресет «{0}». Изменено и сохранено настроек: {1}.</value>
+  </data>
+  <data name="Settings_LaunchArgsIntro" xml:space="preserve">
+    <value>Точная командная строка для запуска выделенного сервера (обновляется ниже в реальном времени). Если один и тот же параметр задаётся здесь и в PalWorldSettings.ini, приоритет у аргумента командной строки, а поле, оставленное пустым, равное 0 или значению по умолчанию, не добавляется в командную строку, и вместо него используется значение из ini-файла. У большинства игровых настроек нет соответствующего аргумента, они существуют только в ini-файле (редактируйте их в «Настройках сервера»). Изменения вступают в силу при следующем запуске.</value>
+  </data>
+  <data name="Settings_ListenPortTerm" xml:space="preserve">
+    <value>Порт прослушивания</value>
+  </data>
+  <data name="Settings_ListenPortNote" xml:space="preserve">
+    <value> обозначает порт, к которому привязывается сервер и через который подключаются игроки. </value>
+  </data>
+  <data name="Settings_PublicPortTerm" xml:space="preserve">
+    <value>Публичный порт</value>
+  </data>
+  <data name="Settings_PublicPortNote" xml:space="preserve">
+    <value> (только для серверов сообщества) задаёт то, что сервер сообщает публичному списку, и НЕ изменяет порт прослушивания.</value>
+  </data>
+  <data name="Settings_ValidateListenPort" xml:space="preserve">
+    <value>Порт прослушивания</value>
+  </data>
+  <data name="Settings_RowQueryPort" xml:space="preserve">
+    <value>Порт запроса (-QueryPort)</value>
+  </data>
+  <data name="Settings_TipQueryPort" xml:space="preserve">
+    <value>Порт запроса Steam. Пусто или 0 - автоматический выбор первого свободного порта начиная с 27015 (чтобы несколько серверов на одном ПК не конфликтовали). Задайте фиксированный, если пробрасываете его через роутер.</value>
+  </data>
+  <data name="Settings_ValidateQueryPort" xml:space="preserve">
+    <value>Порт запроса</value>
+  </data>
+  <data name="Settings_ValidateMaxPlayers" xml:space="preserve">
+    <value>Максимум игроков</value>
+  </data>
+  <data name="Settings_ValidateWorkerThreads" xml:space="preserve">
+    <value>Рабочие потоки</value>
+  </data>
+  <data name="Settings_ValidatePublicIp" xml:space="preserve">
+    <value>Публичный IP</value>
+  </data>
+  <data name="Settings_ValidatePublicPort" xml:space="preserve">
+    <value>Публичный порт</value>
+  </data>
+  <data name="Settings_RowListenPort" xml:space="preserve">
+    <value>Порт прослушивания (-port)</value>
+  </data>
+  <data name="Settings_TipListenPort" xml:space="preserve">
+    <value>UDP-порт, к которому привязывается сервер и через который подключаются игроки (по умолчанию в Palworld 8211). Применяется всегда. Это не то же самое, что публичный порт ниже.</value>
+  </data>
+  <data name="Settings_RowMaxPlayers" xml:space="preserve">
+    <value>Максимум игроков (-players, 0 = использовать игровую настройку)</value>
+  </data>
+  <data name="Settings_TipMaxPlayers" xml:space="preserve">
+    <value>Переопределяет ServerPlayerMaxNum в ini-файле, если задано. 0 = не добавлять аргумент и использовать игровую настройку.</value>
+  </data>
+  <data name="Settings_RowPerfThreads" xml:space="preserve">
+    <value>Потоки производительности</value>
+  </data>
+  <data name="Settings_TipPerfThreads" xml:space="preserve">
+    <value>Добавляет -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS. Рекомендуется включить для выделенного сервера.</value>
+  </data>
+  <data name="Settings_RowWorkerThreads" xml:space="preserve">
+    <value>Рабочие потоки (0 = авто)</value>
+  </data>
+  <data name="Settings_TipWorkerThreads" xml:space="preserve">
+    <value>-NumberOfWorkerThreadsServer. 0 = авто (аргумент не добавляется). Используется только при включённых потоках производительности.</value>
+  </data>
+  <data name="Settings_RowCommunity" xml:space="preserve">
+    <value>Сервер сообщества/публичный (-publiclobby)</value>
+  </data>
+  <data name="Settings_TipCommunity" xml:space="preserve">
+    <value>-publiclobby: показывать сервер в публичном списке/списке сообщества. Отключено = приватный сервер (игроки подключаются по IP).</value>
+  </data>
+  <data name="Settings_RowPublicIp" xml:space="preserve">
+    <value>Публичный IP (сообщество, пусто = авто)</value>
+  </data>
+  <data name="Settings_TipPublicIp" xml:space="preserve">
+    <value>-publicip для серверов сообщества (пусто = автоопределение). Используется только для рекламы сервера, не изменяет то, к чему привязывается сервер.</value>
+  </data>
+  <data name="Settings_RowPublicPort" xml:space="preserve">
+    <value>Публичный порт (для сообщества, 0 = использовать игровую настройку)</value>
+  </data>
+  <data name="Settings_TipPublicPort" xml:space="preserve">
+    <value>-publicport для серверов сообщества: внешний порт, рекламируемый в публичном списке. НЕ изменяет порт прослушивания. 0 = аргумент не добавляется (используется значение из ini-файла).</value>
+  </data>
+  <data name="Settings_RowLogFormat" xml:space="preserve">
+    <value>Формат журнала</value>
+  </data>
+  <data name="Settings_TipLogFormat" xml:space="preserve">
+    <value>-logformat (Text или Json). Пусто = аргумент не добавляется, применяется значение из ini-файла или по умолчанию.</value>
+  </data>
+  <data name="Settings_ExtraArgsNote" xml:space="preserve">
+    <value>Произвольные аргументы, добавляемые в командную строку как есть (через пробел или с новой строки). Некоторые серверы на Unreal принимают здесь переопределение карты/игрового класса. Изменяйте это, только если понимаете, что делаете.</value>
+  </data>
+  <data name="Settings_AdvancedExpander" xml:space="preserve">
+    <value>Дополнительно</value>
+  </data>
+  <data name="Settings_AdvancedIntro" xml:space="preserve">
+    <value>Низкоуровневые настройки, применяемые к процессу сервера после запуска. Неверные значения здесь могут снизить производительность, изменяйте их, только если понимаете, что делаете. Вступает в силу при следующем запуске.</value>
+  </data>
+  <data name="Settings_PriorityAffinityHeader" xml:space="preserve">
+    <value>Приоритет процесса и привязка к ЦП</value>
+  </data>
+  <data name="Settings_RowPriority" xml:space="preserve">
+    <value>Приоритет процесса</value>
+  </data>
+  <data name="Settings_TipPriority" xml:space="preserve">
+    <value>Приоритет процесса сервера в Windows. «Выше среднего»/«Высокий» может помочь под нагрузкой, но может обделить другие приложения и снизить общую производительность, «Реального времени» не предлагается (небезопасно).</value>
+  </data>
+  <data name="Settings_CoreLabel" xml:space="preserve">
+    <value>Ядро {0}</value>
+  </data>
+  <data name="Settings_CpuAffinityNote" xml:space="preserve">
+    <value>Привязка к ЦП, закрепление сервера за определёнными ядрами (все отмечены = без ограничений/использовать все ядра):</value>
+  </data>
+  <data name="Settings_AdvancedArgsTitle" xml:space="preserve">
+    <value>Дополнительные аргументы</value>
+  </data>
+  <data name="Settings_AdvancedArgsMessage" xml:space="preserve">
+    <value>Вы указали пользовательские аргументы в поле «Дополнительно». Они передаются серверу точно в том виде, в каком введены, оставляйте их, только если понимаете, что делаете.</value>
+  </data>
+  <data name="Settings_Accept" xml:space="preserve">
+    <value>Принять</value>
+  </data>
+  <data name="Settings_ConfirmSaveMore" xml:space="preserve">
+    <value>
+...и ещё {0}</value>
+  </data>
+  <data name="Settings_ConfirmSaveTitle" xml:space="preserve">
+    <value>Подтверждение сохранения</value>
+  </data>
+  <data name="Settings_ConfirmSaveMessage" xml:space="preserve">
+    <value>Эти настройки будут изменены:
+
+{0}
+
+Сохранить эти изменения?</value>
+  </data>
+  <data name="Settings_NotSavedTitle" xml:space="preserve">
+    <value>Не сохранено</value>
+  </data>
+  <data name="Settings_NotSavedMessage" xml:space="preserve">
+    <value>У «{0}» указано значение, которое нарушит формат конфигурации (лишняя запятая, кавычка или несбалансированная скобка). Ничего не было сохранено, исправьте значение и попробуйте снова.</value>
+  </data>
+  <data name="Settings_ValidationError" xml:space="preserve">
+    <value>{0}: недопустимое значение. Должно быть {1}.</value>
+  </data>
+  <data name="Settings_InvalidSettingsTitle" xml:space="preserve">
+    <value>Недопустимые настройки</value>
+  </data>
+  <data name="Settings_ResetFieldTooltip" xml:space="preserve">
+    <value>Сбросить поле по умолчанию</value>
+  </data>
+  <data name="Settings_UndocumentedMarker" xml:space="preserve">
+    <value>  · не документировано</value>
+  </data>
+  <data name="Settings_ResetAllMessage" xml:space="preserve">
+    <value>Сбросить все поля на этой панели к значениям по умолчанию? Чтобы применить изменения, всё равно нужно будет нажать «Сохранить».</value>
+  </data>
+  <data name="Settings_ResetAllButton" xml:space="preserve">
+    <value>Сбросить всё</value>
+  </data>
+  <data name="Settings_CategoryServerManagement" xml:space="preserve">
+    <value>Управление сервером</value>
+  </data>
+  <data name="Settings_CategoryPerformance" xml:space="preserve">
+    <value>Производительность</value>
+  </data>
+  <data name="Settings_CategoryGameplay" xml:space="preserve">
+    <value>Геймплей</value>
+  </data>
+  <data name="Settings_CategoryGameBalance" xml:space="preserve">
+    <value>Баланс игры</value>
+  </data>
+  <!-- MainViewModel -->
+  <data name="Vm_Working" xml:space="preserve">
+    <value>Выполняется</value>
+  </data>
+  <data name="Vm_TimesSummaryNone" xml:space="preserve">
+    <value>(нет)</value>
+  </data>
+  <data name="Vm_TimesSummaryMore" xml:space="preserve">
+    <value>{0}  +ещё {1}</value>
+  </data>
+  <!-- SettingsDialog process-priority dropdown (canonical value stored in config, label translated). Match Windows Task Manager wording per locale. -->
+  <data name="Settings_PriorityBelowNormal" xml:space="preserve">
+    <value>Ниже среднего</value>
+  </data>
+  <data name="Settings_PriorityNormal" xml:space="preserve">
+    <value>Обычный</value>
+  </data>
+  <data name="Settings_PriorityAboveNormal" xml:space="preserve">
+    <value>Выше среднего</value>
+  </data>
+  <data name="Settings_PriorityHigh" xml:space="preserve">
+    <value>Высокий</value>
+  </data>
+  <!-- Primary button transitional labels (glyphs stay literal) -->
+  <data name="Btn_Working" xml:space="preserve">
+    <value>Выполняется…</value>
+  </data>
+  <data name="Btn_Install" xml:space="preserve">
+    <value>Установить</value>
+  </data>
+  <data name="Btn_Starting" xml:space="preserve">
+    <value>Запуск…</value>
+  </data>
+  <data name="Btn_Stopping" xml:space="preserve">
+    <value>Остановка…</value>
+  </data>
+  <data name="Btn_StoppingSeconds" xml:space="preserve">
+    <value>Остановка ({0} с)</value>
+  </data>
+  <!-- Server state (Status tile) -->
+  <data name="State_Stopped" xml:space="preserve">
+    <value>Остановлен</value>
+  </data>
+  <data name="State_Starting" xml:space="preserve">
+    <value>Запускается</value>
+  </data>
+  <data name="State_Healthy" xml:space="preserve">
+    <value>Исправен</value>
+  </data>
+  <data name="State_Degraded" xml:space="preserve">
+    <value>Деградация</value>
+  </data>
+  <data name="State_Zombie" xml:space="preserve">
+    <value>Зомби</value>
+  </data>
+  <data name="State_Stopping" xml:space="preserve">
+    <value>Останавливается</value>
+  </data>
+  <data name="State_Restarting" xml:space="preserve">
+    <value>Перезапускается</value>
+  </data>
+  <data name="State_Backoff" xml:space="preserve">
+    <value>Ожидание повтора</value>
+  </data>
+  <!-- Update status line -->
+  <data name="Update_AutoUpdateOff" xml:space="preserve">
+    <value>Автообновление отключено · {0}</value>
+  </data>
+  <data name="Update_Checking" xml:space="preserve">
+    <value>Проверка обновлений...</value>
+  </data>
+  <data name="Update_CheckFailed" xml:space="preserve">
+    <value>Ошибка проверки обновлений · {0}</value>
+  </data>
+  <data name="Update_Found" xml:space="preserve">
+    <value>Найдена новая сборка {0}, перезапуск</value>
+  </data>
+  <data name="Update_UpToDate" xml:space="preserve">
+    <value>Актуальная версия · {0}</value>
+  </data>
+  <data name="Update_Available" xml:space="preserve">
+    <value>Доступна новая сборка {0}</value>
+  </data>
+  <!-- Next restart / backup schedule text -->
+  <data name="Sched_Off" xml:space="preserve">
+    <value>выключено</value>
+  </data>
+  <data name="Sched_UntilHM" xml:space="preserve">
+    <value>{0} ч {1} мин</value>
+  </data>
+  <data name="Sched_UntilMS" xml:space="preserve">
+    <value>{0} мин {1} с</value>
+  </data>
+  <data name="Cat_ServerName_Label" xml:space="preserve">
+    <value>Название мира</value>
+  </data>
+  <data name="Cat_ServerName_Desc" xml:space="preserve">
+    <value>Название сервера.</value>
+  </data>
+  <data name="Cat_ServerDescription_Label" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="Cat_ServerDescription_Desc" xml:space="preserve">
+    <value>Описание сервера.</value>
+  </data>
+  <data name="Cat_ServerPassword_Label" xml:space="preserve">
+    <value>Пароль сервера</value>
+  </data>
+  <data name="Cat_ServerPassword_Desc" xml:space="preserve">
+    <value>Пароль, необходимый для входа на сервер. Пусто = без пароля.</value>
+  </data>
+  <data name="Cat_AdminPassword_Label" xml:space="preserve">
+    <value>Пароль администратора</value>
+  </data>
+  <data name="Cat_AdminPassword_Desc" xml:space="preserve">
+    <value>Пароль для получения прав администратора на сервере. Требуется для REST API и RCON.</value>
+  </data>
+  <data name="Cat_ServerPlayerMaxNum_Label" xml:space="preserve">
+    <value>Максимум игроков</value>
+  </data>
+  <data name="Cat_ServerPlayerMaxNum_Desc" xml:space="preserve">
+    <value>Максимальное количество игроков, которые могут подключиться к серверу. Если задан аргумент запуска -players, он имеет приоритет над этим значением.</value>
+  </data>
+  <data name="Cat_CoopPlayerMaxNum_Label" xml:space="preserve">
+    <value>CoopPlayerMaxNum</value>
+  </data>
+  <data name="Cat_CoopPlayerMaxNum_Desc" xml:space="preserve">
+    <value>Не документировано. По предположению сообщества, это размер группы для кооперативной игры, но возможно, это внутреннее значение, не влияющее на выделенный сервер.</value>
+  </data>
+  <data name="Cat_RESTAPIEnabled_Label" xml:space="preserve">
+    <value>REST API включён</value>
+  </data>
+  <data name="Cat_RESTAPIEnabled_Desc" xml:space="preserve">
+    <value>Включить REST API. Лаунчеру он нужен для получения статистики, корректной остановки сервера и журналирования игроков.</value>
+  </data>
+  <data name="Cat_RESTAPIPort_Label" xml:space="preserve">
+    <value>Порт REST API</value>
+  </data>
+  <data name="Cat_RESTAPIPort_Desc" xml:space="preserve">
+    <value>Порт прослушивания для REST API.</value>
+  </data>
+  <data name="Cat_RCONEnabled_Label" xml:space="preserve">
+    <value>RCON включён</value>
+  </data>
+  <data name="Cat_RCONEnabled_Desc" xml:space="preserve">
+    <value>Включить RCON.</value>
+  </data>
+  <data name="Cat_RCONPort_Label" xml:space="preserve">
+    <value>Порт RCON</value>
+  </data>
+  <data name="Cat_RCONPort_Desc" xml:space="preserve">
+    <value>Номер порта, используемый для RCON.</value>
+  </data>
+  <data name="Cat_bUseAuth_Label" xml:space="preserve">
+    <value>bUseAuth</value>
+  </data>
+  <data name="Cat_bUseAuth_Desc" xml:space="preserve">
+    <value>Не документировано. По умолчанию включено (True).</value>
+  </data>
+  <data name="Cat_BanListURL_Label" xml:space="preserve">
+    <value>BanListURL</value>
+  </data>
+  <data name="Cat_BanListURL_Desc" xml:space="preserve">
+    <value>Не документировано. Вероятно, список банов, по которому сервер проверяет игроков, но точный формат и поведение не подтверждены.</value>
+  </data>
+  <data name="Cat_bIsUseBackupSaveData_Label" xml:space="preserve">
+    <value>Встроенное резервное копирование сохранений</value>
+  </data>
+  <data name="Cat_bIsUseBackupSaveData_Desc" xml:space="preserve">
+    <value>Включить собственное резервное копирование мира Palworld (отдельно от резервного копирования лаунчера). Включение этой опции увеличивает нагрузку на диск.</value>
+  </data>
+  <data name="Cat_AutoSaveSpan_Label" xml:space="preserve">
+    <value>Частота автосохранений</value>
+  </data>
+  <data name="Cat_AutoSaveSpan_Desc" xml:space="preserve">
+    <value>Как часто выполняется автосохранение мира (в секундах).</value>
+  </data>
+  <data name="Cat_bIsShowJoinLeftMessage_Label" xml:space="preserve">
+    <value>Сообщения о входе и выходе</value>
+  </data>
+  <data name="Cat_bIsShowJoinLeftMessage_Desc" xml:space="preserve">
+    <value>На выделенных серверах показывать внутриигровые сообщения о подключении и отключении игроков.</value>
+  </data>
+  <data name="Cat_bAllowClientMod_Label" xml:space="preserve">
+    <value>Разрешить клиентские моды</value>
+  </data>
+  <data name="Cat_bAllowClientMod_Desc" xml:space="preserve">
+    <value>Разрешить подключение к серверу игрокам с включёнными модами.</value>
+  </data>
+  <data name="Cat_ChatPostLimitPerMinute_Label" xml:space="preserve">
+    <value>Ограничение частоты чата</value>
+  </data>
+  <data name="Cat_ChatPostLimitPerMinute_Desc" xml:space="preserve">
+    <value>Максимальное количество сообщений в чате, разрешённое в минуту.</value>
+  </data>
+  <data name="Cat_LogFormatType_Label" xml:space="preserve">
+    <value>Формат журнала</value>
+  </data>
+  <data name="Cat_LogFormatType_Desc" xml:space="preserve">
+    <value>Формат файла журнала сервера.</value>
+  </data>
+  <data name="Cat_bIsMultiplay_Label" xml:space="preserve">
+    <value>bIsMultiplay</value>
+  </data>
+  <data name="Cat_bIsMultiplay_Desc" xml:space="preserve">
+    <value>Не документировано. Вероятно, это опция клиента игры «Многопользовательская игра: Да/Нет», отображаемая при создании мира, поэтому на выделенный сервер она не влияет. По умолчанию выключено (False).</value>
+  </data>
+  <data name="Cat_Region_Label" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="Cat_Region_Desc" xml:space="preserve">
+    <value>Не документировано. Некий код региона, но ожидаемый формат (NA, US, число?) и назначение (подбор игроков, список серверов или ни то, ни другое) неизвестны. По умолчанию пусто.</value>
+  </data>
+  <data name="Cat_CrossplayPlatforms_Label" xml:space="preserve">
+    <value>Платформы кроссплея</value>
+  </data>
+  <data name="Cat_CrossplayPlatforms_Desc" xml:space="preserve">
+    <value>Платформы, которым разрешено подключаться к серверу, в виде кортежа. По умолчанию: (Steam,Xbox,PS5,Mac).</value>
+  </data>
+  <data name="Cat_PublicIP_Label" xml:space="preserve">
+    <value>Публичный IP</value>
+  </data>
+  <data name="Cat_PublicIP_Desc" xml:space="preserve">
+    <value>Для серверов сообщества: явно указать внешний публичный IP-адрес. Пусто = определить автоматически.</value>
+  </data>
+  <data name="Cat_PublicPort_Label" xml:space="preserve">
+    <value>Публичный порт</value>
+  </data>
+  <data name="Cat_PublicPort_Desc" xml:space="preserve">
+    <value>Для серверов сообщества: явно указать внешний публичный порт. Не изменяет порт прослушивания сервера.</value>
+  </data>
+  <data name="Cat_bEnableBuildingPlayerUIdDisplay_Label" xml:space="preserve">
+    <value>Показывать ID создателя на постройках</value>
+  </data>
+  <data name="Cat_bEnableBuildingPlayerUIdDisplay_Desc" xml:space="preserve">
+    <value>Отображать ли ID игрока-создателя на постройках.</value>
+  </data>
+  <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Label" xml:space="preserve">
+    <value>BuildingNameDisplayCacheTTLSeconds</value>
+  </data>
+  <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Desc" xml:space="preserve">
+    <value>Не документировано. Вероятно, время хранения кэшированного отображаемого имени постройки (см. «Показывать ID создателя на постройках») перед обновлением (в секундах).</value>
+  </data>
+  <data name="Cat_BaseCampMaxNum_Label" xml:space="preserve">
+    <value>Максимум баз (мир)</value>
+  </data>
+  <data name="Cat_BaseCampMaxNum_Desc" xml:space="preserve">
+    <value>Максимальное общее количество баз на карте (суммарно по всем базам гильдий).</value>
+  </data>
+  <data name="Cat_BaseCampMaxNumInGuild_Label" xml:space="preserve">
+    <value>Макс. кол-во баз на гильдию</value>
+  </data>
+  <data name="Cat_BaseCampMaxNumInGuild_Desc" xml:space="preserve">
+    <value>Максимальное количество баз на гильдию. По умолчанию 4 (максимум 10). Увеличение этого значения повышает нагрузку на обработку.</value>
+  </data>
+  <data name="Cat_BaseCampWorkerMaxNum_Label" xml:space="preserve">
+    <value>Макс. кол-во рабочих Палов на базе</value>
+  </data>
+  <data name="Cat_BaseCampWorkerMaxNum_Desc" xml:space="preserve">
+    <value>Максимальное количество Палов на базе (максимум 50). Увеличение этого значения повышает нагрузку на обработку.</value>
+  </data>
+  <data name="Cat_MaxBuildingLimitNum_Label" xml:space="preserve">
+    <value>Макс. кол-во построек на базу</value>
+  </data>
+  <data name="Cat_MaxBuildingLimitNum_Desc" xml:space="preserve">
+    <value>Ограничение количества построек на игрока (0 = без ограничений).</value>
+  </data>
+  <data name="Cat_DropItemMaxNum_Label" xml:space="preserve">
+    <value>Макс. количество выпавших предметов в мире</value>
+  </data>
+  <data name="Cat_DropItemMaxNum_Desc" xml:space="preserve">
+    <value>Максимальное количество предметов, лежащих в мире, прежде чем они начнут исчезать.</value>
+  </data>
+  <data name="Cat_PhysicsActiveDropItemMaxNum_Label" xml:space="preserve">
+    <value>Макс. количество выпавших предметов в мире.</value>
+  </data>
+  <data name="Cat_PhysicsActiveDropItemMaxNum_Desc" xml:space="preserve">
+    <value>Максимальное количество выброшенных предметов, которые могут использовать физическое поведение. -1 = без ограничений. Увеличение этого значения может повлиять на нагрузку на обработку.</value>
+  </data>
+  <data name="Cat_DropItemMaxNum_UNKO_Label" xml:space="preserve">
+    <value>DropItemMaxNum_UNKO</value>
+  </data>
+  <data name="Cat_DropItemMaxNum_UNKO_Desc" xml:space="preserve">
+    <value>Не документировано. Судя по всему, не используется, вероятно, это балласт или нереализованная функция.</value>
+  </data>
+  <data name="Cat_ServerReplicatePawnCullDistance_Label" xml:space="preserve">
+    <value>Дистанция синхронизации Палов</value>
+  </data>
+  <data name="Cat_ServerReplicatePawnCullDistance_Desc" xml:space="preserve">
+    <value>Дистанция синхронизации Палов от игроков (в см). Минимум 5000, максимум 15000.</value>
+  </data>
+  <data name="Cat_ItemContainerForceMarkDirtyInterval_Label" xml:space="preserve">
+    <value>Интервал повторной синхронизации контейнера</value>
+  </data>
+  <data name="Cat_ItemContainerForceMarkDirtyInterval_Desc" xml:space="preserve">
+    <value>Как часто принудительно выполнять повторную синхронизацию, пока открыт интерфейс контейнера (в секундах).</value>
+  </data>
+  <data name="Cat_MaxGuildsPerFrame_Label" xml:space="preserve">
+    <value>MaxGuildsPerFrame</value>
+  </data>
+  <data name="Cat_MaxGuildsPerFrame_Desc" xml:space="preserve">
+    <value>Не документировано. Вероятно, ограничивает количество гильдий, обрабатываемых сервером за один тик, что влияет на производительность.</value>
+  </data>
+  <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Label" xml:space="preserve">
+    <value>PlayerDataPalStorageUpdateCheckTickInterval</value>
+  </data>
+  <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Desc" xml:space="preserve">
+    <value>Не документировано. Вероятно, как часто сервер проверяет данные Пал-бокса/хранилища игрока на изменения для синхронизации (в секундах).</value>
+  </data>
+  <data name="Cat_Difficulty_Label" xml:space="preserve">
+    <value>Сложность</value>
+  </data>
+  <data name="Cat_Difficulty_Desc" xml:space="preserve">
+    <value>Пресет сложности клиента/одиночной игры. На выделенный сервер он не влияет, поэтому оставьте значение «Нет» и настраивайте сложность сервера через отдельные параметры ниже (или кнопки пресетов сложности вверху).</value>
+  </data>
+  <data name="Cat_bHardcore_Label" xml:space="preserve">
+    <value>Хардкорный режим: потеря прогресса при смерти игрока.</value>
+  </data>
+  <data name="Cat_bHardcore_Desc" xml:space="preserve">
+    <value>Включить хардкор-режим. После смерти возродиться будет невозможно.</value>
+  </data>
+  <data name="Cat_bCharacterRecreateInHardcore_Label" xml:space="preserve">
+    <value>Пересоздание персонажа (хардкор)</value>
+  </data>
+  <data name="Cat_bCharacterRecreateInHardcore_Desc" xml:space="preserve">
+    <value>Разрешено ли пересоздавать персонажа после смерти в хардкор-режиме.</value>
+  </data>
+  <data name="Cat_bIsPvP_Label" xml:space="preserve">
+    <value>PvP</value>
+  </data>
+  <data name="Cat_bIsPvP_Desc" xml:space="preserve">
+    <value>Включить PvP. Действует только вместе с включёнными опциями «Урон между игроками» и «Защита базы от других гильдий».</value>
+  </data>
+  <data name="Cat_bEnablePlayerToPlayerDamage_Label" xml:space="preserve">
+    <value>Урон между игроками</value>
+  </data>
+  <data name="Cat_bEnablePlayerToPlayerDamage_Desc" xml:space="preserve">
+    <value>Разрешить игрокам наносить урон друг другу. Одна из трёх настроек, которые вместе включают PvP.</value>
+  </data>
+  <data name="Cat_bEnableFriendlyFire_Label" xml:space="preserve">
+    <value>Дружественный огонь</value>
+  </data>
+  <data name="Cat_bEnableFriendlyFire_Desc" xml:space="preserve">
+    <value>Не документировано. По данным сообщества, позволяет игрокам и их Палам наносить урон членам собственной гильдии.</value>
+  </data>
+  <data name="Cat_bCanPickupOtherGuildDeathPenaltyDrop_Label" xml:space="preserve">
+    <value>Подбор дропа других гильдий</value>
+  </data>
+  <data name="Cat_bCanPickupOtherGuildDeathPenaltyDrop_Desc" xml:space="preserve">
+    <value>Разрешить игрокам подбирать Палов и предметы, оставленные игроками других гильдий после смерти.</value>
+  </data>
+  <data name="Cat_bEnableDefenseOtherGuildPlayer_Label" xml:space="preserve">
+    <value>Защита базы от других гильдий</value>
+  </data>
+  <data name="Cat_bEnableDefenseOtherGuildPlayer_Desc" xml:space="preserve">
+    <value>Палы на базе атакуют враждебных игроков, вторгшихся на вашу базу. Одна из трёх настроек, включающих PvP.</value>
+  </data>
+  <data name="Cat_bEnableFastTravel_Label" xml:space="preserve">
+    <value>Быстрое перемещение</value>
+  </data>
+  <data name="Cat_bEnableFastTravel_Desc" xml:space="preserve">
+    <value>Включить быстрое перемещение.</value>
+  </data>
+  <data name="Cat_bEnableFastTravelOnlyBaseCamp_Label" xml:space="preserve">
+    <value>Ограничить быстрое перемещение только между базами?</value>
+  </data>
+  <data name="Cat_bEnableFastTravelOnlyBaseCamp_Desc" xml:space="preserve">
+    <value>Ограничить быстрое перемещение только между базами.</value>
+  </data>
+  <data name="Cat_bEnableInvaderEnemy_Label" xml:space="preserve">
+    <value>Включить события нападений</value>
+  </data>
+  <data name="Cat_bEnableInvaderEnemy_Desc" xml:space="preserve">
+    <value>Включить захватчиков (события набегов).</value>
+  </data>
+  <data name="Cat_EnablePredatorBossPal_Label" xml:space="preserve">
+    <value>Появление Пала-хищника</value>
+  </data>
+  <data name="Cat_EnablePredatorBossPal_Desc" xml:space="preserve">
+    <value>Разрешить появление в мире Палов-хищников.</value>
+  </data>
+  <data name="Cat_bBuildAreaLimit_Label" xml:space="preserve">
+    <value>Ограничение зоны строительства</value>
+  </data>
+  <data name="Cat_bBuildAreaLimit_Desc" xml:space="preserve">
+    <value>Запретить строительство рядом с такими объектами, как точки быстрого перемещения.</value>
+  </data>
+  <data name="Cat_bInvisibleOtherGuildBaseCampAreaFX_Label" xml:space="preserve">
+    <value>Показывать границы территории базы</value>
+  </data>
+  <data name="Cat_bInvisibleOtherGuildBaseCampAreaFX_Desc" xml:space="preserve">
+    <value>Показывать границы территории базы.</value>
+  </data>
+  <data name="Cat_bShowPlayerList_Label" xml:space="preserve">
+    <value>Список игроков в меню ESC</value>
+  </data>
+  <data name="Cat_bShowPlayerList_Desc" xml:space="preserve">
+    <value>Включить список игроков в меню ESC.</value>
+  </data>
+  <data name="Cat_bExistPlayerAfterLogout_Label" xml:space="preserve">
+    <value>Тело остаётся после выхода</value>
+  </data>
+  <data name="Cat_bExistPlayerAfterLogout_Desc" xml:space="preserve">
+    <value>Переходит ли игрок в состояние сна на текущем месте при выходе из игры.</value>
+  </data>
+  <data name="Cat_bEnableNonLoginPenalty_Label" xml:space="preserve">
+    <value>bEnableNonLoginPenalty</value>
+  </data>
+  <data name="Cat_bEnableNonLoginPenalty_Desc" xml:space="preserve">
+    <value>Не документировано. Возможно, связано с тем, получают ли ваши Палы дебафы, пока вы не заходите в игру. Не проверено.</value>
+  </data>
+  <data name="Cat_bIsStartLocationSelectByMap_Label" xml:space="preserve">
+    <value>Выбор начального места</value>
+  </data>
+  <data name="Cat_bIsStartLocationSelectByMap_Desc" xml:space="preserve">
+    <value>Разрешить ли игрокам выбирать начальное место появления.</value>
+  </data>
+  <data name="Cat_bActiveUNKO_Label" xml:space="preserve">
+    <value>bActiveUNKO</value>
+  </data>
+  <data name="Cat_bActiveUNKO_Desc" xml:space="preserve">
+    <value>Не документировано. Судя по всему, не используется, вероятно, это балласт или нереализованная функция.</value>
+  </data>
+  <data name="Cat_bEnableAimAssistPad_Label" xml:space="preserve">
+    <value>Автоприцеливание (геймпад)</value>
+  </data>
+  <data name="Cat_bEnableAimAssistPad_Desc" xml:space="preserve">
+    <value>Автоприцеливание для геймпадов. Установите значение False, чтобы отключить.</value>
+  </data>
+  <data name="Cat_bEnableAimAssistKeyboard_Label" xml:space="preserve">
+    <value>Автоприцеливание (клавиатура)</value>
+  </data>
+  <data name="Cat_bEnableAimAssistKeyboard_Desc" xml:space="preserve">
+    <value>Включить автоприцеливание для мыши и клавиатуры.</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Attack_Label" xml:space="preserve">
+    <value>Разрешить очки характеристик: Атака</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Attack_Desc" xml:space="preserve">
+    <value>Разрешить распределение очков характеристик в Атаку.</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Health_Label" xml:space="preserve">
+    <value>Разрешить очки характеристик: HP</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Health_Desc" xml:space="preserve">
+    <value>Разрешить распределение очков характеристик в HP.</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Stamina_Label" xml:space="preserve">
+    <value>Разрешить очки характеристик: Выносливость</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Stamina_Desc" xml:space="preserve">
+    <value>Разрешить распределение очков характеристик в Выносливость.</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Weight_Label" xml:space="preserve">
+    <value>Разрешить очки характеристик: Переносимый вес</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Weight_Desc" xml:space="preserve">
+    <value>Разрешить распределение очков характеристик в Переносимый вес.</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_WorkSpeed_Label" xml:space="preserve">
+    <value>Разрешить очки характеристик: Скорость работы</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_WorkSpeed_Desc" xml:space="preserve">
+    <value>Разрешить распределение очков характеристик в Скорость работы.</value>
+  </data>
+  <data name="Cat_bAllowGlobalPalboxExport_Label" xml:space="preserve">
+    <value>Разрешить сохранение генетических данных Палов в Глобальный Пал-бокс</value>
+  </data>
+  <data name="Cat_bAllowGlobalPalboxExport_Desc" xml:space="preserve">
+    <value>Разрешить сохранение в Глобальный Пал-бокс.</value>
+  </data>
+  <data name="Cat_bAllowGlobalPalboxImport_Label" xml:space="preserve">
+    <value>Разрешить воссоздание Палов из Глобального Пал-бокса</value>
+  </data>
+  <data name="Cat_bAllowGlobalPalboxImport_Desc" xml:space="preserve">
+    <value>Разрешить загрузку из Глобального Пал-бокса.</value>
+  </data>
+  <data name="Cat_bAutoResetGuildNoOnlinePlayers_Label" xml:space="preserve">
+    <value>Автоматическое удаление построек гильдии при длительном отсутствии входа.</value>
+  </data>
+  <data name="Cat_bAutoResetGuildNoOnlinePlayers_Desc" xml:space="preserve">
+    <value>Если ни один участник гильдии не заходит в игру, автоматически удалять постройки и Палов на базе.</value>
+  </data>
+  <data name="Cat_AutoResetGuildTimeNoOnlinePlayers_Label" xml:space="preserve">
+    <value>Время до автоудаления построек неактивных гильдий (ч.)</value>
+  </data>
+  <data name="Cat_AutoResetGuildTimeNoOnlinePlayers_Desc" xml:space="preserve">
+    <value>Время отсутствия в сети, после которого неактивная гильдия автоматически сбрасывается (в часах). Игнорируется, если опция «Автосброс неактивных гильдий» выключена.</value>
+  </data>
+  <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Label" xml:space="preserve">
+    <value>Показывать PvP-предметы баз на карте</value>
+  </data>
+  <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Desc" xml:space="preserve">
+    <value>Показывать ли на карте количество эксклюзивных PvP-предметов на каждой базе.</value>
+  </data>
+  <data name="Cat_bDisplayPvPItemNumOnWorldMap_Player_Label" xml:space="preserve">
+    <value>Показывать PvP-предметы игроков на карте</value>
+  </data>
+  <data name="Cat_bDisplayPvPItemNumOnWorldMap_Player_Desc" xml:space="preserve">
+    <value>Показывать ли на карте местоположения игроков и количество эксклюзивных PvP-предметов.</value>
+  </data>
+  <data name="Cat_bIsRandomizerPalLevelRandom_Label" xml:space="preserve">
+    <value>В случайном режиме уровень диких Палов станет полностью случайным.</value>
+  </data>
+  <data name="Cat_bIsRandomizerPalLevelRandom_Desc" xml:space="preserve">
+    <value>Если включено, уровни диких Палов полностью случайны. Если выключено, уровни рандомизируются в пределах диапазона, предусмотренного для каждой зоны.</value>
+  </data>
+  <data name="Cat_RandomizerType_Label" xml:space="preserve">
+    <value>Рандомное появление Палов</value>
+  </data>
+  <data name="Cat_RandomizerType_Desc" xml:space="preserve">
+    <value>Рандомизация появления Палов. Нет = без рандомизации. Регион = рандомизация по регионам. Все = полная рандомизация.</value>
+  </data>
+  <data name="Cat_RandomizerSeed_Label" xml:space="preserve">
+    <value>Сид</value>
+  </data>
+  <data name="Cat_RandomizerSeed_Desc" xml:space="preserve">
+    <value>Значение seed (зерна), используемое при включённой рандомизации появления Палов.</value>
+  </data>
+  <data name="Cat_bEnableVoiceChat_Label" xml:space="preserve">
+    <value>Голосовой чат</value>
+  </data>
+  <data name="Cat_bEnableVoiceChat_Desc" xml:space="preserve">
+    <value>Включить внутриигровой голосовой чат.</value>
+  </data>
+  <data name="Cat_VoiceChatMaxVolumeDistance_Label" xml:space="preserve">
+    <value>Дистанция полной громкости голосового чата</value>
+  </data>
+  <data name="Cat_VoiceChatMaxVolumeDistance_Desc" xml:space="preserve">
+    <value>Дистанция, в пределах которой громкость голосового чата не ослабевает.</value>
+  </data>
+  <data name="Cat_VoiceChatZeroVolumeDistance_Label" xml:space="preserve">
+    <value>Дистанция тишины голосового чата</value>
+  </data>
+  <data name="Cat_VoiceChatZeroVolumeDistance_Desc" xml:space="preserve">
+    <value>Дистанция, на которой громкость голосового чата становится нулевой.</value>
+  </data>
+  <data name="Cat_DayTimeSpeedRate_Label" xml:space="preserve">
+    <value>Скорость времени (день)</value>
+  </data>
+  <data name="Cat_DayTimeSpeedRate_Desc" xml:space="preserve">
+    <value>Скорость течения времени днём.</value>
+  </data>
+  <data name="Cat_NightTimeSpeedRate_Label" xml:space="preserve">
+    <value>Скорость времени (ночь)</value>
+  </data>
+  <data name="Cat_NightTimeSpeedRate_Desc" xml:space="preserve">
+    <value>Скорость течения времени ночью.</value>
+  </data>
+  <data name="Cat_ExpRate_Label" xml:space="preserve">
+    <value>Коэффициент получаемого опыта</value>
+  </data>
+  <data name="Cat_ExpRate_Desc" xml:space="preserve">
+    <value>Множитель получаемого опыта (EXP).</value>
+  </data>
+  <data name="Cat_PalCaptureRate_Label" xml:space="preserve">
+    <value>Коэффициент шанса поимки</value>
+  </data>
+  <data name="Cat_PalCaptureRate_Desc" xml:space="preserve">
+    <value>Множитель шанса поимки.</value>
+  </data>
+  <data name="Cat_PalSpawnNumRate_Label" xml:space="preserve">
+    <value>Коэффициент появления Палов ※Возрастает нагрузка на систему.</value>
+  </data>
+  <data name="Cat_PalSpawnNumRate_Desc" xml:space="preserve">
+    <value>Частота появления Палов. Влияет на производительность.</value>
+  </data>
+  <data name="Cat_PalEggDefaultHatchingTime_Label" xml:space="preserve">
+    <value>Время инкубации огромного яйца (h) *Для других яиц время инкубации также отличается.</value>
+  </data>
+  <data name="Cat_PalEggDefaultHatchingTime_Desc" xml:space="preserve">
+    <value>Время вылупления из огромного яйца (в часах). Другим яйцам также требуется время на инкубацию.</value>
+  </data>
+  <data name="Cat_WorkSpeedRate_Label" xml:space="preserve">
+    <value>Коэффициент скорости работы</value>
+  </data>
+  <data name="Cat_WorkSpeedRate_Desc" xml:space="preserve">
+    <value>Насколько быстро игроки и Палы выполняют работу. Множитель: 2.0 = работа выполняется вдвое быстрее.</value>
+  </data>
+  <data name="Cat_MonsterFarmActionSpeedRate_Label" xml:space="preserve">
+    <value>Множитель скорости производства предметов на ранчо</value>
+  </data>
+  <data name="Cat_MonsterFarmActionSpeedRate_Desc" xml:space="preserve">
+    <value>Множитель скорости производства предметов на ранчо.</value>
+  </data>
+  <data name="Cat_PalDamageRateAttack_Label" xml:space="preserve">
+    <value>Коэффициент наносимого всеми Палами урона</value>
+  </data>
+  <data name="Cat_PalDamageRateAttack_Desc" xml:space="preserve">
+    <value>Множитель урона, наносимого Палами.</value>
+  </data>
+  <data name="Cat_PalDamageRateDefense_Label" xml:space="preserve">
+    <value>Коэффициент получаемого всеми Палами урона</value>
+  </data>
+  <data name="Cat_PalDamageRateDefense_Desc" xml:space="preserve">
+    <value>Множитель урона, получаемого Палами.</value>
+  </data>
+  <data name="Cat_PlayerDamageRateAttack_Label" xml:space="preserve">
+    <value>Коэффициент наносимого игроком урона</value>
+  </data>
+  <data name="Cat_PlayerDamageRateAttack_Desc" xml:space="preserve">
+    <value>Множитель урона, наносимого игроками.</value>
+  </data>
+  <data name="Cat_PlayerDamageRateDefense_Label" xml:space="preserve">
+    <value>Коэффициент получаемого игроком урона</value>
+  </data>
+  <data name="Cat_PlayerDamageRateDefense_Desc" xml:space="preserve">
+    <value>Множитель урона, получаемого игроками.</value>
+  </data>
+  <data name="Cat_PlayerStomachDecreaceRate_Label" xml:space="preserve">
+    <value>Коэффициент снижения уровня сытости игрока</value>
+  </data>
+  <data name="Cat_PlayerStomachDecreaceRate_Desc" xml:space="preserve">
+    <value>Множитель скорости истощения голода игрока.</value>
+  </data>
+  <data name="Cat_PlayerStaminaDecreaceRate_Label" xml:space="preserve">
+    <value>Коэффициент расхода выносливости игрока</value>
+  </data>
+  <data name="Cat_PlayerStaminaDecreaceRate_Desc" xml:space="preserve">
+    <value>Множитель скорости расхода выносливости игрока.</value>
+  </data>
+  <data name="Cat_PlayerAutoHPRegeneRate_Label" xml:space="preserve">
+    <value>Коэффициент автовосстановления HP игрока</value>
+  </data>
+  <data name="Cat_PlayerAutoHPRegeneRate_Desc" xml:space="preserve">
+    <value>Множитель естественной регенерации HP игрока.</value>
+  </data>
+  <data name="Cat_PlayerAutoHpRegeneRateInSleep_Label" xml:space="preserve">
+    <value>Коэффициент восстановления HP игрока во сне</value>
+  </data>
+  <data name="Cat_PlayerAutoHpRegeneRateInSleep_Desc" xml:space="preserve">
+    <value>Множитель регенерации HP игрока во время сна.</value>
+  </data>
+  <data name="Cat_PalStomachDecreaceRate_Label" xml:space="preserve">
+    <value>Коэффициент снижения уровня сытости Палов</value>
+  </data>
+  <data name="Cat_PalStomachDecreaceRate_Desc" xml:space="preserve">
+    <value>Множитель скорости истощения голода Пала.</value>
+  </data>
+  <data name="Cat_PalStaminaDecreaceRate_Label" xml:space="preserve">
+    <value>Коэффициент расхода выносливости Палов</value>
+  </data>
+  <data name="Cat_PalStaminaDecreaceRate_Desc" xml:space="preserve">
+    <value>Множитель скорости расхода выносливости Пала.</value>
+  </data>
+  <data name="Cat_PalAutoHPRegeneRate_Label" xml:space="preserve">
+    <value>Коэффициент естественного восстановления HP Палов</value>
+  </data>
+  <data name="Cat_PalAutoHPRegeneRate_Desc" xml:space="preserve">
+    <value>Множитель естественной регенерации HP Пала.</value>
+  </data>
+  <data name="Cat_PalAutoHpRegeneRateInSleep_Label" xml:space="preserve">
+    <value>Коэффициент восстановления HP Палов во сне (в Палбоксе)</value>
+  </data>
+  <data name="Cat_PalAutoHpRegeneRateInSleep_Desc" xml:space="preserve">
+    <value>Множитель регенерации HP Пала во время сна в Пал-боксе.</value>
+  </data>
+  <data name="Cat_CollectionDropRate_Label" xml:space="preserve">
+    <value>Коэффициент числа получаемых предметов при сборе</value>
+  </data>
+  <data name="Cat_CollectionDropRate_Desc" xml:space="preserve">
+    <value>Множитель добываемых предметов.</value>
+  </data>
+  <data name="Cat_CollectionObjectHpRate_Label" xml:space="preserve">
+    <value>Коэффициент HP объектов сбора</value>
+  </data>
+  <data name="Cat_CollectionObjectHpRate_Desc" xml:space="preserve">
+    <value>Множитель прочности (HP) собираемых объектов.</value>
+  </data>
+  <data name="Cat_CollectionObjectRespawnSpeedRate_Label" xml:space="preserve">
+    <value>Время восстановления объектов сбора</value>
+  </data>
+  <data name="Cat_CollectionObjectRespawnSpeedRate_Desc" xml:space="preserve">
+    <value>Множитель интервала восстановления собираемых объектов.</value>
+  </data>
+  <data name="Cat_EnemyDropItemRate_Label" xml:space="preserve">
+    <value>Коэффициент количества выпадающих предметов</value>
+  </data>
+  <data name="Cat_EnemyDropItemRate_Desc" xml:space="preserve">
+    <value>Множитель количества выпадающих предметов.</value>
+  </data>
+  <data name="Cat_DropItemAliveMaxHours_Label" xml:space="preserve">
+    <value>Время жизни выброшенных предметов (часы)</value>
+  </data>
+  <data name="Cat_DropItemAliveMaxHours_Desc" xml:space="preserve">
+    <value>Как долго выброшенные предметы остаются в мире, прежде чем исчезнуть (в часах). Уменьшение значения помогает очистке и производительности сервера.</value>
+  </data>
+  <data name="Cat_ItemWeightRate_Label" xml:space="preserve">
+    <value>Коэффициент веса предметов</value>
+  </data>
+  <data name="Cat_ItemWeightRate_Desc" xml:space="preserve">
+    <value>Множитель веса предметов.</value>
+  </data>
+  <data name="Cat_ItemCorruptionMultiplier_Label" xml:space="preserve">
+    <value>Множитель скорости порчи предметов</value>
+  </data>
+  <data name="Cat_ItemCorruptionMultiplier_Desc" xml:space="preserve">
+    <value>Множитель скорости порчи (износа) предметов.</value>
+  </data>
+  <data name="Cat_EquipmentDurabilityDamageRate_Label" xml:space="preserve">
+    <value>Множитель потери прочности снаряжения</value>
+  </data>
+  <data name="Cat_EquipmentDurabilityDamageRate_Desc" xml:space="preserve">
+    <value>Множитель потери прочности снаряжения.</value>
+  </data>
+  <data name="Cat_BuildObjectHpRate_Label" xml:space="preserve">
+    <value>Прочность построек</value>
+  </data>
+  <data name="Cat_BuildObjectHpRate_Desc" xml:space="preserve">
+    <value>Множитель прочности (HP) построек. 2.0 = вдвое больше HP построек.</value>
+  </data>
+  <data name="Cat_BuildObjectDamageRate_Label" xml:space="preserve">
+    <value>Коэффициент наносимого постройкам урона</value>
+  </data>
+  <data name="Cat_BuildObjectDamageRate_Desc" xml:space="preserve">
+    <value>Множитель урона по постройкам.</value>
+  </data>
+  <data name="Cat_BuildObjectDeteriorationDamageRate_Label" xml:space="preserve">
+    <value>Коэффициент износа построек</value>
+  </data>
+  <data name="Cat_BuildObjectDeteriorationDamageRate_Desc" xml:space="preserve">
+    <value>Множитель скорости разрушения (износа) построек.</value>
+  </data>
+  <data name="Cat_DeathPenalty_Label" xml:space="preserve">
+    <value>Пенальти за смерть</value>
+  </data>
+  <data name="Cat_DeathPenalty_Desc" xml:space="preserve">
+    <value>Что вы теряете при смерти. Нет = ничего. Предметы = все предметы, кроме снаряжения. Предметы и снаряжение = все предметы. Всё = все предметы и все Палы в отряде.</value>
+  </data>
+  <data name="Cat_bPalLost_Label" xml:space="preserve">
+    <value>Хардкорный режим: Палы будут безвозвратно потеряны после смерти.</value>
+  </data>
+  <data name="Cat_bPalLost_Desc" xml:space="preserve">
+    <value>Безвозвратно терять Палов при смерти.</value>
+  </data>
+  <data name="Cat_BlockRespawnTime_Label" xml:space="preserve">
+    <value>Ожидание перед возрождением (секунды)</value>
+  </data>
+  <data name="Cat_BlockRespawnTime_Desc" xml:space="preserve">
+    <value>Время ожидания перед возрождением после смерти (в секундах).</value>
+  </data>
+  <data name="Cat_RespawnPenaltyDurationThreshold_Label" xml:space="preserve">
+    <value>Порог штрафа за возрождение</value>
+  </data>
+  <data name="Cat_RespawnPenaltyDurationThreshold_Desc" xml:space="preserve">
+    <value>Порог времени выживания (в секундах). Если вы снова умрёте, не прожив столько времени, применяется множитель времени ожидания возрождения, указанный ниже.</value>
+  </data>
+  <data name="Cat_RespawnPenaltyTimeScale_Label" xml:space="preserve">
+    <value>Множитель штрафа за возрождение</value>
+  </data>
+  <data name="Cat_RespawnPenaltyTimeScale_Desc" xml:space="preserve">
+    <value>Множитель, применяемый к времени ожидания возрождения.</value>
+  </data>
+  <data name="Cat_GuildPlayerMaxNum_Label" xml:space="preserve">
+    <value>Макс. число участников гильдии</value>
+  </data>
+  <data name="Cat_GuildPlayerMaxNum_Desc" xml:space="preserve">
+    <value>Максимальное количество игроков в гильдии.</value>
+  </data>
+  <data name="Cat_GuildRejoinCooldownMinutes_Label" xml:space="preserve">
+    <value>Ожидание повторного вступления в гильдию (мин)</value>
+  </data>
+  <data name="Cat_GuildRejoinCooldownMinutes_Desc" xml:space="preserve">
+    <value>Время ожидания перед повторным вступлением в гильдию (в минутах).</value>
+  </data>
+  <data name="Cat_DenyTechnologyList_Label" xml:space="preserve">
+    <value>Отключённые технологии</value>
+  </data>
+  <data name="Cat_DenyTechnologyList_Desc" xml:space="preserve">
+    <value>Отключить определённые технологии. Укажите ID технологий, например: ("PALBOX", "RepairBench"). Пусто = ни одной.</value>
+  </data>
+  <data name="Cat_bAdditionalDropItemWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
+    <value>PvP-убийство: выпадение предмета</value>
+  </data>
+  <data name="Cat_bAdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
+    <value>Выпадает ли особый предмет при убийстве игрока в режиме PvP.</value>
+  </data>
+  <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
+    <value>PvP-убийство: ID предмета</value>
+  </data>
+  <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
+    <value>ID предмета, выпадающего при убийстве в PvP (используется, если включена опция «PvP-убийство: выпадение предмета»).</value>
+  </data>
+  <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
+    <value>PvP-убийство: количество предметов</value>
+  </data>
+  <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
+    <value>Количество предмета, выпадающего при убийстве в PvP (используется, если включена опция «PvP-убийство: выпадение предмета»).</value>
+  </data>
+  <data name="Cat_SupplyDropSpan_Label" xml:space="preserve">
+    <value>Интервал падения метеоритов и сброса ресурсов (мин.)</value>
+  </data>
+  <data name="Cat_SupplyDropSpan_Desc" xml:space="preserve">
+    <value>Интервал падения метеоритов и грузовых сбросов (в минутах).</value>
+  </data>
+  <data name="Cat_AutoTransferMasterCheckIntervalSeconds_Label" xml:space="preserve">
+    <value>AutoTransferMasterCheckIntervalSeconds</value>
+  </data>
+  <data name="Cat_AutoTransferMasterCheckIntervalSeconds_Desc" xml:space="preserve">
+    <value>Не документировано. Вероятно, как часто сервер проверяет, следует ли автоматически передать право владения гильдией/базой от неактивного владельца (в секундах).</value>
+  </data>
+  <data name="Cat_AutoTransferMasterThresholdDays_Label" xml:space="preserve">
+    <value>AutoTransferMasterThresholdDays</value>
+  </data>
+  <data name="Cat_AutoTransferMasterThresholdDays_Desc" xml:space="preserve">
+    <value>Не документировано. Вероятно, количество дней неактивности владельца гильдии/базы, после которых право владения передаётся автоматически.</value>
+  </data>
+  <data name="Cat_LogFormatType_Opt_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="Cat_LogFormatType_Opt_Json" xml:space="preserve">
+    <value>Json</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_None" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_Casual" xml:space="preserve">
+    <value>Лёгкий</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_Normal" xml:space="preserve">
+    <value>Нормальный</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_Hard" xml:space="preserve">
+    <value>Сложный</value>
+  </data>
+  <data name="Cat_RandomizerType_Opt_None" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="Cat_RandomizerType_Opt_Region" xml:space="preserve">
+    <value>Регион</value>
+  </data>
+  <data name="Cat_RandomizerType_Opt_All" xml:space="preserve">
+    <value>Все</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_None" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_Item" xml:space="preserve">
+    <value>Предметы</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_ItemAndEquipment" xml:space="preserve">
+    <value>Предметы и снаряжение</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_All" xml:space="preserve">
+    <value>Всё</value>
+  </data>
+  <data name="Settings_PresetCasual" xml:space="preserve">
+    <value>Лёгкий</value>
+  </data>
+  <data name="Settings_PresetNormal" xml:space="preserve">
+    <value>Нормальный</value>
+  </data>
+  <data name="Settings_PresetHard" xml:space="preserve">
+    <value>Сложный</value>
+  </data>
+  <data name="Settings_PresetHardcore" xml:space="preserve">
+    <value>Хардкор</value>
+  </data>
+  <data name="LauncherSettings_RestartPrompt" xml:space="preserve">
+    <value>Для применения нового языка ({0}) лаунчер нужно перезапустить. Перезапустить сейчас?</value>
+  </data>
+  <data name="LauncherSettings_RestartPromptRunning" xml:space="preserve">
+    <value>Для применения нового языка ({0}) лаунчер нужно перезапустить. Ваш сервер Palworld продолжит работать, и лаунчер переподключится к нему. Перезапустить сейчас?</value>
+  </data>
+  <data name="LauncherSettings_RestartNow" xml:space="preserve">
+    <value>Перезапустить сейчас</value>
+  </data>
+  <data name="LauncherSettings_Copyright" xml:space="preserve">
+    <value>© 2026 Syl S. · GPLv3</value>
+  </data>
+  <data name="Settings_TabGameSettings" xml:space="preserve">
+    <value>Игровые настройки</value>
+  </data>
+  <data name="Settings_TabCpuAffinity" xml:space="preserve">
+    <value>Привязка/приоритет ЦП</value>
+  </data>
+  <data name="Main_CompactMode" xml:space="preserve">
+    <value>Компактный режим</value>
+  </data>
+  <data name="Settings_GameplayBlurb" xml:space="preserve">
+    <value>Сложность, скорость опыта/поимки/выпадения предметов, длительность дня и ночи, переключатели особенностей мира. Полный справочник:</value>
+  </data>
+  <data name="Settings_GameBalanceBlurb" xml:space="preserve">
+    <value>Множители урона, выпадения предметов и характеристик, настраивающие баланс боя и прогрессии. Полный справочник:</value>
+  </data>
+  <data name="Settings_PerformanceBlurb" xml:space="preserve">
+    <value>Ограничения, влияющие на нагрузку на сервер: базовые лагеря, размер гильдии, лимиты объектов и плотность спавна. Полный справочник:</value>
+  </data>
+  <data name="Settings_LaunchArgsBlurbLink" xml:space="preserve">
+    <value>документация по аргументам запуска</value>
+  </data>
+  <data name="Update_Pinned" xml:space="preserve">
+    <value>Закреплено на {0}</value>
+  </data>
+  <data name="Main_PinVersion" xml:space="preserve">
+    <value>Закрепить версию сервера</value>
+  </data>
+  <data name="Main_PinVersionTip" xml:space="preserve">
+    <value>Зафиксировать сервер на текущей сборке. Пока версия закреплена, автоматические обновления отключены. Снимите отметку, чтобы возобновить обновления.</value>
+  </data>
+  <data name="Main_AutomaticUpdates" xml:space="preserve">
+    <value>Автоматические обновления</value>
+  </data>
+  <data name="Main_AutomaticUpdatesTip" xml:space="preserve">
+    <value>Автоматически скачивать обновления. Если отключено, лаунчер не будет обновлять сервер при запуске или во время работы. Проверить обновления вручную по-прежнему можно.</value>
+  </data>
+  <data name="Main_PinnedBuildFormat" xml:space="preserve">
+    <value>сборка {0}</value>
+  </data>
+  <data name="LauncherSettings_AutoReconnect" xml:space="preserve">
+    <value>Переподключаться к работающему серверу при запуске лаунчера без запроса</value>
+  </data>
+  <data name="LauncherSettings_AutoReconnectTip" xml:space="preserve">
+    <value>Если при запуске обнаружен ровно один управляемый сервер, лаунчер подключится к нему без запроса. Если найдено несколько, запрос всё равно появится.</value>
+  </data>
+  <data name="Main_ImportServer" xml:space="preserve">
+    <value>Импорт сервера</value>
+  </data>
+  <data name="Main_ImportServerTip" xml:space="preserve">
+    <value>Скопировать в лаунчер уже установленный где-то выделенный сервер Palworld. Оригинал остаётся нетронутым.</value>
+  </data>
+  <data name="Main_ImportPickTitle" xml:space="preserve">
+    <value>Выберите папку вашего выделенного сервера Palworld (обычно называется PalServer)</value>
+  </data>
+  <data name="Main_ImportTitle" xml:space="preserve">
+    <value>Импорт сервера</value>
+  </data>
+  <data name="Main_ImportInvalidMessage" xml:space="preserve">
+    <value>Эта папка не похожа на установку выделенного сервера Palworld. Обычно он устанавливается в папку с именем PalServer. Если вы используете Steam, она находится в Steam\steamapps\common\PalServer.</value>
+  </data>
+  <data name="Main_ImportConfirmMessage" xml:space="preserve">
+    <value>Скопировать этот сервер в лаунчер из «{0}»? Оригинал остаётся на месте, так что после того как вы убедитесь, что копия, управляемая лаунчером, работает, вы сможете удалить оригинал самостоятельно.</value>
+  </data>
+  <data name="Main_ImportCopyButton" xml:space="preserve">
+    <value>Импортировать</value>
+  </data>
+  <data name="Main_ImportFailedMessage" xml:space="preserve">
+    <value>Импорт не завершён. Подробности см. в журнале.</value>
+  </data>
+  <data name="LauncherSettings_LoginOpen" xml:space="preserve">
+    <value>Открывать лаунчер и запускать сервер при входе в Windows</value>
+  </data>
+  <data name="LauncherSettings_LoginOpenTip" xml:space="preserve">
+    <value>При входе в систему открывает лаунчер и запускает сервер, чтобы работали плановые перезапуски, обновления, резервное копирование и восстановление после сбоев. Права администратора не нужны. Снятие отметки удаляет ярлык из папки автозагрузки.</value>
+  </data>
+  <data name="LauncherSettings_LoginOpenFailedTitle" xml:space="preserve">
+    <value>Не удалось изменить ярлык автозагрузки</value>
+  </data>
+  <data name="LauncherSettings_LoginOpenFailedMessage" xml:space="preserve">
+    <value>Не удалось создать или удалить ярлык автозагрузки. Подробности см. в журнале.</value>
+  </data>
+</root>

@@ -1,0 +1,2337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Start_Button" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="FirstRun_Prompt" xml:space="preserve">
+    <value>Wählen Sie Ihre Sprache. Sie können dies später über die Zahnrad-Schaltfläche oben rechts ändern.</value>
+  </data>
+  <!-- Launcher Settings dialog + its main-window button -->
+  <data name="LauncherSettings_Title" xml:space="preserve">
+    <value>Launcher-Einstellungen</value>
+  </data>
+  <data name="LauncherSettings_ThirdPartyLicenses" xml:space="preserve">
+    <value>Open-Source-Lizenzen</value>
+  </data>
+  <data name="LauncherSettings_LanguageLabel" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="LauncherSettings_Tooltip" xml:space="preserve">
+    <value>Sprache und Einstellungen des Launchers ändern.</value>
+  </data>
+  <!-- Shared across dialogs (dedupe: one key reused everywhere the word appears) -->
+  <data name="Common_AppName" xml:space="preserve">
+    <value>Palworld Server Launcher</value>
+  </data>
+  <data name="Common_Save" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="Common_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Common_ForceShutdown" xml:space="preserve">
+    <value>Erzwungenes Herunterfahren</value>
+  </data>
+  <!-- Announcements dialog -->
+  <data name="Announcements_Title" xml:space="preserve">
+    <value>Ankündigungen</value>
+  </data>
+  <data name="Announcements_Intro" xml:space="preserve">
+    <value>Wird Spielern vor dem Neustart angezeigt. {minutes} für den Countdown (verbleibende Minuten) einfügen. Für eine feste Nachricht ohne Zeitangabe entfernen.</value>
+  </data>
+  <data name="Announcements_RestartLabel" xml:space="preserve">
+    <value>Geplanter / manueller Neustart</value>
+  </data>
+  <data name="Announcements_UpdateLabel" xml:space="preserve">
+    <value>Update-Neustart</value>
+  </data>
+  <data name="Announcements_EmptyTitle" xml:space="preserve">
+    <value>Leere Ankündigung</value>
+  </data>
+  <data name="Announcements_EmptyMessage" xml:space="preserve">
+    <value>Eine Ankündigung darf nicht leer sein (der Server lehnt eine leere Nachricht ab):</value>
+  </data>
+  <data name="Announcements_NoTokenTitle" xml:space="preserve">
+    <value>Kein Countdown-Platzhalter</value>
+  </data>
+  <data name="Announcements_NoTokenMessage" xml:space="preserve">
+    <value>Diese enthalten keinen {0}-Platzhalter und zeigen daher keine verbleibenden Minuten an:
+{1}
+
+Trotzdem als feste Nachrichten speichern?</value>
+  </data>
+  <data name="Announcements_SaveAnyway" xml:space="preserve">
+    <value>Trotzdem speichern</value>
+  </data>
+  <data name="Announcements_KeepEditing" xml:space="preserve">
+    <value>Weiter bearbeiten</value>
+  </data>
+  <!-- Main window -->
+  <data name="Main_PrimaryTip" xml:space="preserve">
+    <value>Installiert den Server oder startet (▶) / stoppt (■) ihn nach der Installation. Start prüft zuerst auf ein Update (wenn „Update bei Start“ aktiviert ist) und startet dann den Server.</value>
+  </data>
+  <data name="Main_RestartTip" xml:space="preserve">
+    <value>Jetzt neu starten: Speichert die Welt und startet den Server sofort neu, ohne Countdown für die Spieler. Geplante und Update-Neustarts warnen die Spieler vorher.</value>
+  </data>
+  <data name="Main_ForceShutdownTip" xml:space="preserve">
+    <value>Beendet den Serverprozess sofort, ohne zu speichern. Erscheint, wenn ein Start, Stopp oder Neustart längere Zeit hängen bleibt. Nur verwenden, wenn der Server nicht mehr reagiert.</value>
+  </data>
+  <data name="Main_CheckForUpdate" xml:space="preserve">
+    <value>Nach Update suchen</value>
+  </data>
+  <data name="Main_CheckForUpdateTip" xml:space="preserve">
+    <value>Prüft über SteamCMD auf eine neuere Version (nur lesend, auch im laufenden Betrieb)</value>
+  </data>
+  <data name="Main_ValidateFiles" xml:space="preserve">
+    <value>Dateien überprüfen</value>
+  </data>
+  <data name="Main_ValidateFilesTip" xml:space="preserve">
+    <value>Vollständige Integritätsprüfung der installierten Dateien über SteamCMD</value>
+  </data>
+  <data name="Main_ServerSettings" xml:space="preserve">
+    <value>Servereinstellungen</value>
+  </data>
+  <data name="Main_ServerSettingsTip" xml:space="preserve">
+    <value>Bearbeitet den Server in einem Editor mit mehreren Tabs: Spieleinstellungen (die Gameplay-, Balance- und Admin-Schlüssel der PalWorldSettings.ini als Unterregisterkarten), Startargumente (die Befehlszeile: Listen-Port, Spielerlimit, Performance-Threads, Community-Eintrag) sowie CPU-Affinität/Priorität (Prozesspriorität und CPU-Zuordnung).</value>
+  </data>
+  <data name="Main_Mods" xml:space="preserve">
+    <value>Mods</value>
+  </data>
+  <data name="Main_ModsTip" xml:space="preserve">
+    <value>Verwaltet Server-Mods aus dem Steam Workshop: Fügen Sie Workshop-IDs hinzu, die der Launcher herunterladen soll, oder suchen Sie nach Mods, die Sie selbst in den Mods-Ordner gelegt haben.</value>
+  </data>
+  <data name="Main_StatusLabel" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="Main_UpdateLabel" xml:space="preserve">
+    <value>Update:</value>
+  </data>
+  <data name="Main_PublicIpLabel" xml:space="preserve">
+    <value>Öffentliche IP:</value>
+  </data>
+  <data name="Main_PublicIpTip" xml:space="preserve">
+    <value>Ihre öffentliche IP und der Spiel-Port. Mit dem Augensymbol einblenden, dann markieren zum Kopieren oder die Kopieren-Schaltfläche verwenden.</value>
+  </data>
+  <data name="Main_RevealIpTip" xml:space="preserve">
+    <value>Öffentliche IP anzeigen oder ausblenden</value>
+  </data>
+  <data name="Main_CopyIpTip" xml:space="preserve">
+    <value>IP:Port in die Zwischenablage kopieren</value>
+  </data>
+  <data name="Main_PortCheck" xml:space="preserve">
+    <value>Port-Prüfung</value>
+  </data>
+  <data name="Main_PortCheckTip" xml:space="preserve">
+    <value>Prüft, ob Ihre Ports aus dem Internet erreichbar sind. Der Server muss gestoppt sein, damit der Launcher die Ports testen kann.</value>
+  </data>
+  <data name="Main_StatVersion" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Main_StatFps" xml:space="preserve">
+    <value>FPS</value>
+  </data>
+  <data name="Main_StatCpu" xml:space="preserve">
+    <value>CPU</value>
+  </data>
+  <data name="Main_StatMemory" xml:space="preserve">
+    <value>Arbeitsspeicher</value>
+  </data>
+  <data name="Main_StatPlayers" xml:space="preserve">
+    <value>Spieler</value>
+  </data>
+  <data name="Main_StatUptime" xml:space="preserve">
+    <value>Laufzeit</value>
+  </data>
+  <data name="Main_StatNextRestart" xml:space="preserve">
+    <value>Nächster Neustart</value>
+  </data>
+  <data name="Main_CollapseTip" xml:space="preserve">
+    <value>Einstellungsbereiche ein-/ausblenden (Neustarts, Sicherungen, Sonstiges)</value>
+  </data>
+  <data name="Main_RestartsHeader" xml:space="preserve">
+    <value>Neustarts</value>
+  </data>
+  <data name="Main_ScheduledRestartAt" xml:space="preserve">
+    <value>Geplanter Neustart um</value>
+  </data>
+  <data name="Main_ScheduledRestartTip" xml:space="preserve">
+    <value>Startet den Server automatisch zu den aufgeführten Zeiten neu. Ein Neustart wird übersprungen, wenn der Server nicht mindestens die unten angegebene Mindestlaufzeit erreicht hat.</value>
+  </data>
+  <data name="Main_ChooseRestartTimes" xml:space="preserve">
+    <value>Neustartzeiten wählen</value>
+  </data>
+  <data name="Main_MinUptime" xml:space="preserve">
+    <value>Mindestlaufzeit vor Neustart</value>
+  </data>
+  <data name="Main_HourSuffix" xml:space="preserve">
+    <value>h</value>
+  </data>
+  <data name="Main_AnnounceRestarts" xml:space="preserve">
+    <value>Ankündigen:</value>
+  </data>
+  <data name="Main_AnnounceRestartsTip" xml:space="preserve">
+    <value>Warnt Spieler im Spiel vor einem geplanten oder Update-Neustart, zu den rechts angegebenen Minutenmarken. Wird übersprungen, wenn niemand online ist.</value>
+  </data>
+  <data name="Main_AnnounceLeadTip" xml:space="preserve">
+    <value>Minuten vor dem Neustart für Ankündigungen (leer = aus)</value>
+  </data>
+  <data name="Main_MinuteSuffix" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="Main_EditAnnouncements" xml:space="preserve">
+    <value>Ankündigungen bearbeiten</value>
+  </data>
+  <data name="Main_EditAnnouncementsTip" xml:space="preserve">
+    <value>Bearbeitet die Nachrichten, die Spieler im Spiel vor einem Neustart sehen.</value>
+  </data>
+  <data name="Main_ValidateOnRestart" xml:space="preserve">
+    <value>Dateien bei Neustart überprüfen</value>
+  </data>
+  <data name="Main_ValidateOnRestartTip" xml:space="preserve">
+    <value>Fügt dem Update bei Start/Neustart eine vollständige Integritätsprüfung hinzu (langsamer)</value>
+  </data>
+  <data name="Main_BackupsHeader" xml:space="preserve">
+    <value>Sicherungen</value>
+  </data>
+  <data name="Main_BackupOn" xml:space="preserve">
+    <value>Sicherung bei:</value>
+  </data>
+  <data name="Main_BackupStartup" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Main_BackupStartupTip" xml:space="preserve">
+    <value>Sichert beim Serverstart, vor der Update-Prüfung (SteamCMD kann Konfigurationen überschreiben).</value>
+  </data>
+  <data name="Main_BackupShutdown" xml:space="preserve">
+    <value>Herunterfahren</value>
+  </data>
+  <data name="Main_BackupShutdownTip" xml:space="preserve">
+    <value>Sichert beim Stoppen oder Neustarten (speichert vorher die Welt).</value>
+  </data>
+  <data name="Main_BackupScheduled" xml:space="preserve">
+    <value>Geplant</value>
+  </data>
+  <data name="Main_BackupScheduledTip" xml:space="preserve">
+    <value>Sichert automatisch zu den rechts aufgeführten Zeiten bei laufendem Server.</value>
+  </data>
+  <data name="Main_ChooseBackupTimes" xml:space="preserve">
+    <value>Sicherungszeiten wählen</value>
+  </data>
+  <data name="Main_BackupRetentionTip" xml:space="preserve">
+    <value>Wie lange automatische Sicherungen aufbewahrt werden (Start / Herunterfahren / geplant). Manuelle Sicherungen und Dateien, die Sie selbst in den Sicherungsordner legen, werden nie gelöscht. 0 = alles behalten.</value>
+  </data>
+  <data name="Main_KeepFor" xml:space="preserve">
+    <value>Aufbewahren für</value>
+  </data>
+  <data name="Main_DaysSuffix" xml:space="preserve">
+    <value>Tage</value>
+  </data>
+  <data name="Main_NextBackupLabel" xml:space="preserve">
+    <value>Nächste Sicherung:</value>
+  </data>
+  <data name="Main_BackupNow" xml:space="preserve">
+    <value>Jetzt sichern</value>
+  </data>
+  <data name="Main_BackupNowTip" xml:space="preserve">
+    <value>Erstellt sofort eine manuelle Sicherung. Speichert vorher die Welt, wenn der Server mit aktivierter REST API läuft.</value>
+  </data>
+  <data name="Main_MiscHeader" xml:space="preserve">
+    <value>Sonstiges</value>
+  </data>
+  <data name="Main_AutoUpdate" xml:space="preserve">
+    <value>Server automatisch aktualisieren</value>
+  </data>
+  <data name="Main_AutoUpdateTip" xml:space="preserve">
+    <value>Startet bei neuen Updates automatisch neu. „Neustarts ankündigen“ verzögert dies, falls Spieler online sind.</value>
+  </data>
+  <data name="Main_UpdateOnStart" xml:space="preserve">
+    <value>Update bei Start / Neustart</value>
+  </data>
+  <data name="Main_UpdateOnStartTip" xml:space="preserve">
+    <value>Führt bei jedem Start oder Neustart des Servers eine SteamCMD-Updateprüfung aus. Deaktivieren, um beim Start nie automatisch herunterzuladen. Ein Update lässt sich weiterhin manuell über „Nach Update suchen“ anstoßen.</value>
+  </data>
+  <data name="Main_CheckUpdateEvery" xml:space="preserve">
+    <value>Auf Update prüfen alle</value>
+  </data>
+  <data name="Main_CheckUpdateEveryTip" xml:space="preserve">
+    <value>Wie oft über SteamCMD nach einer neuen Version gesucht wird, während der Server läuft. Wird beim nächsten Start wirksam.</value>
+  </data>
+  <data name="Main_HideSteamCmd" xml:space="preserve">
+    <value>SteamCMD-Fenster ausblenden</value>
+  </data>
+  <data name="Main_HideSteamCmdTip" xml:space="preserve">
+    <value>Führt SteamCMD im Hintergrund aus, statt ein eigenes Konsolenfenster zu öffnen. Der Fortschritt wird weiterhin live im SteamCMD-Tab angezeigt.</value>
+  </data>
+  <data name="Main_LogServerStatus" xml:space="preserve">
+    <value>Serverstatus protokollieren</value>
+  </data>
+  <data name="Main_LogServerStatusTip" xml:space="preserve">
+    <value>Schreibt alle 30 s eine Statuszeile (FPS, Spieler, Laufzeit, Arbeitsspeicher) in das Protokoll. Nützlich beim Betrieb über ein Terminal, sonst eher zusätzliches Rauschen im Protokoll.</value>
+  </data>
+  <data name="Main_ZombieCheck" xml:space="preserve">
+    <value>Zombie-Prüfung: Neustart nach</value>
+  </data>
+  <data name="Main_ZombieCheckTip" xml:space="preserve">
+    <value>Startet den Server neu, wenn die REST API so oft in Folge nicht erreichbar ist oder die Welt eingefroren bleibt. Deaktivieren, wenn Ihre REST API instabil ist und nie automatisch neu gestartet werden soll.</value>
+  </data>
+  <data name="Main_ZombieThresholdTip" xml:space="preserve">
+    <value>Wie viele fehlgeschlagene Zustandsprüfungen in Folge nötig sind, bevor der Server als hängengeblieben gilt und zwangsweise neu gestartet wird.</value>
+  </data>
+  <data name="Main_ChecksSuffix" xml:space="preserve">
+    <value>Prüf.</value>
+  </data>
+  <data name="Main_RestCheckEvery" xml:space="preserve">
+    <value>REST-Prüfung alle</value>
+  </data>
+  <data name="Main_RestCheckEveryTip" xml:space="preserve">
+    <value>Wie oft (in Sekunden) der Launcher die REST API nach Status/Zustand abfragt. Empfohlen sind 5-10. Werte unter 5 belasten die API unnötig (erlaubt, aber nicht empfohlen); der Mindestwert ist 1. Wird beim nächsten Start wirksam.</value>
+  </data>
+  <data name="Main_SecondsSuffix" xml:space="preserve">
+    <value>s</value>
+  </data>
+  <data name="Main_DiscordBot" xml:space="preserve">
+    <value>Discord-Bot</value>
+  </data>
+  <data name="Main_DiscordBotTip" xml:space="preserve">
+    <value>Discord-Steuerungsbot und Webhook-Benachrichtigungen</value>
+  </data>
+  <data name="Main_TabGeneral" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="Main_TabServerLog" xml:space="preserve">
+    <value>Server-Protokoll</value>
+  </data>
+  <data name="Main_TabChat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="Main_TabPlayers" xml:space="preserve">
+    <value>Spieler</value>
+  </data>
+  <data name="Main_TabSteamCmd" xml:space="preserve">
+    <value>SteamCMD</value>
+  </data>
+  <data name="Main_ServerCommands" xml:space="preserve">
+    <value>Serverbefehle</value>
+  </data>
+  <data name="Main_ServerCommandsTip" xml:space="preserve">
+    <value>Sendet Befehle in Echtzeit an den laufenden Server: Ankündigen, Kicken / Bannen / Entbannen, Speichern, Herunterfahren. Verfügbar, solange der Server läuft.</value>
+  </data>
+  <!-- Main window prompts (code-behind dialogs) -->
+  <data name="Main_MultiServerTitle" xml:space="preserve">
+    <value>Mehrere Server aktiv</value>
+  </data>
+  <data name="Main_MultiServerMessage" xml:space="preserve">
+    <value>{0} laufende Palworld-Server aus diesem Ordner erkannt. Sie teilen sich eine Speicherung und dieselben Ports und stehen sich daher im Weg, der Launcher verwaltet nur einen einzelnen Server. Alle herunterfahren oder beenden.</value>
+  </data>
+  <data name="Main_ShutDownAll" xml:space="preserve">
+    <value>Alle herunterfahren</value>
+  </data>
+  <data name="Main_ExitLauncher" xml:space="preserve">
+    <value>Launcher beenden</value>
+  </data>
+  <data name="Main_ServerRunningTitle" xml:space="preserve">
+    <value>Server läuft bereits</value>
+  </data>
+  <data name="Main_ServerRunningMessage" xml:space="preserve">
+    <value>Ein aus diesem Ordner gestarteter Palworld-Server läuft bereits, fast sicher Ihrer aus einer früheren Sitzung, da der Launcher nur Server verfolgt, die er selbst hier gestartet hat.
+
+Stellen Sie die Verbindung wieder her, um ihn weiter über die REST API zu verwalten (Live-Statistiken, geplante Neustarts, Sicherungen; das Server-Protokoll-Tab bleibt für einen Server leer, den der Launcher nicht selbst gestartet hat). Andernfalls fahren Sie ihn herunter oder beenden Sie.</value>
+  </data>
+  <data name="Main_Reconnect" xml:space="preserve">
+    <value>Verbindung wiederherstellen</value>
+  </data>
+  <data name="Main_ShutDownServer" xml:space="preserve">
+    <value>Server herunterfahren</value>
+  </data>
+  <data name="Main_InstallTitle" xml:space="preserve">
+    <value>Server installieren?</value>
+  </data>
+  <data name="Main_InstallMessage" xml:space="preserve">
+    <value>Dies lädt den dedizierten Palworld-Server über SteamCMD herunter und installiert ihn (ca. 4 GB) im Ordner dieses Launchers. Ein SteamCMD-Fenster zeigt dabei den Fortschritt.
+
+Jetzt herunterladen und installieren?</value>
+  </data>
+  <data name="Main_DownloadInstall" xml:space="preserve">
+    <value>Herunterladen &amp; Installieren</value>
+  </data>
+  <data name="Main_ShutdownNowTitle" xml:space="preserve">
+    <value>Jetzt herunterfahren?</value>
+  </data>
+  <data name="Main_ShutdownNowMessage" xml:space="preserve">
+    <value>Countdown überspringen und den Server jetzt herunterfahren?</value>
+  </data>
+  <data name="Main_ShutDownNow" xml:space="preserve">
+    <value>Jetzt herunterfahren</value>
+  </data>
+  <data name="Main_KeepWaiting" xml:space="preserve">
+    <value>Weiter warten</value>
+  </data>
+  <data name="Main_ShutdownTitle" xml:space="preserve">
+    <value>Server herunterfahren</value>
+  </data>
+  <data name="Main_ShutdownForceMessage" xml:space="preserve">
+    <value>Die REST API ist nicht aktiviert, daher kann der Server nicht ordnungsgemäß heruntergefahren werden. Er wird zwangsweise gestoppt, der Prozess wird direkt beendet, der letzte automatische Speicherstand begrenzt den Datenverlust. Aktivieren Sie die REST API für ein ordnungsgemäßes Herunterfahren.</value>
+  </data>
+  <data name="Main_ForceStop" xml:space="preserve">
+    <value>Erzwungener Stopp</value>
+  </data>
+  <data name="Main_ShutdownChoiceMessage" xml:space="preserve">
+    <value>Sofort herunterfahren oder zeitgesteuert mit einem vorherigen Countdown im Spiel für die Spieler?</value>
+  </data>
+  <data name="Main_ShutdownNowButton" xml:space="preserve">
+    <value>Jetzt herunterfahren</value>
+  </data>
+  <data name="Main_TimedShutdown" xml:space="preserve">
+    <value>Zeitgesteuertes Herunterfahren</value>
+  </data>
+  <data name="Main_TimedShutdownTitle" xml:space="preserve">
+    <value>Zeitgesteuertes Herunterfahren</value>
+  </data>
+  <data name="Main_TimedShutdownMessage" xml:space="preserve">
+    <value>Spieler erhalten so viele Sekunden lang einen Countdown im Spiel, bevor der Server herunterfährt.</value>
+  </data>
+  <data name="Main_SecondsUnit" xml:space="preserve">
+    <value>Sekunden</value>
+  </data>
+  <data name="Main_ServerInstalledTitle" xml:space="preserve">
+    <value>Server installiert</value>
+  </data>
+  <data name="Main_ServerInstalledMessage" xml:space="preserve">
+    <value>Server erfolgreich installiert.
+
+REST API aktivieren? Sie ermöglicht dem Launcher die Steuerung des Servers: Spiel-Updates einspielen, ordnungsgemäß speichern und herunterfahren, Neustarts und Sicherungen planen sowie den Serverzustand überwachen.
+
+Wenn Sie sie aktivieren, erzeugt der Launcher jetzt die Serverkonfiguration und legt ein sicheres, zufällig generiertes Admin-Passwort fest (später einsehbar oder änderbar unter Servereinstellungen, im Tab Admin). Sie können dies auch überspringen und später selbst aktivieren.</value>
+  </data>
+  <data name="Main_YesEnableRest" xml:space="preserve">
+    <value>Ja, aktivieren</value>
+  </data>
+  <data name="Main_NotNow" xml:space="preserve">
+    <value>Jetzt nicht</value>
+  </data>
+  <data name="Main_EnableRestTitle" xml:space="preserve">
+    <value>REST API aktivieren?</value>
+  </data>
+  <data name="Main_EnableRestMessage" xml:space="preserve">
+    <value>Dieser Launcher basiert auf Palworlds REST API und nutzt sie für fast alles: ordnungsgemäßes Speichern und Herunterfahren, aktuelle Sicherungen, Live-Zustandsüberwachung, automatische Neustarts und die Protokollierung von Spieler-Beitritten/-Verlassen.
+
+Die REST API ist auf diesem Server noch nicht aktiviert, daher sind diese Funktionen eingeschränkt: Herunterfahren erfolgt dann als harter Abbruch, Sicherungen können veraltet sein, und es gibt keine automatischen Neustarts.
+
+Jetzt mit einem sicheren, zufällig generierten Admin-Passwort aktivieren?</value>
+  </data>
+  <data name="Main_NoRunLimited" xml:space="preserve">
+    <value>Nein, eingeschränkt betreiben</value>
+  </data>
+  <data name="Main_Exit" xml:space="preserve">
+    <value>Beenden</value>
+  </data>
+  <data name="Main_RestEnabledTitle" xml:space="preserve">
+    <value>REST API aktiviert</value>
+  </data>
+  <data name="Main_RestFailedTitle" xml:space="preserve">
+    <value>REST API konnte nicht aktiviert werden</value>
+  </data>
+  <data name="Main_RestEnabledMessage" xml:space="preserve">
+    <value>Fertig, die REST API ist mit einem neuen, zufällig generierten Admin-Passwort aktiviert (einsehbar oder änderbar unter Servereinstellungen, im Tab Admin). Die Änderung wird beim nächsten Start des Servers wirksam.</value>
+  </data>
+  <data name="Main_RestFailedMessage" xml:space="preserve">
+    <value>Die Serverkonfiguration konnte nicht geschrieben werden. Stellen Sie sicher, dass der Server installiert und gestoppt ist, und legen Sie sie dann manuell unter Servereinstellungen, im Tab Admin, fest.</value>
+  </data>
+  <data name="Main_ServerStillRunningTitle" xml:space="preserve">
+    <value>Server läuft noch</value>
+  </data>
+  <data name="Main_ServerStillRunningMessage" xml:space="preserve">
+    <value>Der Palworld-Server läuft noch. Was soll damit geschehen?</value>
+  </data>
+  <data name="Main_ShutDownGraceful" xml:space="preserve">
+    <value>Herunterfahren (ordnungsgemäß)</value>
+  </data>
+  <data name="Main_LeaveRunning" xml:space="preserve">
+    <value>Weiterlaufen lassen</value>
+  </data>
+  <data name="Main_ForceShutdownConfirmMessage" xml:space="preserve">
+    <value>Dies fährt den Server sofort ohne Speicherung herunter, indem der Prozess vollständig beendet wird. Dabei können Speicherdaten verloren gehen oder beschädigt werden. Nur empfohlen, wenn der Server überhaupt nicht mehr reagiert.</value>
+  </data>
+  <data name="Main_PortCheckConsentMessage" xml:space="preserve">
+    <value>Ihre öffentliche IP-Adresse wird an check-host.cc gesendet, einen kostenlosen externen Dienst, um zu prüfen, ob Spieler Ihren Server von außerhalb Ihres Netzwerks erreichen können. An den Dienst werden ausschließlich Ihre öffentliche IP und die getesteten Ports übermittelt.</value>
+  </data>
+  <data name="Main_UpdateAvailableTitle" xml:space="preserve">
+    <value>Update verfügbar</value>
+  </data>
+  <data name="Main_UpdateRunningMessage" xml:space="preserve">
+    <value>Eine neuere Serverversion ({0}) ist verfügbar. Server jetzt aktualisieren und neu starten? Spieler erhalten die üblichen Neustart-Warnungen.</value>
+  </data>
+  <data name="Main_UpdateRestart" xml:space="preserve">
+    <value>Aktualisieren &amp; Neustarten</value>
+  </data>
+  <data name="Main_UpdateStoppedMessage" xml:space="preserve">
+    <value>Eine neuere Serverversion ({0}) ist verfügbar. Jetzt herunterladen und anwenden?</value>
+  </data>
+  <data name="Main_Download" xml:space="preserve">
+    <value>Herunterladen</value>
+  </data>
+  <!-- Secret field (masked password / token) -->
+  <data name="Secret_Tooltip" xml:space="preserve">
+    <value>Wert anzeigen oder ausblenden</value>
+  </data>
+  <!-- Restart / Backup times dialog -->
+  <data name="Times_RestartTitle" xml:space="preserve">
+    <value>Neustartzeiten</value>
+  </data>
+  <data name="Times_RestartHeader" xml:space="preserve">
+    <value>Neustartzeiten</value>
+  </data>
+  <data name="Times_BackupTitle" xml:space="preserve">
+    <value>Sicherungszeiten</value>
+  </data>
+  <data name="Times_BackupHeader" xml:space="preserve">
+    <value>Sicherungszeiten</value>
+  </data>
+  <data name="Times_Every" xml:space="preserve">
+    <value>Alle</value>
+  </data>
+  <data name="Times_EveryTip" xml:space="preserve">
+    <value>Füllt den ganzen Tag in diesem Intervall, beginnend um Mitternacht. Wählen Sie eine Voreinstellung oder geben Sie eine Dezimalzahl wie 2.5 ein. Ersetzt die untenstehenden Zeiten.</value>
+  </data>
+  <data name="Times_Apply" xml:space="preserve">
+    <value>Übernehmen</value>
+  </data>
+  <data name="Times_MinuteTip" xml:space="preserve">
+    <value>Beliebige Minute 0-59, Voreinstellung wählen oder selbst eingeben</value>
+  </data>
+  <data name="Times_Add" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="Times_Done" xml:space="preserve">
+    <value>Fertig</value>
+  </data>
+  <data name="Times_InvalidTimeTitle" xml:space="preserve">
+    <value>Ungültige Zeit</value>
+  </data>
+  <data name="Times_InvalidTimeMessage" xml:space="preserve">
+    <value>Minuten als Zahl von 0-59 eingeben.</value>
+  </data>
+  <data name="Times_InvalidIntervalTitle" xml:space="preserve">
+    <value>Ungültiges Intervall</value>
+  </data>
+  <data name="Times_InvalidIntervalMessage" xml:space="preserve">
+    <value>Intervall zwischen 15 Minuten und 24 Stunden eingeben, z. B. 30m, 2h oder 2.5 (Stunden).</value>
+  </data>
+  <data name="Times_ReplaceTitle" xml:space="preserve">
+    <value>Zeiten ersetzen</value>
+  </data>
+  <data name="Times_ReplaceMessage" xml:space="preserve">
+    <value>Dies ersetzt die {0} unten aufgeführte(n) Zeit(en) durch einen Zeitplan alle {1}. Fortfahren?</value>
+  </data>
+  <data name="Times_Replace" xml:space="preserve">
+    <value>Ersetzen</value>
+  </data>
+  <!-- App-level -->
+  <data name="App_ErrorFormat" xml:space="preserve">
+    <value>Ein Fehler ist aufgetreten:
+
+{0}
+
+Alle Details unter:
+{1}</value>
+  </data>
+  <!-- PortCheckDialog -->
+  <data name="PortCheck_Title" xml:space="preserve">
+    <value>Port-Prüfung</value>
+  </data>
+  <data name="PortCheck_Intro" xml:space="preserve">
+    <value>Prüft mit check-host.cc, ob Ihre Ports aus dem Internet erreichbar sind. Führen Sie dies bei gestopptem Server aus, damit der Launcher die Ports binden und testen kann.</value>
+  </data>
+  <data name="PortCheck_YourPublicIp" xml:space="preserve">
+    <value>Ihre öffentliche IP</value>
+  </data>
+  <data name="PortCheck_Results" xml:space="preserve">
+    <value>Ergebnisse</value>
+  </data>
+  <data name="PortCheck_NotCheckedYet" xml:space="preserve">
+    <value>Noch nicht geprüft.</value>
+  </data>
+  <data name="PortCheck_ServiceOnline" xml:space="preserve">
+    <value>Port-Prüfdienst online</value>
+  </data>
+  <data name="PortCheck_PortRowLabel" xml:space="preserve">
+    <value>{0} ({1})</value>
+  </data>
+  <data name="PortCheck_FirewallNote" xml:space="preserve">
+    <value>Dieser Test bindet vorübergehend einen Listener im Launcher. Falls die Windows-Firewall nachfragt, erlauben Sie den Zugriff, sonst können Ports fälschlich als nicht erreichbar angezeigt werden. REST und RCON sind Admin-Ports: Sie sollten normalerweise NICHT aus dem Internet erreichbar sein, ein grünes Ergebnis dort ist also eine Warnung, kein bestandener Test.</value>
+  </data>
+  <data name="PortCheck_Check" xml:space="preserve">
+    <value>Prüfen</value>
+  </data>
+  <data name="PortCheck_Close" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="PortCheck_NoPublicIpTitle" xml:space="preserve">
+    <value>Keine öffentliche IP</value>
+  </data>
+  <data name="PortCheck_NoPublicIpMessage" xml:space="preserve">
+    <value>Geben Sie zuerst Ihre öffentliche IP ein (wird normalerweise automatisch ausgefüllt).</value>
+  </data>
+  <data name="PortCheck_Checking" xml:space="preserve">
+    <value>Wird geprüft...</value>
+  </data>
+  <data name="PortCheck_ServiceOnlineStatus" xml:space="preserve">
+    <value>Online.</value>
+  </data>
+  <data name="PortCheck_ServiceUnavailable" xml:space="preserve">
+    <value>Nicht verfügbar, check-host.cc ist momentan nicht erreichbar.</value>
+  </data>
+  <data name="PortCheck_InvalidPort" xml:space="preserve">
+    <value>Port zwischen 1 und 65535 eingeben.</value>
+  </data>
+  <data name="PortCheck_Failed" xml:space="preserve">
+    <value>Port-Prüfung fehlgeschlagen, siehe Protokoll.</value>
+  </data>
+  <!-- ServerCommandsDialog -->
+  <data name="ServerCmd_Title" xml:space="preserve">
+    <value>Serverbefehle</value>
+  </data>
+  <data name="ServerCmd_HeaderAnnounce" xml:space="preserve">
+    <value>Ankündigen</value>
+  </data>
+  <data name="ServerCmd_Send" xml:space="preserve">
+    <value>Senden</value>
+  </data>
+  <data name="ServerCmd_HeaderPlayers" xml:space="preserve">
+    <value>Spieler</value>
+  </data>
+  <data name="ServerCmd_Refresh" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+  <data name="ServerCmd_ReasonLabel" xml:space="preserve">
+    <value>Grund (Kick / Bann)</value>
+  </data>
+  <data name="ServerCmd_LoadingPlayers" xml:space="preserve">
+    <value>Spieler werden geladen...</value>
+  </data>
+  <data name="ServerCmd_HeaderUnban" xml:space="preserve">
+    <value>Entbannen</value>
+  </data>
+  <data name="ServerCmd_Unban" xml:space="preserve">
+    <value>Entbannen</value>
+  </data>
+  <data name="ServerCmd_UnbanHint" xml:space="preserve">
+    <value>Zum Entbannen wird die Plattform-Benutzer-ID benötigt (z. B. steam_0123...).</value>
+  </data>
+  <data name="ServerCmd_HeaderServer" xml:space="preserve">
+    <value>Server</value>
+  </data>
+  <data name="ServerCmd_SaveWorld" xml:space="preserve">
+    <value>Welt speichern</value>
+  </data>
+  <data name="ServerCmd_Close" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="ServerCmd_EnterMessage" xml:space="preserve">
+    <value>Nachricht zum Ankündigen eingeben.</value>
+  </data>
+  <data name="ServerCmd_Announced" xml:space="preserve">
+    <value>Angekündigt.</value>
+  </data>
+  <data name="ServerCmd_AnnounceFailed" xml:space="preserve">
+    <value>Ankündigung fehlgeschlagen (REST API aus oder abgelehnt).</value>
+  </data>
+  <data name="ServerCmd_RestOff" xml:space="preserve">
+    <value>REST API ist aus oder reagiert nicht.</value>
+  </data>
+  <data name="ServerCmd_NoPlayers" xml:space="preserve">
+    <value>Keine Spieler online.</value>
+  </data>
+  <data name="ServerCmd_EnterUserId" xml:space="preserve">
+    <value>Benutzer-ID zum Entbannen eingeben.</value>
+  </data>
+  <data name="ServerCmd_UnbanTitle" xml:space="preserve">
+    <value>Spieler entbannen</value>
+  </data>
+  <data name="ServerCmd_UnbanConfirm" xml:space="preserve">
+    <value>{0} entbannen?</value>
+  </data>
+  <data name="ServerCmd_Unbanned" xml:space="preserve">
+    <value>{0} entbannt.</value>
+  </data>
+  <data name="ServerCmd_UnbanFailed" xml:space="preserve">
+    <value>Entbannen fehlgeschlagen (REST API aus oder abgelehnt).</value>
+  </data>
+  <data name="ServerCmd_WorldSaved" xml:space="preserve">
+    <value>Welt gespeichert.</value>
+  </data>
+  <data name="ServerCmd_SaveFailed" xml:space="preserve">
+    <value>Speichern fehlgeschlagen (REST API aus oder abgelehnt).</value>
+  </data>
+  <data name="ServerCmd_UnknownName" xml:space="preserve">
+    <value>(unbekannt)</value>
+  </data>
+  <data name="ServerCmd_PlayerNameLevel" xml:space="preserve">
+    <value>{0}  (Lvl {1})</value>
+  </data>
+  <data name="ServerCmd_NoUserId" xml:space="preserve">
+    <value>(keine Benutzer-ID)</value>
+  </data>
+  <data name="ServerCmd_Kick" xml:space="preserve">
+    <value>Kicken</value>
+  </data>
+  <data name="ServerCmd_Ban" xml:space="preserve">
+    <value>Bannen</value>
+  </data>
+  <data name="ServerCmd_NoUserIdTooltip" xml:space="preserve">
+    <value>Für diesen Spieler wurde keine Benutzer-ID gemeldet.</value>
+  </data>
+  <data name="ServerCmd_KickTitle" xml:space="preserve">
+    <value>Spieler kicken</value>
+  </data>
+  <data name="ServerCmd_KickConfirm" xml:space="preserve">
+    <value>{0} ({1}) kicken?</value>
+  </data>
+  <data name="ServerCmd_Kicked" xml:space="preserve">
+    <value>{0} ({1}) gekickt.</value>
+  </data>
+  <data name="ServerCmd_KickFailed" xml:space="preserve">
+    <value>{0} konnte nicht gekickt werden (REST API aus oder abgelehnt).</value>
+  </data>
+  <data name="ServerCmd_BanTitle" xml:space="preserve">
+    <value>Spieler bannen</value>
+  </data>
+  <data name="ServerCmd_BanConfirm" xml:space="preserve">
+    <value>{0} ({1}) bannen? Der Spieler wird gekickt und kann nicht mehr beitreten.</value>
+  </data>
+  <data name="ServerCmd_Banned" xml:space="preserve">
+    <value>{0} ({1}) gebannt.</value>
+  </data>
+  <data name="ServerCmd_BanFailed" xml:space="preserve">
+    <value>{0} konnte nicht gebannt werden (REST API aus oder abgelehnt).</value>
+  </data>
+  <data name="ServerCmd_CommandFailed" xml:space="preserve">
+    <value>Befehl fehlgeschlagen, siehe Protokoll.</value>
+  </data>
+  <!-- DiscordDialog -->
+  <data name="Discord_Title" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="Discord_BlurbPrefix" xml:space="preserve">
+    <value>Steuern Sie den Server über Slash-Befehle aus Discord und/oder senden Sie Lifecycle-Benachrichtigungen an einen Kanal. Erstellen Sie einen Bot und kopieren Sie dessen Token aus dem</value>
+  </data>
+  <data name="Discord_BlurbLinkText" xml:space="preserve">
+    <value>Discord Developer Portal</value>
+  </data>
+  <data name="Discord_BlurbSuffix" xml:space="preserve">
+    <value> (fügen Sie einen Bot hinzu und laden Sie ihn anschließend mit den Scopes bot + applications.commands ein).</value>
+  </data>
+  <data name="Discord_ServerControlBotHeader" xml:space="preserve">
+    <value>Server-Steuerungsbot</value>
+  </data>
+  <data name="Discord_EnableControlBot" xml:space="preserve">
+    <value>Steuerungsbot aktivieren (Slash-Befehle: /status /players /save /backup /update /start /restart /stop)</value>
+  </data>
+  <data name="Discord_BotTokenLabel" xml:space="preserve">
+    <value>Bot-Token (geheim)</value>
+  </data>
+  <data name="Discord_CommandChannelIdLabel" xml:space="preserve">
+    <value>Befehlskanal-ID</value>
+  </data>
+  <data name="Discord_RequiredRoleIdLabel" xml:space="preserve">
+    <value>Erforderliche Rollen-ID (optional)</value>
+  </data>
+  <data name="Discord_CommandCooldownLabel" xml:space="preserve">
+    <value>Befehls-Abklingzeit (Sekunden)</value>
+  </data>
+  <data name="Discord_SecurityNote" xml:space="preserve">
+    <value>Sicherheit: Legen Sie einen Befehlskanal und/oder eine erforderliche Rolle fest, der Bot reagiert nur, wenn alle von Ihnen gesetzten Bedingungen erfüllt sind (mindestens eine festlegen). Jeder, der im Befehlskanal schreiben kann oder die Rolle besitzt, kann den Server steuern, sichern Sie dies also ab (ein privater, nur für Admins zugänglicher Kanal und/oder eine Admin-Rolle). Aktivieren Sie den Discord-Entwicklermodus und klicken Sie dann mit rechts auf einen Kanal oder eine Rolle -&gt; ID kopieren. Das Token wird lokal in launcher.json gespeichert und nie protokolliert.</value>
+  </data>
+  <data name="Discord_CommandsExposedHeader" xml:space="preserve">
+    <value>Vom Bot bereitgestellte Befehle</value>
+  </data>
+  <data name="Discord_CommandsExposedHint" xml:space="preserve">
+    <value>Wählen Sie die Slash-Befehle aus, die der Bot akzeptieren soll. Kritische Befehle (Neustart, Stopp, Kick, Bann) sind standardmäßig deaktiviert. Änderungen werden beim Speichern wirksam (der Bot verbindet sich neu und registriert seine Befehle erneut).</value>
+  </data>
+  <data name="Discord_WebhookNotificationsHeader" xml:space="preserve">
+    <value>Webhook-Benachrichtigungen</value>
+  </data>
+  <data name="Discord_EnableNotifications" xml:space="preserve">
+    <value>Benachrichtigungen aktivieren</value>
+  </data>
+  <data name="Discord_WebhookUrlLabel" xml:space="preserve">
+    <value>Webhook-URL</value>
+  </data>
+  <data name="Discord_NotifyLifecycle" xml:space="preserve">
+    <value>Benachrichtigen bei Start / Stopp / Update / Absturz</value>
+  </data>
+  <data name="Discord_NotifyPlayers" xml:space="preserve">
+    <value>Benachrichtigen bei Spieler-Beitritt/-Verlassen (benötigt REST API)</value>
+  </data>
+  <data name="Discord_InvalidChannelIdTitle" xml:space="preserve">
+    <value>Ungültige Kanal-ID</value>
+  </data>
+  <data name="Discord_InvalidChannelIdMessage" xml:space="preserve">
+    <value>Die Befehlskanal-ID muss eine Zahl sein (Discord-Entwicklermodus -&gt; Rechtsklick auf den Kanal -&gt; Kanal-ID kopieren).</value>
+  </data>
+  <data name="Discord_InvalidRoleIdTitle" xml:space="preserve">
+    <value>Ungültige Rollen-ID</value>
+  </data>
+  <data name="Discord_InvalidRoleIdMessage" xml:space="preserve">
+    <value>Die erforderliche Rollen-ID muss eine Zahl sein (Discord-Entwicklermodus -&gt; Rechtsklick auf die Rolle -&gt; Rollen-ID kopieren).</value>
+  </data>
+  <data name="Discord_BotNotReadyTitle" xml:space="preserve">
+    <value>Bot nicht bereit</value>
+  </data>
+  <data name="Discord_BotNotReadyMessage" xml:space="preserve">
+    <value>Um den Steuerungsbot zu aktivieren, legen Sie ein Bot-Token und mindestens eine Bedingung fest: eine Befehlskanal-ID und/oder eine erforderliche Rollen-ID.</value>
+  </data>
+  <!-- ModsDialog -->
+  <data name="Mods_Title" xml:space="preserve">
+    <value>Mods</value>
+  </data>
+  <data name="Mods_Disclaimer" xml:space="preserve">
+    <value>Hier funktionieren nur Mods, die für den Serverbetrieb ausgelegt sind. Viele Mods sind reine Client-Mods und können oder sollten nicht auf dem Server installiert werden. Prüfen Sie daher die Beschreibung eines Mods, bevor Sie ihn laden. Die Nutzung von Mods erfolgt auf eigenes Risiko, sie können zu beschädigten Speicherdaten oder Abstürzen führen.</value>
+  </data>
+  <data name="Mods_EnableMods" xml:space="preserve">
+    <value>Mods auf diesem Server aktivieren</value>
+  </data>
+  <data name="Mods_SteamAccountHeader" xml:space="preserve">
+    <value>Steam-Konto</value>
+  </data>
+  <data name="Mods_SteamAccountNote" xml:space="preserve">
+    <value>Nur zum Herunterladen von Workshop-Mods nötig, manuell eingefügte Mods benötigen kein Konto. Die Anmeldung übernimmt Steams eigenes SteamCMD in einem eigenen Fenster, der Launcher sieht oder speichert Ihr Passwort daher nie, er merkt sich nur Ihren Benutzernamen.</value>
+  </data>
+  <data name="Mods_ConnectButton" xml:space="preserve">
+    <value>Steam-Konto verbinden</value>
+  </data>
+  <data name="Mods_DifferentAccountLink" xml:space="preserve">
+    <value>Mit einem anderen Konto verbinden?</value>
+  </data>
+  <data name="Mods_WorkshopHeader" xml:space="preserve">
+    <value>Steam-Workshop-Mods</value>
+  </data>
+  <data name="Mods_BrowsePrefix" xml:space="preserve">
+    <value>Mods durchsuchen im </value>
+  </data>
+  <data name="Mods_BrowseLinkText" xml:space="preserve">
+    <value>Palworld Steam Workshop</value>
+  </data>
+  <data name="Mods_BrowseSuffix" xml:space="preserve">
+    <value>.</value>
+  </data>
+  <data name="Mods_AddButton" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="Mods_ScanFolderButton" xml:space="preserve">
+    <value>Ordner durchsuchen</value>
+  </data>
+  <data name="Mods_OpenModsFolderButton" xml:space="preserve">
+    <value>Mods-Ordner öffnen</value>
+  </data>
+  <data name="Mods_AddByIdLabel" xml:space="preserve">
+    <value>Hinzufügen per Steam-Workshop-ID oder URL:</value>
+  </data>
+  <data name="Mods_NoAccountWarning" xml:space="preserve">
+    <value>Sie haben Workshop-Mods aktiviert, aber kein Steam-Konto verbunden. Verbinden Sie oben eines, um sie herunterzuladen, sonst werden sie beim Start übersprungen (manuell eingefügte Mods werden weiterhin geladen).</value>
+  </data>
+  <data name="Mods_LoosePakHeader" xml:space="preserve">
+    <value>Lose .pak-Mods</value>
+  </data>
+  <data name="Mods_LoosePakDescription" xml:space="preserve">
+    <value>Nicht nötig, wenn Sie den Steam Workshop oben verwenden. Für rohe .pak-Mods ohne Info.json (viele NexusMods-Downloads): Legen Sie sie in den loose-paks-Ordner und schalten Sie sie hier um. Sie werden durch Umbenennen aktiviert/deaktiviert (nie gelöscht) und beim nächsten Serverstart geladen.</value>
+  </data>
+  <data name="Mods_OpenLoosePaksFolderButton" xml:space="preserve">
+    <value>Loose-Paks-Ordner öffnen</value>
+  </data>
+  <data name="Mods_RescanButton" xml:space="preserve">
+    <value>Erneut durchsuchen</value>
+  </data>
+  <data name="Mods_OpenUe4ssFolderButton" xml:space="preserve">
+    <value>UE4SS-Mods-Ordner öffnen</value>
+  </data>
+  <data name="Mods_EnterUsernameTitle" xml:space="preserve">
+    <value>Benutzername eingeben</value>
+  </data>
+  <data name="Mods_EnterUsernameBody" xml:space="preserve">
+    <value>Geben Sie zuerst Ihren Steam-Kontonamen ein und verbinden Sie dann.</value>
+  </data>
+  <data name="Mods_ConnectingButton" xml:space="preserve">
+    <value>Wird verbunden...</value>
+  </data>
+  <data name="Mods_SteamCmdWindowOpened" xml:space="preserve">
+    <value>Ein SteamCMD-Fenster wurde geöffnet. Geben Sie dort Ihr Passwort und Ihren Steam-Guard-Code ein, es bleibt geöffnet, damit Sie das Ergebnis lesen können, schließen Sie es danach.</value>
+  </data>
+  <data name="Mods_ConfirmSignInFailed" xml:space="preserve">
+    <value>Die Anmeldung konnte nicht bestätigt werden. Verbinden Sie erneut und beachten Sie die Fehlermeldung im SteamCMD-Fenster (falsches Passwort oder falscher Steam-Guard-Code).</value>
+  </data>
+  <data name="Mods_SignInFailed" xml:space="preserve">
+    <value>Anmeldung fehlgeschlagen: {0}</value>
+  </data>
+  <data name="Mods_SavedSignInInvalid" xml:space="preserve">
+    <value>Ihre gespeicherte Anmeldung ist nicht mehr gültig, verbinden Sie erneut.</value>
+  </data>
+  <data name="Mods_CheckSignInFailed" xml:space="preserve">
+    <value>Anmeldung konnte nicht geprüft werden: {0}</value>
+  </data>
+  <data name="Mods_CheckingSignIn" xml:space="preserve">
+    <value>Anmeldung wird geprüft...</value>
+  </data>
+  <data name="Mods_SignedIn" xml:space="preserve">
+    <value>Bei SteamCMD angemeldet</value>
+  </data>
+  <data name="Mods_InvalidIdTitle" xml:space="preserve">
+    <value>Ungültige Workshop-ID</value>
+  </data>
+  <data name="Mods_InvalidIdBody" xml:space="preserve">
+    <value>Geben Sie eine numerische Steam-Workshop-ID ein oder eine Workshop-URL wie https://steamcommunity.com/sharedfiles/filedetails/?id=123456.</value>
+  </data>
+  <data name="Mods_AlreadyAddedTitle" xml:space="preserve">
+    <value>Bereits hinzugefügt</value>
+  </data>
+  <data name="Mods_AlreadyAddedBody" xml:space="preserve">
+    <value>Diese Workshop-ID ist bereits in der Liste.</value>
+  </data>
+  <data name="Mods_AddingButton" xml:space="preserve">
+    <value>Wird hinzugefügt...</value>
+  </data>
+  <data name="Mods_NotPalworldTitle" xml:space="preserve">
+    <value>Kein Palworld-Mod?</value>
+  </data>
+  <data name="Mods_NotPalworldBody" xml:space="preserve">
+    <value>Die Steam-App-ID dieses Objekts ist {0} und nicht die von Palworld ({1}), es funktioniert daher möglicherweise nicht auf Ihrem Server. Trotzdem hinzufügen?</value>
+  </data>
+  <data name="Mods_AddAnyway" xml:space="preserve">
+    <value>Trotzdem hinzufügen</value>
+  </data>
+  <data name="Mods_ScanNoneFound" xml:space="preserve">
+    <value>Keine neuen Mods im Mods-Ordner gefunden.</value>
+  </data>
+  <data name="Mods_ScanAdded" xml:space="preserve">
+    <value>{0} Mod(s) aus dem Mods-Ordner hinzugefügt.</value>
+  </data>
+  <data name="Mods_ScanSkipped" xml:space="preserve">
+    <value> {0} Ordner ohne lesbare Info.json übersprungen.</value>
+  </data>
+  <data name="Mods_ScanTitle" xml:space="preserve">
+    <value>Mods-Ordner durchsuchen</value>
+  </data>
+  <data name="Mods_NoAccountTitle" xml:space="preserve">
+    <value>Kein Steam-Konto verbunden</value>
+  </data>
+  <data name="Mods_NoAccountSaveBody" xml:space="preserve">
+    <value>Sie haben Workshop-Mods aktiviert, aber kein Steam-Konto verbunden, sie können daher nicht heruntergeladen werden und werden beim Serverstart übersprungen (manuell eingefügte Mods werden weiterhin geladen). Trotzdem speichern?</value>
+  </data>
+  <data name="Mods_SaveAnyway" xml:space="preserve">
+    <value>Trotzdem speichern</value>
+  </data>
+  <data name="Mods_PackageTip" xml:space="preserve">
+    <value>Paket: {0}</value>
+  </data>
+  <data name="Mods_PackageUnresolvedTip" xml:space="preserve">
+    <value>Paketname noch nicht ermittelt (Mod herunterladen oder durchsuchen).</value>
+  </data>
+  <data name="Mods_OpenWorkshopPageTip" xml:space="preserve">
+    <value>Öffnet die Steam-Workshop-Seite dieses Mods. </value>
+  </data>
+  <data name="Mods_LocalLabel" xml:space="preserve">
+    <value>lokal</value>
+  </data>
+  <data name="Mods_DeleteModTip" xml:space="preserve">
+    <value>Löscht diesen Mod (entfernt ihn aus der Liste und löscht seine heruntergeladenen Dateien).</value>
+  </data>
+  <data name="Mods_EmptyList" xml:space="preserve">
+    <value>Noch keine Mods. Fügen Sie oben eine Workshop-ID hinzu oder legen Sie Mod-Ordner in den Mods-Ordner und durchsuchen Sie ihn.</value>
+  </data>
+  <data name="Mods_DeleteTitle" xml:space="preserve">
+    <value>Mod löschen</value>
+  </data>
+  <data name="Mods_DeleteBody" xml:space="preserve">
+    <value>Dies löscht die Mod-Dateien und entfernt den Mod aus Ihrer Liste.
+
+{0}</value>
+  </data>
+  <data name="Mods_DeleteButton" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="Mods_DeleteFailedTitle" xml:space="preserve">
+    <value>Dateien konnten nicht gelöscht werden</value>
+  </data>
+  <data name="Mods_DeleteFailedBody" xml:space="preserve">
+    <value>Aus der Liste entfernt, aber die Dateien konnten nicht gelöscht werden: {0}</value>
+  </data>
+  <data name="Mods_ThisModFallback" xml:space="preserve">
+    <value>diesen Mod</value>
+  </data>
+  <data name="Mods_LoosePakEmpty" xml:space="preserve">
+    <value>Keine losen .pak-Mods gefunden. Legen Sie .pak-Dateien (mit eventuellen .utoc/.ucas) in den loose-paks-Ordner, dann erneut durchsuchen.</value>
+  </data>
+  <data name="Mods_LoosePakLabelSingular" xml:space="preserve">
+    <value>{0}  ({1} Datei)</value>
+  </data>
+  <data name="Mods_LoosePakLabelPlural" xml:space="preserve">
+    <value>{0}  ({1} Dateien)</value>
+  </data>
+  <data name="Mods_ChangeModFailedTitle" xml:space="preserve">
+    <value>Mod konnte nicht geändert werden</value>
+  </data>
+  <data name="Mods_EnablePakFailed" xml:space="preserve">
+    <value>„{0}“ konnte nicht aktiviert werden: {1}</value>
+  </data>
+  <data name="Mods_DisablePakFailed" xml:space="preserve">
+    <value>„{0}“ konnte nicht deaktiviert werden: {1}</value>
+  </data>
+  <data name="Mods_Ue4ssNotInstalledTitle" xml:space="preserve">
+    <value>UE4SS nicht installiert</value>
+  </data>
+  <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
+    <value>UE4SS ist noch nicht installiert. Fügen Sie einen UE4SS-Mod aus dem Workshop hinzu und starten Sie den Server einmal, danach erscheint dessen Mods-Ordner hier.</value>
+  </data>
+  <data name="Mods_ColOn" xml:space="preserve">
+    <value>An</value>
+  </data>
+  <data name="Mods_ColName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Mods_ColId" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Mods_ColNote" xml:space="preserve">
+    <value>Hinweis</value>
+  </data>
+  <!-- SettingsDialog -->
+  <data name="Settings_ServerTitle" xml:space="preserve">
+    <value>Servereinstellungen</value>
+  </data>
+  <data name="Settings_ResetToDefaults" xml:space="preserve">
+    <value>Auf Standardwerte zurücksetzen</value>
+  </data>
+  <data name="Settings_SearchPlaceholder" xml:space="preserve">
+    <value>Einstellungen durchsuchen...</value>
+  </data>
+  <data name="Settings_SearchNoMatches" xml:space="preserve">
+    <value>Keine Einstellungen gefunden.</value>
+  </data>
+  <data name="Settings_SearchClearTooltip" xml:space="preserve">
+    <value>Suche zurücksetzen</value>
+  </data>
+  <data name="Settings_WorldBlurb" xml:space="preserve">
+    <value>Gameplay und Balance, Schwierigkeitsgrad, EXP-/Fang-/Beutequoten, Schadensmultiplikatoren und Weltfunktionen. Vollständige Referenz:</value>
+  </data>
+  <data name="Settings_WorldBlurbLink" xml:space="preserve">
+    <value>Dokumentation zu den Funktionen</value>
+  </data>
+  <data name="Settings_AdminBlurb" xml:space="preserve">
+    <value>Serververwaltung, Servername, Passwörter, Spielerlimit sowie die REST- und RCON-APIs. Vollständige Referenz:</value>
+  </data>
+  <data name="Settings_AdminBlurbLink" xml:space="preserve">
+    <value>Dokumentation zur Serververwaltung</value>
+  </data>
+  <data name="Settings_TabAdmin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="Settings_TabUndocumented" xml:space="preserve">
+    <value>Undokumentiert</value>
+  </data>
+  <data name="Settings_TabLaunchArgs" xml:space="preserve">
+    <value>Startargumente</value>
+  </data>
+  <data name="Settings_BannerServerRunning" xml:space="preserve">
+    <value>Der Server läuft, daher sind die Spieleinstellungen-Tabs nur lesbar (ein laufender Server überschreibt seine eigene Konfiguration). Die Startargumente lassen sich weiterhin bearbeiten und werden wie die Spieleinstellungen beim nächsten Start wirksam.</value>
+  </data>
+  <data name="Settings_BannerGameUnavailable" xml:space="preserve">
+    <value>Spieleinstellungen nicht verfügbar, installieren Sie zuerst den Server (keine DefaultPalWorldSettings.ini gefunden).</value>
+  </data>
+  <data name="Settings_UndocumentedBlurb" xml:space="preserve">
+    <value>Einstellungen, die die offizielle Dokumentation nicht abdeckt. Jeder Tooltip enthält unsere beste Vermutung, wir können dafür aber nicht garantieren, einige sind möglicherweise intern oder ungenutzt. Nachschlagen können Sie sie in der</value>
+  </data>
+  <data name="Settings_UndocumentedBlurbLink" xml:space="preserve">
+    <value>Palworld-Konfigurationsreferenz</value>
+  </data>
+  <data name="Settings_UndocKnownHeader" xml:space="preserve">
+    <value>Dem Launcher bekannt</value>
+  </data>
+  <data name="Settings_UndocNewHeader" xml:space="preserve">
+    <value>Neu in Ihrer Konfiguration (nicht erkannt)</value>
+  </data>
+  <data name="Settings_UndocNoneRecognized" xml:space="preserve">
+    <value>Keine, alle Schlüssel in Ihrer Konfiguration sind erkannt.</value>
+  </data>
+  <data name="Settings_NoEffectTitle" xml:space="preserve">
+    <value>Diese Einstellung hat auf einem Server keine Wirkung</value>
+  </data>
+  <data name="Settings_NoEffectMessage" xml:space="preserve">
+    <value>Hinweis: „{0}“ ist eine Client-/Einzelspieler-Einstellung und hat auf einem dedizierten Server keine Wirkung. Eine Änderung hier ändert nicht, wie sich der Server verhält. Verwenden Sie die einzelnen Einstellungen (oder die Schwierigkeitsgrad-Voreinstellungen oben im Tab Spieleinstellungen), um den Schwierigkeitsgrad des Servers zu steuern.</value>
+  </data>
+  <data name="Settings_GotIt" xml:space="preserve">
+    <value>Verstanden</value>
+  </data>
+  <data name="Settings_DifficultyPreset" xml:space="preserve">
+    <value>Schwierigkeitsgrad-Voreinstellung:</value>
+  </data>
+  <data name="Settings_PresetTitle" xml:space="preserve">
+    <value>Voreinstellung {0}</value>
+  </data>
+  <data name="Settings_PresetNoChanges" xml:space="preserve">
+    <value>Ihre Einstellungen entsprechen bereits der Voreinstellung {0}, nichts zu ändern.</value>
+  </data>
+  <data name="Settings_PresetConfirmMessage" xml:space="preserve">
+    <value>Dies sind die Werte von Palworld 1.0. Seitdem wurden möglicherweise Einstellungen hinzugefügt oder geändert.
+
+Hier sind die Werte, die sich für die Voreinstellung {0} ändern:
+
+{1}
+
+Alle nicht oben aufgeführten Werte bleiben unverändert.
+
+Diese Änderungen übernehmen und speichern?</value>
+  </data>
+  <data name="Settings_Yes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="Settings_No" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="Settings_PresetAppliedTitle" xml:space="preserve">
+    <value>Voreinstellung {0} angewendet</value>
+  </data>
+  <data name="Settings_PresetAppliedMessage" xml:space="preserve">
+    <value>Voreinstellung {0} angewendet. {1} Einstellung(en) geändert und gespeichert.</value>
+  </data>
+  <data name="Settings_LaunchArgsIntro" xml:space="preserve">
+    <value>Die genaue Befehlszeile zum Starten des dedizierten Servers (unten live neu zusammengestellt). Steuern ein Argument hier und eine Einstellung in der PalWorldSettings.ini dasselbe, gewinnt das Argument, ein leeres, auf 0 oder auf dem Standardwert belassenes Feld wird weggelassen, sodass stattdessen der Wert aus der ini verwendet wird. Die meisten Spieleinstellungen haben kein Argument und existieren nur in der ini (bearbeiten Sie diese unter Servereinstellungen). Änderungen werden beim nächsten Start wirksam.</value>
+  </data>
+  <data name="Settings_ListenPortTerm" xml:space="preserve">
+    <value>Listen-Port</value>
+  </data>
+  <data name="Settings_ListenPortNote" xml:space="preserve">
+    <value> ist der Port, an den sich der Server bindet und über den Spieler sich verbinden. </value>
+  </data>
+  <data name="Settings_PublicPortTerm" xml:space="preserve">
+    <value>Öffentlicher Port</value>
+  </data>
+  <data name="Settings_PublicPortNote" xml:space="preserve">
+    <value> (nur für Community-Server) legt fest, was der Server der öffentlichen Liste meldet, der Listen-Port ändert sich dadurch NICHT.</value>
+  </data>
+  <data name="Settings_ValidateListenPort" xml:space="preserve">
+    <value>Listen-Port</value>
+  </data>
+  <data name="Settings_RowQueryPort" xml:space="preserve">
+    <value>Query-Port (-QueryPort)</value>
+  </data>
+  <data name="Settings_TipQueryPort" xml:space="preserve">
+    <value>Der Steam-Query-Port. Leer oder 0 wählt automatisch den ersten freien Port ab 27015 (damit mehrere Server auf einem PC nicht kollidieren). Legen Sie einen festen Wert fest, wenn Sie ihn weiterleiten.</value>
+  </data>
+  <data name="Settings_ValidateQueryPort" xml:space="preserve">
+    <value>Query-Port</value>
+  </data>
+  <data name="Settings_ValidateMaxPlayers" xml:space="preserve">
+    <value>Max. Spieler</value>
+  </data>
+  <data name="Settings_ValidateWorkerThreads" xml:space="preserve">
+    <value>Worker-Threads</value>
+  </data>
+  <data name="Settings_ValidatePublicIp" xml:space="preserve">
+    <value>Öffentliche IP</value>
+  </data>
+  <data name="Settings_ValidatePublicPort" xml:space="preserve">
+    <value>Öffentlicher Port</value>
+  </data>
+  <data name="Settings_RowListenPort" xml:space="preserve">
+    <value>Listen-Port (-port)</value>
+  </data>
+  <data name="Settings_TipListenPort" xml:space="preserve">
+    <value>Der UDP-Port, an den sich der Server bindet und über den Spieler sich verbinden (Palworld-Standard 8211). Wird immer angewendet. Nicht zu verwechseln mit dem öffentlichen Port unten.</value>
+  </data>
+  <data name="Settings_RowMaxPlayers" xml:space="preserve">
+    <value>Max. Spieler (-players, 0 = Spieleinstellung verwenden)</value>
+  </data>
+  <data name="Settings_TipMaxPlayers" xml:space="preserve">
+    <value>Überschreibt ServerPlayerMaxNum in der ini, wenn gesetzt. 0 = Argument weglassen und die Spieleinstellung verwenden.</value>
+  </data>
+  <data name="Settings_RowPerfThreads" xml:space="preserve">
+    <value>Performance-Threads</value>
+  </data>
+  <data name="Settings_TipPerfThreads" xml:space="preserve">
+    <value>Fügt -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS hinzu. Für einen dedizierten Server empfohlen.</value>
+  </data>
+  <data name="Settings_RowWorkerThreads" xml:space="preserve">
+    <value>Worker-Threads (0 = automatisch)</value>
+  </data>
+  <data name="Settings_TipWorkerThreads" xml:space="preserve">
+    <value>-NumberOfWorkerThreadsServer. 0 = automatisch (weggelassen). Nur wirksam, wenn Performance-Threads aktiviert ist.</value>
+  </data>
+  <data name="Settings_RowCommunity" xml:space="preserve">
+    <value>Community-/öffentlicher Server (-publiclobby)</value>
+  </data>
+  <data name="Settings_TipCommunity" xml:space="preserve">
+    <value>-publiclobby: listet den Server im öffentlichen Community-Browser. Aus = privat (Spieler treten über die IP bei).</value>
+  </data>
+  <data name="Settings_RowPublicIp" xml:space="preserve">
+    <value>Öffentliche IP (Community, leer = automatisch)</value>
+  </data>
+  <data name="Settings_TipPublicIp" xml:space="preserve">
+    <value>-publicip für Community-Server (leer = automatisch ermitteln). Dient nur der Meldung an die Liste, ändert nicht, woran sich der Server bindet.</value>
+  </data>
+  <data name="Settings_RowPublicPort" xml:space="preserve">
+    <value>Öffentlicher Port (Community, 0 = Spieleinstellung verwenden)</value>
+  </data>
+  <data name="Settings_TipPublicPort" xml:space="preserve">
+    <value>-publicport für Community-Server: der externe Port, der der öffentlichen Liste gemeldet wird. Ändert NICHT den Listen-Port. 0 = weggelassen (ini-Wert wird verwendet).</value>
+  </data>
+  <data name="Settings_RowLogFormat" xml:space="preserve">
+    <value>Protokollformat</value>
+  </data>
+  <data name="Settings_TipLogFormat" xml:space="preserve">
+    <value>-logformat (Text oder Json). Leer = weggelassen, der ini-/Standardwert gilt.</value>
+  </data>
+  <data name="Settings_ExtraArgsNote" xml:space="preserve">
+    <value>Rohe Argumente, die der Befehlszeile unverändert angehängt werden (durch Leerzeichen oder Zeilenumbruch getrennt). Manche Unreal-Server akzeptieren hier Map-/Game-Class-Überschreibungen. Nur ändern, wenn Sie genau wissen, was Sie tun.</value>
+  </data>
+  <data name="Settings_AdvancedExpander" xml:space="preserve">
+    <value>Erweitert</value>
+  </data>
+  <data name="Settings_AdvancedIntro" xml:space="preserve">
+    <value>Systemnahe Einstellungen, die nach dem Start auf den Serverprozess angewendet werden. Falsche Werte können die Leistung beeinträchtigen, nur ändern, wenn Sie genau wissen, was Sie tun. Wird beim nächsten Start wirksam.</value>
+  </data>
+  <data name="Settings_PriorityAffinityHeader" xml:space="preserve">
+    <value>Prozesspriorität &amp; CPU-Affinität</value>
+  </data>
+  <data name="Settings_RowPriority" xml:space="preserve">
+    <value>Prozesspriorität</value>
+  </data>
+  <data name="Settings_TipPriority" xml:space="preserve">
+    <value>Windows-Priorität für den Serverprozess. Höher als normal / Hoch kann unter Last helfen, kann aber anderen Apps Ressourcen entziehen und die Leistung beeinträchtigen; Echtzeit wird nicht angeboten (unsicher).</value>
+  </data>
+  <data name="Settings_CoreLabel" xml:space="preserve">
+    <value>Kern {0}</value>
+  </data>
+  <data name="Settings_CpuAffinityNote" xml:space="preserve">
+    <value>CPU-Affinität, den Server an bestimmte Kerne binden (alle aktiviert = keine Einschränkung / alle Kerne verwenden):</value>
+  </data>
+  <data name="Settings_AdvancedArgsTitle" xml:space="preserve">
+    <value>Erweiterte Argumente</value>
+  </data>
+  <data name="Settings_AdvancedArgsMessage" xml:space="preserve">
+    <value>Sie haben eigene Argumente in das Feld Erweitert eingetragen. Sie werden genau wie eingegeben an den Server übergeben, behalten Sie sie nur, wenn Sie genau wissen, was Sie tun.</value>
+  </data>
+  <data name="Settings_Accept" xml:space="preserve">
+    <value>Akzeptieren</value>
+  </data>
+  <data name="Settings_ConfirmSaveMore" xml:space="preserve">
+    <value>
+... und {0} weitere</value>
+  </data>
+  <data name="Settings_ConfirmSaveTitle" xml:space="preserve">
+    <value>Speichern bestätigen</value>
+  </data>
+  <data name="Settings_ConfirmSaveMessage" xml:space="preserve">
+    <value>Diese Einstellungen werden geändert:
+
+{0}
+
+Änderungen speichern?</value>
+  </data>
+  <data name="Settings_NotSavedTitle" xml:space="preserve">
+    <value>Nicht gespeichert</value>
+  </data>
+  <data name="Settings_NotSavedMessage" xml:space="preserve">
+    <value>„{0}“ hat einen Wert, der das Konfigurationsformat zerstören würde (ein überzähliges Komma, Anführungszeichen oder eine unausgeglichene Klammer). Es wurde nichts gespeichert, beheben Sie den Fehler und versuchen Sie es erneut.</value>
+  </data>
+  <data name="Settings_ValidationError" xml:space="preserve">
+    <value>{0} ist ungültig. Muss {1} sein.</value>
+  </data>
+  <data name="Settings_InvalidSettingsTitle" xml:space="preserve">
+    <value>Ungültige Einstellungen</value>
+  </data>
+  <data name="Settings_ResetFieldTooltip" xml:space="preserve">
+    <value>Dieses Feld auf den Standardwert zurücksetzen</value>
+  </data>
+  <data name="Settings_UndocumentedMarker" xml:space="preserve">
+    <value>  · undokumentiert</value>
+  </data>
+  <data name="Settings_ResetAllMessage" xml:space="preserve">
+    <value>Alle Felder in diesem Bereich auf den Standardwert zurücksetzen? Zum Übernehmen ist weiterhin Speichern nötig.</value>
+  </data>
+  <data name="Settings_ResetAllButton" xml:space="preserve">
+    <value>Alle zurücksetzen</value>
+  </data>
+  <data name="Settings_CategoryServerManagement" xml:space="preserve">
+    <value>Serververwaltung</value>
+  </data>
+  <data name="Settings_CategoryPerformance" xml:space="preserve">
+    <value>Performance</value>
+  </data>
+  <data name="Settings_CategoryGameplay" xml:space="preserve">
+    <value>Gameplay</value>
+  </data>
+  <data name="Settings_CategoryGameBalance" xml:space="preserve">
+    <value>Spielbalance</value>
+  </data>
+  <!-- MainViewModel -->
+  <data name="Vm_Working" xml:space="preserve">
+    <value>Wird ausgeführt</value>
+  </data>
+  <data name="Vm_TimesSummaryNone" xml:space="preserve">
+    <value>(keine)</value>
+  </data>
+  <data name="Vm_TimesSummaryMore" xml:space="preserve">
+    <value>{0}  +{1} weitere</value>
+  </data>
+  <!-- SettingsDialog process-priority dropdown (canonical value stored in config, label translated). Match Windows Task Manager wording per locale. -->
+  <data name="Settings_PriorityBelowNormal" xml:space="preserve">
+    <value>Niedriger als normal</value>
+  </data>
+  <data name="Settings_PriorityNormal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="Settings_PriorityAboveNormal" xml:space="preserve">
+    <value>Höher als normal</value>
+  </data>
+  <data name="Settings_PriorityHigh" xml:space="preserve">
+    <value>Hoch</value>
+  </data>
+  <!-- Primary button transitional labels (glyphs stay literal) -->
+  <data name="Btn_Working" xml:space="preserve">
+    <value>Wird ausgeführt…</value>
+  </data>
+  <data name="Btn_Install" xml:space="preserve">
+    <value>Installieren</value>
+  </data>
+  <data name="Btn_Starting" xml:space="preserve">
+    <value>Wird gestartet…</value>
+  </data>
+  <data name="Btn_Stopping" xml:space="preserve">
+    <value>Wird beendet…</value>
+  </data>
+  <data name="Btn_StoppingSeconds" xml:space="preserve">
+    <value>Wird beendet ({0}s)</value>
+  </data>
+  <!-- Server state (Status tile) -->
+  <data name="State_Stopped" xml:space="preserve">
+    <value>Gestoppt</value>
+  </data>
+  <data name="State_Starting" xml:space="preserve">
+    <value>Wird gestartet</value>
+  </data>
+  <data name="State_Healthy" xml:space="preserve">
+    <value>Gesund</value>
+  </data>
+  <data name="State_Degraded" xml:space="preserve">
+    <value>Beeinträchtigt</value>
+  </data>
+  <data name="State_Zombie" xml:space="preserve">
+    <value>Zombie</value>
+  </data>
+  <data name="State_Stopping" xml:space="preserve">
+    <value>Wird beendet</value>
+  </data>
+  <data name="State_Restarting" xml:space="preserve">
+    <value>Wird neu gestartet</value>
+  </data>
+  <data name="State_Backoff" xml:space="preserve">
+    <value>Wartephase</value>
+  </data>
+  <!-- Update status line -->
+  <data name="Update_AutoUpdateOff" xml:space="preserve">
+    <value>Automatisches Update aus · {0}</value>
+  </data>
+  <data name="Update_Checking" xml:space="preserve">
+    <value>Suche nach Updates...</value>
+  </data>
+  <data name="Update_CheckFailed" xml:space="preserve">
+    <value>Updateprüfung fehlgeschlagen · {0}</value>
+  </data>
+  <data name="Update_Found" xml:space="preserve">
+    <value>Neue Version {0} gefunden, wird neu gestartet</value>
+  </data>
+  <data name="Update_UpToDate" xml:space="preserve">
+    <value>Aktuell · {0}</value>
+  </data>
+  <data name="Update_Available" xml:space="preserve">
+    <value>Neue Version {0} verfügbar</value>
+  </data>
+  <!-- Next restart / backup schedule text -->
+  <data name="Sched_Off" xml:space="preserve">
+    <value>aus</value>
+  </data>
+  <data name="Sched_UntilHM" xml:space="preserve">
+    <value>{0}h {1}m</value>
+  </data>
+  <data name="Sched_UntilMS" xml:space="preserve">
+    <value>{0}m {1}s</value>
+  </data>
+  <data name="Cat_ServerName_Label" xml:space="preserve">
+    <value>Weltname</value>
+  </data>
+  <data name="Cat_ServerName_Desc" xml:space="preserve">
+    <value>Servername.</value>
+  </data>
+  <data name="Cat_ServerDescription_Label" xml:space="preserve">
+    <value>Beschreibung</value>
+  </data>
+  <data name="Cat_ServerDescription_Desc" xml:space="preserve">
+    <value>Serverbeschreibung.</value>
+  </data>
+  <data name="Cat_ServerPassword_Label" xml:space="preserve">
+    <value>Serverpasswort</value>
+  </data>
+  <data name="Cat_ServerPassword_Desc" xml:space="preserve">
+    <value>Passwort, das zum Anmelden auf dem Server benötigt wird. Leer = kein Passwort.</value>
+  </data>
+  <data name="Cat_AdminPassword_Label" xml:space="preserve">
+    <value>Admin-Passwort</value>
+  </data>
+  <data name="Cat_AdminPassword_Desc" xml:space="preserve">
+    <value>Passwort, mit dem administrative Rechte auf dem Server erlangt werden. Erforderlich für die REST API und RCON.</value>
+  </data>
+  <data name="Cat_ServerPlayerMaxNum_Label" xml:space="preserve">
+    <value>Max. Spieler</value>
+  </data>
+  <data name="Cat_ServerPlayerMaxNum_Desc" xml:space="preserve">
+    <value>Maximale Anzahl an Spielern, die dem Server beitreten können. Das Startargument -players überschreibt diesen Wert, falls gesetzt.</value>
+  </data>
+  <data name="Cat_CoopPlayerMaxNum_Label" xml:space="preserve">
+    <value>CoopPlayerMaxNum</value>
+  </data>
+  <data name="Cat_CoopPlayerMaxNum_Desc" xml:space="preserve">
+    <value>Nicht dokumentiert. Die Community vermutet eine Gruppengröße für den Koop-Modus, es könnte sich jedoch um einen internen Wert handeln, der auf einem dedizierten Server keine Wirkung hat.</value>
+  </data>
+  <data name="Cat_RESTAPIEnabled_Label" xml:space="preserve">
+    <value>REST API aktiviert</value>
+  </data>
+  <data name="Cat_RESTAPIEnabled_Desc" xml:space="preserve">
+    <value>Aktiviert die REST API. Der Launcher benötigt sie für Statistiken, das kontrollierte Herunterfahren und die Spielerprotokollierung.</value>
+  </data>
+  <data name="Cat_RESTAPIPort_Label" xml:space="preserve">
+    <value>REST-API-Port</value>
+  </data>
+  <data name="Cat_RESTAPIPort_Desc" xml:space="preserve">
+    <value>Port, auf dem die REST API lauscht.</value>
+  </data>
+  <data name="Cat_RCONEnabled_Label" xml:space="preserve">
+    <value>RCON aktiviert</value>
+  </data>
+  <data name="Cat_RCONEnabled_Desc" xml:space="preserve">
+    <value>Aktiviert RCON.</value>
+  </data>
+  <data name="Cat_RCONPort_Label" xml:space="preserve">
+    <value>RCON-Port</value>
+  </data>
+  <data name="Cat_RCONPort_Desc" xml:space="preserve">
+    <value>Portnummer, die für RCON verwendet wird.</value>
+  </data>
+  <data name="Cat_bUseAuth_Label" xml:space="preserve">
+    <value>bUseAuth</value>
+  </data>
+  <data name="Cat_bUseAuth_Desc" xml:space="preserve">
+    <value>Nicht dokumentiert. Standardmäßig auf True gesetzt.</value>
+  </data>
+  <data name="Cat_BanListURL_Label" xml:space="preserve">
+    <value>BanListURL</value>
+  </data>
+  <data name="Cat_BanListURL_Desc" xml:space="preserve">
+    <value>Nicht dokumentiert. Vermutlich die Bannliste, gegen die der Server prüft, das genaue Format und Verhalten sind jedoch nicht bestätigt.</value>
+  </data>
+  <data name="Cat_bIsUseBackupSaveData_Label" xml:space="preserve">
+    <value>Integrierte Spielstand-Sicherungen</value>
+  </data>
+  <data name="Cat_bIsUseBackupSaveData_Desc" xml:space="preserve">
+    <value>Aktiviert Palworlds eigene Welt-Sicherungen (getrennt von denen des Launchers). Die Aktivierung erhöht die Festplattenauslastung.</value>
+  </data>
+  <data name="Cat_AutoSaveSpan_Label" xml:space="preserve">
+    <value>Autosave-Häufigkeit</value>
+  </data>
+  <data name="Cat_AutoSaveSpan_Desc" xml:space="preserve">
+    <value>Wie oft die Welt automatisch gespeichert wird (Sekunden).</value>
+  </data>
+  <data name="Cat_bIsShowJoinLeftMessage_Label" xml:space="preserve">
+    <value>Beitritts-/Verlassen-Nachrichten anzeigen</value>
+  </data>
+  <data name="Cat_bIsShowJoinLeftMessage_Desc" xml:space="preserve">
+    <value>Zeigt auf dedizierten Servern Ingame-Nachrichten an, wenn Spieler beitreten oder den Server verlassen.</value>
+  </data>
+  <data name="Cat_bAllowClientMod_Label" xml:space="preserve">
+    <value>Client-Mods erlauben</value>
+  </data>
+  <data name="Cat_bAllowClientMod_Desc" xml:space="preserve">
+    <value>Erlaubt Spielern mit aktivierten Mods, dem Server beizutreten.</value>
+  </data>
+  <data name="Cat_ChatPostLimitPerMinute_Label" xml:space="preserve">
+    <value>Chat-Ratenbegrenzung</value>
+  </data>
+  <data name="Cat_ChatPostLimitPerMinute_Desc" xml:space="preserve">
+    <value>Maximale Anzahl an Chatnachrichten pro Minute.</value>
+  </data>
+  <data name="Cat_LogFormatType_Label" xml:space="preserve">
+    <value>Protokollformat</value>
+  </data>
+  <data name="Cat_LogFormatType_Desc" xml:space="preserve">
+    <value>Format der Server-Protokolldatei.</value>
+  </data>
+  <data name="Cat_bIsMultiplay_Label" xml:space="preserve">
+    <value>bIsMultiplay</value>
+  </data>
+  <data name="Cat_bIsMultiplay_Desc" xml:space="preserve">
+    <value>Nicht dokumentiert. Vermutlich die Option 'Mehrspieler: Ja/Nein' des Spielclients, die beim Erstellen einer Welt angezeigt wird, und daher ohne Wirkung auf einem dedizierten Server. Standardmäßig False.</value>
+  </data>
+  <data name="Cat_Region_Label" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="Cat_Region_Desc" xml:space="preserve">
+    <value>Nicht dokumentiert. Eine Art Regionscode, dessen erwartetes Format (NA, US, eine Zahl?) und Zweck (Matchmaking, Serverliste oder keines von beidem) unbekannt sind. Standardmäßig leer.</value>
+  </data>
+  <data name="Cat_CrossplayPlatforms_Label" xml:space="preserve">
+    <value>Crossplay-Plattformen</value>
+  </data>
+  <data name="Cat_CrossplayPlatforms_Desc" xml:space="preserve">
+    <value>Plattformen, die sich mit dem Server verbinden dürfen, als Tupel angegeben. Standard: (Steam,Xbox,PS5,Mac).</value>
+  </data>
+  <data name="Cat_PublicIP_Label" xml:space="preserve">
+    <value>Öffentliche IP</value>
+  </data>
+  <data name="Cat_PublicIP_Desc" xml:space="preserve">
+    <value>Community-Server: Legt die externe öffentliche IP explizit fest. Leer = automatische Erkennung.</value>
+  </data>
+  <data name="Cat_PublicPort_Label" xml:space="preserve">
+    <value>Öffentlicher Port</value>
+  </data>
+  <data name="Cat_PublicPort_Desc" xml:space="preserve">
+    <value>Community-Server: Legt den externen öffentlichen Port explizit fest. Ändert nicht den Port, auf dem der Server lauscht.</value>
+  </data>
+  <data name="Cat_bEnableBuildingPlayerUIdDisplay_Label" xml:space="preserve">
+    <value>Erbauer-ID an Gebäuden anzeigen</value>
+  </data>
+  <data name="Cat_bEnableBuildingPlayerUIdDisplay_Desc" xml:space="preserve">
+    <value>Ob die Spieler-ID des Erbauers an Gebäuden angezeigt wird.</value>
+  </data>
+  <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Label" xml:space="preserve">
+    <value>BuildingNameDisplayCacheTTLSeconds</value>
+  </data>
+  <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Desc" xml:space="preserve">
+    <value>Nicht dokumentiert. Vermutlich, wie lange der zwischengespeicherte Anzeigename eines Gebäudes (siehe 'Erbauer-ID an Gebäuden anzeigen') vor der Aktualisierung erhalten bleibt (Sekunden).</value>
+  </data>
+  <data name="Cat_BaseCampMaxNum_Label" xml:space="preserve">
+    <value>Max. Basen (Welt)</value>
+  </data>
+  <data name="Cat_BaseCampMaxNum_Desc" xml:space="preserve">
+    <value>Maximale Gesamtzahl an Basislagern auf der Karte (alle Gildenbasen zusammen).</value>
+  </data>
+  <data name="Cat_BaseCampMaxNumInGuild_Label" xml:space="preserve">
+    <value>Höchstzahl Lager pro Gilde</value>
+  </data>
+  <data name="Cat_BaseCampMaxNumInGuild_Desc" xml:space="preserve">
+    <value>Maximale Anzahl an Basen pro Gilde. Standard 4 (max. 10). Eine Erhöhung steigert die Prozessorlast.</value>
+  </data>
+  <data name="Cat_BaseCampWorkerMaxNum_Label" xml:space="preserve">
+    <value>Max. Anzahl von Arbeitspals im Lager</value>
+  </data>
+  <data name="Cat_BaseCampWorkerMaxNum_Desc" xml:space="preserve">
+    <value>Maximale Anzahl an Pals pro Basis (max. 50). Eine Erhöhung steigert die Prozessorlast.</value>
+  </data>
+  <data name="Cat_MaxBuildingLimitNum_Label" xml:space="preserve">
+    <value>Max. Gebäudeanzahl pro Lager</value>
+  </data>
+  <data name="Cat_MaxBuildingLimitNum_Desc" xml:space="preserve">
+    <value>Obergrenze der Gebäudeanzahl pro Spieler (0 = kein Limit).</value>
+  </data>
+  <data name="Cat_DropItemMaxNum_Label" xml:space="preserve">
+    <value>Maximale Anzahl an fallengelassenen Gegenständen in der Welt</value>
+  </data>
+  <data name="Cat_DropItemMaxNum_Desc" xml:space="preserve">
+    <value>Maximale Anzahl an in der Welt liegenden Gegenständen, bevor sie zu verschwinden beginnen.</value>
+  </data>
+  <data name="Cat_PhysicsActiveDropItemMaxNum_Label" xml:space="preserve">
+    <value>Maximale Anzahl an fallengelassenen Gegenständen mit physikalischem Verhalten in der Welt</value>
+  </data>
+  <data name="Cat_PhysicsActiveDropItemMaxNum_Desc" xml:space="preserve">
+    <value>Maximale Anzahl an fallengelassenen Gegenständen, die Physikverhalten nutzen können. -1 = kein Limit. Eine Erhöhung kann sich auf die Prozessorlast auswirken.</value>
+  </data>
+  <data name="Cat_DropItemMaxNum_UNKO_Label" xml:space="preserve">
+    <value>DropItemMaxNum_UNKO</value>
+  </data>
+  <data name="Cat_DropItemMaxNum_UNKO_Desc" xml:space="preserve">
+    <value>Nicht dokumentiert. Scheint ungenutzt, vermutlich toter Ballast oder eine nicht implementierte Funktion.</value>
+  </data>
+  <data name="Cat_ServerReplicatePawnCullDistance_Label" xml:space="preserve">
+    <value>Pal-Synchronisierungsentfernung</value>
+  </data>
+  <data name="Cat_ServerReplicatePawnCullDistance_Desc" xml:space="preserve">
+    <value>Synchronisierungsentfernung von Pals zu Spielern (cm). Minimum 5000, Maximum 15000.</value>
+  </data>
+  <data name="Cat_ItemContainerForceMarkDirtyInterval_Label" xml:space="preserve">
+    <value>Container-Neusynchronisierungsintervall</value>
+  </data>
+  <data name="Cat_ItemContainerForceMarkDirtyInterval_Desc" xml:space="preserve">
+    <value>Wie oft eine Neusynchronisierung erzwungen wird, während ein Container-Fenster geöffnet ist (Sekunden).</value>
+  </data>
+  <data name="Cat_MaxGuildsPerFrame_Label" xml:space="preserve">
+    <value>MaxGuildsPerFrame</value>
+  </data>
+  <data name="Cat_MaxGuildsPerFrame_Desc" xml:space="preserve">
+    <value>Nicht dokumentiert. Vermutlich eine Obergrenze dafür, wie viele Gilden der Server pro Frame verarbeitet, ein Performance-Regler.</value>
+  </data>
+  <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Label" xml:space="preserve">
+    <value>PlayerDataPalStorageUpdateCheckTickInterval</value>
+  </data>
+  <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Desc" xml:space="preserve">
+    <value>Nicht dokumentiert. Vermutlich, wie oft der Server die Pal-Box/Lagerdaten der Spieler auf zu synchronisierende Änderungen prüft (Sekunden).</value>
+  </data>
+  <data name="Cat_Difficulty_Label" xml:space="preserve">
+    <value>Schwierigkeitsgrad</value>
+  </data>
+  <data name="Cat_Difficulty_Desc" xml:space="preserve">
+    <value>Schwierigkeitsgrad-Voreinstellung für Client / Einzelspieler. Hat keine Wirkung auf einem dedizierten Server, daher auf None belassen und stattdessen die einzelnen Einstellungen unten (oder die Schwierigkeitsgrad-Voreinstellungen oben) verwenden, um die Serverschwierigkeit festzulegen.</value>
+  </data>
+  <data name="Cat_bHardcore_Label" xml:space="preserve">
+    <value>Hardcore-Modus: Spieler sterben permanent.</value>
+  </data>
+  <data name="Cat_bHardcore_Desc" xml:space="preserve">
+    <value>Aktiviert den Hardcore-Modus. Sie können nach dem Tod nicht wiederbelebt werden.</value>
+  </data>
+  <data name="Cat_bCharacterRecreateInHardcore_Label" xml:space="preserve">
+    <value>Charakter neu erstellen (Hardcore)</value>
+  </data>
+  <data name="Cat_bCharacterRecreateInHardcore_Desc" xml:space="preserve">
+    <value>Ob Sie im Hardcore-Modus nach dem Tod Ihren Charakter neu erstellen dürfen.</value>
+  </data>
+  <data name="Cat_bIsPvP_Label" xml:space="preserve">
+    <value>PvP</value>
+  </data>
+  <data name="Cat_bIsPvP_Desc" xml:space="preserve">
+    <value>Aktiviert PvP. Wirkt sich nur aus, wenn Spieler-gegen-Spieler-Schaden und Basisverteidigung gegen andere Gilden ebenfalls aktiviert sind.</value>
+  </data>
+  <data name="Cat_bEnablePlayerToPlayerDamage_Label" xml:space="preserve">
+    <value>Spieler-gegen-Spieler-Schaden</value>
+  </data>
+  <data name="Cat_bEnablePlayerToPlayerDamage_Desc" xml:space="preserve">
+    <value>Erlaubt Spielern, sich gegenseitig zu verletzen. Eine von drei Einstellungen, die zusammen PvP aktivieren.</value>
+  </data>
+  <data name="Cat_bEnableFriendlyFire_Label" xml:space="preserve">
+    <value>Eigenbeschuss</value>
+  </data>
+  <data name="Cat_bEnableFriendlyFire_Desc" xml:space="preserve">
+    <value>Nicht dokumentiert. Laut Community erlaubt dies Spielern und ihren Pals, Mitgliedern der eigenen Gilde Schaden zuzufügen.</value>
+  </data>
+  <data name="Cat_bCanPickupOtherGuildDeathPenaltyDrop_Label" xml:space="preserve">
+    <value>Drops anderer Gilden aufheben</value>
+  </data>
+  <data name="Cat_bCanPickupOtherGuildDeathPenaltyDrop_Desc" xml:space="preserve">
+    <value>Erlaubt Spielern, die von Spielern anderer Gilden beim Tod fallengelassenen Pals und Gegenstände aufzuheben.</value>
+  </data>
+  <data name="Cat_bEnableDefenseOtherGuildPlayer_Label" xml:space="preserve">
+    <value>Basisverteidigung gegen andere Gilden</value>
+  </data>
+  <data name="Cat_bEnableDefenseOtherGuildPlayer_Desc" xml:space="preserve">
+    <value>Basis-Pals greifen feindliche Spieler an, die in Ihre Basis eindringen. Eine von drei Einstellungen, die PvP aktivieren.</value>
+  </data>
+  <data name="Cat_bEnableFastTravel_Label" xml:space="preserve">
+    <value>Schnellreise erlauben</value>
+  </data>
+  <data name="Cat_bEnableFastTravel_Desc" xml:space="preserve">
+    <value>Aktiviert Schnellreise.</value>
+  </data>
+  <data name="Cat_bEnableFastTravelOnlyBaseCamp_Label" xml:space="preserve">
+    <value>Schnellreise auf Lager beschränken</value>
+  </data>
+  <data name="Cat_bEnableFastTravelOnlyBaseCamp_Desc" xml:space="preserve">
+    <value>Beschränkt Schnellreise auf Fahrten ausschließlich zwischen Basen.</value>
+  </data>
+  <data name="Cat_bEnableInvaderEnemy_Label" xml:space="preserve">
+    <value>Überfallevents aktivieren</value>
+  </data>
+  <data name="Cat_bEnableInvaderEnemy_Desc" xml:space="preserve">
+    <value>Aktiviert Invasoren (Überfall-Events).</value>
+  </data>
+  <data name="Cat_EnablePredatorBossPal_Label" xml:space="preserve">
+    <value>Auftauchen von Prädator-Pals</value>
+  </data>
+  <data name="Cat_EnablePredatorBossPal_Desc" xml:space="preserve">
+    <value>Erlaubt es Predator-Pals, in der Welt zu erscheinen.</value>
+  </data>
+  <data name="Cat_bBuildAreaLimit_Label" xml:space="preserve">
+    <value>Baubereichsgrenze</value>
+  </data>
+  <data name="Cat_bBuildAreaLimit_Desc" xml:space="preserve">
+    <value>Verhindert das Bauen in der Nähe von Bauwerken wie Schnellreisepunkten.</value>
+  </data>
+  <data name="Cat_bInvisibleOtherGuildBaseCampAreaFX_Label" xml:space="preserve">
+    <value>Grenzen des Basisbereichs anzeigen</value>
+  </data>
+  <data name="Cat_bInvisibleOtherGuildBaseCampAreaFX_Desc" xml:space="preserve">
+    <value>Zeigt die Grenzen des Basisbereichs an.</value>
+  </data>
+  <data name="Cat_bShowPlayerList_Label" xml:space="preserve">
+    <value>Spielerliste im ESC-Menü</value>
+  </data>
+  <data name="Cat_bShowPlayerList_Desc" xml:space="preserve">
+    <value>Aktiviert die Spielerliste im ESC-Menü.</value>
+  </data>
+  <data name="Cat_bExistPlayerAfterLogout_Label" xml:space="preserve">
+    <value>Körper bleibt nach Abmeldung</value>
+  </data>
+  <data name="Cat_bExistPlayerAfterLogout_Desc" xml:space="preserve">
+    <value>Ob Spieler beim Abmelden an ihrem aktuellen Standort in einen Schlafzustand versetzt werden.</value>
+  </data>
+  <data name="Cat_bEnableNonLoginPenalty_Label" xml:space="preserve">
+    <value>bEnableNonLoginPenalty</value>
+  </data>
+  <data name="Cat_bEnableNonLoginPenalty_Desc" xml:space="preserve">
+    <value>Nicht dokumentiert. Könnte damit zusammenhängen, ob Ihre Pals Debuffs erhalten, wenn Sie sich nicht angemeldet haben. Ungetestet.</value>
+  </data>
+  <data name="Cat_bIsStartLocationSelectByMap_Label" xml:space="preserve">
+    <value>Startort wählen</value>
+  </data>
+  <data name="Cat_bIsStartLocationSelectByMap_Desc" xml:space="preserve">
+    <value>Ob Spieler ihren Startort selbst wählen dürfen.</value>
+  </data>
+  <data name="Cat_bActiveUNKO_Label" xml:space="preserve">
+    <value>bActiveUNKO</value>
+  </data>
+  <data name="Cat_bActiveUNKO_Desc" xml:space="preserve">
+    <value>Nicht dokumentiert. Scheint ungenutzt, vermutlich toter Ballast oder eine nicht implementierte Funktion.</value>
+  </data>
+  <data name="Cat_bEnableAimAssistPad_Label" xml:space="preserve">
+    <value>Zielhilfe (Controller)</value>
+  </data>
+  <data name="Cat_bEnableAimAssistPad_Desc" xml:space="preserve">
+    <value>Zielhilfe für Controller. Auf False setzen, um sie zu deaktivieren.</value>
+  </data>
+  <data name="Cat_bEnableAimAssistKeyboard_Label" xml:space="preserve">
+    <value>Zielhilfe (Tastatur)</value>
+  </data>
+  <data name="Cat_bEnableAimAssistKeyboard_Desc" xml:space="preserve">
+    <value>Aktiviert die Zielhilfe für Maus und Tastatur.</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Attack_Label" xml:space="preserve">
+    <value>Statuspunkte erlauben: Angriff</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Attack_Desc" xml:space="preserve">
+    <value>Erlaubt die Vergabe von Statuspunkten auf Angriff.</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Health_Label" xml:space="preserve">
+    <value>Statuspunkte erlauben: HP</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Health_Desc" xml:space="preserve">
+    <value>Erlaubt die Vergabe von Statuspunkten auf HP.</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Stamina_Label" xml:space="preserve">
+    <value>Statuspunkte erlauben: Ausdauer</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Stamina_Desc" xml:space="preserve">
+    <value>Erlaubt die Vergabe von Statuspunkten auf Ausdauer.</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Weight_Label" xml:space="preserve">
+    <value>Statuspunkte erlauben: Traggewicht</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_Weight_Desc" xml:space="preserve">
+    <value>Erlaubt die Vergabe von Statuspunkten auf Traggewicht.</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_WorkSpeed_Label" xml:space="preserve">
+    <value>Statuspunkte erlauben: Arbeitsgeschwindigkeit</value>
+  </data>
+  <data name="Cat_bAllowEnhanceStat_WorkSpeed_Desc" xml:space="preserve">
+    <value>Erlaubt die Vergabe von Statuspunkten auf Arbeitsgeschwindigkeit.</value>
+  </data>
+  <data name="Cat_bAllowGlobalPalboxExport_Label" xml:space="preserve">
+    <value>Speichern von Pal-Gendaten in der globalen Palbox erlauben</value>
+  </data>
+  <data name="Cat_bAllowGlobalPalboxExport_Desc" xml:space="preserve">
+    <value>Erlaubt das Speichern in der globalen Palbox.</value>
+  </data>
+  <data name="Cat_bAllowGlobalPalboxImport_Label" xml:space="preserve">
+    <value>Wiederherstellen von Pals aus der globalen Palbox erlauben</value>
+  </data>
+  <data name="Cat_bAllowGlobalPalboxImport_Desc" xml:space="preserve">
+    <value>Erlaubt das Laden aus der globalen Palbox.</value>
+  </data>
+  <data name="Cat_bAutoResetGuildNoOnlinePlayers_Label" xml:space="preserve">
+    <value>Bauten inaktiver Gilden automatisch löschen</value>
+  </data>
+  <data name="Cat_bAutoResetGuildNoOnlinePlayers_Desc" xml:space="preserve">
+    <value>Löscht automatisch Bauwerke und Basis-Pals, wenn sich kein Gildenmitglied anmeldet.</value>
+  </data>
+  <data name="Cat_AutoResetGuildTimeNoOnlinePlayers_Label" xml:space="preserve">
+    <value>Inaktive Zeit (keine Mitglieder online) bis zur Löschung der Gildenbauten (in Stunden)</value>
+  </data>
+  <data name="Cat_AutoResetGuildTimeNoOnlinePlayers_Desc" xml:space="preserve">
+    <value>Offline-Dauer, bevor eine inaktive Gilde automatisch zurückgesetzt wird (Stunden). Wird ignoriert, sofern 'Inaktive Gilden automatisch zurücksetzen' nicht aktiviert ist.</value>
+  </data>
+  <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Label" xml:space="preserve">
+    <value>PvP-Gegenstände der Basis auf Karte anzeigen</value>
+  </data>
+  <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Desc" xml:space="preserve">
+    <value>Ob auf der Karte die Anzahl PvP-exklusiver Gegenstände in jeder Basis angezeigt wird.</value>
+  </data>
+  <data name="Cat_bDisplayPvPItemNumOnWorldMap_Player_Label" xml:space="preserve">
+    <value>PvP-Gegenstände der Spieler auf Karte anzeigen</value>
+  </data>
+  <data name="Cat_bDisplayPvPItemNumOnWorldMap_Player_Desc" xml:space="preserve">
+    <value>Ob Spielerstandorte und die Anzahl PvP-exklusiver Gegenstände auf der Karte angezeigt werden.</value>
+  </data>
+  <data name="Cat_bIsRandomizerPalLevelRandom_Label" xml:space="preserve">
+    <value>Im Zufallsmodus das Level wilder Pals komplett zufällig generieren.</value>
+  </data>
+  <data name="Cat_bIsRandomizerPalLevelRandom_Desc" xml:space="preserve">
+    <value>Wenn aktiviert, sind die Level wilder Pals vollständig zufällig. Wenn deaktiviert, werden die Level innerhalb des für das jeweilige Gebiet vorgesehenen Bereichs zufällig bestimmt.</value>
+  </data>
+  <data name="Cat_RandomizerType_Label" xml:space="preserve">
+    <value>Pal-Zufallsbegegnungen</value>
+  </data>
+  <data name="Cat_RandomizerType_Desc" xml:space="preserve">
+    <value>Zufälligkeit beim Erscheinen von Pals. None = keine Zufälligkeit. Region = Zufälligkeit pro Region. All = vollständig zufällig.</value>
+  </data>
+  <data name="Cat_RandomizerSeed_Label" xml:space="preserve">
+    <value>Seed-Wert</value>
+  </data>
+  <data name="Cat_RandomizerSeed_Desc" xml:space="preserve">
+    <value>Seed-Wert, der verwendet wird, wenn die Zufälligkeit beim Erscheinen von Pals aktiviert ist.</value>
+  </data>
+  <data name="Cat_bEnableVoiceChat_Label" xml:space="preserve">
+    <value>Sprachchat</value>
+  </data>
+  <data name="Cat_bEnableVoiceChat_Desc" xml:space="preserve">
+    <value>Aktiviert den Ingame-Sprachchat.</value>
+  </data>
+  <data name="Cat_VoiceChatMaxVolumeDistance_Label" xml:space="preserve">
+    <value>Sprachchat-Entfernung voller Lautstärke</value>
+  </data>
+  <data name="Cat_VoiceChatMaxVolumeDistance_Desc" xml:space="preserve">
+    <value>Entfernung, innerhalb derer die Lautstärke des Sprachchats nicht abnimmt.</value>
+  </data>
+  <data name="Cat_VoiceChatZeroVolumeDistance_Label" xml:space="preserve">
+    <value>Sprachchat-Entfernung ohne Ton</value>
+  </data>
+  <data name="Cat_VoiceChatZeroVolumeDistance_Desc" xml:space="preserve">
+    <value>Entfernung, ab der die Lautstärke des Sprachchats null erreicht.</value>
+  </data>
+  <data name="Cat_DayTimeSpeedRate_Label" xml:space="preserve">
+    <value>Verstreichen der Zeit (Tag)</value>
+  </data>
+  <data name="Cat_DayTimeSpeedRate_Desc" xml:space="preserve">
+    <value>Geschwindigkeit des Tagesverlaufs.</value>
+  </data>
+  <data name="Cat_NightTimeSpeedRate_Label" xml:space="preserve">
+    <value>Verstreichen der Zeit (Nacht)</value>
+  </data>
+  <data name="Cat_NightTimeSpeedRate_Desc" xml:space="preserve">
+    <value>Geschwindigkeit des Nachtverlaufs.</value>
+  </data>
+  <data name="Cat_ExpRate_Label" xml:space="preserve">
+    <value>EP-Erhalt</value>
+  </data>
+  <data name="Cat_ExpRate_Desc" xml:space="preserve">
+    <value>Multiplikator für EXP-Gewinn.</value>
+  </data>
+  <data name="Cat_PalCaptureRate_Label" xml:space="preserve">
+    <value>Fangwahrscheinlichkeit</value>
+  </data>
+  <data name="Cat_PalCaptureRate_Desc" xml:space="preserve">
+    <value>Multiplikator für die Fangrate.</value>
+  </data>
+  <data name="Cat_PalSpawnNumRate_Label" xml:space="preserve">
+    <value>Pal-Erscheinungsrate (*Ein höherer Wert kann die Spielperformance beeinflussen.)</value>
+  </data>
+  <data name="Cat_PalSpawnNumRate_Desc" xml:space="preserve">
+    <value>Erscheinungsrate von Pals. Wirkt sich auf die Performance aus.</value>
+  </data>
+  <data name="Cat_PalEggDefaultHatchingTime_Label" xml:space="preserve">
+    <value>Die Zeit (in Stunden), die benötigt wird, um das riesige Ei auszubrüten (*Die Brutzeiten der anderen Eier ändern sich entsprechend.)</value>
+  </data>
+  <data name="Cat_PalEggDefaultHatchingTime_Desc" xml:space="preserve">
+    <value>Zeit bis zum Schlüpfen eines Riesen-Eis (Stunden). Auch andere Eier benötigen Zeit zum Ausbrüten.</value>
+  </data>
+  <data name="Cat_WorkSpeedRate_Label" xml:space="preserve">
+    <value>Arbeitstempo</value>
+  </data>
+  <data name="Cat_WorkSpeedRate_Desc" xml:space="preserve">
+    <value>Wie schnell Spieler und Pals Arbeiten erledigen. Multiplikator: 2.0 = Arbeit wird doppelt so schnell erledigt.</value>
+  </data>
+  <data name="Cat_MonsterFarmActionSpeedRate_Label" xml:space="preserve">
+    <value>Multiplikator für Produktionsgeschwindigkeit beim Weiden</value>
+  </data>
+  <data name="Cat_MonsterFarmActionSpeedRate_Desc" xml:space="preserve">
+    <value>Multiplikator für die Produktionsgeschwindigkeit von Gegenständen beim Weiden.</value>
+  </data>
+  <data name="Cat_PalDamageRateAttack_Label" xml:space="preserve">
+    <value>Angriffsschaden (alle Pals)</value>
+  </data>
+  <data name="Cat_PalDamageRateAttack_Desc" xml:space="preserve">
+    <value>Multiplikator für von Pals verursachten Schaden.</value>
+  </data>
+  <data name="Cat_PalDamageRateDefense_Label" xml:space="preserve">
+    <value>Genommener Schaden (alle Pals)</value>
+  </data>
+  <data name="Cat_PalDamageRateDefense_Desc" xml:space="preserve">
+    <value>Multiplikator für von Pals erlittenen Schaden.</value>
+  </data>
+  <data name="Cat_PlayerDamageRateAttack_Label" xml:space="preserve">
+    <value>Angriffsschaden (Spieler)</value>
+  </data>
+  <data name="Cat_PlayerDamageRateAttack_Desc" xml:space="preserve">
+    <value>Multiplikator für von Spielern verursachten Schaden.</value>
+  </data>
+  <data name="Cat_PlayerDamageRateDefense_Label" xml:space="preserve">
+    <value>Genommener Schaden (Spieler)</value>
+  </data>
+  <data name="Cat_PlayerDamageRateDefense_Desc" xml:space="preserve">
+    <value>Multiplikator für von Spielern erlittenen Schaden.</value>
+  </data>
+  <data name="Cat_PlayerStomachDecreaceRate_Label" xml:space="preserve">
+    <value>Sattheitsverlust (Spieler)</value>
+  </data>
+  <data name="Cat_PlayerStomachDecreaceRate_Desc" xml:space="preserve">
+    <value>Multiplikator für die Abnahmerate des Hungers von Spielern.</value>
+  </data>
+  <data name="Cat_PlayerStaminaDecreaceRate_Label" xml:space="preserve">
+    <value>Ausdauerverlust (Spieler)</value>
+  </data>
+  <data name="Cat_PlayerStaminaDecreaceRate_Desc" xml:space="preserve">
+    <value>Multiplikator für die Abnahmerate der Ausdauer von Spielern.</value>
+  </data>
+  <data name="Cat_PlayerAutoHPRegeneRate_Label" xml:space="preserve">
+    <value>Natürliche LP-Wiederherstellungsrate (Spieler)</value>
+  </data>
+  <data name="Cat_PlayerAutoHPRegeneRate_Desc" xml:space="preserve">
+    <value>Multiplikator für die natürliche HP-Regeneration von Spielern.</value>
+  </data>
+  <data name="Cat_PlayerAutoHpRegeneRateInSleep_Label" xml:space="preserve">
+    <value>LP-Wiederherstellungsrate beim Schlafen (Spieler)</value>
+  </data>
+  <data name="Cat_PlayerAutoHpRegeneRateInSleep_Desc" xml:space="preserve">
+    <value>Multiplikator für die HP-Regeneration von Spielern im Schlaf.</value>
+  </data>
+  <data name="Cat_PalStomachDecreaceRate_Label" xml:space="preserve">
+    <value>Sattheitsverlust (Pals)</value>
+  </data>
+  <data name="Cat_PalStomachDecreaceRate_Desc" xml:space="preserve">
+    <value>Multiplikator für die Abnahmerate des Hungers von Pals.</value>
+  </data>
+  <data name="Cat_PalStaminaDecreaceRate_Label" xml:space="preserve">
+    <value>Ausdauerverlust (Pals)</value>
+  </data>
+  <data name="Cat_PalStaminaDecreaceRate_Desc" xml:space="preserve">
+    <value>Multiplikator für die Abnahmerate der Ausdauer von Pals.</value>
+  </data>
+  <data name="Cat_PalAutoHPRegeneRate_Label" xml:space="preserve">
+    <value>Natürliche LP-Wiederherstellungsrate (Pals)</value>
+  </data>
+  <data name="Cat_PalAutoHPRegeneRate_Desc" xml:space="preserve">
+    <value>Multiplikator für die natürliche HP-Regeneration von Pals.</value>
+  </data>
+  <data name="Cat_PalAutoHpRegeneRateInSleep_Label" xml:space="preserve">
+    <value>LP-Wiederherstellungsrate beim Schlafen (Pals in Pal-Box)</value>
+  </data>
+  <data name="Cat_PalAutoHpRegeneRateInSleep_Desc" xml:space="preserve">
+    <value>Multiplikator für die HP-Regeneration von Pals im Schlaf in der Palbox.</value>
+  </data>
+  <data name="Cat_CollectionDropRate_Label" xml:space="preserve">
+    <value>Gegenstandsammelrate</value>
+  </data>
+  <data name="Cat_CollectionDropRate_Desc" xml:space="preserve">
+    <value>Multiplikator für sammelbare Gegenstände.</value>
+  </data>
+  <data name="Cat_CollectionObjectHpRate_Label" xml:space="preserve">
+    <value>LP von farmbaren Objekten</value>
+  </data>
+  <data name="Cat_CollectionObjectHpRate_Desc" xml:space="preserve">
+    <value>Multiplikator für die Lebenspunkte sammelbarer Objekte.</value>
+  </data>
+  <data name="Cat_CollectionObjectRespawnSpeedRate_Label" xml:space="preserve">
+    <value>Respawnzeit von farmbaren Objekten</value>
+  </data>
+  <data name="Cat_CollectionObjectRespawnSpeedRate_Desc" xml:space="preserve">
+    <value>Multiplikator für das Respawn-Intervall sammelbarer Objekte.</value>
+  </data>
+  <data name="Cat_EnemyDropItemRate_Label" xml:space="preserve">
+    <value>Beutemenge</value>
+  </data>
+  <data name="Cat_EnemyDropItemRate_Desc" xml:space="preserve">
+    <value>Multiplikator für die Menge fallengelassener Gegenstände.</value>
+  </data>
+  <data name="Cat_DropItemAliveMaxHours_Label" xml:space="preserve">
+    <value>Lebensdauer fallengelassener Gegenstände (Stunden)</value>
+  </data>
+  <data name="Cat_DropItemAliveMaxHours_Desc" xml:space="preserve">
+    <value>Wie lange fallengelassene Gegenstände in der Welt verbleiben, bevor sie verschwinden (Stunden). Ein niedrigerer Wert unterstützt die Serverbereinigung und Performance.</value>
+  </data>
+  <data name="Cat_ItemWeightRate_Label" xml:space="preserve">
+    <value>Gewichtsrate von Gegenständen</value>
+  </data>
+  <data name="Cat_ItemWeightRate_Desc" xml:space="preserve">
+    <value>Multiplikator für das Gegenstandsgewicht.</value>
+  </data>
+  <data name="Cat_ItemCorruptionMultiplier_Label" xml:space="preserve">
+    <value>Multiplikator für Gegenstandsverfall</value>
+  </data>
+  <data name="Cat_ItemCorruptionMultiplier_Desc" xml:space="preserve">
+    <value>Multiplikator für die Geschwindigkeit des Gegenstandsverfalls (Korrosion).</value>
+  </data>
+  <data name="Cat_EquipmentDurabilityDamageRate_Label" xml:space="preserve">
+    <value>Multiplikator für Haltbarkeitsverlust der Ausrüstung</value>
+  </data>
+  <data name="Cat_EquipmentDurabilityDamageRate_Desc" xml:space="preserve">
+    <value>Multiplikator für den Haltbarkeitsverlust von Ausrüstung.</value>
+  </data>
+  <data name="Cat_BuildObjectHpRate_Label" xml:space="preserve">
+    <value>Gebäude-HP</value>
+  </data>
+  <data name="Cat_BuildObjectHpRate_Desc" xml:space="preserve">
+    <value>Multiplikator für die Lebenspunkte von Gebäuden. 2.0 = doppelte Gebäude-HP.</value>
+  </data>
+  <data name="Cat_BuildObjectDamageRate_Label" xml:space="preserve">
+    <value>Gebäudeschaden</value>
+  </data>
+  <data name="Cat_BuildObjectDamageRate_Desc" xml:space="preserve">
+    <value>Schadensmultiplikator für Gebäude.</value>
+  </data>
+  <data name="Cat_BuildObjectDeteriorationDamageRate_Label" xml:space="preserve">
+    <value>Verfallrate von Gebäuden</value>
+  </data>
+  <data name="Cat_BuildObjectDeteriorationDamageRate_Desc" xml:space="preserve">
+    <value>Multiplikator für die Verfallsgeschwindigkeit von Gebäuden.</value>
+  </data>
+  <data name="Cat_DeathPenalty_Label" xml:space="preserve">
+    <value>Todeshandicap</value>
+  </data>
+  <data name="Cat_DeathPenalty_Desc" xml:space="preserve">
+    <value>Was Sie beim Tod verlieren. None = nichts. Item = alle Gegenstände außer Ausrüstung. ItemAndEquipment = alle Gegenstände. All = alle Gegenstände und alle Pals in Ihrem Team.</value>
+  </data>
+  <data name="Cat_bPalLost_Label" xml:space="preserve">
+    <value>Hardcore-Modus: Kampfunfähige Pals sterben permanent.</value>
+  </data>
+  <data name="Cat_bPalLost_Desc" xml:space="preserve">
+    <value>Pals gehen beim Tod dauerhaft verloren.</value>
+  </data>
+  <data name="Cat_BlockRespawnTime_Label" xml:space="preserve">
+    <value>Wiederbelebungs-Abklingzeit (Sekunden)</value>
+  </data>
+  <data name="Cat_BlockRespawnTime_Desc" xml:space="preserve">
+    <value>Abklingzeit, bevor Sie nach dem Tod wiederbelebt werden können (Sekunden).</value>
+  </data>
+  <data name="Cat_RespawnPenaltyDurationThreshold_Label" xml:space="preserve">
+    <value>Schwellenwert der Wiederbelebungsstrafe</value>
+  </data>
+  <data name="Cat_RespawnPenaltyDurationThreshold_Desc" xml:space="preserve">
+    <value>Schwellenwert für die Überlebenszeit (Sekunden). Sterben Sie erneut, bevor Sie so lange überlebt haben, wird der unten stehende Multiplikator für die Wiederbelebungs-Abklingzeit angewendet.</value>
+  </data>
+  <data name="Cat_RespawnPenaltyTimeScale_Label" xml:space="preserve">
+    <value>Multiplikator der Wiederbelebungsstrafe</value>
+  </data>
+  <data name="Cat_RespawnPenaltyTimeScale_Desc" xml:space="preserve">
+    <value>Multiplikator, der auf die Wiederbelebungs-Abklingzeit angewendet wird.</value>
+  </data>
+  <data name="Cat_GuildPlayerMaxNum_Label" xml:space="preserve">
+    <value>Maximale Gildengröße</value>
+  </data>
+  <data name="Cat_GuildPlayerMaxNum_Desc" xml:space="preserve">
+    <value>Maximale Anzahl an Spielern pro Gilde.</value>
+  </data>
+  <data name="Cat_GuildRejoinCooldownMinutes_Label" xml:space="preserve">
+    <value>Abklingzeit für Gildenwiederbeitritt (Min.)</value>
+  </data>
+  <data name="Cat_GuildRejoinCooldownMinutes_Desc" xml:space="preserve">
+    <value>Abklingzeit, bevor einer Gilde erneut beigetreten werden kann (Minuten).</value>
+  </data>
+  <data name="Cat_DenyTechnologyList_Label" xml:space="preserve">
+    <value>Deaktivierte Technologien</value>
+  </data>
+  <data name="Cat_DenyTechnologyList_Desc" xml:space="preserve">
+    <value>Deaktiviert bestimmte Technologien. Geben Sie Technologie-IDs an, Beispiel: ("PALBOX", "RepairBench"). Leer = keine.</value>
+  </data>
+  <data name="Cat_bAdditionalDropItemWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
+    <value>PvP-Kill: Gegenstand fallen lassen</value>
+  </data>
+  <data name="Cat_bAdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
+    <value>Ob bei aktiviertem PvP ein spezieller Gegenstand fallen gelassen wird, wenn ein Spieler getötet wird.</value>
+  </data>
+  <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
+    <value>PvP-Kill: Gegenstands-ID</value>
+  </data>
+  <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
+    <value>Die ID des Gegenstands, der bei einem PvP-Kill fallen gelassen wird (wird verwendet, wenn 'PvP-Kill: Gegenstand fallen lassen' aktiviert ist).</value>
+  </data>
+  <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
+    <value>PvP-Kill: Gegenstandsanzahl</value>
+  </data>
+  <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
+    <value>Die Anzahl des Gegenstands, der bei einem PvP-Kill fallen gelassen wird (wird verwendet, wenn 'PvP-Kill: Gegenstand fallen lassen' aktiviert ist).</value>
+  </data>
+  <data name="Cat_SupplyDropSpan_Label" xml:space="preserve">
+    <value>Intervalle zwischen Meteoritenschauern/Versorgungslieferungen (min)</value>
+  </data>
+  <data name="Cat_SupplyDropSpan_Desc" xml:space="preserve">
+    <value>Intervall für Meteoriten-/Versorgungsabwürfe (Minuten).</value>
+  </data>
+  <data name="Cat_AutoTransferMasterCheckIntervalSeconds_Label" xml:space="preserve">
+    <value>AutoTransferMasterCheckIntervalSeconds</value>
+  </data>
+  <data name="Cat_AutoTransferMasterCheckIntervalSeconds_Desc" xml:space="preserve">
+    <value>Nicht dokumentiert. Vermutlich, wie oft der Server prüft, ob der Besitz einer Gilde/Basis automatisch von einem inaktiven Anführer übertragen werden soll (Sekunden).</value>
+  </data>
+  <data name="Cat_AutoTransferMasterThresholdDays_Label" xml:space="preserve">
+    <value>AutoTransferMasterThresholdDays</value>
+  </data>
+  <data name="Cat_AutoTransferMasterThresholdDays_Desc" xml:space="preserve">
+    <value>Nicht dokumentiert. Vermutlich die Anzahl an Tagen, die ein Gilden-/Basisanführer inaktiv sein muss, bevor der Besitz automatisch übertragen wird.</value>
+  </data>
+  <data name="Cat_LogFormatType_Opt_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="Cat_LogFormatType_Opt_Json" xml:space="preserve">
+    <value>Json</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_None" xml:space="preserve">
+    <value>Keine</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_Casual" xml:space="preserve">
+    <value>Entspannt</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="Cat_Difficulty_Opt_Hard" xml:space="preserve">
+    <value>Schwer</value>
+  </data>
+  <data name="Cat_RandomizerType_Opt_None" xml:space="preserve">
+    <value>Keine</value>
+  </data>
+  <data name="Cat_RandomizerType_Opt_Region" xml:space="preserve">
+    <value>Nach Region</value>
+  </data>
+  <data name="Cat_RandomizerType_Opt_All" xml:space="preserve">
+    <value>Vollständig zufällig</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_None" xml:space="preserve">
+    <value>Keine</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_Item" xml:space="preserve">
+    <value>Gegenstände (ohne Ausrüstung)</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_ItemAndEquipment" xml:space="preserve">
+    <value>Gegenstände und Ausrüstung</value>
+  </data>
+  <data name="Cat_DeathPenalty_Opt_All" xml:space="preserve">
+    <value>Alles (inkl. Pals)</value>
+  </data>
+  <data name="Settings_PresetCasual" xml:space="preserve">
+    <value>Entspannt</value>
+  </data>
+  <data name="Settings_PresetNormal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="Settings_PresetHard" xml:space="preserve">
+    <value>Schwer</value>
+  </data>
+  <data name="Settings_PresetHardcore" xml:space="preserve">
+    <value>Hardcore</value>
+  </data>
+  <data name="LauncherSettings_RestartPrompt" xml:space="preserve">
+    <value>Der Launcher muss neu gestartet werden, um die neue Sprache ({0}) zu übernehmen. Jetzt neu starten?</value>
+  </data>
+  <data name="LauncherSettings_RestartPromptRunning" xml:space="preserve">
+    <value>Der Launcher muss neu gestartet werden, um die neue Sprache ({0}) zu übernehmen. Ihr Palworld-Server läuft dabei weiter, der Launcher verbindet sich anschließend wieder mit ihm. Jetzt neu starten?</value>
+  </data>
+  <data name="LauncherSettings_RestartNow" xml:space="preserve">
+    <value>Jetzt neu starten</value>
+  </data>
+  <data name="LauncherSettings_Copyright" xml:space="preserve">
+    <value>© 2026 Syl S. · GPLv3</value>
+  </data>
+  <data name="Settings_TabGameSettings" xml:space="preserve">
+    <value>Spieleinstellungen</value>
+  </data>
+  <data name="Settings_TabCpuAffinity" xml:space="preserve">
+    <value>CPU-Affinität/Priorität</value>
+  </data>
+  <data name="Main_CompactMode" xml:space="preserve">
+    <value>Kompaktmodus</value>
+  </data>
+  <data name="Settings_GameplayBlurb" xml:space="preserve">
+    <value>Schwierigkeitsgrad, EXP-/Fang-/Beutequoten, Tag-Nacht-Länge und Umschalter für Weltfunktionen. Vollständige Referenz:</value>
+  </data>
+  <data name="Settings_GameBalanceBlurb" xml:space="preserve">
+    <value>Schadens-, Beute- und Statuswert-Multiplikatoren, die Kampf und Spielfortschritt ausbalancieren. Vollständige Referenz:</value>
+  </data>
+  <data name="Settings_PerformanceBlurb" xml:space="preserve">
+    <value>Grenzwerte, die die Serverlast beeinflussen: Lager, Gildengröße, Objektobergrenzen und Spawn-Dichte. Vollständige Referenz:</value>
+  </data>
+  <data name="Settings_LaunchArgsBlurbLink" xml:space="preserve">
+    <value>Dokumentation zu den Startargumenten</value>
+  </data>
+  <data name="Update_Pinned" xml:space="preserve">
+    <value>Fixiert auf {0}</value>
+  </data>
+  <data name="Main_PinVersion" xml:space="preserve">
+    <value>Serverversion fixieren</value>
+  </data>
+  <data name="Main_PinVersionTip" xml:space="preserve">
+    <value>Friert den Server auf seiner aktuellen Version ein. Solange fixiert, sind automatische Updates deaktiviert. Deaktivieren, um Updates fortzusetzen.</value>
+  </data>
+  <data name="Main_AutomaticUpdates" xml:space="preserve">
+    <value>Automatische Updates</value>
+  </data>
+  <data name="Main_AutomaticUpdatesTip" xml:space="preserve">
+    <value>Lädt Updates automatisch herunter. Wenn deaktiviert, aktualisiert der Launcher weder beim Start noch während der Server läuft. Ein manuelles Prüfen auf Updates bleibt weiterhin möglich.</value>
+  </data>
+  <data name="Main_PinnedBuildFormat" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="LauncherSettings_AutoReconnect" xml:space="preserve">
+    <value>Beim Start des Launchers ohne Nachfrage wieder mit einem laufenden Server verbinden</value>
+  </data>
+  <data name="LauncherSettings_AutoReconnectTip" xml:space="preserve">
+    <value>Wird beim Start genau ein verwalteter, laufender Server gefunden, wird er ohne Nachfrage übernommen. Werden mehrere gefunden, erfolgt weiterhin eine Nachfrage.</value>
+  </data>
+  <data name="Main_ImportServer" xml:space="preserve">
+    <value>Server importieren</value>
+  </data>
+  <data name="Main_ImportServerTip" xml:space="preserve">
+    <value>Kopiert einen bereits vorhandenen, an anderer Stelle installierten dedizierten Palworld-Server in diesen Launcher. Das Original bleibt unverändert.</value>
+  </data>
+  <data name="Main_ImportPickTitle" xml:space="preserve">
+    <value>Wählen Sie den Ordner Ihres dedizierten Palworld-Servers (meist PalServer genannt)</value>
+  </data>
+  <data name="Main_ImportTitle" xml:space="preserve">
+    <value>Server importieren</value>
+  </data>
+  <data name="Main_ImportInvalidMessage" xml:space="preserve">
+    <value>Dieser Ordner sieht nicht nach einer Installation eines dedizierten Palworld-Servers aus. Er befindet sich normalerweise in einem Ordner namens PalServer. Bei Steam liegt er unter Steam\steamapps\common\PalServer.</value>
+  </data>
+  <data name="Main_ImportConfirmMessage" xml:space="preserve">
+    <value>Diesen Server aus „{0}“ in den Launcher kopieren? Das Original bleibt erhalten, sodass Sie es selbst löschen können, sobald Sie bestätigt haben, dass die vom Launcher verwaltete Kopie funktioniert.</value>
+  </data>
+  <data name="Main_ImportCopyButton" xml:space="preserve">
+    <value>Importieren</value>
+  </data>
+  <data name="Main_ImportFailedMessage" xml:space="preserve">
+    <value>Der Import wurde nicht abgeschlossen. Details finden Sie im Protokoll.</value>
+  </data>
+  <data name="LauncherSettings_LoginOpen" xml:space="preserve">
+    <value>Launcher öffnen und Server bei der Windows-Anmeldung starten</value>
+  </data>
+  <data name="LauncherSettings_LoginOpenTip" xml:space="preserve">
+    <value>Öffnet bei der Anmeldung den Launcher und startet den Server, damit geplante Neustarts, Updates, Sicherungen und die Zustandsüberwachung laufen. Keine Administratorrechte nötig. Deaktivieren entfernt die Verknüpfung im Autostart-Ordner.</value>
+  </data>
+  <data name="LauncherSettings_LoginOpenFailedTitle" xml:space="preserve">
+    <value>Autostart-Verknüpfung konnte nicht geändert werden</value>
+  </data>
+  <data name="LauncherSettings_LoginOpenFailedMessage" xml:space="preserve">
+    <value>Die Autostart-Verknüpfung konnte nicht erstellt oder entfernt werden. Details finden Sie im Protokoll.</value>
+  </data>
+</root>

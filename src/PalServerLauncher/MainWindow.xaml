@@ -221,17 +221,17 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
                         <TextBlock Text="{x:Static loc:Strings.Main_MinUptime}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                        <TextBox Text="{Binding MinUptimeHours}" Width="40" VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding MinUptimeHours}" Width="30" VerticalAlignment="Center"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_HourSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
                         <CheckBox Content="{x:Static loc:Strings.Main_AnnounceRestarts}" IsChecked="{Binding AnnounceRestartsEnabled}"
                                   ToolTip="{x:Static loc:Strings.Main_AnnounceRestartsTip}"/>
-                        <TextBox Text="{Binding AnnounceLead1}" Width="34" MaxLength="3" VerticalAlignment="Center" Margin="6,0,0,0"
+                        <TextBox Text="{Binding AnnounceLead1}" Width="28" MaxLength="3" VerticalAlignment="Center" Margin="6,0,0,0"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="{x:Static loc:Strings.Main_AnnounceLeadTip}"/>
-                        <TextBox Text="{Binding AnnounceLead2}" Width="34" MaxLength="3" VerticalAlignment="Center" Margin="4,0,0,0"
+                        <TextBox Text="{Binding AnnounceLead2}" Width="28" MaxLength="3" VerticalAlignment="Center" Margin="4,0,0,0"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="{x:Static loc:Strings.Main_AnnounceLeadTip}"/>
-                        <TextBox Text="{Binding AnnounceLead3}" Width="34" MaxLength="3" VerticalAlignment="Center" Margin="4,0,0,0"
+                        <TextBox Text="{Binding AnnounceLead3}" Width="28" MaxLength="3" VerticalAlignment="Center" Margin="4,0,0,0"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="{x:Static loc:Strings.Main_AnnounceLeadTip}"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_MinuteSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
@@ -297,14 +297,14 @@
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
                         <CheckBox Content="{x:Static loc:Strings.Main_ZombieCheck}" IsChecked="{Binding ZombieCheckEnabled}"
                                   ToolTip="{x:Static loc:Strings.Main_ZombieCheckTip}"/>
-                        <TextBox Text="{Binding ZombieFailureThreshold}" Width="34" MaxLength="2" VerticalAlignment="Center" Margin="6,0,0,0"
+                        <TextBox Text="{Binding ZombieFailureThreshold}" Width="28" MaxLength="2" VerticalAlignment="Center" Margin="6,0,0,0"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"
                                  ToolTip="{x:Static loc:Strings.Main_ZombieThresholdTip}"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_ChecksSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,9">
                         <TextBlock Text="{x:Static loc:Strings.Main_RestCheckEvery}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                        <TextBox Text="{Binding HealthProbeSeconds}" Width="34" MaxLength="3" VerticalAlignment="Center"
+                        <TextBox Text="{Binding HealthProbeSeconds}" Width="28" MaxLength="3" VerticalAlignment="Center"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"
                                  ToolTip="{x:Static loc:Strings.Main_RestCheckEveryTip}"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_SecondsSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>

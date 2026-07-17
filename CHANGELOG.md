@@ -2,6 +2,16 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [Unreleased]
+
+### Added
+- **Six more languages: German, French, Spanish, Brazilian Portuguese, Korean, and Russian.** The launcher is
+  now available in German (Deutsch), French (Français), Spanish (Español), Brazilian Portuguese (Português
+  (Brasil)), Korean (한국어), and Russian (Русский), joining English, Simplified Chinese, Traditional Chinese,
+  and Japanese. Pick one on first run or any time from Launcher Settings. The Game Settings names come from
+  Palworld's own translations, the rest is machine-generated, so corrections via an issue or pull request are
+  welcome.
+
 ## [0.4.0] - 2026-07-16
 
 ### Added
