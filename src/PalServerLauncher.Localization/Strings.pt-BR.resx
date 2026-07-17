@@ -398,7 +398,7 @@ Salvar mesmo assim como mensagens fixas?</value>
     <value>Quantas verificações de saúde falhas seguidas antes de o servidor ser considerado travado e reiniciado à força.</value>
   </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
-    <value>verificações</value>
+    <value>verif.</value>
   </data>
   <data name="Main_RestCheckEvery" xml:space="preserve">
     <value>Verificar REST a cada</value>

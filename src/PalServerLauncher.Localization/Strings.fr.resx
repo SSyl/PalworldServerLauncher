@@ -398,7 +398,7 @@ Les enregistrer quand même comme messages fixes ?</value>
     <value>Nombre de vérifications d'état consécutives en échec avant que le serveur soit considéré comme bloqué et forcé à redémarrer.</value>
   </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
-    <value>vérifications</value>
+    <value>vérif.</value>
   </data>
   <data name="Main_RestCheckEvery" xml:space="preserve">
     <value>Vérification REST toutes les</value>

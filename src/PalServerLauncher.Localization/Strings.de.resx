@@ -398,7 +398,7 @@ Trotzdem als feste Nachrichten speichern?</value>
     <value>Wie viele fehlgeschlagene Zustandsprüfungen in Folge nötig sind, bevor der Server als hängengeblieben gilt und zwangsweise neu gestartet wird.</value>
   </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
-    <value>Prüfungen</value>
+    <value>Prüf.</value>
   </data>
   <data name="Main_RestCheckEvery" xml:space="preserve">
     <value>REST-Prüfung alle</value>

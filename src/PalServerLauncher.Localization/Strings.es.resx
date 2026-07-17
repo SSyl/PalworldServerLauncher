@@ -398,7 +398,7 @@
     <value>Cuántas comprobaciones de estado fallidas seguidas antes de considerar el servidor bloqueado y forzar su reinicio.</value>
   </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
-    <value>comprobaciones</value>
+    <value>comprob.</value>
   </data>
   <data name="Main_RestCheckEvery" xml:space="preserve">
     <value>Comprobación REST cada</value>
