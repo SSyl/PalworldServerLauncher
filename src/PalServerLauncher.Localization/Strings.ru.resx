@@ -2391,4 +2391,37 @@ REST API на этом сервере пока не включён, поэтом
   <data name="LauncherSettings_NeverAskUnknownServersTip" xml:space="preserve">
     <value>Если сервер Palworld, который лаунчер не запускал сам, уже работает, запускать без предупреждения об этом.</value>
   </data>
+  <data name="ServerCmd_TabRest" xml:space="preserve">
+    <value>REST</value>
+  </data>
+  <data name="ServerCmd_TabRcon" xml:space="preserve">
+    <value>RCON</value>
+  </data>
+  <data name="ServerCmd_RconDeprecated" xml:space="preserve">
+    <value>Palworld has officially deprecated RCON and has said it will be removed in a future update. You should use the REST API instead when possible.</value>
+  </data>
+  <data name="ServerCmd_RconRecent" xml:space="preserve">
+    <value>Recent commands</value>
+  </data>
+  <data name="ServerCmd_RconConnecting" xml:space="preserve">
+    <value>Connecting to {0}...</value>
+  </data>
+  <data name="ServerCmd_RconConnected" xml:space="preserve">
+    <value>Connected to {0}.</value>
+  </data>
+  <data name="ServerCmd_RconUnreachable" xml:space="preserve">
+    <value>Couldn't reach RCON at {0}. Is the server running with RCONEnabled=True and the right RCONPort?</value>
+  </data>
+  <data name="ServerCmd_RconAuthFailed" xml:space="preserve">
+    <value>RCON rejected the password. It uses your AdminPassword, so check that's set correctly.</value>
+  </data>
+  <data name="ServerCmd_RconError" xml:space="preserve">
+    <value>RCON error. Check the launcher log for details.</value>
+  </data>
+  <data name="ServerCmd_RconNoHistory" xml:space="preserve">
+    <value>No recent commands yet.</value>
+  </data>
+  <data name="ServerCmd_RestUnavailable" xml:space="preserve">
+    <value>The REST API isn't connected, so these commands are unavailable right now.</value>
+  </data>
 </root>

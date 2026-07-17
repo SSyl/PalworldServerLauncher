@@ -280,8 +280,10 @@ public partial class MainViewModel : ObservableObject
 
     // --- Live server commands (the Server Commands dialog) ---
 
-    /// <summary>Server Commands is live-only: enabled while the server is up (so REST is plausibly usable).</summary>
-    public bool CanUseServerCommands => State is ServerState.Healthy or ServerState.Degraded;
+    /// <summary>Server Commands is enabled whenever the server is running, not just when REST is healthy: RCON
+    /// works without REST, and the dialog's REST tab grays itself out with a notice when REST isn't connected.
+    /// Matches the run-state set used for restarts.</summary>
+    public bool CanUseServerCommands => State is ServerState.Healthy or ServerState.Degraded or ServerState.Zombie or ServerState.RestUnreachable;
 
     /// <summary>
     /// On every server-state change, manage the Force Shutdown reveal. Entering a transitional state
@@ -359,6 +361,14 @@ public partial class MainViewModel : ObservableObject
 
     /// <summary>True when a live REST client exists, so a graceful shutdown is possible (else Stop can only force-kill).</summary>
     public bool IsRestApiReady => _controller.RestClient is not null;
+
+    /// <summary>RCON connection details for the local server, read fresh from the ini. Host is always loopback.
+    /// <see cref="Rcon.RconConnectionInfo.Enabled"/> is false when RCON is off in the ini, which hides the RCON tab.</summary>
+    public Rcon.RconConnectionInfo RconConnection()
+    {
+        var settings = _controller.ReadServerSettings();
+        return new Rcon.RconConnectionInfo(settings.RconEnabled ?? false, "127.0.0.1", settings.RconPortOrDefault, settings.AdminPassword ?? "");
+    }
 
     // --- Scheduled-restart settings (persist to launcher.json on change; the scheduler reads config live) ---
     public bool ScheduledRestartEnabled

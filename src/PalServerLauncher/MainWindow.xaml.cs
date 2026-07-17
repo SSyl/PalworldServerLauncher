@@ -398,7 +398,7 @@ public partial class MainWindow : Window
     }
 
     private void OnOpenServerCommands(object sender, RoutedEventArgs e) =>
-        ServerCommandsDialog.Show(this, _viewModel.ServerCommands, _logger);
+        ServerCommandsDialog.Show(this, _viewModel.ServerCommands, _viewModel.RconConnection(), _viewModel.IsRestApiReady, _logger);
 
     private void OnForceShutdown(object sender, RoutedEventArgs e)
     {
