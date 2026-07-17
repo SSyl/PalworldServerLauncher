@@ -2365,7 +2365,7 @@ Save these changes?</value>
     <value>Warning!</value>
   </data>
   <data name="UnknownServer_Intro" xml:space="preserve">
-    <value>The launcher detected other Palworld servers running on this machine. If this isn't intended, click the terminate button below to shut down the other server(s).</value>
+    <value>The launcher detected other Palworld servers running on this machine. If this isn't intended, click the terminate button below to shut them down.</value>
   </data>
   <data name="UnknownServer_Unreadable" xml:space="preserve">
     <value>A running server the launcher couldn't identify (it may be running as administrator)</value>

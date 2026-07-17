@@ -2365,7 +2365,7 @@ Salvar essas alterações?</value>
     <value>Aviso!</value>
   </data>
   <data name="UnknownServer_Intro" xml:space="preserve">
-    <value>O launcher detectou outros servidores Palworld em execução nesta máquina. Se isso não for intencional, clique no botão Forçar Encerramento abaixo para desligar o(s) outro(s) servidor(es).</value>
+    <value>O launcher detectou outros servidores Palworld em execução nesta máquina. Se isso não for intencional, clique no botão Forçar Encerramento abaixo para desligá-los.</value>
   </data>
   <data name="UnknownServer_Unreadable" xml:space="preserve">
     <value>Um servidor em execução que o launcher não conseguiu identificar (ele pode estar sendo executado como administrador)</value>
