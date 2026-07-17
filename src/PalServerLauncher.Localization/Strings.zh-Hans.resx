@@ -2348,4 +2348,49 @@
   <data name="ServerCmd_RestUnavailable" xml:space="preserve">
     <value>REST API 未连接，因此这些命令目前不可用。</value>
   </data>
+  <data name="Main_BackupLocationLabel" xml:space="preserve">
+    <value>备份位置：</value>
+  </data>
+  <data name="Main_BackupLocationDefault" xml:space="preserve">
+    <value>默认</value>
+  </data>
+  <data name="Main_BackupLocationCustom" xml:space="preserve">
+    <value>自定义</value>
+  </data>
+  <data name="Main_BackupLocationTip" xml:space="preserve">
+    <value>备份压缩包的保存位置。默认是启动器旁边的 backups 文件夹。</value>
+  </data>
+  <data name="BackupLoc_Title" xml:space="preserve">
+    <value>备份位置</value>
+  </data>
+  <data name="BackupLoc_Intro" xml:space="preserve">
+    <value>服务器备份压缩后保存到的位置：</value>
+  </data>
+  <data name="BackupLoc_Change" xml:space="preserve">
+    <value>更改…</value>
+  </data>
+  <data name="BackupLoc_PickTitle" xml:space="preserve">
+    <value>选择备份文件夹</value>
+  </data>
+  <data name="BackupLoc_ChangedTitle" xml:space="preserve">
+    <value>备份位置已更改</value>
+  </data>
+  <data name="BackupLoc_ChangedMessage" xml:space="preserve">
+    <value>备份现在将保存到：</value>
+  </data>
+  <data name="BackupLoc_ExistingNote" xml:space="preserve">
+    <value>你现有的备份仍保留在 {0} 中，不会被自动删除。</value>
+  </data>
+  <data name="BackupLoc_FailedTitle" xml:space="preserve">
+    <value>无法更改备份位置</value>
+  </data>
+  <data name="BackupLoc_FailedMessage" xml:space="preserve">
+    <value>该文件夹无法写入：</value>
+  </data>
+  <data name="BackupLoc_ErrorPermission" xml:space="preserve">
+    <value>访问被拒绝：所选文件夹需要管理员权限。</value>
+  </data>
+  <data name="BackupLoc_ErrorInvalid" xml:space="preserve">
+    <value>该文件夹无法使用。请检查路径是否有效，以及驱动器是否已连接。</value>
+  </data>
 </root>

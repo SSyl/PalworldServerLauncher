@@ -22,6 +22,10 @@ public sealed class LauncherConfig
     /// <summary>Name of the launcher's own log subfolder under <see cref="DataRoot"/>.</summary>
     public const string LogsFolderName = "LauncherLogs";
 
+    /// <summary>Name of the default backup-archives subfolder under <see cref="ServerRoot"/>, used when
+    /// <see cref="BackupFolder"/> is empty.</summary>
+    public const string BackupsFolderName = "backups";
+
     /// <summary>Folder that contains (or will contain) the server install, <c>steamcmd/</c>, and <c>backups/</c>.</summary>
     public string ServerRoot { get; set; } = DataRoot;
 
@@ -130,6 +134,10 @@ public sealed class LauncherConfig
     public bool BackupOnStartup { get; set; } = true;
     public bool BackupOnShutdown { get; set; } = true;
     public int BackupRetentionDays { get; set; } = 7;
+
+    /// <summary>Custom folder for backup archives. Empty (the default) = <c>&lt;ServerRoot&gt;\backups</c>. The
+    /// folder is created on demand when a backup is written.</summary>
+    public string BackupFolder { get; set; } = "";
 
     /// <summary>Enable scheduled backups at the explicit <see cref="BackupTimes"/>.</summary>
     public bool ScheduledBackupEnabled { get; set; } = false;
@@ -282,7 +290,7 @@ public sealed class LauncherConfig
         {
             ("launcher.json", "launcher.json"),
             ("steamcmd", "steamcmd"),
-            ("backups", "backups"),
+            ("backups", BackupsFolderName),
             ("server", ServerFolderName),
             ("logs", LogsFolderName),
         };

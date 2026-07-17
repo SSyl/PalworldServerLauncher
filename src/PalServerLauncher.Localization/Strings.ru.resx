@@ -2424,4 +2424,49 @@ REST API на этом сервере пока не включён, поэтом
   <data name="ServerCmd_RestUnavailable" xml:space="preserve">
     <value>REST API не подключён, поэтому эти команды сейчас недоступны.</value>
   </data>
+  <data name="Main_BackupLocationLabel" xml:space="preserve">
+    <value>Расположение резервных копий:</value>
+  </data>
+  <data name="Main_BackupLocationDefault" xml:space="preserve">
+    <value>По умолчанию</value>
+  </data>
+  <data name="Main_BackupLocationCustom" xml:space="preserve">
+    <value>Пользовательское</value>
+  </data>
+  <data name="Main_BackupLocationTip" xml:space="preserve">
+    <value>Куда сохраняются архивы резервных копий. По умолчанию это папка резервных копий рядом с лаунчером.</value>
+  </data>
+  <data name="BackupLoc_Title" xml:space="preserve">
+    <value>Расположение резервных копий</value>
+  </data>
+  <data name="BackupLoc_Intro" xml:space="preserve">
+    <value>Место, куда упаковываются и сохраняются резервные копии сервера:</value>
+  </data>
+  <data name="BackupLoc_Change" xml:space="preserve">
+    <value>Изменить...</value>
+  </data>
+  <data name="BackupLoc_PickTitle" xml:space="preserve">
+    <value>Выберите папку для резервных копий</value>
+  </data>
+  <data name="BackupLoc_ChangedTitle" xml:space="preserve">
+    <value>Расположение резервных копий изменено</value>
+  </data>
+  <data name="BackupLoc_ChangedMessage" xml:space="preserve">
+    <value>Резервные копии теперь будут сохраняться в:</value>
+  </data>
+  <data name="BackupLoc_ExistingNote" xml:space="preserve">
+    <value>Существующие резервные копии останутся в {0} и не будут удаляться автоматически.</value>
+  </data>
+  <data name="BackupLoc_FailedTitle" xml:space="preserve">
+    <value>Не удалось изменить расположение резервных копий</value>
+  </data>
+  <data name="BackupLoc_FailedMessage" xml:space="preserve">
+    <value>В эту папку нельзя выполнить запись:</value>
+  </data>
+  <data name="BackupLoc_ErrorPermission" xml:space="preserve">
+    <value>Доступ запрещён: выбранная папка требует прав администратора.</value>
+  </data>
+  <data name="BackupLoc_ErrorInvalid" xml:space="preserve">
+    <value>Эту папку нельзя использовать. Проверьте, что путь верен и диск подключён.</value>
+  </data>
 </root>

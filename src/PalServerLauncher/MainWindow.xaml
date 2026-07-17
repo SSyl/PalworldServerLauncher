@@ -268,6 +268,11 @@
                         <Button Content="{x:Static loc:Strings.Main_BackupNow}" Command="{Binding BackupNowCommand}" Margin="0"
                                 ToolTip="{x:Static loc:Strings.Main_BackupNowTip}"/>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,7,0,0">
+                        <TextBlock Text="{x:Static loc:Strings.Main_BackupLocationLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <Button Content="{Binding BackupLocationLabel}" Click="OnBackupLocation" Margin="0"
+                                ToolTip="{x:Static loc:Strings.Main_BackupLocationTip}"/>
+                    </StackPanel>
                 </StackPanel>
             </Border>
 

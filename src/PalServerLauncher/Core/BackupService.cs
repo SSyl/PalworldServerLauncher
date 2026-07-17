@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using PalServerLauncher.Config;
+using PalServerLauncher.Localization;
 using PalServerLauncher.Logging;
 using PalServerLauncher.Rest;
 
@@ -33,7 +34,43 @@ public sealed class BackupService
     private string SavedDir => Path.Combine(_config.ServerRoot, LauncherConfig.ServerFolderName, "Pal", "Saved");
     private string SaveGamesDir => Path.Combine(SavedDir, "SaveGames");
     private string ConfigDir => Path.Combine(SavedDir, "Config", "WindowsServer");
-    private string BackupsDir => Path.Combine(_config.ServerRoot, "backups");
+
+    /// <summary>Where backup archives are written: the custom <see cref="LauncherConfig.BackupFolder"/> when set,
+    /// otherwise the default <c>&lt;ServerRoot&gt;\backups</c>.</summary>
+    private string BackupsDir => ResolveBackupsDir(_config.ServerRoot, _config.BackupFolder);
+
+    /// <summary>Resolve the backup folder from the server root and the (possibly empty) custom override. A blank
+    /// override falls back to <c>&lt;serverRoot&gt;\backups</c>. Pure so it's unit-tested directly.</summary>
+    public static string ResolveBackupsDir(string serverRoot, string? backupFolder) =>
+        string.IsNullOrWhiteSpace(backupFolder)
+            ? Path.Combine(serverRoot, LauncherConfig.BackupsFolderName)
+            : backupFolder;
+
+    /// <summary>Verify a folder can actually be written to (the Save-time check for a custom path): create it if
+    /// needed, write and delete a probe file. Returns false with a user-readable <paramref name="error"/> on any
+    /// failure (bad path, missing drive, no permission), so the caller can warn instead of silently failing later.</summary>
+    public static bool TryEnsureWritable(string dir, out string error)
+    {
+        try
+        {
+            Directory.CreateDirectory(dir);
+            var probe = Path.Combine(dir, ".pslauncher-writetest.tmp");
+            File.WriteAllText(probe, "");
+            File.Delete(probe);
+            error = "";
+            return true;
+        }
+        catch (UnauthorizedAccessException)
+        {
+            error = Strings.BackupLoc_ErrorPermission;
+            return false;
+        }
+        catch (Exception ex) when (ex is IOException or ArgumentException or NotSupportedException or PathTooLongException)
+        {
+            error = Strings.BackupLoc_ErrorInvalid;
+            return false;
+        }
+    }
 
     /// <summary>
     /// Take a backup. A fresh <c>/save</c> is issued only when the server is running AND REST is usable;
@@ -59,17 +96,19 @@ public sealed class BackupService
             _logger.Info($"Backup ({reason}): no fresh save (REST off or server stopped), archiving the current on-disk save, which may not include the latest changes.");
         }
 
-        Directory.CreateDirectory(BackupsDir);
         var stamp = DateTime.Now.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture);
-        var zipPath = Path.Combine(BackupsDir, $"palworld-{stamp}-{reason.ToString().ToLowerInvariant()}.zip");
+        string zipPath;
 
         try
         {
+            // Inside the try: a custom backup folder could be invalid or unwritable (bad path, missing drive).
+            Directory.CreateDirectory(BackupsDir);
+            zipPath = Path.Combine(BackupsDir, $"palworld-{stamp}-{reason.ToString().ToLowerInvariant()}.zip");
             CreateArchive(zipPath);
         }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or ArgumentException or PathTooLongException)
         {
-            _logger.Error($"Backup ({reason}) failed to write {Path.GetFileName(zipPath)}", ex);
+            _logger.Error($"Backup ({reason}) failed to write to {BackupsDir}", ex);
             return null;
         }
 
@@ -82,8 +121,12 @@ public sealed class BackupService
     {
         using var zip = ZipFile.Open(zipPath, ZipArchiveMode.Create);
         AddTree(zip, SaveGamesDir, "SaveGames");
-        if (Directory.Exists(ConfigDir))
-            AddTree(zip, ConfigDir, "Config/WindowsServer");
+
+        // Only PalWorldSettings.ini from the config folder. The other inis (Engine.ini, Game.ini, ...) aren't
+        // part of a normal server's state, and where a user has customized one it's a rare, deliberate case.
+        var settingsIni = Path.Combine(ConfigDir, "PalWorldSettings.ini");
+        if (File.Exists(settingsIni))
+            AddFile(zip, settingsIni, "Config/WindowsServer/PalWorldSettings.ini");
     }
 
     private void AddTree(ZipArchive zip, string sourceDir, string entryRoot)
@@ -93,21 +136,24 @@ public sealed class BackupService
             var relative = Path.GetRelativePath(sourceDir, file);
             if (ShouldSkipEntry(relative))
                 continue;
+            AddFile(zip, file, $"{entryRoot}/{relative.Replace('\\', '/')}");
+        }
+    }
 
-            var entryName = $"{entryRoot}/{relative.Replace('\\', '/')}";
-            try
-            {
-                var entry = zip.CreateEntry(entryName, CompressionLevel.Optimal);
-                entry.LastWriteTime = File.GetLastWriteTime(file);
-                using var entryStream = entry.Open();
-                // Share ReadWrite so a concurrent autosave writing the file doesn't fail the backup.
-                using var source = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                source.CopyTo(entryStream);
-            }
-            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
-            {
-                _logger.Debug($"Backup: skipped locked/unreadable file {relative} ({ex.Message}).");
-            }
+    private void AddFile(ZipArchive zip, string file, string entryName)
+    {
+        try
+        {
+            var entry = zip.CreateEntry(entryName, CompressionLevel.Optimal);
+            entry.LastWriteTime = File.GetLastWriteTime(file);
+            using var entryStream = entry.Open();
+            // Share ReadWrite so a concurrent autosave writing the file doesn't fail the backup.
+            using var source = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            source.CopyTo(entryStream);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            _logger.Debug($"Backup: skipped locked/unreadable file {Path.GetFileName(file)} ({ex.Message}).");
         }
     }
 

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
@@ -562,6 +563,47 @@ public partial class MainViewModel : ObservableObject
         get => _config.BackupRetentionDays;
         set { _config.BackupRetentionDays = Math.Max(0, value); _config.Save(); OnPropertyChanged(); }
     }
+
+    // --- Backup location (empty = default <ServerRoot>\backups) ---
+
+    /// <summary>The stored custom backup folder ("" = default). Setting it normalizes to an absolute path and
+    /// persists. The write-test/confirmation is done by the dialog before it calls this.</summary>
+    public string BackupFolder
+    {
+        get => _config.BackupFolder;
+        set
+        {
+            var cleaned = string.IsNullOrWhiteSpace(value) ? "" : value.Trim();
+            if (cleaned.Length > 0)
+            {
+                try { cleaned = Path.GetFullPath(cleaned); }
+                catch (Exception ex) when (ex is ArgumentException or PathTooLongException or NotSupportedException)
+                {
+                    _logger.Info($"Backup folder path rejected: {ex.Message}");
+                    return;
+                }
+            }
+            if (cleaned == _config.BackupFolder)
+                return;
+            _config.BackupFolder = cleaned;
+            _config.Save();
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(BackupLocationLabel));
+            OnPropertyChanged(nameof(BackupFolderResolved));
+        }
+    }
+
+    /// <summary>True when a custom backup folder is set (drives the main-window button caption and the dialog's reset).</summary>
+    public bool BackupFolderIsCustom => !string.IsNullOrWhiteSpace(_config.BackupFolder);
+
+    /// <summary>Main-window caption for the backup-location button: "Default" or "Custom".</summary>
+    public string BackupLocationLabel => BackupFolderIsCustom ? Strings.Main_BackupLocationCustom : Strings.Main_BackupLocationDefault;
+
+    /// <summary>The folder backups actually go to right now (custom if set, else the default).</summary>
+    public string BackupFolderResolved => BackupService.ResolveBackupsDir(_config.ServerRoot, _config.BackupFolder);
+
+    /// <summary>The default backup folder (&lt;ServerRoot&gt;\backups), shown when a custom one is cleared.</summary>
+    public string BackupFolderDefault => Path.Combine(_config.ServerRoot, LauncherConfig.BackupsFolderName);
 
     /// <summary>Current backup times (for the times dialog to seed itself).</summary>
     public IReadOnlyList<TimeOnly> BackupTimes => _config.BackupTimes;

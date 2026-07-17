@@ -2424,4 +2424,49 @@ Salvar essas alterações?</value>
   <data name="ServerCmd_RestUnavailable" xml:space="preserve">
     <value>A REST API não está conectada, então esses comandos estão indisponíveis no momento.</value>
   </data>
+  <data name="Main_BackupLocationLabel" xml:space="preserve">
+    <value>Local dos Backups:</value>
+  </data>
+  <data name="Main_BackupLocationDefault" xml:space="preserve">
+    <value>Padrão</value>
+  </data>
+  <data name="Main_BackupLocationCustom" xml:space="preserve">
+    <value>Personalizado</value>
+  </data>
+  <data name="Main_BackupLocationTip" xml:space="preserve">
+    <value>Onde os arquivos de backup são salvos. O padrão é uma pasta de backups ao lado do launcher.</value>
+  </data>
+  <data name="BackupLoc_Title" xml:space="preserve">
+    <value>Local dos Backups</value>
+  </data>
+  <data name="BackupLoc_Intro" xml:space="preserve">
+    <value>O local onde os backups do servidor são compactados e salvos:</value>
+  </data>
+  <data name="BackupLoc_Change" xml:space="preserve">
+    <value>Alterar...</value>
+  </data>
+  <data name="BackupLoc_PickTitle" xml:space="preserve">
+    <value>Escolha uma pasta de backup</value>
+  </data>
+  <data name="BackupLoc_ChangedTitle" xml:space="preserve">
+    <value>Local dos backups alterado</value>
+  </data>
+  <data name="BackupLoc_ChangedMessage" xml:space="preserve">
+    <value>Os backups agora serão salvos em:</value>
+  </data>
+  <data name="BackupLoc_ExistingNote" xml:space="preserve">
+    <value>Seus backups existentes permanecem em {0} e não serão removidos automaticamente.</value>
+  </data>
+  <data name="BackupLoc_FailedTitle" xml:space="preserve">
+    <value>Não foi possível alterar o local dos backups</value>
+  </data>
+  <data name="BackupLoc_FailedMessage" xml:space="preserve">
+    <value>Não é possível gravar nessa pasta:</value>
+  </data>
+  <data name="BackupLoc_ErrorPermission" xml:space="preserve">
+    <value>Acesso negado: a pasta escolhida requer permissões de administrador.</value>
+  </data>
+  <data name="BackupLoc_ErrorInvalid" xml:space="preserve">
+    <value>Essa pasta não pode ser usada. Verifique se o caminho é válido e se a unidade está conectada.</value>
+  </data>
 </root>

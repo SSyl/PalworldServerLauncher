@@ -2424,4 +2424,49 @@ Enregistrer ces changements ?</value>
   <data name="ServerCmd_RestUnavailable" xml:space="preserve">
     <value>L'API REST n'est pas connectée, ces commandes sont donc indisponibles pour le moment.</value>
   </data>
+  <data name="Main_BackupLocationLabel" xml:space="preserve">
+    <value>Emplacement des sauvegardes :</value>
+  </data>
+  <data name="Main_BackupLocationDefault" xml:space="preserve">
+    <value>Par défaut</value>
+  </data>
+  <data name="Main_BackupLocationCustom" xml:space="preserve">
+    <value>Personnalisé</value>
+  </data>
+  <data name="Main_BackupLocationTip" xml:space="preserve">
+    <value>Emplacement où sont enregistrées les archives de sauvegarde. Par défaut, un dossier de sauvegardes situé à côté du lanceur.</value>
+  </data>
+  <data name="BackupLoc_Title" xml:space="preserve">
+    <value>Emplacement des sauvegardes</value>
+  </data>
+  <data name="BackupLoc_Intro" xml:space="preserve">
+    <value>Emplacement où les sauvegardes du serveur sont compressées puis enregistrées :</value>
+  </data>
+  <data name="BackupLoc_Change" xml:space="preserve">
+    <value>Modifier...</value>
+  </data>
+  <data name="BackupLoc_PickTitle" xml:space="preserve">
+    <value>Sélectionnez un dossier de sauvegarde</value>
+  </data>
+  <data name="BackupLoc_ChangedTitle" xml:space="preserve">
+    <value>Emplacement des sauvegardes modifié</value>
+  </data>
+  <data name="BackupLoc_ChangedMessage" xml:space="preserve">
+    <value>Les sauvegardes seront désormais enregistrées dans :</value>
+  </data>
+  <data name="BackupLoc_ExistingNote" xml:space="preserve">
+    <value>Vos sauvegardes existantes restent dans {0} et ne seront pas supprimées automatiquement.</value>
+  </data>
+  <data name="BackupLoc_FailedTitle" xml:space="preserve">
+    <value>Impossible de modifier l'emplacement des sauvegardes</value>
+  </data>
+  <data name="BackupLoc_FailedMessage" xml:space="preserve">
+    <value>Impossible d'écrire dans ce dossier :</value>
+  </data>
+  <data name="BackupLoc_ErrorPermission" xml:space="preserve">
+    <value>Accès refusé : le dossier choisi nécessite des droits d'administrateur.</value>
+  </data>
+  <data name="BackupLoc_ErrorInvalid" xml:space="preserve">
+    <value>Ce dossier ne peut pas être utilisé. Vérifiez que le chemin est valide et que le lecteur est connecté.</value>
+  </data>
 </root>

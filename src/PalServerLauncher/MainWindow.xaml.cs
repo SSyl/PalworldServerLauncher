@@ -400,6 +400,10 @@ public partial class MainWindow : Window
     private void OnOpenServerCommands(object sender, RoutedEventArgs e) =>
         ServerCommandsDialog.Show(this, _viewModel.ServerCommands, _viewModel.RconConnection(), _viewModel.IsRestApiReady, _logger);
 
+    private void OnBackupLocation(object sender, RoutedEventArgs e) =>
+        BackupLocationDialog.Show(this, _viewModel.BackupFolder, _viewModel.BackupFolderDefault,
+            path => _viewModel.BackupFolder = path, _logger);
+
     private void OnForceShutdown(object sender, RoutedEventArgs e)
     {
         if (ChoiceDialog.Show(this, Strings.Common_ForceShutdown,

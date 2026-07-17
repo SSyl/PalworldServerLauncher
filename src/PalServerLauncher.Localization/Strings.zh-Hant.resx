@@ -2348,4 +2348,49 @@
   <data name="ServerCmd_RestUnavailable" xml:space="preserve">
     <value>REST API 尚未連線，因此目前無法使用這些命令。</value>
   </data>
+  <data name="Main_BackupLocationLabel" xml:space="preserve">
+    <value>備份位置：</value>
+  </data>
+  <data name="Main_BackupLocationDefault" xml:space="preserve">
+    <value>預設</value>
+  </data>
+  <data name="Main_BackupLocationCustom" xml:space="preserve">
+    <value>自訂</value>
+  </data>
+  <data name="Main_BackupLocationTip" xml:space="preserve">
+    <value>備份壓縮檔的儲存位置。預設為啟動器旁的備份資料夾。</value>
+  </data>
+  <data name="BackupLoc_Title" xml:space="preserve">
+    <value>備份位置</value>
+  </data>
+  <data name="BackupLoc_Intro" xml:space="preserve">
+    <value>伺服器備份壓縮並儲存的位置：</value>
+  </data>
+  <data name="BackupLoc_Change" xml:space="preserve">
+    <value>變更...</value>
+  </data>
+  <data name="BackupLoc_PickTitle" xml:space="preserve">
+    <value>選擇備份資料夾</value>
+  </data>
+  <data name="BackupLoc_ChangedTitle" xml:space="preserve">
+    <value>備份位置已變更</value>
+  </data>
+  <data name="BackupLoc_ChangedMessage" xml:space="preserve">
+    <value>備份現在將儲存至：</value>
+  </data>
+  <data name="BackupLoc_ExistingNote" xml:space="preserve">
+    <value>您現有的備份仍保留在 {0}，且不會被自動清除。</value>
+  </data>
+  <data name="BackupLoc_FailedTitle" xml:space="preserve">
+    <value>無法變更備份位置</value>
+  </data>
+  <data name="BackupLoc_FailedMessage" xml:space="preserve">
+    <value>該資料夾無法寫入：</value>
+  </data>
+  <data name="BackupLoc_ErrorPermission" xml:space="preserve">
+    <value>存取被拒：所選資料夾需要管理員權限。</value>
+  </data>
+  <data name="BackupLoc_ErrorInvalid" xml:space="preserve">
+    <value>該資料夾無法使用。請確認路徑正確且磁碟機已連接。</value>
+  </data>
 </root>

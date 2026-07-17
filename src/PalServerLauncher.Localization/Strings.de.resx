@@ -2424,4 +2424,49 @@ Diese Änderungen übernehmen und speichern?</value>
   <data name="ServerCmd_RestUnavailable" xml:space="preserve">
     <value>Die REST API ist nicht verbunden, daher sind diese Befehle derzeit nicht verfügbar.</value>
   </data>
+  <data name="Main_BackupLocationLabel" xml:space="preserve">
+    <value>Sicherungsort:</value>
+  </data>
+  <data name="Main_BackupLocationDefault" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="Main_BackupLocationCustom" xml:space="preserve">
+    <value>Benutzerdefiniert</value>
+  </data>
+  <data name="Main_BackupLocationTip" xml:space="preserve">
+    <value>Wo Sicherungsarchive gespeichert werden. Standardmäßig ein Sicherungsordner neben dem Launcher.</value>
+  </data>
+  <data name="BackupLoc_Title" xml:space="preserve">
+    <value>Sicherungsort</value>
+  </data>
+  <data name="BackupLoc_Intro" xml:space="preserve">
+    <value>Der Ort, an dem Server-Sicherungen gepackt und gespeichert werden:</value>
+  </data>
+  <data name="BackupLoc_Change" xml:space="preserve">
+    <value>Ändern...</value>
+  </data>
+  <data name="BackupLoc_PickTitle" xml:space="preserve">
+    <value>Wählen Sie einen Sicherungsordner</value>
+  </data>
+  <data name="BackupLoc_ChangedTitle" xml:space="preserve">
+    <value>Sicherungsort geändert</value>
+  </data>
+  <data name="BackupLoc_ChangedMessage" xml:space="preserve">
+    <value>Sicherungen werden jetzt gespeichert unter:</value>
+  </data>
+  <data name="BackupLoc_ExistingNote" xml:space="preserve">
+    <value>Ihre vorhandenen Sicherungen bleiben in {0} und werden nicht automatisch gelöscht.</value>
+  </data>
+  <data name="BackupLoc_FailedTitle" xml:space="preserve">
+    <value>Sicherungsort konnte nicht geändert werden</value>
+  </data>
+  <data name="BackupLoc_FailedMessage" xml:space="preserve">
+    <value>In diesen Ordner kann nicht geschrieben werden:</value>
+  </data>
+  <data name="BackupLoc_ErrorPermission" xml:space="preserve">
+    <value>Zugriff verweigert: Der gewählte Ordner erfordert Administratorrechte.</value>
+  </data>
+  <data name="BackupLoc_ErrorInvalid" xml:space="preserve">
+    <value>Dieser Ordner kann nicht verwendet werden. Prüfen Sie, ob der Pfad gültig und das Laufwerk verbunden ist.</value>
+  </data>
 </root>

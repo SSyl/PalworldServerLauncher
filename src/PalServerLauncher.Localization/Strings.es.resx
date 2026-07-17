@@ -2424,4 +2424,49 @@ Cualquier valor no listado arriba permanecerá igual.
   <data name="ServerCmd_RestUnavailable" xml:space="preserve">
     <value>La REST API no está conectada, así que estos comandos no están disponibles por el momento.</value>
   </data>
+  <data name="Main_BackupLocationLabel" xml:space="preserve">
+    <value>Ubicación de copias de seguridad:</value>
+  </data>
+  <data name="Main_BackupLocationDefault" xml:space="preserve">
+    <value>Predeterminada</value>
+  </data>
+  <data name="Main_BackupLocationCustom" xml:space="preserve">
+    <value>Personalizada</value>
+  </data>
+  <data name="Main_BackupLocationTip" xml:space="preserve">
+    <value>Dónde se guardan las copias de seguridad. De forma predeterminada, es una carpeta de copias de seguridad junto al launcher.</value>
+  </data>
+  <data name="BackupLoc_Title" xml:space="preserve">
+    <value>Ubicación de copias de seguridad</value>
+  </data>
+  <data name="BackupLoc_Intro" xml:space="preserve">
+    <value>La ubicación donde se comprimen y guardan las copias de seguridad del servidor:</value>
+  </data>
+  <data name="BackupLoc_Change" xml:space="preserve">
+    <value>Cambiar...</value>
+  </data>
+  <data name="BackupLoc_PickTitle" xml:space="preserve">
+    <value>Elegir carpeta de copias de seguridad</value>
+  </data>
+  <data name="BackupLoc_ChangedTitle" xml:space="preserve">
+    <value>Ubicación de copias de seguridad cambiada</value>
+  </data>
+  <data name="BackupLoc_ChangedMessage" xml:space="preserve">
+    <value>Las copias de seguridad ahora se guardarán en:</value>
+  </data>
+  <data name="BackupLoc_ExistingNote" xml:space="preserve">
+    <value>Sus copias de seguridad existentes permanecerán en {0} y no se eliminarán automáticamente.</value>
+  </data>
+  <data name="BackupLoc_FailedTitle" xml:space="preserve">
+    <value>No se pudo cambiar la ubicación de copias de seguridad</value>
+  </data>
+  <data name="BackupLoc_FailedMessage" xml:space="preserve">
+    <value>No se puede escribir en esa carpeta:</value>
+  </data>
+  <data name="BackupLoc_ErrorPermission" xml:space="preserve">
+    <value>Acceso denegado: la carpeta elegida requiere permisos de administrador.</value>
+  </data>
+  <data name="BackupLoc_ErrorInvalid" xml:space="preserve">
+    <value>No se puede usar esa carpeta. Compruebe que la ruta sea válida y que la unidad esté conectada.</value>
+  </data>
 </root>

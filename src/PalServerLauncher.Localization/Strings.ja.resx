@@ -2355,4 +2355,49 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
   <data name="ServerCmd_RestUnavailable" xml:space="preserve">
     <value>REST API が接続されていないため、これらのコマンドは現在使用できません。</value>
   </data>
+  <data name="Main_BackupLocationLabel" xml:space="preserve">
+    <value>バックアップの保存先：</value>
+  </data>
+  <data name="Main_BackupLocationDefault" xml:space="preserve">
+    <value>デフォルト</value>
+  </data>
+  <data name="Main_BackupLocationCustom" xml:space="preserve">
+    <value>カスタム</value>
+  </data>
+  <data name="Main_BackupLocationTip" xml:space="preserve">
+    <value>バックアップアーカイブの保存先です。デフォルトではランチャーと同じ場所にある backups フォルダーになります。</value>
+  </data>
+  <data name="BackupLoc_Title" xml:space="preserve">
+    <value>バックアップの保存先</value>
+  </data>
+  <data name="BackupLoc_Intro" xml:space="preserve">
+    <value>サーバーのバックアップを zip 化して保存する場所：</value>
+  </data>
+  <data name="BackupLoc_Change" xml:space="preserve">
+    <value>変更...</value>
+  </data>
+  <data name="BackupLoc_PickTitle" xml:space="preserve">
+    <value>バックアップフォルダーを選択</value>
+  </data>
+  <data name="BackupLoc_ChangedTitle" xml:space="preserve">
+    <value>バックアップの保存先を変更しました</value>
+  </data>
+  <data name="BackupLoc_ChangedMessage" xml:space="preserve">
+    <value>今後、バックアップは次の場所に保存されます：</value>
+  </data>
+  <data name="BackupLoc_ExistingNote" xml:space="preserve">
+    <value>既存のバックアップは {0} に残り、自動的には削除されません。</value>
+  </data>
+  <data name="BackupLoc_FailedTitle" xml:space="preserve">
+    <value>バックアップの保存先を変更できませんでした</value>
+  </data>
+  <data name="BackupLoc_FailedMessage" xml:space="preserve">
+    <value>そのフォルダーには書き込めません：</value>
+  </data>
+  <data name="BackupLoc_ErrorPermission" xml:space="preserve">
+    <value>アクセスが拒否されました。選択したフォルダーには管理者権限が必要です。</value>
+  </data>
+  <data name="BackupLoc_ErrorInvalid" xml:space="preserve">
+    <value>そのフォルダーは使用できません。パスが正しいこと、ドライブが接続されていることを確認してください。</value>
+  </data>
 </root>

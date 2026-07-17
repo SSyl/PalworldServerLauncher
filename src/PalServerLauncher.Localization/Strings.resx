@@ -2424,4 +2424,49 @@ Save these changes?</value>
   <data name="ServerCmd_RestUnavailable" xml:space="preserve">
     <value>The REST API isn't connected, so these commands are unavailable right now.</value>
   </data>
+  <data name="Main_BackupLocationLabel" xml:space="preserve">
+    <value>Backup Location:</value>
+  </data>
+  <data name="Main_BackupLocationDefault" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="Main_BackupLocationCustom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="Main_BackupLocationTip" xml:space="preserve">
+    <value>Where backup archives are saved. The default is a backups folder next to the launcher.</value>
+  </data>
+  <data name="BackupLoc_Title" xml:space="preserve">
+    <value>Backup Location</value>
+  </data>
+  <data name="BackupLoc_Intro" xml:space="preserve">
+    <value>The location where server backups are zipped and saved to:</value>
+  </data>
+  <data name="BackupLoc_Change" xml:space="preserve">
+    <value>Change...</value>
+  </data>
+  <data name="BackupLoc_PickTitle" xml:space="preserve">
+    <value>Choose a backup folder</value>
+  </data>
+  <data name="BackupLoc_ChangedTitle" xml:space="preserve">
+    <value>Backup location changed</value>
+  </data>
+  <data name="BackupLoc_ChangedMessage" xml:space="preserve">
+    <value>Backups will now be saved to:</value>
+  </data>
+  <data name="BackupLoc_ExistingNote" xml:space="preserve">
+    <value>Your existing backups stay in {0} and won't be automatically pruned.</value>
+  </data>
+  <data name="BackupLoc_FailedTitle" xml:space="preserve">
+    <value>Couldn't change backup location</value>
+  </data>
+  <data name="BackupLoc_FailedMessage" xml:space="preserve">
+    <value>That folder can't be written to:</value>
+  </data>
+  <data name="BackupLoc_ErrorPermission" xml:space="preserve">
+    <value>Access denied: The chosen folder requires administrator permissions.</value>
+  </data>
+  <data name="BackupLoc_ErrorInvalid" xml:space="preserve">
+    <value>That folder can't be used. Check that the path is valid and the drive is connected.</value>
+  </data>
 </root>
