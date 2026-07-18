@@ -5,22 +5,37 @@ namespace PalServerLauncher.Tests;
 public class ModInfoTests
 {
     [Fact]
-    public void Parses_package_name_version_and_server_flag()
+    public void Parses_package_name_version_and_server_flag_from_array_rules()
     {
-        var json = """{"PackageName":"GamingCattiva","Version":"1.2.0","InstallRule":{"IsServer":true,"IsClient":true}}""";
+        // The real shape: InstallRule is an array of rule objects.
+        var json = """{"PackageName":"UE4SSExperimentalPW","Version":"experimental-palworld-5","InstallRule":[{"Type":"UE4SS","Targets":["."]},{"Type":"UE4SS","IsServer":true,"Targets":["."]}]}""";
         var info = ModInfo.Parse(json);
         Assert.NotNull(info);
-        Assert.Equal("GamingCattiva", info!.PackageName);
-        Assert.Equal("1.2.0", info.Version);
+        Assert.Equal("UE4SSExperimentalPW", info!.PackageName);
+        Assert.Equal("experimental-palworld-5", info.Version);
         Assert.True(info.IsServer);
     }
 
     [Fact]
-    public void Server_flag_is_false_when_missing_or_not_true()
+    public void Server_flag_true_for_single_array_rule()
     {
-        Assert.False(ModInfo.Parse("""{"PackageName":"X","InstallRule":{"IsClient":true}}""")!.IsServer);
-        Assert.False(ModInfo.Parse("""{"PackageName":"X","InstallRule":{"IsServer":false}}""")!.IsServer);
+        Assert.True(ModInfo.Parse("""{"PackageName":"X","InstallRule":[{"Type":"Lua","IsServer":true}]}""")!.IsServer);
+    }
+
+    [Fact]
+    public void Server_flag_false_when_no_rule_declares_it()
+    {
+        // Smart Transport's real (client-only) shape: an array rule with no IsServer.
+        Assert.False(ModInfo.Parse("""{"PackageName":"SmartTransport","InstallRule":[{"Type":"Lua","Targets":["./Scripts"]}]}""")!.IsServer);
+        Assert.False(ModInfo.Parse("""{"PackageName":"X","InstallRule":[{"Type":"Lua","IsServer":false}]}""")!.IsServer);
         Assert.False(ModInfo.Parse("""{"PackageName":"X"}""")!.IsServer);
+    }
+
+    [Fact]
+    public void Server_flag_handles_a_lone_rule_object_defensively()
+    {
+        Assert.True(ModInfo.Parse("""{"PackageName":"X","InstallRule":{"IsServer":true}}""")!.IsServer);
+        Assert.False(ModInfo.Parse("""{"PackageName":"X","InstallRule":{"IsClient":true}}""")!.IsServer);
     }
 
     [Theory]
