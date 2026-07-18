@@ -447,12 +447,14 @@ public sealed class ModsDialog : Window
         remove.Click += (_, _) => DeleteRow(entry);
 
         var grid = new Grid();
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });                       // checkbox
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.3, GridUnitType.Star) }); // name
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80) });                      // id
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.6, GridUnitType.Star) }); // note
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(48) });                      // force
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });                        // remove
+        // All columns except name/note are fixed so the header Grid and the row Grids compute identical column
+        // positions (an Auto column that differs between them, like the remove button, would misalign the rest).
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(30) });                      // checkbox
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.7, GridUnitType.Star) });  // name
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80) });                       // id
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.0, GridUnitType.Star) });   // note
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(48) });                       // force
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(40) });                       // remove
         Grid.SetColumn(enabled, 0);
         Grid.SetColumn(name, 1);
         Grid.SetColumn(idCell, 2);
@@ -617,12 +619,13 @@ public sealed class ModsDialog : Window
     private static Grid ListHeader()
     {
         var grid = new Grid { Margin = new Thickness(0, 12, 0, 0) };
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.3, GridUnitType.Star) });
+        // Column widths MUST match BuildRow's grid exactly, so the headers line up over the row cells.
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(30) });
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.7, GridUnitType.Star) });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80) });
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.6, GridUnitType.Star) });
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.0, GridUnitType.Star) });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(48) });
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(40) });
         AddHeaderCell(grid, 0, Strings.Mods_ColOn);
         AddHeaderCell(grid, 1, Strings.Mods_ColName);
         AddHeaderCell(grid, 2, Strings.Mods_ColId);
