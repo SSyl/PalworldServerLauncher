@@ -2,6 +2,21 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [0.7.0] - 2026-07-18
+
+### Added
+- **Force a mod to run on your server.** Some Workshop mods work on a dedicated server but their author never
+  marked them as server-compatible, so the server quietly skips them. The Mods window has a new Force column:
+  tick it (past a warning) and the launcher makes the mod deploy server-side anyway, and re-applies that
+  automatically each time the mod updates. Unticking it cleanly removes the mod's server files again. Use it with
+  care, since forcing a mod that truly isn't server-ready can crash the server or corrupt saves.
+
+### Changed
+- **Mods are no longer re-copied on every start.** The launcher used to copy every enabled Workshop mod into your
+  server again on each start, which for a large mod meant gigabytes of needless disk work every time. It now
+  copies a mod only when its content actually changed, so starts are quicker and lighter. A removed file in a mod
+  update no longer lingers either, since the copy now mirrors the source exactly.
+
 ## [0.6.1] - 2026-07-17
 
 ### Fixed
