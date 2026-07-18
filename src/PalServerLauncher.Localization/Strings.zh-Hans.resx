@@ -2393,4 +2393,24 @@
   <data name="BackupLoc_ErrorInvalid" xml:space="preserve">
     <value>该文件夹无法使用。请检查路径是否有效，以及驱动器是否已连接。</value>
   </data>
+  <data name="Mods_ColForce" xml:space="preserve">
+    <value>Force</value>
+  </data>
+  <data name="Mods_ForceHeaderTip" xml:space="preserve">
+    <value>Force this mod to deploy on the server even if it doesn't declare server support. Use with caution.</value>
+  </data>
+  <data name="Mods_ForceLocalTip" xml:space="preserve">
+    <value>Force server install applies to Workshop mods the launcher downloads. For a dropped-in mod, edit its Info.json directly.</value>
+  </data>
+  <data name="Mods_ForceWarnTitle" xml:space="preserve">
+    <value>Force server install?</value>
+  </data>
+  <data name="Mods_ForceWarnAccept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="Mods_ForceWarnBody" xml:space="preserve">
+    <value>Warning! This forces a mod to install on the server even though it hasn't declared server compatibility.
+
+Doing this may cause major issues (server crashes, save corruption) if the mod is truly incompatible with a server.</value>
+  </data>
 </root>

@@ -56,6 +56,7 @@ public sealed class ModsDialog : Window
         public required CheckBox Enabled;
         public required TextBox Name;
         public required TextBox Note;
+        public required CheckBox Force;
         public required FrameworkElement Panel;
     }
 
@@ -359,6 +360,7 @@ public sealed class ModsDialog : Window
             row.Entry.Enabled = row.Enabled.IsChecked == true;
             row.Entry.ModName = row.Name.Text.Trim();
             row.Entry.Note = row.Note.Text.Trim();
+            row.Entry.ForceServerInstall = row.Force.IsChecked == true;
         }
 
         var modsOn = _modsEnabled.IsChecked == true;
@@ -415,6 +417,26 @@ public sealed class ModsDialog : Window
             };
         }
         var note = RowField(entry.Note);
+
+        // Force server install is only meaningful for downloaded Workshop mods (a clean cache copy to restore
+        // from). For a dropped-in local mod, the user owns the files directly, so the box is disabled.
+        var isLocal = entry.WorkshopId.Length == 0;
+        var force = new CheckBox
+        {
+            IsChecked = entry.ForceServerInstall, IsEnabled = !isLocal, Foreground = Fg,
+            HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center,
+            ToolTip = isLocal ? Strings.Mods_ForceLocalTip : Strings.Mods_ForceHeaderTip,
+        };
+        // Click fires only on user interaction (not the programmatic IsChecked above), so init doesn't warn.
+        force.Click += (_, _) =>
+        {
+            if (force.IsChecked != true)
+                return;
+            if (ChoiceDialog.Show(this, Strings.Mods_ForceWarnTitle, Strings.Mods_ForceWarnBody,
+                    Strings.Mods_ForceWarnAccept, Strings.Common_Cancel) != 0)
+                force.IsChecked = false; // cancelled -> revert the check
+        };
+
         var remove = new Button
         {
             Content = "✕", Width = 30, Height = 26, Padding = new Thickness(0), Foreground = Fg,
@@ -429,16 +451,19 @@ public sealed class ModsDialog : Window
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.3, GridUnitType.Star) }); // name
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80) });                      // id
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.6, GridUnitType.Star) }); // note
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(48) });                      // force
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });                        // remove
         Grid.SetColumn(enabled, 0);
         Grid.SetColumn(name, 1);
         Grid.SetColumn(idCell, 2);
         Grid.SetColumn(note, 3);
-        Grid.SetColumn(remove, 4);
+        Grid.SetColumn(force, 4);
+        Grid.SetColumn(remove, 5);
         grid.Children.Add(enabled);
         grid.Children.Add(name);
         grid.Children.Add(idCell);
         grid.Children.Add(note);
+        grid.Children.Add(force);
         grid.Children.Add(remove);
 
         var border = new Border
@@ -446,7 +471,7 @@ public sealed class ModsDialog : Window
             Child = grid, BorderBrush = RowBorder, BorderThickness = new Thickness(0, 0, 0, 1),
             Padding = new Thickness(0, 4, 0, 4),
         };
-        return new ModRow { Entry = entry, Enabled = enabled, Name = name, Note = note, Panel = border };
+        return new ModRow { Entry = entry, Enabled = enabled, Name = name, Note = note, Force = force, Panel = border };
     }
 
     private void RebuildModList()
@@ -596,11 +621,20 @@ public sealed class ModsDialog : Window
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.3, GridUnitType.Star) });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80) });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.6, GridUnitType.Star) });
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(48) });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
         AddHeaderCell(grid, 0, Strings.Mods_ColOn);
         AddHeaderCell(grid, 1, Strings.Mods_ColName);
         AddHeaderCell(grid, 2, Strings.Mods_ColId);
         AddHeaderCell(grid, 3, Strings.Mods_ColNote);
+        var forceHeader = new TextBlock
+        {
+            Text = Strings.Mods_ColForce, Foreground = Muted, FontWeight = FontWeights.SemiBold,
+            Margin = new Thickness(6, 0, 6, 0), HorizontalAlignment = HorizontalAlignment.Center,
+            ToolTip = Strings.Mods_ForceHeaderTip,
+        };
+        Grid.SetColumn(forceHeader, 4);
+        grid.Children.Add(forceHeader);
         return grid;
     }
 

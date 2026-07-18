@@ -41,6 +41,28 @@ public sealed class SteamCmd
     public string WorkshopContentDir(string workshopId) =>
         Path.Combine(SteamCmdDir, "steamapps", "workshop", "content", GameAppId, workshopId);
 
+    /// <summary>SteamCMD's Workshop state file, tracking each installed item's content manifest and last-updated time.</summary>
+    public string WorkshopAcfPath =>
+        Path.Combine(SteamCmdDir, "steamapps", "workshop", $"appworkshop_{GameAppId}.acf");
+
+    /// <summary>The cache state (content manifest + last-updated) SteamCMD has for one Workshop item, or null if the
+    /// ACF is missing/unreadable or has no entry for it. Powers the update-detection gate, which re-copies a mod into
+    /// the server only when its manifest advances.</summary>
+    public WorkshopManifest.ItemState? ReadWorkshopItemState(string workshopId)
+    {
+        if (!File.Exists(WorkshopAcfPath))
+            return null;
+        try
+        {
+            var items = WorkshopManifest.ParseInstalled(File.ReadAllText(WorkshopAcfPath));
+            return items.TryGetValue(workshopId, out var state) ? state : null;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            return null;
+        }
+    }
+
     /// <summary>Download + unzip + prime SteamCMD if it isn't present yet. Small (~few MB) download. No-op when
     /// it's already there, so it's safe to call before any SteamCMD operation to self-heal a missing install
     /// (e.g. a server imported or hand-placed without SteamCMD). <paramref name="visible"/> shows the priming

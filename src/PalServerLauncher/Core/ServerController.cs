@@ -916,11 +916,12 @@ public sealed class ServerController : IDisposable
 
     /// <summary>
     /// Bring the server's mods in line with config just before launch (a restart routes through StartAsync, so
-    /// it re-syncs). Mods on: download each enabled Workshop id with the connected Steam account (incremental,
-    /// so it doubles as an up-to-date check), copy it into the server's Mods\Workshop, resolve its PackageName,
-    /// then write PalModSettings.ini enabling every enabled mod (downloaded + dropped-in). Mods off: turn the
-    /// ini's master flag off if a previous run left it on. A failed sync never blocks launch, it logs and
-    /// continues, same posture as the update step. SteamCMD work runs under <see cref="_steamGate"/>.
+    /// it re-syncs). Mods on: download each enabled Workshop id with the connected Steam account, copy it into the
+    /// server's Mods\Workshop only when its cache content or Force state changed (the update-detection gate),
+    /// apply Force Server Install where set, resolve each PackageName, then write PalModSettings.ini enabling every
+    /// enabled mod (downloaded + dropped-in). Mods off: turn the ini's master flag off if a previous run left it
+    /// on. A failed sync never blocks launch, it logs and continues, same posture as the update step. SteamCMD
+    /// work runs under <see cref="_steamGate"/>.
     /// </summary>
     private async Task SyncModsAsync(CancellationToken ct)
     {
@@ -966,13 +967,17 @@ public sealed class ServerController : IDisposable
         }
     }
 
-    /// <summary>Download (incrementally) each enabled Workshop mod under the SteamCMD gate, copy it into the
-    /// server's Mods\Workshop, and cache its resolved PackageName in the in-memory config. Stops early on an
-    /// auth failure so the user is told to reconnect once, not once per mod.</summary>
+    /// <summary>Download each enabled Workshop mod under the SteamCMD gate, then copy it into the server's
+    /// Mods\Workshop only when its cache content or Force state changed since the last sync (the update-detection
+    /// gate, so a large unchanged mod isn't re-copied on every start), applying Force Server Install where set.
+    /// The per-mod sync signature persists in mod-sync.json. Stops early on an auth failure so the user is told to
+    /// reconnect once, not once per mod. State is saved even on an early exit.</summary>
     private async Task DownloadModsAsync(IReadOnlyList<ModEntry> mods, CancellationToken ct)
     {
         var steamLog = new Progress<string>(_logger.SteamCmd);
+        var statePath = ModSyncState.PathFor(_config.ServerRoot);
         await _steamGate.WaitAsync(ct).ConfigureAwait(false);
+        var state = ModSyncState.Load(statePath); // load + save inside the gate, so the state file has one writer
         try
         {
             await _steamCmd.EnsureSteamCmdAsync(steamLog, ct).ConfigureAwait(false);
@@ -982,20 +987,101 @@ public sealed class ServerController : IDisposable
                 if (result == SteamCmd.WorkshopDownloadResult.AuthFailed)
                 {
                     _logger.Error("Steam sign-in expired, reconnect your account in the Mods dialog. Skipping the remaining downloads.");
-                    return;
+                    break;
                 }
                 if (result != SteamCmd.WorkshopDownloadResult.Ok)
                     continue; // a single failed download shouldn't stop the others
 
-                ModService.CopyDownloadedMod(mod.WorkshopId, _steamCmd.WorkshopContentDir(mod.WorkshopId));
-                var pkg = ModService.ResolvePackageName(mod.WorkshopId);
-                if (!string.IsNullOrWhiteSpace(pkg))
-                    mod.PackageName = pkg; // same object the VM holds; the dialog's Save persists it
+                try { SyncDownloadedMod(mod, state); }
+                catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+                {
+                    // One mod's copy/force failure shouldn't stop the others or skip the ini write.
+                    _logger.Error($"Couldn't sync mod {ModDisplayName(mod)}, skipping it", ex);
+                }
             }
         }
         finally
         {
+            state.Save(statePath);
             _steamGate.Release();
+        }
+    }
+
+    /// <summary>Copy one just-downloaded mod into Mods\Workshop only if its cache content (manifest) or Force state
+    /// changed since the last sync, apply or revert its Force injection, and record the new sync signature.
+    /// Skipping the copy when nothing changed is what avoids re-copying a large unchanged mod every start.</summary>
+    private void SyncDownloadedMod(ModEntry mod, ModSyncState state)
+    {
+        var liveState = _steamCmd.ReadWorkshopItemState(mod.WorkshopId);
+        var liveManifest = liveState?.Manifest ?? "";
+        if (liveState is not null)
+            mod.TimeUpdated = liveState.TimeUpdated;
+
+        var folderPresent = Directory.Exists(Path.Combine(ModService.WorkshopDir, mod.WorkshopId));
+        state.Items.TryGetValue(mod.WorkshopId, out var recorded);
+
+        if (!ModSyncState.NeedsSync(recorded, liveManifest, mod.ForceServerInstall, folderPresent))
+        {
+            // Unchanged content and Force state: skip the copy (the up-to-date fast path). Keep PackageName
+            // populated for the ini write, resolving it from disk if it isn't cached yet.
+            if (string.IsNullOrWhiteSpace(mod.PackageName))
+            {
+                var cached = ModService.ResolvePackageName(mod.WorkshopId);
+                if (!string.IsNullOrWhiteSpace(cached))
+                    mod.PackageName = cached;
+            }
+            return;
+        }
+
+        // Copy a clean copy from SteamCMD's cache (this replaces any prior Force injection with the author's file).
+        ModService.CopyDownloadedMod(mod.WorkshopId, _steamCmd.WorkshopContentDir(mod.WorkshopId));
+        var pkg = ModService.ResolvePackageName(mod.WorkshopId);
+        if (!string.IsNullOrWhiteSpace(pkg))
+            mod.PackageName = pkg; // same object the VM holds; the dialog's Save persists it
+
+        var wasForced = recorded?.Forced ?? false;
+        if (mod.ForceServerInstall)
+            ApplyForceServer(mod, pkg);
+        else if (wasForced)
+        {
+            // No longer forced: the clean copy above restored the author's Info.json. The server won't remove the
+            // files it already deployed for this mod (verified on a real server, not even on a Version change), so
+            // reverse that deployment ourselves via the mod's own manifest.
+            _logger.Info($"Mod {ModDisplayName(mod)} is no longer force-installed. Removing its server-side deployment.");
+            if (!string.IsNullOrWhiteSpace(pkg))
+                ModService.UninstallDeployedMod(pkg!);
+        }
+
+        state.Items[mod.WorkshopId] = new ModSyncEntry { Manifest = liveManifest, Forced = mod.ForceServerInstall };
+    }
+
+    /// <summary>Inject IsServer:true into the just-copied source Info.json when Force Server Install is on, and on
+    /// a real change clear the deployed manifest so the server redeploys the mod with the flag.</summary>
+    private void ApplyForceServer(ModEntry mod, string? pkg)
+    {
+        switch (ModService.ForceServerFlag(mod.WorkshopId))
+        {
+            case ForceOutcome.Forced:
+                _logger.Info($"Forcing mod {ModDisplayName(mod)} to run on server.");
+                if (!string.IsNullOrWhiteSpace(pkg))
+                    ClearDeployed(pkg!);
+                break;
+            case ForceOutcome.AlreadyServer:
+                _logger.Info($"Mod {ModDisplayName(mod)} already has IsServer: True. Nothing to change.");
+                break;
+            case ForceOutcome.NotApplicable:
+                _logger.Info($"Couldn't force mod {ModDisplayName(mod)} to run on the server: no InstallRule found in its Info.json.");
+                break;
+        }
+    }
+
+    /// <summary>Clear a mod's deployed manifest, logging a failed delete instead of letting it break the sync.</summary>
+    private void ClearDeployed(string packageName)
+    {
+        try { ModService.ClearDeployedMod(packageName); }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            _logger.Info($"Couldn't clear the deployed manifest for {packageName}: {ex.Message}");
         }
     }
 

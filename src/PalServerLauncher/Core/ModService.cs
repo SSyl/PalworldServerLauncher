@@ -33,6 +33,11 @@ public sealed class ModService
     /// <summary>Where the server looks for Workshop mods by default (no -workshopdir): <c>Mods\Workshop</c>.</summary>
     public string WorkshopDir => Path.Combine(ModsDir, "Workshop");
 
+    /// <summary>Where the server writes each deployed mod's <c>InstallManifest.json</c> after a restart:
+    /// <c>Mods\ManagedMods\&lt;PackageName&gt;</c>. Deleting a mod's folder here makes the server redeploy it from
+    /// the current source on its next start.</summary>
+    public string ManagedModsDir => Path.Combine(ModsDir, "ManagedMods");
+
     /// <summary>The mod enable/order file the server generates after its first run.</summary>
     public string PalModSettingsPath => Path.Combine(ModsDir, "PalModSettings.ini");
 
@@ -41,10 +46,11 @@ public sealed class ModService
     public sealed record InstalledMod(string FolderId, string PackageName, bool IsServer, bool HasInfo);
 
     /// <summary>
-    /// Copy a freshly-downloaded Workshop item out of SteamCMD's cache (<paramref name="sourceDir"/>, from
+    /// Mirror a freshly-downloaded Workshop item out of SteamCMD's cache (<paramref name="sourceDir"/>, from
     /// <see cref="SteamCmd.WorkshopContentDir"/>) into the server's <c>Mods\Workshop\&lt;id&gt;</c>, so the server
-    /// finds it in its default mods folder. Overwrites an existing copy (a re-download is an update). Returns
-    /// false if the source isn't there (the download didn't land).
+    /// finds it in its default mods folder. Wipes the destination first so it exactly matches the cache: an update
+    /// that removed files leaves no stale ones behind, and any prior Force injection is cleanly replaced by the
+    /// author's Info.json. Returns false if the source isn't there (the download didn't land).
     /// </summary>
     public bool CopyDownloadedMod(string workshopId, string sourceDir)
     {
@@ -53,7 +59,10 @@ public sealed class ModService
             _logger.Info($"Downloaded mod {workshopId} wasn't found at {sourceDir}.");
             return false;
         }
-        CopyDirectory(sourceDir, Path.Combine(WorkshopDir, workshopId));
+        var destDir = Path.Combine(WorkshopDir, workshopId);
+        if (Directory.Exists(destDir))
+            Directory.Delete(destDir, recursive: true);
+        CopyDirectory(sourceDir, destDir);
         _logger.Info($"Installed mod {workshopId} into Mods\\Workshop.");
         return true;
     }
@@ -80,6 +89,112 @@ public sealed class ModService
     /// <summary>Read the PackageName from a specific mod folder's Info.json (null if absent / unreadable).</summary>
     public string? ResolvePackageName(string workshopId) =>
         ReadModInfo(Path.Combine(WorkshopDir, workshopId))?.PackageName;
+
+    /// <summary>
+    /// Force a mod to deploy server-side by injecting <c>IsServer: true</c> into its source
+    /// <c>Mods\Workshop\&lt;folder&gt;\Info.json</c> (see <see cref="ModInfoEditor"/> for the exact policy). Writes
+    /// the file only when something actually changed. Returns the outcome so the caller can log it. A missing or
+    /// unreadable/unwritable Info.json surfaces as <see cref="ForceOutcome.NotApplicable"/> so a bad file never
+    /// blocks the launch.
+    /// </summary>
+    public ForceOutcome ForceServerFlag(string folder)
+    {
+        var infoPath = Path.Combine(WorkshopDir, folder, "Info.json");
+        string json;
+        try { json = File.ReadAllText(infoPath); }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException) { return ForceOutcome.NotApplicable; }
+
+        var result = ModInfoEditor.InjectServerFlag(json);
+        if (result.Outcome == ForceOutcome.Forced)
+        {
+            try { File.WriteAllText(infoPath, result.Json!); }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException) { return ForceOutcome.NotApplicable; }
+        }
+        return result.Outcome;
+    }
+
+    /// <summary>Delete a mod's deployed manifest folder (<c>Mods\ManagedMods\&lt;PackageName&gt;</c>) so the server
+    /// redeploys it from the current source on its next restart. No-op if the name is blank or the folder is gone.
+    /// Exceptions propagate so the caller can log a failed clear.</summary>
+    public void ClearDeployedMod(string packageName)
+    {
+        if (string.IsNullOrWhiteSpace(packageName))
+            return;
+        var dir = Path.Combine(ManagedModsDir, packageName);
+        if (Directory.Exists(dir))
+        {
+            Directory.Delete(dir, recursive: true);
+            _logger.Info($"Cleared deployed manifest Mods\\ManagedMods\\{packageName} so the server redeploys it.");
+        }
+    }
+
+    /// <summary>
+    /// Reverse a mod's server-side deployment by deleting the files and dirs its own
+    /// <c>ManagedMods\&lt;pkg&gt;\InstallManifest.json</c> records, then the ManagedMods folder itself. Used on
+    /// un-force, because the Palworld server does NOT clean up a mod's deployed files on its own (verified on a
+    /// real server, even a Version change leaves them). Every path is double-guarded: it must carry the package
+    /// name as a full path segment (<see cref="DeployedModManifest"/>) AND resolve strictly under <c>Mods</c>, so
+    /// this can never touch UE4SS itself, shared files, or anything outside the mod. Best-effort per path.
+    /// </summary>
+    public void UninstallDeployedMod(string packageName)
+    {
+        if (string.IsNullOrWhiteSpace(packageName))
+            return;
+        var recordDir = Path.Combine(ManagedModsDir, packageName);
+        var serverBase = Path.Combine(_serverRoot, LauncherConfig.ServerFolderName); // manifest paths are relative to here
+        var removed = 0;
+
+        var manifestPath = Path.Combine(recordDir, "InstallManifest.json");
+        if (File.Exists(manifestPath))
+        {
+            string manifestJson;
+            try { manifestJson = File.ReadAllText(manifestPath); }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException) { manifestJson = ""; }
+            var plan = DeployedModManifest.Select(manifestJson, packageName);
+            foreach (var rel in plan.Files)
+                removed += TryDeleteUnderMods(serverBase, rel, isDir: false) ? 1 : 0;
+            foreach (var rel in plan.Dirs.OrderByDescending(d => d.Length)) // deepest first, so parents empty out
+                removed += TryDeleteUnderMods(serverBase, rel, isDir: true) ? 1 : 0;
+        }
+
+        // Ensure the deploy record folder is gone even if the manifest was missing or unreadable.
+        if (Directory.Exists(recordDir) && TryDeleteUnderMods(serverBase, Path.Combine("Mods", "ManagedMods", packageName), isDir: true))
+            removed++;
+
+        if (removed > 0)
+            _logger.Info($"Removed the server-side deployment of {packageName} ({removed} path(s)) after it was un-forced.");
+    }
+
+    /// <summary>Delete a server-folder-relative file or dir, but only if it resolves strictly under <c>Mods</c>
+    /// (defense against a malformed manifest path escaping via <c>..</c> or an absolute path). Best-effort.</summary>
+    private bool TryDeleteUnderMods(string serverBase, string relativePath, bool isDir)
+    {
+        var full = Path.GetFullPath(Path.Combine(serverBase, relativePath));
+        var modsRoot = Path.GetFullPath(ModsDir);
+        if (!full.StartsWith(modsRoot + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
+            return false;
+        try
+        {
+            if (isDir)
+            {
+                if (!Directory.Exists(full))
+                    return false;
+                Directory.Delete(full, recursive: true);
+            }
+            else
+            {
+                if (!File.Exists(full))
+                    return false;
+                File.Delete(full);
+            }
+            return true;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            _logger.Info($"Couldn't remove {relativePath}: {ex.Message}");
+            return false;
+        }
+    }
 
     /// <summary>True when PalModSettings.ini exists and currently has mods globally enabled. Lets the launcher
     /// avoid rewriting the file (or creating one on a never-modded install) just to leave it unchanged.</summary>
