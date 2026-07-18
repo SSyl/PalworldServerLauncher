@@ -30,6 +30,10 @@ public sealed class ModEntry
     /// <summary>Steam's last-updated timestamp for the Workshop item, for an "update available" hint.</summary>
     public long TimeUpdated { get; set; }
 
+    /// <summary>Force this mod to deploy server-side even if its Info.json doesn't declare server support (adds
+    /// <c>IsServer: true</c> to the source Info.json on sync). Opt-in per mod, gated by a warning. Off by default.</summary>
+    public bool ForceServerInstall { get; set; }
+
     /// <summary>A field-for-field copy, so the Mods dialog can edit a working copy and discard it on Cancel.</summary>
     public ModEntry Clone() => new()
     {
@@ -40,5 +44,6 @@ public sealed class ModEntry
         PackageName = PackageName,
         FolderName = FolderName,
         TimeUpdated = TimeUpdated,
+        ForceServerInstall = ForceServerInstall,
     };
 }
