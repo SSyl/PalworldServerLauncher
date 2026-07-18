@@ -2470,23 +2470,23 @@ Cualquier valor no listado arriba permanecerá igual.
     <value>No se puede usar esa carpeta. Compruebe que la ruta sea válida y que la unidad esté conectada.</value>
   </data>
   <data name="Mods_ColForce" xml:space="preserve">
-    <value>Force</value>
+    <value>Forzar</value>
   </data>
   <data name="Mods_ForceHeaderTip" xml:space="preserve">
-    <value>Force this mod to deploy on the server even if it doesn't declare server support. Use with caution.</value>
+    <value>Fuerza el despliegue de este mod en el servidor aunque no declare compatibilidad con servidores. Usar con precaución.</value>
   </data>
   <data name="Mods_ForceLocalTip" xml:space="preserve">
-    <value>Force server install applies to Workshop mods the launcher downloads. For a dropped-in mod, edit its Info.json directly.</value>
+    <value>Forzar instalación en el servidor se aplica a los mods del Taller que descarga el launcher. Para un mod colocado manualmente, edita su Info.json directamente.</value>
   </data>
   <data name="Mods_ForceWarnTitle" xml:space="preserve">
-    <value>Force server install?</value>
+    <value>¿Forzar instalación en el servidor?</value>
   </data>
   <data name="Mods_ForceWarnAccept" xml:space="preserve">
-    <value>Accept</value>
+    <value>Aceptar</value>
   </data>
   <data name="Mods_ForceWarnBody" xml:space="preserve">
-    <value>Warning! This forces a mod to install on the server even though it hasn't declared server compatibility.
+    <value>¡Advertencia! Esto fuerza la instalación de un mod en el servidor aunque no declare compatibilidad con servidores.
 
-Doing this may cause major issues (server crashes, save corruption) if the mod is truly incompatible with a server.</value>
+Hacerlo puede causar problemas graves (cierres del servidor, corrupción de las partidas guardadas) si el mod realmente no es compatible con un servidor.</value>
   </data>
 </root>

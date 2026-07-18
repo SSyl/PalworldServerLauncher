@@ -2394,23 +2394,23 @@
     <value>該資料夾無法使用。請確認路徑正確且磁碟機已連接。</value>
   </data>
   <data name="Mods_ColForce" xml:space="preserve">
-    <value>Force</value>
+    <value>強制</value>
   </data>
   <data name="Mods_ForceHeaderTip" xml:space="preserve">
-    <value>Force this mod to deploy on the server even if it doesn't declare server support. Use with caution.</value>
+    <value>即使模組未宣告伺服器支援，也強制將其部署到伺服器。請謹慎使用。</value>
   </data>
   <data name="Mods_ForceLocalTip" xml:space="preserve">
-    <value>Force server install applies to Workshop mods the launcher downloads. For a dropped-in mod, edit its Info.json directly.</value>
+    <value>強制伺服器安裝適用於啟動器下載的創意工坊模組。對於手動放入的模組，請直接編輯其 Info.json。</value>
   </data>
   <data name="Mods_ForceWarnTitle" xml:space="preserve">
-    <value>Force server install?</value>
+    <value>強制伺服器安裝？</value>
   </data>
   <data name="Mods_ForceWarnAccept" xml:space="preserve">
-    <value>Accept</value>
+    <value>接受</value>
   </data>
   <data name="Mods_ForceWarnBody" xml:space="preserve">
-    <value>Warning! This forces a mod to install on the server even though it hasn't declared server compatibility.
+    <value>警告！即使模組未宣告伺服器相容性，這也會強制將其安裝到伺服器。
 
-Doing this may cause major issues (server crashes, save corruption) if the mod is truly incompatible with a server.</value>
+如果模組確實與伺服器不相容，這樣做可能導致嚴重問題（伺服器崩潰、存檔損毀）。</value>
   </data>
 </root>

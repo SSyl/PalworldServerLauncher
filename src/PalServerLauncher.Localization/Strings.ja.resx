@@ -2401,23 +2401,23 @@ None : ロスト無し, Item : 装備品以外のアイテム, ItemAndEquipment 
     <value>そのフォルダーは使用できません。パスが正しいこと、ドライブが接続されていることを確認してください。</value>
   </data>
   <data name="Mods_ColForce" xml:space="preserve">
-    <value>Force</value>
+    <value>強制</value>
   </data>
   <data name="Mods_ForceHeaderTip" xml:space="preserve">
-    <value>Force this mod to deploy on the server even if it doesn't declare server support. Use with caution.</value>
+    <value>サーバー対応を宣言していない Mod でも、サーバーへの適用を強制します。ご注意ください。</value>
   </data>
   <data name="Mods_ForceLocalTip" xml:space="preserve">
-    <value>Force server install applies to Workshop mods the launcher downloads. For a dropped-in mod, edit its Info.json directly.</value>
+    <value>サーバーインストールの強制は、ランチャーがダウンロードするワークショップ Mod に適用されます。手動で配置した Mod は Info.json を直接編集してください。</value>
   </data>
   <data name="Mods_ForceWarnTitle" xml:space="preserve">
-    <value>Force server install?</value>
+    <value>サーバーインストールを強制しますか？</value>
   </data>
   <data name="Mods_ForceWarnAccept" xml:space="preserve">
-    <value>Accept</value>
+    <value>同意する</value>
   </data>
   <data name="Mods_ForceWarnBody" xml:space="preserve">
-    <value>Warning! This forces a mod to install on the server even though it hasn't declared server compatibility.
+    <value>警告！サーバー互換性を宣言していない Mod のインストールをサーバーに強制します。
 
-Doing this may cause major issues (server crashes, save corruption) if the mod is truly incompatible with a server.</value>
+Mod が本当にサーバーに対応していない場合、重大な問題（サーバークラッシュ、セーブデータの破損）が発生する可能性があります。</value>
   </data>
 </root>
