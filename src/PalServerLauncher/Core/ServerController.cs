@@ -947,9 +947,11 @@ public sealed class ServerController : IDisposable
             else if (toDownload.Count > 0)
                 await DownloadModsAsync(toDownload, ct).ConfigureAwait(false);
 
-            // Only mods that actually deploy server-side belong in ActiveModList: a mod whose Info.json declares
-            // IsServer (a real server mod, or one we injected via Force). A client-only, un-forced mod is left out,
-            // so the server writes it as `modname : 0` and UE4SS won't load any leftover files it once deployed.
+            // ActiveModList = enabled mods that actually deploy server-side: a mod whose Info.json declares
+            // IsServer (a real server mod, or one we inject here via Force). A client-only, un-forced mod is left
+            // out, so the server writes it `modname : 0` and UE4SS won't load any leftover files. The Force
+            // injection is a local file edit (no Steam needed), applied here every start and idempotent, so it
+            // holds even when there was no download this start (no account, or an unchanged mod).
             var active = new List<string>();
             foreach (var mod in enabled)
             {
@@ -961,7 +963,12 @@ public sealed class ServerController : IDisposable
                     continue;
                 }
                 mod.PackageName = info.PackageName; // keep the cached name fresh for the dialog
-                if (info.IsServer)
+
+                var serverDeployable = info.IsServer;
+                if (mod.ForceServerInstall && !string.IsNullOrWhiteSpace(mod.WorkshopId))
+                    serverDeployable |= ApplyForceServer(mod, info.PackageName);
+
+                if (serverDeployable)
                     active.Add(info.PackageName);
                 else
                     _logger.Info($"Mod '{ModDisplayName(mod)}' isn't marked to run on dedicated servers (no IsServer). Leaving it out of the active list. Tick Force to run it anyway.");
@@ -1014,10 +1021,11 @@ public sealed class ServerController : IDisposable
         }
     }
 
-    /// <summary>Copy one just-downloaded mod into Mods\Workshop only if its cache content (manifest) or Force state
-    /// changed since the last sync (skipping that copy is what avoids re-copying a large unchanged mod every
-    /// start), then (re-)apply its Force injection. The injection runs for a forced mod every start, idempotently,
-    /// so it self-heals if the source Info.json was reset with no content change (e.g. un-forced then re-forced).</summary>
+    /// <summary>Copy one just-downloaded mod into Mods\Workshop only when its cache content (manifest) or Force
+    /// state changed since the last sync, and record the new sync signature. Skipping that copy when nothing
+    /// changed is what avoids re-copying a large unchanged mod every start. PackageName resolution and the Force
+    /// injection happen afterward while building the active list, so they apply even without a download this
+    /// start (e.g. no Steam account connected).</summary>
     private void SyncDownloadedMod(ModEntry mod, ModSyncState state)
     {
         var liveState = _steamCmd.ReadWorkshopItemState(mod.WorkshopId);
@@ -1027,34 +1035,21 @@ public sealed class ServerController : IDisposable
 
         var folderPresent = Directory.Exists(Path.Combine(ModService.WorkshopDir, mod.WorkshopId));
         state.Items.TryGetValue(mod.WorkshopId, out var recorded);
+        if (!ModSyncState.NeedsSync(recorded, liveManifest, mod.ForceServerInstall, folderPresent))
+            return;
 
-        if (ModSyncState.NeedsSync(recorded, liveManifest, mod.ForceServerInstall, folderPresent))
-        {
-            // Copy a clean copy from SteamCMD's cache (this replaces any prior Force injection with the author's file).
-            ModService.CopyDownloadedMod(mod.WorkshopId, _steamCmd.WorkshopContentDir(mod.WorkshopId));
-            var pkg = ModService.ResolvePackageName(mod.WorkshopId);
-            if (!string.IsNullOrWhiteSpace(pkg))
-                mod.PackageName = pkg; // same object the VM holds; the dialog's Save persists it
+        // Mirror a clean copy from SteamCMD's cache (replaces any prior Force injection with the author's file).
+        // Only record the sync signature if the copy actually landed, so a missing source is retried next start
+        // instead of being pinned as up-to-date.
+        if (ModService.CopyDownloadedMod(mod.WorkshopId, _steamCmd.WorkshopContentDir(mod.WorkshopId)))
             state.Items[mod.WorkshopId] = new ModSyncEntry { Manifest = liveManifest, Forced = mod.ForceServerInstall };
-        }
-        else if (string.IsNullOrWhiteSpace(mod.PackageName))
-        {
-            // Skipped the copy (up-to-date fast path). Keep PackageName populated for the ini write.
-            var cached = ModService.ResolvePackageName(mod.WorkshopId);
-            if (!string.IsNullOrWhiteSpace(cached))
-                mod.PackageName = cached;
-        }
-
-        // Always re-apply the Force injection for a forced mod. Idempotent: ForceServerFlag returns AlreadyServer
-        // and writes nothing when the flag is already there, but re-injects if the source was reset (e.g. the mod
-        // was un-forced -> its Info.json restored -> now re-forced with no content change to trigger a copy).
-        if (mod.ForceServerInstall)
-            ApplyForceServer(mod, mod.PackageName);
     }
 
-    /// <summary>Inject IsServer:true into the just-copied source Info.json when Force Server Install is on, and on
-    /// a real change clear the deployed manifest so the server redeploys the mod with the flag.</summary>
-    private void ApplyForceServer(ModEntry mod, string? pkg)
+    /// <summary>Inject IsServer:true into a forced mod's source Info.json, and on a real change clear the deployed
+    /// manifest so the server redeploys it with the flag. Idempotent (returns AlreadyServer and writes nothing
+    /// when it's already injected). Returns whether the mod is server-deployable after the pass (Forced or
+    /// AlreadyServer), so the caller can decide ActiveModList membership.</summary>
+    private bool ApplyForceServer(ModEntry mod, string? pkg)
     {
         switch (ModService.ForceServerFlag(mod.WorkshopId))
         {
@@ -1062,13 +1057,13 @@ public sealed class ServerController : IDisposable
                 _logger.Info($"Forcing mod {ModDisplayName(mod)} to run on server.");
                 if (!string.IsNullOrWhiteSpace(pkg))
                     ClearDeployed(pkg!);
-                break;
+                return true;
             case ForceOutcome.AlreadyServer:
                 _logger.Info($"Mod {ModDisplayName(mod)} already has IsServer: True. Nothing to change.");
-                break;
-            case ForceOutcome.NotApplicable:
+                return true;
+            default: // NotApplicable
                 _logger.Info($"Couldn't force mod {ModDisplayName(mod)} to run on the server: no InstallRule found in its Info.json.");
-                break;
+                return false;
         }
     }
 

@@ -9,8 +9,9 @@ namespace PalServerLauncher.Core;
 /// Per-server record of which Workshop mod content the launcher last copied into <c>Mods\Workshop</c>, so it can
 /// skip re-copying an unchanged mod on every start (the update-detection gate). Keyed by Workshop id to the
 /// SteamCMD cache <c>manifest</c> last copied plus whether the Force-server injection was applied. Stored as its
-/// own file next to <c>launcher.json</c> and written ONLY from the mod-sync path (a single writer, serialized
-/// under the SteamCMD gate), so it never races <see cref="Config.LauncherConfig.Save"/>. The
+/// own file at the server root (<c>ServerRoot</c>, alongside the server install) and written ONLY from the
+/// mod-sync path (a single writer, serialized under the SteamCMD gate), so it never races
+/// <see cref="Config.LauncherConfig.Save"/>. The
 /// <see cref="NeedsSync"/> decision is pure, so it's unit-tested.
 /// </summary>
 public sealed class ModSyncState
@@ -31,7 +32,7 @@ public sealed class ModSyncState
         }
         catch (Exception ex) when (ex is IOException or JsonException or UnauthorizedAccessException)
         {
-            // A corrupt or unreadable state file just means we re-sync once; never fatal.
+            // A corrupt or unreadable state file just means we re-sync once, never fatal.
         }
         return new ModSyncState();
     }

@@ -86,10 +86,6 @@ public sealed class ModService
         return mods;
     }
 
-    /// <summary>Read the PackageName from a specific mod folder's Info.json (null if absent / unreadable).</summary>
-    public string? ResolvePackageName(string workshopId) =>
-        ReadModInfo(Path.Combine(WorkshopDir, workshopId))?.PackageName;
-
     /// <summary>Read the parsed Info.json for a mod folder under <c>Mods\Workshop</c> (its WorkshopId or scanned
     /// folder name), or null if it's absent/unreadable. Gives the caller PackageName + IsServer in one read, so
     /// the sync can decide ActiveModList membership from whether the mod declares server support.</summary>
@@ -108,13 +104,21 @@ public sealed class ModService
         var infoPath = Path.Combine(WorkshopDir, folder, "Info.json");
         string json;
         try { json = File.ReadAllText(infoPath); }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException) { return ForceOutcome.NotApplicable; }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            _logger.Info($"Couldn't read Info.json for mod '{folder}' to force it: {ex.Message}");
+            return ForceOutcome.NotApplicable;
+        }
 
         var result = ModInfoEditor.InjectServerFlag(json);
         if (result.Outcome == ForceOutcome.Forced)
         {
             try { File.WriteAllText(infoPath, result.Json!); }
-            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException) { return ForceOutcome.NotApplicable; }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            {
+                _logger.Info($"Couldn't write the forced Info.json for mod '{folder}': {ex.Message}");
+                return ForceOutcome.NotApplicable;
+            }
         }
         return result.Outcome;
     }

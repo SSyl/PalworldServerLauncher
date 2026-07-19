@@ -8,7 +8,7 @@ namespace PalServerLauncher.Core;
 /// <summary>The outcome of a <see cref="ModInfoEditor.InjectServerFlag"/> pass, so the caller can log and act.</summary>
 public enum ForceOutcome
 {
-    /// <summary>We added or flipped a flag; <see cref="ForceResult.Json"/> holds the file to write.</summary>
+    /// <summary>We added or flipped a flag, so <see cref="ForceResult.Json"/> holds the file to write.</summary>
     Forced,
     /// <summary>A rule was already <c>IsServer: true</c> and nothing needed changing.</summary>
     AlreadyServer,
@@ -38,7 +38,13 @@ public readonly record struct ForceResult(ForceOutcome Outcome, string? Json);
 /// </summary>
 public static class ModInfoEditor
 {
-    private static readonly JsonSerializerOptions Indented = new() { WriteIndented = true };
+    private static readonly JsonSerializerOptions Indented = new()
+    {
+        WriteIndented = true,
+        // Don't escape non-ASCII (author names, descriptions) to \uXXXX, so the rewritten file stays close to the
+        // author's original bytes. Safe for a JSON file on disk (the "unsafe" name is about HTML embedding).
+        Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+    };
 
     public static ForceResult InjectServerFlag(string json)
     {
@@ -59,7 +65,7 @@ public static class ModInfoEditor
             || rule is null)
             return new ForceResult(ForceOutcome.NotApplicable, null);
 
-        // The real shape is an array of rule objects; a lone object is handled defensively.
+        // The real shape is an array of rule objects, a lone object is handled defensively.
         var rules = rule switch
         {
             JsonArray arr => arr.OfType<JsonObject>().ToList(),

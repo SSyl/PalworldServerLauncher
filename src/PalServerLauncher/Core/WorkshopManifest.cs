@@ -22,7 +22,7 @@ public static class WorkshopManifest
     {
         var result = new Dictionary<string, ItemState>(StringComparer.Ordinal);
         var root = KeyValues.Parse(acfText);
-        // The document's single top node is "AppWorkshop"; be defensive if that wrapper is missing.
+        // The document's single top node is "AppWorkshop", be defensive if that wrapper is missing.
         var app = root.Child("AppWorkshop") ?? root;
         var installed = app.Child("WorkshopItemsInstalled");
         if (installed is null)
