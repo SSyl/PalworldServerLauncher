@@ -428,13 +428,25 @@ public sealed class ModsDialog : Window
             ToolTip = isLocal ? Strings.Mods_ForceLocalTip : Strings.Mods_ForceHeaderTip,
         };
         // Click fires only on user interaction (not the programmatic IsChecked above), so init doesn't warn.
+        // Forcing implies enabling (a forced mod must be in ActiveModList to deploy). Un-forcing disables the
+        // mod, because a client-only mod can't run on a dedicated server, so the server drops its UE4SS entry
+        // (modname : 0) on the next start and the leftover files sit inert until the mod is removed.
         force.Click += (_, _) =>
         {
-            if (force.IsChecked != true)
-                return;
-            if (ChoiceDialog.Show(this, Strings.Mods_ForceWarnTitle, Strings.Mods_ForceWarnBody,
-                    Strings.Mods_ForceWarnAccept, Strings.Common_Cancel) != 0)
-                force.IsChecked = false; // cancelled -> revert the check
+            if (force.IsChecked == true)
+            {
+                if (ChoiceDialog.Show(this, Strings.Mods_ForceWarnTitle, Strings.Mods_ForceWarnBody,
+                        Strings.Mods_ForceWarnAccept, Strings.Common_Cancel) != 0)
+                {
+                    force.IsChecked = false; // cancelled -> revert the check
+                    return;
+                }
+                enabled.IsChecked = true;
+            }
+            else
+            {
+                enabled.IsChecked = false;
+            }
         };
 
         var remove = new Button

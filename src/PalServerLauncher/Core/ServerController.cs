@@ -1039,18 +1039,10 @@ public sealed class ServerController : IDisposable
         if (!string.IsNullOrWhiteSpace(pkg))
             mod.PackageName = pkg; // same object the VM holds; the dialog's Save persists it
 
-        var wasForced = recorded?.Forced ?? false;
+        // Un-forcing a mod disables it in the dialog (a client-only mod can't run on a dedicated server), so a
+        // no-longer-forced mod won't reach here (it's not enabled). The server drops its UE4SS entry on disable.
         if (mod.ForceServerInstall)
             ApplyForceServer(mod, pkg);
-        else if (wasForced)
-        {
-            // No longer forced: the clean copy above restored the author's Info.json. The server won't remove the
-            // files it already deployed for this mod (verified on a real server, not even on a Version change), so
-            // reverse that deployment ourselves via the mod's own manifest.
-            _logger.Info($"Mod {ModDisplayName(mod)} is no longer force-installed. Removing its server-side deployment.");
-            if (!string.IsNullOrWhiteSpace(pkg))
-                ModService.UninstallDeployedMod(pkg!);
-        }
 
         state.Items[mod.WorkshopId] = new ModSyncEntry { Manifest = liveManifest, Forced = mod.ForceServerInstall };
     }
