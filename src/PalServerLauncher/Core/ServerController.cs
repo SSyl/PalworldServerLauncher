@@ -947,17 +947,24 @@ public sealed class ServerController : IDisposable
             else if (toDownload.Count > 0)
                 await DownloadModsAsync(toDownload, ct).ConfigureAwait(false);
 
-            // Enable every enabled mod that resolves to a PackageName (from the cached value or its Info.json).
+            // Only mods that actually deploy server-side belong in ActiveModList: a mod whose Info.json declares
+            // IsServer (a real server mod, or one we injected via Force). A client-only, un-forced mod is left out,
+            // so the server writes it as `modname : 0` and UE4SS won't load any leftover files it once deployed.
             var active = new List<string>();
             foreach (var mod in enabled)
             {
-                var pkg = !string.IsNullOrWhiteSpace(mod.PackageName)
-                    ? mod.PackageName
-                    : string.IsNullOrWhiteSpace(mod.WorkshopId) ? null : ModService.ResolvePackageName(mod.WorkshopId);
-                if (!string.IsNullOrWhiteSpace(pkg))
-                    active.Add(pkg);
+                var folder = !string.IsNullOrWhiteSpace(mod.WorkshopId) ? mod.WorkshopId : mod.FolderName;
+                var info = ModService.GetModInfo(folder);
+                if (info is null || string.IsNullOrWhiteSpace(info.PackageName))
+                {
+                    _logger.Info($"Mod '{ModDisplayName(mod)}' has no readable Info.json yet, it won't activate until it's downloaded or scanned.");
+                    continue;
+                }
+                mod.PackageName = info.PackageName; // keep the cached name fresh for the dialog
+                if (info.IsServer)
+                    active.Add(info.PackageName);
                 else
-                    _logger.Info($"Mod '{ModDisplayName(mod)}' has no PackageName yet, it won't activate until it's downloaded or scanned.");
+                    _logger.Info($"Mod '{ModDisplayName(mod)}' isn't marked to run on dedicated servers (no IsServer). Leaving it out of the active list. Tick Force to run it anyway.");
             }
             ModService.ApplyPalModSettings(globalEnable: true, active);
         }

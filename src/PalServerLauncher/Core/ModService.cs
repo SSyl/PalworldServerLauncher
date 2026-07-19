@@ -90,6 +90,12 @@ public sealed class ModService
     public string? ResolvePackageName(string workshopId) =>
         ReadModInfo(Path.Combine(WorkshopDir, workshopId))?.PackageName;
 
+    /// <summary>Read the parsed Info.json for a mod folder under <c>Mods\Workshop</c> (its WorkshopId or scanned
+    /// folder name), or null if it's absent/unreadable. Gives the caller PackageName + IsServer in one read, so
+    /// the sync can decide ActiveModList membership from whether the mod declares server support.</summary>
+    public ModInfo? GetModInfo(string folder) =>
+        string.IsNullOrWhiteSpace(folder) ? null : ReadModInfo(Path.Combine(WorkshopDir, folder));
+
     /// <summary>
     /// Force a mod to deploy server-side by injecting <c>IsServer: true</c> into its source
     /// <c>Mods\Workshop\&lt;folder&gt;\Info.json</c> (see <see cref="ModInfoEditor"/> for the exact policy). Writes
