@@ -267,6 +267,9 @@ public partial class MainViewModel : ObservableObject
     /// dialog's sign-in status.</summary>
     public Task<bool> CheckSteamLoginAsync(string username) => _controller.CheckSteamLoginAsync(username);
 
+    /// <summary>Restore a mod's original Info.json from SteamCMD's cache when it's un-forced, for the Mods dialog.</summary>
+    public void RestoreOriginalModInfo(string workshopId) => _controller.RestoreOriginalModInfo(workshopId);
+
     /// <summary>Called after the Mods dialog saves. Mods deploy on the next start/restart, so this just notes it.</summary>
     public void ApplyModSettings() => _logger.Info(_config.ModsEnabled
         ? "Mod settings saved. Enabled mods apply on the next server start or restart."

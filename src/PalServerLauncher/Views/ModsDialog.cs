@@ -35,6 +35,7 @@ public sealed class ModsDialog : Window
     private readonly ModService _modService;
     private readonly Func<string, Task<bool>> _connectSteam;
     private readonly Func<string, Task<bool>> _checkLogin;
+    private readonly Action<string> _restoreOriginalInfo;
     private bool _saved;
 
     private readonly CheckBox _modsEnabled;
@@ -60,12 +61,13 @@ public sealed class ModsDialog : Window
         public required FrameworkElement Panel;
     }
 
-    private ModsDialog(LauncherConfig config, ModService modService, Func<string, Task<bool>> connectSteam, Func<string, Task<bool>> checkLogin)
+    private ModsDialog(LauncherConfig config, ModService modService, Func<string, Task<bool>> connectSteam, Func<string, Task<bool>> checkLogin, Action<string> restoreOriginalInfo)
     {
         _config = config;
         _modService = modService;
         _connectSteam = connectSteam;
         _checkLogin = checkLogin;
+        _restoreOriginalInfo = restoreOriginalInfo;
 
         Title = Strings.Mods_Title;
         Background = Theme.Window;
@@ -183,9 +185,9 @@ public sealed class ModsDialog : Window
         Content = new ScrollViewer { Content = stack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
     }
 
-    public static bool Show(Window? owner, LauncherConfig config, ModService modService, Func<string, Task<bool>> connectSteam, Func<string, Task<bool>> checkLogin)
+    public static bool Show(Window? owner, LauncherConfig config, ModService modService, Func<string, Task<bool>> connectSteam, Func<string, Task<bool>> checkLogin, Action<string> restoreOriginalInfo)
     {
-        var dialog = new ModsDialog(config, modService, connectSteam, checkLogin) { Owner = owner };
+        var dialog = new ModsDialog(config, modService, connectSteam, checkLogin, restoreOriginalInfo) { Owner = owner };
         dialog.ShowDialog();
         return dialog._saved;
     }
@@ -357,10 +359,16 @@ public sealed class ModsDialog : Window
     {
         foreach (var row in _rows)
         {
+            // On an un-force (was forced, now not), restore the author's original Info.json so the leftover
+            // injected IsServer doesn't linger on disk. row.Entry still holds the pre-save Force state here.
+            var nowForced = row.Force.IsChecked == true;
+            if (row.Entry.ForceServerInstall && !nowForced && row.Entry.WorkshopId.Length > 0)
+                _restoreOriginalInfo(row.Entry.WorkshopId);
+
             row.Entry.Enabled = row.Enabled.IsChecked == true;
             row.Entry.ModName = row.Name.Text.Trim();
             row.Entry.Note = row.Note.Text.Trim();
-            row.Entry.ForceServerInstall = row.Force.IsChecked == true;
+            row.Entry.ForceServerInstall = nowForced;
         }
 
         var modsOn = _modsEnabled.IsChecked == true;

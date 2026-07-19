@@ -1015,8 +1015,9 @@ public sealed class ServerController : IDisposable
     }
 
     /// <summary>Copy one just-downloaded mod into Mods\Workshop only if its cache content (manifest) or Force state
-    /// changed since the last sync, apply or revert its Force injection, and record the new sync signature.
-    /// Skipping the copy when nothing changed is what avoids re-copying a large unchanged mod every start.</summary>
+    /// changed since the last sync (skipping that copy is what avoids re-copying a large unchanged mod every
+    /// start), then (re-)apply its Force injection. The injection runs for a forced mod every start, idempotently,
+    /// so it self-heals if the source Info.json was reset with no content change (e.g. un-forced then re-forced).</summary>
     private void SyncDownloadedMod(ModEntry mod, ModSyncState state)
     {
         var liveState = _steamCmd.ReadWorkshopItemState(mod.WorkshopId);
@@ -1027,31 +1028,28 @@ public sealed class ServerController : IDisposable
         var folderPresent = Directory.Exists(Path.Combine(ModService.WorkshopDir, mod.WorkshopId));
         state.Items.TryGetValue(mod.WorkshopId, out var recorded);
 
-        if (!ModSyncState.NeedsSync(recorded, liveManifest, mod.ForceServerInstall, folderPresent))
+        if (ModSyncState.NeedsSync(recorded, liveManifest, mod.ForceServerInstall, folderPresent))
         {
-            // Unchanged content and Force state: skip the copy (the up-to-date fast path). Keep PackageName
-            // populated for the ini write, resolving it from disk if it isn't cached yet.
-            if (string.IsNullOrWhiteSpace(mod.PackageName))
-            {
-                var cached = ModService.ResolvePackageName(mod.WorkshopId);
-                if (!string.IsNullOrWhiteSpace(cached))
-                    mod.PackageName = cached;
-            }
-            return;
+            // Copy a clean copy from SteamCMD's cache (this replaces any prior Force injection with the author's file).
+            ModService.CopyDownloadedMod(mod.WorkshopId, _steamCmd.WorkshopContentDir(mod.WorkshopId));
+            var pkg = ModService.ResolvePackageName(mod.WorkshopId);
+            if (!string.IsNullOrWhiteSpace(pkg))
+                mod.PackageName = pkg; // same object the VM holds; the dialog's Save persists it
+            state.Items[mod.WorkshopId] = new ModSyncEntry { Manifest = liveManifest, Forced = mod.ForceServerInstall };
+        }
+        else if (string.IsNullOrWhiteSpace(mod.PackageName))
+        {
+            // Skipped the copy (up-to-date fast path). Keep PackageName populated for the ini write.
+            var cached = ModService.ResolvePackageName(mod.WorkshopId);
+            if (!string.IsNullOrWhiteSpace(cached))
+                mod.PackageName = cached;
         }
 
-        // Copy a clean copy from SteamCMD's cache (this replaces any prior Force injection with the author's file).
-        ModService.CopyDownloadedMod(mod.WorkshopId, _steamCmd.WorkshopContentDir(mod.WorkshopId));
-        var pkg = ModService.ResolvePackageName(mod.WorkshopId);
-        if (!string.IsNullOrWhiteSpace(pkg))
-            mod.PackageName = pkg; // same object the VM holds; the dialog's Save persists it
-
-        // Un-forcing a mod disables it in the dialog (a client-only mod can't run on a dedicated server), so a
-        // no-longer-forced mod won't reach here (it's not enabled). The server drops its UE4SS entry on disable.
+        // Always re-apply the Force injection for a forced mod. Idempotent: ForceServerFlag returns AlreadyServer
+        // and writes nothing when the flag is already there, but re-injects if the source was reset (e.g. the mod
+        // was un-forced -> its Info.json restored -> now re-forced with no content change to trigger a copy).
         if (mod.ForceServerInstall)
-            ApplyForceServer(mod, pkg);
-
-        state.Items[mod.WorkshopId] = new ModSyncEntry { Manifest = liveManifest, Forced = mod.ForceServerInstall };
+            ApplyForceServer(mod, mod.PackageName);
     }
 
     /// <summary>Inject IsServer:true into the just-copied source Info.json when Force Server Install is on, and on
@@ -1081,6 +1079,29 @@ public sealed class ServerController : IDisposable
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
             _logger.Info($"Couldn't clear the deployed manifest for {packageName}: {ex.Message}");
+        }
+    }
+
+    /// <summary>Swap a mod's source Info.json back to the author's original from SteamCMD's Workshop cache (removing
+    /// our injected IsServer), for when it's un-forced. No-op (logged) if the cache copy is gone or the copy fails,
+    /// so un-force still proceeds regardless (the mod leaves ActiveModList either way). Called from the Mods dialog.</summary>
+    public void RestoreOriginalModInfo(string workshopId)
+    {
+        if (string.IsNullOrWhiteSpace(workshopId))
+            return;
+        var original = Path.Combine(_steamCmd.WorkshopContentDir(workshopId), "Info.json");
+        var dest = Path.Combine(ModService.WorkshopDir, workshopId, "Info.json");
+        try
+        {
+            if (File.Exists(original) && Directory.Exists(Path.GetDirectoryName(dest)!))
+            {
+                File.Copy(original, dest, overwrite: true);
+                _logger.Info($"Restored the original Info.json for mod {workshopId} after un-forcing it.");
+            }
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            _logger.Info($"Couldn't restore the original Info.json for mod {workshopId}: {ex.Message}");
         }
     }
 
