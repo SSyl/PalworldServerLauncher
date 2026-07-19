@@ -1079,11 +1079,24 @@ public sealed class ServerController : IDisposable
 
     /// <summary>Swap a mod's source Info.json back to the author's original from SteamCMD's Workshop cache (removing
     /// our injected IsServer), for when it's un-forced. No-op (logged) if the cache copy is gone or the copy fails,
-    /// so un-force still proceeds regardless (the mod leaves ActiveModList either way). Called from the Mods dialog.</summary>
+    /// so un-force still proceeds regardless (the mod leaves ActiveModList either way). Called from the Mods dialog:
+    /// runs fire-and-forget under the SteamCMD gate so the copy can't overlap a sync's mod-folder copy, and never
+    /// blocks the UI Save. The un-force disables the mod, so it won't run regardless of when this lands, this is
+    /// just on-disk tidiness, so eventual completion is fine.</summary>
     public void RestoreOriginalModInfo(string workshopId)
     {
         if (string.IsNullOrWhiteSpace(workshopId))
             return;
+        FireAndForget(async () =>
+        {
+            await _steamGate.WaitAsync().ConfigureAwait(false);
+            try { RestoreOriginalModInfoCore(workshopId); }
+            finally { _steamGate.Release(); }
+        }, "restore original mod Info.json");
+    }
+
+    private void RestoreOriginalModInfoCore(string workshopId)
+    {
         var original = Path.Combine(_steamCmd.WorkshopContentDir(workshopId), "Info.json");
         var dest = Path.Combine(ModService.WorkshopDir, workshopId, "Info.json");
         try

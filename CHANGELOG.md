@@ -2,7 +2,7 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
-## [0.7.0] - 2026-07-18
+## [0.7.0] - 2026-07-19
 
 ### Added
 - **Force a mod to run on your server.** Some Workshop mods work on a dedicated server but their author never
