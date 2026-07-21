@@ -1,6 +1,6 @@
 # Palworld Server Launcher
 
-[![Latest release](https://img.shields.io/github/v/release/SSyl/PalworldServerLauncher?include_prereleases)](https://github.com/SSyl/PalworldServerLauncher/releases/latest) [![License: GPLv3](https://img.shields.io/github/license/SSyl/PalworldServerLauncher)](LICENSE) [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8X4237D8A)
+[![Latest release](https://img.shields.io/github/v/release/SSyl/PalworldServerLauncher?include_prereleases)](https://github.com/SSyl/PalworldServerLauncher/releases/latest) [![License: GPLv3](https://img.shields.io/github/license/SSyl/PalworldServerLauncher?color=blue)](LICENSE) [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8X4237D8A)
 
 A Windows app for running a **Palworld dedicated server**: installs it, keeps it updated, handles scheduled
 restarts and backups, and watches its health, all through Palworld's REST API. Native C# / WPF, single `.exe`.
