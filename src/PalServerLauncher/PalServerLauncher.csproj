@@ -15,7 +15,7 @@
     <AssemblyName>PalworldServerLauncher</AssemblyName>
     <!-- Product version stamped into the exe's file properties. Bump on each release, alongside the
          CHANGELOG entry and the git tag. -->
-    <Version>0.7.0</Version>
+    <Version>0.7.1</Version>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <!-- Repo-root logo (two levels up from this project) -> embedded as the exe icon. -->
     <ApplicationIcon>..\..\logo.ico</ApplicationIcon>

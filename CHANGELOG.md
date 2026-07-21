@@ -2,6 +2,11 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [0.7.1] - 2026-07-21
+
+### Changed
+- **Signing in to Steam for Workshop mods is much clearer.** Connecting your Steam account now asks for your password in the launcher's own box, instead of the bare SteamCMD window that hid your typing and made it look like nothing was happening (a common source of confusion). Your password goes straight to Steam to sign in and is never saved or logged. Steam Guard is still confirmed in Steam's own window: approve the login on your phone, or type the code there. If a sign-in does not go through, the message now points you to the SteamCMD log in the main window for the exact error, instead of a window that closes on its own.
+
 ## [0.7.0] - 2026-07-19
 
 ### Added
