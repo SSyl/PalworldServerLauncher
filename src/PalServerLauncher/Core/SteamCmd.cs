@@ -126,29 +126,36 @@ public sealed class SteamCmd
     public enum WorkshopDownloadResult { Ok, AuthFailed, Failed }
 
     /// <summary>
-    /// Interactive one-time Steam sign-in for Workshop downloads. Runs SteamCMD in its OWN console window (via
-    /// cmd.exe) with just <c>+login &lt;username&gt;</c>: SteamCMD prompts for the password and Steam Guard code IN
-    /// THAT WINDOW and caches its own session, the launcher never sees or stores them (only the username). The
-    /// window is held open with a pause afterward so the user can read the result, SteamCMD's own <c>+quit</c>
-    /// would slam it shut the instant login finishes. The launcher confirms success separately via
-    /// <see cref="HasCachedSessionAsync"/>, so this method's exit code (cmd's, not SteamCMD's) is unused.
+    /// Interactive one-time Steam sign-in for Workshop downloads. Launches SteamCMD directly in its OWN console
+    /// window with <c>+login &lt;username&gt; &lt;password&gt; +quit</c>, so the user never faces SteamCMD's blank,
+    /// no-echo password prompt (the thing that trips people up). Steam Guard is still handled IN THAT WINDOW: a
+    /// mobile-authenticator account shows "confirm on your phone", an email/code account prompts for the (echoed)
+    /// code. On a successful login SteamCMD caches its own session, so later downloads pass only the username. The
+    /// launcher confirms success separately via <see cref="HasCachedSessionAsync"/>, so this method's exit code is
+    /// unused.
+    ///
+    /// The password goes through <see cref="ProcessStartInfo.ArgumentList"/> (no shell), so symbols in it can't
+    /// break quoting or inject a command, and it is deliberately never logged or persisted anywhere.
     /// </summary>
-    public async Task ConnectAccountAsync(string username, IProgress<string>? log, CancellationToken ct = default)
+    public async Task ConnectAccountAsync(string username, string password, IProgress<string>? log, CancellationToken ct = default)
     {
-        username = username.Replace("\"", "").Trim(); // keep the account name from breaking the cmd quoting
-        log?.Report($"Opening a Steam sign-in window for account '{username}'. Enter your password and Steam Guard code there.");
+        username = username.Trim();
+        log?.Report($"Opening a Steam sign-in window for account '{username}'. If prompted, approve the sign-in on your phone or enter your Steam Guard code there.");
 
-        var login = $"\"{SteamCmdExe}\" +login \"{username}\" +quit";
-        var pause = "echo. & echo Sign-in finished, review the result above. & echo Press any key to close this window. & pause > nul";
         var psi = new ProcessStartInfo
         {
-            FileName = "cmd.exe",
-            Arguments = $"/c \"{login} & {pause}\"", // the & forces cmd to keep the inner quotes around the exe path
+            FileName = SteamCmdExe,
             WorkingDirectory = SteamCmdDir,
             UseShellExecute = false,
-            CreateNoWindow = false,
+            CreateNoWindow = false,          // a console app launched from the windowless GUI gets its own window
             WindowStyle = ProcessWindowStyle.Normal,
         };
+        // Never log these args: ArgumentList[2] is the password.
+        psi.ArgumentList.Add("+login");
+        psi.ArgumentList.Add(username);
+        psi.ArgumentList.Add(password);
+        psi.ArgumentList.Add("+quit");
+
         using var process = new Process { StartInfo = psi, EnableRaisingEvents = true };
         process.Start();
         await process.WaitForExitAsync(ct).ConfigureAwait(false);

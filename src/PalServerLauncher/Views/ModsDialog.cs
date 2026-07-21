@@ -33,7 +33,7 @@ public sealed class ModsDialog : Window
 
     private readonly LauncherConfig _config;
     private readonly ModService _modService;
-    private readonly Func<string, Task<bool>> _connectSteam;
+    private readonly Func<string, string, Task<bool>> _connectSteam;
     private readonly Func<string, Task<bool>> _checkLogin;
     private readonly Action<string> _restoreOriginalInfo;
     private bool _saved;
@@ -61,7 +61,7 @@ public sealed class ModsDialog : Window
         public required FrameworkElement Panel;
     }
 
-    private ModsDialog(LauncherConfig config, ModService modService, Func<string, Task<bool>> connectSteam, Func<string, Task<bool>> checkLogin, Action<string> restoreOriginalInfo)
+    private ModsDialog(LauncherConfig config, ModService modService, Func<string, string, Task<bool>> connectSteam, Func<string, Task<bool>> checkLogin, Action<string> restoreOriginalInfo)
     {
         _config = config;
         _modService = modService;
@@ -185,7 +185,7 @@ public sealed class ModsDialog : Window
         Content = new ScrollViewer { Content = stack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
     }
 
-    public static bool Show(Window? owner, LauncherConfig config, ModService modService, Func<string, Task<bool>> connectSteam, Func<string, Task<bool>> checkLogin, Action<string> restoreOriginalInfo)
+    public static bool Show(Window? owner, LauncherConfig config, ModService modService, Func<string, string, Task<bool>> connectSteam, Func<string, Task<bool>> checkLogin, Action<string> restoreOriginalInfo)
     {
         var dialog = new ModsDialog(config, modService, connectSteam, checkLogin, restoreOriginalInfo) { Owner = owner };
         dialog.ShowDialog();
@@ -200,6 +200,11 @@ public sealed class ModsDialog : Window
             ChoiceDialog.Show(this, Strings.Mods_EnterUsernameTitle, Strings.Mods_EnterUsernameBody, Strings.Common_OK);
             return;
         }
+
+        var password = PasswordPromptDialog.Show(this, username);
+        if (password is null)
+            return; // user cancelled the password prompt, leave the connect panel as-is
+
         _connectButton.IsEnabled = false;
         _connectButton.Content = Strings.Mods_ConnectingButton;
         _steamStatus.Visibility = Visibility.Visible;
@@ -207,7 +212,7 @@ public sealed class ModsDialog : Window
         _steamStatus.Text = Strings.Mods_SteamCmdWindowOpened;
         try
         {
-            var ok = await _connectSteam(username);
+            var ok = await _connectSteam(username, password);
             ShowSteamState(ok ? SteamUi.SignedIn : SteamUi.NotSignedIn,
                 ok ? null : Strings.Mods_ConfirmSignInFailed);
         }

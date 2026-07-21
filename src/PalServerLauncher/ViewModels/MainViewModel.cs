@@ -259,9 +259,10 @@ public partial class MainViewModel : ObservableObject
     /// <summary>Steam Workshop mod service (the Mods dialog scans / opens the folder / resolves package names through it).</summary>
     public Core.ModService ModService => _controller.ModService;
 
-    /// <summary>Run SteamCMD's interactive sign-in for Workshop downloads. Visible SteamCMD window, the launcher
-    /// only passes the username and never sees the password. Returns true on a successful login.</summary>
-    public Task<bool> ConnectSteamAsync(string username) => _controller.ConnectSteamAsync(username);
+    /// <summary>Run SteamCMD's interactive sign-in for Workshop downloads. The launcher passes the username and
+    /// password to SteamCMD (never storing or logging the password); its visible window still handles Steam Guard.
+    /// Returns true on a successful login.</summary>
+    public Task<bool> ConnectSteamAsync(string username, string password) => _controller.ConnectSteamAsync(username, password);
 
     /// <summary>Check whether SteamCMD still has a cached session for the account (no login window), for the Mods
     /// dialog's sign-in status.</summary>

@@ -1120,17 +1120,19 @@ public sealed class ServerController : IDisposable
         : "(local mod)";
 
     /// <summary>
-    /// Run SteamCMD's interactive one-time sign-in so it caches a session for Workshop downloads. Its own visible
-    /// window prompts for the password + Steam Guard, the launcher only passes the username. Under the gate.
+    /// Run SteamCMD's interactive one-time sign-in so it caches a session for Workshop downloads. The launcher
+    /// collects the password and passes it straight to SteamCMD (never storing or logging it), sparing the user
+    /// SteamCMD's blank password prompt; its visible window still handles Steam Guard (phone approval or an echoed
+    /// code). Under the gate.
     /// </summary>
-    public async Task<bool> ConnectSteamAsync(string username, CancellationToken ct = default)
+    public async Task<bool> ConnectSteamAsync(string username, string password, CancellationToken ct = default)
     {
         var steamLog = new Progress<string>(_logger.SteamCmd);
         await _steamGate.WaitAsync(ct).ConfigureAwait(false);
         try
         {
             await _steamCmd.EnsureSteamCmdAsync(steamLog, ct).ConfigureAwait(false);
-            await _steamCmd.ConnectAccountAsync(username, steamLog, ct).ConfigureAwait(false);
+            await _steamCmd.ConnectAccountAsync(username, password, steamLog, ct).ConfigureAwait(false);
             // The sign-in window's exit code isn't SteamCMD's, so confirm the session took with a quick hidden check.
             var connected = await _steamCmd.HasCachedSessionAsync(username, ct).ConfigureAwait(false);
             _logger.Info(connected
