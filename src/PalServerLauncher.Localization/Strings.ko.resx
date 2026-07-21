@@ -915,7 +915,7 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>Steam 계정</value>
   </data>
   <data name="Mods_SteamAccountNote" xml:space="preserve">
-    <value>창작마당 모드를 다운로드할 때만 필요하며, 직접 넣은 모드에는 계정이 필요 없습니다. Steam의 SteamCMD가 자체 창에서 로그인을 처리하므로 런처는 비밀번호를 절대 보거나 저장하지 않으며, 사용자 이름만 기억합니다.</value>
+    <value>창작마당 모드를 다운로드할 때만 필요하며, 직접 넣은 모드에는 계정이 필요 없습니다. Steam 비밀번호는 SteamCMD로 바로 전달되어 로그인에 사용되며 저장되거나 로그에 기록되지 않고, 사용자 이름만 기억됩니다.</value>
   </data>
   <data name="Mods_ConnectButton" xml:space="preserve">
     <value>Steam 계정 연결</value>
@@ -975,10 +975,10 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>연결 중...</value>
   </data>
   <data name="Mods_SteamCmdWindowOpened" xml:space="preserve">
-    <value>SteamCMD 창이 열렸습니다. 그곳에 비밀번호와 Steam Guard 코드를 입력하십시오. 결과를 확인할 수 있도록 창이 열려 있으니 확인 후 닫으십시오.</value>
+    <value>로그인을 마치기 위해 SteamCMD 창이 열렸습니다. 메시지가 표시되면 Steam 모바일 앱에서 승인하거나, 그 창에 Steam Guard 코드를 입력하십시오.</value>
   </data>
   <data name="Mods_ConfirmSignInFailed" xml:space="preserve">
-    <value>로그인을 확인하지 못했습니다. 다시 연결하고 SteamCMD 창에서 오류(잘못된 비밀번호 또는 Steam Guard 코드)를 확인하십시오.</value>
+    <value>로그인을 확인하지 못했습니다. 대개 비밀번호가 잘못되었거나 Steam Guard 단계가 완료되지 않은 경우입니다. 정확한 오류는 메인 창의 SteamCMD 로그에 표시됩니다. 다시 연결하여 재시도하십시오.</value>
   </data>
   <data name="Mods_SignInFailed" xml:space="preserve">
     <value>로그인 실패: {0}</value>
@@ -2488,5 +2488,14 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>경고! 서버 호환성을 선언하지 않은 모드를 서버에 강제로 설치합니다.
 
 모드가 실제로 서버와 호환되지 않으면 심각한 문제(서버 충돌, 저장 데이터 손상)가 발생할 수 있습니다.</value>
+  </data>
+  <data name="Mods_PasswordTitle" xml:space="preserve">
+    <value>Steam 로그인</value>
+  </data>
+  <data name="Mods_PasswordPrompt" xml:space="preserve">
+    <value>{0}의 Steam 비밀번호를 입력하십시오.</value>
+  </data>
+  <data name="Mods_PasswordNote" xml:space="preserve">
+    <value>로그인을 위해 Steam의 SteamCMD로 바로 전달된 후 폐기됩니다. 디스크에 저장되거나 로그에 기록되지 않습니다.</value>
   </data>
 </root>

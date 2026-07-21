@@ -915,7 +915,7 @@ Alle Details unter:
     <value>Steam-Konto</value>
   </data>
   <data name="Mods_SteamAccountNote" xml:space="preserve">
-    <value>Nur zum Herunterladen von Workshop-Mods nötig, manuell eingefügte Mods benötigen kein Konto. Die Anmeldung übernimmt Steams eigenes SteamCMD in einem eigenen Fenster, der Launcher sieht oder speichert Ihr Passwort daher nie, er merkt sich nur Ihren Benutzernamen.</value>
+    <value>Nur zum Herunterladen von Workshop-Mods nötig, manuell eingefügte Mods benötigen kein Konto. Ihr Steam-Passwort wird direkt an SteamCMD zur Anmeldung weitergegeben und nie gespeichert oder protokolliert, der Launcher merkt sich nur Ihren Benutzernamen.</value>
   </data>
   <data name="Mods_ConnectButton" xml:space="preserve">
     <value>Steam-Konto verbinden</value>
@@ -975,10 +975,10 @@ Alle Details unter:
     <value>Wird verbunden...</value>
   </data>
   <data name="Mods_SteamCmdWindowOpened" xml:space="preserve">
-    <value>Ein SteamCMD-Fenster wurde geöffnet. Geben Sie dort Ihr Passwort und Ihren Steam-Guard-Code ein, es bleibt geöffnet, damit Sie das Ergebnis lesen können, schließen Sie es danach.</value>
+    <value>Ein SteamCMD-Fenster wurde geöffnet, um die Anmeldung abzuschließen. Genehmigen Sie es bei Aufforderung in Ihrer Steam Mobile App oder geben Sie dort Ihren Steam-Guard-Code ein.</value>
   </data>
   <data name="Mods_ConfirmSignInFailed" xml:space="preserve">
-    <value>Die Anmeldung konnte nicht bestätigt werden. Verbinden Sie erneut und beachten Sie die Fehlermeldung im SteamCMD-Fenster (falsches Passwort oder falscher Steam-Guard-Code).</value>
+    <value>Die Anmeldung konnte nicht bestätigt werden, meist ein falsches Passwort oder ein unvollständiger Steam-Guard-Schritt. Die genaue Fehlermeldung steht im SteamCMD-Protokoll im Hauptfenster. Verbinden Sie erneut, um es noch einmal zu versuchen.</value>
   </data>
   <data name="Mods_SignInFailed" xml:space="preserve">
     <value>Anmeldung fehlgeschlagen: {0}</value>
@@ -2488,5 +2488,14 @@ Diese Änderungen übernehmen und speichern?</value>
     <value>Warnung! Dies erzwingt die Installation eines Mods auf dem Server, obwohl er keine Serverkompatibilität angibt.
 
 Das kann schwerwiegende Probleme verursachen (Serverabstürze, beschädigte Spielstände), wenn der Mod wirklich nicht servertauglich ist.</value>
+  </data>
+  <data name="Mods_PasswordTitle" xml:space="preserve">
+    <value>Bei Steam anmelden</value>
+  </data>
+  <data name="Mods_PasswordPrompt" xml:space="preserve">
+    <value>Geben Sie das Steam-Passwort für {0} ein.</value>
+  </data>
+  <data name="Mods_PasswordNote" xml:space="preserve">
+    <value>Wird direkt an Steams SteamCMD zur Anmeldung weitergegeben, dann verworfen. Nie auf der Festplatte gespeichert oder protokolliert.</value>
   </data>
 </root>

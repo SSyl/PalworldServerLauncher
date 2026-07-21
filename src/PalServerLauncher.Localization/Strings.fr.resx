@@ -915,7 +915,7 @@ Détails complets dans :
     <value>Compte Steam</value>
   </data>
   <data name="Mods_SteamAccountNote" xml:space="preserve">
-    <value>Nécessaire uniquement pour télécharger des mods de l'Atelier ; les mods déposés manuellement ne nécessitent aucun compte. SteamCMD gère lui-même la connexion dans sa propre fenêtre, le lanceur ne voit ni ne stocke jamais votre mot de passe, il ne mémorise que votre nom d'utilisateur.</value>
+    <value>Nécessaire uniquement pour télécharger des mods de l'Atelier ; les mods déposés manuellement ne nécessitent aucun compte. Votre mot de passe Steam est transmis directement à SteamCMD pour la connexion et n'est jamais enregistré ni journalisé, seul votre nom d'utilisateur est mémorisé.</value>
   </data>
   <data name="Mods_ConnectButton" xml:space="preserve">
     <value>Connecter le compte Steam</value>
@@ -975,10 +975,10 @@ Détails complets dans :
     <value>Connexion...</value>
   </data>
   <data name="Mods_SteamCmdWindowOpened" xml:space="preserve">
-    <value>Une fenêtre SteamCMD s'est ouverte. Saisissez-y votre mot de passe et votre code Steam Guard ; elle reste ouverte pour que vous puissiez lire le résultat, puis fermez-la.</value>
+    <value>Une fenêtre SteamCMD s'est ouverte pour terminer la connexion. Si demandé, approuvez-la dans l'application mobile Steam, ou saisissez-y votre code Steam Guard.</value>
   </data>
   <data name="Mods_ConfirmSignInFailed" xml:space="preserve">
-    <value>Impossible de confirmer la connexion. Reconnectez-vous et surveillez la fenêtre SteamCMD pour voir l'erreur (mot de passe ou code Steam Guard incorrect).</value>
+    <value>Impossible de confirmer la connexion, généralement un mot de passe incorrect ou une étape Steam Guard incomplète. L'erreur exacte se trouve dans le journal SteamCMD de la fenêtre principale. Reconnectez-vous pour réessayer.</value>
   </data>
   <data name="Mods_SignInFailed" xml:space="preserve">
     <value>Échec de la connexion : {0}</value>
@@ -2488,5 +2488,14 @@ Enregistrer ces changements ?</value>
     <value>Attention ! Cela force l'installation d'un mod sur le serveur bien qu'il ne déclare pas de compatibilité serveur.
 
 Cela peut provoquer de graves problèmes (plantages du serveur, corruption des sauvegardes) si le mod n'est vraiment pas compatible avec un serveur.</value>
+  </data>
+  <data name="Mods_PasswordTitle" xml:space="preserve">
+    <value>Se connecter à Steam</value>
+  </data>
+  <data name="Mods_PasswordPrompt" xml:space="preserve">
+    <value>Saisissez le mot de passe Steam de {0}.</value>
+  </data>
+  <data name="Mods_PasswordNote" xml:space="preserve">
+    <value>Transmis directement au SteamCMD de Steam pour la connexion, puis supprimé. Jamais enregistré sur le disque ni journalisé.</value>
   </data>
 </root>

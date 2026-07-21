@@ -939,7 +939,7 @@ Full details in:
     <value>Steam Account</value>
   </data>
   <data name="Mods_SteamAccountNote" xml:space="preserve">
-    <value>Only needed to download Workshop mods, dropped-in mods need no account. Steam's own SteamCMD handles the sign-in in its own window, so the launcher never sees or stores your password, it only remembers your username.</value>
+    <value>Only needed to download Workshop mods, dropped-in mods need no account. Your Steam password is passed straight to SteamCMD to sign in and is never saved or logged, only your username is remembered.</value>
   </data>
   <data name="Mods_ConnectButton" xml:space="preserve">
     <value>Connect Steam Account</value>
@@ -999,10 +999,10 @@ Full details in:
     <value>Connecting...</value>
   </data>
   <data name="Mods_SteamCmdWindowOpened" xml:space="preserve">
-    <value>A SteamCMD window opened. Enter your password and Steam Guard code there, it stays open so you can read the result, then close it.</value>
+    <value>A SteamCMD window opened to finish signing in. If prompted, approve it in your Steam Mobile app or enter your Steam Guard code there.</value>
   </data>
   <data name="Mods_ConfirmSignInFailed" xml:space="preserve">
-    <value>Couldn't confirm the sign-in. Connect again and watch the SteamCMD window for the error (wrong password or Steam Guard code).</value>
+    <value>Couldn't confirm the sign-in, usually a wrong password or an incomplete Steam Guard step. The exact error is in the SteamCMD log in the main window. Connect again to retry.</value>
   </data>
   <data name="Mods_SignInFailed" xml:space="preserve">
     <value>Sign-in failed: {0}</value>
@@ -2488,5 +2488,14 @@ Save these changes?</value>
     <value>Warning! This forces a mod to install on the server even though it hasn't declared server compatibility.
 
 Doing this may cause major issues (server crashes, save corruption) if the mod is truly incompatible with a server.</value>
+  </data>
+  <data name="Mods_PasswordTitle" xml:space="preserve">
+    <value>Sign in to Steam</value>
+  </data>
+  <data name="Mods_PasswordPrompt" xml:space="preserve">
+    <value>Enter the Steam password for {0}.</value>
+  </data>
+  <data name="Mods_PasswordNote" xml:space="preserve">
+    <value>Passed straight to Steam's SteamCMD to sign in, then discarded. Never saved to disk or written to the logs.</value>
   </data>
 </root>

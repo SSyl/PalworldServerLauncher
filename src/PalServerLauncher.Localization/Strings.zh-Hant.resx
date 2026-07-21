@@ -870,7 +870,7 @@
     <value>Steam 賬戶</value>
   </data>
   <data name="Mods_SteamAccountNote" xml:space="preserve">
-    <value>僅在下載創意工坊模組時需要，手動放入的模組無需賬戶。登入由 Steam 自己的 SteamCMD 在它自己的視窗中處理，因此啟動器永遠不會看到或保存你的密碼，它只記住你的使用者名稱。</value>
+    <value>僅在下載創意工坊模組時需要，手動放入的模組無需賬戶。你的 Steam 密碼會直接傳給 SteamCMD 用於登入，永不保存或寫入日誌，僅會記住你的使用者名稱。</value>
   </data>
   <data name="Mods_ConnectButton" xml:space="preserve">
     <value>連線 Steam 賬戶</value>
@@ -930,10 +930,10 @@
     <value>連線中...</value>
   </data>
   <data name="Mods_SteamCmdWindowOpened" xml:space="preserve">
-    <value>已開啟一個 SteamCMD 視窗。請在其中輸入你的密碼和 Steam Guard 驗證碼，視窗會保持開啟以便你檢視結果，之後再關閉它。</value>
+    <value>已開啟一個 SteamCMD 視窗以完成登入。如有提示，請在 Steam 手機應用程式中核准，或在該視窗中輸入你的 Steam Guard 驗證碼。</value>
   </data>
   <data name="Mods_ConfirmSignInFailed" xml:space="preserve">
-    <value>無法確認登入。請重新連線，並留意 SteamCMD 視窗中的錯誤（密碼或 Steam Guard 驗證碼錯誤）。</value>
+    <value>無法確認登入，通常是密碼錯誤或 Steam Guard 步驟未完成。確切錯誤顯示在主視窗的 SteamCMD 日誌中。請重新連線以重試。</value>
   </data>
   <data name="Mods_SignInFailed" xml:space="preserve">
     <value>登入失敗：{0}</value>
@@ -2412,5 +2412,14 @@
     <value>警告！即使模組未宣告伺服器相容性，這也會強制將其安裝到伺服器。
 
 如果模組確實與伺服器不相容，這樣做可能導致嚴重問題（伺服器崩潰、存檔損毀）。</value>
+  </data>
+  <data name="Mods_PasswordTitle" xml:space="preserve">
+    <value>登入 Steam</value>
+  </data>
+  <data name="Mods_PasswordPrompt" xml:space="preserve">
+    <value>請輸入 {0} 的 Steam 密碼。</value>
+  </data>
+  <data name="Mods_PasswordNote" xml:space="preserve">
+    <value>直接傳給 Steam 的 SteamCMD 用於登入，隨後即捨棄。永不保存到磁碟或寫入日誌。</value>
   </data>
 </root>

@@ -870,7 +870,7 @@
     <value>Steam 账户</value>
   </data>
   <data name="Mods_SteamAccountNote" xml:space="preserve">
-    <value>仅在下载创意工坊模组时需要，手动放入的模组无需账户。登录由 Steam 自己的 SteamCMD 在它自己的窗口中处理，因此启动器永远不会看到或存储你的密码，它只记住你的用户名。</value>
+    <value>仅在下载创意工坊模组时需要，手动放入的模组无需账户。你的 Steam 密码会直接传给 SteamCMD 登录，不会被保存或记录，只有用户名会被记住。</value>
   </data>
   <data name="Mods_ConnectButton" xml:space="preserve">
     <value>连接 Steam 账户</value>
@@ -930,10 +930,10 @@
     <value>连接中...</value>
   </data>
   <data name="Mods_SteamCmdWindowOpened" xml:space="preserve">
-    <value>已打开一个 SteamCMD 窗口。请在其中输入你的密码和 Steam Guard 验证码，窗口会保持打开以便你查看结果，之后再关闭它。</value>
+    <value>已打开一个 SteamCMD 窗口以完成登录。如有提示，请在 Steam 手机应用中批准，或在该窗口中输入 Steam Guard 验证码。</value>
   </data>
   <data name="Mods_ConfirmSignInFailed" xml:space="preserve">
-    <value>无法确认登录。请重新连接，并留意 SteamCMD 窗口中的错误（密码或 Steam Guard 验证码错误）。</value>
+    <value>无法确认登录，通常是密码错误或 Steam Guard 步骤未完成。确切错误信息在主窗口的 SteamCMD 日志中。请重新连接以重试。</value>
   </data>
   <data name="Mods_SignInFailed" xml:space="preserve">
     <value>登录失败：{0}</value>
@@ -2412,5 +2412,14 @@
     <value>警告！即使模组未声明服务器兼容性，这也会强制将其安装到服务器。
 
 如果模组确实与服务器不兼容，这样做可能导致严重问题（服务器崩溃、存档损坏）。</value>
+  </data>
+  <data name="Mods_PasswordTitle" xml:space="preserve">
+    <value>登录 Steam</value>
+  </data>
+  <data name="Mods_PasswordPrompt" xml:space="preserve">
+    <value>输入 {0} 的 Steam 密码。</value>
+  </data>
+  <data name="Mods_PasswordNote" xml:space="preserve">
+    <value>直接传给 SteamCMD 登录，随后即被丢弃，不会保存到磁盘或写入日志。</value>
   </data>
 </root>
