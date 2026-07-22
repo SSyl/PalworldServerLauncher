@@ -52,7 +52,7 @@ public sealed class LauncherSettingsDialog : Window
         });
         _languages = new ComboBox
         {
-            Background = FieldBg, Foreground = Brushes.Black, MinWidth = 180,
+            MinWidth = 180,
             DisplayMemberPath = nameof(LauncherLanguage.DisplayName), VerticalAlignment = VerticalAlignment.Center,
         };
         foreach (var lang in LauncherLanguages.All)

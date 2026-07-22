@@ -1071,7 +1071,7 @@ public sealed class SettingsDialog : Window
 
     private static ComboBox ComboField(string[] options, string value, bool enabled, string? optionKey = null)
     {
-        var combo = new ComboBox { IsEnabled = enabled, Background = FieldBg, Foreground = Brushes.Black };
+        var combo = new ComboBox { IsEnabled = enabled };
         // Preserve an out-of-list / odd-case original so Save never silently snaps it to the first option.
         var items = !string.IsNullOrEmpty(value) && !options.Contains(value)
             ? options.Prepend(value).ToArray()

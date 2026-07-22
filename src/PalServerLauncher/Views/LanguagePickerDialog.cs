@@ -38,7 +38,7 @@ public sealed class LanguagePickerDialog : Window
 
         _languages = new ComboBox
         {
-            Background = FieldBg, Foreground = Brushes.Black, MinWidth = 180,
+            MinWidth = 180,
             DisplayMemberPath = nameof(LauncherLanguage.DisplayName),
             HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(0, 0, 0, 18),
         };

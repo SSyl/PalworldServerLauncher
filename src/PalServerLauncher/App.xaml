@@ -21,6 +21,22 @@
             </Setter>
         </Style>
 
+        <!-- Type ramp (sizes from Metrics; four roles). Keyed, not implicit: an implicit TextBlock style would
+             recolour every stray TextBlock, so screens and dialogs opt in. -->
+        <Style x:Key="Caption" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{x:Static local:Theme.TextCaption}"/>
+            <Setter Property="FontSize" Value="{x:Static local:Metrics.FontCaption}"/>
+        </Style>
+        <Style x:Key="SectionHeader" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
+            <Setter Property="FontSize" Value="{x:Static local:Metrics.FontSubhead}"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style x:Key="StatValue" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
         <!-- Dark tab header, shared by the main window's log tabs and the code-built Server Settings dialog
              (which applies it via ItemContainerStyle since it has no XAML of its own). -->
         <Style x:Key="DarkTabItem" TargetType="TabItem">
@@ -91,19 +107,20 @@
             <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
             <Setter Property="BorderBrush" Value="{x:Static local:Theme.ButtonBorder}"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="14,7"/>
+            <Setter Property="Padding" Value="{x:Static local:Metrics.ButtonPadding}"/>
+            <Setter Property="MinHeight" Value="{x:Static local:Metrics.ControlHeight}"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="bd" Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="0" SnapsToDevicePixels="True">
+                                CornerRadius="{x:Static local:Metrics.Radius}" SnapsToDevicePixels="True">
                             <Grid>
                                 <!-- A translucent white overlay on hover / black on press brightens or darkens
                                      whatever the base color is, so colored buttons (danger red) get feedback too,
                                      not just the plain grey ones. -->
-                                <Border x:Name="overlay" CornerRadius="0" Background="White" Opacity="0"/>
+                                <Border x:Name="overlay" CornerRadius="{x:Static local:Metrics.Radius}" Background="White" Opacity="0"/>
                                 <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
                         </Border>
@@ -125,15 +142,33 @@
             </Setter>
         </Style>
 
-        <!-- Dark text box, app-wide. Border turns the app blue (Accent) on hover and keyboard focus. -->
+        <!-- Dark text box, app-wide: rounded to the shared radius, border turns Accent blue on hover / focus. -->
         <Style TargetType="TextBox">
             <Setter Property="Background" Value="{x:Static local:Theme.Field}"/>
             <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
             <Setter Property="BorderBrush" Value="{x:Static local:Theme.FieldBorder}"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="5,4"/>
-            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="Padding" Value="{x:Static local:Metrics.FieldPadding}"/>
+            <Setter Property="MinHeight" Value="{x:Static local:Metrics.ControlHeight}"/>
+            <Setter Property="CaretBrush" Value="{x:Static local:Theme.Caret}"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{x:Static local:Metrics.Radius}"
+                                SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False" Margin="{TemplateBinding Padding}"
+                                          HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="BorderBrush" Value="{x:Static local:Theme.Accent}"/>
@@ -154,6 +189,140 @@
                     <Setter Property="Opacity" Value="0.4"/>
                 </Trigger>
             </Style.Triggers>
+        </Style>
+
+        <!-- Dark ComboBox, app-wide. Structure adapted from WPF UI's MIT-licensed ComboBox template but
+             reimplemented with standard WPF parts and Theme/Metrics values, so it matches the app and stays
+             dependency-free. It replaces the default LIGHT combo template that forced Foreground=Black
+             workarounds. The z-order is deliberate (chevron under the toggle, editable text box on top in the
+             text column only): a closed combo toggles on any click, while an editable combo still types into
+             PART_EditableTextBox and toggles from the chevron. -->
+        <Style x:Key="ComboToggleButton" TargetType="ToggleButton">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ComboEditableTextBox" TargetType="TextBox">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
+            <Setter Property="CaretBrush" Value="{x:Static local:Theme.Caret}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="AllowDrop" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="False"
+                                      HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="{x:Static local:Theme.Field}"/>
+            <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
+            <Setter Property="BorderBrush" Value="{x:Static local:Theme.FieldBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="{x:Static local:Metrics.FieldPadding}"/>
+            <Setter Property="MinHeight" Value="{x:Static local:Metrics.ControlHeight}"/>
+            <Setter Property="FontSize" Value="{x:Static local:Metrics.FontBody}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{x:Static local:Metrics.Radius}"
+                                    SnapsToDevicePixels="True">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ContentPresenter x:Name="PART_ContentPresenter" Grid.Column="0" Margin="{TemplateBinding Padding}"
+                                                      Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                      ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                      HorizontalAlignment="Left" VerticalAlignment="Center" IsHitTestVisible="False"
+                                                      TextElement.Foreground="{TemplateBinding Foreground}"/>
+                                    <TextBlock Grid.Column="1" Margin="6,0,10,0" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets"
+                                               FontSize="11" Foreground="{x:Static local:Theme.TextMuted}" Text="&#xE70D;"/>
+                                    <ToggleButton Grid.Column="0" Grid.ColumnSpan="2" ClickMode="Press"
+                                                  Style="{StaticResource ComboToggleButton}"
+                                                  IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                    <TextBox x:Name="PART_EditableTextBox" Grid.Column="0" Margin="{TemplateBinding Padding}"
+                                             VerticalAlignment="Center" Visibility="Hidden" Focusable="True"
+                                             IsReadOnly="{TemplateBinding IsReadOnly}" Style="{StaticResource ComboEditableTextBox}"/>
+                                </Grid>
+                            </Border>
+                            <Popup x:Name="PART_Popup" Placement="Bottom" AllowsTransparency="True" Focusable="False"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}" PopupAnimation="Fade" VerticalOffset="2">
+                                <Border Background="{x:Static local:Theme.Inset}" BorderBrush="{x:Static local:Theme.FieldBorder}"
+                                        BorderThickness="1" CornerRadius="{x:Static local:Metrics.Radius}" Padding="0,3"
+                                        MinWidth="{Binding ActualWidth, ElementName=border}" SnapsToDevicePixels="True">
+                                    <ScrollViewer MaxHeight="{TemplateBinding MaxDropDownHeight}" VerticalScrollBarVisibility="Auto">
+                                        <ItemsPresenter/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{x:Static local:Theme.Accent}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{x:Static local:Theme.Accent}"/>
+                            </Trigger>
+                            <Trigger Property="IsEditable" Value="True">
+                                <Setter Property="IsTabStop" Value="False"/>
+                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="PART_ContentPresenter" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="10,6,10,6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
+                                Margin="3,1" CornerRadius="{x:Static local:Metrics.Radius}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="{x:Static local:Theme.Button}"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="{x:Static local:Theme.Button}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{x:Static local:Theme.TextMuted}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <!-- Dark context menu + items, app-wide. The default light template reserves an icon/checkmark gutter
