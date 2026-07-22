@@ -22,6 +22,7 @@ public static class Theme
     public static readonly SolidColorBrush Window = Frozen(0x1E, 0x1E, 0x1E);       // dialog / window background (all dialogs)
     public static readonly SolidColorBrush Sunken = Frozen(0x14, 0x14, 0x14);       // recessed: tab strip, selected tab, code preview
     public static readonly SolidColorBrush Inset = Frozen(0x26, 0x26, 0x26);        // raised note / inset panels
+    public static readonly SolidColorBrush RowHover = Frozen(0x33, 0x33, 0x33);      // hover highlight for a settings table row
 
     // Buttons (Windows 11 style: subtle grey fill plus a faint border)
     public static readonly SolidColorBrush Button = Frozen(0x2D, 0x2D, 0x2D);

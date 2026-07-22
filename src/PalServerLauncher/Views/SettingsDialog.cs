@@ -343,7 +343,12 @@ public sealed class SettingsDialog : Window
                     if (row.Element.Visibility != Visibility.Visible)
                         continue;
                     if (row.Element is Border band)
-                        band.Background = visible % 2 == 1 ? Theme.Inset : Brushes.Transparent;
+                    {
+                        Brush zebra = visible % 2 == 1 ? Theme.Inset : Brushes.Transparent;
+                        band.Tag = zebra; // remembered so a hover can restore the right stripe on mouse-leave
+                        if (!band.IsMouseOver)
+                            band.Background = zebra;
+                    }
                     visible++;
                 }
             }
@@ -1047,8 +1052,13 @@ public sealed class SettingsDialog : Window
             grid.Children.Add(resetButton);
         }
         // Wrap in a band so alternate rows can be zebra-tinted (RestripeRows) as one contiguous stripe; the
-        // vertical padding is the row's breathing room, moved off the grid's old margin.
-        return new Border { Child = grid, Padding = new Thickness(0, 3, 0, 3) };
+        // vertical padding is the row's breathing room, moved off the grid's old margin. Hovering highlights the
+        // band, restoring its zebra colour (stashed in Tag) on leave, since the stripe is a local value a Style
+        // trigger couldn't override.
+        var band = new Border { Child = grid, Padding = new Thickness(0, 3, 0, 3) };
+        band.MouseEnter += (_, _) => band.Background = Theme.RowHover;
+        band.MouseLeave += (_, _) => band.Background = band.Tag as Brush ?? Brushes.Transparent;
+        return band;
     }
 
     /// <summary>A field's reset behavior: set it to its default, report whether it's currently AT the default,
