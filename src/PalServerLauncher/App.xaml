@@ -183,11 +183,13 @@
                             <Border x:Name="box" Width="16" Height="16" VerticalAlignment="Center"
                                     Background="Transparent" BorderBrush="{x:Static local:Theme.FieldBorder}" BorderThickness="1"
                                     CornerRadius="{x:Static local:Metrics.Radius}" SnapsToDevicePixels="True" UseLayoutRounding="True">
-                                <!-- A vector checkmark (not a font glyph): its geometry centres exactly in the box,
-                                     unlike the MDL2 glyph whose ink sits off-centre in its character cell. -->
+                                <!-- A vector checkmark (not a font glyph): its geometry centres exactly, unlike the
+                                     MDL2 glyph whose ink sits off-centre in its character cell. The 1px render-
+                                     transform nudge offsets the shape's optical left-bias (the vertex sits ~1/3
+                                     from the left, so the geometric centre reads slightly left). -->
                                 <Path x:Name="check" Data="M0,4 L3.5,7.5 L10,0" Stroke="White" StrokeThickness="1.5"
                                       StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
-                                      HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
+                                      HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransform="1,0,0,1,1,0" Visibility="Collapsed"/>
                             </Border>
                             <ContentPresenter Margin="8,0,0,0" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                         </StackPanel>
