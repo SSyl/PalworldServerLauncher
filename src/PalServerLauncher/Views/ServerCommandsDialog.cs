@@ -313,6 +313,9 @@ public sealed class ServerCommandsDialog : Window
         var terminal = new TextBox
         {
             IsReadOnly = true, IsReadOnlyCaretVisible = false, AcceptsReturn = true, TextWrapping = TextWrapping.Wrap,
+            // Multiline, so start text at the top; the app-wide TextBox style centers content vertically (right
+            // for single-line fields in the taller settings rows) which would otherwise float the log mid-box.
+            VerticalContentAlignment = VerticalAlignment.Top,
             VerticalScrollBarVisibility = ScrollBarVisibility.Auto, FontFamily = new FontFamily("Consolas"),
             Background = Theme.Sunken, Foreground = Fg, BorderBrush = FieldBorder, BorderThickness = new Thickness(1),
             Padding = new Thickness(6), Height = 260,
