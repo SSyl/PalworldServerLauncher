@@ -462,15 +462,8 @@ public sealed class ModsDialog : Window
             }
         };
 
-        var remove = new Button
-        {
-            Content = "", FontFamily = new FontFamily("Segoe MDL2 Assets"), FontSize = 11,
-            Width = 30, Height = 26, Padding = new Thickness(0), Foreground = Fg,
-            Background = Theme.Control, BorderThickness = new Thickness(0),
-            Cursor = Cursors.Hand, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(6, 0, 0, 0),
-            ToolTip = Strings.Mods_DeleteModTip,
-        };
-        remove.Click += (_, _) => DeleteRow(entry);
+        var remove = CloseButton(() => DeleteRow(entry), Strings.Mods_DeleteModTip);
+        remove.Margin = new Thickness(6, 0, 0, 0);
 
         var grid = new Grid();
         // All columns except name/note are fixed so the header Grid and the row Grids compute identical column
