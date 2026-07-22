@@ -5,7 +5,7 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
 ## [1.0.0] - 2026-07-22
 
 ### Changed
-- **A top-to-bottom visual refresh.** The whole app now shares one design system, consistent spacing, type, and control sizing, with a unified square dark look. Dropdowns, scroll bars, and checkboxes are dark-themed now instead of the leftover light Windows ones, and the settings, dialogs, and buttons all read as one coherent app. Nothing about how it works changed.
+- **Visual refresh.** The app now shares a unified square dark look. Dropdowns, scroll bars, and checkboxes are dark-themed now instead of the leftover default light Windows ones.
 - **The Server Settings editor is easier to scan.** Rows alternate shading and the row under your cursor highlights, so a setting lines up with its control across the width of the window.
 
 ### Added
