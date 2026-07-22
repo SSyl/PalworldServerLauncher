@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using static PalServerLauncher.Views.DarkControls;
 
 namespace PalServerLauncher.Views;
 
@@ -22,16 +23,16 @@ public sealed class ChoiceDialog : Window
         ShowInTaskbar = false;
         MinWidth = 380;
 
-        var root = new StackPanel { Margin = new Thickness(20) };
+        var root = new StackPanel { Margin = Metrics.DialogPadding };
 
         root.Children.Add(new TextBlock
         {
             Text = message,
             Foreground = Theme.Text,
-            FontSize = 13,
+            FontSize = Metrics.FontBody,
             TextWrapping = TextWrapping.Wrap,
             MaxWidth = 460,
-            Margin = new Thickness(0, 0, 0, 18),
+            Margin = new Thickness(0, 0, 0, Metrics.S16),
         });
 
         var buttonRow = new StackPanel
@@ -43,14 +44,7 @@ public sealed class ChoiceDialog : Window
         for (var i = 0; i < buttons.Length; i++)
         {
             var index = i;
-            var button = new Button
-            {
-                Content = buttons[i],
-                Margin = new Thickness(8, 0, 0, 0),
-                MinWidth = 90,
-            };
-            button.Click += (_, _) => { _result = index; Close(); };
-            buttonRow.Children.Add(button);
+            buttonRow.Children.Add(MakeButton(buttons[i], () => { _result = index; Close(); }));
         }
 
         root.Children.Add(buttonRow);

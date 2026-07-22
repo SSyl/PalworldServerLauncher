@@ -82,4 +82,67 @@ internal static class DarkControls
                     if (!char.IsAsciiDigit(c)) { e.CancelCommand(); return; }
         });
     }
+
+    // ---- promoted builders (these were copy-pasted across the dialogs at divergent sizes) ----
+
+    /// <summary>The app's caret colour, so dark inputs stop leaking a hard <c>Brushes.White</c>.</summary>
+    public static readonly Brush Caret = Theme.Caret;
+
+    /// <summary>An amber note / callout box wrapping arbitrary content (e.g. a hyperlink blurb). The several
+    /// hand-rolled copies across the dialogs collapse to this. Default top margin is one spacing step.</summary>
+    public static Border NoteBox(UIElement content, Thickness? margin = null) => new()
+    {
+        Background = Theme.BannerBg,
+        Padding = new Thickness(10, 8, 10, 8),
+        Margin = margin ?? new Thickness(0, Metrics.S8, 0, 0),
+        Child = content,
+    };
+
+    /// <summary>An amber note box around a plain wrapping string.</summary>
+    public static Border Note(string text, Thickness? margin = null) =>
+        NoteBox(new TextBlock { Text = text, Foreground = Theme.BannerFg, TextWrapping = TextWrapping.Wrap }, margin);
+
+    /// <summary>A themed checkbox. Near-identical copies lived in DiscordDialog, ModsDialog and LauncherSettings.</summary>
+    public static CheckBox Check(string text, bool value, Thickness? margin = null) => new()
+    {
+        Content = text, IsChecked = value, Foreground = Fg,
+        VerticalContentAlignment = VerticalAlignment.Center,
+        Margin = margin ?? new Thickness(0),
+    };
+
+    /// <summary>A square Segoe MDL2 glyph button (send, history, and similar). Lifted from ServerCommandsDialog.</summary>
+    public static Button IconButton(string glyph, Action onClick, string? tooltip = null)
+    {
+        var button = new Button
+        {
+            Content = glyph,
+            FontFamily = new FontFamily("Segoe MDL2 Assets"),
+            FontSize = Metrics.FontIcon,
+            MinWidth = Metrics.IconButtonSize,
+            Margin = new Thickness(Metrics.S8, 0, 0, 0),
+        };
+        if (tooltip is not null) button.ToolTip = tooltip;
+        button.Click += (_, _) => onClick();
+        return button;
+    }
+
+    /// <summary>A small "reset to default" glyph button (MDL2 undo), shared by the settings editor's per-field
+    /// resets and the backup-location reset. The caller wires any show / hide logic.</summary>
+    public static Button ResetButton(Action onClick, string? tooltip = null)
+    {
+        var button = new Button
+        {
+            Content = "",  // MDL2 Undo
+            FontFamily = new FontFamily("Segoe MDL2 Assets"),
+            FontSize = 12,
+            Background = Theme.Control,
+            MinWidth = 26,
+            Padding = new Thickness(0, 1, 0, 1),
+            VerticalAlignment = VerticalAlignment.Center,
+            Cursor = System.Windows.Input.Cursors.Hand,
+        };
+        if (tooltip is not null) button.ToolTip = tooltip;
+        button.Click += (_, _) => onClick();
+        return button;
+    }
 }

@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using PalServerLauncher.Localization;
+using static PalServerLauncher.Views.DarkControls;
 
 namespace PalServerLauncher.Views;
 
@@ -25,7 +26,7 @@ public sealed class WorldOptionRenamedDialog : Window
         ShowInTaskbar = false;
         MinWidth = 420;
 
-        var root = new StackPanel { Margin = new Thickness(20) };
+        var root = new StackPanel { Margin = Metrics.DialogPadding };
 
         foreach (var bak in bakPaths)
         {
@@ -46,8 +47,9 @@ public sealed class WorldOptionRenamedDialog : Window
             root.Children.Add(pathLine);
         }
 
-        var ok = new Button { Content = Strings.Common_OK, MinWidth = 90, HorizontalAlignment = HorizontalAlignment.Right };
-        ok.Click += (_, _) => Close();
+        var ok = MakeButton(Strings.Common_OK, Close);
+        ok.Margin = new Thickness(0);
+        ok.HorizontalAlignment = HorizontalAlignment.Right;
         root.Children.Add(ok);
 
         Content = root;

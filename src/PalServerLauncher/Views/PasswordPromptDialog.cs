@@ -26,7 +26,7 @@ public sealed class PasswordPromptDialog : Window
         ShowInTaskbar = false;
         MinWidth = 380;
 
-        var root = new StackPanel { Margin = new Thickness(20) };
+        var root = new StackPanel { Margin = Metrics.DialogPadding };
 
         root.Children.Add(new TextBlock
         {

@@ -1,7 +1,6 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using PalServerLauncher.Localization;
 using static PalServerLauncher.Views.DarkControls;
 
@@ -35,21 +34,16 @@ public sealed class NumberPromptDialog : Window
         ShowInTaskbar = false;
         MinWidth = 360;
 
-        var root = new StackPanel { Margin = new Thickness(20) };
+        var root = new StackPanel { Margin = Metrics.DialogPadding };
         root.Children.Add(new TextBlock
         {
-            Text = message, Foreground = Fg, FontSize = 13, TextWrapping = TextWrapping.Wrap,
-            MaxWidth = 420, Margin = new Thickness(0, 0, 0, 14),
+            Text = message, Foreground = Fg, FontSize = Metrics.FontBody, TextWrapping = TextWrapping.Wrap,
+            MaxWidth = 420, Margin = new Thickness(0, 0, 0, Metrics.S12),
         });
 
-        var inputRow = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 0, 0, 18) };
-        _input = new TextBox
-        {
-            Text = defaultValue.ToString(CultureInfo.InvariantCulture), Width = 80,
-            Background = FieldBg, Foreground = Fg, BorderBrush = FieldBorder,
-            Padding = new Thickness(5, 4, 5, 4), CaretBrush = Brushes.White,
-            VerticalContentAlignment = VerticalAlignment.Center,
-        };
+        var inputRow = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 0, 0, Metrics.S16) };
+        _input = Field(defaultValue.ToString(CultureInfo.InvariantCulture));
+        _input.Width = 80;
         DigitsOnly(_input);
         inputRow.Children.Add(_input);
         if (!string.IsNullOrEmpty(unitLabel))
