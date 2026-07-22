@@ -2499,6 +2499,6 @@ Fazer isso pode causar problemas graves (travamentos do servidor, corrupção do
     <value>Repassada diretamente ao SteamCMD da Steam para o login, depois descartada. Nunca salva no disco nem gravada nos logs.</value>
   </data>
   <data name="Main_JumpToLatest" xml:space="preserve">
-    <value>Jump to latest</value>
+    <value>Ir para o mais recente</value>
   </data>
 </root>

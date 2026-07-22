@@ -2499,6 +2499,6 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>로그인을 위해 Steam의 SteamCMD로 바로 전달된 후 폐기됩니다. 디스크에 저장되거나 로그에 기록되지 않습니다.</value>
   </data>
   <data name="Main_JumpToLatest" xml:space="preserve">
-    <value>Jump to latest</value>
+    <value>최신으로 이동</value>
   </data>
 </root>

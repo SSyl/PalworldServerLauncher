@@ -2499,6 +2499,6 @@ Cela peut provoquer de graves problèmes (plantages du serveur, corruption des s
     <value>Transmis directement au SteamCMD de Steam pour la connexion, puis supprimé. Jamais enregistré sur le disque ni journalisé.</value>
   </data>
   <data name="Main_JumpToLatest" xml:space="preserve">
-    <value>Jump to latest</value>
+    <value>Revenir au direct</value>
   </data>
 </root>

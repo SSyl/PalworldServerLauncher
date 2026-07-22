@@ -2423,6 +2423,6 @@
     <value>直接传给 SteamCMD 登录，随后即被丢弃，不会保存到磁盘或写入日志。</value>
   </data>
   <data name="Main_JumpToLatest" xml:space="preserve">
-    <value>Jump to latest</value>
+    <value>跳至最新</value>
   </data>
 </root>
