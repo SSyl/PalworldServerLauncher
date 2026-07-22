@@ -142,33 +142,16 @@
             </Setter>
         </Style>
 
-        <!-- Dark text box, app-wide: rounded to the shared radius, border turns Accent blue on hover / focus. -->
+        <!-- Dark text box, app-wide. Square (the default template is already square, so no custom template),
+             border turns Accent blue on hover and keyboard focus. -->
         <Style TargetType="TextBox">
             <Setter Property="Background" Value="{x:Static local:Theme.Field}"/>
             <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
             <Setter Property="BorderBrush" Value="{x:Static local:Theme.FieldBorder}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="{x:Static local:Metrics.FieldPadding}"/>
-            <Setter Property="MinHeight" Value="{x:Static local:Metrics.ControlHeight}"/>
             <Setter Property="CaretBrush" Value="{x:Static local:Theme.Caret}"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{x:Static local:Metrics.Radius}"
-                                SnapsToDevicePixels="True">
-                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False" Margin="{TemplateBinding Padding}"
-                                          HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value="0.5"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="BorderBrush" Value="{x:Static local:Theme.Accent}"/>
@@ -177,6 +160,13 @@
                     <Setter Property="BorderBrush" Value="{x:Static local:Theme.Accent}"/>
                 </Trigger>
             </Style.Triggers>
+        </Style>
+
+        <!-- Compact, centered variant for small inline numeric entry (the main window's number fields), so a
+             2-3 digit value fills the box instead of drowning in prose-field padding. -->
+        <Style x:Key="NumericField" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Padding" Value="3,2"/>
+            <Setter Property="TextAlignment" Value="Center"/>
         </Style>
 
         <!-- Dark checkbox, app-wide: default text colour, and dim the WHOLE control when disabled (matching the

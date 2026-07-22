@@ -30,16 +30,18 @@ public static class Metrics
     public const double FontAction = 16;     // the primary action button
     public const double FontIcon = 15;       // Segoe MDL2 glyph buttons
 
-    // Controls: one height shared by buttons / text boxes / combos, and two numeric-field widths keyed to
-    // digit count (replacing the old 28/30/38/40 spread) so triplet rows stay dense, plus a square glyph size.
+    // ControlHeight is the shared click-target height for buttons and combos. Text boxes are intentionally
+    // NOT pinned to it: they size to their compact content, which reads denser for inline numeric entry.
+    // The two numeric-field widths are keyed to digit count, collapsing the old 28/30/38/40 spread to two.
     public const double ControlHeight = 28;
-    public const double NumericFieldNarrow = 36;   // 1-3 digit fields (hours, minutes, thresholds)
-    public const double NumericFieldWidth = 44;    // 4-digit fields (e.g. update interval in minutes)
+    public const double NumericFieldNarrow = 30;   // 1-3 digit fields (hours, minutes, thresholds)
+    public const double NumericFieldWidth = 40;    // 4-digit fields (e.g. update interval in minutes)
     public const double IconButtonSize = 28;
 
-    // Corner radius: a single answer for every container (buttons, fields, combos, boxes). The toggle switch
-    // keeps its own pill radius (10) in App.xaml.
-    public static readonly CornerRadius Radius = new(4);
+    // Corner radius: the app is SQUARE by a long-settled design decision, so this is 0. Kept as one token so
+    // every container (buttons, fields, combos, boxes) stays square from a single definition. The toggle
+    // switch keeps its own pill radius (10) in App.xaml.
+    public static readonly CornerRadius Radius = new(0);
 
     // Common paddings, so a field and a button read at the same rhythm everywhere.
     public static readonly Thickness FieldPadding = new(6, 4, 6, 4);

@@ -124,10 +124,20 @@
                         ToolTip="{x:Static loc:Strings.Main_ServerSettingsTip}"/>
                 <Button Content="{x:Static loc:Strings.Main_Mods}" Click="OnOpenMods"
                         ToolTip="{x:Static loc:Strings.Main_ModsTip}"/>
-                <!-- A peer "open a dialog" action like Server Settings / Mods, so it is a plain secondary button.
-                     It used to be filled Discord-brand blue, which made the least-critical action the loudest
-                     thing in the row (inverted hierarchy); the primary Start/Stop is the only colored action. -->
-                <Button Content="{x:Static loc:Strings.Main_DiscordBot}" Click="OnOpenDiscord" ToolTip="{x:Static loc:Strings.Main_DiscordBotTip}"/>
+                <!-- Deliberately filled in the Discord brand colour (owner's call) for instant recognition. -->
+                <Button Content="{x:Static loc:Strings.Main_DiscordBot}" Click="OnOpenDiscord" ToolTip="{x:Static loc:Strings.Main_DiscordBotTip}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Background" Value="{x:Static local:Theme.Discord}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{x:Static local:Theme.DiscordHover}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
                 <Button FontFamily="Segoe MDL2 Assets" Content="&#xE713;" FontSize="{x:Static local:Metrics.FontIcon}" Padding="10,7" MinWidth="0" Margin="0"
                         Click="OnOpenLauncherSettings" ToolTip="{x:Static loc:Strings.LauncherSettings_Tooltip}"/>
             </StackPanel>
@@ -199,17 +209,17 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                         <TextBlock Text="{x:Static loc:Strings.Main_MinUptime}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                        <TextBox Text="{Binding MinUptimeHours}" Width="{x:Static local:Metrics.NumericFieldNarrow}" VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding MinUptimeHours}" Style="{StaticResource NumericField}" Width="{x:Static local:Metrics.NumericFieldNarrow}" VerticalAlignment="Center"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_HourSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                         <CheckBox Content="{x:Static loc:Strings.Main_AnnounceRestarts}" IsChecked="{Binding AnnounceRestartsEnabled}"
                                   ToolTip="{x:Static loc:Strings.Main_AnnounceRestartsTip}"/>
-                        <TextBox Text="{Binding AnnounceLead1}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="3" VerticalAlignment="Center" Margin="6,0,0,0"
+                        <TextBox Text="{Binding AnnounceLead1}" Style="{StaticResource NumericField}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="3" VerticalAlignment="Center" Margin="6,0,0,0"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="{x:Static loc:Strings.Main_AnnounceLeadTip}"/>
-                        <TextBox Text="{Binding AnnounceLead2}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="3" VerticalAlignment="Center" Margin="4,0,0,0"
+                        <TextBox Text="{Binding AnnounceLead2}" Style="{StaticResource NumericField}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="3" VerticalAlignment="Center" Margin="4,0,0,0"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="{x:Static loc:Strings.Main_AnnounceLeadTip}"/>
-                        <TextBox Text="{Binding AnnounceLead3}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="3" VerticalAlignment="Center" Margin="4,0,0,0"
+                        <TextBox Text="{Binding AnnounceLead3}" Style="{StaticResource NumericField}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="3" VerticalAlignment="Center" Margin="4,0,0,0"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="{x:Static loc:Strings.Main_AnnounceLeadTip}"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_MinuteSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
@@ -237,7 +247,7 @@
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,6"
                                 ToolTip="{x:Static loc:Strings.Main_BackupRetentionTip}">
                         <TextBlock Text="{x:Static loc:Strings.Main_KeepFor}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,4,0"/>
-                        <TextBox Text="{Binding BackupRetentionDays}" Width="{x:Static local:Metrics.NumericFieldNarrow}" VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding BackupRetentionDays}" Style="{StaticResource NumericField}" Width="{x:Static local:Metrics.NumericFieldNarrow}" VerticalAlignment="Center"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_DaysSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
@@ -272,7 +282,7 @@
                               IsEnabled="{Binding IsNotPinned}" ToolTip="{x:Static loc:Strings.Main_AutoUpdateTip}"/>
                     <StackPanel Orientation="Horizontal" Margin="16,0,0,6" IsEnabled="{Binding AutoUpdateEnabled}" Style="{StaticResource DimWhenDisabled}">
                         <TextBlock Text="{x:Static loc:Strings.Main_CheckUpdateEvery}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                        <TextBox Text="{Binding UpdateCheckMinutes}" Width="{x:Static local:Metrics.NumericFieldWidth}" MaxLength="4" VerticalAlignment="Center"
+                        <TextBox Text="{Binding UpdateCheckMinutes}" Style="{StaticResource NumericField}" Width="{x:Static local:Metrics.NumericFieldWidth}" MaxLength="4" VerticalAlignment="Center"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"
                                  ToolTip="{x:Static loc:Strings.Main_CheckUpdateEveryTip}"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_MinuteSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
@@ -280,14 +290,14 @@
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                         <CheckBox Content="{x:Static loc:Strings.Main_ZombieCheck}" IsChecked="{Binding ZombieCheckEnabled}"
                                   ToolTip="{x:Static loc:Strings.Main_ZombieCheckTip}"/>
-                        <TextBox Text="{Binding ZombieFailureThreshold}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="2" VerticalAlignment="Center" Margin="6,0,0,0"
+                        <TextBox Text="{Binding ZombieFailureThreshold}" Style="{StaticResource NumericField}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="2" VerticalAlignment="Center" Margin="6,0,0,0"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"
                                  ToolTip="{x:Static loc:Strings.Main_ZombieThresholdTip}"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_ChecksSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{x:Static loc:Strings.Main_RestCheckEvery}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                        <TextBox Text="{Binding HealthProbeSeconds}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="3" VerticalAlignment="Center"
+                        <TextBox Text="{Binding HealthProbeSeconds}" Style="{StaticResource NumericField}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="3" VerticalAlignment="Center"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"
                                  ToolTip="{x:Static loc:Strings.Main_RestCheckEveryTip}"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_SecondsSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
