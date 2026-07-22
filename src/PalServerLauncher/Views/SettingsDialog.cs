@@ -663,6 +663,7 @@ public sealed class SettingsDialog : Window
         {
             Text = _config.ExtraServerArgs, AcceptsReturn = true, TextWrapping = TextWrapping.Wrap,
             MinHeight = 64, VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+            VerticalContentAlignment = VerticalAlignment.Top, // multiline: keep text at the top (app style centers)
             Background = FieldBg, Foreground = Fg, BorderBrush = NormalBorder,
             Padding = new Thickness(6), CaretBrush = Caret,
         };

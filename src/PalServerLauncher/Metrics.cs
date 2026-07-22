@@ -36,7 +36,6 @@ public static class Metrics
     public const double ControlHeight = 28;
     public const double NumericFieldNarrow = 30;   // 1-3 digit fields (hours, minutes, thresholds)
     public const double NumericFieldWidth = 40;    // 4-digit fields (e.g. update interval in minutes)
-    public const double IconButtonSize = 28;
 
     // Corner radius: the app is SQUARE by a long-settled design decision, so this is 0. Kept as one token so
     // every container (buttons, fields, combos, boxes) stays square from a single definition. The toggle

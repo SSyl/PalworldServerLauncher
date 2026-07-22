@@ -96,7 +96,7 @@ public sealed class ModsDialog : Window
 
         // Build the connect panel first so the "different account" link can reference it (assigned field).
         _connectPanel = new StackPanel();
-        _connectPanel.Children.Add(Note(Strings.Mods_SteamAccountNote));
+        _connectPanel.Children.Add(InfoNote(Strings.Mods_SteamAccountNote));
         _username = Field(config.SteamUsername);
         _username.TextChanged += (_, _) => RefreshWarning();
         _connectButton = MakeButton(Strings.Mods_ConnectButton, () => _ = OnConnectSteam());
@@ -621,7 +621,9 @@ public sealed class ModsDialog : Window
         Content = text, IsChecked = value, Foreground = Fg, Margin = new Thickness(0, 6, 0, 0),
     };
 
-    private static Border Note(string text) => new()
+    // A neutral grey info box, deliberately DISTINCT from the amber DarkControls.Note. Named InfoNote (not
+    // Note) so it doesn't shadow / get mistaken for the shared amber one.
+    private static Border InfoNote(string text) => new()
     {
         Background = Theme.Inset,
         Padding = new Thickness(10, 8, 10, 8), Margin = new Thickness(0, 6, 0, 0),

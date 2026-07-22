@@ -125,22 +125,6 @@ internal static class DarkControls
         return grid;
     }
 
-    /// <summary>A square Segoe MDL2 glyph button (send, history, and similar). Lifted from ServerCommandsDialog.</summary>
-    public static Button IconButton(string glyph, Action onClick, string? tooltip = null)
-    {
-        var button = new Button
-        {
-            Content = glyph,
-            FontFamily = new FontFamily("Segoe MDL2 Assets"),
-            FontSize = Metrics.FontIcon,
-            MinWidth = Metrics.IconButtonSize,
-            Margin = new Thickness(Metrics.S8, 0, 0, 0),
-        };
-        if (tooltip is not null) button.ToolTip = tooltip;
-        button.Click += (_, _) => onClick();
-        return button;
-    }
-
     /// <summary>A small "reset to default" glyph button (MDL2 undo), shared by the settings editor's per-field
     /// resets and the backup-location reset. The caller wires any show / hide logic.</summary>
     public static Button ResetButton(Action onClick, string? tooltip = null)
