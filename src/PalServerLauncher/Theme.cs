@@ -35,6 +35,7 @@ public static class Theme
     public static readonly SolidColorBrush Text = Frozen(0xF0, 0xF0, 0xF0);        // primary
     public static readonly SolidColorBrush TextMuted = Frozen(0x99, 0x99, 0x99);   // secondary, unselected tabs
     public static readonly SolidColorBrush TextCaption = Frozen(0x88, 0x88, 0x88); // dim captions
+    public static readonly SolidColorBrush Caret = Frozen(0xF0, 0xF0, 0xF0);       // text-input caret (was Brushes.White)
 
     // Inputs
     public static readonly SolidColorBrush Field = Frozen(0x33, 0x33, 0x33);
