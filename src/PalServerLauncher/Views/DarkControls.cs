@@ -164,7 +164,7 @@ internal static class DarkControls
 
     /// <summary>A muted MDL2 close / remove glyph button (transparent, borderless) that reddens on hover,
     /// matching the scheduler's row-delete buttons. For row-remove / clear actions.</summary>
-    public static Button CloseButton(Action onClick, string? tooltip = null)
+    public static Button CloseButton(Action onClick, string? tooltip = null, double squareSize = 0)
     {
         var button = new Button
         {
@@ -180,6 +180,13 @@ internal static class DarkControls
             Cursor = System.Windows.Input.Cursors.Hand,
             VerticalAlignment = VerticalAlignment.Center,
         };
+        // A square variant (equal size, centered glyph) for table cells like the mods panel, where the default
+        // wide-rectangle shape reads oddly. The rectangle stays the default for list rows (the scheduler).
+        if (squareSize > 0)
+        {
+            button.Width = button.Height = squareSize;
+            button.Padding = new Thickness(0);
+        }
         if (tooltip is not null) button.ToolTip = tooltip;
         button.MouseEnter += (_, _) => button.Foreground = Theme.Danger;
         button.MouseLeave += (_, _) => button.Foreground = Theme.TextMuted;

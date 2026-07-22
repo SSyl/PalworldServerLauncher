@@ -462,7 +462,7 @@ public sealed class ModsDialog : Window
             }
         };
 
-        var remove = CloseButton(() => DeleteRow(entry), Strings.Mods_DeleteModTip);
+        var remove = CloseButton(() => DeleteRow(entry), Strings.Mods_DeleteModTip, squareSize: 24);
         remove.Margin = new Thickness(6, 0, 0, 0);
 
         var grid = new Grid();
