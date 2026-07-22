@@ -2422,4 +2422,7 @@
   <data name="Mods_PasswordNote" xml:space="preserve">
     <value>直接傳給 Steam 的 SteamCMD 用於登入，隨後即捨棄。永不保存到磁碟或寫入日誌。</value>
   </data>
+  <data name="Main_JumpToLatest" xml:space="preserve">
+    <value>Jump to latest</value>
+  </data>
 </root>

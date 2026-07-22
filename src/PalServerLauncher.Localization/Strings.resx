@@ -2498,4 +2498,7 @@ Doing this may cause major issues (server crashes, save corruption) if the mod i
   <data name="Mods_PasswordNote" xml:space="preserve">
     <value>Passed straight to Steam's SteamCMD to sign in, then discarded. Never saved to disk or written to the logs.</value>
   </data>
+  <data name="Main_JumpToLatest" xml:space="preserve">
+    <value>Jump to latest</value>
+  </data>
 </root>

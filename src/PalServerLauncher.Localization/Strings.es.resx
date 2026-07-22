@@ -2498,4 +2498,7 @@ Hacerlo puede causar problemas graves (cierres del servidor, corrupción de las 
   <data name="Mods_PasswordNote" xml:space="preserve">
     <value>Se envía directamente a SteamCMD de Steam para iniciar sesión y luego se descarta. Nunca se guarda en disco ni se escribe en el registro.</value>
   </data>
+  <data name="Main_JumpToLatest" xml:space="preserve">
+    <value>Jump to latest</value>
+  </data>
 </root>

@@ -2498,4 +2498,7 @@ Das kann schwerwiegende Probleme verursachen (Serverabstürze, beschädigte Spie
   <data name="Mods_PasswordNote" xml:space="preserve">
     <value>Wird direkt an Steams SteamCMD zur Anmeldung weitergegeben, dann verworfen. Nie auf der Festplatte gespeichert oder protokolliert.</value>
   </data>
+  <data name="Main_JumpToLatest" xml:space="preserve">
+    <value>Jump to latest</value>
+  </data>
 </root>

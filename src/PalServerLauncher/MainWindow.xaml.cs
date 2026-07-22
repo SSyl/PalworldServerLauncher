@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 using Microsoft.Win32;
 using PalServerLauncher.Config;
@@ -23,6 +24,11 @@ public partial class MainWindow : Window
     private readonly bool _ignoreRestApi;
     private bool _forceClose;
 
+    // Per-log follow-the-tail state, backing the jump-to-latest button (see HookLogScroll / HookAutoScroll).
+    private readonly Dictionary<ListBox, ScrollViewer> _logScrollers = new();
+    private readonly Dictionary<ListBox, bool> _followingTail = new();
+    private ListBox[] _logLists = [];
+
     public MainWindow(Logger logger, LauncherConfig config, bool startServer = false, bool ignoreRestApi = false)
     {
         InitializeComponent();
@@ -32,12 +38,20 @@ public partial class MainWindow : Window
         _viewModel = new MainViewModel(logger, config);
         DataContext = _viewModel;
 
-        // Keep each tab's log scrolled to the newest line as entries are appended.
+        // Follow-the-tail per log: auto-scroll to the newest line, but stop once the user scrolls up so they can
+        // read history, and surface a jump-to-latest button for the current tab while it's scrolled up.
+        _logLists = [GeneralList, ServerList, ChatList, PlayersList, SteamCmdList];
+        foreach (var logList in _logLists)
+        {
+            _followingTail[logList] = true;
+            logList.Loaded += (_, _) => HookLogScroll(logList);
+        }
         HookAutoScroll(_viewModel.LogGeneral, GeneralList);
         HookAutoScroll(_viewModel.LogServer, ServerList);
         HookAutoScroll(_viewModel.LogChat, ChatList);
         HookAutoScroll(_viewModel.LogPlayerJoin, PlayersList);
         HookAutoScroll(_viewModel.LogSteamCmd, SteamCmdList);
+        LogTabs.SelectionChanged += (_, _) => UpdateJumpButton();
 
         _viewModel.InstallFinished += OnInstallFinished;
         _viewModel.ConfirmInstall = ConfirmInstall;
@@ -480,6 +494,9 @@ public partial class MainWindow : Window
         {
             if (e.Action != NotifyCollectionChangedAction.Add)
                 return;
+            // Leave the user where they are if they've scrolled up to read history.
+            if (!(_followingTail.TryGetValue(list, out var following) && following))
+                return;
 
             // Defer the scroll: calling ScrollIntoView synchronously inside CollectionChanged forces a
             // layout pass mid-notification, which under rapid streaming adds throws
@@ -490,5 +507,56 @@ public partial class MainWindow : Window
                     list.ScrollIntoView(list.Items[^1]);
             }));
         };
+    }
+
+    /// <summary>Hook a log ListBox's ScrollViewer (once it's in the visual tree) so scrolling away from the
+    /// bottom stops the follow-the-tail auto-scroll, and scrolling back to the bottom resumes it.</summary>
+    private void HookLogScroll(ListBox list)
+    {
+        if (_logScrollers.ContainsKey(list))
+            return; // Loaded can fire more than once; hook the ScrollViewer only the first time
+        if (FindScrollViewer(list) is not { } scroller)
+            return; // no ScrollViewer found: auto-scroll still works, the jump button just never appears
+        _logScrollers[list] = scroller;
+        scroller.ScrollChanged += (_, e) =>
+        {
+            // Only a plain user scroll (no content growth) decides whether we're following the tail. Growing
+            // content that pushes the bottom down is the auto-scroll's job and must not read as a scroll-up.
+            if (e.ExtentHeightChange != 0)
+                return;
+            _followingTail[list] = scroller.VerticalOffset >= scroller.ScrollableHeight - 1.0;
+            if (ReferenceEquals(list, CurrentLog()))
+                UpdateJumpButton();
+        };
+    }
+
+    private static ScrollViewer? FindScrollViewer(DependencyObject root)
+    {
+        if (root is ScrollViewer scroller)
+            return scroller;
+        for (var i = 0; i < VisualTreeHelper.GetChildrenCount(root); i++)
+            if (FindScrollViewer(VisualTreeHelper.GetChild(root, i)) is { } found)
+                return found;
+        return null;
+    }
+
+    /// <summary>The log ListBox for the currently selected tab, or null.</summary>
+    private ListBox? CurrentLog() =>
+        LogTabs.SelectedIndex >= 0 && LogTabs.SelectedIndex < _logLists.Length ? _logLists[LogTabs.SelectedIndex] : null;
+
+    /// <summary>Show the jump-to-latest button only while the current tab's log is scrolled up.</summary>
+    private void UpdateJumpButton() =>
+        JumpToLatestButton.Visibility =
+            CurrentLog() is { } current && _followingTail.TryGetValue(current, out var following) && !following
+                ? Visibility.Visible : Visibility.Collapsed;
+
+    private void OnJumpToLatest(object sender, RoutedEventArgs e)
+    {
+        if (CurrentLog() is not { } current)
+            return;
+        if (_logScrollers.TryGetValue(current, out var scroller))
+            scroller.ScrollToBottom();
+        _followingTail[current] = true;
+        UpdateJumpButton();
     }
 }

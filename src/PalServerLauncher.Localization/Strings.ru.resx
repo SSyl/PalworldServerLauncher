@@ -2498,4 +2498,7 @@ REST API на этом сервере пока не включён, поэтом
   <data name="Mods_PasswordNote" xml:space="preserve">
     <value>Передаётся напрямую в SteamCMD для входа в Steam, затем удаляется. Никогда не сохраняется на диск и не записывается в журнал.</value>
   </data>
+  <data name="Main_JumpToLatest" xml:space="preserve">
+    <value>Jump to latest</value>
+  </data>
 </root>

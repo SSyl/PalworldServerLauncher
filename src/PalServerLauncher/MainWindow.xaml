@@ -309,7 +309,7 @@
 
         <!-- Log tabs, with Server Commands docked to the far right of the tab strip -->
         <Grid Grid.Row="3">
-        <TabControl Background="{x:Static local:Theme.Window}" BorderThickness="0" Padding="0,8,0,0">
+        <TabControl x:Name="LogTabs" Background="{x:Static local:Theme.Window}" BorderThickness="0" Padding="0,8,0,0">
             <TabControl.Resources>
                 <Style TargetType="TabItem" BasedOn="{StaticResource DarkTabItem}"/>
                 <Style TargetType="ListBox" x:Key="LogListStyle">
@@ -348,6 +348,11 @@
             <Button Content="{x:Static loc:Strings.Main_ServerCommands}" Click="OnOpenServerCommands" IsEnabled="{Binding CanUseServerCommands}"
                     HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0" ToolTipService.ShowOnDisabled="True"
                     ToolTip="{x:Static loc:Strings.Main_ServerCommandsTip}"/>
+            <!-- Appears bottom-right of the log once you've scrolled up; clicking jumps back to the newest line. -->
+            <Button x:Name="JumpToLatestButton" Click="OnJumpToLatest" Visibility="Collapsed"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,22,14"
+                    FontFamily="Segoe MDL2 Assets" Content="&#xE70D;" FontSize="12" Padding="9,6" MinWidth="0"
+                    ToolTip="{x:Static loc:Strings.Main_JumpToLatest}"/>
         </Grid>
     </Grid>
 </Window>
