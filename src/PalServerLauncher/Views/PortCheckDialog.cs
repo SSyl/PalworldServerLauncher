@@ -60,7 +60,7 @@ public sealed class PortCheckDialog : Window
         ShowInTaskbar = false;
         Closed += (_, _) => _cts.Cancel();
 
-        var stack = new StackPanel { Margin = new Thickness(18) };
+        var stack = new StackPanel { Margin = Metrics.DialogPadding };
 
         stack.Children.Add(new TextBlock
         {
@@ -69,7 +69,7 @@ public sealed class PortCheckDialog : Window
         });
 
         _ipBox = Field(detectedIp ?? "");
-        stack.Children.Add(Row(Strings.PortCheck_YourPublicIp, _ipBox));
+        stack.Children.Add(Row(Strings.PortCheck_YourPublicIp, _ipBox, 190));
 
         stack.Children.Add(Header(Strings.PortCheck_Results));
 
@@ -89,7 +89,7 @@ public sealed class PortCheckDialog : Window
             stack.Children.Add(RowGrid(string.Format(Strings.PortCheck_PortRowLabel, item.Label, item.Protocol.ToString().ToUpperInvariant()), portBox, light, status));
         }
 
-        stack.Children.Add(Note(Strings.PortCheck_FirewallNote));
+        stack.Children.Add(Note(Strings.PortCheck_FirewallNote, new Thickness(0, Metrics.S12, 0, 0)));
 
         _checkButton = MakeButton(Strings.PortCheck_Check, OnCheck);
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 16, 0, 0) };
@@ -203,19 +203,6 @@ public sealed class PortCheckDialog : Window
         Text = text, Foreground = Muted, TextWrapping = TextWrapping.Wrap, VerticalAlignment = VerticalAlignment.Center,
     };
 
-    private static Grid Row(string label, FrameworkElement input)
-    {
-        var grid = new Grid { Margin = new Thickness(0, 4, 0, 0) };
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(190) });
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-        var text = new TextBlock { Text = label, Foreground = Fg, VerticalAlignment = VerticalAlignment.Center };
-        Grid.SetColumn(text, 0);
-        Grid.SetColumn(input, 1);
-        grid.Children.Add(text);
-        grid.Children.Add(input);
-        return grid;
-    }
-
     private static Grid RowGrid(string label, FrameworkElement? portBox, TextBlock light, TextBlock status)
     {
         var grid = new Grid { Margin = new Thickness(0, 6, 0, 0) };
@@ -240,12 +227,4 @@ public sealed class PortCheckDialog : Window
         grid.Children.Add(status);
         return grid;
     }
-
-    private static Border Note(string text) => new()
-    {
-        Background = Theme.BannerBg,
-        Padding = new Thickness(10, 8, 10, 8),
-        Margin = new Thickness(0, 14, 0, 0),
-        Child = new TextBlock { Text = text, Foreground = Theme.BannerFg, TextWrapping = TextWrapping.Wrap },
-    };
 }

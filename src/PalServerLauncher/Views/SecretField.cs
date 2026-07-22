@@ -32,7 +32,7 @@ internal sealed class SecretField
         _masked = new PasswordBox
         {
             Password = value, IsEnabled = editable, Background = Brushes.Transparent, Foreground = Fg,
-            BorderThickness = new Thickness(0), Padding = new Thickness(5, 4, 5, 4), CaretBrush = Brushes.White,
+            BorderThickness = new Thickness(0), Padding = new Thickness(5, 4, 5, 4), CaretBrush = Caret,
             VerticalContentAlignment = VerticalAlignment.Center,
         };
         // Revealed view: read-only (not disabled) when not editable, so the value stays selectable and copyable.
@@ -40,7 +40,7 @@ internal sealed class SecretField
         {
             Text = value, IsReadOnly = !editable, Visibility = Visibility.Collapsed, Background = Brushes.Transparent,
             Foreground = Fg, BorderThickness = new Thickness(0), Padding = new Thickness(5, 4, 5, 4),
-            CaretBrush = Brushes.White, VerticalContentAlignment = VerticalAlignment.Center,
+            CaretBrush = Caret, VerticalContentAlignment = VerticalAlignment.Center,
         };
         GateText(_revealed);
         StripPassword(_masked);

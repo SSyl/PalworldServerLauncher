@@ -110,6 +110,21 @@ internal static class DarkControls
         Margin = margin ?? new Thickness(0),
     };
 
+    /// <summary>A label + input row with a fixed-width label column, the grid several dialogs hand-rolled at
+    /// divergent label widths (Discord 200, Port Check 190). Pass <paramref name="labelWidth"/> to match.</summary>
+    public static Grid Row(string label, FrameworkElement input, double labelWidth = 200)
+    {
+        var grid = new Grid { Margin = new Thickness(0, Metrics.S4, 0, 0) };
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(labelWidth) });
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+        var text = new TextBlock { Text = label, Foreground = Fg, VerticalAlignment = VerticalAlignment.Center, TextWrapping = TextWrapping.Wrap };
+        Grid.SetColumn(text, 0);
+        Grid.SetColumn(input, 1);
+        grid.Children.Add(text);
+        grid.Children.Add(input);
+        return grid;
+    }
+
     /// <summary>A square Segoe MDL2 glyph button (send, history, and similar). Lifted from ServerCommandsDialog.</summary>
     public static Button IconButton(string glyph, Action onClick, string? tooltip = null)
     {

@@ -138,7 +138,7 @@ public sealed class ServerCommandsDialog : Window
         else
         {
             stack.IsEnabled = false;
-            var banner = Banner(Strings.ServerCmd_RestUnavailable);
+            var banner = Note(Strings.ServerCmd_RestUnavailable);
             banner.Margin = new Thickness(18, 18, 18, 0);
             DockPanel.SetDock(banner, Dock.Top);
             var restDock = new DockPanel();
@@ -283,7 +283,7 @@ public sealed class ServerCommandsDialog : Window
     {
         var panel = new DockPanel { Margin = new Thickness(18) };
 
-        var blurb = Banner(Strings.ServerCmd_RconDeprecated); // amber notice box, matching the CPU Affinity/Priority tab
+        var blurb = Note(Strings.ServerCmd_RconDeprecated); // amber notice box, matching the CPU Affinity/Priority tab
         blurb.Margin = new Thickness(0, 0, 0, 10);
         DockPanel.SetDock(blurb, Dock.Top);
         panel.Children.Add(blurb);
@@ -486,7 +486,7 @@ public sealed class ServerCommandsDialog : Window
 
     private void SetStatus(string text) => _status.Text = text;
 
-    // --- small dark-theme builders (mirrors PortCheckDialog / DiscordDialog) ---
+    // --- dialog-specific builders (the amber Note box now lives in DarkControls) ---
     private static TextBlock Line(string text, Brush colour) => new()
     {
         Text = text, Foreground = colour, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 3, 0, 0),
@@ -499,13 +499,4 @@ public sealed class ServerCommandsDialog : Window
         panel.Children.Add(input);
         return panel;
     }
-
-    /// <summary>The amber notice box, matching the Server Settings dialog (its "server running" banner style).</summary>
-    private static Border Banner(string text) => new()
-    {
-        Background = Theme.BannerBg,
-        Padding = new Thickness(10, 8, 10, 8),
-        Child = new TextBlock { Text = text, Foreground = Theme.BannerFg, TextWrapping = TextWrapping.Wrap },
-    };
-
 }

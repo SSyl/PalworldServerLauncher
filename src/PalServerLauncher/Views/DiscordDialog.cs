@@ -44,7 +44,8 @@ public sealed class DiscordDialog : Window
         SizeToContent = SizeToContent.Height;
         ShowInTaskbar = false;
 
-        var stack = new StackPanel { Margin = new Thickness(18) };
+        var stack = new StackPanel { Margin = Metrics.DialogPadding };
+        var checkTop = new Thickness(0, Metrics.S6, 0, 0);
 
         stack.Children.Add(Blurb(
             Strings.Discord_BlurbPrefix,
@@ -52,7 +53,7 @@ public sealed class DiscordDialog : Window
             Strings.Discord_BlurbSuffix));
 
         stack.Children.Add(Header(Strings.Discord_ServerControlBotHeader));
-        _botEnabled = Check(Strings.Discord_EnableControlBot, config.DiscordBotEnabled);
+        _botEnabled = Check(Strings.Discord_EnableControlBot, config.DiscordBotEnabled, checkTop);
         stack.Children.Add(_botEnabled);
         _token = new SecretField(config.DiscordBotToken, editable: true);
         stack.Children.Add(Row(Strings.Discord_BotTokenLabel, _token.Element));
@@ -89,13 +90,13 @@ public sealed class DiscordDialog : Window
         stack.Children.Add(commandsPanel);
 
         stack.Children.Add(Header(Strings.Discord_WebhookNotificationsHeader));
-        _notifyEnabled = Check(Strings.Discord_EnableNotifications, config.DiscordEnabled);
+        _notifyEnabled = Check(Strings.Discord_EnableNotifications, config.DiscordEnabled, checkTop);
         stack.Children.Add(_notifyEnabled);
         _webhook = Field(config.DiscordWebhookUrl);
         stack.Children.Add(Row(Strings.Discord_WebhookUrlLabel, _webhook));
-        _notifyLifecycle = Check(Strings.Discord_NotifyLifecycle, config.DiscordNotifyLifecycle);
+        _notifyLifecycle = Check(Strings.Discord_NotifyLifecycle, config.DiscordNotifyLifecycle, checkTop);
         stack.Children.Add(_notifyLifecycle);
-        _notifyPlayers = Check(Strings.Discord_NotifyPlayers, config.DiscordNotifyPlayers);
+        _notifyPlayers = Check(Strings.Discord_NotifyPlayers, config.DiscordNotifyPlayers, checkTop);
         stack.Children.Add(_notifyPlayers);
 
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 18, 0, 0) };
@@ -154,33 +155,7 @@ public sealed class DiscordDialog : Window
         Close();
     }
 
-    // --- small dark-theme builders ---
-    private static Grid Row(string label, FrameworkElement input)
-    {
-        var grid = new Grid { Margin = new Thickness(0, 4, 0, 0) };
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(200) });
-        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-        var text = new TextBlock { Text = label, Foreground = Fg, VerticalAlignment = VerticalAlignment.Center, TextWrapping = TextWrapping.Wrap };
-        Grid.SetColumn(text, 0);
-        Grid.SetColumn(input, 1);
-        grid.Children.Add(text);
-        grid.Children.Add(input);
-        return grid;
-    }
-
-    private static CheckBox Check(string text, bool value) => new()
-    {
-        Content = text, IsChecked = value, Foreground = Fg, Margin = new Thickness(0, 6, 0, 0),
-    };
-
-    private static Border Note(string text) => new()
-    {
-        Background = Theme.BannerBg,
-        Padding = new Thickness(10, 8, 10, 8),
-        Margin = new Thickness(0, 8, 0, 0),
-        Child = new TextBlock { Text = text, Foreground = Theme.BannerFg, TextWrapping = TextWrapping.Wrap },
-    };
-
+    // --- dialog-specific builder (generic Row / Check / Note now live in DarkControls) ---
     private static TextBlock Blurb(string prefix, string url, string linkText, string suffix)
     {
         var block = new TextBlock { Foreground = Muted, TextWrapping = TextWrapping.Wrap };
