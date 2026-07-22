@@ -22,7 +22,8 @@ Chinese, Traditional Chinese, and Korean. See [Languages](#languages).
 
 - [Features](#features)
 - [Getting started](#getting-started)
-- [Running more than one server](#running-more-than-one-server)
+- [FAQ and troubleshooting](#faq-and-troubleshooting)
+- [Advanced usage](#advanced-usage)
 - [Privacy and security](#privacy-and-security)
 
 ---
@@ -77,7 +78,7 @@ Chinese, Traditional Chinese, and Korean. See [Languages](#languages).
 - **Start at login** (optional): opens the launcher and starts the server when you sign into Windows, so
   restarts, backups, and recovery keep running without you.
 - Logs from the launcher, SteamCMD, and the server show up in-app and to a rotating log file (last ten kept).
-  `--debug` and `--console` give more detail, see [Command-line options](#command-line-options).
+  `--debug` and `--console` give more detail, see [Command-line options](docs/advanced-usage.md#command-line-options).
 
 ### Discord (optional)
 - **Webhook** notifications when the server comes up, goes down, updates, crashes, or players come and go.
@@ -167,64 +168,31 @@ installer, so drop it wherever you'd like the server to live.
    launcher has to hard-stop it instead of shutting it down cleanly.
 5. Optional: turn on **Scheduled restart** and pick your times, set up **Backups**, and connect **Discord**.
 
-## File locations
+## FAQ and troubleshooting
 
-Everything the launcher manages, its own `launcher.json` settings, the server install, backups, and logs,
-lives in a `PalworldServerLauncher` folder next to the exe. The game's own settings live in
-`PalWorldSettings.ini`, editable from the launcher (Server Settings and Launch Arguments) or by hand.
+Common hosting questions, how you and your friends connect, why a connection fails (firewall, port
+forwarding, CGNAT), how to get listed in the community server browser, updating and pinning versions,
+importing an existing server, and where your files live, are all answered in
+**[docs/FAQ.md](docs/FAQ.md)**.
 
-## Running more than one server
+## Advanced usage
 
-Each copy of the exe runs one server, installed next to it. To run several on the same machine, drop a copy
-of the exe into its own folder per server. Each one stays completely separate (settings, logs, install,
-backups). Just give each server its own ports:
-
-- **Listen port** (`-port`, default 8211), set under **Launch Arguments**.
-- **REST API port** (default 8212) and **RCON port** (default 25575, if you turn it on), set in that
-  server's `PalWorldSettings.ini`.
-
-The Steam query port picks the first free one automatically (starting at 27015), or you can set a fixed
-**Query port** under Launch Arguments if you forward it.
-
-## Command-line options
-
-You can double-click the launcher, or start it from a terminal with a couple of extra options:
-
-- `--debug` (or `--verbose`): write more detailed logs.
-- `--console`: mirror the launcher's logs into the terminal you started it from, handy for keeping an eye on
-  a server from the command line.
-- `--start-server`: open the launcher and bring the server up on load, adopting one that's already running.
-  Good for a scheduled task or a hands-off start.
-- `--install-server`: install SteamCMD and the server without opening the window, then exit.
-
-```powershell
-PalworldServerLauncher.exe --console --debug
-```
+Running more than one server on the same machine, and the launcher's command-line options (`--console`,
+`--start-server`, `--install-server`, and more), are covered in
+**[docs/advanced-usage.md](docs/advanced-usage.md)**.
 
 ## Upcoming features
 
 - A system-tray icon.
 - A fuller headless / command-line mode. There's already `--install-server` and `--start-server` (see
-  [Command-line options](#command-line-options)), and you can run the launcher hidden with a small PowerShell
-  script if you want it out of the way.
+  [Command-line options](docs/advanced-usage.md#command-line-options)), and you can run the launcher hidden
+  with a small PowerShell script if you want it out of the way.
 
 ## Building from source
 
-> [!TIP]
-> You don't need to do this as a regular user, grab a pre-built `.exe` from the
-> [releases page](https://github.com/SSyl/PalworldServerLauncher/releases/latest) instead. This is only for
-> building the app yourself, which requires the **.NET 10 SDK**.
-
-From the repository root:
-
-```powershell
-dotnet build
-dotnet test
-dotnet run --project src\PalServerLauncher              # run it
-dotnet publish src\PalServerLauncher -c Release         # build a single self-contained .exe
-```
-
-Pass launcher options after `--`, for example `dotnet run --project src\PalServerLauncher -- --console`.
+Most people don't need this, just grab a pre-built `.exe` from the
+[releases page](https://github.com/SSyl/PalworldServerLauncher/releases/latest). If you'd rather build it
+yourself (you'll need the **.NET 10 SDK**), see **[docs/building.md](docs/building.md)**.
 
 ## Privacy and security
 
