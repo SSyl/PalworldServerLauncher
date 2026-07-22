@@ -374,7 +374,7 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter TargetName="track" Property="Background" Value="{x:Static local:Theme.Accent}"/>
-                                <Setter TargetName="track" Property="BorderBrush" Value="{x:Static local:Theme.Accent}"/>
+                                <Setter TargetName="track" Property="BorderBrush" Value="{x:Static local:Theme.AccentBorder}"/>
                                 <Setter TargetName="thumb" Property="Background" Value="White"/>
                                 <Setter TargetName="thumb" Property="HorizontalAlignment" Value="Right"/>
                                 <Setter TargetName="thumb" Property="Margin" Value="0,0,4,0"/>

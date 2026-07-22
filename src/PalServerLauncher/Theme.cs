@@ -30,6 +30,7 @@ public static class Theme
 
     // Accent (selection, tab underline, focus)
     public static readonly SolidColorBrush Accent = Frozen(0x2D, 0x6C, 0xDF);
+    public static readonly SolidColorBrush AccentBorder = Frozen(0x24, 0x56, 0xB0); // darker accent: a visible edge on accent-filled controls
 
     // Text
     public static readonly SolidColorBrush Text = Frozen(0xF0, 0xF0, 0xF0);        // primary
