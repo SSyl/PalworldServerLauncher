@@ -236,7 +236,7 @@ public sealed class SettingsDialog : Window
     {
         _searchBox = new TextBox
         {
-            Background = FieldBg, Foreground = Fg, BorderThickness = new Thickness(0), CaretBrush = Brushes.White,
+            Background = FieldBg, Foreground = Fg, BorderThickness = new Thickness(0), CaretBrush = Caret,
             VerticalContentAlignment = VerticalAlignment.Center,
             // Explicit left padding (not the app-wide 5px) so the caret sits just left of the placeholder below,
             // instead of on top of its first letter.
@@ -249,11 +249,12 @@ public sealed class SettingsDialog : Window
             VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(6, 0, 0, 0),
         };
 
-        // A prominent red button with a white ✕ (the app-wide Button style rounds it and adds hover feedback).
+        // A muted clear glyph inside the search box; the app-wide Button style brightens it on hover.
         var clear = new Button
         {
-            Content = "✕", Width = 22, Height = 22, Padding = new Thickness(0), FontSize = 11,
-            Foreground = Brushes.White, Background = Theme.Danger,
+            Content = "", FontFamily = new FontFamily("Segoe MDL2 Assets"), FontSize = 10,
+            Width = 22, Height = 22, Padding = new Thickness(0),
+            Foreground = Muted, Background = Brushes.Transparent, BorderThickness = new Thickness(0),
             Margin = new Thickness(6, 0, 2, 0), Visibility = Visibility.Collapsed,
             VerticalAlignment = VerticalAlignment.Center, ToolTip = Strings.Settings_SearchClearTooltip,
         };
@@ -635,7 +636,7 @@ public sealed class SettingsDialog : Window
             Text = _config.ExtraServerArgs, AcceptsReturn = true, TextWrapping = TextWrapping.Wrap,
             MinHeight = 64, VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
             Background = FieldBg, Foreground = Fg, BorderBrush = NormalBorder,
-            Padding = new Thickness(6), CaretBrush = Brushes.White,
+            Padding = new Thickness(6), CaretBrush = Caret,
         };
         _extraArgs.TextChanged += OnLaunchFieldChanged;
 
@@ -1048,14 +1049,8 @@ public sealed class SettingsDialog : Window
     {
         if (includeInBulk)
             _resetActions.Add(spec.Reset);
-        var button = new Button
-        {
-            Content = "↺", Width = 26, Margin = new Thickness(6, 0, 0, 0), Padding = new Thickness(0, 1, 0, 1),
-            Foreground = Fg, Background = Theme.Control,
-            BorderThickness = new Thickness(0), Cursor = System.Windows.Input.Cursors.Hand,
-            VerticalAlignment = VerticalAlignment.Center, ToolTip = Strings.Settings_ResetFieldTooltip,
-        };
-        button.Click += (_, _) => spec.Reset();
+        var button = DarkControls.ResetButton(spec.Reset, Strings.Settings_ResetFieldTooltip);
+        button.Margin = new Thickness(6, 0, 0, 0);
         void Refresh() => button.Visibility = spec.IsDefault() ? Visibility.Collapsed : Visibility.Visible;
         spec.Subscribe(Refresh);
         Refresh(); // hidden if the loaded value already equals the default

@@ -159,7 +159,7 @@ public sealed class ModsDialog : Window
         stack.Children.Add(new Border
         {
             Child = _loosePakPanel, Background = InsetBg, BorderBrush = FieldBorder, BorderThickness = new Thickness(1),
-            CornerRadius = new CornerRadius(4), Padding = new Thickness(10, 6, 10, 6), Margin = new Thickness(0, 6, 0, 0),
+            CornerRadius = Metrics.Radius, Padding = new Thickness(10, 6, 10, 6), Margin = new Thickness(0, 6, 0, 0),
         });
         var looseButtons = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 8, 0, 0) };
         var openLoose = MakeButton(Strings.Mods_OpenLoosePaksFolderButton, () => _modService.OpenLoosePaksFolder());
@@ -464,7 +464,8 @@ public sealed class ModsDialog : Window
 
         var remove = new Button
         {
-            Content = "✕", Width = 30, Height = 26, Padding = new Thickness(0), Foreground = Fg,
+            Content = "", FontFamily = new FontFamily("Segoe MDL2 Assets"), FontSize = 11,
+            Width = 30, Height = 26, Padding = new Thickness(0), Foreground = Fg,
             Background = Theme.Control, BorderThickness = new Thickness(0),
             Cursor = Cursors.Hand, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(6, 0, 0, 0),
             ToolTip = Strings.Mods_DeleteModTip,
@@ -619,7 +620,7 @@ public sealed class ModsDialog : Window
     private static TextBox RowField(string value) => new()
     {
         Text = value, Background = FieldBg, Foreground = Fg, BorderBrush = FieldBorder,
-        Padding = new Thickness(4, 3, 4, 3), CaretBrush = Brushes.White, VerticalAlignment = VerticalAlignment.Center,
+        Padding = new Thickness(4, 3, 4, 3), CaretBrush = Caret, VerticalAlignment = VerticalAlignment.Center,
     };
 
     private static CheckBox Check(string text, bool value) => new()
