@@ -357,24 +357,25 @@
             </Setter>
         </Style>
 
-        <!-- Fluent-style toggle switch (a retemplated ToggleButton): grey track with the thumb left when off,
-             Accent (blue) track with the thumb right when on. Used for the compact-mode toggle. -->
+        <!-- Squared toggle switch (a retemplated ToggleButton): a square grey track with a square thumb on the
+             left when off, Accent (blue) track with the thumb on the right when on. Square (not a pill) to match
+             the app, and pixel-snapped so its straight edges stay crisp (curves aliased). For compact mode. -->
         <Style x:Key="ToggleSwitch" TargetType="ToggleButton">
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ToggleButton">
-                        <Grid Width="40" Height="20" Background="Transparent">
-                            <Border x:Name="track" CornerRadius="10" Background="{x:Static local:Theme.Field}"
+                        <Grid Width="40" Height="20" Background="Transparent" SnapsToDevicePixels="True" UseLayoutRounding="True">
+                            <Border x:Name="track" CornerRadius="{x:Static local:Metrics.Radius}" Background="{x:Static local:Theme.Field}"
                                     BorderBrush="{x:Static local:Theme.FieldBorder}" BorderThickness="1"/>
-                            <Ellipse x:Name="thumb" Width="12" Height="12" Fill="{x:Static local:Theme.TextMuted}"
-                                     HorizontalAlignment="Left" Margin="4,0,0,0"/>
+                            <Border x:Name="thumb" Width="12" Height="12" Background="{x:Static local:Theme.TextMuted}"
+                                    CornerRadius="{x:Static local:Metrics.Radius}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,0,0,0"/>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter TargetName="track" Property="Background" Value="{x:Static local:Theme.Accent}"/>
                                 <Setter TargetName="track" Property="BorderBrush" Value="{x:Static local:Theme.Accent}"/>
-                                <Setter TargetName="thumb" Property="Fill" Value="White"/>
+                                <Setter TargetName="thumb" Property="Background" Value="White"/>
                                 <Setter TargetName="thumb" Property="HorizontalAlignment" Value="Right"/>
                                 <Setter TargetName="thumb" Property="Margin" Value="0,0,4,0"/>
                             </Trigger>
