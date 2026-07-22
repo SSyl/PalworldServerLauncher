@@ -169,16 +169,41 @@
             <Setter Property="TextAlignment" Value="Center"/>
         </Style>
 
-        <!-- Dark checkbox, app-wide: default text colour, and dim the WHOLE control when disabled (matching the
-             buttons' 0.4 opacity) so a grayed-out option clearly reads as unavailable. The default template's
-             disabled cue is a light-theme grey that's nearly invisible on the dark background. -->
+        <!-- Dark checkbox, app-wide (retemplated): a square Fluent-style box that fills Accent with a white MDL2
+             checkmark when checked, its border turns Accent blue on hover, and the whole control dims when
+             disabled. Square to match the app; the box reads from the shared Radius token. -->
         <Style TargetType="CheckBox">
             <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
-            <Style.Triggers>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Opacity" Value="0.4"/>
-                </Trigger>
-            </Style.Triggers>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <StackPanel Orientation="Horizontal" Background="Transparent" SnapsToDevicePixels="True">
+                            <Border x:Name="box" Width="16" Height="16" VerticalAlignment="Center"
+                                    Background="Transparent" BorderBrush="{x:Static local:Theme.FieldBorder}" BorderThickness="1"
+                                    CornerRadius="{x:Static local:Metrics.Radius}" SnapsToDevicePixels="True" UseLayoutRounding="True">
+                                <TextBlock x:Name="check" Text="&#xE73E;" FontFamily="Segoe MDL2 Assets" FontSize="11"
+                                           Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
+                            </Border>
+                            <ContentPresenter Margin="8,0,0,0" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="box" Property="BorderBrush" Value="{x:Static local:Theme.Accent}"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="box" Property="Background" Value="{x:Static local:Theme.Accent}"/>
+                                <Setter TargetName="box" Property="BorderBrush" Value="{x:Static local:Theme.AccentBorder}"/>
+                                <Setter TargetName="check" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <!-- Dark ComboBox, app-wide. Structure adapted from WPF UI's MIT-licensed ComboBox template but
