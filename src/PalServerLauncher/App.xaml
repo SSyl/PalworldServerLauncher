@@ -183,8 +183,11 @@
                             <Border x:Name="box" Width="16" Height="16" VerticalAlignment="Center"
                                     Background="Transparent" BorderBrush="{x:Static local:Theme.FieldBorder}" BorderThickness="1"
                                     CornerRadius="{x:Static local:Metrics.Radius}" SnapsToDevicePixels="True" UseLayoutRounding="True">
-                                <TextBlock x:Name="check" Text="&#xE73E;" FontFamily="Segoe MDL2 Assets" FontSize="11"
-                                           Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
+                                <!-- A vector checkmark (not a font glyph): its geometry centres exactly in the box,
+                                     unlike the MDL2 glyph whose ink sits off-centre in its character cell. -->
+                                <Path x:Name="check" Data="M0,4 L3.5,7.5 L10,0" Stroke="White" StrokeThickness="1.5"
+                                      StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
                             </Border>
                             <ContentPresenter Margin="8,0,0,0" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                         </StackPanel>
