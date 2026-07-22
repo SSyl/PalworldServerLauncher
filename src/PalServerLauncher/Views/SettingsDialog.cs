@@ -168,6 +168,7 @@ public sealed class SettingsDialog : Window
         _searchTabs.Add(new SearchTab(gameBalanceTab, CategoryLabel(SettingCategory.GameBalance), gameBalance.Placeholder, gameBalance.Groups));
         _searchTabs.Add(new SearchTab(performanceTab, CategoryLabel(SettingCategory.Performance), performance.Placeholder, performance.Groups));
         _searchTabs.Add(new SearchTab(undocTab, Strings.Settings_TabUndocumented, undoc.Placeholder, undoc.Groups));
+        RestripeRows(); // initial zebra over all rows (all visible)
 
         // Game Settings host is a DockPanel so the inner TabControl fills. A StackPanel or an outer ScrollViewer
         // would hand the inner TabControl infinite height and break it. The blurb + preset row + search dock to
@@ -322,8 +323,30 @@ public sealed class SettingsDialog : Window
         if (_presetRow is not null)
             _presetRow.Visibility = searching ? Visibility.Collapsed : Visibility.Visible;
 
+        // Filtering hides rows, so recompute the zebra over what's now visible.
+        RestripeRows();
+
         if (searching)
             AutoSwitchToMatches();
+    }
+
+    /// <summary>Zebra-stripe the VISIBLE rows of each ini group (a subtle tint on alternate rows) so a wide
+    /// label-to-input row is easy to read across. Recomputed after a search since filtering hides rows.</summary>
+    private void RestripeRows()
+    {
+        foreach (var tab in _searchTabs)
+            foreach (var group in tab.Groups)
+            {
+                var visible = 0;
+                foreach (var row in group.Rows)
+                {
+                    if (row.Element.Visibility != Visibility.Visible)
+                        continue;
+                    if (row.Element is Border band)
+                        band.Background = visible % 2 == 1 ? Theme.Inset : Brushes.Transparent;
+                    visible++;
+                }
+            }
     }
 
     /// <summary>If the user is on an ini tab that now shows nothing while another ini tab has matches, switch to
@@ -993,9 +1016,9 @@ public sealed class SettingsDialog : Window
         return block;
     }
 
-    private Grid Row(string label, FrameworkElement input, string? tip = null, ResetSpec? reset = null, DocStatus doc = DocStatus.Documented, bool includeInBulkReset = true)
+    private Border Row(string label, FrameworkElement input, string? tip = null, ResetSpec? reset = null, DocStatus doc = DocStatus.Documented, bool includeInBulkReset = true)
     {
-        var grid = new Grid { Margin = new Thickness(0, 3, 0, 3) };
+        var grid = new Grid();
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(300) });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
@@ -1021,7 +1044,9 @@ public sealed class SettingsDialog : Window
             Grid.SetColumn(resetButton, 2);
             grid.Children.Add(resetButton);
         }
-        return grid;
+        // Wrap in a band so alternate rows can be zebra-tinted (RestripeRows) as one contiguous stripe; the
+        // vertical padding is the row's breathing room, moved off the grid's old margin.
+        return new Border { Child = grid, Padding = new Thickness(0, 3, 0, 3) };
     }
 
     /// <summary>A field's reset behavior: set it to its default, report whether it's currently AT the default,
