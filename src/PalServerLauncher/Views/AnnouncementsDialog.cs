@@ -33,7 +33,7 @@ public sealed class AnnouncementsDialog : Window
         SizeToContent = SizeToContent.Height;
         ShowInTaskbar = false;
 
-        var stack = new StackPanel { Margin = new Thickness(18) };
+        var stack = new StackPanel { Margin = Metrics.DialogPadding };
         stack.Children.Add(new TextBlock
         {
             Text = Strings.Announcements_Intro,

@@ -29,11 +29,11 @@ public sealed class LanguagePickerDialog : Window
         ShowInTaskbar = false;
         MinWidth = 360;
 
-        var root = new StackPanel { Margin = new Thickness(20) };
+        var root = new StackPanel { Margin = Metrics.DialogPadding };
         root.Children.Add(new TextBlock
         {
-            Text = Strings.FirstRun_Prompt, Foreground = Fg, FontSize = 13, TextWrapping = TextWrapping.Wrap,
-            MaxWidth = 420, Margin = new Thickness(0, 0, 0, 14),
+            Text = Strings.FirstRun_Prompt, Foreground = Fg, FontSize = Metrics.FontBody, TextWrapping = TextWrapping.Wrap,
+            MaxWidth = 420, Margin = new Thickness(0, 0, 0, Metrics.S12),
         });
 
         _languages = new ComboBox

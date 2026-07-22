@@ -136,6 +136,7 @@ internal static class DarkControls
             FontFamily = new FontFamily("Segoe MDL2 Assets"),
             FontSize = 12,
             Background = Theme.Control,
+            BorderThickness = new Thickness(0),
             MinWidth = 26,
             Padding = new Thickness(0, 1, 0, 1),
             VerticalAlignment = VerticalAlignment.Center,

@@ -46,7 +46,7 @@ public sealed class BackupLocationDialog : Window
         ShowInTaskbar = false;
         Width = 540;
 
-        var stack = new StackPanel { Margin = new Thickness(20) };
+        var stack = new StackPanel { Margin = Metrics.DialogPadding };
         stack.Children.Add(new TextBlock
         {
             Text = Strings.BackupLoc_Intro, Foreground = Muted, TextWrapping = TextWrapping.Wrap,
@@ -68,13 +68,8 @@ public sealed class BackupLocationDialog : Window
         var change = MakeButton(Strings.BackupLoc_Change, OnChange);
         Grid.SetColumn(change, 1);
 
-        _resetButton = new Button
-        {
-            Content = "↺", Width = 26, Margin = new Thickness(6, 0, 0, 0), Padding = new Thickness(0, 1, 0, 1),
-            Foreground = Fg, Background = Theme.Control, BorderThickness = new Thickness(0), Cursor = Cursors.Hand,
-            VerticalAlignment = VerticalAlignment.Center, ToolTip = Strings.Settings_ResetFieldTooltip,
-        };
-        _resetButton.Click += (_, _) => { _pending = ""; RefreshDisplay(); };
+        _resetButton = ResetButton(() => { _pending = ""; RefreshDisplay(); }, Strings.Settings_ResetFieldTooltip);
+        _resetButton.Margin = new Thickness(6, 0, 0, 0);
         Grid.SetColumn(_resetButton, 2);
 
         row.Children.Add(_pathBox);

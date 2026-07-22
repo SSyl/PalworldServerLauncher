@@ -42,9 +42,9 @@ public sealed class LauncherSettingsDialog : Window
         ShowInTaskbar = false;
         MinWidth = 360;
 
-        var root = new StackPanel { Margin = new Thickness(20) };
+        var root = new StackPanel { Margin = Metrics.DialogPadding };
 
-        var languageRow = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 0, 0, 18) };
+        var languageRow = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 0, 0, Metrics.S16) };
         languageRow.Children.Add(new TextBlock
         {
             Text = Strings.LauncherSettings_LanguageLabel, Foreground = Fg,
@@ -61,58 +61,30 @@ public sealed class LauncherSettingsDialog : Window
         languageRow.Children.Add(_languages);
         root.Children.Add(languageRow);
 
-        _autoReconnect = new CheckBox
-        {
-            Content = Strings.LauncherSettings_AutoReconnect,
-            IsChecked = config.AutoReconnectSingleInstance,
-            Foreground = Fg,
-            ToolTip = Strings.LauncherSettings_AutoReconnectTip,
-            Margin = new Thickness(0, 0, 0, 18),
-        };
+        var checkGap = new Thickness(0, 0, 0, Metrics.S12);
+
+        _autoReconnect = Check(Strings.LauncherSettings_AutoReconnect, config.AutoReconnectSingleInstance, checkGap);
+        _autoReconnect.ToolTip = Strings.LauncherSettings_AutoReconnectTip;
         root.Children.Add(_autoReconnect);
 
         // Login autostart: a Startup shortcut that opens the launcher with --start-server at login, which starts
         // the server and manages it. No elevation, so it applies immediately on click, not deferred to Save.
-        _loginOpen = new CheckBox
-        {
-            Content = Strings.LauncherSettings_LoginOpen,
-            IsChecked = LoginShortcut.Exists(Environment.ProcessPath ?? ""),
-            Foreground = Fg,
-            ToolTip = Strings.LauncherSettings_LoginOpenTip,
-            Margin = new Thickness(0, 0, 0, 18),
-        };
+        _loginOpen = Check(Strings.LauncherSettings_LoginOpen, LoginShortcut.Exists(Environment.ProcessPath ?? ""), checkGap);
+        _loginOpen.ToolTip = Strings.LauncherSettings_LoginOpenTip;
         _loginOpen.Click += OnToggleLoginOpen;
         root.Children.Add(_loginOpen);
 
         // Server-behavior toggles (persist on Save). Moved here from the main-window Misc box to free room there.
-        _hideSteamCmd = new CheckBox
-        {
-            Content = Strings.Main_HideSteamCmd,
-            IsChecked = config.HideSteamCmdWindow,
-            Foreground = Fg,
-            ToolTip = Strings.Main_HideSteamCmdTip,
-            Margin = new Thickness(0, 0, 0, 18),
-        };
+        _hideSteamCmd = Check(Strings.Main_HideSteamCmd, config.HideSteamCmdWindow, checkGap);
+        _hideSteamCmd.ToolTip = Strings.Main_HideSteamCmdTip;
         root.Children.Add(_hideSteamCmd);
 
-        _logHealthStats = new CheckBox
-        {
-            Content = Strings.Main_LogServerStatus,
-            IsChecked = config.LogHealthStats,
-            Foreground = Fg,
-            ToolTip = Strings.Main_LogServerStatusTip,
-            Margin = new Thickness(0, 0, 0, 18),
-        };
+        _logHealthStats = Check(Strings.Main_LogServerStatus, config.LogHealthStats, checkGap);
+        _logHealthStats.ToolTip = Strings.Main_LogServerStatusTip;
         root.Children.Add(_logHealthStats);
 
-        _neverAskUnknownServers = new CheckBox
-        {
-            Content = Strings.LauncherSettings_NeverAskUnknownServers,
-            IsChecked = !config.WarnUnknownServers,
-            Foreground = Fg,
-            ToolTip = Strings.LauncherSettings_NeverAskUnknownServersTip,
-            Margin = new Thickness(0, 0, 0, 18),
-        };
+        _neverAskUnknownServers = Check(Strings.LauncherSettings_NeverAskUnknownServers, !config.WarnUnknownServers, checkGap);
+        _neverAskUnknownServers.ToolTip = Strings.LauncherSettings_NeverAskUnknownServersTip;
         root.Children.Add(_neverAskUnknownServers);
 
         var bottom = new DockPanel { LastChildFill = false };
