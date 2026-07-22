@@ -2,6 +2,18 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [1.0.0] - 2026-07-22
+
+### Changed
+- **A top-to-bottom visual refresh.** The whole app now shares one design system, consistent spacing, type, and control sizing, with a unified square dark look. Dropdowns, scroll bars, and checkboxes are dark-themed now instead of the leftover light Windows ones, and the settings, dialogs, and buttons all read as one coherent app. Nothing about how it works changed.
+- **The Server Settings editor is easier to scan.** Rows alternate shading and the row under your cursor highlights, so a setting lines up with its control across the width of the window.
+
+### Added
+- **Jump to latest in the log.** You can now scroll up in the log tabs to read earlier lines without being pulled back to the newest one, and a button appears to jump straight back to live.
+
+### Fixed
+- **The RCON console no longer opens with its text floating in the middle of the window.**
+
 ## [0.7.1] - 2026-07-21
 
 ### Changed

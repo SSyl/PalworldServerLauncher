@@ -11,9 +11,6 @@ Inspired by [Conan Exiles' Dedicated Server Launcher](https://forums.funcom.com/
 Other languages are available: German, Spanish, French, Brazilian Portuguese, Russian, Japanese, Simplified
 Chinese, Traditional Chinese, and Korean. See [Languages](#languages).
 
-> [!NOTE]
-> **Status:** Pre-release but mostly feature complete
-
 ![The Palworld Server Launcher main window](docs/images/app-screenshots/main-window.png)
 
 ---
