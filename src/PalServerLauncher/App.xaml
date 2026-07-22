@@ -516,5 +516,25 @@
             </Setter>
         </Style>
 
+        <!-- Row-delete / close button coloring, shared by the scheduler (XAML) and the mods panel (code-built
+             DarkControls.CloseButton): a gray box with a muted glyph that turns red with a white glyph on hover.
+             The glyph and any square size are set by the caller. -->
+        <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="{x:Static local:Theme.Control}"/>
+            <Setter Property="Foreground" Value="{x:Static local:Theme.TextMuted}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="MinWidth" Value="0"/>
+            <Setter Property="MinHeight" Value="0"/>
+            <Setter Property="Padding" Value="8,2"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{x:Static local:Theme.Danger}"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
     </Application.Resources>
 </Application>

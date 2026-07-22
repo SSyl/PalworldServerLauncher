@@ -162,22 +162,15 @@ internal static class DarkControls
         return button;
     }
 
-    /// <summary>A muted MDL2 close / remove glyph button (transparent, borderless) that reddens on hover,
-    /// matching the scheduler's row-delete buttons. For row-remove / clear actions.</summary>
+    /// <summary>A close / remove glyph button (a gray box that turns red on hover) sharing the app's
+    /// CloseButtonStyle with the scheduler's XAML delete buttons. Pass <paramref name="squareSize"/> for a
+    /// square variant (table cells like the mods panel); the default is a wider rectangle for list rows.</summary>
     public static Button CloseButton(Action onClick, string? tooltip = null, double squareSize = 0)
     {
         var button = new Button
         {
             Content = "", // MDL2 ChromeClose
-            FontFamily = new FontFamily("Segoe MDL2 Assets"),
-            FontSize = 12,
-            Foreground = Theme.TextMuted,
-            Background = Brushes.Transparent,
-            BorderThickness = new Thickness(0),
-            MinWidth = 0,
-            MinHeight = 0,
-            Padding = new Thickness(8, 2, 8, 2),
-            Cursor = System.Windows.Input.Cursors.Hand,
+            Style = (Style)Application.Current.FindResource("CloseButtonStyle"),
             VerticalAlignment = VerticalAlignment.Center,
         };
         // A square variant (equal size, centered glyph) for table cells like the mods panel, where the default
@@ -188,8 +181,6 @@ internal static class DarkControls
             button.Padding = new Thickness(0);
         }
         if (tooltip is not null) button.ToolTip = tooltip;
-        button.MouseEnter += (_, _) => button.Foreground = Theme.Danger;
-        button.MouseLeave += (_, _) => button.Foreground = Theme.TextMuted;
         button.Click += (_, _) => onClick();
         return button;
     }

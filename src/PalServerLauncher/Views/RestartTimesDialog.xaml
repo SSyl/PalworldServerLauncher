@@ -39,25 +39,9 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel LastChildFill="True">
-                        <!-- A muted delete glyph that reddens on hover, rather than a loud filled-red block. -->
-                        <Button DockPanel.Dock="Right" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" Click="RemoveTime" Tag="{Binding}">
-                            <Button.Style>
-                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="BorderThickness" Value="0"/>
-                                    <Setter Property="Foreground" Value="{x:Static local:Theme.TextMuted}"/>
-                                    <Setter Property="MinWidth" Value="0"/>
-                                    <Setter Property="MinHeight" Value="0"/>
-                                    <Setter Property="Padding" Value="8,2"/>
-                                    <Setter Property="FontSize" Value="12"/>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Foreground" Value="{x:Static local:Theme.Danger}"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
+                        <!-- Shared delete-button coloring (gray box, red on hover): App.xaml CloseButtonStyle. -->
+                        <Button DockPanel.Dock="Right" Content="&#xE711;" Click="RemoveTime" Tag="{Binding}"
+                                Style="{StaticResource CloseButtonStyle}"/>
                         <TextBlock Text="{Binding Display}" VerticalAlignment="Center" FontFamily="Consolas"/>
                     </DockPanel>
                 </DataTemplate>
