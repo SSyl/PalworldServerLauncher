@@ -1018,7 +1018,9 @@ public sealed class SettingsDialog : Window
 
     private Border Row(string label, FrameworkElement input, string? tip = null, ResetSpec? reset = null, DocStatus doc = DocStatus.Documented, bool includeInBulkReset = true)
     {
-        var grid = new Grid();
+        // A uniform row height so every input lines up: text boxes and secret fields stretch to it, combos
+        // already match it, and checkboxes/labels center within it. Fixes the ragged 23px-vs-28px rows.
+        var grid = new Grid { MinHeight = Metrics.ControlHeight };
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(300) });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
