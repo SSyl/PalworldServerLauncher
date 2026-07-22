@@ -10,7 +10,7 @@
         Title="{x:Static loc:Strings.Common_AppName}" Height="656" Width="1000"
         Icon="logo.png"
         Background="{x:Static local:Theme.Window}" Foreground="{x:Static local:Theme.Text}"
-        FontFamily="Segoe UI" FontSize="13"
+        FontFamily="Segoe UI" FontSize="{x:Static local:Metrics.FontBody}"
         d:DataContext="{d:DesignInstance Type=vm:MainViewModel}">
 
     <Window.Resources>
@@ -19,15 +19,6 @@
              gap. No duplicate template: change the button look in App.xaml and it applies here too. -->
         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Margin" Value="0,0,8,0"/>
-        </Style>
-
-        <Style x:Key="Caption" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="{x:Static local:Theme.TextCaption}"/>
-            <Setter Property="FontSize" Value="11"/>
-        </Style>
-        <Style x:Key="Value" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
         </Style>
 
         <!-- BasedOn the app-wide CheckBox style so the IsEnabled=False -> Opacity 0.4 dimming trigger carries
@@ -46,23 +37,17 @@
             </Style.Triggers>
         </Style>
 
-        <!-- Titled grouping box -->
+        <!-- Titled grouping box. Corner radius, like every container, comes from the shared Metrics token. -->
         <Style x:Key="Box" TargetType="Border">
             <Setter Property="BorderBrush" Value="{x:Static local:Theme.Divider}"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="CornerRadius" Value="{x:Static local:Metrics.Radius}"/>
             <Setter Property="Padding" Value="12,10"/>
-            <Setter Property="Margin" Value="0,0,10,0"/>
-        </Style>
-        <Style x:Key="BoxHeader" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="Margin" Value="0,0,12,0"/>
         </Style>
     </Window.Resources>
 
-    <Grid Margin="14">
+    <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>   <!-- action buttons -->
             <RowDefinition Height="Auto"/>   <!-- status / update + public IP -->
@@ -72,8 +57,9 @@
         </Grid.RowDefinitions>
 
         <!-- Row 0: action buttons (left) + settings dialogs (right) -->
-        <DockPanel Grid.Row="0" LastChildFill="False" Margin="0,0,0,10">
-            <Button DockPanel.Dock="Left" Content="{Binding PrimaryActionText}" Command="{Binding PrimaryActionCommand}" MinWidth="46" FontSize="16" FontWeight="SemiBold"
+        <DockPanel Grid.Row="0" LastChildFill="False" Margin="0,0,0,8">
+            <Button DockPanel.Dock="Left" Content="{Binding PrimaryActionText}" Command="{Binding PrimaryActionCommand}" MinWidth="46"
+                    FontSize="{x:Static local:Metrics.FontAction}" FontWeight="SemiBold"
                     ToolTip="{x:Static loc:Strings.Main_PrimaryTip}">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
@@ -111,7 +97,8 @@
             <Button DockPanel.Dock="Left" Content="{x:Static loc:Strings.Main_ImportServer}" Click="OnImportServer"
                     IsEnabled="{Binding CanImport}" Visibility="{Binding ImportVisible, Converter={StaticResource BoolToVis}}"
                     ToolTip="{x:Static loc:Strings.Main_ImportServerTip}"/>
-            <Button DockPanel.Dock="Left" Content="↻" Command="{Binding RestartCommand}" FontSize="16" MinWidth="40"
+            <Button DockPanel.Dock="Left" Command="{Binding RestartCommand}" FontFamily="Segoe MDL2 Assets" Content="&#xE72C;"
+                    FontSize="{x:Static local:Metrics.FontIcon}" MinWidth="40"
                     ToolTip="{x:Static loc:Strings.Main_RestartTip}"/>
             <Button DockPanel.Dock="Left" Content="{x:Static loc:Strings.Common_ForceShutdown}" Click="OnForceShutdown"
                     Visibility="{Binding IsForceShutdownVisible, Converter={StaticResource BoolToVis}}"
@@ -137,21 +124,12 @@
                         ToolTip="{x:Static loc:Strings.Main_ServerSettingsTip}"/>
                 <Button Content="{x:Static loc:Strings.Main_Mods}" Click="OnOpenMods"
                         ToolTip="{x:Static loc:Strings.Main_ModsTip}"/>
-                <Button Content="{x:Static loc:Strings.Main_DiscordBot}" Click="OnOpenDiscord" ToolTip="{x:Static loc:Strings.Main_DiscordBotTip}">
-                    <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                            <Setter Property="Background" Value="{x:Static local:Theme.Discord}"/>
-                            <Setter Property="Foreground" Value="White"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="{x:Static local:Theme.DiscordHover}"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
-                <Button FontFamily="Segoe MDL2 Assets" Content="&#xE713;" FontSize="15" Padding="10,7" MinWidth="0" Margin="0" Click="OnOpenLauncherSettings"
-                        ToolTip="{x:Static loc:Strings.LauncherSettings_Tooltip}"/>
+                <!-- A peer "open a dialog" action like Server Settings / Mods, so it is a plain secondary button.
+                     It used to be filled Discord-brand blue, which made the least-critical action the loudest
+                     thing in the row (inverted hierarchy); the primary Start/Stop is the only colored action. -->
+                <Button Content="{x:Static loc:Strings.Main_DiscordBot}" Click="OnOpenDiscord" ToolTip="{x:Static loc:Strings.Main_DiscordBotTip}"/>
+                <Button FontFamily="Segoe MDL2 Assets" Content="&#xE713;" FontSize="{x:Static local:Metrics.FontIcon}" Padding="10,7" MinWidth="0" Margin="0"
+                        Click="OnOpenLauncherSettings" ToolTip="{x:Static loc:Strings.LauncherSettings_Tooltip}"/>
             </StackPanel>
         </DockPanel>
 
@@ -159,20 +137,20 @@
         <DockPanel Grid.Row="1" LastChildFill="False" Margin="0,0,0,12">
             <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Text="{x:Static loc:Strings.Main_StatusLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                <TextBlock Text="{Binding StateText}" Style="{StaticResource Value}" FontSize="15" VerticalAlignment="Center" Margin="0,0,24,0"/>
+                <TextBlock Text="{Binding StateText}" Style="{StaticResource StatValue}" FontSize="{x:Static local:Metrics.FontSubhead}" VerticalAlignment="Center" Margin="0,0,24,0"/>
                 <TextBlock Text="{x:Static loc:Strings.Main_UpdateLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                 <TextBlock Text="{Binding UpdateStatus}" Foreground="{x:Static local:Theme.Text}" VerticalAlignment="Center"/>
             </StackPanel>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Text="{x:Static loc:Strings.Main_PublicIpLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                 <Border Background="{x:Static local:Theme.Field}" BorderBrush="{x:Static local:Theme.FieldBorder}" BorderThickness="1"
-                        Width="185" VerticalAlignment="Center" Margin="0,0,4,0">
+                        CornerRadius="{x:Static local:Metrics.Radius}" Width="185" VerticalAlignment="Center" Margin="0,0,4,0">
                     <DockPanel>
                         <Button DockPanel.Dock="Right" Click="OnToggleIpReveal" FontFamily="Segoe MDL2 Assets" Content="&#xE7B3;"
-                                Background="Transparent" BorderThickness="0" MinWidth="0" Margin="0" Padding="9,0" FontSize="13"
+                                Background="Transparent" BorderThickness="0" MinWidth="0" Margin="0" Padding="9,0" FontSize="{x:Static local:Metrics.FontBody}"
                                 VerticalAlignment="Stretch" ToolTip="{x:Static loc:Strings.Main_RevealIpTip}"/>
                         <TextBox Text="{Binding PublicIpDisplay, Mode=OneWay}" IsReadOnly="True" Background="Transparent"
-                                 BorderThickness="0" VerticalContentAlignment="Center" ToolTip="{x:Static loc:Strings.Main_PublicIpTip}"/>
+                                 BorderThickness="0" MinHeight="0" VerticalContentAlignment="Center" ToolTip="{x:Static loc:Strings.Main_PublicIpTip}"/>
                     </DockPanel>
                 </Border>
                 <Button Click="OnCopyConnectionInfo" FontFamily="Segoe MDL2 Assets" Content="&#xE8C8;" Padding="9,5" MinWidth="0" IsEnabled="{Binding CanCopyConnectionInfo}"
@@ -183,20 +161,20 @@
         </DockPanel>
 
         <!-- Bottom status bar: live server stats, under the log terminal -->
-        <Border Grid.Row="4" BorderBrush="{x:Static local:Theme.Divider}" BorderThickness="0,1,0,0" Padding="0,7,0,0" Margin="0,8,0,0">
+        <Border Grid.Row="4" BorderBrush="{x:Static local:Theme.Divider}" BorderThickness="0,1,0,0" Padding="0,8,0,0" Margin="0,8,0,0">
         <StackPanel Orientation="Horizontal">
-            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="{x:Static loc:Strings.Main_StatVersion}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Version}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="{x:Static loc:Strings.Main_StatFps}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Fps}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="{x:Static loc:Strings.Main_StatCpu}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Cpu}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="{x:Static loc:Strings.Main_StatMemory}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Memory}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="{x:Static loc:Strings.Main_StatPlayers}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Players}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,20,0"><TextBlock Text="{x:Static loc:Strings.Main_StatUptime}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Uptime}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal"><TextBlock Text="{x:Static loc:Strings.Main_StatNextRestart}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding NextRestart}" Style="{StaticResource Value}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,24,0"><TextBlock Text="{x:Static loc:Strings.Main_StatVersion}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Version}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,24,0"><TextBlock Text="{x:Static loc:Strings.Main_StatFps}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Fps}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,24,0"><TextBlock Text="{x:Static loc:Strings.Main_StatCpu}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Cpu}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,24,0"><TextBlock Text="{x:Static loc:Strings.Main_StatMemory}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Memory}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,24,0"><TextBlock Text="{x:Static loc:Strings.Main_StatPlayers}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Players}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,24,0"><TextBlock Text="{x:Static loc:Strings.Main_StatUptime}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Uptime}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal"><TextBlock Text="{x:Static loc:Strings.Main_StatNextRestart}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding NextRestart}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
         </StackPanel>
         </Border>
 
         <!-- Settings sections (Restarts / Backups / Misc) with a collapse bar; hidden in Compact mode -->
-        <StackPanel Grid.Row="2" Margin="0,0,0,14">
+        <StackPanel Grid.Row="2" Margin="0,0,0,12">
             <DockPanel Margin="0,0,0,8">
                 <ToggleButton DockPanel.Dock="Left" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding CompactMode}"
                               VerticalAlignment="Center" Margin="2,0,8,0" ToolTip="{x:Static loc:Strings.Main_CollapseTip}"/>
@@ -213,29 +191,29 @@
 
             <Border Grid.Column="0" Style="{StaticResource Box}">
                 <StackPanel>
-                    <TextBlock Text="{x:Static loc:Strings.Main_RestartsHeader}" Style="{StaticResource BoxHeader}"/>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
+                    <TextBlock Text="{x:Static loc:Strings.Main_RestartsHeader}" Style="{StaticResource SectionHeader}" Margin="0,0,0,8"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                         <CheckBox Content="{x:Static loc:Strings.Main_ScheduledRestartAt}" IsChecked="{Binding ScheduledRestartEnabled}"
                                   ToolTip="{x:Static loc:Strings.Main_ScheduledRestartTip}"/>
                         <Button Content="{Binding RestartTimesSummary}" Click="OnEditRestartTimes" MinWidth="120" Margin="8,0,0,0" HorizontalContentAlignment="Left" ToolTip="{x:Static loc:Strings.Main_ChooseRestartTimes}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                         <TextBlock Text="{x:Static loc:Strings.Main_MinUptime}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                        <TextBox Text="{Binding MinUptimeHours}" Width="30" VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding MinUptimeHours}" Width="{x:Static local:Metrics.NumericFieldNarrow}" VerticalAlignment="Center"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_HourSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                         <CheckBox Content="{x:Static loc:Strings.Main_AnnounceRestarts}" IsChecked="{Binding AnnounceRestartsEnabled}"
                                   ToolTip="{x:Static loc:Strings.Main_AnnounceRestartsTip}"/>
-                        <TextBox Text="{Binding AnnounceLead1}" Width="28" MaxLength="3" VerticalAlignment="Center" Margin="6,0,0,0"
+                        <TextBox Text="{Binding AnnounceLead1}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="3" VerticalAlignment="Center" Margin="6,0,0,0"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="{x:Static loc:Strings.Main_AnnounceLeadTip}"/>
-                        <TextBox Text="{Binding AnnounceLead2}" Width="28" MaxLength="3" VerticalAlignment="Center" Margin="4,0,0,0"
+                        <TextBox Text="{Binding AnnounceLead2}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="3" VerticalAlignment="Center" Margin="4,0,0,0"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="{x:Static loc:Strings.Main_AnnounceLeadTip}"/>
-                        <TextBox Text="{Binding AnnounceLead3}" Width="28" MaxLength="3" VerticalAlignment="Center" Margin="4,0,0,0"
+                        <TextBox Text="{Binding AnnounceLead3}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="3" VerticalAlignment="Center" Margin="4,0,0,0"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste" ToolTip="{x:Static loc:Strings.Main_AnnounceLeadTip}"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_MinuteSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
-                    <Button Content="{x:Static loc:Strings.Main_EditAnnouncements}" Click="OnEditAnnouncements" HorizontalAlignment="Left" Margin="0,0,0,7"
+                    <Button Content="{x:Static loc:Strings.Main_EditAnnouncements}" Click="OnEditAnnouncements" HorizontalAlignment="Left" Margin="0,0,0,6"
                             ToolTip="{x:Static loc:Strings.Main_EditAnnouncementsTip}"/>
                     <CheckBox Content="{x:Static loc:Strings.Main_ValidateOnRestart}" IsChecked="{Binding VerifyOnUpdate}" ToolTip="{x:Static loc:Strings.Main_ValidateOnRestartTip}"/>
                 </StackPanel>
@@ -243,23 +221,23 @@
 
             <Border Grid.Column="1" Style="{StaticResource Box}">
                 <StackPanel>
-                    <TextBlock Text="{x:Static loc:Strings.Main_BackupsHeader}" Style="{StaticResource BoxHeader}"/>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
+                    <TextBlock Text="{x:Static loc:Strings.Main_BackupsHeader}" Style="{StaticResource SectionHeader}" Margin="0,0,0,8"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                         <TextBlock Text="{x:Static loc:Strings.Main_BackupOn}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,8,0"/>
                         <CheckBox Content="{x:Static loc:Strings.Main_BackupStartup}" IsChecked="{Binding BackupOnStartup}"
                                   ToolTip="{x:Static loc:Strings.Main_BackupStartupTip}"/>
                         <CheckBox Content="{x:Static loc:Strings.Main_BackupShutdown}" IsChecked="{Binding BackupOnShutdown}" Margin="12,0,0,0"
                                   ToolTip="{x:Static loc:Strings.Main_BackupShutdownTip}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                         <CheckBox Content="{x:Static loc:Strings.Main_BackupScheduled}" IsChecked="{Binding ScheduledBackupEnabled}"
                                   ToolTip="{x:Static loc:Strings.Main_BackupScheduledTip}"/>
                         <Button Content="{Binding BackupTimesSummary}" Click="OnEditBackupTimes" MinWidth="90" Margin="6,0,0,0" HorizontalContentAlignment="Left" ToolTip="{x:Static loc:Strings.Main_ChooseBackupTimes}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7"
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6"
                                 ToolTip="{x:Static loc:Strings.Main_BackupRetentionTip}">
                         <TextBlock Text="{x:Static loc:Strings.Main_KeepFor}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,4,0"/>
-                        <TextBox Text="{Binding BackupRetentionDays}" Width="38" VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding BackupRetentionDays}" Width="{x:Static local:Metrics.NumericFieldNarrow}" VerticalAlignment="Center"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_DaysSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
@@ -268,7 +246,7 @@
                         <Button Content="{x:Static loc:Strings.Main_BackupNow}" Command="{Binding BackupNowCommand}" Margin="0"
                                 ToolTip="{x:Static loc:Strings.Main_BackupNowTip}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,7,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
                         <TextBlock Text="{x:Static loc:Strings.Main_BackupLocationLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                         <Button Content="{Binding BackupLocationLabel}" Click="OnBackupLocation" Margin="0"
                                 ToolTip="{x:Static loc:Strings.Main_BackupLocationTip}"/>
@@ -278,38 +256,38 @@
 
             <Border Grid.Column="2" Style="{StaticResource Box}" Margin="0">
                 <StackPanel>
-                    <TextBlock Text="{x:Static loc:Strings.Main_MiscHeader}" Style="{StaticResource BoxHeader}"/>
+                    <TextBlock Text="{x:Static loc:Strings.Main_MiscHeader}" Style="{StaticResource SectionHeader}" Margin="0,0,0,8"/>
                     <!-- Version pin (item 2a): freezes the build and grays the update options below. -->
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                         <CheckBox Content="{x:Static loc:Strings.Main_PinVersion}" IsChecked="{Binding VersionPinEnabled}"
                                   IsEnabled="{Binding CanTogglePin}" ToolTip="{x:Static loc:Strings.Main_PinVersionTip}"/>
                         <TextBlock Text="{Binding PinnedBuildDisplay}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="6,0,0,0"/>
                     </StackPanel>
                     <CheckBox Content="{x:Static loc:Strings.Main_AutomaticUpdates}" IsChecked="{Binding AutomaticUpdatesOn}"
-                              IsEnabled="{Binding IsNotPinned}" Margin="0,0,0,7"
+                              IsEnabled="{Binding IsNotPinned}" Margin="0,0,0,6"
                               ToolTip="{x:Static loc:Strings.Main_AutomaticUpdatesTip}"/>
-                    <CheckBox Content="{x:Static loc:Strings.Main_UpdateOnStart}" IsChecked="{Binding UpdateOnStart}" Margin="16,0,0,7"
+                    <CheckBox Content="{x:Static loc:Strings.Main_UpdateOnStart}" IsChecked="{Binding UpdateOnStart}" Margin="16,0,0,6"
                               IsEnabled="{Binding IsNotPinned}" ToolTip="{x:Static loc:Strings.Main_UpdateOnStartTip}"/>
-                    <CheckBox Content="{x:Static loc:Strings.Main_AutoUpdate}" IsChecked="{Binding AutoUpdateEnabled}" Margin="16,0,0,7"
+                    <CheckBox Content="{x:Static loc:Strings.Main_AutoUpdate}" IsChecked="{Binding AutoUpdateEnabled}" Margin="16,0,0,6"
                               IsEnabled="{Binding IsNotPinned}" ToolTip="{x:Static loc:Strings.Main_AutoUpdateTip}"/>
-                    <StackPanel Orientation="Horizontal" Margin="16,0,0,7" IsEnabled="{Binding AutoUpdateEnabled}" Style="{StaticResource DimWhenDisabled}">
+                    <StackPanel Orientation="Horizontal" Margin="16,0,0,6" IsEnabled="{Binding AutoUpdateEnabled}" Style="{StaticResource DimWhenDisabled}">
                         <TextBlock Text="{x:Static loc:Strings.Main_CheckUpdateEvery}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                        <TextBox Text="{Binding UpdateCheckMinutes}" Width="40" MaxLength="4" VerticalAlignment="Center"
+                        <TextBox Text="{Binding UpdateCheckMinutes}" Width="{x:Static local:Metrics.NumericFieldWidth}" MaxLength="4" VerticalAlignment="Center"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"
                                  ToolTip="{x:Static loc:Strings.Main_CheckUpdateEveryTip}"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_MinuteSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,7">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                         <CheckBox Content="{x:Static loc:Strings.Main_ZombieCheck}" IsChecked="{Binding ZombieCheckEnabled}"
                                   ToolTip="{x:Static loc:Strings.Main_ZombieCheckTip}"/>
-                        <TextBox Text="{Binding ZombieFailureThreshold}" Width="28" MaxLength="2" VerticalAlignment="Center" Margin="6,0,0,0"
+                        <TextBox Text="{Binding ZombieFailureThreshold}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="2" VerticalAlignment="Center" Margin="6,0,0,0"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"
                                  ToolTip="{x:Static loc:Strings.Main_ZombieThresholdTip}"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_ChecksSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,9">
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{x:Static loc:Strings.Main_RestCheckEvery}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                        <TextBox Text="{Binding HealthProbeSeconds}" Width="28" MaxLength="3" VerticalAlignment="Center"
+                        <TextBox Text="{Binding HealthProbeSeconds}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="3" VerticalAlignment="Center"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"
                                  ToolTip="{x:Static loc:Strings.Main_RestCheckEveryTip}"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_SecondsSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
