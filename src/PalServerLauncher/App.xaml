@@ -244,8 +244,8 @@
                                                       ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                                       HorizontalAlignment="Left" VerticalAlignment="Center" IsHitTestVisible="False"
                                                       TextElement.Foreground="{TemplateBinding Foreground}"/>
-                                    <TextBlock Grid.Column="1" Margin="6,0,10,0" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets"
-                                               FontSize="11" Foreground="{x:Static local:Theme.TextMuted}" Text="&#xE70D;"/>
+                                    <TextBlock Grid.Column="1" Margin="0,0,7,0" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets"
+                                               FontSize="10" Foreground="{x:Static local:Theme.TextMuted}" Text="&#xE70D;"/>
                                     <ToggleButton Grid.Column="0" Grid.ColumnSpan="2" ClickMode="Press"
                                                   Style="{StaticResource ComboToggleButton}"
                                                   IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
