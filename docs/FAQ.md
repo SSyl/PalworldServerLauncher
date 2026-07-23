@@ -96,6 +96,29 @@ folder.)*
 </details>
 
 <details>
+<summary><strong>Do I have to use Steam Workshop to mod? (Workshop won't connect, or installing mods manually)</strong></summary>
+
+The Steam Workshop connection is only a convenience for downloading and auto-updating Workshop mods. You
+can ignore it and mod the server exactly like any other Palworld dedicated server.
+
+The only thing the launcher changes is where the server lives: it's installed at
+`PalworldServerLauncher\PalworldDedicatedServer\`. So follow whatever your mod or mod loader documents, and
+wherever a guide tells you to use your `Palworld` / `PalServer` folder, use that one instead. A few common
+cases:
+
+- **Loose `.pak` mods:** these usually go in `...\PalworldDedicatedServer\Pal\Content\Paks\~mods`, but follow
+  the mod author's own instructions.
+- **UE4SS you install yourself:** UE4SS goes into `...\PalworldDedicatedServer\Pal\Binaries\Win64`, and its
+  mods live under its own `ue4ss\Mods` folder there, per UE4SS's instructions.
+- **A UE4SS mod that isn't on Steam Workshop, when you got UE4SS through Workshop:** put it in
+  `...\PalworldDedicatedServer\Mods\NativeMods\UE4SS\Mods`
+
+There are a lot of different mod types and systems out there, so I can't outline them all here. What I can say
+is that the launcher supports anything a standard Palworld dedicated server would.
+
+</details>
+
+<details>
 <summary><strong>Can I use a world I made in-game (a co-op session), not from a dedicated server?</strong></summary>
 
 Not directly. A dedicated server's save is a different format from the one Palworld creates for an in-game
