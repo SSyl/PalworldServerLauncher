@@ -1636,13 +1636,13 @@ Enregistrer ces changements ?</value>
     <value>Nombre max de bases par guilde</value>
   </data>
   <data name="Cat_BaseCampMaxNumInGuild_Desc" xml:space="preserve">
-    <value>Nombre maximum de bases par guilde. Par défaut 4 (max 10). Augmenter cette valeur accroît la charge de traitement.</value>
+    <value>Nombre maximum de bases par guilde (par défaut 4). Le jeu plafonne cette valeur à 10, mais des mods peuvent l'augmenter davantage. Augmenter cette valeur accroît la charge de traitement.</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Label" xml:space="preserve">
     <value>Nombre max de Pals actifs dans la base</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Desc" xml:space="preserve">
-    <value>Nombre maximum de Pals par base (max 50). Augmenter cette valeur accroît la charge de traitement.</value>
+    <value>Nombre maximum de Pals par base. Le jeu plafonne cette valeur à 50, mais des mods peuvent l'augmenter davantage. Augmenter cette valeur accroît la charge de traitement.</value>
   </data>
   <data name="Cat_MaxBuildingLimitNum_Label" xml:space="preserve">
     <value>Nombre max de structures par base</value>
@@ -1672,7 +1672,7 @@ Enregistrer ces changements ?</value>
     <value>Distance de synchronisation des Pals</value>
   </data>
   <data name="Cat_ServerReplicatePawnCullDistance_Desc" xml:space="preserve">
-    <value>Distance de synchronisation des Pals par rapport aux joueurs (cm). Minimum 5000, maximum 15000.</value>
+    <value>Distance de synchronisation des Pals par rapport aux joueurs (cm). La plage documentée par le jeu est de 5000 à 15000.</value>
   </data>
   <data name="Cat_ItemContainerForceMarkDirtyInterval_Label" xml:space="preserve">
     <value>Intervalle de resynchronisation des conteneurs</value>

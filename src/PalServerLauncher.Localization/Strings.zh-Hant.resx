@@ -1587,13 +1587,13 @@
     <value>各公會的最大據點數</value>
   </data>
   <data name="Cat_BaseCampMaxNumInGuild_Desc" xml:space="preserve">
-    <value>每個公會的最大據點數。預設 4（最大 10）。提高此值會增加處理負載。</value>
+    <value>每個公會的最大據點數（預設 4）。遊戲本身上限為 10，但模組可進一步提高此上限。提高此值會增加處理負載。</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Label" xml:space="preserve">
     <value>據點工作帕魯最大數</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Desc" xml:space="preserve">
-    <value>每個據點的最大帕魯數（最大 50）。提高此值會增加處理負載。</value>
+    <value>每個據點的最大帕魯數。遊戲本身上限為 50，但模組可進一步提高此上限。提高此值會增加處理負載。</value>
   </data>
   <data name="Cat_MaxBuildingLimitNum_Label" xml:space="preserve">
     <value>單個據點的最大建築數</value>
@@ -1623,7 +1623,7 @@
     <value>帕魯同步距離</value>
   </data>
   <data name="Cat_ServerReplicatePawnCullDistance_Desc" xml:space="preserve">
-    <value>帕魯與玩家的同步距離（釐米）。最小 5000，最大 15000。</value>
+    <value>帕魯與玩家的同步距離（釐米）。遊戲文件記載的範圍為 5000 至 15000。</value>
   </data>
   <data name="Cat_ItemContainerForceMarkDirtyInterval_Label" xml:space="preserve">
     <value>容器重新同步間隔</value>

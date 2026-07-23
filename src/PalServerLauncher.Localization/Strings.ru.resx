@@ -1636,13 +1636,13 @@ REST API на этом сервере пока не включён, поэтом
     <value>Макс. кол-во баз на гильдию</value>
   </data>
   <data name="Cat_BaseCampMaxNumInGuild_Desc" xml:space="preserve">
-    <value>Максимальное количество баз на гильдию. По умолчанию 4 (максимум 10). Увеличение этого значения повышает нагрузку на обработку.</value>
+    <value>Максимальное количество баз на гильдию (по умолчанию 4). Игра ограничивает это значение до 10, но моды могут увеличить лимит ещё больше. Увеличение этого значения повышает нагрузку на обработку.</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Label" xml:space="preserve">
     <value>Макс. кол-во рабочих Палов на базе</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Desc" xml:space="preserve">
-    <value>Максимальное количество Палов на базе (максимум 50). Увеличение этого значения повышает нагрузку на обработку.</value>
+    <value>Максимальное количество Палов на базе. Игра ограничивает это значение до 50, но моды могут увеличить лимит ещё больше. Увеличение этого значения повышает нагрузку на обработку.</value>
   </data>
   <data name="Cat_MaxBuildingLimitNum_Label" xml:space="preserve">
     <value>Макс. кол-во построек на базу</value>
@@ -1672,7 +1672,7 @@ REST API на этом сервере пока не включён, поэтом
     <value>Дистанция синхронизации Палов</value>
   </data>
   <data name="Cat_ServerReplicatePawnCullDistance_Desc" xml:space="preserve">
-    <value>Дистанция синхронизации Палов от игроков (в см). Минимум 5000, максимум 15000.</value>
+    <value>Дистанция синхронизации Палов от игроков (в см). Документированный диапазон игры: от 5000 до 15000.</value>
   </data>
   <data name="Cat_ItemContainerForceMarkDirtyInterval_Label" xml:space="preserve">
     <value>Интервал повторной синхронизации контейнера</value>

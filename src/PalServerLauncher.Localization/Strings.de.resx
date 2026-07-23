@@ -1636,13 +1636,13 @@ Diese Änderungen übernehmen und speichern?</value>
     <value>Höchstzahl Lager pro Gilde</value>
   </data>
   <data name="Cat_BaseCampMaxNumInGuild_Desc" xml:space="preserve">
-    <value>Maximale Anzahl an Basen pro Gilde. Standard 4 (max. 10). Eine Erhöhung steigert die Prozessorlast.</value>
+    <value>Maximale Anzahl an Basen pro Gilde (Standard 4). Das Spiel begrenzt dies auf max. 10, Mods können diesen Wert jedoch weiter erhöhen. Eine Erhöhung steigert die Prozessorlast.</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Label" xml:space="preserve">
     <value>Max. Anzahl von Arbeitspals im Lager</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Desc" xml:space="preserve">
-    <value>Maximale Anzahl an Pals pro Basis (max. 50). Eine Erhöhung steigert die Prozessorlast.</value>
+    <value>Maximale Anzahl an Pals pro Basis. Das Spiel begrenzt dies auf max. 50, Mods können diesen Wert jedoch weiter erhöhen. Eine Erhöhung steigert die Prozessorlast.</value>
   </data>
   <data name="Cat_MaxBuildingLimitNum_Label" xml:space="preserve">
     <value>Max. Gebäudeanzahl pro Lager</value>
@@ -1672,7 +1672,7 @@ Diese Änderungen übernehmen und speichern?</value>
     <value>Pal-Synchronisierungsentfernung</value>
   </data>
   <data name="Cat_ServerReplicatePawnCullDistance_Desc" xml:space="preserve">
-    <value>Synchronisierungsentfernung von Pals zu Spielern (cm). Minimum 5000, Maximum 15000.</value>
+    <value>Synchronisierungsentfernung von Pals zu Spielern (cm). Der vom Spiel dokumentierte Bereich liegt zwischen 5000 und 15000.</value>
   </data>
   <data name="Cat_ItemContainerForceMarkDirtyInterval_Label" xml:space="preserve">
     <value>Container-Neusynchronisierungsintervall</value>

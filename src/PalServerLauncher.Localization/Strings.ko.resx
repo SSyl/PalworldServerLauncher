@@ -1636,13 +1636,13 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>길드당 거점 최대 수</value>
   </data>
   <data name="Cat_BaseCampMaxNumInGuild_Desc" xml:space="preserve">
-    <value>길드당 보유할 수 있는 최대 거점 수입니다. 기본값은 4이며(최대 10), 값을 늘리면 처리 부하가 증가합니다.</value>
+    <value>길드당 보유할 수 있는 최대 거점 수입니다(기본값 4). 게임에서는 이 값을 최대 10으로 제한하지만, 모드로 더 늘릴 수 있습니다. 값을 늘리면 처리 부하가 증가합니다.</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Label" xml:space="preserve">
     <value>거점 작업 팰 최대 수</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Desc" xml:space="preserve">
-    <value>거점당 배치할 수 있는 최대 팰 수입니다(최대 50). 값을 늘리면 처리 부하가 증가합니다.</value>
+    <value>거점당 배치할 수 있는 최대 팰 수입니다. 게임에서는 이 값을 최대 50으로 제한하지만, 모드로 더 늘릴 수 있습니다. 값을 늘리면 처리 부하가 증가합니다.</value>
   </data>
   <data name="Cat_MaxBuildingLimitNum_Label" xml:space="preserve">
     <value>각 거점당 최대 건축 수</value>
@@ -1672,7 +1672,7 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>팰 동기화 거리</value>
   </data>
   <data name="Cat_ServerReplicatePawnCullDistance_Desc" xml:space="preserve">
-    <value>플레이어를 기준으로 팰을 동기화하는 거리입니다(cm). 최소 5000, 최대 15000.</value>
+    <value>플레이어를 기준으로 팰을 동기화하는 거리입니다(cm). 게임 문서에 명시된 범위는 5000~15000입니다.</value>
   </data>
   <data name="Cat_ItemContainerForceMarkDirtyInterval_Label" xml:space="preserve">
     <value>컨테이너 재동기화 주기</value>
