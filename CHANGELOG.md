@@ -2,6 +2,12 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [1.0.1] - 2026-07-22
+
+### Fixed
+- **Server Settings no longer caps values the base game itself limits.** Pals per base, bases per guild, and Pal sync distance used to reject anything above the vanilla maximum, so a mod that raises those limits couldn't be configured. They now accept any value, and each tooltip states the game's own range.
+- **Settings that use -1 for "no limit" can be entered again.** The number fields were blocking the minus sign, so the documented -1 (for example on the dropped active-items cap) couldn't be typed.
+
 ## [1.0.0] - 2026-07-22
 
 ### Changed
