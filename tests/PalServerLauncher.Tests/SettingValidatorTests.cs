@@ -6,10 +6,12 @@ public class SettingValidatorTests
 {
     [Theory]
     [InlineData(SettingType.Int, '5', true)]
+    [InlineData(SettingType.Int, '-', true)]  // -1 No-Limit sentinel (e.g. PhysicsActiveDropItemMaxNum)
     [InlineData(SettingType.Int, '.', false)]
     [InlineData(SettingType.Int, 'a', false)]
     [InlineData(SettingType.Float, '.', true)]
     [InlineData(SettingType.Float, '5', true)]
+    [InlineData(SettingType.Float, '-', false)] // no Float key needs a negative
     [InlineData(SettingType.Float, 'a', false)]
     [InlineData(SettingType.Text, 'a', true)]
     [InlineData(SettingType.Text, '"', false)]
@@ -38,6 +40,13 @@ public class SettingValidatorTests
         Assert.False(SettingValidator.Validate(SettingType.Int, "70000", min: 1, max: 65535).Ok);
         Assert.False(SettingValidator.Validate(SettingType.Int, "0", min: 1, max: 65535).Ok);
         Assert.True(SettingValidator.Validate(SettingType.Int, "8211", min: 1, max: 65535).Ok);
+    }
+
+    [Fact]
+    public void Int_accepts_negative_one_sentinel_when_min_allows()
+    {
+        Assert.True(SettingValidator.Validate(SettingType.Int, "-1", min: -1).Ok);
+        Assert.False(SettingValidator.Validate(SettingType.Int, "-2", min: -1).Ok);
     }
 
     [Fact]

@@ -11,7 +11,8 @@ namespace PalServerLauncher.Config;
 public static class SettingValidator
 {
     /// <summary>
-    /// True if <paramref name="c"/> may be typed into a field of this type. Int -> digits; Float ->
+    /// True if <paramref name="c"/> may be typed into a field of this type. Int -> digits and a minus
+    /// (a few keys use -1 as a No-Limit sentinel); Float ->
     /// digits and a decimal point; Text -> anything except the quote/backslash that break the blob (and
     /// which Palworld can't represent). Bool/Enum are constrained by their control -> always allowed.
     /// This is a coarse gate: it permits partial/malformed values (e.g. "1..5") that <see cref="Validate"/>
@@ -19,7 +20,7 @@ public static class SettingValidator
     /// </summary>
     public static bool IsCharAllowed(SettingType type, char c) => type switch
     {
-        SettingType.Int => char.IsAsciiDigit(c),
+        SettingType.Int => char.IsAsciiDigit(c) || c == '-',
         SettingType.Float => char.IsAsciiDigit(c) || c == '.',
         SettingType.IpAddress => char.IsAsciiDigit(c) || c == '.',
         SettingType.Text => c != '"' && c != '\\',

@@ -1663,13 +1663,13 @@ Save these changes?</value>
     <value>Maximum Number of Bases for Each Guild</value>
   </data>
   <data name="Cat_BaseCampMaxNumInGuild_Desc" xml:space="preserve">
-    <value>Maximum number of bases per guild. Default 4 (max 10). Increasing this raises processing load.</value>
+    <value>Maximum number of bases per guild (default 4). The game caps this at 10, but mods can raise it further. Increasing this raises processing load.</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Label" xml:space="preserve">
     <value>Maximum Number of Work Pals at the Base</value>
   </data>
   <data name="Cat_BaseCampWorkerMaxNum_Desc" xml:space="preserve">
-    <value>Maximum number of Pals per base (max 50). Increasing this raises processing load.</value>
+    <value>Maximum number of Pals per base. The game caps this at 50, but mods can raise it further. Increasing this raises processing load.</value>
   </data>
   <data name="Cat_MaxBuildingLimitNum_Label" xml:space="preserve">
     <value>Maximum Number of Structures per Base</value>
@@ -1699,7 +1699,7 @@ Save these changes?</value>
     <value>Pal sync distance</value>
   </data>
   <data name="Cat_ServerReplicatePawnCullDistance_Desc" xml:space="preserve">
-    <value>Pal sync distance from players (cm). Minimum 5000, maximum 15000.</value>
+    <value>Pal sync distance from players (cm). The game's documented range is 5000 to 15000.</value>
   </data>
   <data name="Cat_ItemContainerForceMarkDirtyInterval_Label" xml:space="preserve">
     <value>Container re-sync interval</value>
