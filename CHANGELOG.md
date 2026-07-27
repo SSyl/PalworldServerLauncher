@@ -2,6 +2,11 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [1.0.2] - 2026-07-27
+
+### Fixed
+- **Server Settings no longer opens in the wrong state while the server is starting or stopping.** Opening it during startup left the game settings editable, so changes made there were silently overwritten once the server came up, and opening it during shutdown left them locked after the server had stopped. The button is now unavailable until the server settles, and a window left open follows the server if it starts or stops.
+
 ## [1.0.1] - 2026-07-22
 
 ### Fixed
