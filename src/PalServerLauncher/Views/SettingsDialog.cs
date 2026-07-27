@@ -31,8 +31,17 @@ public sealed class SettingsDialog : Window
 
     private readonly LauncherConfig _config;
     private readonly GameSettingsService _gameSettings;
-    private readonly bool _serverRunning;
+    // Not readonly: the dialog is modal, but the server can still start or stop underneath it (the Discord bot,
+    // a scheduled or update restart, crash recovery), and the ini tabs must follow. See SetServerRunning.
+    private bool _serverRunning;
+    private bool _gameAvailable;
     private bool _saved;
+
+    // Enable/disable hooks for every control the running server gates: the ini inputs, their ↺ resets, the
+    // difficulty presets, and the bulk reset. Each is re-run by SetServerRunning. Launch Arguments and CPU
+    // tuning are launcher.json-backed and stay editable, so they are deliberately NOT registered here.
+    private readonly List<System.Action<bool>> _iniGates = new();
+    private Border? _banner;
 
     // Launch-arg inputs (only built in the LaunchArgs section).
     private TextBox? _port, _queryPort, _maxPlayers, _workerThreads, _publicIp, _publicPort, _extraArgs;
@@ -111,6 +120,42 @@ public sealed class SettingsDialog : Window
         BuildServerSettings();
     }
 
+    /// <summary>Whether the game-ini tabs are editable right now: the server must be installed (so there is an
+    /// ini to edit) and stopped (a running server overwrites its own config on the way down).</summary>
+    private bool GameEnabled => _gameAvailable && !_serverRunning;
+
+    /// <summary>
+    /// Re-gate the game-ini tabs for a server that started or stopped while this dialog was open. Without this
+    /// the dialog kept whatever state it was built with, so a panel opened before Start stayed editable (edits
+    /// that would then be overwritten) and one opened while running stayed locked after the server stopped.
+    /// Only the ini tabs move: Launch Arguments and CPU tuning are ours and stay editable throughout.
+    /// </summary>
+    public void SetServerRunning(bool running)
+    {
+        if (_serverRunning == running)
+            return;
+        _serverRunning = running;
+        foreach (var gate in _iniGates)
+            gate(GameEnabled);
+        UpdateBanner();
+    }
+
+    /// <summary>Show the read-only notice that matches the current state, or hide the banner when there is
+    /// nothing to say (server installed and stopped, so everything is editable).</summary>
+    private void UpdateBanner()
+    {
+        if (_banner is null)
+            return;
+        var text = _serverRunning
+            ? Strings.Settings_BannerServerRunning
+            : !_gameAvailable
+                ? Strings.Settings_BannerGameUnavailable
+                : null;
+        _banner.Visibility = text is null ? Visibility.Collapsed : Visibility.Visible;
+        if (text is not null && _banner.Child is TextBlock block)
+            block.Text = text;
+    }
+
     /// <summary>
     /// Build the three-tab dialog: a Game Settings tab (the ini categories as an inner sub-tab strip, with the
     /// difficulty presets and search box above it), a Launcher Arguments tab, and a CPU Affinity/Priority tab.
@@ -118,8 +163,9 @@ public sealed class SettingsDialog : Window
     /// </summary>
     private void BuildServerSettings()
     {
-        var gameAvailable = _gameSettings.EnsureInitialized();
-        var gameEnabled = gameAvailable && !_serverRunning;
+        _gameAvailable = _gameSettings.EnsureInitialized();
+        var gameAvailable = _gameAvailable;
+        var gameEnabled = GameEnabled;
         var current = gameAvailable ? _gameSettings.Load() : new Dictionary<string, string?>();
         var defaults = gameAvailable ? _gameSettings.LoadDefaults() : new Dictionary<string, string?>();
 
@@ -209,22 +255,23 @@ public sealed class SettingsDialog : Window
 
         var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(18, 10, 18, 14) };
         if (_resetActions.Count > 0)
-            buttons.Children.Add(MakeButton(Strings.Settings_ResetToDefaults, ResetAll));
+        {
+            // Bulk reset is scoped to the ini tabs, so it gates with them rather than staying live like Save.
+            var resetAll = MakeButton(Strings.Settings_ResetToDefaults, ResetAll);
+            resetAll.IsEnabled = gameEnabled;
+            _iniGates.Add(enabled => resetAll.IsEnabled = enabled);
+            buttons.Children.Add(resetAll);
+        }
         buttons.Children.Add(MakeButton(Strings.Common_Save, OnSave));
         buttons.Children.Add(MakeButton(Strings.Common_Cancel, Close));
 
         var root = new DockPanel();
-        var bannerText = _serverRunning
-            ? Strings.Settings_BannerServerRunning
-            : !gameAvailable
-                ? Strings.Settings_BannerGameUnavailable
-                : null;
-        if (bannerText is not null)
-        {
-            var banner = Banner(bannerText);
-            DockPanel.SetDock(banner, Dock.Top);
-            root.Children.Add(banner);
-        }
+        // Built unconditionally (and hidden when it has nothing to say) so a server starting or stopping under
+        // the open dialog can show or clear the read-only notice without rebuilding the tree.
+        _banner = Banner("");
+        DockPanel.SetDock(_banner, Dock.Top);
+        root.Children.Add(_banner);
+        UpdateBanner();
         DockPanel.SetDock(buttons, Dock.Bottom);
         root.Children.Add(buttons);
         root.Children.Add(_tabs); // last child fills the remaining space
@@ -463,13 +510,16 @@ public sealed class SettingsDialog : Window
         // resets toward it (so it only shows when the value differs, i.e. REST is off) and the key is left out
         // of bulk "Reset to defaults" so a blanket reset can't disable a feature the launcher relies on.
         var resetTarget = setting.AppDefault ?? dv ?? "";
-        var (input, reset) = BuildGameInput(setting, value, resetTarget, gameEnabled);
+        var (input, reset, setEnabled) = BuildGameInput(setting, value, resetTarget, gameEnabled);
+        _iniGates.Add(setEnabled);
         if (setting.NoServerEffect && input is ComboBox noEffectCombo)
             WarnNoServerEffectOnUse(setting, noEffectCombo);
         // No reset (↺) on secret fields, don't let "Reset to defaults" silently blank a password.
-        var offerReset = gameEnabled && !setting.Secret && (setting.AppDefault is not null || hasDefault);
+        // Whether the ↺ EXISTS keys off the install (no ini, nothing to reset toward); whether it is usable
+        // keys off the running server, so it grays with its row instead of vanishing when the server comes up.
+        var offerReset = _gameAvailable && !setting.Secret && (setting.AppDefault is not null || hasDefault);
         var row = Row(label, input, tip, offerReset ? reset : null, setting.Doc,
-            includeInBulkReset: setting.AppDefault is null);
+            includeInBulkReset: setting.AppDefault is null, gateResetOnServer: true);
         stack.Children.Add(row);
         // Searchable text: the literal ini key (always English, so it works in any UI language) plus the
         // localized label and description the user actually sees.
@@ -505,6 +555,7 @@ public sealed class SettingsDialog : Window
             var presetName = name;
             var button = MakeButton(PresetLabel(presetName), () => ApplyPreset(presetName));
             button.IsEnabled = enabled;
+            _iniGates.Add(e => button.IsEnabled = e);
             button.Margin = new Thickness(0, 0, 6, 4);
             panel.Children.Add(button);
         }
@@ -549,8 +600,23 @@ public sealed class SettingsDialog : Window
         if (ChoiceDialog.Show(this, string.Format(Strings.Settings_PresetTitle, label), message, Strings.Settings_Yes, Strings.Settings_No) != 0)
             return;
 
-        // Push into the live controls and update each Original so the change isn't re-flagged as unsaved.
+        // The confirm above pumps a nested message loop, so re-check: the server can start while it is open,
+        // and then the preset is dropped like any other pending ini edit.
+        if (_serverRunning)
+            return;
+
+        // Write BEFORE touching the controls. The push below also rewrites each Original, which is what marks a
+        // value as saved, so doing it first would leave the form claiming a preset that never reached the ini:
+        // Apply would then see no pending edit and skip those keys, and re-picking the preset would report
+        // "no changes needed".
         var edits = changes.ToDictionary(c => c.Key, c => c.Value, StringComparer.OrdinalIgnoreCase);
+        if (!_gameSettings.Save(edits, serverRunning: _serverRunning, out var badKey))
+        {
+            ShowCorruptError(badKey);
+            return;
+        }
+
+        // Push into the live controls and update each Original so the change isn't re-flagged as unsaved.
         for (var i = 0; i < _gameInputs.Count; i++)
         {
             if (edits.TryGetValue(_gameInputs[i].Setting.Key, out var val))
@@ -560,21 +626,28 @@ public sealed class SettingsDialog : Window
                 _gameInputs[i] = (g.Setting, g.Read, g.Set, val);
             }
         }
-
-        if (!_gameSettings.Save(edits, serverRunning: false, out var badKey))
-        {
-            ShowCorruptError(badKey);
-            return;
-        }
         _saved = true;
         ChoiceDialog.Show(this, string.Format(Strings.Settings_PresetAppliedTitle, label),
             string.Format(Strings.Settings_PresetAppliedMessage, label, changes.Count), Strings.Common_OK);
     }
 
-    public static bool ShowServerSettings(Window? owner, LauncherConfig config, GameSettingsService gs, bool serverRunning)
+    /// <param name="watchRunning">Subscribes the caller's server-state signal to the callback it is handed, and
+    /// returns the matching unsubscribe. The dialog is modal, but the server can still start or stop under it
+    /// (the Discord bot, a scheduled or update restart, crash recovery), and the ini tabs must follow. The
+    /// callback must be invoked on the UI thread.</param>
+    public static bool ShowServerSettings(Window? owner, LauncherConfig config, GameSettingsService gs,
+        bool serverRunning, System.Func<System.Action<bool>, System.Action>? watchRunning = null)
     {
         var dialog = new SettingsDialog(config, gs, serverRunning) { Owner = owner };
-        dialog.ShowDialog();
+        var unsubscribe = watchRunning?.Invoke(dialog.SetServerRunning);
+        try
+        {
+            dialog.ShowDialog();
+        }
+        finally
+        {
+            unsubscribe?.Invoke();
+        }
         return dialog._saved;
     }
 
@@ -804,6 +877,7 @@ public sealed class SettingsDialog : Window
         foreach (var extra in extras)
         {
             var box = TextField(extra.Value, enabled);
+            _iniGates.Add(e => box.IsEnabled = e);
             // Block only quotes/backslash (unrepresentable); commas/parens stay so tuple values are editable.
             box.PreviewTextInput += (_, e) =>
             {
@@ -812,10 +886,10 @@ public sealed class SettingsDialog : Window
             };
             _extraInputs.Add((extra.Key, () => box.Text, extra.Value));
             // Only offer a reset when the default template actually has this key.
-            ResetSpec? reset = enabled && defaults.TryGetValue(extra.Key, out var dv)
+            ResetSpec? reset = available && defaults.TryGetValue(extra.Key, out var dv)
                 ? TextReset(box, dv ?? "")
                 : null;
-            var row = Row(extra.Key, box, null, reset, DocStatus.Unknown);
+            var row = Row(extra.Key, box, null, reset, DocStatus.Unknown, gateResetOnServer: true);
             stack.Children.Add(row);
             // The shown label IS the raw key (these keys aren't in the catalog), and there's no description.
             rows.Add(new SearchRow(row, extra.Key, extra.Key, ""));
@@ -823,7 +897,10 @@ public sealed class SettingsDialog : Window
         return rows;
     }
 
-    private (FrameworkElement Input, ResetSpec Reset) BuildGameInput(GameSetting setting, string value, string defaultValue, bool enabled)
+    /// <summary>Build one game setting's input by type. Also returns the hook that re-gates it when the server
+    /// starts or stops (a secret field re-gates itself: its reveal toggle must keep working while locked).</summary>
+    private (FrameworkElement Input, ResetSpec Reset, System.Action<bool> SetEnabled) BuildGameInput(
+        GameSetting setting, string value, string defaultValue, bool enabled)
     {
         switch (setting.Type)
         {
@@ -831,13 +908,13 @@ public sealed class SettingsDialog : Window
             {
                 var box = CheckField(IsTrue(value), enabled);
                 _gameInputs.Add((setting, () => box.IsChecked == true ? "True" : "False", s => box.IsChecked = IsTrue(s), value));
-                return (box, CheckReset(box, IsTrue(defaultValue)));
+                return (box, CheckReset(box, IsTrue(defaultValue)), e => box.IsEnabled = e);
             }
             case SettingType.Enum:
             {
                 var combo = ComboField(setting.Options?.ToArray() ?? new[] { value }, value, enabled, setting.Key);
                 _gameInputs.Add((setting, () => (combo.SelectedItem as string) ?? "", s => SelectCombo(combo, s), value));
-                return (combo, ComboReset(combo, defaultValue));
+                return (combo, ComboReset(combo, defaultValue), e => combo.IsEnabled = e);
             }
             default:
             {
@@ -846,11 +923,12 @@ public sealed class SettingsDialog : Window
                     var secret = new SecretField(value, enabled);
                     _gameInputs.Add((setting, () => secret.Value, s => secret.SetValue(s), value));
                     return (secret.Element, new ResetSpec(
-                        () => secret.SetValue(defaultValue), () => secret.Value == defaultValue, cb => secret.OnChanged(cb)));
+                        () => secret.SetValue(defaultValue), () => secret.Value == defaultValue, cb => secret.OnChanged(cb)),
+                        secret.SetEditable);
                 }
                 var box = ValidatedTextField(CatalogText.Label(setting), value, enabled, setting.Type, setting.Min, setting.Max);
                 _gameInputs.Add((setting, () => box.Text, s => box.Text = s, value));
-                return (box, TextReset(box, defaultValue));
+                return (box, TextReset(box, defaultValue), e => box.IsEnabled = e);
             }
         }
     }
@@ -865,15 +943,6 @@ public sealed class SettingsDialog : Window
 
     private bool Apply()
     {
-        // The launcher.json tabs (Launch Arguments + Advanced process tuning) are ours and always safe to write,
-        // so ApplyLauncherConfig saves them regardless of running state. The game ini can only be written while
-        // stopped (a running server would overwrite it), so those edits are gated below.
-        if (_serverRunning)
-        {
-            ApplyLauncherConfig();
-            return true;
-        }
-
         // Compare catalog keys by typed value, not raw text, so a hand-edited non-canonical value (bHardcore=false,
         // 1.0 vs 1.000000, enum casing) on a key the user didn't touch isn't rewritten canonical.
         var gameEdits = _gameInputs
@@ -882,6 +951,16 @@ public sealed class SettingsDialog : Window
         var extraEdits = _extraInputs
             .Where(x => x.Read() != x.Original)
             .ToDictionary(x => x.Key, x => x.Read());
+
+        // The launcher.json tabs (Launch Arguments + Advanced process tuning) are ours and always safe to write,
+        // so ApplyLauncherConfig saves them regardless of running state. The game ini can only be written while
+        // stopped, so any ini edit still pending here is dropped without comment: that is what the dedicated
+        // server itself does to an ini edited under it, and the locked tabs plus the banner already said so.
+        if (_serverRunning)
+        {
+            ApplyLauncherConfig();
+            return true;
+        }
 
         if (gameEdits.Count == 0 && extraEdits.Count == 0)
         {
@@ -901,12 +980,19 @@ public sealed class SettingsDialog : Window
                 string.Format(Strings.Settings_ConfirmSaveMessage, body), Strings.Common_Save, Strings.Common_Cancel) != 0)
             return false; // keep the dialog open so the user can review or cancel
 
-        if (gameEdits.Count > 0 && !_gameSettings.Save(gameEdits, serverRunning: false, out var badGameKey))
+        // That confirm runs a nested message loop, so the server can come up while it is open. Same rule as
+        // above then: drop the ini edits, still save the launcher-side tabs.
+        if (_serverRunning)
+        {
+            ApplyLauncherConfig();
+            return true;
+        }
+        if (gameEdits.Count > 0 && !_gameSettings.Save(gameEdits, serverRunning: _serverRunning, out var badGameKey))
         {
             ShowCorruptError(badGameKey);
             return false;
         }
-        if (extraEdits.Count > 0 && !_gameSettings.SaveExtras(extraEdits, serverRunning: false, out var badExtraKey))
+        if (extraEdits.Count > 0 && !_gameSettings.SaveExtras(extraEdits, serverRunning: _serverRunning, out var badExtraKey))
         {
             ShowCorruptError(badExtraKey);
             return false;
@@ -1022,7 +1108,8 @@ public sealed class SettingsDialog : Window
         return block;
     }
 
-    private Border Row(string label, FrameworkElement input, string? tip = null, ResetSpec? reset = null, DocStatus doc = DocStatus.Documented, bool includeInBulkReset = true)
+    private Border Row(string label, FrameworkElement input, string? tip = null, ResetSpec? reset = null,
+        DocStatus doc = DocStatus.Documented, bool includeInBulkReset = true, bool gateResetOnServer = false)
     {
         // A uniform row height so every input lines up: text boxes and secret fields stretch to it, combos
         // already match it, and checkboxes/labels center within it. Fixes the ragged 23px-vs-28px rows.
@@ -1048,7 +1135,7 @@ public sealed class SettingsDialog : Window
 
         if (reset is not null)
         {
-            var resetButton = ResetButton(reset, includeInBulkReset);
+            var resetButton = ResetButton(reset, includeInBulkReset, gateResetOnServer);
             Grid.SetColumn(resetButton, 2);
             grid.Children.Add(resetButton);
         }
@@ -1082,13 +1169,19 @@ public sealed class SettingsDialog : Window
         cb => combo.SelectionChanged += (_, _) => cb());
 
     /// <summary>A small "reset to default" (↺) button for one field, shown only while the value differs from
-    /// its default; also collected for the "Reset to defaults" button.</summary>
-    private Button ResetButton(ResetSpec spec, bool includeInBulk = true)
+    /// its default; also collected for the "Reset to defaults" button. <paramref name="gateOnServer"/> marks it
+    /// as an ini reset, which grays out while the server runs (the launch-arg and CPU resets stay live).</summary>
+    private Button ResetButton(ResetSpec spec, bool includeInBulk = true, bool gateOnServer = false)
     {
         if (includeInBulk)
             _resetActions.Add(spec.Reset);
         var button = DarkControls.ResetButton(spec.Reset, Strings.Settings_ResetFieldTooltip);
         button.Margin = new Thickness(6, 0, 0, 0);
+        if (gateOnServer)
+        {
+            button.IsEnabled = GameEnabled;
+            _iniGates.Add(e => button.IsEnabled = e);
+        }
         void Refresh() => button.Visibility = spec.IsDefault() ? Visibility.Collapsed : Visibility.Visible;
         spec.Subscribe(Refresh);
         Refresh(); // hidden if the loaded value already equals the default

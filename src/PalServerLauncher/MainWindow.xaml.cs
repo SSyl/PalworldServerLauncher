@@ -393,8 +393,22 @@ public partial class MainWindow : Window
         Application.Current.Shutdown();
     }
 
+    /// <summary>Open Server Settings, feeding it the server's running state for as long as it is open so the
+    /// game-ini tabs lock and unlock with the server instead of freezing at whatever state they opened in.
+    /// IsServerRunning is a pass-through with no change notification of its own, so State is the signal (the VM
+    /// already marshals it to the UI thread, and the controller sets the process before raising it).</summary>
     private void OnOpenServerSettings(object sender, RoutedEventArgs e) =>
-        SettingsDialog.ShowServerSettings(this, _viewModel.Config, _viewModel.GameSettings, _viewModel.IsServerRunning);
+        SettingsDialog.ShowServerSettings(this, _viewModel.Config, _viewModel.GameSettings, _viewModel.IsServerRunning,
+            onRunningChanged =>
+            {
+                void OnStatePropertyChanged(object? source, PropertyChangedEventArgs args)
+                {
+                    if (args.PropertyName == nameof(MainViewModel.State))
+                        onRunningChanged(_viewModel.IsServerRunning);
+                }
+                _viewModel.PropertyChanged += OnStatePropertyChanged;
+                return () => _viewModel.PropertyChanged -= OnStatePropertyChanged;
+            });
 
     private void OnOpenMods(object sender, RoutedEventArgs e)
     {

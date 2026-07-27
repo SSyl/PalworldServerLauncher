@@ -91,6 +91,15 @@ internal sealed class SecretField
     /// <summary>The current value, read from whichever view (masked or revealed) is active.</summary>
     public string Value => _revealed.Visibility == Visibility.Visible ? _revealed.Text : _masked.Password;
 
+    /// <summary>Re-gate editing after construction, for a dialog that stays open while the server starts or
+    /// stops. Mirrors the constructor: the masked view disables, the revealed view only goes read-only, and the
+    /// reveal toggle is left alone so a password stays viewable either way.</summary>
+    public void SetEditable(bool editable)
+    {
+        _masked.IsEnabled = editable;
+        _revealed.IsReadOnly = !editable;
+    }
+
     /// <summary>Set both views (used for reset-to-default).</summary>
     public void SetValue(string value)
     {
