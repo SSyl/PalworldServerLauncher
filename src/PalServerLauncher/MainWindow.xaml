@@ -121,6 +121,7 @@
                     ToolTip="{x:Static loc:Strings.Main_ValidateFilesTip}"/>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                 <Button Content="{x:Static loc:Strings.Main_ServerSettings}" Click="OnOpenServerSettings"
+                        IsEnabled="{Binding CanOpenServerSettings}"
                         ToolTip="{x:Static loc:Strings.Main_ServerSettingsTip}"/>
                 <Button Content="{x:Static loc:Strings.Main_Mods}" Click="OnOpenMods"
                         ToolTip="{x:Static loc:Strings.Main_ModsTip}"/>

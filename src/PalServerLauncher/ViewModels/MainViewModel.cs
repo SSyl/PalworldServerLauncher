@@ -39,7 +39,7 @@ public partial class MainViewModel : ObservableObject
     private readonly string[] _leadSlots = new string[3];
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(StateText), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate), nameof(CanCheckPorts), nameof(CanUseServerCommands))]
+    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(StateText), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate), nameof(CanCheckPorts), nameof(CanUseServerCommands), nameof(CanOpenServerSettings))]
     [NotifyCanExecuteChangedFor(nameof(PrimaryActionCommand), nameof(RestartCommand), nameof(ValidateFilesCommand))]
     private ServerState _state = ServerState.Stopped;
 
@@ -49,7 +49,7 @@ public partial class MainViewModel : ObservableObject
     private bool _isInstalled;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate), nameof(CanCheckPorts), nameof(CanImport))]
+    [NotifyPropertyChangedFor(nameof(PrimaryActionText), nameof(PrimaryActionKind), nameof(UpdateActionsEnabled), nameof(CanCheckForUpdate), nameof(CanCheckPorts), nameof(CanImport), nameof(CanOpenServerSettings))]
     [NotifyCanExecuteChangedFor(nameof(PrimaryActionCommand), nameof(RestartCommand), nameof(ValidateFilesCommand), nameof(BackupNowCommand))]
     private bool _isBusy;
 
@@ -289,6 +289,12 @@ public partial class MainViewModel : ObservableObject
     /// works without REST, and the dialog's REST tab grays itself out with a notice when REST isn't connected.
     /// Matches the run-state set used for restarts.</summary>
     public bool CanUseServerCommands => State is ServerState.Healthy or ServerState.Degraded or ServerState.Zombie or ServerState.RestUnreachable;
+
+    /// <summary>Server Settings opens only from a settled state, so the game-ini tabs can't be opened against a
+    /// server that is midway through coming up or going down. Both terms are needed: StartAsync runs the startup
+    /// backup, the SteamCMD update check, and the mod sync BEFORE the process exists, and State is still Stopped
+    /// for all of it, so IsBusy is the only thing covering that window (it is also what shows "Working...").</summary>
+    public bool CanOpenServerSettings => !IsBusy && !IsTransitional(State);
 
     /// <summary>
     /// On every server-state change, manage the Force Shutdown reveal. Entering a transitional state
