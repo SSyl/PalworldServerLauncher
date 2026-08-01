@@ -201,10 +201,21 @@ public sealed class ServerController : IDisposable
                     : new StopOutcome(false, "The server process did not exit within 10s.");
 
             case StopKind.Countdown:
-                // Don't hold the pipe open for the countdown (up to an hour). Fire it the way the GUI's timed
-                // shutdown does and answer as soon as it is under way.
-                FireAndForget(() => ShutdownWithCountdownAsync(request.Seconds), "CLI timed shutdown");
-                return new StopOutcome(true, $"Shutting down in {request.Seconds}s.");
+                // Don't hold the pipe open for the countdown (up to an hour), but don't claim success before the
+                // server has accepted it either. Answer on the server's own reply to /shutdown, which arrives
+                // after the save and shutdown backup, then let the countdown run on without us.
+                var requested = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                var countdown = ShutdownWithCountdownAsync(request.Seconds,
+                    onShutdownRequested: accepted => requested.TrySetResult(accepted));
+                FireAndForget(() => countdown, "CLI timed shutdown");
+
+                report("Saving and requesting the shutdown...");
+                // Whichever lands first: the server's answer, or the whole stop ending without one (no REST, the
+                // process already gone, a failure). Only the first is a countdown that actually started.
+                var settled = await Task.WhenAny(requested.Task, countdown).ConfigureAwait(false);
+                return settled == requested.Task && requested.Task.Result
+                    ? new StopOutcome(true, $"Shutting down in {request.Seconds}s.")
+                    : new StopOutcome(false, "The server did not accept the shutdown request.");
 
             default:
                 // A graceful stop can run for minutes (the shutdown backup zips SaveGames first), so mirror the
@@ -924,14 +935,17 @@ public sealed class ServerController : IDisposable
     /// <summary>Graceful shutdown with an in-game countdown and no relaunch. Routes through the stop ladder so
     /// the resulting exit is treated as a deliberate stop, not a crash. Cancels any pending restart countdown
     /// first (like <see cref="StopAsync"/>), so a deliberate shutdown can't be undone by a restart relaunch.</summary>
-    public Task ShutdownWithCountdownAsync(int seconds, CancellationToken ct = default)
+    /// <param name="onShutdownRequested">Signalled with the server's answer to the /shutdown call, as soon as it
+    /// answers. Lets a caller that will not wait out the countdown (the CLI) still report whether the countdown
+    /// actually started.</param>
+    public Task ShutdownWithCountdownAsync(int seconds, CancellationToken ct = default, Action<bool>? onShutdownRequested = null)
     {
         lock (_gate)
         {
             _restartCts?.Cancel();
             _relaunchGate.SuppressForDeliberateStop(); // a deliberate shutdown stays stopped, like a plain Stop
         }
-        return StopCoreAsync(graceful: true, shutdownWaitSeconds: seconds, restarting: false, ct);
+        return StopCoreAsync(graceful: true, shutdownWaitSeconds: seconds, restarting: false, ct, onShutdownRequested);
     }
 
     /// <summary>Accelerate a timed shutdown that's counting down: send a fresh REST /shutdown(1), which overrides the
@@ -1450,7 +1464,8 @@ public sealed class ServerController : IDisposable
     /// (0 for restarts and plain Stop, restarts already warned via broadcasts, and a plain Stop is immediate).
     /// <paramref name="restarting"/> picks the state shown while stopping: <see cref="ServerState.Restarting"/>
     /// when a relaunch will follow (restart / recovery), else <see cref="ServerState.Stopping"/>.</summary>
-    private async Task StopCoreAsync(bool graceful, int shutdownWaitSeconds, bool restarting, CancellationToken ct)
+    private async Task StopCoreAsync(bool graceful, int shutdownWaitSeconds, bool restarting, CancellationToken ct,
+        Action<bool>? onShutdownRequested = null)
     {
         Process? process;
         PalworldRestClient? rest;
@@ -1491,6 +1506,7 @@ public sealed class ServerController : IDisposable
                 await rest.SaveAsync(ct).ConfigureAwait(false);
 
             var shutdownAccepted = await rest.ShutdownAsync(wait, "Server is shutting down.").ConfigureAwait(false);
+            onShutdownRequested?.Invoke(shutdownAccepted);
             if (!shutdownAccepted)
                 _logger.Info("REST /shutdown was rejected, will force-stop if the server doesn't exit.");
 

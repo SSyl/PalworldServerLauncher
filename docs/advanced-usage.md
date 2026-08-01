@@ -63,8 +63,10 @@ A few details worth knowing:
 - **A plain `--stop-server` waits** until the server has actually stopped before it exits, so exit code 0 means
   it is down. That includes the case where it was not running to begin with, so a script can run this to be
   sure. Anything else means the stop failed, and the reason is printed.
-- **A countdown returns straight away** rather than waiting it out, so its exit code 0 means the countdown
-  started, not that the server is down yet. It shuts down on its own once the countdown runs out.
+- **A countdown returns once the server has accepted it**, rather than waiting the countdown out, so its exit
+  code 0 means the countdown started, not that the server is down yet. It shuts down on its own once the
+  countdown runs out. Acceptance comes after the save and the shutdown backup, so the command takes as long as
+  those do. If the server refuses the request or does not answer, the command reports that and exits non-zero.
 - **`--stop-server` needs the REST API enabled** to save and shut down cleanly. With it off the command
   refuses, and you can use `--kill-server` instead, though the server then loses anything since its last
   autosave.
