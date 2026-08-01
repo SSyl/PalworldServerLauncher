@@ -175,15 +175,15 @@ importing an existing server, and where your files live, are all answered in
 ## Advanced usage
 
 Running more than one server on the same machine, and the launcher's command-line options (`--console`,
-`--start-server`, `--install-server`, and more), are covered in
+`--start-server`, `--install-server`, `--stop-server`, and more), are covered in
 **[docs/advanced-usage.md](docs/advanced-usage.md)**.
 
 ## Upcoming features
 
 - A system-tray icon.
-- A fuller headless / command-line mode. There's already `--install-server` and `--start-server` (see
-  [Command-line options](docs/advanced-usage.md#command-line-options)), and you can run the launcher hidden
-  with a small PowerShell script if you want it out of the way.
+- A fuller headless / command-line mode. There's already `--install-server`, `--start-server`, and
+  `--stop-server` (see [Command-line options](docs/advanced-usage.md#command-line-options)), and you can run
+  the launcher hidden with a small PowerShell script if you want it out of the way.
 
 ## Building from source
 

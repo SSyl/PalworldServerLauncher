@@ -185,8 +185,12 @@ public partial class App : Application
         var exitCode = 1;
         try
         {
+            // A graceful stop mirrors the launcher's log here, which usually ends on the same line as the outcome
+            // ("Server stopped."). Track the last one so we don't print it twice.
+            string? lastForwarded = null;
             var outcome = await LauncherIpcClient
-                .SendAsync(LauncherIpc.PipeNameFor(LauncherConfig.DataRoot), request, _logger.Info)
+                .SendAsync(LauncherIpc.PipeNameFor(LauncherConfig.DataRoot), request,
+                    line => { lastForwarded = line; _logger.Info(line); })
                 .ConfigureAwait(false);
 
             if (outcome is null)
@@ -196,7 +200,8 @@ public partial class App : Application
             }
             else if (outcome.Succeeded)
             {
-                _logger.Info(outcome.Message);
+                if (outcome.Message != lastForwarded)
+                    _logger.Info(outcome.Message);
                 exitCode = 0;
             }
             else
