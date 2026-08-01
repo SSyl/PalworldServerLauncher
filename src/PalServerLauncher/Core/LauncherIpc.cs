@@ -35,19 +35,19 @@ public static class LauncherIpc
     public static readonly TimeSpan RequestTimeout = TimeSpan.FromMinutes(10);
 
     /// <summary>
-    /// Pipe name for one launcher installation, derived from its data root so two copies of the exe in different
-    /// folders never talk to each other. Keyed on the data root rather than the (user-movable) server root because
-    /// both ends can compute it from their own <see cref="Config.LauncherConfig.DataRoot"/> without reading
-    /// launcher.json. Pure, so it is tested.
+    /// Whether a launcher currently holds this pipe name. Answers the question a failed connect cannot: was
+    /// nobody there, or was someone there and unavailable.
+    ///
+    /// Enumerates the \\.\pipe pseudo-directory rather than testing the path directly. File.Exists on a pipe
+    /// path OPENS the pipe, which consumes a waiting listener's pending accept and makes it tear down and
+    /// recreate its instance (measured: 20 probes against an idle listener saw it present only 3 times).
     /// </summary>
-    /// <summary>Whether a launcher currently holds this pipe name. Named pipes surface under the \\.\pipe
-    /// pseudo-directory, so existence is a plain file check, and it answers the question a failed connect can't:
-    /// was nobody there, or was someone there and unavailable.</summary>
     public static bool IsListening(string pipeName)
     {
         try
         {
-            return File.Exists(@"\\.\pipe\" + pipeName);
+            return Directory.EnumerateFiles(@"\\.\pipe\")
+                .Any(p => string.Equals(Path.GetFileName(p), pipeName, StringComparison.OrdinalIgnoreCase));
         }
         catch
         {
@@ -55,6 +55,12 @@ public static class LauncherIpc
         }
     }
 
+    /// <summary>
+    /// Pipe name for one launcher installation, derived from its data root so two copies of the exe in different
+    /// folders never talk to each other. Keyed on the data root rather than the (user-movable) server root because
+    /// both ends can compute it from their own <see cref="Config.LauncherConfig.DataRoot"/> without reading
+    /// launcher.json. Pure, so it is tested.
+    /// </summary>
     public static string PipeNameFor(string dataRoot)
     {
         var normalized = Path.TrimEndingDirectorySeparator(Path.GetFullPath(dataRoot)).ToLowerInvariant();
@@ -82,8 +88,12 @@ public static class LauncherIpcClient
         // Anonymous impersonation: the server end of a pipe can impersonate its client, and this name is
         // derivable from the install path on a machine where any local user can create it first. Nothing we
         // connect to should get to act as this user.
+        // CurrentUserOnly refuses to connect unless the server end runs as this same user, so a local account
+        // that pre-created the name can neither answer for the launcher nor read a graceful stop's streamed log.
+        // Anonymous impersonation is the other half: nothing we connect to gets to act as this user.
         await using var pipe = new NamedPipeClientStream(
-            ".", pipeName, PipeDirection.InOut, PipeOptions.Asynchronous, TokenImpersonationLevel.Anonymous);
+            ".", pipeName, PipeDirection.InOut,
+            PipeOptions.Asynchronous | PipeOptions.CurrentUserOnly, TokenImpersonationLevel.Anonymous);
 
         try
         {

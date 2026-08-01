@@ -15,13 +15,15 @@ public class LauncherIpcTests
     private static string UniquePipeName() =>
         LauncherIpc.PipeNameFor(Path.Combine(Path.GetTempPath(), "pal-ipc-tests", Guid.NewGuid().ToString("N")));
 
-    /// <summary>Wait for the listener's pipe to actually exist, so a test never races Start().</summary>
+    /// <summary>Wait for the listener's pipe to actually exist, so a test never races Start(). Uses the
+    /// enumerating check, not File.Exists: probing a pipe path opens it, which would consume the very accept
+    /// the caller is about to rely on.</summary>
     private static async Task WaitForPipeAsync(string pipeName)
     {
         var deadline = Stopwatch.StartNew();
         while (deadline.Elapsed < TimeSpan.FromSeconds(5))
         {
-            if (File.Exists(@"\\.\pipe\" + pipeName))
+            if (LauncherIpc.IsListening(pipeName))
                 return;
             await Task.Delay(20);
         }
@@ -210,19 +212,32 @@ public class LauncherIpcTests
         // feature exists to prevent. A listener that is merely busy must never produce it.
         var pipeName = UniquePipeName();
         var release = new TaskCompletionSource();
-        using var server = new LauncherIpcServer(pipeName,
-            async (_, _) => { await release.Task; return new StopOutcome(true, "stopped"); }, _ => { });
+        var handlerEntered = new TaskCompletionSource();
+        using var server = new LauncherIpcServer(pipeName, async (_, _) =>
+        {
+            handlerEntered.TrySetResult();
+            await release.Task;
+            return new StopOutcome(true, "stopped");
+        }, _ => { });
         server.Start();
         await WaitForPipeAsync(pipeName);
 
         var held = LauncherIpcClient.SendAsync(pipeName, new StopRequest(StopKind.Graceful), _ => { });
-        await Task.Delay(300); // let the first request occupy the single instance
+        // Wait for the handler itself, not a sleep: otherwise the second request can win the connect race and
+        // be the one that blocks, and this test would hang instead of failing.
+        await handlerEntered.Task.WaitAsync(TimeSpan.FromSeconds(10));
 
-        var second = await LauncherIpcClient.SendAsync(pipeName, new StopRequest(StopKind.Graceful), _ => { });
-        Assert.NotNull(second);
-        Assert.False(second.Succeeded);
+        try
+        {
+            var second = await LauncherIpcClient.SendAsync(pipeName, new StopRequest(StopKind.Graceful), _ => { });
+            Assert.NotNull(second);
+            Assert.False(second.Succeeded);
+        }
+        finally
+        {
+            release.SetResult(); // release even on failure, so a broken assert can't wedge the run
+        }
 
-        release.SetResult();
         Assert.True((await held)?.Succeeded);
     }
 
@@ -265,14 +280,15 @@ public class LauncherIpcTests
         var pipeName = UniquePipeName();
         await using var squatter = new NamedPipeServerStream(pipeName, PipeDirection.InOut, 2);
 
-        var logged = new List<string>();
+        // Written from the listener thread, read here, so it needs to be a concurrent collection.
+        var logged = new System.Collections.Concurrent.ConcurrentQueue<string>();
         using var server = new LauncherIpcServer(pipeName,
-            (_, _) => Task.FromResult(new StopOutcome(true, "stopped")), logged.Add);
+            (_, _) => Task.FromResult(new StopOutcome(true, "stopped")), logged.Enqueue);
         server.Start();
 
         // It should give up rather than serve alongside the squatter.
         var deadline = Stopwatch.StartNew();
-        while (logged.Count == 0 && deadline.Elapsed < TimeSpan.FromSeconds(5))
+        while (logged.IsEmpty && deadline.Elapsed < TimeSpan.FromSeconds(5))
             await Task.Delay(20);
 
         Assert.Contains(logged, l => l.Contains("Couldn't claim", StringComparison.Ordinal));

@@ -113,6 +113,12 @@ public partial class App : Application
         EventManager.RegisterClassHandler(typeof(Window), FrameworkElement.LoadedEvent,
             new RoutedEventHandler((s, _) => { if (s is Window w) DarkTitleBar.Apply(w); }));
 
+        // The single-instance prompt and the first-run language picker are both shown before MainWindow exists,
+        // so each is briefly the only open window. Under the default OnLastWindowClose, closing one would put the
+        // app into shutting-down state before MainWindow opens, and every later ShutdownMode set then throws.
+        // Hold shutdown from here until MainWindow is up, then restore the normal close-to-exit behavior.
+        ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
         // Only one GUI per install folder. Reached after the headless branches on purpose: --stop-server and
         // --install-server ARE second instances by design and must never trip this.
         if (!EnsureOnlyLauncherForThisFolder())
@@ -120,11 +126,6 @@ public partial class App : Application
             Shutdown(1);
             return;
         }
-
-        // The first-run language picker is shown before MainWindow exists, so it is briefly the only open
-        // window. Under the default OnLastWindowClose, closing it would exit the app before MainWindow opens.
-        // Hold shutdown until MainWindow is up, then restore the normal close-to-exit behavior.
-        ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
         // Load the config once here (not in MainViewModel) so the UI language is set before MainWindow's
         // XAML is evaluated, and thread the same instance through the window and view model. On a fresh
@@ -271,12 +272,35 @@ public partial class App : Application
     }
 
     /// <summary>
-    /// Stop the server with no launcher involved: same ladder as ServerController.StopCoreAsync (shutdown backup
-    /// or save, REST shutdown, kill if it drags), just without the monitors and state machine. A countdown is
-    /// only started here, not waited out, matching what a running launcher reports back for one.
+    /// Stop the server with no launcher involved: the same ladder as ServerController.StopCoreAsync (shutdown
+    /// backup or save, REST shutdown, kill if it drags), without the monitors and state machine. A countdown is
+    /// only started here, not waited out, matching what a running launcher reports back for one. One deliberate
+    /// difference: a REFUSED /shutdown stops here rather than falling through to a kill. In the launcher that
+    /// fallback is safe because it owns the process, whereas a bare CLI killing a server whose REST just said no
+    /// is more likely to be losing someone's progress than fixing anything.
     /// </summary>
     private async Task<bool> StopServerDirectlyAsync(StopRequest request, LauncherConfig config)
     {
+        // Last line of defence before stopping a server nobody handed us. A launcher can be alive with no
+        // listener (it lost the pipe name, or never claimed it), and SendAsync cannot tell that from nobody
+        // being home. Stopping the server behind that launcher is read as a crash and relaunched, which is the
+        // whole failure this feature exists to prevent, so refuse instead.
+        var siblings = ProcessScanner.FindSiblingLaunchers();
+        try
+        {
+            if (siblings.Count > 0)
+            {
+                _logger.Error($"A launcher is running from this folder (PID {string.Join(", ", siblings.Select(p => p.Id))}) " +
+                              "but did not answer, so it isn't safe to stop the server behind it. Close that launcher, or use its Stop button.");
+                return false;
+            }
+        }
+        finally
+        {
+            foreach (var sibling in siblings)
+                sibling.Dispose();
+        }
+
         using var process = ProcessScanner.FindManagedServer(config.ServerRoot);
         if (process is null)
         {

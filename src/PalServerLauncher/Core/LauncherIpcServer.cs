@@ -162,9 +162,18 @@ public sealed class LauncherIpcServer : IDisposable
         finally
         {
             // Runs even when the handler throws: the channel must be completed or the pump parks on it forever,
-            // and the client gets a real error line instead of an unexplained EOF.
+            // and the client gets a real error line instead of an unexplained EOF. The pump is awaited inside its
+            // own try so that a pump failure can neither skip the terminal line nor displace the handler's
+            // exception on its way out.
             progress.Writer.Complete();
-            await pump.ConfigureAwait(false);
+            try
+            {
+                await pump.ConfigureAwait(false);
+            }
+            catch
+            {
+                // Already means the client is unreachable; the terminal write below reports it properly.
+            }
             await WriteTerminalAsync(writer, terminal).ConfigureAwait(false);
         }
     }
