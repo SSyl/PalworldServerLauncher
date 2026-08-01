@@ -6,6 +6,7 @@ using PalServerLauncher.Config;
 using PalServerLauncher.Core;
 using PalServerLauncher.Localization;
 using PalServerLauncher.Logging;
+using PalServerLauncher.Rest;
 using PalServerLauncher.Views;
 
 namespace PalServerLauncher;
@@ -37,9 +38,14 @@ public partial class App : Application
         var startServer = HasFlag("--start-server", "-start-server");
         var ignoreRestApi = HasFlag("--ignore-rest-api", "-ignore-rest-api");
 
+        // --stop-server [seconds] / --kill-server stop the server without opening a window. Like --install-server
+        // they imply a console so the outcome is visible.
+        var stopRequest = StopRequest.FromCommandLine(e.Args, out var stopError);
+        var stopping = stopRequest is not null || stopError is not null;
+
         // --console mirrors all log output to a terminal (the launching one, or a new window), so the
         // launcher can be watched from the command line. The GUI window still opens.
-        var console = (HasFlag("--console", "-console", "-c") || installServer) && ConsoleBridge.Enable();
+        var console = (HasFlag("--console", "-console", "-c") || installServer || stopping) && ConsoleBridge.Enable();
 
         // Move any legacy data (settings/steamcmd/server/backups/logs sitting next to the exe) into the
         // PalworldServerLauncher data folder before logging starts, so the exe ends up alone.
@@ -76,6 +82,22 @@ public partial class App : Application
                 _logger.Error("Unobserved task exception", args.Exception);
             args.SetObserved();
         };
+
+        // Headless stop, before the install branch: an install refuses to run while a server is up anyway.
+        if (stopError is not null)
+        {
+            _logger.Error(stopError);
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            Dispatcher.BeginInvoke(() => Shutdown(1));
+            return;
+        }
+
+        if (stopRequest is not null)
+        {
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            _ = RunHeadlessStopAsync(stopRequest, LauncherConfig.Load());
+            return;
+        }
 
         // Headless install: run the SteamCMD install/update to completion, then exit with a code. No window,
         // no schedulers or Discord (we drive SteamCMD directly, not the full controller).
@@ -151,6 +173,104 @@ public partial class App : Application
             _logger.Error("Headless install failed", ex);
         }
         Dispatcher.Invoke(() => Shutdown(exitCode));
+    }
+
+    /// <summary>
+    /// Headless stop. Asks a running launcher first, over its named pipe, so ITS stop path runs: an external kill
+    /// would fire ServerController.OnProcessExited with no manual stop latched, which reads as a crash and
+    /// relaunches the server. Only when no launcher answers do we stop the server ourselves.
+    /// </summary>
+    private async Task RunHeadlessStopAsync(StopRequest request, LauncherConfig config)
+    {
+        var exitCode = 1;
+        try
+        {
+            var outcome = await LauncherIpcClient
+                .SendAsync(LauncherIpc.PipeNameFor(LauncherConfig.DataRoot), request, _logger.Info)
+                .ConfigureAwait(false);
+
+            if (outcome is null)
+            {
+                _logger.Info("No running launcher answered, stopping the server directly.");
+                exitCode = await StopServerDirectlyAsync(request, config).ConfigureAwait(false) ? 0 : 1;
+            }
+            else if (outcome.Succeeded)
+            {
+                _logger.Info(outcome.Message);
+                exitCode = 0;
+            }
+            else
+            {
+                _logger.Error(outcome.Message);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.Error("Headless stop failed", ex);
+        }
+        Dispatcher.Invoke(() => Shutdown(exitCode));
+    }
+
+    /// <summary>
+    /// Stop the server with no launcher involved: same ladder as ServerController.StopCoreAsync (shutdown backup
+    /// or save, REST shutdown, kill if it drags), just without the monitors and state machine. A countdown is
+    /// only started here, not waited out, matching what a running launcher reports back for one.
+    /// </summary>
+    private async Task<bool> StopServerDirectlyAsync(StopRequest request, LauncherConfig config)
+    {
+        using var process = ProcessScanner.FindManagedServer(config.ServerRoot);
+        if (process is null)
+        {
+            _logger.Info("No server is running.");
+            return true; // nothing to stop is a success, so a scripted stop is idempotent
+        }
+
+        if (request.Kind == StopKind.Kill)
+        {
+            _logger.Info($"Killing the server process (PID {process.Id}).");
+            process.Kill(entireProcessTree: true);
+            return await ServerController.WaitForExitAsync(process, TimeSpan.FromSeconds(10), CancellationToken.None)
+                .ConfigureAwait(false);
+        }
+
+        var settings = IniReader.ReadFile(ServerController.PalWorldSettingsPathFor(config.ServerRoot));
+        if (!settings.RestApiUsable)
+        {
+            _logger.Error("REST API is off, so the server can't be saved or shut down cleanly. Use --kill-server to force it down.");
+            return false;
+        }
+
+        using var rest = new PalworldRestClient(settings.RestApiPortOrDefault, settings.AdminPassword!);
+        var wait = ServerController.ShutdownWaitSeconds(request.Kind == StopKind.Countdown ? request.Seconds : 0);
+
+        if (config.BackupOnShutdown)
+            await new BackupService(config, _logger).BackupNowAsync(BackupReason.Shutdown, rest, serverRunning: true).ConfigureAwait(false);
+        else
+            await rest.SaveAsync().ConfigureAwait(false);
+
+        _logger.Info($"Shutting down (wait {wait}s)...");
+        if (!await rest.ShutdownAsync(wait, "Server is shutting down.").ConfigureAwait(false))
+        {
+            _logger.Error("The server rejected the shutdown request.");
+            return false;
+        }
+
+        if (request.Kind == StopKind.Countdown)
+        {
+            _logger.Info($"Shutting down in {wait}s.");
+            return true;
+        }
+
+        if (await ServerController.WaitForExitAsync(process, TimeSpan.FromSeconds(wait + 30), CancellationToken.None).ConfigureAwait(false))
+        {
+            _logger.Info("Server stopped.");
+            return true;
+        }
+
+        _logger.Info("Graceful shutdown timed out, killing the process.");
+        process.Kill(entireProcessTree: true);
+        return await ServerController.WaitForExitAsync(process, TimeSpan.FromSeconds(10), CancellationToken.None)
+            .ConfigureAwait(false);
     }
 
     // Set only the UI culture (drives resx lookup). CurrentCulture is left on the OS regional setting so

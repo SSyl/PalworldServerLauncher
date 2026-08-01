@@ -37,6 +37,7 @@ public sealed class ServerController : IDisposable
     private readonly BackupScheduler _backupScheduler;
     private readonly DiscordNotifier _discord;
     private readonly DiscordBotService _discordBot;
+    private readonly LauncherIpcServer _ipc;
     private ServerState _lastNotifiedState = ServerState.Stopped;
     private readonly SemaphoreSlim _steamGate = new(1, 1); // serialize all SteamCMD runs - never two at once
 
@@ -97,6 +98,66 @@ public sealed class ServerController : IDisposable
             ResolvePlayerName: ResolvePlayerDisplayNameAsync));
         if (config.DiscordBotEnabled)
             FireAndForget(_discordBot.StartAsync, "Discord bot start");
+
+        // Let a second copy of the exe (--stop-server) ask US to stop, instead of killing the process behind our
+        // back, which OnProcessExited would read as a crash and relaunch.
+        _ipc = new LauncherIpcServer(LauncherIpc.PipeNameFor(LauncherConfig.DataRoot), HandleCliStopAsync, _logger.Info);
+        _ipc.Start();
+    }
+
+    /// <summary>
+    /// Serve a stop asked for from the command line. Routes to the very methods the Stop button uses, so the
+    /// relaunch latch is set and the exit is never mistaken for a crash. Runs on the pipe's thread, the same way
+    /// the Discord bot's commands do.
+    /// </summary>
+    private async Task<StopOutcome> HandleCliStopAsync(StopRequest request, Action<string> report)
+    {
+        Process? process;
+        lock (_gate)
+            process = _process;
+
+        // Nothing to stop is a success: a scripted "make sure it's down" shouldn't fail because it already is.
+        if (process is null || process.HasExited)
+            return new StopOutcome(true, "No server is running.");
+
+        switch (request.Kind)
+        {
+            case StopKind.Kill:
+                report("Killing the server process.");
+                ForceShutdownNow();
+                // Kill() is asynchronous, so confirm the exit landed before reporting the server down.
+                return await WaitForExitAsync(process, TimeSpan.FromSeconds(10), CancellationToken.None).ConfigureAwait(false)
+                    ? new StopOutcome(true, "Server killed.")
+                    : new StopOutcome(false, "The server process did not exit within 10s.");
+
+            case StopKind.Countdown:
+                // Don't hold the pipe open for the countdown (up to an hour). Fire it the way the GUI's timed
+                // shutdown does and answer as soon as it is under way.
+                FireAndForget(() => ShutdownWithCountdownAsync(request.Seconds), "CLI timed shutdown");
+                return new StopOutcome(true, $"Shutting down in {request.Seconds}s.");
+
+            default:
+                // A graceful stop can run for minutes (the shutdown backup zips SaveGames first), so mirror the
+                // launcher's own log to the waiting CLI rather than leaving it staring at one line.
+                void Forward(LogChannel channel, string text)
+                {
+                    if (channel == LogChannel.General)
+                        report(text);
+                }
+
+                _logger.LineForUi += Forward;
+                try
+                {
+                    await StopAsync(graceful: true).ConfigureAwait(false);
+                }
+                finally
+                {
+                    _logger.LineForUi -= Forward;
+                }
+                return IsRunning()
+                    ? new StopOutcome(false, "The server did not stop.")
+                    : new StopOutcome(true, "Server stopped.");
+        }
     }
 
     /// <summary>Reconnect the Discord bot after its settings change (called by the UI on Save).</summary>
@@ -327,8 +388,12 @@ public sealed class ServerController : IDisposable
     /// <summary>REST client built from the current PalWorldSettings.ini, or null if the API isn't usable.</summary>
     public PalworldRestClient? RestClient { get; private set; }
 
-    private string PalWorldSettingsPath => Path.Combine(
-        _config.ServerRoot, LauncherConfig.ServerFolderName, "Pal", "Saved", "Config", "WindowsServer", "PalWorldSettings.ini");
+    private string PalWorldSettingsPath => PalWorldSettingsPathFor(_config.ServerRoot);
+
+    /// <summary>The game's settings ini under a given server root. Static so the headless CLI stop path can read
+    /// the REST credentials without building a controller.</summary>
+    public static string PalWorldSettingsPathFor(string serverRoot) => Path.Combine(
+        serverRoot, LauncherConfig.ServerFolderName, "Pal", "Saved", "Config", "WindowsServer", "PalWorldSettings.ini");
 
     private string SaveGamesDir => Path.Combine(
         _config.ServerRoot, LauncherConfig.ServerFolderName, "Pal", "Saved", "SaveGames");
@@ -1822,7 +1887,9 @@ public sealed class ServerController : IDisposable
     /// <summary>Running check for callers that already hold <c>_gate</c> (used for the atomic launch check).</summary>
     private bool IsRunningNoLock() => _process is { HasExited: false };
 
-    private static async Task<bool> WaitForExitAsync(Process process, TimeSpan timeout, CancellationToken ct)
+    /// <summary>Wait up to <paramref name="timeout"/> for a process to exit, reporting whether it actually did.
+    /// Internal rather than private so the headless CLI stop path gets the same semantics.</summary>
+    internal static async Task<bool> WaitForExitAsync(Process process, TimeSpan timeout, CancellationToken ct)
     {
         using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
         cts.CancelAfter(timeout);
@@ -1915,6 +1982,7 @@ public sealed class ServerController : IDisposable
         _backupScheduler.Dispose();
         _discord.Dispose();
         _discordBot.Dispose();
+        _ipc.Dispose();
         _health?.Dispose();
         _updateMonitor?.Dispose();
         RestClient?.Dispose();
