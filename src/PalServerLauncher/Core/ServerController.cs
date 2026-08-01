@@ -105,6 +105,46 @@ public sealed class ServerController : IDisposable
         _ipc.Start();
     }
 
+    /// <summary>What a CLI stop resolves to, before anything is actually done.</summary>
+    public enum CliStopVerdict
+    {
+        /// <summary>No server of ours is up at all. A scripted "make sure it's down" has nothing to do.</summary>
+        NothingToStop,
+
+        /// <summary>A server of ours is running but this launcher hasn't bound to it yet (startup adoption is
+        /// still pending, possibly behind a modal prompt). We can't stop it through the normal path.</summary>
+        NotAdopted,
+
+        /// <summary>A graceful stop was asked for on a server we can't save. Force is its own flag.</summary>
+        NeedsRestApi,
+
+        /// <summary>Run the stop.</summary>
+        Proceed,
+    }
+
+    /// <summary>
+    /// Resolve a CLI stop from what the launcher can see. Pure, so the combinations that decide whether a script
+    /// gets a success, a refusal, or an actual stop are unit-tested rather than inferred from the call site.
+    /// </summary>
+    public static CliStopVerdict ResolveCliStop(StopKind kind, bool adopted, bool anyServerRunning, bool restUsable)
+    {
+        if (!adopted)
+            return anyServerRunning ? CliStopVerdict.NotAdopted : CliStopVerdict.NothingToStop;
+        if (kind != StopKind.Kill && !restUsable)
+            return CliStopVerdict.NeedsRestApi;
+        return CliStopVerdict.Proceed;
+    }
+
+    /// <summary>
+    /// Whether a verdict should latch the relaunch gate. Only for verdicts that mean "the server is meant to be
+    /// down": an actual stop, and the nothing-bound case, which covers a restart sitting between its own stop and
+    /// start (minutes wide, thanks to the startup backup, update, and mod sync) where nothing would otherwise
+    /// suppress the restart's relaunch. A refusal must NOT latch, or a still-running server silently loses crash
+    /// auto-restart and zombie recovery until the next Start.
+    /// </summary>
+    public static bool ShouldLatchRelaunchGate(CliStopVerdict verdict) =>
+        verdict is CliStopVerdict.Proceed or CliStopVerdict.NothingToStop;
+
     /// <summary>
     /// Serve a stop asked for from the command line. Routes to the very methods the Stop button uses, so the
     /// relaunch latch is set and the exit is never mistaken for a crash. Runs on the pipe's thread, the same way
@@ -114,25 +154,41 @@ public sealed class ServerController : IDisposable
     {
         Process? process;
         lock (_gate)
-        {
-            // Latch BEFORE the running check, like every other stop entry point. A restart between its stop and
-            // its start has no process bound for minutes (startup backup, update, mod sync), and without the
-            // latch a stop landing in that window would report success and then be undone by the restart's own
-            // relaunch. Cleared by the next user Start, as usual.
-            _restartCts?.Cancel();
-            _relaunchGate.SuppressForDeliberateStop();
             process = _process;
+
+        var adopted = process is { HasExited: false };
+
+        // Only scan when nothing is bound: the listener is up from the controller's constructor, but adoption
+        // happens later in MainWindow and can sit behind a modal prompt, so "no process bound" does not mean
+        // "no server running". Reporting success there would tell a script the server is down while it is up.
+        using var unadopted = adopted ? null : ProcessScanner.FindManagedServer(_config.ServerRoot);
+
+        var verdict = ResolveCliStop(request.Kind, adopted, anyServerRunning: unadopted is not null, RestClient is not null);
+
+        if (ShouldLatchRelaunchGate(verdict))
+        {
+            lock (_gate)
+            {
+                _restartCts?.Cancel();
+                _relaunchGate.SuppressForDeliberateStop();
+            }
         }
 
-        // Nothing to stop is a success: a scripted "make sure it's down" shouldn't fail because it already is.
-        if (process is null || process.HasExited)
-            return new StopOutcome(true, "No server is running.");
+        switch (verdict)
+        {
+            case CliStopVerdict.NothingToStop:
+                return new StopOutcome(true, "No server is running.");
 
-        // Force is its own flag. Matching the GUI (which only offers Force Stop when REST is off) and the
-        // standalone path, a stop that can't save refuses rather than quietly killing the server.
-        if (request.Kind != StopKind.Kill && RestClient is null)
-            return new StopOutcome(false,
-                "REST API is off, so the server can't be saved or shut down cleanly. Use --kill-server to force it down.");
+            case CliStopVerdict.NotAdopted:
+                return new StopOutcome(false,
+                    "A server is running but this launcher hasn't adopted it yet. Finish the launcher's startup prompt, then try again.");
+
+            case CliStopVerdict.NeedsRestApi:
+                return new StopOutcome(false,
+                    "REST API is off, so the server can't be saved or shut down cleanly. Use --kill-server to force it down.");
+        }
+
+        var live = process!; // Proceed implies a bound, live process
 
         switch (request.Kind)
         {
@@ -140,7 +196,7 @@ public sealed class ServerController : IDisposable
                 report("Killing the server process.");
                 ForceShutdownNow();
                 // Kill() is asynchronous, so confirm the exit landed before reporting the server down.
-                return await WaitForExitAsync(process, TimeSpan.FromSeconds(10), CancellationToken.None).ConfigureAwait(false)
+                return await WaitForExitAsync(live, TimeSpan.FromSeconds(10), CancellationToken.None).ConfigureAwait(false)
                     ? new StopOutcome(true, "Server killed.")
                     : new StopOutcome(false, "The server process did not exit within 10s.");
 

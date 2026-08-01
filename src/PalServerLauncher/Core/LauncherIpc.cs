@@ -40,6 +40,21 @@ public static class LauncherIpc
     /// both ends can compute it from their own <see cref="Config.LauncherConfig.DataRoot"/> without reading
     /// launcher.json. Pure, so it is tested.
     /// </summary>
+    /// <summary>Whether a launcher currently holds this pipe name. Named pipes surface under the \\.\pipe
+    /// pseudo-directory, so existence is a plain file check, and it answers the question a failed connect can't:
+    /// was nobody there, or was someone there and unavailable.</summary>
+    public static bool IsListening(string pipeName)
+    {
+        try
+        {
+            return File.Exists(@"\\.\pipe\" + pipeName);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
     public static string PipeNameFor(string dataRoot)
     {
         var normalized = Path.TrimEndingDirectorySeparator(Path.GetFullPath(dataRoot)).ToLowerInvariant();
@@ -76,7 +91,13 @@ public static class LauncherIpcClient
         }
         catch (Exception ex) when (ex is TimeoutException or IOException or UnauthorizedAccessException)
         {
-            return null; // nothing listening
+            // Failing to connect is not the same as nobody being there. A listener that exists but is busy (it
+            // serves one at a time) or unreachable (an elevated launcher, a different session) still owns the
+            // server, and stopping it ourselves would look like a crash to it and get the server relaunched.
+            // Only a name that isn't there at all licenses the standalone path.
+            return LauncherIpc.IsListening(pipeName)
+                ? new StopOutcome(false, "A launcher is running but wouldn't accept the request. It may be busy with another stop.")
+                : null;
         }
 
         try

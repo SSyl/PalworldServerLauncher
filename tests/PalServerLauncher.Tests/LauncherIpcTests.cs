@@ -159,6 +159,74 @@ public class LauncherIpcTests
     }
 
     [Fact]
+    public async Task The_outcome_survives_a_progress_burst_that_overruns_the_queue()
+    {
+        // The handler enqueues far faster than the pump can write to a zero-buffer pipe, so a healthy reader
+        // still overflows the queue. Overflow must cost old progress lines, never the terminal outcome the
+        // CLI's exit code is read from.
+        var pipeName = UniquePipeName();
+        const int burst = 3000;
+        using var server = new LauncherIpcServer(pipeName, (_, report) =>
+        {
+            for (var i = 0; i < burst; i++)
+                report($"line {i}");
+            return Task.FromResult(new StopOutcome(true, "Server stopped."));
+        }, _ => { });
+        server.Start();
+        await WaitForPipeAsync(pipeName);
+
+        var progress = new List<string>();
+        var outcome = await LauncherIpcClient.SendAsync(pipeName, new StopRequest(StopKind.Graceful), progress.Add);
+
+        Assert.Equal(new StopOutcome(true, "Server stopped."), outcome);
+        Assert.NotEmpty(progress);
+        Assert.True(progress.Count < burst, "the burst should have overrun the queue, or this test proves nothing");
+    }
+
+    [Fact]
+    public async Task A_handler_that_throws_still_answers_and_keeps_the_listener_alive()
+    {
+        var pipeName = UniquePipeName();
+        var calls = 0;
+        using var server = new LauncherIpcServer(pipeName, (_, _) =>
+            Interlocked.Increment(ref calls) == 1
+                ? throw new InvalidOperationException("boom")
+                : Task.FromResult(new StopOutcome(true, "stopped")), _ => { });
+        server.Start();
+        await WaitForPipeAsync(pipeName);
+
+        var failed = await LauncherIpcClient.SendAsync(pipeName, new StopRequest(StopKind.Graceful), _ => { });
+        Assert.False(failed?.Succeeded);
+
+        await WaitForPipeAsync(pipeName);
+        var second = await LauncherIpcClient.SendAsync(pipeName, new StopRequest(StopKind.Graceful), _ => { });
+        Assert.Equal(new StopOutcome(true, "stopped"), second);
+    }
+
+    [Fact]
+    public async Task A_busy_listener_is_reported_as_a_failure_not_as_nobody_listening()
+    {
+        // Null means "stop the server yourself", which behind a live launcher is the crash-relaunch this
+        // feature exists to prevent. A listener that is merely busy must never produce it.
+        var pipeName = UniquePipeName();
+        var release = new TaskCompletionSource();
+        using var server = new LauncherIpcServer(pipeName,
+            async (_, _) => { await release.Task; return new StopOutcome(true, "stopped"); }, _ => { });
+        server.Start();
+        await WaitForPipeAsync(pipeName);
+
+        var held = LauncherIpcClient.SendAsync(pipeName, new StopRequest(StopKind.Graceful), _ => { });
+        await Task.Delay(300); // let the first request occupy the single instance
+
+        var second = await LauncherIpcClient.SendAsync(pipeName, new StopRequest(StopKind.Graceful), _ => { });
+        Assert.NotNull(second);
+        Assert.False(second.Succeeded);
+
+        release.SetResult();
+        Assert.True((await held)?.Succeeded);
+    }
+
+    [Fact]
     public async Task A_client_that_stops_reading_costs_one_timeout_not_the_listener()
     {
         var pipeName = UniquePipeName();
