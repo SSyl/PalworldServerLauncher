@@ -2425,4 +2425,15 @@
   <data name="Main_JumpToLatest" xml:space="preserve">
     <value>跳至最新</value>
   </data>
+  <data name="SingleInstance_Title" xml:space="preserve">
+    <value>啟動器已在執行</value>
+  </data>
+  <data name="SingleInstance_Message" xml:space="preserve">
+    <value>偵測到此資料夾中已有一個 Palworld Server Launcher 執行個體在執行。請先關閉另一個執行個體，再開啟新的執行個體。
+
+從不同資料夾執行多個啟動器沒有問題。此提示僅針對目前資料夾。</value>
+  </data>
+  <data name="SingleInstance_ForceClose" xml:space="preserve">
+    <value>強制關閉另一個執行個體</value>
+  </data>
 </root>

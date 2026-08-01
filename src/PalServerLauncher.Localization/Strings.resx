@@ -2501,4 +2501,15 @@ Doing this may cause major issues (server crashes, save corruption) if the mod i
   <data name="Main_JumpToLatest" xml:space="preserve">
     <value>Jump to latest</value>
   </data>
+  <data name="SingleInstance_Title" xml:space="preserve">
+    <value>Launcher Already Running</value>
+  </data>
+  <data name="SingleInstance_Message" xml:space="preserve">
+    <value>Detected an existing Palworld Server Launcher instance running from this folder. Please close the other instance before opening another.
+
+Running launchers from separate folders is fine. This only affects this folder.</value>
+  </data>
+  <data name="SingleInstance_ForceClose" xml:space="preserve">
+    <value>Force Close Other Instance</value>
+  </data>
 </root>

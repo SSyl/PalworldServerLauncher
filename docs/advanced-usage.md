@@ -20,6 +20,12 @@ backups). Just give each server its own ports:
 The Steam query port picks the first free one automatically (starting at 27015), or you can set a fixed
 **Query port** under Launch Arguments if you forward it.
 
+Running as many launchers as you have folders is fine and is the intended setup. What is not fine is two
+launchers on the *same* folder, since they would share one server, one config, and one data folder, and fight
+over restarts, backups, and updates. Opening a second launcher from a folder that already has one running
+offers to force close the other one, or to exit. Force closing the other launcher does not stop its server,
+which keeps running and is picked back up when a launcher next opens.
+
 ## Command-line options
 
 You can double-click the launcher, or start it from a terminal with a couple of extra options:

@@ -2425,4 +2425,15 @@
   <data name="Main_JumpToLatest" xml:space="preserve">
     <value>跳至最新</value>
   </data>
+  <data name="SingleInstance_Title" xml:space="preserve">
+    <value>启动器已在运行</value>
+  </data>
+  <data name="SingleInstance_Message" xml:space="preserve">
+    <value>检测到此文件夹中已有一个 Palworld Server Launcher 实例在运行。请先关闭另一个实例，再打开新的实例。
+
+从不同文件夹运行多个启动器没有问题。此提示仅针对当前文件夹。</value>
+  </data>
+  <data name="SingleInstance_ForceClose" xml:space="preserve">
+    <value>强制关闭另一个实例</value>
+  </data>
 </root>

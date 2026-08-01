@@ -2501,4 +2501,15 @@ REST API на этом сервере пока не включён, поэтом
   <data name="Main_JumpToLatest" xml:space="preserve">
     <value>К последним</value>
   </data>
+  <data name="SingleInstance_Title" xml:space="preserve">
+    <value>Лаунчер уже запущен</value>
+  </data>
+  <data name="SingleInstance_Message" xml:space="preserve">
+    <value>Обнаружен запущенный экземпляр Palworld Server Launcher из этой папки. Закройте другой экземпляр, прежде чем открывать новый.
+
+Запускать лаунчеры из разных папок можно. Это касается только текущей папки.</value>
+  </data>
+  <data name="SingleInstance_ForceClose" xml:space="preserve">
+    <value>Принудительно закрыть другой экземпляр</value>
+  </data>
 </root>

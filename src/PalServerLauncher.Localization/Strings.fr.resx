@@ -2501,4 +2501,15 @@ Cela peut provoquer de graves problèmes (plantages du serveur, corruption des s
   <data name="Main_JumpToLatest" xml:space="preserve">
     <value>Revenir au direct</value>
   </data>
+  <data name="SingleInstance_Title" xml:space="preserve">
+    <value>Le lanceur est déjà en cours d'exécution</value>
+  </data>
+  <data name="SingleInstance_Message" xml:space="preserve">
+    <value>Une instance de Palworld Server Launcher est déjà en cours d'exécution dans ce dossier. Fermez l'autre instance avant d'en ouvrir une nouvelle.
+
+Lancer plusieurs lanceurs depuis des dossiers distincts ne pose pas de problème. Cela ne concerne que ce dossier.</value>
+  </data>
+  <data name="SingleInstance_ForceClose" xml:space="preserve">
+    <value>Forcer la fermeture de l'autre instance</value>
+  </data>
 </root>

@@ -87,6 +87,49 @@ public static class ProcessScanner
         return full;
     }
 
+    /// <summary>
+    /// Other launcher processes running from the SAME exe file as this one. Two launchers in separate folders are
+    /// a supported setup (one install each), so this matches on the exact exe path, not on the process name.
+    /// Caller owns and disposes the returned processes.
+    /// </summary>
+    public static IReadOnlyList<Process> FindSiblingLaunchers()
+    {
+        var ourPath = Environment.ProcessPath;
+        if (string.IsNullOrWhiteSpace(ourPath))
+            return [];
+
+        var ourPid = Environment.ProcessId;
+        var matches = new List<Process>();
+
+        foreach (var candidate in Process.GetProcessesByName(Path.GetFileNameWithoutExtension(ourPath)))
+        {
+            var matched = false;
+            try
+            {
+                matched = candidate.Id != ourPid && SameExe(candidate.MainModule?.FileName, ourPath);
+            }
+            catch
+            {
+                // Access denied (an elevated instance) or it exited mid-scan. Can't confirm it is a sibling.
+            }
+
+            if (matched)
+                matches.Add(candidate);
+            else
+                candidate.Dispose();
+        }
+
+        return matches;
+    }
+
+    /// <summary>Whether two paths name the same exe file. Pure, so the same-folder rule is unit-tested.</summary>
+    public static bool SameExe(string? a, string? b)
+    {
+        if (string.IsNullOrWhiteSpace(a) || string.IsNullOrWhiteSpace(b))
+            return false;
+        return string.Equals(Path.GetFullPath(a), Path.GetFullPath(b), StringComparison.OrdinalIgnoreCase);
+    }
+
     /// <summary>Whether a running server process is one we manage (path under our root), a foreign one (readable
     /// path outside our root), or one whose path we couldn't read (so we can neither confirm it is ours nor attach
     /// to it, meaning a Start would spawn a competing duplicate).</summary>

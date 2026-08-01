@@ -113,6 +113,14 @@ public partial class App : Application
         EventManager.RegisterClassHandler(typeof(Window), FrameworkElement.LoadedEvent,
             new RoutedEventHandler((s, _) => { if (s is Window w) DarkTitleBar.Apply(w); }));
 
+        // Only one GUI per install folder. Reached after the headless branches on purpose: --stop-server and
+        // --install-server ARE second instances by design and must never trip this.
+        if (!EnsureOnlyLauncherForThisFolder())
+        {
+            Shutdown(1);
+            return;
+        }
+
         // The first-run language picker is shown before MainWindow exists, so it is briefly the only open
         // window. Under the default OnLastWindowClose, closing it would exit the app before MainWindow opens.
         // Hold shutdown until MainWindow is up, then restore the normal close-to-exit behavior.
@@ -173,6 +181,52 @@ public partial class App : Application
             _logger.Error("Headless install failed", ex);
         }
         Dispatcher.Invoke(() => Shutdown(exitCode));
+    }
+
+    /// <summary>
+    /// Two launchers on one folder share a server, a config, and a data root, and would fight over restarts,
+    /// backups, and updates. Two launchers in DIFFERENT folders are a supported setup (one install each), so this
+    /// matches on the exe path, never on the process name. Returns false when this instance should not start.
+    /// </summary>
+    private bool EnsureOnlyLauncherForThisFolder()
+    {
+        var others = ProcessScanner.FindSiblingLaunchers();
+        if (others.Count == 0)
+            return true;
+
+        try
+        {
+            _logger.Info($"Another launcher is already running from this folder (PID {string.Join(", ", others.Select(p => p.Id))}).");
+
+            // No owner window: MainWindow does not exist yet, and this has to be settled before anything
+            // (schedulers, the CLI listener, server adoption) starts up behind it.
+            var choice = ChoiceDialog.Show(null, Strings.SingleInstance_Title, Strings.SingleInstance_Message,
+                Strings.SingleInstance_ForceClose, Strings.Main_ExitLauncher);
+
+            if (choice != 0)
+                return false;
+
+            foreach (var other in others)
+            {
+                try
+                {
+                    other.Kill(entireProcessTree: false); // the server is deliberately NOT in its tree, so it survives
+                    other.WaitForExit(5000);
+                    _logger.Info($"Force closed the other launcher (PID {other.Id}).");
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error($"Couldn't close the other launcher (PID {other.Id})", ex);
+                    return false;
+                }
+            }
+            return true;
+        }
+        finally
+        {
+            foreach (var other in others)
+                other.Dispose();
+        }
     }
 
     /// <summary>

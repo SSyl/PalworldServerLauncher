@@ -6,6 +6,7 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
 
 ### Added
 - **Stop the server from the command line with `--stop-server`.** It saves, runs the shutdown backup, and shuts the server down, then exits. Add a number of seconds (`--stop-server 60`) to warn players with an in-game countdown first, or use `--kill-server` to end a wedged server immediately. See [Advanced usage](docs/advanced-usage.md) for the details.
+- **Opening a second launcher from the same folder now warns instead of quietly running two.** Two launchers on one folder share a server, a config, and a data folder, and fight over restarts, backups, and updates. The second one offers to force close the first, or to exit. Running a launcher per folder, one install each, is unaffected and still the intended way to run several servers.
 - **`--stop-server` works even while a launcher window is open.** It hands the request to the running launcher, so the shutdown behaves exactly like clicking Stop (shutdown backup, Discord notification) and the launcher knows the server was stopped on purpose instead of treating it as a crash and starting it again.
 
 ## [1.0.2] - 2026-07-27
