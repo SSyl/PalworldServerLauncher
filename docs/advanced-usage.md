@@ -54,13 +54,14 @@ shutdown that the launcher would.
 
 A few details worth knowing:
 
-- **Exit code 0 means the server is down**, including when it was not running to begin with, so a script can
-  run this to be sure. Anything else means the stop failed, and the reason is printed.
-- **A countdown returns straight away** rather than waiting it out. The command reports that the countdown has
-  started and the server shuts down on its own once it runs out.
-- **A plain `--stop-server` waits** until the server has actually stopped before it exits.
-- **`--stop-server` needs the REST API enabled** to save and shut down cleanly. With it off, use
-  `--kill-server`, though the server loses anything since its last autosave.
+- **A plain `--stop-server` waits** until the server has actually stopped before it exits, so exit code 0 means
+  it is down. That includes the case where it was not running to begin with, so a script can run this to be
+  sure. Anything else means the stop failed, and the reason is printed.
+- **A countdown returns straight away** rather than waiting it out, so its exit code 0 means the countdown
+  started, not that the server is down yet. It shuts down on its own once the countdown runs out.
+- **`--stop-server` needs the REST API enabled** to save and shut down cleanly. With it off the command
+  refuses, and you can use `--kill-server` instead, though the server then loses anything since its last
+  autosave.
 - **It only reaches launchers running under your own Windows account.** A launcher started by a different
   account (a service, or a scheduled task set to run as another user) will not answer, and the command falls
   back to stopping the server directly.

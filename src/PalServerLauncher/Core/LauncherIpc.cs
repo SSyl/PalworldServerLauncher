@@ -1,6 +1,7 @@
 using System.IO;
 using System.IO.Pipes;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,23 +49,38 @@ public static class LauncherIpc
 }
 
 /// <summary>
-/// The CLI end: connect to a running launcher and hand it a stop request. Every failure to reach one is reported
-/// as null (not an exception) so the caller can fall back to stopping the server standalone.
+/// The CLI end: connect to a running launcher and hand it a stop request. Failures are reported as values rather
+/// than exceptions, and "no launcher answered" is kept distinct from "a launcher answered and then failed",
+/// because only the first makes it safe to go stop the server ourselves.
 /// </summary>
 public static class LauncherIpcClient
 {
     /// <summary>
-    /// Send <paramref name="request"/> to a launcher listening on <paramref name="pipeName"/>. Returns its outcome,
-    /// or null when no launcher answered (nothing listening, or a stop already in flight holding the instance).
-    /// Progress lines arrive on <paramref name="onLog"/> as they stream in.
+    /// Send <paramref name="request"/> to a launcher listening on <paramref name="pipeName"/> and return its
+    /// outcome. Null means specifically that NO launcher answered, so the caller may safely stop the server
+    /// itself. A launcher that answered and then failed comes back as a failed outcome instead: falling back
+    /// there would run a second shutdown on top of one already in flight. Progress lines arrive on
+    /// <paramref name="onLog"/> as they stream in.
     /// </summary>
     public static async Task<StopOutcome?> SendAsync(string pipeName, StopRequest request, Action<string> onLog)
     {
+        // Anonymous impersonation: the server end of a pipe can impersonate its client, and this name is
+        // derivable from the install path on a machine where any local user can create it first. Nothing we
+        // connect to should get to act as this user.
+        await using var pipe = new NamedPipeClientStream(
+            ".", pipeName, PipeDirection.InOut, PipeOptions.Asynchronous, TokenImpersonationLevel.Anonymous);
+
         try
         {
-            await using var pipe = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
             await pipe.ConnectAsync((int)LauncherIpc.ConnectTimeout.TotalMilliseconds).ConfigureAwait(false);
+        }
+        catch (Exception ex) when (ex is TimeoutException or IOException or UnauthorizedAccessException)
+        {
+            return null; // nothing listening
+        }
 
+        try
+        {
             using var deadline = new CancellationTokenSource(LauncherIpc.RequestTimeout);
             var writer = new StreamWriter(pipe, new UTF8Encoding(false)) { AutoFlush = true };
             var reader = new StreamReader(pipe, new UTF8Encoding(false));
@@ -84,14 +100,9 @@ public static class LauncherIpcClient
             // The launcher closed the pipe without a terminal line (it exited mid-stop, most likely).
             return new StopOutcome(false, "The launcher closed the connection before finishing the stop.");
         }
-        catch (TimeoutException)
+        catch (Exception ex) when (ex is IOException or OperationCanceledException)
         {
-            return null; // nothing listening
-        }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or OperationCanceledException)
-        {
-            onLog($"Could not talk to the running launcher: {ex.Message}");
-            return null;
+            return new StopOutcome(false, $"Lost contact with the running launcher mid-stop: {ex.Message}");
         }
     }
 }

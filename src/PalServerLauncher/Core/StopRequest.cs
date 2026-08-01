@@ -32,7 +32,7 @@ public sealed record StopRequest(StopKind Kind, int Seconds = 0)
     /// <summary>
     /// Parse argv. Returns null when no stop verb is present (with <paramref name="error"/> null), or null with an
     /// <paramref name="error"/> when a verb is present but its countdown is unusable. <c>--stop-server</c> takes an
-    /// optional countdown as either the next bare token or <c>=N</c>; a non-numeric next token is left alone so
+    /// optional countdown as either the next bare token or <c>=N</c>. A non-numeric next token is left alone, so
     /// <c>--stop-server --debug</c> still means an immediate stop.
     /// </summary>
     public static StopRequest? FromCommandLine(IReadOnlyList<string> args, out string? error)
@@ -49,14 +49,16 @@ public sealed record StopRequest(StopKind Kind, int Seconds = 0)
             if (!SplitFlag(arg, StopFlags, out var inlineValue))
                 continue;
 
-            // "--stop-server=60" carries its value; otherwise a bare numeric next token is the countdown.
+            // "--stop-server=60" carries its value, otherwise a bare numeric next token is the countdown.
             var value = inlineValue ?? (i + 1 < args.Count && IsBareNumber(args[i + 1]) ? args[i + 1] : null);
             if (value is null)
                 return new StopRequest(StopKind.Graceful);
 
             if (!int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var seconds))
             {
-                error = $"--stop-server: '{value}' is not a number of seconds.";
+                error = IsBareNumber(value)
+                    ? $"--stop-server: countdown must be between 1 and {MaxCountdownSeconds} seconds."
+                    : $"--stop-server: '{value}' is not a number of seconds.";
                 return null;
             }
 
@@ -129,7 +131,12 @@ public sealed record StopRequest(StopKind Kind, int Seconds = 0)
         return true;
     }
 
-    /// <summary>A token that is nothing but digits (optionally signed), so a following flag is never eaten as a value.</summary>
-    private static bool IsBareNumber(string arg) =>
-        arg.Length > 0 && int.TryParse(arg, NumberStyles.Integer, CultureInfo.InvariantCulture, out _);
+    /// <summary>A token that is nothing but digits (optionally signed), so a following flag is never eaten as a
+    /// value. Deliberately not an int.TryParse: a value too large for an int has to reach the range error, not
+    /// be discarded as "not a number" and silently turn the request into an immediate stop.</summary>
+    private static bool IsBareNumber(string arg)
+    {
+        var digits = arg.StartsWith('-') || arg.StartsWith('+') ? arg[1..] : arg;
+        return digits.Length > 0 && digits.All(char.IsAsciiDigit);
+    }
 }

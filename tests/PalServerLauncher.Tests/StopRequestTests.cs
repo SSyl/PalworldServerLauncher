@@ -90,6 +90,17 @@ public class StopRequestTests
         Assert.Contains("soon", ErrorFor("--stop-server=soon"));
     }
 
+    [Theory]
+    [InlineData("--stop-server", "99999999999")]
+    [InlineData("--stop-server=99999999999", null)]
+    public void A_countdown_too_large_for_an_int_still_reports_the_range(string flag, string? seconds)
+    {
+        // It must not fall through "that isn't a number" into a silent immediate stop.
+        var args = seconds is null ? new[] { flag } : [flag, seconds];
+        Assert.Null(StopRequest.FromCommandLine(args, out var error));
+        Assert.Contains("3600", error);
+    }
+
     [Fact]
     public void Kill_wins_when_it_comes_first()
     {

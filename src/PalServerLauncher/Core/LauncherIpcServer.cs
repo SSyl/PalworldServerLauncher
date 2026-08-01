@@ -4,6 +4,7 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace PalServerLauncher.Core;
@@ -13,29 +14,48 @@ namespace PalServerLauncher.Core;
 /// and runs it through the handler (which routes to the normal stop path, so the relaunch latch is set).
 ///
 /// One connection at a time, on purpose. Stops are rare and user-driven, and a serial loop means a long graceful
-/// stop can't be raced by a second request. A client that connects and then says nothing is dropped after
-/// <see cref="RequestReadTimeout"/> so it can't wedge the loop.
+/// stop can't be raced by a second request. That makes the listener's liveness critical: every per-connection
+/// failure has to end the connection and keep looping, never fall out of the accept loop.
 /// </summary>
 public sealed class LauncherIpcServer : IDisposable
 {
-    /// <summary>How long a connected client gets to actually send its request line before it is dropped.</summary>
-    private static readonly TimeSpan RequestReadTimeout = TimeSpan.FromSeconds(5);
+    /// <summary>How long a connected client gets to send its request line before it is dropped.</summary>
+    public static readonly TimeSpan DefaultRequestReadTimeout = TimeSpan.FromSeconds(5);
+
+    /// <summary>How long one reply line may block on a client that isn't reading. The pipe is created with a zero
+    /// output buffer, so every write waits for the client, and a client that stops reading would otherwise hold
+    /// the single pipe instance forever.</summary>
+    public static readonly TimeSpan DefaultWriteTimeout = TimeSpan.FromSeconds(10);
+
+    /// <summary>Cap on queued progress lines. Reached only when the client has stopped reading, in which case the
+    /// connection is already being abandoned, so dropping the overflow is right.</summary>
+    private const int MaxQueuedLines = 512;
 
     private static readonly UTF8Encoding Utf8NoBom = new(false);
 
     private readonly string _pipeName;
     private readonly Func<StopRequest, Action<string>, Task<StopOutcome>> _handler;
     private readonly Action<string> _log;
+    private readonly TimeSpan _readTimeout;
+    private readonly TimeSpan _writeTimeout;
     private readonly CancellationTokenSource _cts = new();
-    private readonly object _writeGate = new();
     private Task? _loop;
+    private bool _ownsPipeName;
 
-    /// <param name="handler">Runs the request. Its second argument is a progress sink, safe to call from any thread.</param>
-    public LauncherIpcServer(string pipeName, Func<StopRequest, Action<string>, Task<StopOutcome>> handler, Action<string> log)
+    /// <param name="handler">Runs the request. Its second argument is a progress sink, safe to call from any
+    /// thread and guaranteed not to block the caller.</param>
+    public LauncherIpcServer(
+        string pipeName,
+        Func<StopRequest, Action<string>, Task<StopOutcome>> handler,
+        Action<string> log,
+        TimeSpan? requestReadTimeout = null,
+        TimeSpan? writeTimeout = null)
     {
         _pipeName = pipeName;
         _handler = handler;
         _log = log;
+        _readTimeout = requestReadTimeout ?? DefaultRequestReadTimeout;
+        _writeTimeout = writeTimeout ?? DefaultWriteTimeout;
     }
 
     /// <summary>Begin listening. Never throws: a pipe we can't create just means no CLI control this session.</summary>
@@ -48,13 +68,16 @@ public sealed class LauncherIpcServer : IDisposable
             NamedPipeServerStream pipe;
             try
             {
-                pipe = CreatePipe(_pipeName);
+                pipe = CreatePipe(_pipeName, claimName: !_ownsPipeName);
+                _ownsPipeName = true;
             }
-            catch (IOException)
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
-                // Name already taken: another launcher on this same data root owns it. Two launchers on one data
-                // root already conflict over the server itself, so don't fight for the pipe or retry-spam.
-                _log("Another launcher is already listening for CLI stop commands. This one won't accept them.");
+                // FirstPipeInstance refused the name: someone else already holds it. That is either a second
+                // launcher on this same data root (they already conflict over the server itself) or a local
+                // process squatting the name. Either way, don't fight for it and don't retry-spam.
+                _log("Couldn't claim the CLI stop listener, another process already holds the name. " +
+                     "This launcher won't accept command-line stops.");
                 return;
             }
             catch (Exception ex)
@@ -68,12 +91,15 @@ public sealed class LauncherIpcServer : IDisposable
                 await pipe.WaitForConnectionAsync(ct).ConfigureAwait(false);
                 await ServeAsync(pipe, ct).ConfigureAwait(false);
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException) when (ct.IsCancellationRequested)
             {
-                return;
+                return; // shutting down, the only reason to leave the loop
             }
             catch (Exception ex)
             {
+                // Anything else is this ONE connection's problem (a timeout, a client that vanished mid-reply).
+                // Log it and keep listening: a dead listener silently sends every later --stop-server down the
+                // standalone path, which is exactly the crash-relaunch this feature exists to avoid.
                 _log($"CLI stop request failed: {ex.Message}");
             }
             finally
@@ -88,53 +114,75 @@ public sealed class LauncherIpcServer : IDisposable
         var reader = new StreamReader(pipe, Utf8NoBom);
         var writer = new StreamWriter(pipe, Utf8NoBom) { AutoFlush = true };
 
-        using var readDeadline = CancellationTokenSource.CreateLinkedTokenSource(ct);
-        readDeadline.CancelAfter(RequestReadTimeout);
-        var line = await reader.ReadLineAsync(readDeadline.Token).ConfigureAwait(false);
-
-        var request = StopRequest.FromWire(line);
-        if (request is null)
+        string? line;
+        try
         {
-            await WriteAsync(writer, LauncherIpc.ErrPrefix + "Unrecognized request.", ct).ConfigureAwait(false);
+            using var readDeadline = CancellationTokenSource.CreateLinkedTokenSource(ct);
+            readDeadline.CancelAfter(_readTimeout);
+            line = await reader.ReadLineAsync(readDeadline.Token).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException) when (!ct.IsCancellationRequested)
+        {
+            _log("A CLI stop connection sent no request and was dropped.");
             return;
         }
 
-        _log($"CLI stop request received: {request.ToWire()}");
-        var outcome = await _handler(request, text => Report(writer, text)).ConfigureAwait(false);
-        var prefix = outcome.Succeeded ? LauncherIpc.OkPrefix : LauncherIpc.ErrPrefix;
-        await WriteAsync(writer, prefix + Flatten(outcome.Message), ct).ConfigureAwait(false);
+        var request = StopRequest.FromWire(line);
+
+        // All replies go through one queue drained by a single writer task, so the handler's progress callback
+        // never blocks (it can fire on the UI thread via Logger.LineForUi) and two writes can never interleave.
+        var replies = Channel.CreateBounded<string>(
+            new BoundedChannelOptions(MaxQueuedLines) { FullMode = BoundedChannelFullMode.DropWrite, SingleReader = true });
+        var pump = PumpAsync(writer, replies.Reader);
+
+        if (request is null)
+        {
+            replies.Writer.TryWrite(LauncherIpc.ErrPrefix + "Unrecognized request.");
+        }
+        else
+        {
+            _log($"CLI stop request received: {request.ToWire()}");
+            var outcome = await _handler(request, text => replies.Writer.TryWrite(LauncherIpc.LogPrefix + Flatten(text)))
+                .ConfigureAwait(false);
+            replies.Writer.TryWrite((outcome.Succeeded ? LauncherIpc.OkPrefix : LauncherIpc.ErrPrefix) + Flatten(outcome.Message));
+        }
+
+        replies.Writer.Complete();
+        await pump.ConfigureAwait(false);
     }
 
-    /// <summary>Stream one progress line to the client. Best effort: the client may have walked away, and losing
-    /// progress must never fail the stop that's already under way.</summary>
-    private void Report(StreamWriter writer, string text)
+    /// <summary>Drain queued reply lines to the client, one at a time. Bounded by <see cref="_writeTimeout"/> per
+    /// line so a client that stopped reading costs one timeout, not the listener.</summary>
+    private async Task PumpAsync(StreamWriter writer, ChannelReader<string> replies)
     {
-        try
+        await foreach (var line in replies.ReadAllAsync().ConfigureAwait(false))
         {
-            lock (_writeGate)
-                writer.WriteLine(LauncherIpc.LogPrefix + Flatten(text));
+            using var deadline = new CancellationTokenSource(_writeTimeout);
+            try
+            {
+                await writer.WriteLineAsync(line.AsMemory(), deadline.Token).ConfigureAwait(false);
+            }
+            catch (Exception ex) when (ex is OperationCanceledException or IOException or ObjectDisposedException)
+            {
+                // The client stopped reading or went away. Abandon the connection; the caller still completes the
+                // stop, and the CLI reports the lost connection rather than a false success.
+                return;
+            }
         }
-        catch (Exception ex) when (ex is IOException or ObjectDisposedException)
-        {
-        }
-    }
-
-    private async Task WriteAsync(StreamWriter writer, string line, CancellationToken ct)
-    {
-        // Same gate as Report: a progress line landing mid-write would desync the client's line framing.
-        Task write;
-        lock (_writeGate)
-            write = writer.WriteLineAsync(line.AsMemory(), ct);
-        await write.ConfigureAwait(false);
     }
 
     /// <summary>Collapse newlines: the protocol is line-framed, so an embedded one would look like a new reply.</summary>
     private static string Flatten(string text) =>
         text.ReplaceLineEndings(" ").Trim();
 
-    /// <summary>Create the pipe with a DACL granting only the user running the launcher. Creating a DACL on an
-    /// object you own needs no elevation (only a SACL or a foreign owner would).</summary>
-    private static NamedPipeServerStream CreatePipe(string pipeName)
+    /// <summary>
+    /// Create the pipe with a DACL granting only the user running the launcher. Creating a DACL on an object you
+    /// own needs no elevation (only a SACL or a foreign owner would). <paramref name="claimName"/> adds
+    /// FirstPipeInstance for the very first create: \\.\pipe has no per-user namespace and the name is derivable
+    /// from the install path, so without it another local user could pre-create the name and answer for us. It is
+    /// off for later creates in the accept loop, where we are re-taking a name we already own.
+    /// </summary>
+    private static NamedPipeServerStream CreatePipe(string pipeName, bool claimName)
     {
         var user = WindowsIdentity.GetCurrent().User
             ?? throw new InvalidOperationException("Could not resolve the current user SID.");
@@ -142,12 +190,16 @@ public sealed class LauncherIpcServer : IDisposable
         var security = new PipeSecurity();
         security.AddAccessRule(new PipeAccessRule(user, PipeAccessRights.FullControl, AccessControlType.Allow));
 
+        var options = PipeOptions.Asynchronous;
+        if (claimName)
+            options |= PipeOptions.FirstPipeInstance;
+
         return NamedPipeServerStreamAcl.Create(
             pipeName,
             PipeDirection.InOut,
             maxNumberOfServerInstances: 1,
             PipeTransmissionMode.Byte,
-            PipeOptions.Asynchronous,
+            options,
             inBufferSize: 0,
             outBufferSize: 0,
             security,
@@ -158,6 +210,17 @@ public sealed class LauncherIpcServer : IDisposable
     public void Dispose()
     {
         _cts.Cancel();
+        // Give a request that is mid-reply a moment to land, so closing the launcher during a scripted stop
+        // doesn't report failure for a stop that worked. Bounded: a longer stop is abandoned rather than holding
+        // up shutdown, and the CLI then reports the lost connection.
+        try
+        {
+            _loop?.Wait(TimeSpan.FromSeconds(2));
+        }
+        catch (AggregateException)
+        {
+            // The loop's own failures are already logged.
+        }
         _cts.Dispose();
     }
 }

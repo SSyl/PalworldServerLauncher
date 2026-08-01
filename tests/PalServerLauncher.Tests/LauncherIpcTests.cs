@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.IO;
+using System.IO.Pipes;
 using PalServerLauncher.Core;
 
 namespace PalServerLauncher.Tests;
@@ -132,6 +133,81 @@ public class LauncherIpcTests
 
         Assert.Equal("stop #1", first?.Message);
         Assert.Equal("stop #2", second?.Message);
+    }
+
+    [Fact]
+    public async Task A_client_that_sends_nothing_does_not_kill_the_listener()
+    {
+        // The listener is single-instance, so losing the accept loop sends every later --stop-server down the
+        // standalone path, which is the crash-relaunch this whole feature exists to avoid.
+        var pipeName = UniquePipeName();
+        using var server = new LauncherIpcServer(pipeName,
+            (_, _) => Task.FromResult(new StopOutcome(true, "stopped")), _ => { },
+            requestReadTimeout: TimeSpan.FromMilliseconds(300));
+        server.Start();
+        await WaitForPipeAsync(pipeName);
+
+        await using (var silent = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut, PipeOptions.Asynchronous))
+        {
+            await silent.ConnectAsync(2000);
+            await Task.Delay(600); // outlast the read timeout without sending a request
+        }
+
+        await WaitForPipeAsync(pipeName); // the loop must have come back around
+        var outcome = await LauncherIpcClient.SendAsync(pipeName, new StopRequest(StopKind.Graceful), _ => { });
+        Assert.Equal(new StopOutcome(true, "stopped"), outcome);
+    }
+
+    [Fact]
+    public async Task A_client_that_stops_reading_costs_one_timeout_not_the_listener()
+    {
+        var pipeName = UniquePipeName();
+        var handlerFinished = new TaskCompletionSource();
+        using var server = new LauncherIpcServer(pipeName, (_, report) =>
+        {
+            // More progress than the pipe can hand to a client that never reads.
+            for (var i = 0; i < 50; i++)
+                report($"line {i}");
+            handlerFinished.TrySetResult();
+            return Task.FromResult(new StopOutcome(true, "stopped"));
+        }, _ => { }, writeTimeout: TimeSpan.FromMilliseconds(300));
+        server.Start();
+        await WaitForPipeAsync(pipeName);
+
+        await using (var deaf = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut, PipeOptions.Asynchronous))
+        {
+            await deaf.ConnectAsync(2000);
+            var writer = new StreamWriter(deaf) { AutoFlush = true };
+            await writer.WriteLineAsync("stop");
+
+            // The handler must not block on a client that isn't draining its progress.
+            await handlerFinished.Task.WaitAsync(TimeSpan.FromSeconds(5));
+        }
+
+        await WaitForPipeAsync(pipeName);
+        var outcome = await LauncherIpcClient.SendAsync(pipeName, new StopRequest(StopKind.Graceful), _ => { });
+        Assert.Equal(new StopOutcome(true, "stopped"), outcome);
+    }
+
+    [Fact]
+    public async Task A_squatted_pipe_name_is_refused_rather_than_shared()
+    {
+        // \\.\pipe has no per-user namespace and the name is derivable from the install path, so the listener
+        // must claim it outright instead of adding an instance next to someone else's.
+        var pipeName = UniquePipeName();
+        await using var squatter = new NamedPipeServerStream(pipeName, PipeDirection.InOut, 2);
+
+        var logged = new List<string>();
+        using var server = new LauncherIpcServer(pipeName,
+            (_, _) => Task.FromResult(new StopOutcome(true, "stopped")), logged.Add);
+        server.Start();
+
+        // It should give up rather than serve alongside the squatter.
+        var deadline = Stopwatch.StartNew();
+        while (logged.Count == 0 && deadline.Elapsed < TimeSpan.FromSeconds(5))
+            await Task.Delay(20);
+
+        Assert.Contains(logged, l => l.Contains("Couldn't claim", StringComparison.Ordinal));
     }
 
     [Fact]

@@ -114,11 +114,25 @@ public sealed class ServerController : IDisposable
     {
         Process? process;
         lock (_gate)
+        {
+            // Latch BEFORE the running check, like every other stop entry point. A restart between its stop and
+            // its start has no process bound for minutes (startup backup, update, mod sync), and without the
+            // latch a stop landing in that window would report success and then be undone by the restart's own
+            // relaunch. Cleared by the next user Start, as usual.
+            _restartCts?.Cancel();
+            _relaunchGate.SuppressForDeliberateStop();
             process = _process;
+        }
 
         // Nothing to stop is a success: a scripted "make sure it's down" shouldn't fail because it already is.
         if (process is null || process.HasExited)
             return new StopOutcome(true, "No server is running.");
+
+        // Force is its own flag. Matching the GUI (which only offers Force Stop when REST is off) and the
+        // standalone path, a stop that can't save refuses rather than quietly killing the server.
+        if (request.Kind != StopKind.Kill && RestClient is null)
+            return new StopOutcome(false,
+                "REST API is off, so the server can't be saved or shut down cleanly. Use --kill-server to force it down.");
 
         switch (request.Kind)
         {
