@@ -213,9 +213,12 @@ public sealed class ServerController : IDisposable
                 // Whichever lands first: the server's answer, or the whole stop ending without one (no REST, the
                 // process already gone, a failure). Only the first is a countdown that actually started.
                 var settled = await Task.WhenAny(requested.Task, countdown).ConfigureAwait(false);
+                // A refusal is NOT the end of it: the stop ladder keeps going and force stops the server shortly.
+                // Say so, or a script reads the failure as "nothing happened" and the server goes down anyway.
                 return settled == requested.Task && requested.Task.Result
                     ? new StopOutcome(true, $"Shutting down in {request.Seconds}s.")
-                    : new StopOutcome(false, "The server did not accept the shutdown request.");
+                    : new StopOutcome(false,
+                        "The server did not accept the shutdown request. The launcher will force stop it shortly if it doesn't exit on its own.");
 
             default:
                 // A graceful stop can run for minutes (the shutdown backup zips SaveGames first), so mirror the

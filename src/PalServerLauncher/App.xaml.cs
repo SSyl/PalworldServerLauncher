@@ -336,7 +336,8 @@ public partial class App : Application
         _logger.Info($"Shutting down (wait {wait}s)...");
         if (!await rest.ShutdownAsync(wait, "Server is shutting down.").ConfigureAwait(false))
         {
-            _logger.Error("The server rejected the shutdown request.");
+            // Unlike the launcher's ladder, nothing follows this, so the server really is still up.
+            _logger.Error("The server rejected the shutdown request. It is still running. Use --kill-server to force it down.");
             return false;
         }
 
