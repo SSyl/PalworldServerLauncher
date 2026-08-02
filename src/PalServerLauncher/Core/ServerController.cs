@@ -202,9 +202,8 @@ public sealed class ServerController : IDisposable
                     : new StopOutcome(false, "The server process did not exit within 10s.");
 
             case StopKind.Countdown:
-                // A countdown that would only join a running stop never gets its /shutdown sent, so waiting on it
-                // would block for the OTHER stop's duration and then report a failure for a server that did stop.
-                // Say what actually happened instead, and say it now.
+                // Joining sends no /shutdown of our own, so there is no countdown to report on and waiting would
+                // just block for the other stop's duration.
                 if (_stopGate.IsRunning)
                     return new StopOutcome(false, "A stop is already in progress, so the countdown was not started.");
 
@@ -1471,13 +1470,9 @@ public sealed class ServerController : IDisposable
     }
 
     /// <summary>
-    /// The stop entry point every caller uses (plain Stop, timed shutdown, restart, recovery). Graceful stops are
-    /// serialized, so a second one joins the running ladder rather than fighting it (see <see cref="StopGate"/>).
-    ///
-    /// A FORCE stop deliberately bypasses the gate. It is the escape hatch, same role as
-    /// <see cref="ForceShutdownNow"/>: killing the process is what unblocks a graceful ladder that is dragging, so
-    /// making it queue behind that ladder would leave the user's Force Stop waiting out the very countdown they
-    /// pressed it to escape.
+    /// Graceful stops are serialized through <see cref="StopGate"/>. A force stop bypasses it: killing the process
+    /// is what unblocks a graceful ladder that is dragging, so queueing it behind one would make Force Stop wait
+    /// out the countdown it was pressed to escape.
     /// </summary>
     private Task StopCoreAsync(bool graceful, int shutdownWaitSeconds, bool restarting, CancellationToken ct,
         Action<bool>? onShutdownRequested = null)

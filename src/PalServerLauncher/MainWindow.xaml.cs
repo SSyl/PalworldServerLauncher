@@ -328,13 +328,8 @@ public partial class MainWindow : Window
         }
     }
 
-    /// <summary>
-    /// Finish the shutdown the close prompt asked for, then let the window close. Started fire-and-forget from
-    /// OnClosing (which has already cancelled that first close), so nothing observes this task: a failure here
-    /// skipped Close() and left the window open with no dialog and no log line explaining it. Clicking X again
-    /// does close it, because the server is down by then and OnClosing stops cancelling, but the prompt's own
-    /// choice should not need a second click. Close whichever way the shutdown went, and log why if it failed.
-    /// </summary>
+    /// <summary>Fire-and-forget from OnClosing, which has already cancelled that close, so nothing observes this
+    /// task and an unguarded failure would skip Close() and leave the window open.</summary>
     private async Task ShutdownThenClose(Task shutdown)
     {
         _logger.Debug("Waiting for the shutdown to finish before closing the window.");
