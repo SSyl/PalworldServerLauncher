@@ -71,7 +71,8 @@ A few details worth knowing:
   refuses, and you can use `--kill-server` instead, though the server then loses anything since its last
   autosave.
 - **It only reaches launchers running under your own Windows account.** A launcher started by a different
-  account (a service, or a scheduled task set to run as another user) will not answer, and rather than stop
-  the server behind it, the command reports that and exits non-zero. Stop that server from its own launcher.
+  account (a service, or a scheduled task set to run as another user) will not answer. In that case the command
+  reports it and exits non-zero rather than stopping the server behind it, so long as that launcher is holding
+  its side of the connection. Stopping such a server from its own launcher is the reliable way.
 - **Each copy of the exe controls its own server.** Run the command from the folder of the server you want to
   stop, the same way each copy keeps its own settings and install.

@@ -85,12 +85,11 @@ public static class LauncherIpcClient
     /// </summary>
     public static async Task<StopOutcome?> SendAsync(string pipeName, StopRequest request, Action<string> onLog)
     {
-        // Anonymous impersonation: the server end of a pipe can impersonate its client, and this name is
-        // derivable from the install path on a machine where any local user can create it first. Nothing we
-        // connect to should get to act as this user.
-        // CurrentUserOnly refuses to connect unless the server end runs as this same user, so a local account
-        // that pre-created the name can neither answer for the launcher nor read a graceful stop's streamed log.
-        // Anonymous impersonation is the other half: nothing we connect to gets to act as this user.
+        // This name is derivable from the install path, and \\.\pipe has no per-user namespace, so any local
+        // account can create it first. CurrentUserOnly refuses to connect unless the server end runs as this
+        // same user, so a squatter can neither answer for the launcher nor read a graceful stop's streamed log.
+        // Anonymous is the other half: the server end of a pipe can impersonate its client, and whatever we do
+        // connect to must not get to act as this user.
         await using var pipe = new NamedPipeClientStream(
             ".", pipeName, PipeDirection.InOut,
             PipeOptions.Asynchronous | PipeOptions.CurrentUserOnly, TokenImpersonationLevel.Anonymous);

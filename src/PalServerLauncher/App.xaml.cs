@@ -211,7 +211,9 @@ public partial class App : Application
             {
                 try
                 {
-                    other.Kill(entireProcessTree: false); // the server is deliberately NOT in its tree, so it survives
+                    // false is load-bearing: the server IS a child of the launcher that started it (no Job Object,
+                    // but still a child), so entireProcessTree: true would take the running server down with it.
+                    other.Kill(entireProcessTree: false);
                     other.WaitForExit(5000);
                     _logger.Info($"Force closed the other launcher (PID {other.Id}).");
                 }
@@ -281,10 +283,17 @@ public partial class App : Application
     /// </summary>
     private async Task<bool> StopServerDirectlyAsync(StopRequest request, LauncherConfig config)
     {
-        // Last line of defence before stopping a server nobody handed us. A launcher can be alive with no
-        // listener (it lost the pipe name, or never claimed it), and SendAsync cannot tell that from nobody
-        // being home. Stopping the server behind that launcher is read as a crash and relaunched, which is the
-        // whole failure this feature exists to prevent, so refuse instead.
+        using var process = ProcessScanner.FindManagedServer(config.ServerRoot);
+        if (process is null)
+        {
+            _logger.Info("No server is running.");
+            return true; // nothing to stop is a success, so a scripted stop is idempotent
+        }
+
+        // Checked only once there IS something to stop, so "nothing was running" keeps its documented exit 0.
+        // A launcher can be alive with no listener (it lost the pipe name, or never claimed it) and SendAsync
+        // cannot tell that from nobody being home. Stopping the server behind that launcher is read as a crash
+        // and relaunched, the whole failure this feature exists to prevent, so refuse instead.
         var siblings = ProcessScanner.FindSiblingLaunchers();
         try
         {
@@ -299,13 +308,6 @@ public partial class App : Application
         {
             foreach (var sibling in siblings)
                 sibling.Dispose();
-        }
-
-        using var process = ProcessScanner.FindManagedServer(config.ServerRoot);
-        if (process is null)
-        {
-            _logger.Info("No server is running.");
-            return true; // nothing to stop is a success, so a scripted stop is idempotent
         }
 
         if (request.Kind == StopKind.Kill)
