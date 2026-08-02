@@ -2502,12 +2502,12 @@ Hacerlo puede causar problemas graves (cierres del servidor, corrupción de las 
     <value>Ir al más reciente</value>
   </data>
   <data name="SingleInstance_Title" xml:space="preserve">
-    <value>El lanzador ya está en ejecución</value>
+    <value>El launcher ya está en ejecución</value>
   </data>
   <data name="SingleInstance_Message" xml:space="preserve">
-    <value>Se detectó una instancia de Palworld Server Launcher ejecutándose desde esta carpeta. Cierra la otra instancia antes de abrir una nueva.
+    <value>Se detectó una instancia de Palworld Server Launcher ejecutándose desde esta carpeta. Cierre la otra instancia antes de abrir una nueva.
 
-Ejecutar lanzadores desde carpetas distintas no es problema. Esto solo afecta a esta carpeta.</value>
+Ejecutar launchers desde carpetas distintas no es problema. Esto solo afecta a esta carpeta.</value>
   </data>
   <data name="SingleInstance_ForceClose" xml:space="preserve">
     <value>Forzar cierre de la otra instancia</value>

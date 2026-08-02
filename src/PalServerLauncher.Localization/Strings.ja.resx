@@ -2435,12 +2435,12 @@ Mod が本当にサーバーに対応していない場合、重大な問題（�
     <value>最新へ移動</value>
   </data>
   <data name="SingleInstance_Title" xml:space="preserve">
-    <value>ランチャーは実行中です</value>
+    <value>ランチャーは既に実行中</value>
   </data>
   <data name="SingleInstance_Message" xml:space="preserve">
     <value>このフォルダーで実行中の Palworld Server Launcher を検出しました。別のインスタンスを開く前に、実行中のインスタンスを閉じてください。
 
-フォルダーごとに複数のランチャーを実行するのは問題ありません。これはこのフォルダーのみに適用されます。</value>
+別々のフォルダーからランチャーを実行するのは問題ありません。この制限はこのフォルダーにのみ適用されます。</value>
   </data>
   <data name="SingleInstance_ForceClose" xml:space="preserve">
     <value>実行中のインスタンスを強制終了</value>

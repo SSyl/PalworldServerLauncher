@@ -2505,11 +2505,11 @@ Das kann schwerwiegende Probleme verursachen (Serverabstürze, beschädigte Spie
     <value>Launcher läuft bereits</value>
   </data>
   <data name="SingleInstance_Message" xml:space="preserve">
-    <value>In diesem Ordner läuft bereits eine Instanz des Palworld Server Launcher. Bitte schließe die andere Instanz, bevor du eine weitere öffnest.
+    <value>In diesem Ordner läuft bereits eine Instanz des Palworld Server Launchers. Bitte schließen Sie die andere Instanz, bevor Sie eine weitere öffnen.
 
 Launcher aus getrennten Ordnern zu starten ist in Ordnung. Dies betrifft nur diesen Ordner.</value>
   </data>
   <data name="SingleInstance_ForceClose" xml:space="preserve">
-    <value>Andere Instanz erzwungen schließen</value>
+    <value>Andere Instanz zwangsweise schließen</value>
   </data>
 </root>

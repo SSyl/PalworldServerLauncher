@@ -2502,14 +2502,14 @@ Fazer isso pode causar problemas graves (travamentos do servidor, corrupção do
     <value>Ir para o mais recente</value>
   </data>
   <data name="SingleInstance_Title" xml:space="preserve">
-    <value>O lançador já está em execução</value>
+    <value>Launcher Já em Execução</value>
   </data>
   <data name="SingleInstance_Message" xml:space="preserve">
-    <value>Foi detectada uma instância do Palworld Server Launcher em execução nesta pasta. Feche a outra instância antes de abrir uma nova.
+    <value>Detectada uma instância do Palworld Server Launcher em execução nesta pasta. Feche a outra instância antes de abrir uma nova.
 
-Executar lançadores em pastas separadas não é problema. Isto afeta apenas esta pasta.</value>
+Executar launchers em pastas separadas não é problema. Isso afeta apenas esta pasta.</value>
   </data>
   <data name="SingleInstance_ForceClose" xml:space="preserve">
-    <value>Forçar fechamento da outra instância</value>
+    <value>Forçar Fechamento da Outra Instância</value>
   </data>
 </root>
