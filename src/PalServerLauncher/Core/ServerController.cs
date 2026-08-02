@@ -202,6 +202,12 @@ public sealed class ServerController : IDisposable
                     : new StopOutcome(false, "The server process did not exit within 10s.");
 
             case StopKind.Countdown:
+                // A countdown that would only join a running stop never gets its /shutdown sent, so waiting on it
+                // would block for the OTHER stop's duration and then report a failure for a server that did stop.
+                // Say what actually happened instead, and say it now.
+                if (_stopGate.IsRunning)
+                    return new StopOutcome(false, "A stop is already in progress, so the countdown was not started.");
+
                 // Don't hold the pipe open for the countdown (up to an hour), but don't claim success before the
                 // server has accepted it either. Answer on the server's own reply to /shutdown, which arrives
                 // after the save and shutdown backup, then let the countdown run on without us.
@@ -1464,51 +1470,29 @@ public sealed class ServerController : IDisposable
             _logger.Server(data!);
     }
 
-    /// <summary>The shutdown ladder. <paramref name="shutdownWaitSeconds"/> is the in-game /shutdown countdown
-    /// (0 for restarts and plain Stop, restarts already warned via broadcasts, and a plain Stop is immediate).
-    /// <paramref name="restarting"/> picks the state shown while stopping: <see cref="ServerState.Restarting"/>
-    /// when a relaunch will follow (restart / recovery), else <see cref="ServerState.Stopping"/>.</summary>
     /// <summary>
-    /// The stop entry point every caller uses (plain Stop, timed shutdown, restart, recovery). Serialized: a
-    /// caller arriving while a stop is already running joins it instead of starting a second ladder. See
-    /// <see cref="StopGate"/> for what two concurrent ladders do to each other.
+    /// The stop entry point every caller uses (plain Stop, timed shutdown, restart, recovery). Graceful stops are
+    /// serialized, so a second one joins the running ladder rather than fighting it (see <see cref="StopGate"/>).
+    ///
+    /// A FORCE stop deliberately bypasses the gate. It is the escape hatch, same role as
+    /// <see cref="ForceShutdownNow"/>: killing the process is what unblocks a graceful ladder that is dragging, so
+    /// making it queue behind that ladder would leave the user's Force Stop waiting out the very countdown they
+    /// pressed it to escape.
     /// </summary>
     private Task StopCoreAsync(bool graceful, int shutdownWaitSeconds, bool restarting, CancellationToken ct,
         Action<bool>? onShutdownRequested = null)
     {
-        TaskCompletionSource signal;
-        lock (_gate)
-        {
-            if (_stopGate.InFlight is { } running)
-            {
-                _logger.Debug("A stop is already running, joining it instead of starting a second one.");
-                return running;
-            }
+        if (!graceful)
+            return StopLadderAsync(graceful, shutdownWaitSeconds, restarting, ct, onShutdownRequested);
 
-            // Claim the slot before the ladder starts, but start the ladder OUTSIDE the lock: it sets State,
-            // whose handlers must never be raised under _gate (see the State setter).
-            signal = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-            _stopGate.Claim(signal.Task);
-        }
-
-        return RunStopLadderAsync(signal, graceful, shutdownWaitSeconds, restarting, ct, onShutdownRequested);
+        return _stopGate.RunOrJoin(() =>
+            StopLadderAsync(graceful, shutdownWaitSeconds, restarting, ct, onShutdownRequested));
     }
 
-    private async Task RunStopLadderAsync(TaskCompletionSource signal, bool graceful, int shutdownWaitSeconds,
-        bool restarting, CancellationToken ct, Action<bool>? onShutdownRequested)
-    {
-        try
-        {
-            await StopLadderAsync(graceful, shutdownWaitSeconds, restarting, ct, onShutdownRequested).ConfigureAwait(false);
-        }
-        finally
-        {
-            // Released even when the ladder throws. Joiners only learn that the stop finished and check the
-            // server state themselves, so a faulted ladder can't resurface as an unobserved exception per joiner.
-            signal.TrySetResult();
-        }
-    }
-
+    /// <summary>The shutdown ladder. <paramref name="shutdownWaitSeconds"/> is the in-game /shutdown countdown
+    /// (0 for restarts and plain Stop, restarts already warned via broadcasts, and a plain Stop is immediate).
+    /// <paramref name="restarting"/> picks the state shown while stopping: <see cref="ServerState.Restarting"/>
+    /// when a relaunch will follow (restart / recovery), else <see cref="ServerState.Stopping"/>.</summary>
     private async Task StopLadderAsync(bool graceful, int shutdownWaitSeconds, bool restarting, CancellationToken ct,
         Action<bool>? onShutdownRequested = null)
     {

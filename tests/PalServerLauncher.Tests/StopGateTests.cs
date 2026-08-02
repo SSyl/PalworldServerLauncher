@@ -3,78 +3,163 @@ using PalServerLauncher.Core;
 namespace PalServerLauncher.Tests;
 
 /// <summary>
-/// The one-stop-at-a-time state machine. The cases that matter are the two ends: a stop still running must be
-/// joined (two ladders both POST /shutdown and the later one silently rewrites the countdown players were given),
-/// and a finished stop must never block the next one.
+/// The one-stop-at-a-time gate. The property everything depends on is that the slot frees on EVERY exit path, a
+/// ladder that throws or is cancelled included, because nothing ever releases it explicitly. A latched gate would
+/// mean no stop ever runs again.
 /// </summary>
 public class StopGateTests
 {
     [Fact]
-    public void A_fresh_gate_has_nothing_to_join()
+    public async Task The_first_caller_runs_the_ladder()
     {
-        Assert.Null(new StopGate().InFlight);
+        var gate = new StopGate();
+        var ran = false;
+
+        await gate.RunOrJoin(() => { ran = true; return Task.CompletedTask; });
+
+        Assert.True(ran);
     }
 
     [Fact]
-    public void A_running_stop_is_handed_back_to_join()
+    public async Task A_second_caller_joins_instead_of_running_a_second_ladder()
     {
         var gate = new StopGate();
-        var running = new TaskCompletionSource().Task;
+        var release = new TaskCompletionSource();
+        var runs = 0;
 
-        gate.Claim(running);
+        var first = gate.RunOrJoin(() => { runs++; return release.Task; });
+        var second = gate.RunOrJoin(() => { runs++; return Task.CompletedTask; });
 
-        Assert.Same(running, gate.InFlight);
+        Assert.Equal(1, runs); // the second ladder must never have been started
+        Assert.False(second.IsCompleted);
+
+        release.SetResult();
+        await Task.WhenAll(first, second);
+        Assert.Equal(1, runs);
     }
 
     [Fact]
-    public void A_finished_stop_does_not_block_the_next_one()
+    public async Task A_joiner_completes_when_the_running_ladder_does_not_before()
     {
-        // No explicit release anywhere, so this is what keeps the gate from latching shut forever.
         var gate = new StopGate();
-        var finished = new TaskCompletionSource();
-        gate.Claim(finished.Task);
+        var release = new TaskCompletionSource();
+        var first = gate.RunOrJoin(() => release.Task);
+        var second = gate.RunOrJoin(() => Task.CompletedTask);
 
-        finished.SetResult();
+        Assert.False(second.IsCompleted);
+        release.SetResult();
 
-        Assert.Null(gate.InFlight);
+        await second.WaitAsync(TimeSpan.FromSeconds(5));
+        await first;
     }
 
     [Fact]
-    public void A_faulted_stop_also_frees_the_gate()
+    public async Task A_finished_stop_frees_the_gate_for_the_next_one()
     {
         var gate = new StopGate();
-        var faulted = new TaskCompletionSource();
-        gate.Claim(faulted.Task);
+        await gate.RunOrJoin(() => Task.CompletedTask);
 
-        faulted.SetException(new InvalidOperationException("ladder blew up"));
+        var ranAgain = false;
+        await gate.RunOrJoin(() => { ranAgain = true; return Task.CompletedTask; });
 
-        Assert.Null(gate.InFlight);
-        Assert.True(faulted.Task.IsFaulted);
+        Assert.True(ranAgain);
     }
 
     [Fact]
-    public void A_cancelled_stop_also_frees_the_gate()
+    public async Task A_throwing_ladder_frees_the_gate_and_faults_only_its_own_caller()
     {
         var gate = new StopGate();
-        var cancelled = new TaskCompletionSource();
-        gate.Claim(cancelled.Task);
 
-        cancelled.SetCanceled();
+        var boom = gate.RunOrJoin(() => Task.FromException(new InvalidOperationException("ladder blew up")));
+        await Assert.ThrowsAsync<InvalidOperationException>(() => boom);
 
-        Assert.Null(gate.InFlight);
+        Assert.False(gate.IsRunning);
+        var ranAgain = false;
+        await gate.RunOrJoin(() => { ranAgain = true; return Task.CompletedTask; });
+        Assert.True(ranAgain);
     }
 
     [Fact]
-    public void Claiming_again_after_one_finishes_tracks_the_new_stop()
+    public async Task A_joiner_does_not_see_the_running_ladders_exception()
+    {
+        // One failed ladder must not resurface as an unobserved exception once per joiner.
+        var gate = new StopGate();
+        var release = new TaskCompletionSource();
+
+        var first = gate.RunOrJoin(() => release.Task);
+        var joiner = gate.RunOrJoin(() => Task.CompletedTask);
+
+        release.SetException(new InvalidOperationException("ladder blew up"));
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() => first);
+        await joiner.WaitAsync(TimeSpan.FromSeconds(5)); // completes, does not throw
+    }
+
+    [Fact]
+    public async Task A_cancelled_ladder_frees_the_gate()
     {
         var gate = new StopGate();
-        var first = new TaskCompletionSource();
-        gate.Claim(first.Task);
-        first.SetResult();
+        using var cts = new CancellationTokenSource();
+        await cts.CancelAsync();
 
-        var second = new TaskCompletionSource().Task;
-        gate.Claim(second);
+        var cancelled = gate.RunOrJoin(() => Task.FromCanceled(cts.Token));
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => cancelled);
 
-        Assert.Same(second, gate.InFlight);
+        Assert.False(gate.IsRunning);
+        var ranAgain = false;
+        await gate.RunOrJoin(() => { ranAgain = true; return Task.CompletedTask; });
+        Assert.True(ranAgain);
+    }
+
+    [Fact]
+    public async Task A_ladder_that_throws_synchronously_still_frees_the_gate()
+    {
+        // Thrown before the returned task exists at all, so the release has to survive that too.
+        var gate = new StopGate();
+
+        await Assert.ThrowsAsync<InvalidOperationException>(
+            () => gate.RunOrJoin(() => throw new InvalidOperationException("threw before awaiting")));
+
+        Assert.False(gate.IsRunning);
+    }
+
+    [Fact]
+    public async Task IsRunning_tracks_the_ladder()
+    {
+        var gate = new StopGate();
+        Assert.False(gate.IsRunning);
+
+        var release = new TaskCompletionSource();
+        var running = gate.RunOrJoin(() => release.Task);
+        Assert.True(gate.IsRunning);
+
+        // Awaited, not just released: the slot frees when the gate's own completion propagates, one scheduling
+        // hop after the ladder's task finishes, so IsRunning briefly over-reports. Conservative on purpose.
+        release.SetResult();
+        await running;
+
+        Assert.False(gate.IsRunning);
+    }
+
+    [Fact]
+    public async Task Concurrent_callers_still_only_run_one_ladder()
+    {
+        var gate = new StopGate();
+        var release = new TaskCompletionSource();
+        var runs = 0;
+        var start = new TaskCompletionSource();
+
+        var callers = Enumerable.Range(0, 16).Select(_ => Task.Run(async () =>
+        {
+            await start.Task;
+            await gate.RunOrJoin(() => { Interlocked.Increment(ref runs); return release.Task; });
+        })).ToArray();
+
+        start.SetResult();
+        await Task.Delay(50);
+        release.SetResult();
+        await Task.WhenAll(callers).WaitAsync(TimeSpan.FromSeconds(10));
+
+        Assert.Equal(1, runs);
     }
 }
