@@ -2,7 +2,7 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
-## [1.1.0] - 2026-08-01
+## [1.1.0] - 2026-08-03
 
 ### Added
 - **Stop the server from the command line with `--stop-server`.** It saves, runs the shutdown backup, and shuts the server down, then exits. Add a number of seconds (`--stop-server 60`) to warn players with an in-game countdown first, or use `--kill-server` to end a wedged server immediately. See [Advanced usage](docs/advanced-usage.md) for the details.
