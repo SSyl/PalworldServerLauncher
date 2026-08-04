@@ -31,7 +31,7 @@ public sealed class BackupService
         _logger = logger;
     }
 
-    private string SavedDir => Path.Combine(_config.ServerRoot, LauncherConfig.ServerFolderName, "Pal", "Saved");
+    private string SavedDir => Path.Combine(LauncherConfig.ServerDir(_config.ServerRoot), "Pal", "Saved");
     private string SaveGamesDir => Path.Combine(SavedDir, "SaveGames");
     private string ConfigDir => Path.Combine(SavedDir, "Config", "WindowsServer");
 

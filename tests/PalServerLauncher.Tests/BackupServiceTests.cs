@@ -11,7 +11,7 @@ public class BackupServiceTests
     private static string WriteFakeInstall(string worldId)
     {
         var root = Path.Combine(Path.GetTempPath(), $"pal_bk_{Guid.NewGuid():N}");
-        var saved = Path.Combine(root, LauncherConfig.ServerFolderName, "Pal", "Saved");
+        var saved = Path.Combine(LauncherConfig.ServerDir(root), "Pal", "Saved");
         var world = Path.Combine(saved, "SaveGames", "0", worldId);
         var cfg = Path.Combine(saved, "Config", "WindowsServer");
         Directory.CreateDirectory(world);

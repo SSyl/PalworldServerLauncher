@@ -33,7 +33,8 @@ always one of three things:
 
 1. **Windows Firewall** hasn't allowed the Palworld server. Press the Windows key, type "Allow an app through
    Windows Firewall", click **Change settings**, and tick the boxes for anything named "Pal" / "PalServer". If
-   it's not in the list, add it (it lives in `PalworldServerLauncher\palworlddedicatedserver\Pal\Binaries\Win64`).
+   it's not in the list, add it (it lives in `PalworldServerLauncher\PalServer\Pal\Binaries\Win64`, or
+   `PalworldServerLauncher\palworlddedicatedserver\Pal\Binaries\Win64` if you installed before v1.1.0).
 2. **Router port forwarding** isn't set up, or points at the wrong device. Search "[your router model] port
    forward", then forward **UDP 8211** to your PC's **local** IP (the one that looks like `192.168.x.x`,
    **not** `127.0.0.1`).
@@ -90,8 +91,8 @@ folder (the one containing PalServer.exe), and it copies it into the launcher so
 original is left where it is until you've confirmed the managed copy works.
 
 *(On an older version without Import: click Install to let it set up a fresh server, close the launcher, then
-copy your existing server files over the top of the generated `PalworldServerLauncher\palworlddedicatedserver`
-folder.)*
+copy your existing server files over the top of the generated `PalworldServerLauncher\PalServer` folder, or
+`palworlddedicatedserver` on installs made before v1.1.0.)*
 
 </details>
 
@@ -102,16 +103,17 @@ The Steam Workshop connection is only a convenience for downloading and auto-upd
 can ignore it and mod the server exactly like any other Palworld dedicated server.
 
 The only thing the launcher changes is where the server lives: it's installed at
-`PalworldServerLauncher\PalworldDedicatedServer\`. So follow whatever your mod or mod loader documents, and
-wherever a guide tells you to use your `Palworld` / `PalServer` folder, use that one instead. A few common
-cases:
+`PalworldServerLauncher\PalServer\`. (Installs created before v1.1.0 are in
+`PalworldServerLauncher\palworlddedicatedserver\` instead, and stay there. Use whichever folder you actually
+have.) So follow whatever your mod or mod loader documents, and wherever a guide tells you to use your
+`Palworld` / `PalServer` folder, use that one instead. A few common cases:
 
-- **Loose `.pak` mods:** these usually go in `...\PalworldDedicatedServer\Pal\Content\Paks\~mods`, but follow
+- **Loose `.pak` mods:** these usually go in `...\PalServer\Pal\Content\Paks\~mods`, but follow
   the mod author's own instructions.
-- **UE4SS you install yourself:** UE4SS goes into `...\PalworldDedicatedServer\Pal\Binaries\Win64`, and its
+- **UE4SS you install yourself:** UE4SS goes into `...\PalServer\Pal\Binaries\Win64`, and its
   mods live under its own `ue4ss\Mods` folder there, per UE4SS's instructions.
 - **A UE4SS mod that isn't on Steam Workshop, when you got UE4SS through Workshop:** put it in
-  `...\PalworldDedicatedServer\Mods\NativeMods\UE4SS\Mods`
+  `...\PalServer\Mods\NativeMods\UE4SS\Mods`
 
 There are a lot of different mod types and systems out there, so I can't outline them all here. What I can say
 is that the launcher supports anything a standard Palworld dedicated server would.

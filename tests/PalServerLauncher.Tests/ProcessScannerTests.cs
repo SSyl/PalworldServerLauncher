@@ -8,7 +8,23 @@ public class ProcessScannerTests
     public void ExpectedExePath_builds_console_server_path()
     {
         var path = ProcessScanner.ExpectedExePath(@"D:\Palworld");
-        Assert.Equal(@"D:\Palworld\PalworldDedicatedServer\Pal\Binaries\Win64\PalServer-Win64-Shipping-Cmd.exe", path);
+        Assert.Equal(@"D:\Palworld\PalServer\Pal\Binaries\Win64\PalServer-Win64-Shipping-Cmd.exe", path);
+    }
+
+    /// <summary>The exe path has to follow a pre-1.1.0 install's own folder name, or the launcher would decide
+    /// nothing is installed and offer to download a whole server next to the one already there.</summary>
+    [Fact]
+    public void ExpectedExePath_follows_a_legacy_install_folder()
+    {
+        var root = Path.Combine(Path.GetTempPath(), $"pal_scan_{Guid.NewGuid():N}");
+        Directory.CreateDirectory(Path.Combine(root, "palworlddedicatedserver"));
+        try
+        {
+            Assert.Equal(
+                Path.Combine(root, "palworlddedicatedserver", "Pal", "Binaries", "Win64", "PalServer-Win64-Shipping-Cmd.exe"),
+                ProcessScanner.ExpectedExePath(root));
+        }
+        finally { Directory.Delete(root, recursive: true); }
     }
 
     [Fact]

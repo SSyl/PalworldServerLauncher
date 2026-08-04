@@ -28,7 +28,7 @@ public sealed class ModService
     }
 
     /// <summary>The server's Mods folder: <c>&lt;ServerRoot&gt;\PalworldDedicatedServer\Mods</c>.</summary>
-    public string ModsDir => Path.Combine(_serverRoot, LauncherConfig.ServerFolderName, "Mods");
+    public string ModsDir => Path.Combine(LauncherConfig.ServerDir(_serverRoot), "Mods");
 
     /// <summary>Where the server looks for Workshop mods by default (no -workshopdir): <c>Mods\Workshop</c>.</summary>
     public string WorkshopDir => Path.Combine(ModsDir, "Workshop");
@@ -168,11 +168,11 @@ public sealed class ModService
 
     /// <summary>Loose-paks folder: <c>Pal\Content\Paks\~mods</c>. Raw .pak mods (no Info.json) dropped here are
     /// mounted by the engine directly, outside the managed Workshop system.</summary>
-    public string LoosePaksDir => Path.Combine(_serverRoot, LauncherConfig.ServerFolderName, "Pal", "Content", "Paks", "~mods");
+    public string LoosePaksDir => Path.Combine(LauncherConfig.ServerDir(_serverRoot), "Pal", "Content", "Paks", "~mods");
 
     /// <summary>UE4SS script-mods folder: <c>Mods\NativeMods\UE4SS\Mods</c>, where UE4SS (installed via a Workshop
     /// mod) keeps its Lua mods. Only exists once a UE4SS mod has been deployed.</summary>
-    public string Ue4ssModsDir => Path.Combine(_serverRoot, LauncherConfig.ServerFolderName, "Mods", "NativeMods", "UE4SS", "Mods");
+    public string Ue4ssModsDir => Path.Combine(LauncherConfig.ServerDir(_serverRoot), "Mods", "NativeMods", "UE4SS", "Mods");
 
     /// <summary>True once UE4SS has been deployed (its mods folder exists).</summary>
     public bool Ue4ssInstalled => Directory.Exists(Ue4ssModsDir);

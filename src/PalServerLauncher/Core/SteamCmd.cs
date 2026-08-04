@@ -31,7 +31,7 @@ public sealed class SteamCmd
 
     public string SteamCmdDir => Path.Combine(_serverRoot, "steamcmd");
     public string SteamCmdExe => Path.Combine(SteamCmdDir, "steamcmd.exe");
-    public string InstallDir => Path.Combine(_serverRoot, LauncherConfig.ServerFolderName);
+    public string InstallDir => LauncherConfig.ServerDir(_serverRoot);
     public string AppManifestPath => Path.Combine(InstallDir, "steamapps", $"appmanifest_{AppId}.acf");
 
     /// <summary>SteamCMD's own console log, tailed into the SteamCMD tab while it runs in its window.</summary>
@@ -99,6 +99,11 @@ public sealed class SteamCmd
     /// </summary>
     public async Task<int> InstallOrUpdateServerAsync(bool validate, bool visible, IProgress<string>? log, CancellationToken ct = default)
     {
+        // Create the folder ourselves first: SteamCMD lowercases whatever it is given to force_install_dir, but it
+        // only ever creates the directory, and Windows keeps the casing a directory was created with. Making it
+        // here is what gets "PalServer" on disk instead of "palserver". A folder that already exists is untouched.
+        Directory.CreateDirectory(InstallDir);
+
         var args = new List<string> { "+force_install_dir", InstallDir, "+login", "anonymous", "+app_update", AppId };
         if (validate)
             args.Add("validate");

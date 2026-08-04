@@ -36,7 +36,8 @@ Chinese, Traditional Chinese, and Korean. See [Languages](#languages).
 - **Check for Update** (safe while running) and **Validate Files** buttons.
 - **Import an existing server** you installed elsewhere: it's copied into the launcher so it can manage it,
   and your original is left where it was. Import only shows when the launcher doesn't already have a server; to
-  bring in a different one, delete the current install at `PalworldServerLauncher\palworlddedicatedserver` first.
+  bring in a different one, delete the current install at `PalworldServerLauncher\PalServer` first (or
+  `palworlddedicatedserver` if the launcher set it up before v1.1.0).
 
 ### Restarts and recovery
 - **Scheduled restarts** at the times you set, with a minimum-uptime guard so a server that just came up

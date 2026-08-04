@@ -16,8 +16,42 @@ public sealed class LauncherConfig
     /// to the exe. This is the default <see cref="ServerRoot"/> and the folder for launcher.json + logs.</summary>
     public static string DataRoot => Path.Combine(AppContext.BaseDirectory, "PalworldServerLauncher");
 
-    /// <summary>Name of the server install subfolder under <see cref="ServerRoot"/> (the SteamCMD install dir).</summary>
-    public const string ServerFolderName = "PalworldDedicatedServer";
+    /// <summary>Name a NEW server install gets under <see cref="ServerRoot"/> (the SteamCMD install dir). This is
+    /// Palworld's own name for it: Steam's app manifest records <c>"installdir" "PalServer"</c> regardless of where
+    /// force_install_dir actually puts it. It is also 14 characters shorter than the name used before, which buys
+    /// back path length on the save files, and Palworld's autosave fails outright on a long enough path.</summary>
+    public const string ServerFolderName = "PalServer";
+
+    /// <summary>What the server folder was called before 1.1.0. SteamCMD lowercases force_install_dir, so on disk
+    /// it is normally <c>palworlddedicatedserver</c>. Existing installs keep this name forever: renaming several GB
+    /// buys nothing and can only go wrong.</summary>
+    public const string LegacyServerFolderName = "PalworldDedicatedServer";
+
+    /// <summary>
+    /// The server folder under <paramref name="serverRoot"/>: the legacy folder when one is there, under whatever
+    /// casing it actually has on disk, otherwise <see cref="ServerFolderName"/>. Existence alone decides, not
+    /// whether a server is installed in it, so a half-deleted or broken install is repaired in place rather than
+    /// having a second install appear beside it while the user's world sits in the old folder.
+    /// </summary>
+    public static string ResolveServerFolder(string serverRoot)
+    {
+        try
+        {
+            // GetDirectories, not Exists: the match is case-insensitive but the result carries the real casing,
+            // so logs and dialogs can name the folder the user actually has.
+            var legacy = Directory.GetDirectories(serverRoot, LegacyServerFolderName);
+            if (legacy.Length > 0)
+                return Path.GetFileName(legacy[0]);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or ArgumentException)
+        {
+            // An unreadable or missing root just means no legacy install to honor.
+        }
+        return ServerFolderName;
+    }
+
+    /// <summary>Full path to the server install under <paramref name="serverRoot"/>, legacy name or new.</summary>
+    public static string ServerDir(string serverRoot) => Path.Combine(serverRoot, ResolveServerFolder(serverRoot));
 
     /// <summary>Name of the launcher's own log subfolder under <see cref="DataRoot"/>.</summary>
     public const string LogsFolderName = "LauncherLogs";

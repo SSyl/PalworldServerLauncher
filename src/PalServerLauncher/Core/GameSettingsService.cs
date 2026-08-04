@@ -23,8 +23,8 @@ public sealed class GameSettingsService
         _logger = logger;
     }
 
-    private string SettingsPath => Path.Combine(_serverRoot, LauncherConfig.ServerFolderName, "Pal", "Saved", "Config", "WindowsServer", "PalWorldSettings.ini");
-    private string DefaultTemplatePath => Path.Combine(_serverRoot, LauncherConfig.ServerFolderName, "DefaultPalWorldSettings.ini");
+    private string SettingsPath => Path.Combine(LauncherConfig.ServerDir(_serverRoot), "Pal", "Saved", "Config", "WindowsServer", "PalWorldSettings.ini");
+    private string DefaultTemplatePath => Path.Combine(LauncherConfig.ServerDir(_serverRoot), "DefaultPalWorldSettings.ini");
 
     /// <summary>True once PalWorldSettings.ini exists and has an OptionSettings line to edit.</summary>
     public bool IsInitialized() =>

@@ -485,10 +485,10 @@ public sealed class ServerController : IDisposable
     /// <summary>The game's settings ini under a given server root. Static so the headless CLI stop path can read
     /// the REST credentials without building a controller.</summary>
     public static string PalWorldSettingsPathFor(string serverRoot) => Path.Combine(
-        serverRoot, LauncherConfig.ServerFolderName, "Pal", "Saved", "Config", "WindowsServer", "PalWorldSettings.ini");
+        LauncherConfig.ServerDir(serverRoot), "Pal", "Saved", "Config", "WindowsServer", "PalWorldSettings.ini");
 
     private string SaveGamesDir => Path.Combine(
-        _config.ServerRoot, LauncherConfig.ServerFolderName, "Pal", "Saved", "SaveGames");
+        LauncherConfig.ServerDir(_config.ServerRoot), "Pal", "Saved", "SaveGames");
 
     /// <summary>
     /// Every <c>WorldOption.sav</c> under the save folder (usually one, empty on a fresh install with no saves
@@ -537,7 +537,7 @@ public sealed class ServerController : IDisposable
     }
 
     private string ConfigDir => Path.Combine(
-        _config.ServerRoot, LauncherConfig.ServerFolderName, "Pal", "Saved", "Config", "WindowsServer");
+        LauncherConfig.ServerDir(_config.ServerRoot), "Pal", "Saved", "Config", "WindowsServer");
 
     private string GameUserSettingsPath => Path.Combine(ConfigDir, GameUserSettingsFile.FileName);
 

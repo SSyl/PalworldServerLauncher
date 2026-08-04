@@ -21,7 +21,7 @@ public static class ProcessScanner
 
     /// <summary>Full path to the managed server exe for a given root.</summary>
     public static string ExpectedExePath(string serverRoot) =>
-        Path.GetFullPath(Path.Combine(serverRoot, LauncherConfig.ServerFolderName, "Pal", "Binaries", "Win64", ServerProcessName + ".exe"));
+        Path.GetFullPath(Path.Combine(LauncherConfig.ServerDir(serverRoot), "Pal", "Binaries", "Win64", ServerProcessName + ".exe"));
 
     /// <summary>
     /// Return a running managed server process whose exe lives under <paramref name="serverRoot"/>,

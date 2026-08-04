@@ -12,7 +12,7 @@ public class GameSettingsServiceTests
     private static string WriteIni(string optionSettingsInner)
     {
         var root = Path.Combine(Path.GetTempPath(), $"pal_gs_{Guid.NewGuid():N}");
-        var cfgDir = Path.Combine(root, LauncherConfig.ServerFolderName, "Pal", "Saved", "Config", "WindowsServer");
+        var cfgDir = Path.Combine(LauncherConfig.ServerDir(root), "Pal", "Saved", "Config", "WindowsServer");
         Directory.CreateDirectory(cfgDir);
         File.WriteAllText(Path.Combine(cfgDir, "PalWorldSettings.ini"),
             "[/Script/Pal.PalGameWorldSettings]\r\nOptionSettings=(" + optionSettingsInner + ")\r\n");
