@@ -30,20 +30,8 @@ public class ServerFolderResolverTests
         Assert.Equal("PalServer", LauncherConfig.ResolveServerFolder(NewRoot()));
     }
 
-    /// <summary>SteamCMD lowercases force_install_dir, so this is what a real upgraded install looks like.</summary>
-    [Fact]
-    public void Resolve_keeps_a_legacy_install_on_its_own_name()
-    {
-        var root = NewRoot();
-        Directory.CreateDirectory(Path.Combine(root, "palworlddedicatedserver"));
-        try
-        {
-            Assert.Equal("palworlddedicatedserver", LauncherConfig.ResolveServerFolder(root));
-        }
-        finally { Directory.Delete(root, recursive: true); }
-    }
-
-    /// <summary>The name is reported exactly as it sits on disk, so a log line naming it isn't lying.</summary>
+    /// <summary>The name is reported exactly as it sits on disk, so a log line naming it isn't lying. The
+    /// lowercase row is what a real upgraded install looks like, since SteamCMD lowercases force_install_dir.</summary>
     [Theory]
     [InlineData("PalworldDedicatedServer")]
     [InlineData("palworlddedicatedserver")]
@@ -98,6 +86,21 @@ public class ServerFolderResolverTests
             Assert.Equal("palworlddedicatedserver", LauncherConfig.ResolveServerFolder(root));
         }
         finally { Directory.Delete(root, recursive: true); }
+    }
+
+    /// <summary>A root that can't be listed at all still has to answer rather than throw. The dangerous half of
+    /// this path (an unlistable root that DOES hold a legacy install, where returning the new name would strand
+    /// the world) needs a deny ACE to reproduce, so it is covered by the fallback in the catch, not by a test.</summary>
+    [Fact]
+    public void Resolve_falls_back_when_the_root_cannot_be_listed()
+    {
+        var notADirectory = Path.Combine(Path.GetTempPath(), $"pal_file_{Guid.NewGuid():N}");
+        File.WriteAllText(notADirectory, "");
+        try
+        {
+            Assert.Equal("PalServer", LauncherConfig.ResolveServerFolder(notADirectory));
+        }
+        finally { File.Delete(notADirectory); }
     }
 
     /// <summary>A folder that merely starts with the legacy name is a different folder, not our install.</summary>

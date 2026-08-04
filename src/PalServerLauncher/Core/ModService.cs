@@ -27,7 +27,7 @@ public sealed class ModService
         _logger = logger;
     }
 
-    /// <summary>The server's Mods folder: <c>&lt;ServerRoot&gt;\PalworldDedicatedServer\Mods</c>.</summary>
+    /// <summary>The server's Mods folder: <c>&lt;ServerRoot&gt;\PalServer\Mods</c> (or the legacy folder name).</summary>
     public string ModsDir => Path.Combine(LauncherConfig.ServerDir(_serverRoot), "Mods");
 
     /// <summary>Where the server looks for Workshop mods by default (no -workshopdir): <c>Mods\Workshop</c>.</summary>

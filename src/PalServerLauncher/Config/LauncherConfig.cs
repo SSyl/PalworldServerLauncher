@@ -45,7 +45,13 @@ public sealed class LauncherConfig
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or ArgumentException)
         {
-            // An unreadable or missing root just means no legacy install to honor.
+            // Listing the root can fail while the legacy install is sitting right there (a root that denies list,
+            // a network share that hiccups). Answering "no legacy install" there is the expensive way to be wrong:
+            // SteamCMD would install a second server and the world would be stranded in the old folder. Directory
+            // .Exists on the child only needs traverse on the parent, so it still answers, and it never throws.
+            // The real on-disk casing is lost on this path, which costs nothing but a log line's accuracy.
+            if (Directory.Exists(Path.Combine(serverRoot, LegacyServerFolderName)))
+                return LegacyServerFolderName;
         }
         return ServerFolderName;
     }
@@ -325,7 +331,10 @@ public sealed class LauncherConfig
             ("launcher.json", "launcher.json"),
             ("steamcmd", "steamcmd"),
             ("backups", BackupsFolderName),
-            ("server", ServerFolderName),
+            // Resolved, not the constant: an install that already lives here under the legacy name has to make
+            // this destination match so the move is skipped, or a stranded old "server" folder would land beside
+            // it as a second multi-GB install.
+            ("server", ResolveServerFolder(DataRoot)),
             ("logs", LogsFolderName),
         };
         foreach (var (oldName, newName) in items)
