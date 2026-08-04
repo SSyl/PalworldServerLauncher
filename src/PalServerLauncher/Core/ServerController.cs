@@ -1454,8 +1454,10 @@ public sealed class ServerController : IDisposable
     public static bool IsRestAccessLogLine(string line) =>
         line.Contains("REST accessed endpoint", StringComparison.Ordinal);
 
-    /// <summary>True for an in-game chat line (the server tags these "[CHAT]").</summary>
-    public static bool IsChatLine(string line) => line.Contains("[CHAT]", StringComparison.Ordinal);
+    /// <summary>True for an in-game chat line. Vanilla tags these "[CHAT]", but PalDefender replaces the line
+    /// entirely with its own "[Chat::Global]" form, so an exact "[CHAT]" match left PalDefender users with an
+    /// empty Chat tab and all their chat in the Server Log (issue #8).</summary>
+    public static bool IsChatLine(string line) => line.Contains("[Chat", StringComparison.OrdinalIgnoreCase);
 
     /// <summary>Route a captured server-output line: drop noise via <see cref="ShouldLogServerLine"/>, send chat
     /// to the Chat log, and everything else to the Server Log, so the Server Log stays focused on server events.</summary>

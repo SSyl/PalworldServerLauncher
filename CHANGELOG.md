@@ -9,6 +9,9 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
 - **Opening a second launcher from the same folder now warns instead of quietly running two.** Two launchers on one folder share a server, a config, and a data folder, and fight over restarts, backups, and updates. The second one offers to force close the first, or to exit. Running a launcher per folder, one install each, is unaffected and still the intended way to run several servers.
 - **`--stop-server` works even while a launcher window is open.** It hands the request to the running launcher, so the shutdown behaves exactly like clicking Stop (shutdown backup, Discord notification) and the launcher knows the server was stopped on purpose instead of treating it as a crash and starting it again.
 
+### Fixed
+- **Chat shows up in the Chat tab on servers running PalDefender.** PalDefender replaces the game's own chat line with its own format, which the launcher did not recognize, so the Chat tab stayed empty and every message went to the Server Log instead. Reported in #8.
+
 ## [1.0.2] - 2026-07-27
 
 ### Fixed

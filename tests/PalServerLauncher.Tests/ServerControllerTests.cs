@@ -104,6 +104,10 @@ public class ServerControllerTests
     [Theory]
     [InlineData("[2026-07-12 03:48:24] [CHAT] <SSyl> hello there")]
     [InlineData("[2026-07-09 22:57:26] [CHAT] <Someone> 2.5 is ok")]
+    // PalDefender replaces the vanilla [CHAT] line with its own tags (GitHub issue #8)
+    [InlineData("[20:03:50][info] [Chat::Global]['Someone' (UserId=steam_11111111111111111, IP=127.0.0.1)]: hello")]
+    [InlineData("[20:03:50][info] [Chat::Local]['Someone' (UserId=steam_11111111111111111, IP=127.0.0.1)]: hello")]
+    [InlineData("[20:03:50][info] [Chat::Guild]['Someone' (UserId=steam_11111111111111111, IP=127.0.0.1)]: hello")]
     public void IsChatLine_matches_chat_output(string line)
     {
         Assert.True(ServerController.IsChatLine(line));
