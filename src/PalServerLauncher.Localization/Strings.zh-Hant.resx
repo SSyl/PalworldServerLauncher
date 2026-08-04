@@ -91,28 +91,28 @@
     <value>確定</value>
   </data>
   <data name="WorldOpt_Title" xml:space="preserve">
-    <value>WorldOption.sav detected</value>
+    <value>檢測到 WorldOption.sav</value>
   </data>
   <data name="WorldOpt_Message" xml:space="preserve">
-    <value>⚠ A WorldOption.sav in this save folder overrides your PalWorldSettings.ini, so the launcher may not be able to monitor or control the server. Renaming it to .bak fixes this and does not affect your world.</value>
+    <value>⚠ 此存檔資料夾中的 WorldOption.sav 會覆蓋你的 PalWorldSettings.ini，導致啟動器可能無法監控或控制伺服器。將它重新命名為 .bak 可解決此問題，且不會影響你的世界。</value>
   </data>
   <data name="WorldOpt_Rename" xml:space="preserve">
-    <value>Rename to .bak (recommended)</value>
+    <value>重新命名為 .bak（建議）</value>
   </data>
   <data name="WorldOpt_Continue" xml:space="preserve">
-    <value>Start anyway (not recommended)</value>
+    <value>仍然啟動（不建議）</value>
   </data>
   <data name="WorldOpt_RenamedTitle" xml:space="preserve">
-    <value>WorldOption.sav renamed</value>
+    <value>WorldOption.sav 已重新命名</value>
   </data>
   <data name="WorldOpt_RenameFailedTitle" xml:space="preserve">
-    <value>Couldn't rename WorldOption.sav</value>
+    <value>無法重新命名 WorldOption.sav</value>
   </data>
   <data name="WorldOpt_RenamedFormat" xml:space="preserve">
-    <value>WorldOption.sav renamed to {0} in:</value>
+    <value>WorldOption.sav 已重新命名為 {0}，位置：</value>
   </data>
   <data name="WorldOpt_RenameFailedFormat" xml:space="preserve">
-    <value>Couldn't rename WorldOption.sav: {0}</value>
+    <value>無法重新命名 WorldOption.sav：{0}</value>
   </data>
   <data name="Announcements_Title" xml:space="preserve">
     <value>公告</value>
@@ -2437,35 +2437,35 @@
     <value>強制關閉另一個執行個體</value>
   </data>
   <data name="WorldSel_Title" xml:space="preserve">
-    <value>Existing world save found</value>
+    <value>找到現有世界存檔</value>
   </data>
   <data name="WorldSel_SingleMessage" xml:space="preserve">
-    <value>⚠ There's a world save in your save folder, but the server isn't set to load it. Starting now begins a NEW empty world and leaves that save on disk but unreachable in game.
+    <value>⚠ 你的存檔資料夾中有一個世界存檔，但伺服器未設定要載入它。現在啟動會建立一個全新的空世界，該存檔仍會保留在磁碟上，但在遊戲中無法讀取。
 
-Save on disk: {0}</value>
+磁碟上的存檔：{0}</value>
   </data>
   <data name="WorldSel_ManyMessage" xml:space="preserve">
-    <value>⚠ There are {0} world saves in your save folder, but the server isn't set to load any of them. Starting now begins a NEW empty world and leaves them on disk but unreachable in game.
+    <value>⚠ 你的存檔資料夾中有 {0} 個世界存檔，但伺服器未設定要載入其中任何一個。現在啟動會建立一個全新的空世界，這些存檔仍會保留在磁碟上，但在遊戲中無法讀取。
 
 {1}
 
-To load one of these, set DedicatedServerName in GameUserSettings.ini to its folder name.</value>
+若要載入其中一個，請在 GameUserSettings.ini 中將 DedicatedServerName 設為該存檔的資料夾名稱。</value>
   </data>
   <data name="WorldSel_LoadWorld" xml:space="preserve">
-    <value>Load this save (recommended)</value>
+    <value>載入此存檔（建議）</value>
   </data>
   <data name="WorldSel_StartNew" xml:space="preserve">
-    <value>Start a new world</value>
+    <value>建立新世界</value>
   </data>
   <data name="WorldSel_FailedTitle" xml:space="preserve">
-    <value>Couldn't set the world</value>
+    <value>無法設定世界</value>
   </data>
   <data name="WorldSel_FailedFormat" xml:space="preserve">
-    <value>Couldn't update GameUserSettings.ini: {0}</value>
+    <value>無法更新 GameUserSettings.ini：{0}</value>
   </data>
   <data name="Main_ImportLinuxMessage" xml:space="preserve">
-    <value>That folder holds a Linux server, whose binaries can't run on Windows. The launcher can download the Windows dedicated server with SteamCMD, about 4 GB, and bring the world and settings across from '{0}'. The original is left in place.
+    <value>該資料夾內含 Linux 版伺服器，其執行檔無法在 Windows 上執行。啟動器可以透過 SteamCMD 下載 Windows 版專用伺服器（約 4 GB），並將世界和設定從“{0}”移轉過來。原始資料夾會保留不動。
 
-Import it that way?</value>
+要以此方式匯入嗎？</value>
   </data>
 </root>

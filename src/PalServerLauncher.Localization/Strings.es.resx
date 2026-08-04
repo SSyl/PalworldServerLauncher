@@ -2338,28 +2338,28 @@ Cualquier valor no listado arriba permanecerá igual.
     <value>REST not responding</value>
   </data>
   <data name="WorldOpt_Title" xml:space="preserve">
-    <value>WorldOption.sav detected</value>
+    <value>WorldOption.sav detectado</value>
   </data>
   <data name="WorldOpt_Message" xml:space="preserve">
-    <value>⚠ A WorldOption.sav in this save folder overrides your PalWorldSettings.ini, so the launcher may not be able to monitor or control the server. Renaming it to .bak fixes this and does not affect your world.</value>
+    <value>⚠ Un WorldOption.sav en esta carpeta de partidas guardadas anula su PalWorldSettings.ini, por lo que es posible que el launcher no pueda supervisar ni controlar el servidor. Renombrarlo a .bak soluciona esto y no afecta su mundo.</value>
   </data>
   <data name="WorldOpt_Rename" xml:space="preserve">
-    <value>Rename to .bak (recommended)</value>
+    <value>Renombrar a .bak (recomendado)</value>
   </data>
   <data name="WorldOpt_Continue" xml:space="preserve">
-    <value>Start anyway (not recommended)</value>
+    <value>Iniciar de todos modos (no recomendado)</value>
   </data>
   <data name="WorldOpt_RenamedTitle" xml:space="preserve">
-    <value>WorldOption.sav renamed</value>
+    <value>WorldOption.sav renombrado</value>
   </data>
   <data name="WorldOpt_RenameFailedTitle" xml:space="preserve">
-    <value>Couldn't rename WorldOption.sav</value>
+    <value>No se pudo renombrar WorldOption.sav</value>
   </data>
   <data name="WorldOpt_RenamedFormat" xml:space="preserve">
-    <value>WorldOption.sav renamed to {0} in:</value>
+    <value>WorldOption.sav renombrado a {0} en:</value>
   </data>
   <data name="WorldOpt_RenameFailedFormat" xml:space="preserve">
-    <value>Couldn't rename WorldOption.sav: {0}</value>
+    <value>No se pudo renombrar WorldOption.sav: {0}</value>
   </data>
   <data name="UnknownServer_Title" xml:space="preserve">
     <value>¡Advertencia!</value>
@@ -2513,35 +2513,35 @@ Ejecutar launchers desde carpetas distintas no es problema. Esto solo afecta a e
     <value>Forzar cierre de la otra instancia</value>
   </data>
   <data name="WorldSel_Title" xml:space="preserve">
-    <value>Existing world save found</value>
+    <value>Se encontró una partida guardada</value>
   </data>
   <data name="WorldSel_SingleMessage" xml:space="preserve">
-    <value>⚠ There's a world save in your save folder, but the server isn't set to load it. Starting now begins a NEW empty world and leaves that save on disk but unreachable in game.
+    <value>⚠ Hay una partida guardada en su carpeta de partidas guardadas, pero el servidor no está configurado para cargarla. Iniciar ahora crea un mundo NUEVO y vacío, y esa partida guardada queda en el disco pero inaccesible dentro del juego.
 
-Save on disk: {0}</value>
+Partida en el disco: {0}</value>
   </data>
   <data name="WorldSel_ManyMessage" xml:space="preserve">
-    <value>⚠ There are {0} world saves in your save folder, but the server isn't set to load any of them. Starting now begins a NEW empty world and leaves them on disk but unreachable in game.
+    <value>⚠ Hay {0} partidas guardadas en su carpeta de partidas guardadas, pero el servidor no está configurado para cargar ninguna de ellas. Iniciar ahora crea un mundo NUEVO y vacío, y esas partidas quedan en el disco pero inaccesibles dentro del juego.
 
 {1}
 
-To load one of these, set DedicatedServerName in GameUserSettings.ini to its folder name.</value>
+Para cargar una de ellas, en GameUserSettings.ini establezca DedicatedServerName con el nombre de su carpeta.</value>
   </data>
   <data name="WorldSel_LoadWorld" xml:space="preserve">
-    <value>Load this save (recommended)</value>
+    <value>Cargar esta partida guardada (recomendado)</value>
   </data>
   <data name="WorldSel_StartNew" xml:space="preserve">
-    <value>Start a new world</value>
+    <value>Iniciar un mundo nuevo</value>
   </data>
   <data name="WorldSel_FailedTitle" xml:space="preserve">
-    <value>Couldn't set the world</value>
+    <value>No se pudo establecer el mundo</value>
   </data>
   <data name="WorldSel_FailedFormat" xml:space="preserve">
-    <value>Couldn't update GameUserSettings.ini: {0}</value>
+    <value>No se pudo actualizar GameUserSettings.ini: {0}</value>
   </data>
   <data name="Main_ImportLinuxMessage" xml:space="preserve">
-    <value>That folder holds a Linux server, whose binaries can't run on Windows. The launcher can download the Windows dedicated server with SteamCMD, about 4 GB, and bring the world and settings across from '{0}'. The original is left in place.
+    <value>Esa carpeta contiene un servidor Linux, cuyos archivos binarios no pueden ejecutarse en Windows. El launcher puede descargar el servidor dedicado de Windows con SteamCMD, unos 4 GB, y trasladar el mundo y la configuración desde '{0}'. El original se deja en su lugar.
 
-Import it that way?</value>
+¿Importarlo de esa forma?</value>
   </data>
 </root>

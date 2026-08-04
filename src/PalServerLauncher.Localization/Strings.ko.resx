@@ -2338,28 +2338,28 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>REST not responding</value>
   </data>
   <data name="WorldOpt_Title" xml:space="preserve">
-    <value>WorldOption.sav detected</value>
+    <value>WorldOption.sav 감지됨</value>
   </data>
   <data name="WorldOpt_Message" xml:space="preserve">
-    <value>⚠ A WorldOption.sav in this save folder overrides your PalWorldSettings.ini, so the launcher may not be able to monitor or control the server. Renaming it to .bak fixes this and does not affect your world.</value>
+    <value>⚠ 이 저장 폴더의 WorldOption.sav가 PalWorldSettings.ini보다 우선 적용되어, 런처가 서버를 모니터링하거나 제어하지 못할 수 있습니다. .bak으로 이름을 변경하면 이 문제가 해결되며 월드에는 영향이 없습니다.</value>
   </data>
   <data name="WorldOpt_Rename" xml:space="preserve">
-    <value>Rename to .bak (recommended)</value>
+    <value>.bak으로 이름 변경(권장)</value>
   </data>
   <data name="WorldOpt_Continue" xml:space="preserve">
-    <value>Start anyway (not recommended)</value>
+    <value>그래도 시작(권장하지 않음)</value>
   </data>
   <data name="WorldOpt_RenamedTitle" xml:space="preserve">
-    <value>WorldOption.sav renamed</value>
+    <value>WorldOption.sav 이름 변경됨</value>
   </data>
   <data name="WorldOpt_RenameFailedTitle" xml:space="preserve">
-    <value>Couldn't rename WorldOption.sav</value>
+    <value>WorldOption.sav 이름을 변경하지 못함</value>
   </data>
   <data name="WorldOpt_RenamedFormat" xml:space="preserve">
-    <value>WorldOption.sav renamed to {0} in:</value>
+    <value>WorldOption.sav의 이름이 {0}(으)로 변경되었습니다:</value>
   </data>
   <data name="WorldOpt_RenameFailedFormat" xml:space="preserve">
-    <value>Couldn't rename WorldOption.sav: {0}</value>
+    <value>WorldOption.sav의 이름을 변경하지 못했습니다: {0}</value>
   </data>
   <data name="UnknownServer_Title" xml:space="preserve">
     <value>경고!</value>
@@ -2513,35 +2513,35 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>다른 인스턴스 강제 종료</value>
   </data>
   <data name="WorldSel_Title" xml:space="preserve">
-    <value>Existing world save found</value>
+    <value>저장된 월드 발견됨</value>
   </data>
   <data name="WorldSel_SingleMessage" xml:space="preserve">
-    <value>⚠ There's a world save in your save folder, but the server isn't set to load it. Starting now begins a NEW empty world and leaves that save on disk but unreachable in game.
+    <value>⚠ 저장 폴더에 저장된 월드가 있지만, 서버가 이를 불러오도록 설정되어 있지 않습니다. 지금 시작하면 새로운 빈 월드가 생성되며, 기존 월드는 디스크에 그대로 남지만 게임에서는 접근할 수 없습니다.
 
-Save on disk: {0}</value>
+디스크에 저장된 월드: {0}</value>
   </data>
   <data name="WorldSel_ManyMessage" xml:space="preserve">
-    <value>⚠ There are {0} world saves in your save folder, but the server isn't set to load any of them. Starting now begins a NEW empty world and leaves them on disk but unreachable in game.
+    <value>⚠ 저장 폴더에 저장된 월드가 {0}개 있지만, 서버가 그중 어느 것도 불러오도록 설정되어 있지 않습니다. 지금 시작하면 새로운 빈 월드가 생성되며, 기존 월드들은 디스크에 그대로 남지만 게임에서는 접근할 수 없습니다.
 
 {1}
 
-To load one of these, set DedicatedServerName in GameUserSettings.ini to its folder name.</value>
+이 중 하나를 불러오려면 GameUserSettings.ini의 DedicatedServerName을 해당 폴더 이름으로 설정하십시오.</value>
   </data>
   <data name="WorldSel_LoadWorld" xml:space="preserve">
-    <value>Load this save (recommended)</value>
+    <value>이 월드 불러오기(권장)</value>
   </data>
   <data name="WorldSel_StartNew" xml:space="preserve">
-    <value>Start a new world</value>
+    <value>새 월드 시작</value>
   </data>
   <data name="WorldSel_FailedTitle" xml:space="preserve">
-    <value>Couldn't set the world</value>
+    <value>월드를 설정하지 못함</value>
   </data>
   <data name="WorldSel_FailedFormat" xml:space="preserve">
-    <value>Couldn't update GameUserSettings.ini: {0}</value>
+    <value>GameUserSettings.ini를 수정하지 못했습니다: {0}</value>
   </data>
   <data name="Main_ImportLinuxMessage" xml:space="preserve">
-    <value>That folder holds a Linux server, whose binaries can't run on Windows. The launcher can download the Windows dedicated server with SteamCMD, about 4 GB, and bring the world and settings across from '{0}'. The original is left in place.
+    <value>그 폴더에는 Windows에서 실행할 수 없는 Linux 서버가 들어 있습니다. 런처가 SteamCMD로 Windows용 전용 서버(약 4GB)를 다운로드하고, '{0}'에서 월드와 설정을 가져올 수 있습니다. 원본은 그대로 남습니다.
 
-Import it that way?</value>
+이 방식으로 가져오시겠습니까?</value>
   </data>
 </root>

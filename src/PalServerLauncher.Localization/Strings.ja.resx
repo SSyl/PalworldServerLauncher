@@ -90,28 +90,28 @@
     <value>OK</value>
   </data>
   <data name="WorldOpt_Title" xml:space="preserve">
-    <value>WorldOption.sav detected</value>
+    <value>WorldOption.sav を検出しました</value>
   </data>
   <data name="WorldOpt_Message" xml:space="preserve">
-    <value>⚠ A WorldOption.sav in this save folder overrides your PalWorldSettings.ini, so the launcher may not be able to monitor or control the server. Renaming it to .bak fixes this and does not affect your world.</value>
+    <value>⚠ このセーブフォルダー内の WorldOption.sav が PalWorldSettings.ini を上書きするため、ランチャーがサーバーを監視・操作できなくなることがあります。.bak にリネームすると解消され、ワールドには影響しません。</value>
   </data>
   <data name="WorldOpt_Rename" xml:space="preserve">
-    <value>Rename to .bak (recommended)</value>
+    <value>.bak にリネーム（推奨）</value>
   </data>
   <data name="WorldOpt_Continue" xml:space="preserve">
-    <value>Start anyway (not recommended)</value>
+    <value>それでも起動（非推奨）</value>
   </data>
   <data name="WorldOpt_RenamedTitle" xml:space="preserve">
-    <value>WorldOption.sav renamed</value>
+    <value>WorldOption.sav をリネームしました</value>
   </data>
   <data name="WorldOpt_RenameFailedTitle" xml:space="preserve">
-    <value>Couldn't rename WorldOption.sav</value>
+    <value>WorldOption.sav をリネームできませんでした</value>
   </data>
   <data name="WorldOpt_RenamedFormat" xml:space="preserve">
-    <value>WorldOption.sav renamed to {0} in:</value>
+    <value>WorldOption.sav を {0} にリネームしました。保存先：</value>
   </data>
   <data name="WorldOpt_RenameFailedFormat" xml:space="preserve">
-    <value>Couldn't rename WorldOption.sav: {0}</value>
+    <value>WorldOption.sav をリネームできませんでした：{0}</value>
   </data>
   <data name="Common_ForceShutdown" xml:space="preserve">
     <value>強制シャットダウン</value>
@@ -2446,35 +2446,35 @@ Mod が本当にサーバーに対応していない場合、重大な問題（�
     <value>実行中のインスタンスを強制終了</value>
   </data>
   <data name="WorldSel_Title" xml:space="preserve">
-    <value>Existing world save found</value>
+    <value>既存のワールドが見つかりました</value>
   </data>
   <data name="WorldSel_SingleMessage" xml:space="preserve">
-    <value>⚠ There's a world save in your save folder, but the server isn't set to load it. Starting now begins a NEW empty world and leaves that save on disk but unreachable in game.
+    <value>⚠ セーブフォルダーにワールドのセーブデータがありますが、サーバーはそれを読み込む設定になっていません。今すぐ起動すると新しい空のワールドが開始され、そのセーブデータはディスク上に残ったままゲーム内からは到達できなくなります。
 
-Save on disk: {0}</value>
+ディスク上のセーブデータ：{0}</value>
   </data>
   <data name="WorldSel_ManyMessage" xml:space="preserve">
-    <value>⚠ There are {0} world saves in your save folder, but the server isn't set to load any of them. Starting now begins a NEW empty world and leaves them on disk but unreachable in game.
+    <value>⚠ セーブフォルダーにワールドのセーブデータが {0} 個ありますが、サーバーはそのいずれも読み込む設定になっていません。今すぐ起動すると新しい空のワールドが開始され、それらのセーブデータはディスク上に残ったままゲーム内からは到達できなくなります。
 
 {1}
 
-To load one of these, set DedicatedServerName in GameUserSettings.ini to its folder name.</value>
+これらのいずれかを読み込むには、GameUserSettings.ini の DedicatedServerName にそのフォルダー名を設定してください。</value>
   </data>
   <data name="WorldSel_LoadWorld" xml:space="preserve">
-    <value>Load this save (recommended)</value>
+    <value>このワールドを読み込む（推奨）</value>
   </data>
   <data name="WorldSel_StartNew" xml:space="preserve">
-    <value>Start a new world</value>
+    <value>新しいワールドを開始</value>
   </data>
   <data name="WorldSel_FailedTitle" xml:space="preserve">
-    <value>Couldn't set the world</value>
+    <value>ワールドを設定できませんでした</value>
   </data>
   <data name="WorldSel_FailedFormat" xml:space="preserve">
-    <value>Couldn't update GameUserSettings.ini: {0}</value>
+    <value>GameUserSettings.ini を更新できませんでした：{0}</value>
   </data>
   <data name="Main_ImportLinuxMessage" xml:space="preserve">
-    <value>That folder holds a Linux server, whose binaries can't run on Windows. The launcher can download the Windows dedicated server with SteamCMD, about 4 GB, and bring the world and settings across from '{0}'. The original is left in place.
+    <value>そのフォルダーには Linux サーバーが入っており、その実行ファイルは Windows では動作しません。ランチャーは SteamCMD で Windows 版の専用サーバー（約 4 GB）をダウンロードし、'{0}' からワールドと設定を引き継ぐことができます。元のファイルはそのまま残ります。
 
-Import it that way?</value>
+この方法でインポートしますか？</value>
   </data>
 </root>

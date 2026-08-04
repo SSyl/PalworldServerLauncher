@@ -2338,28 +2338,28 @@ REST API на этом сервере пока не включён, поэтом
     <value>REST not responding</value>
   </data>
   <data name="WorldOpt_Title" xml:space="preserve">
-    <value>WorldOption.sav detected</value>
+    <value>Обнаружен WorldOption.sav</value>
   </data>
   <data name="WorldOpt_Message" xml:space="preserve">
-    <value>⚠ A WorldOption.sav in this save folder overrides your PalWorldSettings.ini, so the launcher may not be able to monitor or control the server. Renaming it to .bak fixes this and does not affect your world.</value>
+    <value>⚠ WorldOption.sav в этой папке сохранений переопределяет PalWorldSettings.ini, из-за чего лаунчер может быть не способен отслеживать сервер или управлять им. Переименование в .bak устраняет это и не влияет на ваш мир.</value>
   </data>
   <data name="WorldOpt_Rename" xml:space="preserve">
-    <value>Rename to .bak (recommended)</value>
+    <value>Переименовать в .bak (рекомендуется)</value>
   </data>
   <data name="WorldOpt_Continue" xml:space="preserve">
-    <value>Start anyway (not recommended)</value>
+    <value>Всё равно запустить (не рекомендуется)</value>
   </data>
   <data name="WorldOpt_RenamedTitle" xml:space="preserve">
-    <value>WorldOption.sav renamed</value>
+    <value>WorldOption.sav переименован</value>
   </data>
   <data name="WorldOpt_RenameFailedTitle" xml:space="preserve">
-    <value>Couldn't rename WorldOption.sav</value>
+    <value>Не удалось переименовать WorldOption.sav</value>
   </data>
   <data name="WorldOpt_RenamedFormat" xml:space="preserve">
-    <value>WorldOption.sav renamed to {0} in:</value>
+    <value>WorldOption.sav переименован в {0} в папке:</value>
   </data>
   <data name="WorldOpt_RenameFailedFormat" xml:space="preserve">
-    <value>Couldn't rename WorldOption.sav: {0}</value>
+    <value>Не удалось переименовать WorldOption.sav: {0}</value>
   </data>
   <data name="UnknownServer_Title" xml:space="preserve">
     <value>Внимание!</value>
@@ -2513,35 +2513,35 @@ REST API на этом сервере пока не включён, поэтом
     <value>Принудительно закрыть другой экземпляр</value>
   </data>
   <data name="WorldSel_Title" xml:space="preserve">
-    <value>Existing world save found</value>
+    <value>Обнаружено сохранение мира</value>
   </data>
   <data name="WorldSel_SingleMessage" xml:space="preserve">
-    <value>⚠ There's a world save in your save folder, but the server isn't set to load it. Starting now begins a NEW empty world and leaves that save on disk but unreachable in game.
+    <value>⚠ В папке сохранений есть сохранение мира, но сервер не настроен на его загрузку. Если запустить сейчас, начнётся НОВЫЙ пустой мир, а это сохранение останется на диске, но будет недоступно в игре.
 
-Save on disk: {0}</value>
+Сохранение на диске: {0}</value>
   </data>
   <data name="WorldSel_ManyMessage" xml:space="preserve">
-    <value>⚠ There are {0} world saves in your save folder, but the server isn't set to load any of them. Starting now begins a NEW empty world and leaves them on disk but unreachable in game.
+    <value>⚠ В папке сохранений найдено сохранений мира: {0}, но сервер не настроен ни на одно из них. Если запустить сейчас, начнётся НОВЫЙ пустой мир, а они останутся на диске, но будут недоступны в игре.
 
 {1}
 
-To load one of these, set DedicatedServerName in GameUserSettings.ini to its folder name.</value>
+Чтобы загрузить одно из них, укажите в GameUserSettings.ini в качестве DedicatedServerName имя нужной папки.</value>
   </data>
   <data name="WorldSel_LoadWorld" xml:space="preserve">
-    <value>Load this save (recommended)</value>
+    <value>Загрузить это сохранение (рекомендуется)</value>
   </data>
   <data name="WorldSel_StartNew" xml:space="preserve">
-    <value>Start a new world</value>
+    <value>Начать новый мир</value>
   </data>
   <data name="WorldSel_FailedTitle" xml:space="preserve">
-    <value>Couldn't set the world</value>
+    <value>Не удалось задать мир</value>
   </data>
   <data name="WorldSel_FailedFormat" xml:space="preserve">
-    <value>Couldn't update GameUserSettings.ini: {0}</value>
+    <value>Не удалось обновить GameUserSettings.ini: {0}</value>
   </data>
   <data name="Main_ImportLinuxMessage" xml:space="preserve">
-    <value>That folder holds a Linux server, whose binaries can't run on Windows. The launcher can download the Windows dedicated server with SteamCMD, about 4 GB, and bring the world and settings across from '{0}'. The original is left in place.
+    <value>Эта папка содержит Linux-сервер, исполняемые файлы которого не запускаются в Windows. Лаунчер может скачать через SteamCMD выделенный сервер для Windows (около 4 ГБ) и перенести мир и настройки из «{0}». Оригинал остаётся на месте.
 
-Import it that way?</value>
+Импортировать таким способом?</value>
   </data>
 </root>

@@ -2338,28 +2338,28 @@ Enregistrer ces changements ?</value>
     <value>REST not responding</value>
   </data>
   <data name="WorldOpt_Title" xml:space="preserve">
-    <value>WorldOption.sav detected</value>
+    <value>WorldOption.sav détecté</value>
   </data>
   <data name="WorldOpt_Message" xml:space="preserve">
-    <value>⚠ A WorldOption.sav in this save folder overrides your PalWorldSettings.ini, so the launcher may not be able to monitor or control the server. Renaming it to .bak fixes this and does not affect your world.</value>
+    <value>⚠ Un fichier WorldOption.sav dans ce dossier de sauvegarde prend le pas sur votre PalWorldSettings.ini, le lanceur risque donc de ne pas pouvoir surveiller ni contrôler le serveur. Le renommer en .bak corrige cela sans affecter votre monde.</value>
   </data>
   <data name="WorldOpt_Rename" xml:space="preserve">
-    <value>Rename to .bak (recommended)</value>
+    <value>Renommer en .bak (recommandé)</value>
   </data>
   <data name="WorldOpt_Continue" xml:space="preserve">
-    <value>Start anyway (not recommended)</value>
+    <value>Démarrer quand même (non recommandé)</value>
   </data>
   <data name="WorldOpt_RenamedTitle" xml:space="preserve">
-    <value>WorldOption.sav renamed</value>
+    <value>WorldOption.sav renommé</value>
   </data>
   <data name="WorldOpt_RenameFailedTitle" xml:space="preserve">
-    <value>Couldn't rename WorldOption.sav</value>
+    <value>Impossible de renommer WorldOption.sav</value>
   </data>
   <data name="WorldOpt_RenamedFormat" xml:space="preserve">
-    <value>WorldOption.sav renamed to {0} in:</value>
+    <value>WorldOption.sav renommé en {0} dans :</value>
   </data>
   <data name="WorldOpt_RenameFailedFormat" xml:space="preserve">
-    <value>Couldn't rename WorldOption.sav: {0}</value>
+    <value>Impossible de renommer WorldOption.sav : {0}</value>
   </data>
   <data name="UnknownServer_Title" xml:space="preserve">
     <value>Attention !</value>
@@ -2513,35 +2513,35 @@ Exécuter plusieurs lanceurs depuis des dossiers distincts ne pose pas de probl�
     <value>Forcer la fermeture de l'autre instance</value>
   </data>
   <data name="WorldSel_Title" xml:space="preserve">
-    <value>Existing world save found</value>
+    <value>Sauvegarde de monde existante détectée</value>
   </data>
   <data name="WorldSel_SingleMessage" xml:space="preserve">
-    <value>⚠ There's a world save in your save folder, but the server isn't set to load it. Starting now begins a NEW empty world and leaves that save on disk but unreachable in game.
+    <value>⚠ Il y a une sauvegarde de monde dans votre dossier de sauvegarde, mais le serveur n'est pas configuré pour la charger. Démarrer maintenant crée un NOUVEAU monde vide et laisse cette sauvegarde sur le disque, mais inaccessible en jeu.
 
-Save on disk: {0}</value>
+Sauvegarde sur le disque : {0}</value>
   </data>
   <data name="WorldSel_ManyMessage" xml:space="preserve">
-    <value>⚠ There are {0} world saves in your save folder, but the server isn't set to load any of them. Starting now begins a NEW empty world and leaves them on disk but unreachable in game.
+    <value>⚠ Il y a {0} sauvegardes de monde dans votre dossier de sauvegarde, mais le serveur n'est configuré pour en charger aucune. Démarrer maintenant crée un NOUVEAU monde vide et les laisse sur le disque, mais inaccessibles en jeu.
 
 {1}
 
-To load one of these, set DedicatedServerName in GameUserSettings.ini to its folder name.</value>
+Pour en charger une, définissez DedicatedServerName dans GameUserSettings.ini avec le nom de son dossier.</value>
   </data>
   <data name="WorldSel_LoadWorld" xml:space="preserve">
-    <value>Load this save (recommended)</value>
+    <value>Charger cette sauvegarde (recommandé)</value>
   </data>
   <data name="WorldSel_StartNew" xml:space="preserve">
-    <value>Start a new world</value>
+    <value>Démarrer un nouveau monde</value>
   </data>
   <data name="WorldSel_FailedTitle" xml:space="preserve">
-    <value>Couldn't set the world</value>
+    <value>Impossible de définir le monde</value>
   </data>
   <data name="WorldSel_FailedFormat" xml:space="preserve">
-    <value>Couldn't update GameUserSettings.ini: {0}</value>
+    <value>Impossible de mettre à jour GameUserSettings.ini : {0}</value>
   </data>
   <data name="Main_ImportLinuxMessage" xml:space="preserve">
-    <value>That folder holds a Linux server, whose binaries can't run on Windows. The launcher can download the Windows dedicated server with SteamCMD, about 4 GB, and bring the world and settings across from '{0}'. The original is left in place.
+    <value>Ce dossier contient un serveur Linux, dont les binaires ne peuvent pas s'exécuter sous Windows. Le lanceur peut télécharger le serveur dédié Windows avec SteamCMD, environ 4 Go, et transférer le monde et les paramètres depuis « {0} ». L'original reste en place.
 
-Import it that way?</value>
+L'importer de cette façon ?</value>
   </data>
 </root>
