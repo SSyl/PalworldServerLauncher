@@ -10,7 +10,7 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
 - **`--stop-server` works even while a launcher window is open.** It hands the request to the running launcher, so the shutdown behaves exactly like clicking Stop (shutdown backup, Discord notification) and the launcher knows the server was stopped on purpose instead of treating it as a crash and starting it again.
 
 ### Fixed
-- **Backups now include `GameUserSettings.ini`, so a backup can actually be restored into a fresh install.** That file is what tells the server which world folder to load. Restoring a backup without it left the world sitting on disk while the server created a new empty one beside it. Existing backups are unaffected, take a fresh one to get the new contents.
+- **Backups now include `GameUserSettings.ini`, so a backup can actually be restored into a fresh install.** That file is what tells the server which world folder to load. Restoring a backup without it left the world sitting on disk while the server created a new empty one beside it.
 - **Chat shows up in the Chat tab on servers running PalDefender.** PalDefender replaces the game's own chat line with its own format, which the launcher did not recognize, so the Chat tab stayed empty and every message went to the Server Log instead. Reported in #8.
 
 ## [1.0.2] - 2026-07-27
