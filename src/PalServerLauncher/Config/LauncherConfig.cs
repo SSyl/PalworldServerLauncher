@@ -33,13 +33,21 @@ public sealed class LauncherConfig
     /// whether a server is installed in it, so a half-deleted or broken install is repaired in place rather than
     /// having a second install appear beside it while the user's world sits in the old folder.
     /// </summary>
-    public static string ResolveServerFolder(string serverRoot)
+    public static string ResolveServerFolder(string serverRoot) =>
+        ResolveServerFolder(serverRoot, Directory.GetDirectories);
+
+    /// <summary>
+    /// The testable core. <paramref name="listMatching"/> is <see cref="Directory.GetDirectories(string, string)"/>
+    /// in production, and a seam here because the branch worth testing (listing throws while a legacy install is
+    /// sitting right there) takes a deny ACE on the root to provoke for real.
+    /// </summary>
+    public static string ResolveServerFolder(string serverRoot, Func<string, string, string[]> listMatching)
     {
         try
         {
             // GetDirectories, not Exists: the match is case-insensitive but the result carries the real casing,
             // so logs and dialogs can name the folder the user actually has.
-            var legacy = Directory.GetDirectories(serverRoot, LegacyServerFolderName);
+            var legacy = listMatching(serverRoot, LegacyServerFolderName);
             if (legacy.Length > 0)
                 return Path.GetFileName(legacy[0]);
         }

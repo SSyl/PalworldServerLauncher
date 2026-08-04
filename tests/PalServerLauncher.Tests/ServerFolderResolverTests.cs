@@ -88,11 +88,51 @@ public class ServerFolderResolverTests
         finally { Directory.Delete(root, recursive: true); }
     }
 
-    /// <summary>A root that can't be listed at all still has to answer rather than throw. The dangerous half of
-    /// this path (an unlistable root that DOES hold a legacy install, where returning the new name would strand
-    /// the world) needs a deny ACE to reproduce, so it is covered by the fallback in the catch, not by a test.</summary>
+    /// <summary>
+    /// The expensive way to be wrong. Listing the root can fail (a root that denies list, a network share that
+    /// drops) while the legacy install is right there, and answering "no legacy install" would send SteamCMD off
+    /// to build a second server while the user's world sat in the old folder. The failure is injected because
+    /// provoking it for real takes a deny ACE, but the folder underneath is a real one on disk.
+    /// </summary>
+    [Theory]
+    [InlineData(typeof(UnauthorizedAccessException))]
+    [InlineData(typeof(IOException))]
+    public void Resolve_still_finds_the_legacy_folder_when_the_root_cannot_be_listed(Type failure)
+    {
+        var root = NewRoot();
+        Directory.CreateDirectory(Path.Combine(root, "palworlddedicatedserver"));
+        try
+        {
+            var resolved = LauncherConfig.ResolveServerFolder(
+                root, (_, _) => throw (Exception)Activator.CreateInstance(failure)!);
+
+            // The fallback can't report the on-disk casing, so it returns the constant. What has to hold is that
+            // the name it returns still lands on the folder that is really there.
+            Assert.Equal("PalworldDedicatedServer", resolved);
+            Assert.True(Directory.Exists(Path.Combine(root, resolved)));
+        }
+        finally { Directory.Delete(root, recursive: true); }
+    }
+
+    /// <summary>The same failure with nothing there really is a fresh install, so it takes the new name.</summary>
     [Fact]
-    public void Resolve_falls_back_when_the_root_cannot_be_listed()
+    public void Resolve_uses_the_new_name_when_listing_fails_and_no_legacy_folder_exists()
+    {
+        var root = NewRoot();
+        Directory.CreateDirectory(root);
+        try
+        {
+            var resolved = LauncherConfig.ResolveServerFolder(root, (_, _) => throw new UnauthorizedAccessException());
+
+            Assert.Equal("PalServer", resolved);
+        }
+        finally { Directory.Delete(root, recursive: true); }
+    }
+
+    /// <summary>A root that isn't a directory at all goes through the real lister, so the catch is exercised
+    /// end to end rather than only through the injected seam.</summary>
+    [Fact]
+    public void Resolve_answers_instead_of_throwing_when_the_root_is_a_file()
     {
         var notADirectory = Path.Combine(Path.GetTempPath(), $"pal_file_{Guid.NewGuid():N}");
         File.WriteAllText(notADirectory, "");
