@@ -119,16 +119,24 @@ public sealed class BackupService
         return zipPath;
     }
 
+    /// <summary>The config files an archive carries. The rest of the folder (Engine.ini, Game.ini, ...) isn't part
+    /// of a normal server's state, and where a user has customized one it's a rare, deliberate case.
+    /// GameUserSettings.ini is here because its <c>DedicatedServerName</c> names the world folder the server loads:
+    /// restore the saves without it into a fresh install and the server mints a new GUID and boots an empty world
+    /// next to the restored one.</summary>
+    public static readonly string[] ArchivedConfigFiles = ["PalWorldSettings.ini", "GameUserSettings.ini"];
+
     private void CreateArchive(string zipPath)
     {
         using var zip = ZipFile.Open(zipPath, ZipArchiveMode.Create);
         AddTree(zip, SaveGamesDir, "SaveGames");
 
-        // Only PalWorldSettings.ini from the config folder. The other inis (Engine.ini, Game.ini, ...) aren't
-        // part of a normal server's state, and where a user has customized one it's a rare, deliberate case.
-        var settingsIni = Path.Combine(ConfigDir, "PalWorldSettings.ini");
-        if (File.Exists(settingsIni))
-            AddFile(zip, settingsIni, "Config/WindowsServer/PalWorldSettings.ini");
+        foreach (var name in ArchivedConfigFiles)
+        {
+            var path = Path.Combine(ConfigDir, name);
+            if (File.Exists(path))
+                AddFile(zip, path, $"Config/WindowsServer/{name}");
+        }
     }
 
     private void AddTree(ZipArchive zip, string sourceDir, string entryRoot)

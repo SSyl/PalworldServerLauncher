@@ -1,10 +1,54 @@
+using System.IO.Compression;
 using PalServerLauncher.Config;
 using PalServerLauncher.Core;
+using PalServerLauncher.Logging;
 
 namespace PalServerLauncher.Tests;
 
 public class BackupServiceTests
 {
+    /// <summary>A minimal installed-server tree: one world folder plus the two config files a restore needs.</summary>
+    private static string WriteFakeInstall(string worldId)
+    {
+        var root = Path.Combine(Path.GetTempPath(), $"pal_bk_{Guid.NewGuid():N}");
+        var saved = Path.Combine(root, LauncherConfig.ServerFolderName, "Pal", "Saved");
+        var world = Path.Combine(saved, "SaveGames", "0", worldId);
+        var cfg = Path.Combine(saved, "Config", "WindowsServer");
+        Directory.CreateDirectory(world);
+        Directory.CreateDirectory(cfg);
+        File.WriteAllText(Path.Combine(world, "Level.sav"), "level");
+        File.WriteAllText(Path.Combine(cfg, "PalWorldSettings.ini"), "[/Script/Pal.PalGameWorldSettings]\r\nOptionSettings=()\r\n");
+        File.WriteAllText(Path.Combine(cfg, "GameUserSettings.ini"),
+            $"[/Script/Pal.PalGameLocalSettings]\r\nDedicatedServerName={worldId}\r\n");
+        File.WriteAllText(Path.Combine(cfg, "Engine.ini"), "[Core.Log]\r\n");
+        return root;
+    }
+
+    /// <summary>Without GameUserSettings.ini a restore into a fresh install loses the world: nothing names the
+    /// save folder, so the server generates a new GUID and comes up empty (issue #9 groundwork).</summary>
+    [Fact]
+    public async Task BackupNow_archives_the_world_and_both_config_files()
+    {
+        const string worldId = "FDD3EE684AEC6FCB1BCB53A576EBB0E4";
+        var root = WriteFakeInstall(worldId);
+        try
+        {
+            var config = new LauncherConfig { ServerRoot = root };
+            var service = new BackupService(config, new Logger(verbose: false));
+
+            var zipPath = await service.BackupNowAsync(BackupReason.Manual, rest: null, serverRunning: false);
+
+            Assert.NotNull(zipPath);
+            using var zip = ZipFile.OpenRead(zipPath!);
+            var entries = zip.Entries.Select(e => e.FullName).ToList();
+            Assert.Contains($"SaveGames/0/{worldId}/Level.sav", entries);
+            Assert.Contains("Config/WindowsServer/PalWorldSettings.ini", entries);
+            Assert.Contains("Config/WindowsServer/GameUserSettings.ini", entries);
+            Assert.DoesNotContain("Config/WindowsServer/Engine.ini", entries);
+        }
+        finally { Directory.Delete(root, recursive: true); }
+    }
+
     [Theory]
     [InlineData(null)]
     [InlineData("")]
