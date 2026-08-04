@@ -113,6 +113,13 @@ public partial class MainViewModel : ObservableObject
     /// as reveal-in-Explorer links, or an error).</summary>
     public Action<WorldOptionRenameResult>? ShowWorldOptionResult { get; set; }
 
+    /// <summary>Set by the View: on Start, when DedicatedServerName doesn't name a world that exists, ask whether
+    /// to load the save that's there or let the server begin a new one. The list carries every world on disk.</summary>
+    public Func<WorldSelectionVerdict, IReadOnlyList<string>, WorldSelectionChoice>? ConfirmWorldSelection { get; set; }
+
+    /// <summary>Set by the View: report that pointing the server at a world failed (an unwritable ini).</summary>
+    public Action<string>? ShowWorldSelectionFailure { get; set; }
+
     /// <summary>Set by the View: before Start, if a Palworld server this launcher didn't start is already running,
     /// ask whether to terminate it, leave it, or cancel. The list carries each process's pid + path (null = unidentifiable).</summary>
     public Func<IReadOnlyList<ProcessScanner.UnmanagedServer>, UnknownServerChoice>? ConfirmUnknownServers { get; set; }
@@ -865,6 +872,9 @@ public partial class MainViewModel : ObservableObject
         if (!HandleUnmanagedServers(interactive))
             return false;
 
+        if (!HandleWorldSelection(interactive))
+            return false;
+
         var savs = _controller.FindWorldOptionSavs();
         if (savs.Count == 0)
             return true;
@@ -899,6 +909,39 @@ public partial class MainViewModel : ObservableObject
         }
         ShowWorldOptionResult?.Invoke(new WorldOptionRenameResult(true, bakPaths, null));
         return true;
+    }
+
+    /// <summary>
+    /// Pre-Start guard for a save the server isn't pointed at. The server picks its world by name from
+    /// GameUserSettings.ini and never looks for one, so a restored backup, an imported save, or a hand-copied
+    /// save folder all boot a new empty world and leave the real one untouched but unreachable in game.
+    /// Returns true to proceed with the launch, false to abort.
+    /// </summary>
+    private bool HandleWorldSelection(bool interactive)
+    {
+        var verdict = _controller.CheckWorldSelection();
+        if (verdict.State is WorldSelectionState.Ok or WorldSelectionState.NoWorlds)
+            return true;
+
+        if (!interactive)
+        {
+            // Headless (--start-server): can't show a modal, and rewriting the config unattended isn't ours to
+            // decide, since clearing the key is also how a user starts a fresh world on purpose.
+            _controller.WarnIfWorldMissing();
+            return true;
+        }
+
+        var choice = ConfirmWorldSelection?.Invoke(verdict, _controller.FindWorldIds()) ?? WorldSelectionChoice.Cancel;
+        if (choice == WorldSelectionChoice.Cancel)
+            return false;
+        if (choice == WorldSelectionChoice.StartNewWorld || verdict.WorldId is null)
+            return true;
+
+        if (_controller.TryLoadWorld(verdict.WorldId, out var error))
+            return true;
+
+        ShowWorldSelectionFailure?.Invoke(error ?? "");
+        return false;
     }
 
     /// <summary>

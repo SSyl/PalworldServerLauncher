@@ -534,6 +534,93 @@ public sealed class ServerController : IDisposable
             _logger.Info("WorldOption.sav found in the save folder. It can override PalWorldSettings.ini and leave the server uncontrollable. Rename it to .bak, or start the launcher normally to be prompted.");
     }
 
+    private string ConfigDir => Path.Combine(
+        _config.ServerRoot, LauncherConfig.ServerFolderName, "Pal", "Saved", "Config", "WindowsServer");
+
+    private string GameUserSettingsPath => Path.Combine(ConfigDir, GameUserSettingsFile.FileName);
+
+    /// <summary>The world folders on disk, i.e. the directory names under <c>SaveGames\0</c> (the dedicated
+    /// server's only slot). Empty when nothing has been saved yet.</summary>
+    public IReadOnlyList<string> FindWorldIds()
+    {
+        var slotDir = Path.Combine(SaveGamesDir, "0");
+        if (!Directory.Exists(slotDir))
+            return Array.Empty<string>();
+        try
+        {
+            return Directory.EnumerateDirectories(slotDir).Select(Path.GetFileName).OfType<string>().ToList();
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            _logger.Error($"Couldn't list the save folders: {ex.Message}");
+            return Array.Empty<string>();
+        }
+    }
+
+    /// <summary>Whether <c>DedicatedServerName</c> still names a world that's actually on disk. When it doesn't,
+    /// the server silently starts a brand new world and leaves the real save untouched but unreachable, which is
+    /// what a restored backup, an imported save, or a hand-copied save folder all look like.</summary>
+    public WorldSelectionVerdict CheckWorldSelection() =>
+        WorldSelection.Evaluate(ReadConfiguredWorldId(), FindWorldIds());
+
+    private string? ReadConfiguredWorldId()
+    {
+        try
+        {
+            return File.Exists(GameUserSettingsPath)
+                ? GameUserSettingsFile.ReadWorldId(File.ReadAllText(GameUserSettingsPath))
+                : null;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            _logger.Error($"Couldn't read {GameUserSettingsFile.FileName}: {ex.Message}");
+            return null;
+        }
+    }
+
+    /// <summary>Point <c>GameUserSettings.ini</c> at <paramref name="worldId"/>, leaving every other line alone.
+    /// The write is read back and re-parsed before we report success, the same way a settings save is verified.
+    /// Returns false with <paramref name="error"/> set on an IO/permission failure.</summary>
+    public bool TryLoadWorld(string worldId, out string? error)
+    {
+        error = null;
+        try
+        {
+            Directory.CreateDirectory(ConfigDir);
+            var existing = File.Exists(GameUserSettingsPath) ? File.ReadAllText(GameUserSettingsPath) : "";
+            File.WriteAllText(GameUserSettingsPath, GameUserSettingsFile.SetWorldId(existing, worldId));
+
+            var written = GameUserSettingsFile.ReadWorldId(File.ReadAllText(GameUserSettingsPath));
+            if (!string.Equals(written, worldId, StringComparison.OrdinalIgnoreCase))
+            {
+                error = $"{GameUserSettingsFile.FileName} still reads {written ?? "nothing"} after the write.";
+                _logger.Error(error);
+                return false;
+            }
+
+            _logger.Info($"Server world set to {worldId} in {GameUserSettingsFile.FileName}.");
+            return true;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            error = ex.Message;
+            _logger.Error($"Couldn't update {GameUserSettingsFile.FileName}: {ex.Message}");
+            return false;
+        }
+    }
+
+    /// <summary>Log the world-selection state for unattended start paths (headless start, Discord /start) that
+    /// can't prompt. Never rewrites the config on its own: clearing the key is also how a user deliberately
+    /// starts a fresh world, so the choice stays theirs.</summary>
+    public void WarnIfWorldMissing()
+    {
+        var verdict = CheckWorldSelection();
+        if (verdict.State == WorldSelectionState.Recoverable)
+            _logger.Info($"The server isn't pointed at the save on disk ({verdict.WorldId}), so it will start a NEW empty world. Start the launcher normally to be prompted, or set DedicatedServerName in {GameUserSettingsFile.FileName}.");
+        else if (verdict.State == WorldSelectionState.Ambiguous)
+            _logger.Info($"The server isn't pointed at any of the {FindWorldIds().Count} saves on disk, so it will start a NEW empty world. Set DedicatedServerName in {GameUserSettingsFile.FileName} to the world you want.");
+    }
+
     /// <summary>Running Palworld servers this launcher doesn't manage (a foreign install, or one whose path we
     /// can't read). Starting while one runs risks a port conflict or a competing duplicate.</summary>
     public IReadOnlyList<ProcessScanner.UnmanagedServer> FindUnmanagedServers() =>

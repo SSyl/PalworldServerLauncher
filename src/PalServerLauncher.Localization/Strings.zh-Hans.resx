@@ -2436,4 +2436,31 @@
   <data name="SingleInstance_ForceClose" xml:space="preserve">
     <value>强制关闭另一个实例</value>
   </data>
+  <data name="WorldSel_Title" xml:space="preserve">
+    <value>Existing world save found</value>
+  </data>
+  <data name="WorldSel_SingleMessage" xml:space="preserve">
+    <value>⚠ There's a world save in your save folder, but the server isn't set to load it. Starting now begins a NEW empty world and leaves that save on disk but unreachable in game.
+
+Save on disk: {0}</value>
+  </data>
+  <data name="WorldSel_ManyMessage" xml:space="preserve">
+    <value>⚠ There are {0} world saves in your save folder, but the server isn't set to load any of them. Starting now begins a NEW empty world and leaves them on disk but unreachable in game.
+
+{1}
+
+To load one of these, set DedicatedServerName in GameUserSettings.ini to its folder name.</value>
+  </data>
+  <data name="WorldSel_LoadWorld" xml:space="preserve">
+    <value>Load this save (recommended)</value>
+  </data>
+  <data name="WorldSel_StartNew" xml:space="preserve">
+    <value>Start a new world</value>
+  </data>
+  <data name="WorldSel_FailedTitle" xml:space="preserve">
+    <value>Couldn't set the world</value>
+  </data>
+  <data name="WorldSel_FailedFormat" xml:space="preserve">
+    <value>Couldn't update GameUserSettings.ini: {0}</value>
+  </data>
 </root>

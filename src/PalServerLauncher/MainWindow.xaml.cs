@@ -59,6 +59,8 @@ public partial class MainWindow : Window
         _viewModel.ConfirmShutdownNow = ConfirmShutdownNow;
         _viewModel.ConfirmWorldOption = PromptWorldOption;
         _viewModel.ShowWorldOptionResult = ShowWorldOptionResult;
+        _viewModel.ConfirmWorldSelection = PromptWorldSelection;
+        _viewModel.ShowWorldSelectionFailure = ShowWorldSelectionFailure;
         _viewModel.ConfirmUnknownServers = PromptUnknownServers;
         _viewModel.ShowTerminateFailure = ShowTerminateFailure;
 
@@ -206,6 +208,41 @@ public partial class MainWindow : Window
             ChoiceDialog.Show(this, Strings.WorldOpt_RenameFailedTitle,
                 string.Format(Strings.WorldOpt_RenameFailedFormat, result.Error), Strings.Common_OK);
     }
+
+    /// <summary>On Start, when GameUserSettings.ini doesn't name a world that exists, ask whether to load the save
+    /// that's on disk or let the server begin a new one. Starting fresh is a legitimate choice here (clearing the
+    /// key is how you deliberately begin a new world), so nothing is rewritten without an answer.</summary>
+    private WorldSelectionChoice PromptWorldSelection(WorldSelectionVerdict verdict, IReadOnlyList<string> worldIds)
+    {
+        if (verdict.State == WorldSelectionState.Ambiguous)
+        {
+            var lines = new List<string>();
+            foreach (var id in worldIds)
+                lines.Add($"  • {id}");
+            var message = string.Format(Strings.WorldSel_ManyMessage, worldIds.Count, string.Join("\n", lines));
+            return ChoiceDialog.Show(this, Strings.WorldSel_Title, message,
+                Strings.WorldSel_StartNew, Strings.Common_Cancel) switch
+            {
+                0 => WorldSelectionChoice.StartNewWorld,
+                _ => WorldSelectionChoice.Cancel, // Cancel button or dialog dismissed (-1)
+            };
+        }
+
+        return ChoiceDialog.Show(this, Strings.WorldSel_Title,
+            string.Format(Strings.WorldSel_SingleMessage, verdict.WorldId),
+            Strings.WorldSel_LoadWorld, Strings.WorldSel_StartNew, Strings.Common_Cancel) switch
+        {
+            0 => WorldSelectionChoice.LoadExistingWorld,
+            1 => WorldSelectionChoice.StartNewWorld,
+            _ => WorldSelectionChoice.Cancel, // Cancel button or dialog dismissed (-1)
+        };
+    }
+
+    /// <summary>Report that pointing GameUserSettings.ini at a world failed, so the start is abandoned rather than
+    /// quietly launching into a new world.</summary>
+    private void ShowWorldSelectionFailure(string error) =>
+        ChoiceDialog.Show(this, Strings.WorldSel_FailedTitle,
+            string.Format(Strings.WorldSel_FailedFormat, error), Strings.Common_OK);
 
     /// <summary>Before Start, when a Palworld server this launcher didn't start is running, ask whether to
     /// terminate it, leave it running, or cancel. The dialog lives here, not the VM.</summary>
