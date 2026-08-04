@@ -840,6 +840,27 @@ public partial class MainViewModel : ObservableObject
         return imported;
     }
 
+    /// <summary>Import a Linux server: SteamCMD installs the Windows server, then the world and settings are copied
+    /// across. Same busy/InstallFinished handling as a plain import, since it ends in a fresh install either way.</summary>
+    public async Task<bool> ImportLinuxServerAsync(string sourceDir)
+    {
+        var wasInstalled = IsInstalled;
+        IsBusy = true;
+        bool imported;
+        try
+        {
+            imported = await _controller.ImportLinuxServerAsync(sourceDir);
+        }
+        finally
+        {
+            IsBusy = false;
+            IsInstalled = _controller.IsInstalled;
+        }
+        if (imported && !wasInstalled && IsInstalled)
+            InstallFinished?.Invoke();
+        return imported;
+    }
+
     /// <summary>Programmatically start the server (used by --start-server on load). Same path as the Start button,
     /// wrapped in Guard so a failure logs instead of crashing. Non-interactive: can't prompt an unattended start.</summary>
     public Task StartServerAsync() => Guard(() => StartCoreAsync(interactive: false));

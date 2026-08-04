@@ -171,18 +171,25 @@ public partial class MainWindow : Window
             return;
 
         var source = picker.FolderName;
-        if (!ServerImporter.LooksLikeServerInstall(source))
+        var kind = ServerImporter.DetectInstallKind(source);
+        if (kind == ServerInstallKind.None)
         {
             ChoiceDialog.Show(this, Strings.Main_ImportTitle, Strings.Main_ImportInvalidMessage, Strings.Common_OK);
             return;
         }
 
-        if (ChoiceDialog.Show(this, Strings.Main_ImportTitle,
-                string.Format(Strings.Main_ImportConfirmMessage, source),
+        // A Linux install can't be copied in and run, so that path downloads the Windows server and takes only
+        // the world and settings. Say so before starting, it's a multi-GB download either way.
+        var isLinux = kind == ServerInstallKind.Linux;
+        var message = string.Format(
+            isLinux ? Strings.Main_ImportLinuxMessage : Strings.Main_ImportConfirmMessage, source);
+        if (ChoiceDialog.Show(this, Strings.Main_ImportTitle, message,
                 Strings.Main_ImportCopyButton, Strings.Common_Cancel) != 0)
             return;
 
-        var imported = await _viewModel.ImportServerAsync(source);
+        var imported = isLinux
+            ? await _viewModel.ImportLinuxServerAsync(source)
+            : await _viewModel.ImportServerAsync(source);
         if (!imported)
             ChoiceDialog.Show(this, Strings.Main_ImportTitle, Strings.Main_ImportFailedMessage, Strings.Common_OK);
     }

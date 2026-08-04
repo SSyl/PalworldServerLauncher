@@ -864,6 +864,75 @@ public sealed class ServerController : IDisposable
         }
     }
 
+    /// <summary>
+    /// Bring a Linux server across: install the Windows server with SteamCMD, then copy the world and the settings
+    /// out of the Linux install (its own binaries can't run here). The original is left in place. The settings move
+    /// between the platform-named config folders, which is the step that makes this more than a file copy.
+    /// Returns true once the Windows server is installed and the world is in, false if anything stopped it.
+    /// </summary>
+    public async Task<bool> ImportLinuxServerAsync(string sourceDir, CancellationToken ct = default)
+    {
+        if (IsRunning())
+        {
+            _logger.Info("Stop the server before importing.");
+            return false;
+        }
+        if (IsInstalled)
+        {
+            _logger.Info("A server is already installed here. Remove it before importing another.");
+            return false;
+        }
+        if (ServerImporter.DetectInstallKind(sourceDir) != ServerInstallKind.Linux)
+        {
+            _logger.Info("That folder doesn't look like a Linux Palworld dedicated server install (no PalServer.sh found).");
+            return false;
+        }
+
+        var dest = _steamCmd.InstallDir;
+        if (ProcessScanner.IsUnder(dest, sourceDir) || PathsEqual(sourceDir, dest))
+        {
+            _logger.Info("Can't import a folder into itself. Pick the existing install, not the launcher's own server folder.");
+            return false;
+        }
+
+        _logger.Info($"Importing a Linux server from {sourceDir}. Installing the Windows server first, its Linux binaries can't run here.");
+        await InstallOrUpdateAsync(ct: ct).ConfigureAwait(false); // same validated first install the Install button runs
+        if (!IsInstalled)
+        {
+            _logger.Error("Import stopped: the Windows server didn't install, so there's nothing to copy the world into. Check the SteamCMD tab.");
+            return false;
+        }
+
+        var progress = new Progress<string>(_logger.Info);
+        try
+        {
+            var payload = await ServerImporter.CopyWorldAndSettingsAsync(
+                sourceDir, dest, ServerImporter.LinuxConfigRelative, progress, ct).ConfigureAwait(false);
+
+            if (!payload.Saves)
+                _logger.Info("No save folder found in the Linux install, so the server will start a new world.");
+            foreach (var name in ServerImporter.PortableConfigFiles)
+            {
+                if (!payload.ConfigFiles.Contains(name))
+                    _logger.Info($"No {name} in the Linux install's config folder, so the server's own default is used.");
+            }
+
+            RebuildRestClient(); // the copied PalWorldSettings.ini carries the REST port and admin password
+            _logger.Info("Import complete. Once you've confirmed this copy works, you can delete the original yourself.");
+            return true;
+        }
+        catch (OperationCanceledException)
+        {
+            _logger.Info("Import cancelled.");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            _logger.Error("Import failed", ex);
+            return false;
+        }
+    }
+
     private static bool PathsEqual(string a, string b)
     {
         try

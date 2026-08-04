@@ -2539,4 +2539,9 @@ To load one of these, set DedicatedServerName in GameUserSettings.ini to its fol
   <data name="WorldSel_FailedFormat" xml:space="preserve">
     <value>Couldn't update GameUserSettings.ini: {0}</value>
   </data>
+  <data name="Main_ImportLinuxMessage" xml:space="preserve">
+    <value>That folder holds a Linux server, whose binaries can't run on Windows. The launcher can download the Windows dedicated server with SteamCMD, about 4 GB, and bring the world and settings across from '{0}'. The original is left in place.
+
+Import it that way?</value>
+  </data>
 </root>
