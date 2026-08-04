@@ -44,9 +44,11 @@ public static class GameUserSettingsFile
         var newline = text.Contains('\n') && !text.Contains("\r\n", StringComparison.Ordinal) ? "\n" : "\r\n";
         var line = $"DedicatedServerName={worldId}";
 
+        // Every occurrence, not just the first: a hand-edited file can end up with two DedicatedServerName lines,
+        // and rewriting them all means we're correct whichever one the engine honors.
         // MatchEvaluator, not a replacement string: a $ in the value would otherwise be read as a substitution.
         if (KeyLine.IsMatch(text))
-            return KeyLine.Replace(text, _ => line, 1);
+            return KeyLine.Replace(text, _ => line);
 
         var section = text.IndexOf(Section, StringComparison.OrdinalIgnoreCase);
         if (section < 0)

@@ -373,7 +373,9 @@ public sealed class ServerController : IDisposable
             return Task.FromResult("Server is already running.");
         if (!IsInstalled)
             return Task.FromResult("Server isn't installed, install it from the launcher first.");
-        WarnIfWorldOptionPresent(); // unattended start, can't prompt; warn like the headless path does
+        // Unattended start, can't prompt; warn like the headless path does.
+        WarnIfWorldOptionPresent();
+        WarnIfWorldMissing();
         FireAndForget(() => StartAsync(), "Discord start");
         return Task.FromResult("Starting the server (updating first if needed)...");
     }
@@ -540,7 +542,8 @@ public sealed class ServerController : IDisposable
     private string GameUserSettingsPath => Path.Combine(ConfigDir, GameUserSettingsFile.FileName);
 
     /// <summary>The world folders on disk, i.e. the directory names under <c>SaveGames\0</c> (the dedicated
-    /// server's only slot). Empty when nothing has been saved yet.</summary>
+    /// server's only slot). Empty when nothing has been saved yet. A folder counts only once it holds a
+    /// <c>Level.sav</c>, so a leftover or half-copied directory can't be offered up as someone's world.</summary>
     public IReadOnlyList<string> FindWorldIds()
     {
         var slotDir = Path.Combine(SaveGamesDir, "0");
@@ -548,7 +551,9 @@ public sealed class ServerController : IDisposable
             return Array.Empty<string>();
         try
         {
-            return Directory.EnumerateDirectories(slotDir).Select(Path.GetFileName).OfType<string>().ToList();
+            return Directory.EnumerateDirectories(slotDir)
+                .Where(dir => File.Exists(Path.Combine(dir, "Level.sav")))
+                .Select(Path.GetFileName).OfType<string>().ToList();
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
@@ -895,17 +900,21 @@ public sealed class ServerController : IDisposable
             return false;
         }
 
-        _logger.Info($"Importing a Linux server from {sourceDir}. Installing the Windows server first, its Linux binaries can't run here.");
-        await InstallOrUpdateAsync(ct: ct).ConfigureAwait(false); // same validated first install the Install button runs
-        if (!IsInstalled)
-        {
-            _logger.Error("Import stopped: the Windows server didn't install, so there's nothing to copy the world into. Check the SteamCMD tab.");
-            return false;
-        }
-
+        // A half-copied world would be read by the pre-Start guard as "the save on disk" and offered up as the one
+        // to load, so a failed copy has to leave nothing behind. Only ours to delete if we're the ones who made it.
+        var destSaves = Path.Combine(dest, ServerImporter.SaveGamesRelative);
+        var savesExistedBefore = Directory.Exists(destSaves);
         var progress = new Progress<string>(_logger.Info);
         try
         {
+            _logger.Info($"Importing a Linux server from {sourceDir}. Installing the Windows server first, its Linux binaries can't run here.");
+            await InstallOrUpdateAsync(ct: ct).ConfigureAwait(false); // same validated first install the Install button runs
+            if (!IsInstalled)
+            {
+                _logger.Error("Import stopped: the Windows server didn't install, so there's nothing to copy the world into. Check the SteamCMD tab.");
+                return false;
+            }
+
             var payload = await ServerImporter.CopyWorldAndSettingsAsync(
                 sourceDir, dest, ServerImporter.LinuxConfigRelative, progress, ct).ConfigureAwait(false);
 
@@ -917,19 +926,37 @@ public sealed class ServerController : IDisposable
                     _logger.Info($"No {name} in the Linux install's config folder, so the server's own default is used.");
             }
 
-            RebuildRestClient(); // the copied PalWorldSettings.ini carries the REST port and admin password
             _logger.Info("Import complete. Once you've confirmed this copy works, you can delete the original yourself.");
             return true;
         }
         catch (OperationCanceledException)
         {
             _logger.Info("Import cancelled.");
+            DiscardPartialImport(destSaves, savesExistedBefore);
             return false;
         }
         catch (Exception ex)
         {
             _logger.Error("Import failed", ex);
+            DiscardPartialImport(destSaves, savesExistedBefore);
             return false;
+        }
+    }
+
+    /// <summary>Remove a world copied in by an import that then failed, so the install is left as a plain fresh one
+    /// rather than holding a truncated save. Never touches saves that were already there.</summary>
+    private void DiscardPartialImport(string destSaves, bool savesExistedBefore)
+    {
+        if (savesExistedBefore || !Directory.Exists(destSaves))
+            return;
+        try
+        {
+            Directory.Delete(destSaves, recursive: true);
+            _logger.Info("Removed the partially copied world, so the install is a clean one. Import it again to retry.");
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            _logger.Error($"Couldn't remove the partially copied world at {destSaves}: {ex.Message}. Delete that folder before importing again.");
         }
     }
 

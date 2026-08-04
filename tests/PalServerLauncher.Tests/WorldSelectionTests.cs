@@ -148,6 +148,48 @@ public class GameUserSettingsFileTests
         Assert.DoesNotContain("\r", updated, StringComparison.Ordinal);
     }
 
+    /// <summary>A $ in the new value must not be read as a regex substitution (the replace uses a MatchEvaluator).</summary>
+    [Fact]
+    public void SetWorldId_writes_a_value_containing_regex_syntax_verbatim()
+    {
+        const string awkward = "My$1World$&Save";
+
+        var updated = GameUserSettingsFile.SetWorldId(RealFile, awkward);
+
+        Assert.Equal(awkward, GameUserSettingsFile.ReadWorldId(updated));
+    }
+
+    /// <summary>A hand-edited file can end up with the key twice. Rewriting only the first would leave the two
+    /// disagreeing, and the read-back check (which also reads the first) couldn't tell.</summary>
+    [Fact]
+    public void SetWorldId_rewrites_every_occurrence_of_the_key()
+    {
+        var duplicated =
+            $"[/Script/Pal.PalGameLocalSettings]\r\nDedicatedServerName={WorldA}\r\nGraphicsLevel=None\r\nDedicatedServerName={WorldB}\r\n";
+
+        var updated = GameUserSettingsFile.SetWorldId(duplicated, WorldA);
+
+        Assert.Equal(2, updated.Split($"DedicatedServerName={WorldA}").Length - 1);
+        Assert.DoesNotContain(WorldB, updated, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SetWorldId_appends_to_a_file_that_has_no_trailing_newline()
+    {
+        var updated = GameUserSettingsFile.SetWorldId("[ScalabilityGroups]\r\nsg.ShadowQuality=3", WorldA);
+
+        Assert.Equal($"[ScalabilityGroups]\r\nsg.ShadowQuality=3\r\n[/Script/Pal.PalGameLocalSettings]\r\nDedicatedServerName={WorldA}\r\n", updated);
+    }
+
+    [Fact]
+    public void SetWorldId_handles_a_section_header_with_nothing_after_it()
+    {
+        var updated = GameUserSettingsFile.SetWorldId("[/Script/Pal.PalGameLocalSettings]", WorldA);
+
+        Assert.Equal(WorldA, GameUserSettingsFile.ReadWorldId(updated));
+        Assert.StartsWith("[/Script/Pal.PalGameLocalSettings]", updated, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void SetWorldId_tolerates_spacing_around_the_key()
     {
