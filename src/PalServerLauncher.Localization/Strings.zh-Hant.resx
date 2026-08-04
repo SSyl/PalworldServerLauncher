@@ -2464,7 +2464,7 @@
     <value>無法更新 GameUserSettings.ini：{0}</value>
   </data>
   <data name="Main_ImportLinuxMessage" xml:space="preserve">
-    <value>該資料夾內含 Linux 版伺服器，其執行檔無法在 Windows 上執行。啟動器可以透過 SteamCMD 下載 Windows 版專用伺服器（約 4 GB），並將世界和設定從“{0}”移轉過來。原始資料夾會保留不動。
+    <value>該資料夾內含 Linux 版伺服器，其執行檔無法在 Windows 上執行。啟動器可以通過 SteamCMD 下載 Windows 版專用伺服器（約 4 GB），並將世界和設定從“{0}”移轉過來。原始資料夾會保留不動。
 
 要以此方式匯入嗎？</value>
   </data>

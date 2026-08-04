@@ -2525,7 +2525,7 @@ Partida en el disco: {0}</value>
 
 {1}
 
-Para cargar una de ellas, en GameUserSettings.ini establezca DedicatedServerName con el nombre de su carpeta.</value>
+Para cargar una de ellas, en GameUserSettings.ini establezca DedicatedServerName al nombre de su carpeta.</value>
   </data>
   <data name="WorldSel_LoadWorld" xml:space="preserve">
     <value>Cargar esta partida guardada (recomendado)</value>

@@ -2525,7 +2525,7 @@ Sauvegarde sur le disque : {0}</value>
 
 {1}
 
-Pour en charger une, définissez DedicatedServerName dans GameUserSettings.ini avec le nom de son dossier.</value>
+Pour en charger une, définissez DedicatedServerName dans GameUserSettings.ini sur le nom de son dossier.</value>
   </data>
   <data name="WorldSel_LoadWorld" xml:space="preserve">
     <value>Charger cette sauvegarde (recommandé)</value>
