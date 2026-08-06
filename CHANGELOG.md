@@ -2,7 +2,7 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
-## [Unreleased]
+## [1.2.0] - 2026-08-06
 
 ### Added
 - **A crash now says why.** Palworld writes no log file and its fatal errors never reach the console, so a crash used to leave the log stopping mid-sentence with nothing to go on. The launcher now reads the crash report Palworld itself writes and shows the reason, along with the folder holding the crash dump. A corrupt world, for one, now says so in as many words instead of looking like an unexplained crash. Reported in #11.
