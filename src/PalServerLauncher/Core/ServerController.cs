@@ -49,6 +49,7 @@ public sealed class ServerController : IDisposable
     public ModService ModService { get; }
     private readonly List<DateTime> _restartTimes = new();
     private DateTime? _serverStartedUtc;
+    private bool _sawRunning;
     private bool _manualStop;
     private readonly RelaunchGate _relaunchGate = new(); // suppresses auto-recovery / restart relaunch after a deliberate stop, until the next user Start
     private readonly StopGate _stopGate = new();         // one stop ladder at a time; a second caller joins the running one
@@ -468,6 +469,10 @@ public sealed class ServerController : IDisposable
                 if (_state == value) return;
                 previous = _state;
                 _state = value;
+                // All four mean the process finished booting, so a later exit is a runtime fault rather
+                // than a startup one. Read by OnProcessExited to describe the crash.
+                if (value is ServerState.Healthy or ServerState.Degraded or ServerState.Zombie or ServerState.RestUnreachable)
+                    _sawRunning = true;
             }
             _logger.Debug($"State: {previous} -> {value}");
             StateChanged?.Invoke(value);
@@ -1911,6 +1916,7 @@ public sealed class ServerController : IDisposable
     {
         _process = process;
         _serverStartedUtc = DateTime.UtcNow;
+        _sawRunning = false;
         process.Exited += OnProcessExited;
         ApplyProcessTuning(process);
 
@@ -2068,11 +2074,15 @@ public sealed class ServerController : IDisposable
     private void OnProcessExited(object? sender, EventArgs e)
     {
         bool wasManual;
+        bool reachedRunning;
+        DateTime? startedUtc;
         HealthMonitor? health;
         UpdateMonitor? updateMonitor;
         lock (_gate)
         {
             wasManual = _manualStop;
+            reachedRunning = _sawRunning;
+            startedUtc = _serverStartedUtc;
             _process = null;
             _serverStartedUtc = null;
             health = _health;
@@ -2080,6 +2090,11 @@ public sealed class ServerController : IDisposable
             updateMonitor = _updateMonitor;
             _updateMonitor = null;
         }
+
+        // Read off the sender: _process is already null above, and the exit code is the only thing that
+        // separates a fatal assert (3) from an external kill (1) or a clean stop (0).
+        var exitCode = TryReadExitCode(sender as Process);
+        var uptime = startedUtc is null ? TimeSpan.Zero : DateTime.UtcNow - startedUtc.Value;
 
         health?.Dispose();
         updateMonitor?.Dispose();
@@ -2092,23 +2107,52 @@ public sealed class ServerController : IDisposable
             return;
         }
 
+        var summary = CrashReport.DescribeExit(exitCode, uptime, reachedRunning);
+
         if (!_config.RestartOnCrash)
         {
-            _logger.Info("Server exited unexpectedly (crash). Auto-restart disabled.");
+            _logger.Info($"{summary} Auto-restart disabled.");
+            FireAndForget(() => LogCrashReasonAsync(startedUtc), "Crash reason");
             return;
         }
 
         if (AllowRestart())
         {
             // Fast relaunch to restore service, no update check on a crash.
-            _logger.Info("Server exited unexpectedly (crash), restarting.");
+            _logger.Info($"{summary} Restarting.");
+            FireAndForget(() => LogCrashReasonAsync(startedUtc), "Crash reason");
             FireAndForget(() => LaunchServerAsync(), "Crash relaunch");
         }
         else
         {
             State = ServerState.Backoff;
-            _logger.Error("Server crashed repeatedly, auto-restart suspended (circuit breaker). Fix the issue, then Start manually.");
+            _logger.Error($"{summary} Crashed repeatedly, auto-restart suspended (circuit breaker). Fix the issue, then Start manually.");
+            FireAndForget(() => LogCrashReasonAsync(startedUtc), "Crash reason");
         }
+    }
+
+    private static int? TryReadExitCode(Process? process)
+    {
+        try { return process?.ExitCode; }
+        catch (Exception ex) when (ex is InvalidOperationException or System.ComponentModel.Win32Exception) { return null; }
+    }
+
+    /// <summary>Log why Unreal says the server died. Off the exit path (it touches the disk) so a crash
+    /// relaunch isn't held up waiting on it.</summary>
+    private async Task LogCrashReasonAsync(DateTime? startedUtc)
+    {
+        if (startedUtc is null)
+            return;
+
+        var crash = await CrashReport.ReadAsync(_config.ServerRoot, startedUtc.Value).ConfigureAwait(false);
+        if (crash is null)
+        {
+            _logger.Error("No crash report found. Server may have been force-stopped.");
+            return;
+        }
+
+        _logger.Error($"Crash reason: {crash.Value.Reason}");
+        _logger.Error($"More information for this crash can be found at {crash.Value.Directory}");
     }
 
     private void HandleZombie()
