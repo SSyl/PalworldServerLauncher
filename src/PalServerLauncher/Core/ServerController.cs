@@ -47,7 +47,7 @@ public sealed class ServerController : IDisposable
     /// <summary>Steam Workshop mod management (the Mods dialog scans / opens the folder through it; the launch
     /// path downloads + applies mods through it).</summary>
     public ModService ModService { get; }
-    private readonly List<DateTime> _restartTimes = new();
+    private readonly RestartBudget _restartBudget = new();
     private DateTime? _serverStartedUtc;
     private bool _sawRunning;
     private bool _manualStop;
@@ -1032,10 +1032,14 @@ public sealed class ServerController : IDisposable
             return;
         }
 
-        // A user Start clears a prior deliberate-stop suppression. A restart passes false so a Stop or Force
-        // Shutdown during the restart keeps the server down instead of being undone by the restart's relaunch.
+        // A user Start clears a prior deliberate-stop suppression and refills the auto-restart budget. A restart
+        // passes false so a Stop or Force Shutdown during the restart keeps the server down instead of being
+        // undone by the restart's relaunch, and so an automatic restart can't refill its own budget.
         lock (_gate)
+        {
             _relaunchGate.OnStart(userInitiated);
+            _restartBudget.OnStart(userInitiated);
+        }
 
         // Back up before the update: SteamCMD can wipe PalWorldSettings.ini, and the server is stopped
         // here so this snapshots the on-disk (last-autosave) state.
@@ -2178,19 +2182,12 @@ public sealed class ServerController : IDisposable
         await LaunchServerAsync().ConfigureAwait(false);
     }
 
-    /// <summary>Circuit breaker: allow at most 3 auto-restarts within a 5-minute rolling window.
-    /// Locked because crash-relaunch (Process.Exited) and zombie recovery can both call it off-thread.</summary>
+    /// <summary>Circuit breaker, see <see cref="RestartBudget"/>. Locked because crash-relaunch
+    /// (Process.Exited) and zombie recovery can both call it off-thread.</summary>
     private bool AllowRestart()
     {
         lock (_gate)
-        {
-            var now = DateTime.UtcNow;
-            _restartTimes.RemoveAll(t => now - t > TimeSpan.FromMinutes(5));
-            if (_restartTimes.Count >= 3)
-                return false;
-            _restartTimes.Add(now);
-            return true;
-        }
+            return _restartBudget.TryConsume(DateTime.UtcNow);
     }
 
     /// <summary>Run a fire-and-forget lifecycle task, logging any exception instead of losing it to GC.</summary>
