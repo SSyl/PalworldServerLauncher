@@ -286,15 +286,16 @@ public sealed class SettingsDialog : Window
         {
             Background = FieldBg, Foreground = Fg, BorderThickness = new Thickness(0), CaretBrush = Caret,
             VerticalContentAlignment = VerticalAlignment.Center,
-            // Explicit left padding (not the app-wide 5px) so the caret sits just left of the placeholder below,
-            // instead of on top of its first letter.
             Padding = new Thickness(4, 4, 0, 4),
         };
 
         var placeholder = new TextBlock
         {
             Text = Strings.Settings_SearchPlaceholder, Foreground = Muted, IsHitTestVisible = false,
-            VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(6, 0, 0, 0),
+            // The box auto-focuses on open, so the caret shows while the placeholder does. The caret sits at
+            // the text start (the box's 4px padding), so this margin is what separates them. 6px put the
+            // caret through the middle of the S and 10px still grazed it.
+            VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(14, 0, 0, 0),
         };
 
         // A muted clear glyph inside the search box; the app-wide Button style brightens it on hover.
