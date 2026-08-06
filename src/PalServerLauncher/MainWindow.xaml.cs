@@ -452,7 +452,8 @@ public partial class MainWindow : Window
     /// game-ini tabs lock and unlock with the server instead of freezing at whatever state they opened in.
     /// IsServerRunning is a pass-through with no change notification of its own, so State is the signal (the VM
     /// already marshals it to the UI thread, and the controller sets the process before raising it).</summary>
-    private void OnOpenServerSettings(object sender, RoutedEventArgs e) =>
+    private void OnOpenServerSettings(object sender, RoutedEventArgs e)
+    {
         SettingsDialog.ShowServerSettings(this, _viewModel.Config, _viewModel.GameSettings, _viewModel.IsServerRunning,
             onRunningChanged =>
             {
@@ -464,6 +465,10 @@ public partial class MainWindow : Window
                 _viewModel.PropertyChanged += OnStatePropertyChanged;
                 return () => _viewModel.PropertyChanged -= OnStatePropertyChanged;
             });
+
+        // RESTAPIEnabled / AdminPassword are editable in there, and they gate the unresponsive-check controls.
+        _viewModel.RefreshRestApiState();
+    }
 
     private void OnOpenMods(object sender, RoutedEventArgs e)
     {

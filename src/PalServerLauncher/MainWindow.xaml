@@ -288,7 +288,9 @@
                                  ToolTip="{x:Static loc:Strings.Main_CheckUpdateEveryTip}"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_MinuteSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                    <!-- The whole row gates on REST: without it the health probe returns before any zombie
+                         evaluation, so neither the toggle nor the threshold can do anything. -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6" IsEnabled="{Binding RestApiConfigured}" Style="{StaticResource DimWhenDisabled}">
                         <CheckBox Content="{x:Static loc:Strings.Main_ZombieCheck}" IsChecked="{Binding ZombieCheckEnabled}"
                                   ToolTip="{x:Static loc:Strings.Main_ZombieCheckTip}"/>
                         <TextBox Text="{Binding ZombieFailureThreshold}" Style="{StaticResource NumericField}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="2" VerticalAlignment="Center" Margin="6,0,0,0"

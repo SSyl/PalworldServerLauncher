@@ -27,6 +27,7 @@ public partial class MainViewModel : ObservableObject
     private readonly Logger _logger;
     private readonly LauncherConfig _config;
     private readonly ServerController _controller;
+    private bool _restApiConfigured;
     private readonly DispatcherTimer _busyAnimationTimer;
     private int _busyDots;
     // Reveals the Force Shutdown button only after the server has been stuck in a transitional state for this long.
@@ -173,6 +174,7 @@ public partial class MainViewModel : ObservableObject
         _config = config;
         InitLeadSlots();
         _controller = new ServerController(_config, _logger);
+        _restApiConfigured = _controller.IsRestApiConfigured;
 
         _controller.StateChanged += OnControllerStateChanged;
         _controller.HealthUpdated += OnHealthUpdated;
@@ -258,7 +260,28 @@ public partial class MainViewModel : ObservableObject
     public bool ShouldPromptRestSetup() => IsInstalled && !IsServerRunning && !_controller.IsRestApiConfigured;
 
     /// <summary>Enable the REST API with a fresh random admin password (the setup prompt's "Yes").</summary>
-    public bool EnableRestApi() => _controller.EnableRestApiWithRandomPassword();
+    public bool EnableRestApi()
+    {
+        var enabled = _controller.EnableRestApiWithRandomPassword();
+        RefreshRestApiState();
+        return enabled;
+    }
+
+    /// <summary>Whether the game ini has a usable REST API. Cached rather than read per get: it backs an
+    /// IsEnabled binding, and the underlying read parses PalWorldSettings.ini off disk.</summary>
+    public bool RestApiConfigured => _restApiConfigured;
+
+    /// <summary>Re-read the REST API state from the game ini. Call after anything that can change it (the
+    /// setup prompt, the Server Settings dialog, a server start that re-reads the ini).</summary>
+    public void RefreshRestApiState()
+    {
+        var configured = _controller.IsRestApiConfigured;
+        if (configured == _restApiConfigured)
+            return;
+        _restApiConfigured = configured;
+        OnPropertyChanged(nameof(RestApiConfigured));
+        OnPropertyChanged(nameof(ZombieCheckEnabled));
+    }
 
     // --- Settings dialog (opened from the View; edits launch args + PalWorldSettings.ini) ---
     public LauncherConfig Config => _config;
@@ -538,9 +561,13 @@ public partial class MainViewModel : ObservableObject
         set { _config.RestartBroadcastEnabled = value; _config.Save(); OnPropertyChanged(); }
     }
 
+    /// <summary>Masked to unchecked while the REST API is off, the same way the update options mask while
+    /// pinned. The stored value is left alone, so turning REST back on restores the user's own threshold
+    /// rather than a default. Without REST the probe returns before any zombie evaluation, so the setting
+    /// genuinely cannot fire.</summary>
     public bool ZombieCheckEnabled
     {
-        get => _config.ZombieCheckEnabled;
+        get => _restApiConfigured && _config.ZombieCheckEnabled;
         set { _config.ZombieCheckEnabled = value; _config.Save(); OnPropertyChanged(); }
     }
 
