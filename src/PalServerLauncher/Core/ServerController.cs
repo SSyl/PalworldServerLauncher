@@ -2130,7 +2130,7 @@ public sealed class ServerController : IDisposable
         else
         {
             State = ServerState.Backoff;
-            _logger.Error($"{summary} Crashed repeatedly, auto-restart suspended (circuit breaker). Fix the issue, then Start manually.");
+            _logger.Error($"{summary} Auto-restart suspended after repeated crashes. Fix the issue, then Start manually.");
             FireAndForget(() => LogCrashReasonAsync(startedUtc), "Crash reason");
         }
     }
@@ -2174,7 +2174,7 @@ public sealed class ServerController : IDisposable
         if (!AllowRestart())
         {
             State = ServerState.Backoff;
-            _logger.Error("Server kept going unresponsive, auto-recovery suspended (circuit breaker). Fix the issue, then Start manually.");
+            _logger.Error("Auto-recovery suspended after the server kept going unresponsive. Fix the issue, then Start manually.");
             return;
         }
         _logger.Info("Server is unresponsive, stopping and relaunching it...");
