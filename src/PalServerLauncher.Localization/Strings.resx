@@ -1472,7 +1472,7 @@ Save these changes?</value>
     <value>Restarting</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>Backoff</value>
+    <value>Suspended</value>
   </data>
   <!-- Update status line -->
   <data name="Update_AutoUpdateOff" xml:space="preserve">
