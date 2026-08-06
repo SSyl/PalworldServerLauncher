@@ -131,6 +131,16 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="overlay" Property="Opacity" Value="0.08"/>
                             </Trigger>
+                            <!-- Accent border on hover, matching the text boxes and checkboxes, but only for
+                                 buttons still on the default background. A blue edge on the green Start or red
+                                 Stop reads as a mismatch, and those get their feedback from the overlay. -->
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="Background" Value="{x:Static local:Theme.Button}"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="bd" Property="BorderBrush" Value="{x:Static local:Theme.Accent}"/>
+                            </MultiTrigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="overlay" Property="Background" Value="Black"/>
                                 <Setter TargetName="overlay" Property="Opacity" Value="0.22"/>
