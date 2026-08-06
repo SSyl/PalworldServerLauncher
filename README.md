@@ -43,9 +43,10 @@ Chinese, Traditional Chinese, and Korean. See [Languages](#languages).
 - **Scheduled restarts** at the times you set, with a minimum-uptime guard so a server that just came up
   won't get bounced.
 - **In-game warnings** before a restart, at whatever marks you choose, skipped when nobody's online.
-- **Crash and zombie recovery.** Restarts automatically on a crash, and also catches a server that's
-  technically running but wedged (REST stopped answering, or the world stopped advancing). A safety cutoff
-  stops it from looping forever if the server keeps dying.
+- **Crash and hang recovery.** Restarts automatically on a crash, and also catches a server that's
+  technically running but unresponsive (REST stopped answering, or the world stopped advancing). A safety
+  cutoff stops it from looping forever if the server keeps dying. When a crash does happen, the log reports
+  how long the server had been up, the exit code, and the reason Palworld recorded in its own crash report.
 
 ### Backups
 - Zips the world save and config, timestamped. Runs on startup, shutdown, a schedule, or on demand.

@@ -594,9 +594,11 @@ public partial class MainWindow : Window
         _logScrollers[list] = scroller;
         scroller.ScrollChanged += (_, e) =>
         {
-            // Only a plain user scroll (no content growth) decides whether we're following the tail. Growing
-            // content that pushes the bottom down is the auto-scroll's job and must not read as a scroll-up.
-            if (e.ExtentHeightChange != 0)
+            // Only a plain user scroll decides whether we're following the tail. Growing content that pushes
+            // the bottom down is the auto-scroll's job and must not read as a scroll-up. Viewport changes are
+            // excluded for the same reason: the log lines wrap, so narrowing the window fits fewer items on
+            // screen and grows ScrollableHeight without the offset moving, which would read as a scroll-up.
+            if (e.ExtentHeightChange != 0 || e.ViewportHeightChange != 0)
                 return;
             _followingTail[list] = scroller.VerticalOffset >= scroller.ScrollableHeight - 1.0;
             if (ReferenceEquals(list, CurrentLog()))

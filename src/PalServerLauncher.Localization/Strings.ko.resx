@@ -397,6 +397,9 @@
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
     <value>서버를 무응답 상태로 간주하고 강제 재시작하기까지 연속으로 실패해야 하는 상태 확인 횟수입니다.</value>
   </data>
+  <data name="Main_ZombieNeedsRestTip" xml:space="preserve">
+    <value>REST API가 필요합니다. REST API가 없으면 런처가 서버가 멈췄는지 정상인지 구분할 수 없어 이 확인 기능을 사용할 수 없습니다. 서버 설정에서 RESTAPIEnabled를 켜십시오.</value>
+  </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>회</value>
   </data>

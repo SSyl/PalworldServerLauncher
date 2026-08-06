@@ -469,8 +469,9 @@ public sealed class ServerController : IDisposable
                 if (_state == value) return;
                 previous = _state;
                 _state = value;
-                // All four mean the process finished booting, so a later exit is a runtime fault rather
-                // than a startup one. Read by OnProcessExited to describe the crash.
+                // Any "up" state clears the startup claim. Deliberately generous: only the "during startup"
+                // wording asserts anything, so a state that over-reports booting costs a vaguer message,
+                // while one that under-reports would call a 6-hour-old server's crash a startup failure.
                 if (value is ServerState.Healthy or ServerState.Degraded or ServerState.Zombie or ServerState.RestUnreachable)
                     _sawRunning = true;
             }
@@ -697,7 +698,7 @@ public sealed class ServerController : IDisposable
         lock (_gate)
         {
             _manualStop = false;
-            BindProcess(existing);
+            BindProcess(existing, adopted: true);
             RebuildRestClient();
         }
         _logger.Info(all.Count == 1
@@ -1574,7 +1575,7 @@ public sealed class ServerController : IDisposable
             process.Start();
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
-            BindProcess(process);
+            BindProcess(process, adopted: false);
             RebuildRestClient();
         }
         _logger.Info($"Server launched (PID {process.Id}, queryport {queryPort}).");
@@ -1916,11 +1917,13 @@ public sealed class ServerController : IDisposable
         }
     }
 
-    private void BindProcess(Process process)
+    /// <summary><paramref name="adopted"/> = this server was already running when the launcher attached, so
+    /// its uptime predates us and it has self-evidently finished booting.</summary>
+    private void BindProcess(Process process, bool adopted)
     {
         _process = process;
-        _serverStartedUtc = DateTime.UtcNow;
-        _sawRunning = false;
+        _serverStartedUtc = ProcessStartUtc(process);
+        _sawRunning = adopted;
         process.Exited += OnProcessExited;
         ApplyProcessTuning(process);
 
@@ -2122,16 +2125,33 @@ public sealed class ServerController : IDisposable
 
         if (AllowRestart())
         {
-            // Fast relaunch to restore service, no update check on a crash.
+            // Fast relaunch to restore service, no update check on a crash. The reason is read first so it
+            // lands under the crash line rather than below the next launch banner. Bounded by the reader's
+            // own retries, so this delays the relaunch by at most a couple hundred milliseconds.
             _logger.Info($"{summary} Restarting.");
-            FireAndForget(() => LogCrashReasonAsync(startedUtc), "Crash reason");
-            FireAndForget(() => LaunchServerAsync(), "Crash relaunch");
+            FireAndForget(async () =>
+            {
+                await LogCrashReasonAsync(startedUtc).ConfigureAwait(false);
+                await LaunchServerAsync().ConfigureAwait(false);
+            }, "Crash relaunch");
         }
         else
         {
             State = ServerState.Backoff;
             _logger.Error($"{summary} Auto-restart suspended after repeated crashes. Fix the issue, then Start manually.");
             FireAndForget(() => LogCrashReasonAsync(startedUtc), "Crash reason");
+        }
+    }
+
+    /// <summary>When the server process really started. Adopting a long-running server would otherwise date
+    /// its uptime from adoption, which both mislabels a crash as a startup failure and hands the restart
+    /// scheduler a uptime far below the truth. Denied or already-gone processes fall back to now.</summary>
+    private static DateTime ProcessStartUtc(Process process)
+    {
+        try { return process.StartTime.ToUniversalTime(); }
+        catch (Exception ex) when (ex is InvalidOperationException or System.ComponentModel.Win32Exception or NotSupportedException)
+        {
+            return DateTime.UtcNow;
         }
     }
 
@@ -2155,8 +2175,10 @@ public sealed class ServerController : IDisposable
             return;
         }
 
-        _logger.Error($"Crash reason: {crash.Value.Reason}");
-        _logger.Error($"More information for this crash can be found at {crash.Value.Directory}");
+        _logger.Error(crash.Value.Reason is null
+            ? "A crash report was written but its reason couldn't be read, it may be incomplete."
+            : $"Crash reason: {crash.Value.Reason}");
+        _logger.Error($"More information for this crash can be found at {crash.Value.Directory}.");
     }
 
     private void HandleZombie()

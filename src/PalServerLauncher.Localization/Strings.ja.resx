@@ -359,6 +359,9 @@
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
     <value>連続して何回ヘルスチェックに失敗した場合に、サーバーが応答なしとみなして強制再起動するかを指定します。</value>
   </data>
+  <data name="Main_ZombieNeedsRestTip" xml:space="preserve">
+    <value>REST API が必要です。REST API がないと、ランチャーはサーバーがフリーズしているのか正常に動作しているのかを判別できないため、このチェックは利用できません。サーバー設定で RESTAPIEnabled を有効にしてください。</value>
+  </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>回</value>
   </data>

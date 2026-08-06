@@ -271,8 +271,9 @@ public partial class MainViewModel : ObservableObject
     /// IsEnabled binding, and the underlying read parses PalWorldSettings.ini off disk.</summary>
     public bool RestApiConfigured => _restApiConfigured;
 
-    /// <summary>Re-read the REST API state from the game ini. Call after anything that can change it (the
-    /// setup prompt, the Server Settings dialog, a server start that re-reads the ini).</summary>
+    /// <summary>Re-read the REST API state from the game ini. Call after anything that can change it: the
+    /// setup prompt, the Server Settings dialog, and any SteamCMD run, since a validate can restore
+    /// PalWorldSettings.ini out from under us and silently turn REST off.</summary>
     public void RefreshRestApiState()
     {
         var configured = _controller.IsRestApiConfigured;
@@ -847,6 +848,8 @@ public partial class MainViewModel : ObservableObject
         {
             IsBusy = false;
             IsInstalled = _controller.IsInstalled;
+            // A validate can restore PalWorldSettings.ini, which is where RESTAPIEnabled lives.
+            RefreshRestApiState();
         }
 
         // Only after a genuine first install (not a re-validate / update on an existing one).

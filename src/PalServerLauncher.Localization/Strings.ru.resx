@@ -397,6 +397,9 @@
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
     <value>Сколько неудачных проверок состояния подряд должно пройти, прежде чем сервер будет считаться не отвечающим и принудительно перезапущен.</value>
   </data>
+  <data name="Main_ZombieNeedsRestTip" xml:space="preserve">
+    <value>Требуется REST API. Без него лаунчер не может отличить замороженный сервер от исправного, поэтому эта проверка недоступна. Включите RESTAPIEnabled в настройках сервера.</value>
+  </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>провер.</value>
   </data>

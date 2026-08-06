@@ -397,6 +397,9 @@
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
     <value>Cuántas comprobaciones de estado fallidas seguidas antes de considerar el servidor sin respuesta y forzar su reinicio.</value>
   </data>
+  <data name="Main_ZombieNeedsRestTip" xml:space="preserve">
+    <value>Requiere la API REST. Sin ella, el launcher no puede distinguir un servidor congelado de uno en buen estado, por lo que esta comprobación no está disponible. Active RESTAPIEnabled en Configuración del servidor.</value>
+  </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>comprob.</value>
   </data>

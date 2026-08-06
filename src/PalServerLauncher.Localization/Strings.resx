@@ -421,6 +421,9 @@ Save them as fixed messages anyway?</value>
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
     <value>How many failed health checks in a row before the server is treated as unresponsive and force-restarted.</value>
   </data>
+  <data name="Main_ZombieNeedsRestTip" xml:space="preserve">
+    <value>Needs the REST API. Without it the launcher can't tell a frozen server from a healthy one, so this check is unavailable. Turn on RESTAPIEnabled in Server Settings.</value>
+  </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>checks</value>
   </data>

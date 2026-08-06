@@ -360,6 +360,9 @@
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
     <value>连续多少次健康检查失败后，服务器会被视为未响应并被强制重启。</value>
   </data>
+  <data name="Main_ZombieNeedsRestTip" xml:space="preserve">
+    <value>需要 REST API。没有它，启动器无法区分服务器是已冻结还是正常运行，因此此检查不可用。在服务器设置中开启 RESTAPIEnabled。</value>
+  </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>次</value>
   </data>

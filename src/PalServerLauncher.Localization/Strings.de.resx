@@ -397,6 +397,9 @@ Trotzdem als feste Nachrichten speichern?</value>
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
     <value>Wie viele fehlgeschlagene Zustandsprüfungen in Folge nötig sind, bevor der Server als nicht reagierend gilt und zwangsweise neu gestartet wird.</value>
   </data>
+  <data name="Main_ZombieNeedsRestTip" xml:space="preserve">
+    <value>Erfordert die REST API. Ohne sie kann der Launcher nicht erkennen, ob der Server eingefroren oder funktionsfähig ist, daher ist diese Prüfung nicht verfügbar. Aktivieren Sie RESTAPIEnabled in den Servereinstellungen.</value>
+  </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>Prüf.</value>
   </data>

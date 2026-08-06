@@ -1,10 +1,75 @@
 using System;
+using System.IO;
+using PalServerLauncher.Config;
 using PalServerLauncher.Core;
 
 namespace PalServerLauncher.Tests;
 
 public class CrashReportTests
 {
+    /// <summary>A server root with one crash folder per entry, stamped in the order given.</summary>
+    private static string WriteCrashFolders(params (string Name, string? Context)[] folders)
+    {
+        var root = Path.Combine(Path.GetTempPath(), $"pal_cr_{Guid.NewGuid():N}");
+        var crashes = Path.Combine(LauncherConfig.ServerDir(root), "Pal", "Saved", "Crashes");
+        var stamp = DateTime.UtcNow;
+        foreach (var (name, context) in folders)
+        {
+            var dir = Path.Combine(crashes, name);
+            Directory.CreateDirectory(dir);
+            if (context is null)
+                continue;
+            var path = Path.Combine(dir, CrashReport.ContextFileName);
+            File.WriteAllText(path, context);
+            File.SetLastWriteTimeUtc(path, stamp);
+            stamp = stamp.AddSeconds(1); // later entries are newer
+        }
+        return root;
+    }
+
+    private static string Context(string message) =>
+        $"<FGenericCrashContext><RuntimeProperties><ErrorMessage>{message}</ErrorMessage></RuntimeProperties></FGenericCrashContext>";
+
+    [Fact]
+    public async Task ReadAsync_reports_the_folder_even_when_the_context_is_truncated()
+    {
+        // The dying process can be killed mid-write. The reason is lost, but the folder still holds the
+        // minidump, so pointing at it beats reporting nothing and implying the server was force-stopped.
+        var root = WriteCrashFolders(("UECC-Windows-AAA_0000", "<FGenericCrashContext><ErrorMessage>Save data is cor"));
+
+        var crash = await CrashReport.ReadAsync(root, DateTime.UtcNow.AddMinutes(-1));
+
+        Assert.NotNull(crash);
+        Assert.Null(crash!.Value.Reason);
+        Assert.EndsWith("UECC-Windows-AAA_0000", crash.Value.Directory);
+    }
+
+    [Fact]
+    public async Task ReadAsync_falls_through_to_an_older_folder_when_the_newest_has_no_reason()
+    {
+        var root = WriteCrashFolders(
+            ("UECC-Windows-OLD_0000", Context("LowLevelFatalError: the real reason")),
+            ("UECC-Windows-NEW_0000", "<FGenericCrashContext>truncated"));
+
+        var crash = await CrashReport.ReadAsync(root, DateTime.UtcNow.AddMinutes(-1));
+
+        Assert.Equal("LowLevelFatalError: the real reason", crash!.Value.Reason);
+        Assert.EndsWith("UECC-Windows-OLD_0000", crash.Value.Directory);
+    }
+
+    [Fact]
+    public async Task ReadAsync_ignores_folders_from_before_this_run()
+    {
+        var root = WriteCrashFolders(("UECC-Windows-STALE_0000", Context("An older crash")));
+
+        Assert.Null(await CrashReport.ReadAsync(root, DateTime.UtcNow.AddMinutes(5)));
+    }
+
+    [Fact]
+    public async Task ReadAsync_returns_null_when_nothing_crashed() =>
+        Assert.Null(await CrashReport.ReadAsync(
+            Path.Combine(Path.GetTempPath(), $"pal_cr_missing_{Guid.NewGuid():N}"), DateTime.UtcNow.AddMinutes(-1)));
+
     // Verbatim from a real Palworld 1.0.2 crash, produced by truncating Level.sav (issue #11).
     private const string RealContext = """
         <?xml version="1.0" encoding="UTF-8"?>
@@ -55,7 +120,7 @@ public class CrashReportTests
         Assert.Null(CrashReport.ExtractErrorMessage(xml));
 
     [Fact]
-    public void SelectCrashDir_ignores_folders_written_before_this_run_started()
+    public void SelectCrashDirs_ignores_folders_written_before_this_run_started()
     {
         var launched = new DateTime(2026, 8, 6, 12, 00, 00, DateTimeKind.Utc);
         (string, DateTime)[] dirs =
@@ -64,11 +129,11 @@ public class CrashReportTests
             ("UECC-older", launched.AddDays(-3)),
         ];
 
-        Assert.Null(CrashReport.SelectCrashDir(dirs, launched));
+        Assert.Empty(CrashReport.SelectCrashDirs(dirs, launched));
     }
 
     [Fact]
-    public void SelectCrashDir_takes_the_newest_folder_from_this_run()
+    public void SelectCrashDirs_orders_this_run_newest_first_so_a_bad_context_can_fall_through()
     {
         var launched = new DateTime(2026, 8, 6, 12, 00, 00, DateTimeKind.Utc);
         (string, DateTime)[] dirs =
@@ -78,21 +143,23 @@ public class CrashReportTests
             ("UECC-earlier-this-run", launched.AddSeconds(1)),
         ];
 
-        Assert.Equal("UECC-this-run", CrashReport.SelectCrashDir(dirs, launched));
+        Assert.Equal(
+            ["UECC-this-run", "UECC-earlier-this-run"],
+            CrashReport.SelectCrashDirs(dirs, launched));
     }
 
     [Fact]
-    public void SelectCrashDir_accepts_a_folder_stamped_exactly_at_launch()
+    public void SelectCrashDirs_accepts_a_folder_stamped_exactly_at_launch()
     {
         var launched = new DateTime(2026, 8, 6, 12, 00, 00, DateTimeKind.Utc);
 
-        Assert.Equal("UECC-boundary", CrashReport.SelectCrashDir([("UECC-boundary", launched)], launched));
+        Assert.Equal(["UECC-boundary"], CrashReport.SelectCrashDirs([("UECC-boundary", launched)], launched));
     }
 
     [Fact]
-    public void SelectCrashDir_returns_null_when_nothing_crashed()
+    public void SelectCrashDirs_returns_nothing_when_this_run_did_not_crash()
     {
-        Assert.Null(CrashReport.SelectCrashDir([], DateTime.UtcNow));
+        Assert.Empty(CrashReport.SelectCrashDirs([], DateTime.UtcNow));
     }
 
     [Fact]

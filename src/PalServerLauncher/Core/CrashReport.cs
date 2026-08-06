@@ -29,16 +29,29 @@ public static class CrashReport
         Path.Combine(LauncherConfig.ServerDir(serverRoot), "Pal", "Saved", "Crashes");
 
     /// <summary>
-    /// The newest crash folder written at or after <paramref name="launchedUtc"/>, or null when this run
-    /// wrote none. The cutoff is what keeps an old crash from being blamed on the current one: a force-stop
-    /// or an external kill writes no folder at all, so the newest folder on disk can be days stale.
+    /// Crash folders written at or after <paramref name="launchedUtc"/>, newest first. The cutoff is what
+    /// keeps an old crash from being blamed on the current one: a force-stop or an external kill writes no
+    /// folder at all, so the newest folder on disk can be days stale.
     /// </summary>
-    public static string? SelectCrashDir(
+    public static IEnumerable<string> SelectCrashDirs(
         IEnumerable<(string Path, DateTime WrittenUtc)> dirs, DateTime launchedUtc) =>
         dirs.Where(dir => dir.WrittenUtc >= launchedUtc)
             .OrderByDescending(dir => dir.WrittenUtc)
-            .Select(dir => dir.Path)
-            .FirstOrDefault();
+            .Select(dir => dir.Path);
+
+    /// <summary>
+    /// Candidate folders stamped by their context file rather than the folder. A folder's timestamp moves
+    /// whenever anything inside it changes, so an old crash that something else touches mid-run (an upload,
+    /// a dump moved out to send to support) would otherwise look newer than the real one. The context file
+    /// is written once by the dying process and never touched again. Folders without one keep the directory
+    /// stamp, so a crash caught before the context landed is still a candidate.
+    /// </summary>
+    private static IEnumerable<(string Path, DateTime WrittenUtc)> EnumerateCandidates(string root) =>
+        Directory.EnumerateDirectories(root).Select(dir =>
+        {
+            var context = Path.Combine(dir, ContextFileName);
+            return (dir, File.Exists(context) ? File.GetLastWriteTimeUtc(context) : Directory.GetLastWriteTimeUtc(dir));
+        });
 
     /// <summary>
     /// The reason text out of a crash context, or null when it isn't there. Pulled out by substring rather
@@ -87,13 +100,16 @@ public static class CrashReport
     };
 
     /// <summary>
-    /// The crash reason and the folder holding it for the run that started at <paramref name="launchedUtc"/>,
-    /// or null when the server left no crash context (a force-stop, or a death Unreal never caught). The
-    /// folder is worth reporting too, it also holds the minidump. Never throws: a missing or unreadable
-    /// folder just means there is nothing to report.
+    /// What this run's crash left behind: the folder, plus the reason when the context could be read. Null
+    /// only when the run wrote no crash folder at all (a force-stop, or a death Unreal never caught).
+    /// Reason and Directory are separate because they fail separately: a context truncated by the dying
+    /// process yields a folder with no reason, and that folder still holds the minidump worth pointing at.
+    /// Never throws, an unreadable folder just means less to report.
     /// </summary>
-    public static async Task<(string Reason, string Directory)?> ReadAsync(string serverRoot, DateTime launchedUtc)
+    public static async Task<(string? Reason, string Directory)?> ReadAsync(string serverRoot, DateTime launchedUtc)
     {
+        (string? Reason, string Directory)? found = null;
+
         for (var attempt = 0; attempt < ReadAttempts; attempt++)
         {
             if (attempt > 0)
@@ -105,25 +121,27 @@ public static class CrashReport
                 if (!Directory.Exists(root))
                     continue;
 
-                var dir = SelectCrashDir(
-                    Directory.EnumerateDirectories(root).Select(p => (p, Directory.GetLastWriteTimeUtc(p))),
-                    launchedUtc);
-                if (dir is null)
-                    continue;
+                // Newest first, and keep walking: if the newest folder's context is unreadable, an older
+                // folder from this same run may still carry the reason.
+                foreach (var dir in SelectCrashDirs(EnumerateCandidates(root), launchedUtc))
+                {
+                    found ??= (null, dir);
+                    var contextPath = Path.Combine(dir, ContextFileName);
+                    if (!File.Exists(contextPath))
+                        continue;
 
-                var contextPath = Path.Combine(dir, ContextFileName);
-                if (!File.Exists(contextPath))
-                    continue;
-
-                var reason = ExtractErrorMessage(await File.ReadAllTextAsync(contextPath).ConfigureAwait(false));
-                if (reason is not null)
-                    return (reason, dir);
+                    var reason = ExtractErrorMessage(await File.ReadAllTextAsync(contextPath).ConfigureAwait(false));
+                    if (reason is not null)
+                        return (reason, dir);
+                }
             }
-            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or System.Security.SecurityException or ArgumentException)
             {
-                // Mid-write or locked. Fall through to the next attempt.
+                // Mid-write, locked, or a path we can't touch. Fall through to the next attempt.
             }
         }
+
+        return found;
 
         return null;
     }

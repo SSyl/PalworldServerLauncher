@@ -397,6 +397,9 @@ Les enregistrer quand même comme messages fixes ?</value>
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
     <value>Nombre de vérifications d'état consécutives en échec avant que le serveur soit considéré comme sans réponse et forcé à redémarrer.</value>
   </data>
+  <data name="Main_ZombieNeedsRestTip" xml:space="preserve">
+    <value>Nécessite l'API REST. Sans elle, le launcher ne peut pas distinguer un serveur figé d'un serveur qui fonctionne normalement, donc cette vérification est indisponible. Activez RESTAPIEnabled dans Paramètres du serveur.</value>
+  </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>vérif.</value>
   </data>

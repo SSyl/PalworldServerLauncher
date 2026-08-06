@@ -2,6 +2,21 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [Unreleased]
+
+### Added
+- **A crash now says why.** Palworld writes no log file and its fatal errors never reach the console, so a crash used to leave the log stopping mid-sentence with nothing to go on. The launcher now reads the crash report Palworld itself writes and shows the reason, along with the folder holding the crash dump. A corrupt world, for one, now says so in as many words instead of looking like an unexplained crash. Reported in #11.
+- **Crash lines say how long the server had been up and whether it ever finished starting.** A server that dies four seconds into startup is a different problem from one that dies after six hours, and the log used to describe both identically. The exit code is reported too.
+
+### Changed
+- **Log tabs now wrap long lines** instead of running off the right edge, so crash reasons and file paths can be read without scrolling sideways.
+- **The unresponsive-server check is grayed out when the REST API is off**, with a tooltip explaining why, because the launcher cannot detect a frozen server without it. The setting keeps your values and comes back as you left it once REST is on again.
+- **Plainer wording throughout the log and the interface.** Internal terms like "zombie", "backoff", and "circuit breaker" have been replaced with what they actually mean, and the startup line now names the launcher version.
+
+### Fixed
+- **Clicking Start after repeated crashes gives the server a real chance again.** The safety cutoff that stops an endless crash loop kept counting the old crashes, so the first crash after starting manually would immediately suspend restarts again, even though the launcher had just told you to fix the problem and press Start.
+- **Startup backups no longer warn that they might be missing recent changes.** The server is stopped at that point, so the save on disk is the whole world and there is nothing to miss. The warning still appears where it belongs, when the server is running but REST is off.
+
 ## [1.1.0] - 2026-08-03
 
 ### Added
