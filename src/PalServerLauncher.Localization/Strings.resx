@@ -413,13 +413,13 @@ Save them as fixed messages anyway?</value>
     <value>Write a server stats line (FPS, players, uptime, memory) to the log every 30s. Handy when running from a terminal; adds noise to the log otherwise.</value>
   </data>
   <data name="Main_ZombieCheck" xml:space="preserve">
-    <value>Zombie check: restart after</value>
+    <value>Restart if unresponsive for</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
     <value>When the REST API stays unreachable or the world stays frozen for this many checks in a row, restart the server. Turn off if your REST API is flaky and you'd rather it never auto-restart.</value>
   </data>
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
-    <value>How many failed health checks in a row before the server is treated as wedged and force-restarted.</value>
+    <value>How many failed health checks in a row before the server is treated as unresponsive and force-restarted.</value>
   </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>checks</value>
@@ -1460,7 +1460,7 @@ Save these changes?</value>
     <value>Degraded</value>
   </data>
   <data name="State_Zombie" xml:space="preserve">
-    <value>Zombie</value>
+    <value>Unresponsive</value>
   </data>
   <data name="State_RestUnreachable" xml:space="preserve">
     <value>REST not responding</value>
