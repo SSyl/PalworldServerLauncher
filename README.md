@@ -164,7 +164,7 @@ installer, so drop it wherever you'd like the server to live.
 
 4. When offered, turn on the **REST API** (it can generate a secure admin password for you). It's what powers
    the stats, graceful restarts, backups, and health checks. Without it the server still runs, but the
-   launcher has to hard-stop it instead of shutting it down cleanly.
+   launcher has to force-stop it instead of shutting it down cleanly.
 5. Optional: turn on **Scheduled restart** and pick your times, set up **Backups**, and connect **Discord**.
 
 ## FAQ and troubleshooting
