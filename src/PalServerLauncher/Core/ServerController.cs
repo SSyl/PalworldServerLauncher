@@ -1043,8 +1043,7 @@ public sealed class ServerController : IDisposable
             _restartBudget.OnStart(userInitiated);
         }
 
-        // Back up before the update: SteamCMD can wipe PalWorldSettings.ini, and the server is stopped
-        // here so this snapshots the on-disk (last-autosave) state.
+        // Back up before the update, in case SteamCMD ever wipes PalWorldSettings.ini.
         if (_config.BackupOnStartup)
             await _backup.BackupNowAsync(BackupReason.Startup, rest: null, serverRunning: false, ct).ConfigureAwait(false);
 

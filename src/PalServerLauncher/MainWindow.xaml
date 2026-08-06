@@ -290,13 +290,14 @@
                     </StackPanel>
                     <!-- The whole row gates on REST: without it the health probe returns before any zombie
                          evaluation, so neither the toggle nor the threshold can do anything. -->
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6" IsEnabled="{Binding RestApiConfigured}" Style="{StaticResource DimWhenDisabled}"
-                                ToolTipService.ShowOnDisabled="True">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6" IsEnabled="{Binding RestApiConfigured}" Style="{StaticResource DimWhenDisabled}">
+                        <!-- ShowOnDisabled has to sit on the element that owns the ToolTip, it does not carry
+                             down from the panel. Same shape as the Port Check and Server Commands buttons. -->
                         <CheckBox Content="{x:Static loc:Strings.Main_ZombieCheck}" IsChecked="{Binding ZombieCheckEnabled}"
-                                  ToolTip="{Binding ZombieCheckTooltip}"/>
+                                  ToolTipService.ShowOnDisabled="True" ToolTip="{Binding ZombieCheckTooltip}"/>
                         <TextBox Text="{Binding ZombieFailureThreshold}" Style="{StaticResource NumericField}" Width="{x:Static local:Metrics.NumericFieldNarrow}" MaxLength="2" VerticalAlignment="Center" Margin="6,0,0,0"
                                  PreviewTextInput="OnDigitsOnly" DataObject.Pasting="OnLeadPaste"
-                                 ToolTip="{Binding ZombieThresholdTooltip}"/>
+                                 ToolTipService.ShowOnDisabled="True" ToolTip="{Binding ZombieThresholdTooltip}"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_ChecksSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
