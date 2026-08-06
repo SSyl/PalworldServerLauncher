@@ -451,7 +451,7 @@
     <value>サーバーをシャットダウン</value>
   </data>
   <data name="Main_ShutdownForceMessage" xml:space="preserve">
-    <value>REST が有効でないため、サーバーを正常にシャットダウンできません。プロセスを直接終了して強制停止します。データ損失は最後のオートセーブ時点までに留まります。正常なシャットダウンを行うには REST を有効にしてください。</value>
+    <value>REST が有効でないため、サーバーを正常にシャットダウンできません。プロセスを直接終了して強制停止します。正常なシャットダウンを行うには REST を有効にしてください。</value>
   </data>
   <data name="Main_ForceStop" xml:space="preserve">
     <value>強制停止</value>

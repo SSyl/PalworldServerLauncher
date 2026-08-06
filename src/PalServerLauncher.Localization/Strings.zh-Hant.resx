@@ -452,7 +452,7 @@
     <value>關閉伺服器</value>
   </data>
   <data name="Main_ShutdownForceMessage" xml:space="preserve">
-    <value>未啟用 REST，因此無法正常關閉伺服器。它將被強制停止，程序會被直接終止，最後一次自動保存可將損失降至最低。開啟 REST 可實現正常關閉。</value>
+    <value>未啟用 REST，因此無法正常關閉伺服器。它將被強制停止，程序會被直接終止。開啟 REST 可實現正常關閉。</value>
   </data>
   <data name="Main_ForceStop" xml:space="preserve">
     <value>強制停止</value>

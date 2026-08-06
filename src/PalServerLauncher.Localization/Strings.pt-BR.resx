@@ -490,7 +490,7 @@ Baixar e instalar agora?</value>
     <value>Desligar o Servidor</value>
   </data>
   <data name="Main_ShutdownForceMessage" xml:space="preserve">
-    <value>A REST API não está ativada, então o servidor não pode ser desligado de forma segura. Ele será parado à força, o processo é encerrado diretamente e o último salvamento automático limita a perda de dados. Ative a REST API para desligamentos seguros.</value>
+    <value>A REST API não está ativada, então o servidor não pode ser desligado de forma segura. Ele será parado à força, o processo é encerrado diretamente. Ative a REST API para desligamentos seguros.</value>
   </data>
   <data name="Main_ForceStop" xml:space="preserve">
     <value>Forçar Parada</value>

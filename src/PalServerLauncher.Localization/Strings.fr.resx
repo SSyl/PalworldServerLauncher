@@ -490,7 +490,7 @@ Le télécharger et l'installer maintenant ?</value>
     <value>Arrêter le serveur</value>
   </data>
   <data name="Main_ShutdownForceMessage" xml:space="preserve">
-    <value>REST n'est pas activé, le serveur ne peut donc pas être arrêté proprement. Il sera arrêté de force : le processus est terminé directement et la dernière sauvegarde automatique limite les pertes. Activez REST pour des arrêts propres.</value>
+    <value>REST n'est pas activé, le serveur ne peut donc pas être arrêté proprement. Il sera arrêté de force : le processus est terminé directement. Activez REST pour des arrêts propres.</value>
   </data>
   <data name="Main_ForceStop" xml:space="preserve">
     <value>Forcer l'arrêt</value>

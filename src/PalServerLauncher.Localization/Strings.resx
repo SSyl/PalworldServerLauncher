@@ -514,7 +514,7 @@ Download and install it now?</value>
     <value>Shut Down the Server</value>
   </data>
   <data name="Main_ShutdownForceMessage" xml:space="preserve">
-    <value>REST is not enabled, so the server can't be shut down gracefully. It will be force-stopped, the process is killed directly and the last autosave limits any loss. Turn on REST for graceful shutdowns.</value>
+    <value>REST is not enabled, so the server can't be shut down gracefully. It will be force-stopped, the process is killed directly. Turn on REST for graceful shutdowns.</value>
   </data>
   <data name="Main_ForceStop" xml:space="preserve">
     <value>Force Stop</value>

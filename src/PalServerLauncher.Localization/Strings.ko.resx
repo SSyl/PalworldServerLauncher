@@ -490,7 +490,7 @@ REST API로 계속 관리하려면 다시 연결하십시오(실시간 통계, �
     <value>서버 종료</value>
   </data>
   <data name="Main_ShutdownForceMessage" xml:space="preserve">
-    <value>REST가 활성화되어 있지 않아 서버를 정상적으로 종료할 수 없습니다. 프로세스가 즉시 강제 종료되며, 마지막 자동 저장이 손실을 최소화합니다. 정상 종료를 원하면 REST를 켜십시오.</value>
+    <value>REST가 활성화되어 있지 않아 서버를 정상적으로 종료할 수 없습니다. 프로세스가 즉시 강제 종료됩니다. 정상 종료를 원하면 REST를 켜십시오.</value>
   </data>
   <data name="Main_ForceStop" xml:space="preserve">
     <value>강제 중지</value>

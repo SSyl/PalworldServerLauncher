@@ -490,7 +490,7 @@ Jetzt herunterladen und installieren?</value>
     <value>Server herunterfahren</value>
   </data>
   <data name="Main_ShutdownForceMessage" xml:space="preserve">
-    <value>Die REST API ist nicht aktiviert, daher kann der Server nicht ordnungsgemäß heruntergefahren werden. Er wird zwangsweise gestoppt, der Prozess wird direkt beendet, der letzte automatische Speicherstand begrenzt den Datenverlust. Aktivieren Sie die REST API für ein ordnungsgemäßes Herunterfahren.</value>
+    <value>Die REST API ist nicht aktiviert, daher kann der Server nicht ordnungsgemäß heruntergefahren werden. Er wird zwangsweise gestoppt, der Prozess wird direkt beendet. Aktivieren Sie die REST API für ein ordnungsgemäßes Herunterfahren.</value>
   </data>
   <data name="Main_ForceStop" xml:space="preserve">
     <value>Erzwungener Stopp</value>

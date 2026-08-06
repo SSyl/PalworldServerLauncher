@@ -490,7 +490,7 @@ Reconéctese para seguir administrándolo mediante la API REST (estadísticas en
     <value>Apagar el servidor</value>
   </data>
   <data name="Main_ShutdownForceMessage" xml:space="preserve">
-    <value>REST no está activado, por lo que el servidor no se puede apagar de forma controlada. Se forzará su detención, el proceso se termina directamente y el último autoguardado limita cualquier pérdida. Active REST para apagados controlados.</value>
+    <value>REST no está activado, por lo que el servidor no se puede apagar de forma controlada. Se forzará su detención, el proceso se termina directamente. Active REST para apagados controlados.</value>
   </data>
   <data name="Main_ForceStop" xml:space="preserve">
     <value>Forzar detención</value>
