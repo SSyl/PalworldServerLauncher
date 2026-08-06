@@ -5,12 +5,21 @@ using PalServerLauncher.Core;
 
 namespace PalServerLauncher.Tests;
 
-public class CrashReportTests
+public class CrashReportTests : IDisposable
 {
+    private readonly List<string> _tempRoots = new();
+
+    public void Dispose()
+    {
+        foreach (var root in _tempRoots)
+            try { Directory.Delete(root, recursive: true); } catch (IOException) { }
+    }
+
     /// <summary>A server root with one crash folder per entry, stamped in the order given.</summary>
-    private static string WriteCrashFolders(params (string Name, string? Context)[] folders)
+    private string WriteCrashFolders(params (string Name, string? Context)[] folders)
     {
         var root = Path.Combine(Path.GetTempPath(), $"pal_cr_{Guid.NewGuid():N}");
+        _tempRoots.Add(root);
         var crashes = Path.Combine(LauncherConfig.ServerDir(root), "Pal", "Saved", "Crashes");
         var stamp = DateTime.UtcNow;
         foreach (var (name, context) in folders)
@@ -69,6 +78,21 @@ public class CrashReportTests
     public async Task ReadAsync_returns_null_when_nothing_crashed() =>
         Assert.Null(await CrashReport.ReadAsync(
             Path.Combine(Path.GetTempPath(), $"pal_cr_missing_{Guid.NewGuid():N}"), DateTime.UtcNow.AddMinutes(-1)));
+
+    [Fact]
+    public async Task ReadAsync_dates_a_folder_by_its_context_not_the_folder_itself()
+    {
+        // Something touching an old crash folder mid-run (an upload, a dump dragged out to send to support)
+        // moves the DIRECTORY's timestamp to now. Dating candidates by the folder would let that stale crash
+        // pass the cutoff and be reported as the current one.
+        var root = WriteCrashFolders(("UECC-Windows-STALE_0000", Context("A crash from last week")));
+        var stale = Path.Combine(
+            LauncherConfig.ServerDir(root), "Pal", "Saved", "Crashes", "UECC-Windows-STALE_0000");
+        File.SetLastWriteTimeUtc(Path.Combine(stale, CrashReport.ContextFileName), DateTime.UtcNow.AddDays(-7));
+        Directory.SetLastWriteTimeUtc(stale, DateTime.UtcNow);
+
+        Assert.Null(await CrashReport.ReadAsync(root, DateTime.UtcNow.AddMinutes(-1)));
+    }
 
     // Verbatim from a real Palworld 1.0.2 crash, produced by truncating Level.sav (issue #11).
     private const string RealContext = """

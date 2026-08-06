@@ -271,6 +271,12 @@ public partial class MainViewModel : ObservableObject
     /// IsEnabled binding, and the underlying read parses PalWorldSettings.ini off disk.</summary>
     public bool RestApiConfigured => _restApiConfigured;
 
+    /// <summary>Tooltips for the unresponsive-check row. WPF resolves a tooltip on the innermost element that
+    /// has one, so a single explanation on the parent panel would never surface on the checkbox or the number
+    /// box. Each control swaps to the "needs REST" text itself while the row is disabled.</summary>
+    public string ZombieCheckTooltip => _restApiConfigured ? Strings.Main_ZombieCheckTip : Strings.Main_ZombieNeedsRestTip;
+    public string ZombieThresholdTooltip => _restApiConfigured ? Strings.Main_ZombieThresholdTip : Strings.Main_ZombieNeedsRestTip;
+
     /// <summary>Re-read the REST API state from the game ini. Call after anything that can change it: the
     /// setup prompt, the Server Settings dialog, and any SteamCMD run, since a validate can restore
     /// PalWorldSettings.ini out from under us and silently turn REST off.</summary>
@@ -282,6 +288,8 @@ public partial class MainViewModel : ObservableObject
         _restApiConfigured = configured;
         OnPropertyChanged(nameof(RestApiConfigured));
         OnPropertyChanged(nameof(ZombieCheckEnabled));
+        OnPropertyChanged(nameof(ZombieCheckTooltip));
+        OnPropertyChanged(nameof(ZombieThresholdTooltip));
     }
 
     // --- Settings dialog (opened from the View; edits launch args + PalWorldSettings.ini) ---
@@ -872,6 +880,8 @@ public partial class MainViewModel : ObservableObject
         {
             IsBusy = false;
             IsInstalled = _controller.IsInstalled;
+            // An imported server brings its own PalWorldSettings.ini, so REST may already be on.
+            RefreshRestApiState();
         }
         if (imported && !wasInstalled && IsInstalled)
             InstallFinished?.Invoke();
@@ -893,6 +903,8 @@ public partial class MainViewModel : ObservableObject
         {
             IsBusy = false;
             IsInstalled = _controller.IsInstalled;
+            // An imported server brings its own PalWorldSettings.ini, so REST may already be on.
+            RefreshRestApiState();
         }
         if (imported && !wasInstalled && IsInstalled)
             InstallFinished?.Invoke();

@@ -142,7 +142,5 @@ public static class CrashReport
         }
 
         return found;
-
-        return null;
     }
 }

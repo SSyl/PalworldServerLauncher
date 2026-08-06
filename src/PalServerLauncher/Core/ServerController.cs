@@ -50,6 +50,7 @@ public sealed class ServerController : IDisposable
     private readonly RestartBudget _restartBudget = new();
     private DateTime? _serverStartedUtc;
     private bool _sawRunning;
+    private DateTime? _crashScanFromUtc;
     private bool _manualStop;
     private readonly RelaunchGate _relaunchGate = new(); // suppresses auto-recovery / restart relaunch after a deliberate stop, until the next user Start
     private readonly StopGate _stopGate = new();         // one stop ladder at a time; a second caller joins the running one
@@ -1923,6 +1924,10 @@ public sealed class ServerController : IDisposable
     {
         _process = process;
         _serverStartedUtc = ProcessStartUtc(process);
+        // Deliberately NOT the process start time: crash folders are only this run's if they postdate the
+        // moment we attached. An adopted server can carry days of older UECC folders from ensures and
+        // earlier crashes, and dating the scan from its boot would let one of those be blamed on this exit.
+        _crashScanFromUtc = DateTime.UtcNow;
         _sawRunning = adopted;
         process.Exited += OnProcessExited;
         ApplyProcessTuning(process);
@@ -2083,6 +2088,7 @@ public sealed class ServerController : IDisposable
         bool wasManual;
         bool reachedRunning;
         DateTime? startedUtc;
+        DateTime? crashScanFromUtc;
         HealthMonitor? health;
         UpdateMonitor? updateMonitor;
         lock (_gate)
@@ -2090,8 +2096,10 @@ public sealed class ServerController : IDisposable
             wasManual = _manualStop;
             reachedRunning = _sawRunning;
             startedUtc = _serverStartedUtc;
+            crashScanFromUtc = _crashScanFromUtc;
             _process = null;
             _serverStartedUtc = null;
+            _crashScanFromUtc = null;
             health = _health;
             _health = null;
             updateMonitor = _updateMonitor;
@@ -2119,7 +2127,7 @@ public sealed class ServerController : IDisposable
         if (!_config.RestartOnCrash)
         {
             _logger.Info($"{summary} Auto-restart disabled.");
-            FireAndForget(() => LogCrashReasonAsync(startedUtc), "Crash reason");
+            FireAndForget(() => LogCrashReasonAsync(crashScanFromUtc), "Crash reason");
             return;
         }
 
@@ -2131,15 +2139,17 @@ public sealed class ServerController : IDisposable
             _logger.Info($"{summary} Restarting.");
             FireAndForget(async () =>
             {
-                await LogCrashReasonAsync(startedUtc).ConfigureAwait(false);
-                await LaunchServerAsync().ConfigureAwait(false);
+                // finally, not a bare sequence: recovery must not hinge on a diagnostic. Anything the reason
+                // read doesn't catch would otherwise swallow the relaunch and leave the server down.
+                try { await LogCrashReasonAsync(crashScanFromUtc).ConfigureAwait(false); }
+                finally { await LaunchServerAsync().ConfigureAwait(false); }
             }, "Crash relaunch");
         }
         else
         {
             State = ServerState.Backoff;
             _logger.Error($"{summary} Auto-restart suspended after repeated crashes. Fix the issue, then Start manually.");
-            FireAndForget(() => LogCrashReasonAsync(startedUtc), "Crash reason");
+            FireAndForget(() => LogCrashReasonAsync(crashScanFromUtc), "Crash reason");
         }
     }
 
@@ -2163,12 +2173,12 @@ public sealed class ServerController : IDisposable
 
     /// <summary>Log why Unreal says the server died. Off the exit path (it touches the disk) so a crash
     /// relaunch isn't held up waiting on it.</summary>
-    private async Task LogCrashReasonAsync(DateTime? startedUtc)
+    private async Task LogCrashReasonAsync(DateTime? crashScanFromUtc)
     {
-        if (startedUtc is null)
+        if (crashScanFromUtc is null)
             return;
 
-        var crash = await CrashReport.ReadAsync(_config.ServerRoot, startedUtc.Value).ConfigureAwait(false);
+        var crash = await CrashReport.ReadAsync(_config.ServerRoot, crashScanFromUtc.Value).ConfigureAwait(false);
         if (crash is null)
         {
             _logger.Error("No crash report found. Server may have been force-stopped.");
