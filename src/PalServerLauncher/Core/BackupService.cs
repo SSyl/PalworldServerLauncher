@@ -73,9 +73,10 @@ public sealed class BackupService
     }
 
     /// <summary>
-    /// Take a backup. A fresh <c>/save</c> is issued only when the server is running AND REST is usable;
-    /// otherwise the on-disk (last-autosave) state is archived with a staleness warning. Returns the
-    /// zip path, or null if there was nothing to back up / it failed.
+    /// Take a backup. A fresh <c>/save</c> is issued only when the server is running AND REST is usable.
+    /// A running server without REST archives the on-disk (last-autosave) state and warns that it may be
+    /// stale. A stopped server has nothing live to be missing, so it archives without a warning. Returns
+    /// the zip path, or null if there was nothing to back up / it failed.
     /// </summary>
     public async Task<string?> BackupNowAsync(BackupReason reason, PalworldRestClient? rest, bool serverRunning, CancellationToken ct = default)
     {
@@ -91,9 +92,13 @@ public sealed class BackupService
             if (!await rest.SaveAsync(ct).ConfigureAwait(false))
                 _logger.Info($"Backup ({reason}): /save was not accepted, archiving the current on-disk save, which may not include the latest changes.");
         }
+        else if (serverRunning)
+        {
+            _logger.Info($"Backup ({reason}): REST is off, so the world can't be saved first. Archiving the current on-disk save, which may not include the latest changes.");
+        }
         else
         {
-            _logger.Info($"Backup ({reason}): no fresh save (REST off or server stopped), archiving the current on-disk save, which may not include the latest changes.");
+            _logger.Info($"Backup ({reason}): archiving the current save.");
         }
 
         var stamp = DateTime.Now.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture);
