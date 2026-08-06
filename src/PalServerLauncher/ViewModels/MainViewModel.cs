@@ -198,7 +198,7 @@ public partial class MainViewModel : ObservableObject
         _shutdownCountdownTimer.Tick += OnShutdownCountdownTick;
 
         // Name the server folder as it actually is on disk, since it can be either the legacy name or the new one.
-        _logger.Info($"Launcher UI ready. Server root: {_config.ServerRoot} (server folder: {LauncherConfig.ResolveServerFolder(_config.ServerRoot)})");
+        _logger.Info($"Launcher v{AppInfo.Version} ready. Server root: {_config.ServerRoot} (server folder: {LauncherConfig.ResolveServerFolder(_config.ServerRoot)})");
     }
 
     // Run the animated-dots ellipsis while a long op is in progress (Working) or the server is transitioning

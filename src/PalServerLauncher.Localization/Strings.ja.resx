@@ -363,10 +363,10 @@
     <value>回</value>
   </data>
   <data name="Main_RestCheckEvery" xml:space="preserve">
-    <value>REST 確認の間隔</value>
+    <value>ヘルスチェックの間隔</value>
   </data>
   <data name="Main_RestCheckEveryTip" xml:space="preserve">
-    <value>ランチャーが REST API に状態／ヘルスを問い合わせる頻度（秒）です。5〜10 を推奨します。5 未満にしても実質的な効果はなく API に負荷をかけるだけです（許可はされますが非推奨）。1 未満にはできません。次回の起動時に適用されます。</value>
+    <value>ランチャーがサーバーの状態を確認する頻度（秒）です。5〜10 を推奨します。5 未満にしてもサーバーに負荷をかけるだけで実質的な効果はなく、1 未満には設定できません。次回の起動時に適用されます。</value>
   </data>
   <data name="Main_SecondsSuffix" xml:space="preserve">
     <value>秒</value>

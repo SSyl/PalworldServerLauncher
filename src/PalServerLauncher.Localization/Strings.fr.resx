@@ -401,10 +401,10 @@ Les enregistrer quand même comme messages fixes ?</value>
     <value>vérif.</value>
   </data>
   <data name="Main_RestCheckEvery" xml:space="preserve">
-    <value>Vérification REST toutes les</value>
+    <value>Vérification d'état toutes les</value>
   </data>
   <data name="Main_RestCheckEveryTip" xml:space="preserve">
-    <value>Fréquence (en secondes) à laquelle le lanceur interroge l'API REST pour l'état/la santé du serveur. 5 à 10 est recommandé. En dessous de 5, cela sollicite inutilement l'API sans réel avantage (autorisé, mais déconseillé) ; la valeur ne peut pas descendre sous 1. S'applique au prochain démarrage.</value>
+    <value>Fréquence (en secondes) à laquelle le lanceur vérifie le serveur. 5 à 10 est recommandé. En dessous de 5, cela sollicite inutilement le serveur sans réel avantage, et la valeur ne peut pas descendre sous 1. S'applique au prochain démarrage.</value>
   </data>
   <data name="Main_SecondsSuffix" xml:space="preserve">
     <value>s</value>

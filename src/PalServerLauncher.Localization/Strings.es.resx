@@ -401,10 +401,10 @@
     <value>comprob.</value>
   </data>
   <data name="Main_RestCheckEvery" xml:space="preserve">
-    <value>Comprobación REST cada</value>
+    <value>Comprobación de estado cada</value>
   </data>
   <data name="Main_RestCheckEveryTip" xml:space="preserve">
-    <value>Con qué frecuencia (en segundos) el launcher consulta la API REST para conocer el estado/salud. Se recomienda entre 5 y 10. Bajar de 5 solo satura la API sin ninguna ventaja real (permitido, pero no recomendado); no bajará de 1. Se aplica en el próximo inicio.</value>
+    <value>Con qué frecuencia (en segundos) el launcher comprueba el servidor. Se recomienda entre 5 y 10. Bajar de 5 solo satura el servidor sin ninguna ventaja real, y no bajará de 1. Se aplica en el próximo inicio.</value>
   </data>
   <data name="Main_SecondsSuffix" xml:space="preserve">
     <value>s</value>

@@ -364,10 +364,10 @@
     <value>次</value>
   </data>
   <data name="Main_RestCheckEvery" xml:space="preserve">
-    <value>REST 检查间隔</value>
+    <value>健康检查间隔</value>
   </data>
   <data name="Main_RestCheckEveryTip" xml:space="preserve">
-    <value>启动器轮询 REST API 获取状态/健康信息的频率（秒）。推荐 5-10。低于 5 只会徒增 API 负担而没有实际收益（允许，但不建议），且不会低于 1。下次启动时生效。</value>
+    <value>启动器对服务器进行健康检查的频率（秒）。推荐 5-10。低于 5 只会徒增服务器负担而没有实际收益，且不会低于 1。下次启动时生效。</value>
   </data>
   <data name="Main_SecondsSuffix" xml:space="preserve">
     <value>秒</value>

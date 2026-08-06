@@ -401,10 +401,10 @@
     <value>회</value>
   </data>
   <data name="Main_RestCheckEvery" xml:space="preserve">
-    <value>REST 확인 주기</value>
+    <value>상태 확인 주기</value>
   </data>
   <data name="Main_RestCheckEveryTip" xml:space="preserve">
-    <value>런처가 상태/헬스 확인을 위해 REST API를 폴링하는 주기(초)입니다. 5~10을 권장합니다. 5 미만으로 설정해도 실질적인 이득 없이 API에 부담만 줍니다(허용되지만 권장하지 않음). 1 미만으로는 설정할 수 없습니다. 다음 시작부터 적용됩니다.</value>
+    <value>런처가 서버 상태를 확인하는 주기(초)입니다. 5~10을 권장합니다. 5 미만으로 설정해도 실질적인 이득 없이 서버에 부담만 줄 뿐이며, 1 미만으로는 설정할 수 없습니다. 다음 시작부터 적용됩니다.</value>
   </data>
   <data name="Main_SecondsSuffix" xml:space="preserve">
     <value>초</value>

@@ -401,10 +401,10 @@ Salvar mesmo assim como mensagens fixas?</value>
     <value>verif.</value>
   </data>
   <data name="Main_RestCheckEvery" xml:space="preserve">
-    <value>Verificar REST a cada</value>
+    <value>Verificação de saúde a cada</value>
   </data>
   <data name="Main_RestCheckEveryTip" xml:space="preserve">
-    <value>Com que frequência (em segundos) o launcher consulta a REST API para status/saúde. Recomenda-se de 5 a 10. Ir abaixo de 5 só sobrecarrega a API sem ganho real (é permitido, mas não recomendado); o valor não vai abaixo de 1. Aplicado no próximo início.</value>
+    <value>Com que frequência (em segundos) o launcher verifica o servidor. Recomenda-se de 5 a 10. Ir abaixo de 5 só sobrecarrega o servidor sem ganho real, e o valor não vai abaixo de 1. Aplicado no próximo início.</value>
   </data>
   <data name="Main_SecondsSuffix" xml:space="preserve">
     <value>s</value>

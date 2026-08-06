@@ -425,10 +425,10 @@ Save them as fixed messages anyway?</value>
     <value>checks</value>
   </data>
   <data name="Main_RestCheckEvery" xml:space="preserve">
-    <value>REST check every</value>
+    <value>Health check every</value>
   </data>
   <data name="Main_RestCheckEveryTip" xml:space="preserve">
-    <value>How often (seconds) the launcher polls the REST API for status/health. 5-10 is recommended. Going below 5 just hammers the API for no real gain (allowed, but not advised); it won't go below 1. Applies on next start.</value>
+    <value>How often (seconds) the launcher checks on the server. 5-10 is recommended. Going below 5 just hammers the server for no real gain, and it won't go below 1. Applies on next start.</value>
   </data>
   <data name="Main_SecondsSuffix" xml:space="preserve">
     <value>s</value>

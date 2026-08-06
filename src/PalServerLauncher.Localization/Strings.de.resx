@@ -401,10 +401,10 @@ Trotzdem als feste Nachrichten speichern?</value>
     <value>Prüf.</value>
   </data>
   <data name="Main_RestCheckEvery" xml:space="preserve">
-    <value>REST-Prüfung alle</value>
+    <value>Zustandsprüfung alle</value>
   </data>
   <data name="Main_RestCheckEveryTip" xml:space="preserve">
-    <value>Wie oft (in Sekunden) der Launcher die REST API nach Status/Zustand abfragt. Empfohlen sind 5-10. Werte unter 5 belasten die API unnötig (erlaubt, aber nicht empfohlen); der Mindestwert ist 1. Wird beim nächsten Start wirksam.</value>
+    <value>Wie oft (in Sekunden) der Launcher den Server prüft. Empfohlen sind 5-10. Werte unter 5 belasten den Server unnötig, ohne echten Nutzen, und der Mindestwert ist 1. Wird beim nächsten Start wirksam.</value>
   </data>
   <data name="Main_SecondsSuffix" xml:space="preserve">
     <value>s</value>
