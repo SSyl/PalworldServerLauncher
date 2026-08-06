@@ -66,9 +66,8 @@ public static class CrashReport
 
     /// <summary>
     /// One line describing how the server died. A death during startup is a different problem from one after
-    /// hours of play (a bad save or config versus a runtime fault), and the old wording made them identical,
-    /// so the phase leads. Exit codes seen on Palworld 1.0.2: 0 clean, 3 fatal assert, 1 external kill.
-    /// English on purpose, the log file is not localized.
+    /// hours of play (a bad save or config versus a runtime fault), so the phase leads. Exit codes measured
+    /// on Palworld 1.0.2: 0 clean, 3 fatal assert, 1 external kill. English on purpose, the log isn't localized.
     /// </summary>
     public static string DescribeExit(int? exitCode, TimeSpan uptime, bool reachedRunning)
     {

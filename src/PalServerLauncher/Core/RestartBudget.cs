@@ -27,9 +27,9 @@ public sealed class RestartBudget
     }
 
     /// <summary>
-    /// A user Start (<paramref name="userInitiated"/> true) gets a fresh window. Without this the breaker
-    /// contradicts its own advice: it says to fix the problem and start manually, then the stale window
-    /// re-trips on the first crash after they do, granting zero restarts (issue #11's log shows exactly that).
+    /// A user Start (<paramref name="userInitiated"/> true) gets a fresh window, otherwise the breaker
+    /// contradicts its own advice. It tells the user to fix the problem and start manually, and a stale
+    /// window then re-trips on their first crash, granting zero restarts (issue #11's log shows that).
     /// A restart's own start passes false, so an automatic restart can't refill its own budget.
     /// </summary>
     public void OnStart(bool userInitiated)
