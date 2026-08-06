@@ -16,7 +16,9 @@
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
+                        <!-- TextAlignment is inheritable and a tooltip picks it up from its placement target,
+                             so without this the numeric fields (TextAlignment=Center) centre their tooltips. -->
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap" TextAlignment="Left"/>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>

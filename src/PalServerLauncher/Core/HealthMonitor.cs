@@ -100,8 +100,8 @@ public sealed class HealthMonitor : IDisposable
 
     private async Task ProbeAsync(CancellationToken ct)
     {
-        // Reading HasExited is what RAISES Process.Exited on an adopted server, since EnableRaisingEvents is
-        // only set on the launch path. The controller's Stopped transition depends on this poll, keep it.
+        // Reading HasExited raises Process.Exited, which is the backstop if the controller couldn't enable
+        // the event on an adopted server. The Stopped transition can depend on this poll, keep it.
         if (_process.HasExited)
             return;
 

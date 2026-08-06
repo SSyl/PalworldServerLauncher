@@ -80,6 +80,16 @@ public sealed record GameSetting(
 /// </summary>
 public static class GameSettingsCatalog
 {
+    /// <summary>Whether a key's value must never reach the log. Users attach these logs to bug reports, so a
+    /// password written here becomes public. Covers the catalog's own <c>Secret</c> settings plus anything
+    /// password-shaped, since the Undocumented tab lets users add keys the catalog has never heard of.</summary>
+    public static bool IsSecretKey(string key) =>
+        All.Any(setting => setting.Secret && string.Equals(setting.Key, key, StringComparison.OrdinalIgnoreCase))
+        || key.Contains("password", StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>Fixed-width so the mask doesn't leak the real length.</summary>
+    public const string SecretMask = "********";
+
     public static readonly IReadOnlyList<GameSetting> All = new List<GameSetting>
     {
         // ===================== Server management (Admin tab) =====================

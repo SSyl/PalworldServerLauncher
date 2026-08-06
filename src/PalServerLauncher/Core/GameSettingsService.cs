@@ -135,7 +135,7 @@ public sealed class GameSettingsService
 
         File.WriteAllText(SettingsPath, rendered);
         foreach (var (key, value) in appliedEdits)
-            _logger.Info($"Changed: {key} = {value}");
+            _logger.Info($"Changed: {key} = {(GameSettingsCatalog.IsSecretKey(key) ? GameSettingsCatalog.SecretMask : value)}");
         _logger.Info($"Saved {appliedEdits.Count} game setting(s) to PalWorldSettings.ini.");
         return true;
     }
@@ -212,7 +212,7 @@ public sealed class GameSettingsService
 
         File.WriteAllText(SettingsPath, rendered);
         foreach (var key in applied)
-            _logger.Info($"Changed: {key} = {edits[key]}");
+            _logger.Info($"Changed: {key} = {(GameSettingsCatalog.IsSecretKey(key) ? GameSettingsCatalog.SecretMask : edits[key])}");
         _logger.Info($"Saved {applied.Count} extra setting(s) to PalWorldSettings.ini.");
         return true;
     }

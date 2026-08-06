@@ -14,6 +14,7 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
 - **Plainer wording throughout the log and the interface.** Internal terms like "zombie", "backoff", and "circuit breaker" have been replaced with what they actually mean, and the startup line now names the launcher version.
 
 ### Fixed
+- **Passwords are masked in the log.** Server and Admin passwords no longer appear in the log in plaintext.
 - **Clicking Start after repeated crashes gives the server a real chance again.** The safety cutoff that stops an endless crash loop kept counting the old crashes, so the first crash after starting manually would immediately suspend restarts again, even though the launcher had just told you to fix the problem and press Start.
 - **Startup backups no longer warn that they might be missing recent changes.** The server is stopped at that point, so the save on disk is the whole world and there is nothing to miss. The warning still appears where it belongs, when the server is running but REST is off.
 

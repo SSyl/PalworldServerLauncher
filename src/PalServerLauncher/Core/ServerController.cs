@@ -1929,6 +1929,11 @@ public sealed class ServerController : IDisposable
         _crashScanFromUtc = DateTime.UtcNow;
         _sawRunning = adopted;
         process.Exited += OnProcessExited;
+        // .NET refuses ExitCode for a process it didn't start ("Process was not started by this object")
+        // unless a handle was retained while it was alive, and the scanner hands us a bare one. Setting this
+        // retains that handle, so an adopted server's crash still reports its exit code.
+        if (adopted)
+            TryEnableRaisingEvents(process);
         ApplyProcessTuning(process);
 
         // Health monitor promotes Starting -> Healthy, feeds the status tiles, and flags zombies.
@@ -2149,6 +2154,17 @@ public sealed class ServerController : IDisposable
             State = ServerState.Backoff;
             _logger.Error($"{summary} Auto-restart suspended after repeated crashes. Fix the issue, then Start manually.");
             FireAndForget(() => LogCrashReasonAsync(crashScanFromUtc), "Crash reason");
+        }
+    }
+
+    /// <summary>Best-effort: a server started by another user, or one that died between the scan and here,
+    /// simply keeps the old behavior of reporting no exit code.</summary>
+    private void TryEnableRaisingEvents(Process process)
+    {
+        try { process.EnableRaisingEvents = true; }
+        catch (Exception ex) when (ex is InvalidOperationException or System.ComponentModel.Win32Exception)
+        {
+            _logger.Debug($"Couldn't watch the adopted server's exit directly: {ex.Message}");
         }
     }
 
