@@ -1204,7 +1204,7 @@ public sealed class ServerController : IDisposable
             return;
         }
 
-        _logger.Info("Force shutdown requested, killing the server process now.");
+        _logger.Info("Force stop requested, stopping the server process now.");
         KillNow(process);
     }
 
@@ -1760,7 +1760,7 @@ public sealed class ServerController : IDisposable
         else if (graceful)
         {
             // No REST -> no save/graceful-shutdown is possible (Palworld has no safe OS-signal stop).
-            _logger.Info("REST API off, can't save or graceful-shutdown; force-stopping (autosave limits loss). Enable REST for clean shutdowns.");
+            _logger.Info("REST API is off, so the server can't be saved or shut down gracefully. Force-stopping it now. Enable REST for clean shutdowns.");
         }
 
         KillNow(process);
@@ -2163,7 +2163,7 @@ public sealed class ServerController : IDisposable
     {
         if (!_config.RestartOnCrash)
         {
-            _logger.Info("Zombie detected but auto-restart is disabled.");
+            _logger.Info("Server is unresponsive but auto-restart is disabled.");
             return;
         }
         FireAndForget(RecoverAsync, "Zombie recovery");
@@ -2174,10 +2174,10 @@ public sealed class ServerController : IDisposable
         if (!AllowRestart())
         {
             State = ServerState.Backoff;
-            _logger.Error("Server wedged repeatedly, auto-recovery suspended (circuit breaker). Fix the issue, then Start manually.");
+            _logger.Error("Server kept going unresponsive, auto-recovery suspended (circuit breaker). Fix the issue, then Start manually.");
             return;
         }
-        _logger.Info("Recovering wedged server (stop + relaunch)...");
+        _logger.Info("Server is unresponsive, stopping and relaunching it...");
         await StopCoreAsync(graceful: true, shutdownWaitSeconds: 0, restarting: true, CancellationToken.None).ConfigureAwait(false);
         await LaunchServerAsync().ConfigureAwait(false);
     }
@@ -2247,12 +2247,12 @@ public sealed class ServerController : IDisposable
             if (!process.HasExited)
             {
                 process.Kill(entireProcessTree: true);
-                _logger.Info("Server process killed.");
+                _logger.Info("Server process force-stopped.");
             }
         }
         catch (Exception ex) when (ex is InvalidOperationException or System.ComponentModel.Win32Exception)
         {
-            _logger.Info($"Kill failed: {ex.Message}");
+            _logger.Info($"Force stop failed: {ex.Message}");
         }
     }
 

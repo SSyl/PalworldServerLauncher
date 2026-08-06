@@ -312,7 +312,7 @@ public partial class App : Application
 
         if (request.Kind == StopKind.Kill)
         {
-            _logger.Info($"Killing the server process (PID {process.Id}).");
+            _logger.Info($"Force-stopping the server process (PID {process.Id}).");
             process.Kill(entireProcessTree: true);
             return await ServerController.WaitForExitAsync(process, TimeSpan.FromSeconds(10), CancellationToken.None)
                 .ConfigureAwait(false);
@@ -353,7 +353,7 @@ public partial class App : Application
             return true;
         }
 
-        _logger.Info("Graceful shutdown timed out, killing the process.");
+        _logger.Info("Graceful shutdown timed out, force-stopping the process.");
         process.Kill(entireProcessTree: true);
         return await ServerController.WaitForExitAsync(process, TimeSpan.FromSeconds(10), CancellationToken.None)
             .ConfigureAwait(false);

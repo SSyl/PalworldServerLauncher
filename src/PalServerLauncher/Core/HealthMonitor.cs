@@ -290,7 +290,7 @@ public sealed class HealthMonitor : IDisposable
 
         if (_config.ZombieCheckEnabled && _consecutiveFailures >= threshold)
         {
-            _logger.Error($"Server appears wedged ({reason}), flagged as zombie.");
+            _logger.Error($"Server is unresponsive ({reason}), flagging it for recovery.");
             StateChanged?.Invoke(ServerState.Zombie);
             _consecutiveFailures = 0;
             ZombieDetected?.Invoke();

@@ -667,7 +667,14 @@ public partial class MainViewModel : ObservableObject
     private Task PrimaryAction()
     {
         var kind = PrimaryButton.Resolve(IsInstalled, IsBusy, State, ShutdownRemainingSeconds);
-        _logger.Info($"Button clicked: {kind}");
+        _logger.Info(kind switch
+        {
+            PrimaryActionKind.Install => "Server install requested.",
+            PrimaryActionKind.Start => "Server start requested.",
+            PrimaryActionKind.Stop => "Server stop requested.",
+            PrimaryActionKind.ShutdownNow => "Immediate shutdown requested.",
+            _ => $"{kind} requested.",
+        });
         return Guard(() => kind switch
         {
             PrimaryActionKind.Install => ConfirmedInstallAsync(),
@@ -720,7 +727,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanRestart))]
     private Task Restart()
     {
-        _logger.Info("Button clicked: Restart");
+        _logger.Info("Server restart requested.");
         return Guard(() => _controller.RestartAsync(RestartReason.Manual));
     }
 
@@ -765,7 +772,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanValidateFiles))]
     private Task ValidateFiles()
     {
-        _logger.Info("Button clicked: Validate Files");
+        _logger.Info("File validation requested.");
         return Guard(() => InstallOrUpdateCoreAsync(validate: true));
     }
 
@@ -790,7 +797,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanBackupNow))]
     private Task BackupNow()
     {
-        _logger.Info("Button clicked: Backup now");
+        _logger.Info("Backup requested.");
         return Guard(async () =>
         {
             IsBusy = true;
