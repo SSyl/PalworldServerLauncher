@@ -319,12 +319,23 @@
                     <Setter Property="Foreground" Value="{x:Static local:Theme.LogText}"/>
                     <Setter Property="FontFamily" Value="Consolas"/>
                     <Setter Property="FontSize" Value="12"/>
-                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+                    <!-- Wrapping needs all three of these. Left scrollable, the ListBox measures items at
+                         infinite width and the TextBlock never wraps; without Stretch the item sizes to its
+                         content and it still doesn't. -->
+                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+                    <Setter Property="ItemTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
                     <Setter Property="ItemContainerStyle">
                         <Setter.Value>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Background" Value="Transparent"/>
                                 <Setter Property="Padding" Value="2,1"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                             </Style>
                         </Setter.Value>
                     </Setter>
