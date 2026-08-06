@@ -351,13 +351,13 @@
     <value>30 秒ごとにサーバーの統計情報（FPS、プレイヤー数、稼働時間、メモリ）を 1 行ログに記録します。ターミナルから実行する際に便利ですが、それ以外の場合はログのノイズになります。</value>
   </data>
   <data name="Main_ZombieCheck" xml:space="preserve">
-    <value>ゾンビ検知：再起動しきい値</value>
+    <value>応答なし時の再起動しきい値</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
     <value>REST API に連続してこの回数だけ到達できない、またはワールドがフリーズしたままの場合、サーバーを再起動します。REST API が不安定で自動再起動させたくない場合は、オフにしてください。</value>
   </data>
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
-    <value>連続して何回ヘルスチェックに失敗した場合に、サーバーがフリーズ（ハング）しているとみなして強制再起動するかを指定します。</value>
+    <value>連続して何回ヘルスチェックに失敗した場合に、サーバーが応答なしとみなして強制再起動するかを指定します。</value>
   </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>回</value>
@@ -494,7 +494,7 @@ REST API を有効にしますか？ランチャーはこれを使用してサ�
     <value>REST API を有効にしますか？</value>
   </data>
   <data name="Main_EnableRestMessage" xml:space="preserve">
-    <value>このランチャーは Palworld の REST API を中心に構築されており、ほぼすべての機能でこれを使用します：正常な保存とシャットダウン、最新のバックアップ、リアルタイムのヘルス／ゾンビ監視、自動再起動、プレイヤーの参加／退出の記録。
+    <value>このランチャーは Palworld の REST API を中心に構築されており、ほぼすべての機能でこれを使用します：正常な保存とシャットダウン、最新のバックアップ、リアルタイムのヘルス監視、自動再起動、プレイヤーの参加／退出の記録。
 
 このサーバーではまだ REST API が有効になっていないため、これらの機能は制限されます：シャットダウンは強制終了にフォールバックし、バックアップは古い可能性があり、自動再起動もありません。
 
@@ -1385,7 +1385,7 @@ REST API を有効にしますか？ランチャーはこれを使用してサ�
     <value>機能低下</value>
   </data>
   <data name="State_Zombie" xml:space="preserve">
-    <value>ゾンビ</value>
+    <value>応答なし</value>
   </data>
   <data name="State_RestUnreachable" xml:space="preserve">
     <value>REST not responding</value>
@@ -1397,7 +1397,7 @@ REST API を有効にしますか？ランチャーはこれを使用してサ�
     <value>再起動中</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>バックオフ</value>
+    <value>再起動中断</value>
   </data>
   <data name="Update_AutoUpdateOff" xml:space="preserve">
     <value>自動アップデート オフ · {0}</value>

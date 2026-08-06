@@ -389,13 +389,13 @@
     <value>서버 통계(FPS, 플레이어 수, 가동 시간, 메모리)를 30초마다 로그에 기록합니다. 터미널에서 실행할 때 유용하지만, 그 외에는 로그에 잡음이 늘어납니다.</value>
   </data>
   <data name="Main_ZombieCheck" xml:space="preserve">
-    <value>좀비 확인: 재시작 기준</value>
+    <value>무응답 재시작 기준</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
     <value>REST API가 연속으로 이 횟수만큼 응답하지 않거나 월드가 멈춰 있으면 서버를 재시작합니다. REST API가 불안정해서 자동 재시작을 원하지 않으면 꺼두십시오.</value>
   </data>
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
-    <value>서버를 멈춘 것으로 간주하고 강제 재시작하기까지 연속으로 실패해야 하는 상태 확인 횟수입니다.</value>
+    <value>서버를 무응답 상태로 간주하고 강제 재시작하기까지 연속으로 실패해야 하는 상태 확인 횟수입니다.</value>
   </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>회</value>
@@ -533,7 +533,7 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>REST API를 활성화하시겠습니까?</value>
   </data>
   <data name="Main_EnableRestMessage" xml:space="preserve">
-    <value>이 런처는 Palworld의 REST API를 기반으로 만들어졌으며 거의 모든 기능에 이를 사용합니다: 정상적인 저장 후 종료, 최신 백업, 실시간 상태/좀비 모니터링, 자동 재시작, 플레이어 접속/퇴장 기록.
+    <value>이 런처는 Palworld의 REST API를 기반으로 만들어졌으며 거의 모든 기능에 이를 사용합니다: 정상적인 저장 후 종료, 최신 백업, 실시간 상태 모니터링, 자동 재시작, 플레이어 접속/퇴장 기록.
 
 이 서버에는 아직 REST API가 활성화되어 있지 않아 이러한 기능이 제한됩니다. 종료는 강제 종료로 대체되고, 백업이 오래된 상태일 수 있으며, 자동 재시작이 동작하지 않습니다.
 
@@ -1436,7 +1436,7 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>저하됨</value>
   </data>
   <data name="State_Zombie" xml:space="preserve">
-    <value>좀비</value>
+    <value>무응답</value>
   </data>
   <data name="State_Stopping" xml:space="preserve">
     <value>중지 중</value>
@@ -1445,7 +1445,7 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>재시작 중</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>백오프</value>
+    <value>재시작 중단됨</value>
   </data>
   <!-- Update status line -->
   <data name="Update_AutoUpdateOff" xml:space="preserve">

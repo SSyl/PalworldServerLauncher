@@ -389,13 +389,13 @@ Les enregistrer quand même comme messages fixes ?</value>
     <value>Écrit une ligne de statistiques du serveur (FPS, joueurs, temps de fonctionnement, mémoire) dans le journal toutes les 30 s. Pratique en exécution depuis un terminal ; alourdit le journal sinon.</value>
   </data>
   <data name="Main_ZombieCheck" xml:space="preserve">
-    <value>Détection de blocage :</value>
+    <value>Redémarrer si ne répond pas après</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
     <value>Redémarre le serveur lorsque l'API REST reste injoignable ou que le monde reste figé pendant ce nombre de vérifications consécutives. Désactivez si votre API REST est instable et que vous préférez qu'il ne redémarre jamais automatiquement.</value>
   </data>
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
-    <value>Nombre de vérifications d'état consécutives en échec avant que le serveur soit considéré comme bloqué et forcé à redémarrer.</value>
+    <value>Nombre de vérifications d'état consécutives en échec avant que le serveur soit considéré comme sans réponse et forcé à redémarrer.</value>
   </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>vérif.</value>
@@ -1436,7 +1436,7 @@ Enregistrer ces changements ?</value>
     <value>Dégradé</value>
   </data>
   <data name="State_Zombie" xml:space="preserve">
-    <value>Zombie</value>
+    <value>Ne répond pas</value>
   </data>
   <data name="State_Stopping" xml:space="preserve">
     <value>Arrêt en cours</value>
@@ -1445,7 +1445,7 @@ Enregistrer ces changements ?</value>
     <value>Redémarrage</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>Temporisation</value>
+    <value>Suspendu</value>
   </data>
   <!-- Update status line -->
   <data name="Update_AutoUpdateOff" xml:space="preserve">

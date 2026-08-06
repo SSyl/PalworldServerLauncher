@@ -557,7 +557,7 @@ If you enable it, the launcher generates the server config now and sets a secure
     <value>Enable the REST API?</value>
   </data>
   <data name="Main_EnableRestMessage" xml:space="preserve">
-    <value>This launcher is built around Palworld's REST API and uses it for almost everything: graceful save-and-shutdown, fresh backups, live health / zombie monitoring, automatic restarts, and player join/leave logging.
+    <value>This launcher is built around Palworld's REST API and uses it for almost everything: graceful save-and-shutdown, fresh backups, live health monitoring, automatic restarts, and player join/leave logging.
 
 The REST API isn't enabled on this server yet, so those features will be limited, shutdowns fall back to a hard kill, backups may be stale, and there are no automatic restarts.
 

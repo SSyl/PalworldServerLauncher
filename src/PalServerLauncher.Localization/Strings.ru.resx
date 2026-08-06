@@ -389,13 +389,13 @@
     <value>Записывать строку статистики сервера (FPS, игроки, время работы, память) в журнал каждые 30 с. Полезно при запуске из терминала, в остальных случаях засоряет журнал.</value>
   </data>
   <data name="Main_ZombieCheck" xml:space="preserve">
-    <value>Проверка на зависание:</value>
+    <value>Перезапуск, если не отвечает уже</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
     <value>Перезапускать сервер, если REST API остаётся недоступным или мир остаётся замороженным столько проверок подряд. Отключите, если ваш REST API нестабилен и вы не хотите автоматических перезапусков.</value>
   </data>
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
-    <value>Сколько неудачных проверок состояния подряд должно пройти, прежде чем сервер будет считаться зависшим и принудительно перезапущен.</value>
+    <value>Сколько неудачных проверок состояния подряд должно пройти, прежде чем сервер будет считаться не отвечающим и принудительно перезапущен.</value>
   </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>провер.</value>
@@ -1436,7 +1436,7 @@ REST API на этом сервере пока не включён, поэтом
     <value>Деградация</value>
   </data>
   <data name="State_Zombie" xml:space="preserve">
-    <value>Зомби</value>
+    <value>Не отвечает</value>
   </data>
   <data name="State_Stopping" xml:space="preserve">
     <value>Останавливается</value>
@@ -1445,7 +1445,7 @@ REST API на этом сервере пока не включён, поэтом
     <value>Перезапускается</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>Ожидание повтора</value>
+    <value>Приостановлен</value>
   </data>
   <!-- Update status line -->
   <data name="Update_AutoUpdateOff" xml:space="preserve">

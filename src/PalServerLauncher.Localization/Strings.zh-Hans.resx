@@ -352,13 +352,13 @@
     <value>每 30 秒向日志写入一行服务器统计信息（FPS、玩家数、运行时间、内存）。从终端运行时很方便，否则会给日志增加干扰。</value>
   </data>
   <data name="Main_ZombieCheck" xml:space="preserve">
-    <value>假死检测：重启阈值</value>
+    <value>未响应重启阈值</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
     <value>当 REST API 连续这么多次无法访问，或世界连续这么多次保持冻结时，重启服务器。如果你的 REST API 不稳定，且你宁愿它永不自动重启，请关闭此项。</value>
   </data>
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
-    <value>连续多少次健康检查失败后，服务器会被视为假死并被强制重启。</value>
+    <value>连续多少次健康检查失败后，服务器会被视为未响应并被强制重启。</value>
   </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>次</value>
@@ -495,7 +495,7 @@
     <value>启用 REST API？</value>
   </data>
   <data name="Main_EnableRestMessage" xml:space="preserve">
-    <value>此启动器围绕 Palworld 的 REST API 构建，几乎所有功能都依赖它：正常保存并关闭、最新备份、实时健康/假死监控、自动重启，以及玩家加入/离开的记录。
+    <value>此启动器围绕 Palworld 的 REST API 构建，几乎所有功能都依赖它：正常保存并关闭、最新备份、实时健康监控、自动重启，以及玩家加入/离开的记录。
 
 此服务器尚未启用 REST API，因此这些功能会受到限制：关闭将退而使用强制终止，备份可能不是最新的，也没有自动重启。
 
@@ -1386,7 +1386,7 @@
     <value>降级</value>
   </data>
   <data name="State_Zombie" xml:space="preserve">
-    <value>假死</value>
+    <value>未响应</value>
   </data>
   <data name="State_RestUnreachable" xml:space="preserve">
     <value>REST not responding</value>
@@ -1398,7 +1398,7 @@
     <value>重启中</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>退避中</value>
+    <value>重启暂停</value>
   </data>
   <data name="Update_AutoUpdateOff" xml:space="preserve">
     <value>自动更新已关闭 · {0}</value>

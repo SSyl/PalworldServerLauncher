@@ -389,13 +389,13 @@ Trotzdem als feste Nachrichten speichern?</value>
     <value>Schreibt alle 30 s eine Statuszeile (FPS, Spieler, Laufzeit, Arbeitsspeicher) in das Protokoll. Nützlich beim Betrieb über ein Terminal, sonst eher zusätzliches Rauschen im Protokoll.</value>
   </data>
   <data name="Main_ZombieCheck" xml:space="preserve">
-    <value>Zombie-Prüfung: Neustart nach</value>
+    <value>Neustart bei Nichtreagieren für</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
     <value>Startet den Server neu, wenn die REST API so oft in Folge nicht erreichbar ist oder die Welt eingefroren bleibt. Deaktivieren, wenn Ihre REST API instabil ist und nie automatisch neu gestartet werden soll.</value>
   </data>
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
-    <value>Wie viele fehlgeschlagene Zustandsprüfungen in Folge nötig sind, bevor der Server als hängengeblieben gilt und zwangsweise neu gestartet wird.</value>
+    <value>Wie viele fehlgeschlagene Zustandsprüfungen in Folge nötig sind, bevor der Server als nicht reagierend gilt und zwangsweise neu gestartet wird.</value>
   </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>Prüf.</value>
@@ -1436,7 +1436,7 @@ Diese Änderungen übernehmen und speichern?</value>
     <value>Beeinträchtigt</value>
   </data>
   <data name="State_Zombie" xml:space="preserve">
-    <value>Zombie</value>
+    <value>Nicht reagierend</value>
   </data>
   <data name="State_Stopping" xml:space="preserve">
     <value>Wird beendet</value>
@@ -1445,7 +1445,7 @@ Diese Änderungen übernehmen und speichern?</value>
     <value>Wird neu gestartet</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>Wartephase</value>
+    <value>Ausgesetzt</value>
   </data>
   <!-- Update status line -->
   <data name="Update_AutoUpdateOff" xml:space="preserve">

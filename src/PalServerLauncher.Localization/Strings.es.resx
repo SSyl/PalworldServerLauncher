@@ -389,13 +389,13 @@
     <value>Escribe una línea de estadísticas del servidor (FPS, jugadores, tiempo activo, memoria) en el registro cada 30 s. Útil al ejecutar desde una terminal, en otro caso añade ruido al registro.</value>
   </data>
   <data name="Main_ZombieCheck" xml:space="preserve">
-    <value>Comprobación de zombi:</value>
+    <value>Reiniciar si no responde tras</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
     <value>Cuando la API REST permanece inaccesible o el mundo se mantiene congelado durante esta cantidad de comprobaciones seguidas, reinicia el servidor. Desactívelo si su API REST es inestable y prefiere que nunca se reinicie automáticamente.</value>
   </data>
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
-    <value>Cuántas comprobaciones de estado fallidas seguidas antes de considerar el servidor bloqueado y forzar su reinicio.</value>
+    <value>Cuántas comprobaciones de estado fallidas seguidas antes de considerar el servidor sin respuesta y forzar su reinicio.</value>
   </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>comprob.</value>
@@ -533,7 +533,7 @@ Si la activa, el launcher genera ahora la configuración del servidor y establec
     <value>¿Activar la API REST?</value>
   </data>
   <data name="Main_EnableRestMessage" xml:space="preserve">
-    <value>Este launcher está construido en torno a la API REST de Palworld y la usa para casi todo: guardado y apagado controlados, copias de seguridad actualizadas, supervisión en vivo de estado / zombi, reinicios automáticos y registro de entradas/salidas de jugadores.
+    <value>Este launcher está construido en torno a la API REST de Palworld y la usa para casi todo: guardado y apagado controlados, copias de seguridad actualizadas, supervisión en vivo de estado, reinicios automáticos y registro de entradas/salidas de jugadores.
 
 La API REST aún no está activada en este servidor, por lo que estas funciones estarán limitadas, los apagados recurrirán a una terminación forzada, las copias de seguridad pueden quedar desactualizadas y no habrá reinicios automáticos.
 
@@ -1436,7 +1436,7 @@ Cualquier valor no listado arriba permanecerá igual.
     <value>Degradado</value>
   </data>
   <data name="State_Zombie" xml:space="preserve">
-    <value>Zombi</value>
+    <value>No responde</value>
   </data>
   <data name="State_Stopping" xml:space="preserve">
     <value>Deteniendo</value>
@@ -1445,7 +1445,7 @@ Cualquier valor no listado arriba permanecerá igual.
     <value>Reiniciando</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>Espera de reintento</value>
+    <value>Suspendido</value>
   </data>
   <!-- Update status line -->
   <data name="Update_AutoUpdateOff" xml:space="preserve">
