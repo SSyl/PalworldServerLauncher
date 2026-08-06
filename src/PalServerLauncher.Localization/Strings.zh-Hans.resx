@@ -1389,7 +1389,7 @@
     <value>未响应</value>
   </data>
   <data name="State_RestUnreachable" xml:space="preserve">
-    <value>REST not responding</value>
+    <value>REST 未响应</value>
   </data>
   <data name="State_Stopping" xml:space="preserve">
     <value>停止中</value>

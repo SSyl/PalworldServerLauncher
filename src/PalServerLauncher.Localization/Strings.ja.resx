@@ -1388,7 +1388,7 @@ REST API を有効にしますか？ランチャーはこれを使用してサ�
     <value>応答なし</value>
   </data>
   <data name="State_RestUnreachable" xml:space="preserve">
-    <value>REST not responding</value>
+    <value>REST 応答なし</value>
   </data>
   <data name="State_Stopping" xml:space="preserve">
     <value>停止中</value>

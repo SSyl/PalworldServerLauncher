@@ -2335,7 +2335,7 @@ REST API на этом сервере пока не включён, поэтом
     <value>Не удалось создать или удалить ярлык автозагрузки. Подробности см. в журнале.</value>
   </data>
   <data name="State_RestUnreachable" xml:space="preserve">
-    <value>REST not responding</value>
+    <value>REST не отвечает</value>
   </data>
   <data name="WorldOpt_Title" xml:space="preserve">
     <value>Обнаружен WorldOption.sav</value>

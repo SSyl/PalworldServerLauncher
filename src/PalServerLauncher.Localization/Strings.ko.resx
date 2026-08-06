@@ -2335,7 +2335,7 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>시작프로그램 바로가기를 만들거나 제거하지 못했습니다. 자세한 내용은 로그를 확인하십시오.</value>
   </data>
   <data name="State_RestUnreachable" xml:space="preserve">
-    <value>REST not responding</value>
+    <value>REST 무응답</value>
   </data>
   <data name="WorldOpt_Title" xml:space="preserve">
     <value>WorldOption.sav 감지됨</value>

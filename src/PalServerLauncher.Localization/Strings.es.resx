@@ -2335,7 +2335,7 @@ Cualquier valor no listado arriba permanecerá igual.
     <value>No se pudo crear ni eliminar el acceso directo de Inicio. Consulte el registro para más detalles.</value>
   </data>
   <data name="State_RestUnreachable" xml:space="preserve">
-    <value>REST not responding</value>
+    <value>REST no responde</value>
   </data>
   <data name="WorldOpt_Title" xml:space="preserve">
     <value>WorldOption.sav detectado</value>

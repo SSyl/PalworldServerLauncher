@@ -2335,7 +2335,7 @@ Enregistrer ces changements ?</value>
     <value>Le raccourci de démarrage n'a pas pu être créé ou supprimé. Consultez le journal pour plus de détails.</value>
   </data>
   <data name="State_RestUnreachable" xml:space="preserve">
-    <value>REST not responding</value>
+    <value>REST ne répond pas</value>
   </data>
   <data name="WorldOpt_Title" xml:space="preserve">
     <value>WorldOption.sav détecté</value>
