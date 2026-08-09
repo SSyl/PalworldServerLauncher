@@ -116,13 +116,16 @@ have.) So follow whatever your mod or mod loader documents, and wherever a guide
   `...\PalServer\Mods\NativeMods\UE4SS\Mods`
 
 Two things to know if you install UE4SS by hand, which means getting it from GitHub or NexusMods rather than
-the Steam Workshop. **Don't have both copies at once.** Installing UE4SS from the Steam Workshop and also
-installing it by hand in `Pal\Binaries\Win64` means the server loads two copies of UE4SS and crashes on
-launch, so pick one. To turn the hand install off without deleting it, rename
-`Pal\Binaries\Win64\dwmapi.dll` to `dwmapi.dll.bak`. **And Workshop mods won't reach a hand install.** The
-server puts Workshop mods in `Mods\NativeMods\UE4SS\Mods`, which a hand-installed UE4SS doesn't read, so they
-sit there without loading.
-The launcher warns you about both when you open the Mods panel.
+the Steam Workshop:
+
+- **Don't have both copies at once.** Installing UE4SS from the Steam Workshop and also installing it by hand
+  in `Pal\Binaries\Win64` means the server loads two copies of UE4SS and crashes on launch, so pick one. To
+  turn the hand install off without deleting it, rename `Pal\Binaries\Win64\dwmapi.dll` to `dwmapi.dll.bak`.
+- **Workshop mods won't reach a hand install.** The server puts Workshop mods in
+  `Mods\NativeMods\UE4SS\Mods`, which a hand-installed UE4SS doesn't read, so they sit there without loading.
+
+The Mods panel warns you about the first one whenever it finds both, and about the second one when you have
+mods enabled.
 
 There are a lot of different mod types and systems out there, so I can't outline them all here. What I can say
 is that the launcher supports anything a standard Palworld dedicated server would.

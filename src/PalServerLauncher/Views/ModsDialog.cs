@@ -49,6 +49,10 @@ public sealed class ModsDialog : Window
     private readonly StackPanel _modListPanel;
     private readonly Border _noAccountWarning;
     private readonly Border _customUe4ssWarning;
+    // Cached rather than re-read, because RefreshWarning runs on every keystroke in the username box. Refreshed
+    // wherever the dialog itself can change what's on disk, which is adding a mod and scanning the folder.
+    private Ue4ssInstall _ue4ss;
+    private bool _customUe4ssLoads;
     private readonly StackPanel _loosePakPanel;
     private readonly List<ModRow> _rows = new();
 
@@ -66,6 +70,7 @@ public sealed class ModsDialog : Window
     {
         _config = config;
         _modService = modService;
+        RefreshUe4ssState();
         _connectSteam = connectSteam;
         _checkLogin = checkLogin;
         _restoreOriginalInfo = restoreOriginalInfo;
@@ -330,6 +335,7 @@ public sealed class ModsDialog : Window
             _rows.Add(BuildRow(new ModEntry { WorkshopId = id, ModName = name, Enabled = true, TimeUpdated = timeUpdated }));
             _addInput.Text = "";
             RebuildModList();
+            RefreshUe4ssState(); // the mod just downloaded may BE UE4SS, which turns a hand install into a conflict
             RefreshWarning();
         }
         finally
@@ -360,6 +366,7 @@ public sealed class ModsDialog : Window
             added++;
         }
         RebuildModList();
+        RefreshUe4ssState();
         RefreshWarning();
 
         var message = added == 0 ? Strings.Mods_ScanNoneFound : string.Format(Strings.Mods_ScanAdded, added);
@@ -397,6 +404,8 @@ public sealed class ModsDialog : Window
             if (choice != 0)
                 return;
         }
+
+        WarnOnUe4ssConflict();
 
         _config.ModsEnabled = modsOn;
         _config.SteamUsername = username;
@@ -593,27 +602,25 @@ public sealed class ModsDialog : Window
         Dispatcher.BeginInvoke(RebuildLoosePakList);
     }
 
-    /// <summary>Two live copies of UE4SS crash the server on launch, so say so as soon as the panel opens rather
-    /// than waiting for the user to reach for the UE4SS folder button.</summary>
+    private void RefreshUe4ssState()
+    {
+        _ue4ss = _modService.DetectUe4ss();
+        _customUe4ssLoads = _modService.CustomUe4ssLoads;
+    }
+
+    /// <summary>Two live copies of UE4SS crash the server on launch. Shown when the panel opens and again on Save,
+    /// which is the last point the launcher sees before the user starts the server.</summary>
     private void WarnOnUe4ssConflict()
     {
-        if (_modService.DetectUe4ss() == Ue4ssInstall.Both)
+        if (_ue4ss == Ue4ssInstall.Both)
             ChoiceDialog.Show(this, Strings.Mods_Ue4ssConflictTitle, Strings.Mods_Ue4ssConflictBody, Strings.Common_OK);
     }
 
     private void OnOpenUe4ss()
     {
-        switch (_modService.DetectUe4ss())
-        {
-            case Ue4ssInstall.None:
-                ChoiceDialog.Show(this, Strings.Mods_Ue4ssNotInstalledTitle,
-                    $"{Strings.Mods_Ue4ssNotInstalledBody}\n\n{Strings.Mods_Ue4ssNotInstalledManual}", Strings.Common_OK);
-                return;
-            case Ue4ssInstall.Both:
-                WarnOnUe4ssConflict();
-                break;
-        }
-        _modService.OpenUe4ssModsFolder();
+        if (!_modService.OpenUe4ssModsFolder())
+            ChoiceDialog.Show(this, Strings.Mods_Ue4ssNotInstalledTitle,
+                $"{Strings.Mods_Ue4ssNotInstalledBody}\n\n{Strings.Mods_Ue4ssNotInstalledManual}", Strings.Common_OK);
     }
 
     private static Border Separator() => new()
@@ -631,9 +638,10 @@ public sealed class ModsDialog : Window
         // A hand-installed UE4SS reads its own Mods folder, but the SERVER deploys Workshop mods into
         // Mods\NativeMods\UE4SS\Mods regardless, so enabled Workshop mods silently never load. Warned per mod
         // list rather than per mod: a mod that hasn't been downloaded yet has no Info.json to read a rule Type
-        // from, and that fresh-add case is exactly when the user needs telling.
+        // from, and that fresh-add case is exactly when the user needs telling. Requires the hand install to
+        // actually load, since a disabled one means no UE4SS is running and the banner's reason would be wrong.
         var customOnly = _modsEnabled.IsChecked == true
-            && _modService.DetectUe4ss() == Ue4ssInstall.Custom
+            && _ue4ss == Ue4ssInstall.Custom && _customUe4ssLoads
             && _rows.Any(r => r.Enabled.IsChecked == true);
         _customUe4ssWarning.Visibility = customOnly ? Visibility.Visible : Visibility.Collapsed;
     }

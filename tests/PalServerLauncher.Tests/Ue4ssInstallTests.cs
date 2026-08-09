@@ -10,6 +10,9 @@ public class Ue4ssInstallTests
     [InlineData(true, false, false, Ue4ssInstall.Workshop)]
     [InlineData(false, true, true, Ue4ssInstall.Custom)]
     [InlineData(true, true, true, Ue4ssInstall.Both)]
+    // A stray dwmapi.dll with no ue4ss folder is somebody else's DLL, never a UE4SS install.
+    [InlineData(false, false, true, Ue4ssInstall.None)]
+    [InlineData(true, false, true, Ue4ssInstall.Workshop)]
     public void Classify_maps_each_combination_of_install_locations(bool workshop, bool custom, bool loads, Ue4ssInstall expected) =>
         Assert.Equal(expected, ModService.Classify(workshop, custom, loads));
 

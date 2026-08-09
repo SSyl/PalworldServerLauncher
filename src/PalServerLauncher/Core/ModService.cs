@@ -186,8 +186,20 @@ public sealed class ModService
     /// (not the folder's) is what decides whether a second copy is actually going to load.</summary>
     public string CustomUe4ssLoaderPath => Path.Combine(LauncherConfig.ServerDir(_serverRoot), "Pal", "Binaries", "Win64", "dwmapi.dll");
 
-    /// <summary>True once the Workshop UE4SS mod has been deployed (its mods folder exists).</summary>
-    public bool Ue4ssInstalled => Directory.Exists(Ue4ssModsDir);
+    /// <summary>True once the server has deployed a Workshop UE4SS (its mods folder exists).</summary>
+    public bool Ue4ssDeployed => Directory.Exists(Ue4ssModsDir);
+
+    /// <summary>True when the Workshop side will supply UE4SS: either the server already deployed it, or a mod
+    /// source folder holds its DLL and the next start will. The staged half is what makes a conflict detectable
+    /// before it bites, since adding UE4SS from the Workshop creates the conflict but the server only deploys it
+    /// (and crashes) on the next start.</summary>
+    public bool WorkshopUe4ssPresent => Ue4ssDeployed || StagedWorkshopUe4ss();
+
+    /// <summary>Look for UE4SS.dll in the Workshop mod sources. Keyed on the DLL rather than a package name, which
+    /// varies by who published the UE4SS item.</summary>
+    private bool StagedWorkshopUe4ss() =>
+        Directory.Exists(WorkshopDir)
+        && Directory.EnumerateDirectories(WorkshopDir).Any(dir => File.Exists(Path.Combine(dir, "UE4SS.dll")));
 
     /// <summary>True when a hand-installed UE4SS is present. Keyed on the <c>ue4ss</c> folder rather than its Mods
     /// subfolder, so a fresh install with no mods in it yet still counts.</summary>
@@ -197,7 +209,7 @@ public sealed class ModService
     public bool CustomUe4ssLoads => File.Exists(CustomUe4ssLoaderPath);
 
     /// <summary>Which UE4SS installs are on disk right now.</summary>
-    public Ue4ssInstall DetectUe4ss() => Classify(Ue4ssInstalled, CustomUe4ssInstalled, CustomUe4ssLoads);
+    public Ue4ssInstall DetectUe4ss() => Classify(WorkshopUe4ssPresent, CustomUe4ssInstalled, CustomUe4ssLoads);
 
     /// <summary>
     /// Pure classifier over the two install locations, split out so the four-way outcome (including the crashing
@@ -222,24 +234,20 @@ public sealed class ModService
     /// <summary>Open the loose-paks folder (creating it first), for raw .pak mods that aren't Workshop-packaged.</summary>
     public void OpenLoosePaksFolder() => OpenFolder(LoosePaksDir);
 
-    /// <summary>Open the mods folder of whichever UE4SS install is present, preferring the Workshop one when both
-    /// are (that's the side the launcher manages, and the caller warns about the conflict). No-op when UE4SS isn't
-    /// installed at all, since creating the folder would fake an install. The caller checks
-    /// <see cref="DetectUe4ss"/> first.</summary>
-    public void OpenUe4ssModsFolder()
+    /// <summary>Open the mods folder of whichever UE4SS is on disk, preferring the deployed Workshop one since
+    /// that's the side the launcher manages. Returns false when there's nothing to open, which covers both no
+    /// UE4SS at all and a Workshop UE4SS that's staged but not deployed yet, so the caller can say which.</summary>
+    public bool OpenUe4ssModsFolder()
     {
-        switch (DetectUe4ss())
-        {
-            case Ue4ssInstall.Workshop:
-            case Ue4ssInstall.Both:
-                OpenFolder(Ue4ssModsDir, create: false);
-                break;
-            case Ue4ssInstall.Custom:
-                // UE4SS is genuinely there, so creating its Mods folder isn't faking an install. The zips ship
-                // one, this only covers a trimmed install that dropped it.
-                OpenFolder(CustomUe4ssModsDir);
-                break;
-        }
+        if (Ue4ssDeployed)
+            OpenFolder(Ue4ssModsDir, create: false);
+        else if (CustomUe4ssInstalled)
+            // UE4SS is genuinely there, so creating its Mods folder isn't faking an install. The zips ship one,
+            // this only covers a trimmed install that dropped it.
+            OpenFolder(CustomUe4ssModsDir);
+        else
+            return false;
+        return true;
     }
 
     /// <summary>Delete a mod's source folder under <c>Mods\Workshop</c>. No-op if the name is blank or the folder

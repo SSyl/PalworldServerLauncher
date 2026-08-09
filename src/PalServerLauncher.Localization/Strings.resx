@@ -1127,7 +1127,7 @@ Full details in:
     <value>UE4SS Not Installed</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
-    <value>UE4SS isn't installed yet. Add a UE4SS mod from the Workshop and start the server once, then its mods folder will appear here.</value>
+    <value>UE4SS isn't installed yet. Install it from the Steam Workshop and start the server once, then its mods folder will appear here.</value>
   </data>
   <data name="Mods_ColOn" xml:space="preserve">
     <value>On</value>
