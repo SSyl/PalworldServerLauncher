@@ -312,7 +312,7 @@
         </Grid>
         </StackPanel>
 
-        <!-- Log tabs, with Server Commands docked to the far right of the tab strip -->
+        <!-- Log tabs, with Clear Logs and Server Commands docked to the far right of the tab strip -->
         <Grid Grid.Row="3">
         <TabControl x:Name="LogTabs" Background="{x:Static local:Theme.Window}" BorderThickness="0" Padding="0,8,0,0">
             <TabControl.Resources>
@@ -362,7 +362,7 @@
             </TabItem>
         </TabControl>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                <Button Content="{x:Static loc:Strings.Main_ClearLogs}" Command="{Binding ClearLogsCommand}" Margin="0,0,6,0"
+                <Button Content="{x:Static loc:Strings.Main_ClearLogs}" Command="{Binding ClearLogsCommand}"
                         ToolTip="{x:Static loc:Strings.Main_ClearLogsTip}"/>
                 <Button Content="{x:Static loc:Strings.Main_ServerCommands}" Click="OnOpenServerCommands" IsEnabled="{Binding CanUseServerCommands}"
                         Margin="0" ToolTipService.ShowOnDisabled="True"

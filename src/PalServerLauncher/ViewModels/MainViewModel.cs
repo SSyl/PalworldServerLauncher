@@ -703,8 +703,6 @@ public partial class MainViewModel : ObservableObject
     private Task PrimaryAction()
     {
         var kind = PrimaryButton.Resolve(IsInstalled, IsBusy, State, ShutdownRemainingSeconds);
-        if (kind == PrimaryActionKind.Start)
-            ClearLogsIfConfigured(); // before the log line below, so "Server start requested." survives the wipe
         _logger.Info(kind switch
         {
             PrimaryActionKind.Install => "Server install requested.",
@@ -924,6 +922,11 @@ public partial class MainViewModel : ObservableObject
         if (!PrepareForStart(interactive))
             return; // user cancelled at the WorldOption.sav prompt, or a rename failed
 
+        // After PrepareForStart, so cancelling out of one of its prompts doesn't wipe the log for a start that
+        // never happened. Interactive only: --start-server comes through here with interactive false.
+        if (interactive)
+            ClearLogsIfConfigured();
+
         IsBusy = true;
         try
         {
@@ -1123,10 +1126,11 @@ public partial class MainViewModel : ObservableObject
 
     /// <summary>Clear the log tabs ahead of a start or restart the user asked for, when the option is on. Called
     /// only from the two manual entry points, so an automated restart or a crash recovery leaves the history that
-    /// explains why the server went down on screen.</summary>
+    /// explains why the server went down on screen. Backoff is held back for the same reason: the server just
+    /// crash-looped, the crash reason is on screen, and the launcher's own advice is to read it and press Start.</summary>
     private void ClearLogsIfConfigured()
     {
-        if (_config.ClearLogsOnManualStart)
+        if (_config.ClearLogsOnManualStart && State != ServerState.Backoff)
             ClearLogs();
     }
 
