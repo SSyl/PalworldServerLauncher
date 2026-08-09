@@ -7,6 +7,7 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
 ### Added
 - **A Clear Logs button on the log tabs**, and a Launcher Settings option to clear them automatically when you start or restart the server yourself. Automatic restarts, update restarts, and crash recovery never clear, so a server that keeps failing to start keeps the messages explaining why. Either way only the on-screen text is cleared, the log file on disk keeps everything. Requested in #12.
 - **Open UE4SS Mods Folder now finds a hand-installed UE4SS**, not just the Steam Workshop one, and says where to put it when neither is there. If both are installed it warns first, because loading two copies of UE4SS crashes the server on launch. Reported in #12.
+- **The Mods panel now warns when Workshop mods cannot reach a hand-installed UE4SS.** The server installs Workshop mods into its own UE4SS folder, which a hand-installed UE4SS does not read, so they used to sit there doing nothing with no explanation.
 
 ## [1.2.0] - 2026-08-06
 

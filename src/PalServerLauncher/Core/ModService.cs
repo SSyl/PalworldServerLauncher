@@ -181,6 +181,11 @@ public sealed class ModService
     /// <summary>Script-mods folder of a hand-installed UE4SS: <c>Pal\Binaries\Win64\ue4ss\Mods</c>.</summary>
     public string CustomUe4ssModsDir => Path.Combine(CustomUe4ssDir, "Mods");
 
+    /// <summary>The proxy DLL that loads a hand-installed UE4SS: <c>Pal\Binaries\Win64\dwmapi.dll</c>. Nothing
+    /// loads UE4SS without it, and renaming it is the documented way to turn a hand install off, so its presence
+    /// (not the folder's) is what decides whether a second copy is actually going to load.</summary>
+    public string CustomUe4ssLoaderPath => Path.Combine(LauncherConfig.ServerDir(_serverRoot), "Pal", "Binaries", "Win64", "dwmapi.dll");
+
     /// <summary>True once the Workshop UE4SS mod has been deployed (its mods folder exists).</summary>
     public bool Ue4ssInstalled => Directory.Exists(Ue4ssModsDir);
 
@@ -188,14 +193,23 @@ public sealed class ModService
     /// subfolder, so a fresh install with no mods in it yet still counts.</summary>
     public bool CustomUe4ssInstalled => Directory.Exists(CustomUe4ssDir);
 
-    /// <summary>Which UE4SS installs are on disk right now.</summary>
-    public Ue4ssInstall DetectUe4ss() => Classify(Ue4ssInstalled, CustomUe4ssInstalled);
+    /// <summary>True when a hand-installed UE4SS will actually load, meaning its proxy DLL is still in place.</summary>
+    public bool CustomUe4ssLoads => File.Exists(CustomUe4ssLoaderPath);
 
-    /// <summary>Pure classifier over the two install locations, split out so the four-way outcome (including the
-    /// crashing Both) is unit-testable without a server folder.</summary>
-    public static Ue4ssInstall Classify(bool workshopPresent, bool customPresent) => (workshopPresent, customPresent) switch
+    /// <summary>Which UE4SS installs are on disk right now.</summary>
+    public Ue4ssInstall DetectUe4ss() => Classify(Ue4ssInstalled, CustomUe4ssInstalled, CustomUe4ssLoads);
+
+    /// <summary>
+    /// Pure classifier over the two install locations, split out so the four-way outcome (including the crashing
+    /// <see cref="Ue4ssInstall.Both"/>) is unit-testable without a server folder. A hand install whose proxy DLL
+    /// has been renamed away does NOT count as a conflict: that rename is the documented way to disable it, so
+    /// treating the leftover folder as a conflict would make the warning impossible to clear by following its own
+    /// advice. The folder still counts for <see cref="Ue4ssInstall.Custom"/>, since a disabled install is the one
+    /// whose mods folder the user most likely wants to open.
+    /// </summary>
+    public static Ue4ssInstall Classify(bool workshopPresent, bool customPresent, bool customLoads) => (workshopPresent, customPresent) switch
     {
-        (true, true) => Ue4ssInstall.Both,
+        (true, true) => customLoads ? Ue4ssInstall.Both : Ue4ssInstall.Workshop,
         (true, false) => Ue4ssInstall.Workshop,
         (false, true) => Ue4ssInstall.Custom,
         _ => Ue4ssInstall.None,

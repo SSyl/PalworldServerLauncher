@@ -48,6 +48,7 @@ public sealed class ModsDialog : Window
     private readonly Button _addButton;
     private readonly StackPanel _modListPanel;
     private readonly Border _noAccountWarning;
+    private readonly Border _customUe4ssWarning;
     private readonly StackPanel _loosePakPanel;
     private readonly List<ModRow> _rows = new();
 
@@ -142,6 +143,9 @@ public sealed class ModsDialog : Window
 
         _noAccountWarning = Warning(Strings.Mods_NoAccountWarning);
         stack.Children.Add(_noAccountWarning);
+
+        _customUe4ssWarning = Warning(Strings.Mods_CustomUe4ssWarning);
+        stack.Children.Add(_customUe4ssWarning);
 
         stack.Children.Add(ListHeader());
         _modListPanel = new StackPanel { Margin = new Thickness(0, 2, 0, 0) };
@@ -611,6 +615,15 @@ public sealed class ModsDialog : Window
             && string.IsNullOrWhiteSpace(_username.Text)
             && _rows.Any(r => r.Enabled.IsChecked == true && r.Entry.WorkshopId.Length > 0);
         _noAccountWarning.Visibility = needsAccount ? Visibility.Visible : Visibility.Collapsed;
+
+        // A hand-installed UE4SS reads its own Mods folder, but the SERVER deploys Workshop mods into
+        // Mods\NativeMods\UE4SS\Mods regardless, so enabled Workshop mods silently never load. Warned per mod
+        // list rather than per mod: a mod that hasn't been downloaded yet has no Info.json to read a rule Type
+        // from, and that fresh-add case is exactly when the user needs telling.
+        var customOnly = _modsEnabled.IsChecked == true
+            && _modService.DetectUe4ss() == Ue4ssInstall.Custom
+            && _rows.Any(r => r.Enabled.IsChecked == true);
+        _customUe4ssWarning.Visibility = customOnly ? Visibility.Visible : Visibility.Collapsed;
     }
 
     // --- small dark-theme builders (mirrors DiscordDialog) ---

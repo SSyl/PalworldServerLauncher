@@ -2568,4 +2568,7 @@ So importieren?</value>
   <data name="Mods_Ue4ssConflictBody" xml:space="preserve">
     <value>UE4SS is installed twice: once from the Steam Workshop (Mods\NativeMods\UE4SS) and once by hand (Pal\Binaries\Win64\ue4ss). The server crashes on launch when it loads two copies of UE4SS. Remove one of them, or disable the hand-installed one by renaming Pal\Binaries\Win64\dwmapi.dll to dwmapi.dll.bak. Opening the Workshop mods folder.</value>
   </data>
+  <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
+    <value>UE4SS is installed by hand in Pal\Binaries\Win64\ue4ss. Workshop mods that run under UE4SS install into Mods\NativeMods\UE4SS\Mods, which a hand-installed UE4SS does not read, so they will not load. Pak-only mods still work. Use the Steam Workshop UE4SS mod instead to have the launcher manage them.</value>
+  </data>
 </root>
