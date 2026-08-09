@@ -184,7 +184,11 @@ public sealed class ModsDialog : Window
         RebuildLoosePakList();
         ShowSteamState(string.IsNullOrWhiteSpace(config.SteamUsername) ? SteamUi.NotSignedIn : SteamUi.Checking);
         RefreshWarning();
-        Loaded += async (_, _) => await CheckLoginOnOpenAsync();
+        Loaded += async (_, _) =>
+        {
+            WarnOnUe4ssConflict();
+            await CheckLoginOnOpenAsync();
+        };
 
         Content = new ScrollViewer { Content = stack, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
     }
@@ -589,6 +593,14 @@ public sealed class ModsDialog : Window
         Dispatcher.BeginInvoke(RebuildLoosePakList);
     }
 
+    /// <summary>Two live copies of UE4SS crash the server on launch, so say so as soon as the panel opens rather
+    /// than waiting for the user to reach for the UE4SS folder button.</summary>
+    private void WarnOnUe4ssConflict()
+    {
+        if (_modService.DetectUe4ss() == Ue4ssInstall.Both)
+            ChoiceDialog.Show(this, Strings.Mods_Ue4ssConflictTitle, Strings.Mods_Ue4ssConflictBody, Strings.Common_OK);
+    }
+
     private void OnOpenUe4ss()
     {
         switch (_modService.DetectUe4ss())
@@ -598,7 +610,7 @@ public sealed class ModsDialog : Window
                     $"{Strings.Mods_Ue4ssNotInstalledBody}\n\n{Strings.Mods_Ue4ssNotInstalledManual}", Strings.Common_OK);
                 return;
             case Ue4ssInstall.Both:
-                ChoiceDialog.Show(this, Strings.Mods_Ue4ssConflictTitle, Strings.Mods_Ue4ssConflictBody, Strings.Common_OK);
+                WarnOnUe4ssConflict();
                 break;
         }
         _modService.OpenUe4ssModsFolder();
