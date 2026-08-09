@@ -2493,7 +2493,7 @@ Mod が本当にサーバーに対応していない場合、重大な問題（�
     <value>When you start or restart the server yourself, wipe the log tabs first. Scheduled restarts, update restarts, and crash recovery never clear, so you keep the messages that explain a server that is failing to start. The log file on disk is never touched.</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledManual" xml:space="preserve">
-    <value>You can also install UE4SS by hand, by extracting its zip into Pal\Binaries\Win64 so you get a ue4ss folder and dwmapi.dll there. Do not use both at once, two copies of UE4SS crash the server.</value>
+    <value>You can also install UE4SS by hand. Get it from GitHub or NexusMods and extract its zip into Pal\Binaries\Win64 so you get a ue4ss folder and dwmapi.dll there. Do not use both at once, two copies of UE4SS crash the server.</value>
   </data>
   <data name="Mods_Ue4ssConflictTitle" xml:space="preserve">
     <value>Two UE4SS Installs Found</value>
