@@ -115,11 +115,12 @@ have.) So follow whatever your mod or mod loader documents, and wherever a guide
 - **A UE4SS mod that isn't on Steam Workshop, when you got UE4SS through Workshop:** put it in
   `...\PalServer\Mods\NativeMods\UE4SS\Mods`
 
-Two things to know if you install UE4SS yourself. **Don't have both copies at once.** A Workshop UE4SS mod
-plus a hand install in `Pal\Binaries\Win64` means the server loads two copies of UE4SS and crashes on launch,
-so pick one. To turn a hand install off without deleting it, rename `Pal\Binaries\Win64\dwmapi.dll` to
-`dwmapi.dll.bak`. **And Workshop mods won't reach a hand install.** The server puts Workshop mods in
-`Mods\NativeMods\UE4SS\Mods`, which a hand-installed UE4SS doesn't read, so they sit there without loading.
+Two things to know if you install UE4SS yourself. **Don't have both copies at once.** Installing UE4SS from
+the Steam Workshop and also installing it by hand in `Pal\Binaries\Win64` means the server loads two copies
+of UE4SS and crashes on launch, so pick one. To turn the hand install off without deleting it, rename
+`Pal\Binaries\Win64\dwmapi.dll` to `dwmapi.dll.bak`. **And Workshop mods won't reach a hand install.** The
+server puts Workshop mods in `Mods\NativeMods\UE4SS\Mods`, which a hand-installed UE4SS doesn't read, so they
+sit there without loading.
 The launcher warns you about both when you open the Mods panel.
 
 There are a lot of different mod types and systems out there, so I can't outline them all here. What I can say
