@@ -23,6 +23,7 @@ public class LauncherConfigTests
         Assert.True(cfg.HideSteamCmdWindow);
         Assert.False(cfg.VerifyOnUpdate);
         Assert.False(cfg.LogHealthStats);
+        Assert.False(cfg.ClearLogsOnManualStart);
         Assert.True(cfg.ZombieCheckEnabled);
         Assert.Equal(10, cfg.ZombieFailureThreshold);
 

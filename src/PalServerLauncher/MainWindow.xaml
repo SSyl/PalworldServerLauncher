@@ -361,9 +361,13 @@
                 <ListBox x:Name="SteamCmdList" ItemsSource="{Binding LogSteamCmd}" Style="{StaticResource LogListStyle}"/>
             </TabItem>
         </TabControl>
-            <Button Content="{x:Static loc:Strings.Main_ServerCommands}" Click="OnOpenServerCommands" IsEnabled="{Binding CanUseServerCommands}"
-                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0" ToolTipService.ShowOnDisabled="True"
-                    ToolTip="{x:Static loc:Strings.Main_ServerCommandsTip}"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Button Content="{x:Static loc:Strings.Main_ClearLogs}" Command="{Binding ClearLogsCommand}" Margin="0,0,6,0"
+                        ToolTip="{x:Static loc:Strings.Main_ClearLogsTip}"/>
+                <Button Content="{x:Static loc:Strings.Main_ServerCommands}" Click="OnOpenServerCommands" IsEnabled="{Binding CanUseServerCommands}"
+                        Margin="0" ToolTipService.ShowOnDisabled="True"
+                        ToolTip="{x:Static loc:Strings.Main_ServerCommandsTip}"/>
+            </StackPanel>
             <!-- Appears bottom-right of the log once you've scrolled up; clicking jumps back to the newest line. -->
             <Button x:Name="JumpToLatestButton" Click="OnJumpToLatest" Visibility="Collapsed"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,22,14"

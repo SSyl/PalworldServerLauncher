@@ -2547,4 +2547,16 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
 
 이 방식으로 가져오시겠습니까?</value>
   </data>
+  <data name="Main_ClearLogs" xml:space="preserve">
+    <value>Clear Logs</value>
+  </data>
+  <data name="Main_ClearLogsTip" xml:space="preserve">
+    <value>Clear every log tab. Only the on-screen text is cleared, the log file on disk is not touched.</value>
+  </data>
+  <data name="LauncherSettings_ClearLogsOnManualStart" xml:space="preserve">
+    <value>Clear logs on manual server start and restart</value>
+  </data>
+  <data name="LauncherSettings_ClearLogsOnManualStartTip" xml:space="preserve">
+    <value>When you start or restart the server yourself, wipe the log tabs first. Scheduled restarts, update restarts, and crash recovery never clear, so you keep the messages that explain a server that is failing to start. The log file on disk is never touched.</value>
+  </data>
 </root>

@@ -207,6 +207,11 @@ public sealed class LauncherConfig
     /// <summary>Periodically log a server status line (FPS | Players | Uptime | ...), handy in --console / CLI use.</summary>
     public bool LogHealthStats { get; set; } = false;
 
+    /// <summary>Wipe the on-screen log tabs when the user starts or restarts the server from a button. Scheduled
+    /// restarts, update restarts, and crash / zombie recovery never clear, so a failing server keeps its history
+    /// on screen. Only the displayed buffers are cleared, the log file on disk is untouched.</summary>
+    public bool ClearLogsOnManualStart { get; set; } = false;
+
     // --- Discord webhook notifications (off by default) ---
     public bool DiscordEnabled { get; set; } = false;
     public string DiscordWebhookUrl { get; set; } = "";

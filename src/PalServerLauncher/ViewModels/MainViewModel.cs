@@ -703,6 +703,8 @@ public partial class MainViewModel : ObservableObject
     private Task PrimaryAction()
     {
         var kind = PrimaryButton.Resolve(IsInstalled, IsBusy, State, ShutdownRemainingSeconds);
+        if (kind == PrimaryActionKind.Start)
+            ClearLogsIfConfigured(); // before the log line below, so "Server start requested." survives the wipe
         _logger.Info(kind switch
         {
             PrimaryActionKind.Install => "Server install requested.",
@@ -763,6 +765,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanRestart))]
     private Task Restart()
     {
+        ClearLogsIfConfigured();
         _logger.Info("Server restart requested.");
         return Guard(() => _controller.RestartAsync(RestartReason.Manual));
     }
@@ -1106,6 +1109,26 @@ public partial class MainViewModel : ObservableObject
         _dispatcher.BeginInvoke(() => AppendLine(channel, message));
 
     private const int MaxLogLines = 1000;
+
+    /// <summary>Wipe every log tab. Only the on-screen buffers, the log file on disk keeps everything.</summary>
+    [RelayCommand]
+    private void ClearLogs()
+    {
+        LogGeneral.Clear();
+        LogServer.Clear();
+        LogChat.Clear();
+        LogPlayerJoin.Clear();
+        LogSteamCmd.Clear();
+    }
+
+    /// <summary>Clear the log tabs ahead of a start or restart the user asked for, when the option is on. Called
+    /// only from the two manual entry points, so an automated restart or a crash recovery leaves the history that
+    /// explains why the server went down on screen.</summary>
+    private void ClearLogsIfConfigured()
+    {
+        if (_config.ClearLogsOnManualStart)
+            ClearLogs();
+    }
 
     private void AppendLine(LogChannel channel, string message)
     {
