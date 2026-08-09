@@ -587,11 +587,15 @@ public sealed class ModsDialog : Window
 
     private void OnOpenUe4ss()
     {
-        if (!_modService.Ue4ssInstalled)
+        switch (_modService.DetectUe4ss())
         {
-            ChoiceDialog.Show(this, Strings.Mods_Ue4ssNotInstalledTitle,
-                Strings.Mods_Ue4ssNotInstalledBody, Strings.Common_OK);
-            return;
+            case Ue4ssInstall.None:
+                ChoiceDialog.Show(this, Strings.Mods_Ue4ssNotInstalledTitle,
+                    $"{Strings.Mods_Ue4ssNotInstalledBody}\n\n{Strings.Mods_Ue4ssNotInstalledManual}", Strings.Common_OK);
+                return;
+            case Ue4ssInstall.Both:
+                ChoiceDialog.Show(this, Strings.Mods_Ue4ssConflictTitle, Strings.Mods_Ue4ssConflictBody, Strings.Common_OK);
+                break;
         }
         _modService.OpenUe4ssModsFolder();
     }

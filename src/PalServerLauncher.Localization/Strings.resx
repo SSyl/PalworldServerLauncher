@@ -2559,4 +2559,13 @@ Import it that way?</value>
   <data name="LauncherSettings_ClearLogsOnManualStartTip" xml:space="preserve">
     <value>When you start or restart the server yourself, wipe the log tabs first. Scheduled restarts, update restarts, and crash recovery never clear, so you keep the messages that explain a server that is failing to start. The log file on disk is never touched.</value>
   </data>
+  <data name="Mods_Ue4ssNotInstalledManual" xml:space="preserve">
+    <value>You can also install UE4SS by hand, by extracting its zip into Pal\Binaries\Win64 so you get a ue4ss folder and dwmapi.dll there. Do not use both at once, two copies of UE4SS crash the server.</value>
+  </data>
+  <data name="Mods_Ue4ssConflictTitle" xml:space="preserve">
+    <value>Two UE4SS Installs Found</value>
+  </data>
+  <data name="Mods_Ue4ssConflictBody" xml:space="preserve">
+    <value>UE4SS is installed twice: once from the Steam Workshop (Mods\NativeMods\UE4SS) and once by hand (Pal\Binaries\Win64\ue4ss). The server crashes on launch when it loads two copies of UE4SS. Remove one of them, or disable the hand-installed one by renaming Pal\Binaries\Win64\dwmapi.dll to dwmapi.dll.bak. Opening the Workshop mods folder.</value>
+  </data>
 </root>
