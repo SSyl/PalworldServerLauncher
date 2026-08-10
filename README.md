@@ -160,7 +160,7 @@ need the **.NET 10 SDK**, see **[docs/building.md](docs/building.md)**.
 
 The launcher runs on your machine and has no telemetry or analytics. It makes network connections only to:
 
-- your own server, over `127.0.0.1`,
+- your own server, over `127.0.0.1` (your own PC, not the internet),
 - Steam, to download SteamCMD and to install or update the server,
 - your own Discord webhook and bot, if you set them up,
 - **Port Check**, if you use it, and it warns you before it runs. It sends your public IP and the ports being
