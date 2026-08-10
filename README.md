@@ -29,22 +29,19 @@ Traditional Chinese, and Korean. See [Languages](#languages).
 ## Features
 
 ### Install and update
-- Installs SteamCMD and the server for you. **Start** checks for an update first, and you can turn that off.
-- Updates itself when a new build drops and restarts gracefully to apply it. No version to configure.
+- Installs the server for you without touching SteamCMD. **Start** checks for an update first (can be turned off).
+- Auto-updates when a new build drops and restarts gracefully to apply it. No version to configure.
 - Pin the server to its current build to hold updates back when a game update breaks something.
-- **Check for Update** is safe to run while the server is up. **Validate Files** repairs a damaged install.
 - **Import an existing server** from elsewhere. It gets copied in, and your original is left where it was.
 
 ### Restarts and recovery
-- Scheduled restarts at times you set, with a minimum uptime so a server that just came up isn't bounced.
-- In-game warnings before a restart, at the marks you choose, skipped when nobody is online.
-- Restarts after a crash, and also catches a server that is running but no longer responding.
-- A cutoff stops the restarts if the server keeps dying, so it can't loop.
+- Scheduled restarts at times you set, announced in-game beforehand and skipped when nobody is online.
+- Restarts after a crash, and catches a server that is running but no longer responding, without looping.
 - Crash lines report how long the server was up, the exit code, and the reason Palworld itself recorded.
 
 ### Backups
 - Zips the world save and config, timestamped, on startup, shutdown, a schedule, or on demand.
-- Saves the world in-game first when the REST API is on, so the backup is current rather than stale.
+- Tells the running server to save first when the REST API is on, so you get the latest state, not the last autosave.
 - Automatic backups age out after a set number of days. Manual ones are left alone.
 - Keep them next to the launcher or in a folder of your choice.
 
@@ -84,7 +81,7 @@ Traditional Chinese, and Korean. See [Languages](#languages).
 ## Getting started
 
 You need **Windows 10 or 11 (64-bit)** and about 6 GB of disk space for the server as of Palworld 1.0. The
-launcher uses around 100 MB of RAM, but the Palworld server it runs needs a lot more, so check Palworld's
+launcher itself is light, but the Palworld server it runs needs a lot of RAM, so check Palworld's
 [official requirements](https://docs.palworldgame.com/getting-started/requirements/) before you host.
 
 **Download** the latest `PalworldServerLauncher.exe` from the
@@ -104,7 +101,7 @@ installer, so drop it wherever you want the server to live.
 > Windows Firewall may ask whether to allow the Palworld server through. Click **Allow access**, or the
 > server won't be reachable over the network and players won't be able to connect.
 
-4. When offered, turn on the **REST API**, which can generate a secure admin password for you. It drives the
+4. When offered, turn on the **REST API**. It generates a secure admin password for you and drives the
    stats, graceful restarts, backups, and health checks. Without it the server still runs, but the launcher
    has to force-stop it instead of shutting it down cleanly.
 5. Optional: turn on **Scheduled restart** and pick your times, set up **Backups**, and connect **Discord**.
@@ -141,7 +138,7 @@ command-line options (`--console`, `--start-server`, `--install-server`, `--stop
 
 ## Building from source
 
-Most people don't need this, just grab a pre-built `.exe` from the
+Every release ships a pre-built `.exe` on the
 [releases page](https://github.com/SSyl/PalworldServerLauncher/releases/latest). To build it yourself you'll
 need the **.NET 10 SDK**, see **[docs/building.md](docs/building.md)**.
 
