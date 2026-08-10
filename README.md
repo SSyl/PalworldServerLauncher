@@ -160,8 +160,8 @@ is never written to the logs. Lock the control bot down to a private channel and
 ## Feedback
 
 Found a bug, or want something changed? Open an
-[issue](https://github.com/SSyl/PalworldServerLauncher/issues). If the launcher is useful to you, a star helps
-other people find it.
+[issue](https://github.com/SSyl/PalworldServerLauncher/issues). If the launcher is useful to you, a star here,
+or an endorsement on [Nexus Mods](https://www.nexusmods.com/palworld/mods/3786), helps other people find it.
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8X4237D8A)
 
