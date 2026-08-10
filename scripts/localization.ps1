@@ -22,13 +22,21 @@
       untranslated      List satellite values that are still the English text.
       mark-invariant    Mark a key as the same in every language on purpose, so untranslated skips it.
       unmark-invariant  Remove that marker.
+      mark-reviewed     Confirm one satellite's value, even though it equals English. Needs -Lang.
+      unmark-reviewed   Remove that marker.
       validate          Key parity, duplicates, empty values, {N} placeholder parity. Non-zero on findings.
       audit             validate plus per-language coverage and a catalog-check summary. Always exits zero.
       catalog-check     Compare Cat_*_Label values against Palworld's own L10N export.
 
-    The invariant marker is a resx <comment> reading "invariant" (trailing text allowed, so
-    "invariant, brand name" counts), written to Strings.resx only because English is authoritative.
-    untranslated hides marked keys unless -IncludeInvariant.
+    Two markers, both a resx <comment>, told apart by the file they sit in. Trailing text is allowed on
+    either, so "invariant, brand name" and "reviewed, same word in German" both count.
+
+      Strings.resx     <comment>invariant</comment>   never translate this, in any language
+      Strings.de.resx  <comment>reviewed</comment>    a human confirmed this German value
+
+    untranslated hides both unless -IncludeInvariant or -IncludeReviewed, and reports the hidden counts
+    separately. Changing an English value clears every reviewed marker on that key, since the wording
+    those markers confirmed no longer exists.
 
     Exit codes: 0 clean, 1 findings or failure, 2 usage error, 3 a write failed verification and was rolled back.
 
@@ -66,7 +74,7 @@
 param(
     [Parameter(Position = 0)]
     [ValidateSet('add', 'set', 'get', 'find', 'untranslated', 'validate', 'audit', 'catalog-check',
-        'mark-invariant', 'unmark-invariant', 'help')]
+        'mark-invariant', 'unmark-invariant', 'mark-reviewed', 'unmark-reviewed', 'help')]
     [string] $Command = 'help',
 
     [string] $Key,
@@ -77,6 +85,7 @@ param(
     [switch] $Regex,
     [switch] $CaseSensitive,
     [switch] $IncludeInvariant,
+    [switch] $IncludeReviewed,
 
     [ValidateSet('table', 'json')]
     [string] $Format = 'table',
@@ -241,12 +250,11 @@ function Write-ResxText {
 #
 # The scanning is left to the regex engine on purpose. An equivalent character-by-character walk in
 # PowerShell ran 2 seconds per resx against 20 ms here, and validate loads ten of them.
-# A resx <comment> of "invariant" marks a value that is the same in every language on purpose, which is what
-# ResXManager calls an invariant string. Trailing text is allowed so "invariant, brand name" still counts.
-function Test-InvariantComment {
-    param([string] $Comment)
+# Trailing text is allowed, so "invariant, brand name" and "reviewed, same word in German" both count.
+function Test-MarkerComment {
+    param([string] $Comment, [Parameter(Mandatory)][string] $Word)
     if ([string]::IsNullOrWhiteSpace($Comment)) { return $false }
-    return $Comment.TrimStart() -match '^invariant\b'
+    return $Comment.TrimStart() -match "^$Word\b"
 }
 
 function New-Span {
@@ -389,7 +397,8 @@ function Get-ResxDocument {
                 Name         = $parsed[$i].Name
                 Value        = $value
                 Comment      = $comment
-                Invariant    = Test-InvariantComment $comment
+                Invariant    = Test-MarkerComment $comment 'invariant'
+                Reviewed     = Test-MarkerComment $comment 'reviewed'
                 ValueStart   = $spans[$i].ValueStart
                 ValueEnd     = $spans[$i].ValueEnd
                 RawValue     = $spans[$i].RawValue
@@ -651,6 +660,13 @@ function Invoke-Set {
     Write-Output "  was: $(Format-Inline $entry.Value 160)"
     Write-Output "  now: $(Format-Inline $wanted 160)"
 
+    if ($langKey -eq 'default') {
+        $cleared = @(Clear-ReviewedForKey -KeyName $Key)
+        if ($cleared.Count -gt 0) {
+            Write-Output "  cleared the reviewed marker on $($cleared -join ' '), the English wording they confirmed has changed."
+        }
+    }
+
     if ($langKey -ne 'default') {
         $english = Get-LangDocument 'default'
         if ($english.Index.ContainsKey($Key)) {
@@ -664,29 +680,37 @@ function Invoke-Set {
     return
 }
 
-# Both markers live in Strings.resx only. English is authoritative, and a per-satellite marker would be nine
-# times the upkeep for nothing.
-function Set-InvariantMarker {
+# Resx has no state attribute, so <comment> carries both markers and the FILE it sits in tells them apart.
+# In Strings.resx "invariant" means never translate this in any language, XLIFF's translate="no". In a
+# satellite "reviewed" means a human confirmed this target, XLIFF's state="final", which is the only place
+# the fact can live: "Hardcore" is the official Palworld term in en/es/de/fr but "Intenso" in pt-BR, so no
+# source-side flag can express it.
+function Set-CommentMarker {
     param(
+        [Parameter(Mandatory)][string] $LangKey,
         [Parameter(Mandatory)][string] $KeyName,
-        [AllowNull()][object] $CommentText
+        [Parameter(Mandatory)][string] $Word,
+        [AllowNull()][object] $CommentText,
+        [switch] $Quiet
     )
 
     if ($RequireClean) { Assert-CleanTree -Directory (Get-LocalizationDir) }
-    $target = Get-LangPath 'default'
+    $target = Get-LangPath $LangKey
     $before = Get-ResxDocument -LiteralPath $target
-    $file = $script:LangFiles['default']
+    $file = $script:LangFiles[$LangKey]
 
     if (-not $before.Index.ContainsKey($KeyName)) { throw "$file has no key '$KeyName'." }
     if ($before.Duplicates -contains $KeyName) { throw "$file holds '$KeyName' more than once. Fix that by hand first." }
     $entry = $before.Index[$KeyName]
 
     # An empty <comment></comment> carries nothing, so it is safe to rewrite. A real note is not.
-    if (-not [string]::IsNullOrWhiteSpace($entry.Comment) -and -not $entry.Invariant) {
-        throw "'$KeyName' already carries a comment that is not an invariant marker: [$(Format-Inline $entry.Comment 120)]. Refusing to overwrite it."
+    if (-not [string]::IsNullOrWhiteSpace($entry.Comment) -and -not (Test-MarkerComment $entry.Comment $Word)) {
+        throw "'$KeyName' in $file already carries a comment that is not a '$Word' marker: [$(Format-Inline $entry.Comment 120)]. Refusing to overwrite it."
     }
     if ($entry.Comment -ceq $CommentText) {
-        Write-Output "$file : '$KeyName' already reads $(if ($null -eq $CommentText) { 'unmarked' } else { "[$CommentText]" }), nothing written."
+        if (-not $Quiet) {
+            Write-Output "$file : '$KeyName' already reads $(if ($null -eq $CommentText) { 'unmarked' } else { "[$CommentText]" }), nothing written."
+        }
         return
     }
     if ($entry.ValueStart -lt 0) { throw "'$KeyName' in $file has no <value> element." }
@@ -709,8 +733,10 @@ function Set-InvariantMarker {
         if ($after.Duplicates.Count -ne 0) { throw "the write introduced duplicate keys: $($after.Duplicates -join ', ')." }
     }
 
-    if ($null -eq $CommentText) { Write-Output "$file : '$KeyName' is no longer marked invariant." }
-    else { Write-Output "$file : '$KeyName' marked [$CommentText]." }
+    if (-not $Quiet) {
+        if ($null -eq $CommentText) { Write-Output "$file : '$KeyName' is no longer marked $Word." }
+        else { Write-Output "$file : '$KeyName' marked [$CommentText]." }
+    }
 }
 
 # Reads the comment-based help above rather than repeating it, so the two cannot drift apart.
@@ -733,14 +759,56 @@ function Invoke-Help {
 function Invoke-MarkInvariant {
     if (-not $Key) { throw 'mark-invariant needs -Key.' }
     $text = if ($Reason) { "invariant, $Reason" } else { 'invariant' }
-    Set-InvariantMarker -KeyName $Key -CommentText $text
+    Set-CommentMarker -LangKey 'default' -KeyName $Key -Word 'invariant' -CommentText $text
     return
 }
 
 function Invoke-UnmarkInvariant {
     if (-not $Key) { throw 'unmark-invariant needs -Key.' }
-    Set-InvariantMarker -KeyName $Key -CommentText $null
+    Set-CommentMarker -LangKey 'default' -KeyName $Key -Word 'invariant' -CommentText $null
     return
+}
+
+function Resolve-ReviewLang {
+    param([Parameter(Mandatory)][string] $Command)
+    if (-not $Lang) { throw "$Command needs -Lang." }
+    $langKey = Resolve-Lang $Lang
+    if ($langKey -eq 'default') {
+        throw "$Command does not apply to Strings.resx. The source file uses 'invariant' for a value no language translates, so use mark-invariant instead."
+    }
+    return $langKey
+}
+
+function Invoke-MarkReviewed {
+    if (-not $Key) { throw 'mark-reviewed needs -Key.' }
+    $langKey = Resolve-ReviewLang 'mark-reviewed'
+    $text = if ($Reason) { "reviewed, $Reason" } else { 'reviewed' }
+    Set-CommentMarker -LangKey $langKey -KeyName $Key -Word 'reviewed' -CommentText $text
+    return
+}
+
+function Invoke-UnmarkReviewed {
+    if (-not $Key) { throw 'unmark-reviewed needs -Key.' }
+    $langKey = Resolve-ReviewLang 'unmark-reviewed'
+    Set-CommentMarker -LangKey $langKey -KeyName $Key -Word 'reviewed' -CommentText $null
+    return
+}
+
+# XLIFF resets a target's state when its source changes, and the same holds here: once the English wording
+# moves, every "a human confirmed this" mark on that key is describing text that no longer exists.
+function Clear-ReviewedForKey {
+    param([Parameter(Mandatory)][string] $KeyName)
+
+    $cleared = [System.Collections.Generic.List[string]]::new()
+    foreach ($langKey in $script:LangFiles.Keys) {
+        if ($langKey -eq 'default') { continue }
+        $doc = Get-LangDocument $langKey
+        if (-not $doc.Index.ContainsKey($KeyName)) { continue }
+        if (-not $doc.Index[$KeyName].Reviewed) { continue }
+        Set-CommentMarker -LangKey $langKey -KeyName $KeyName -Word 'reviewed' -CommentText $null -Quiet
+        $cleared.Add($langKey)
+    }
+    return $cleared
 }
 
 function Invoke-Get {
@@ -824,7 +892,7 @@ function Invoke-Find {
 # match English and those that translate it. All nine satellites are always inspected, whatever -Lang asks
 # for, because "translated in 8 others" is the whole point and it cannot be known from one file.
 function Get-UntranslatedKeys {
-    param([switch] $WithInvariant)
+    param([switch] $WithInvariant, [switch] $WithReviewed)
 
     $english = Get-LangDocument 'default'
     $satellites = @($script:LangFiles.Keys | Where-Object { $_ -ne 'default' })
@@ -836,12 +904,15 @@ function Get-UntranslatedKeys {
         if ($entry.Invariant -and -not $WithInvariant) { continue }
 
         $matching = [System.Collections.Generic.List[string]]::new()
+        $reviewed = [System.Collections.Generic.List[string]]::new()
         $translated = [System.Collections.Generic.List[string]]::new()
         foreach ($langKey in $satellites) {
             $doc = $docs[$langKey]
             if (-not $doc.Index.ContainsKey($entry.Name)) { continue }
-            if ($doc.Index[$entry.Name].Value -ceq $entry.Value) { $matching.Add($langKey) }
-            else { $translated.Add($langKey) }
+            if ($doc.Index[$entry.Name].Value -cne $entry.Value) { $translated.Add($langKey); continue }
+            if ($doc.Index[$entry.Name].Reviewed) { $reviewed.Add($langKey) }
+            if ($doc.Index[$entry.Name].Reviewed -and -not $WithReviewed) { continue }
+            $matching.Add($langKey)
         }
         if ($matching.Count -eq 0) { continue }
 
@@ -849,12 +920,30 @@ function Get-UntranslatedKeys {
                 Key        = $entry.Name
                 Value      = $entry.Value
                 Matching   = @($matching)
+                Reviewed   = @($reviewed)
                 Translated = @($translated)
                 Everywhere = $translated.Count -eq 0
                 Invariant  = $entry.Invariant
             })
     }
     return $keys
+}
+
+# Key-language pairs a reviewed marker is hiding, counted independently so a marker cannot quietly swallow
+# a real gap.
+function Get-ReviewedHiddenCount {
+    $english = Get-LangDocument 'default'
+    $count = 0
+    foreach ($langKey in $script:LangFiles.Keys) {
+        if ($langKey -eq 'default') { continue }
+        $doc = Get-LangDocument $langKey
+        foreach ($entry in $doc.Entries) {
+            if (-not $entry.Reviewed) { continue }
+            if (-not $english.Index.ContainsKey($entry.Name)) { continue }
+            if ($english.Index[$entry.Name].Value -ceq $entry.Value) { $count++ }
+        }
+    }
+    return $count
 }
 
 function Invoke-Untranslated {
@@ -866,8 +955,9 @@ function Invoke-Untranslated {
     $english = Get-LangDocument 'default'
     $total = $english.Entries.Count
     $satellites = @($script:LangFiles.Keys | Where-Object { $_ -ne 'default' })
-    $all = @(Get-UntranslatedKeys -WithInvariant:$IncludeInvariant)
+    $all = @(Get-UntranslatedKeys -WithInvariant:$IncludeInvariant -WithReviewed:$IncludeReviewed)
     $invariantHidden = @($english.Entries | Where-Object { $_.Invariant }).Count
+    $reviewedHidden = Get-ReviewedHiddenCount
 
     $gaps = @($all | Where-Object { -not $_.Everywhere })
     $everywhere = @($all | Where-Object { $_.Everywhere })
@@ -892,6 +982,7 @@ function Invoke-Untranslated {
                 TranslatedElsewhere = $gaps
                 IdenticalEverywhere = $everywhere
                 InvariantHidden     = $(if ($IncludeInvariant) { 0 } else { $invariantHidden })
+                ReviewedHidden      = $(if ($IncludeReviewed) { 0 } else { $reviewedHidden })
             })
         return
     }
@@ -921,9 +1012,16 @@ function Invoke-Untranslated {
     foreach ($item in $summary) {
         Write-Output ("{0,-8} {1,4} to translate, {2,3} identical everywhere, {3}% translated" -f $item.Lang, $item.Gaps, $item.IdenticalNoGap, $item.Coverage)
     }
+    $notes = [System.Collections.Generic.List[string]]::new()
     if ($invariantHidden -gt 0 -and -not $IncludeInvariant) {
+        $notes.Add("$invariantHidden key(s) marked invariant in Strings.resx are hidden (-IncludeInvariant shows them).")
+    }
+    if ($reviewedHidden -gt 0 -and -not $IncludeReviewed) {
+        $notes.Add("$reviewedHidden key-language pair(s) marked reviewed in a satellite are hidden (-IncludeReviewed shows them).")
+    }
+    if ($notes.Count -gt 0) {
         Write-Output ''
-        Write-Output "$invariantHidden key(s) marked invariant are hidden. Pass -IncludeInvariant to show them."
+        foreach ($note in $notes) { Write-Output $note }
     }
     return
 }
@@ -1360,6 +1458,8 @@ try {
         'catalog-check' { Invoke-CatalogCheck }
         'mark-invariant' { Invoke-MarkInvariant }
         'unmark-invariant' { Invoke-UnmarkInvariant }
+        'mark-reviewed' { Invoke-MarkReviewed }
+        'unmark-reviewed' { Invoke-UnmarkReviewed }
         'help' { Invoke-Help }
     }
     exit $script:ExitCode
