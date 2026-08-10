@@ -98,9 +98,8 @@ installer, so drop it wherever you want the server to live.
 > Windows Firewall may ask whether to allow the Palworld server through. Click **Allow access**, or the
 > server won't be reachable over the network and players won't be able to connect.
 
-4. When offered, turn on the **REST API**. It generates a secure admin password for you and drives the
-   stats, graceful restarts, backups, and health checks. Without it the server still runs, but the launcher
-   has to force-stop it instead of shutting it down cleanly.
+4. When offered, turn on the **REST API**. It generates a secure admin password for you, and most of the
+   launcher's features depend on it (see [the FAQ](docs/FAQ.md)).
 5. Optional: turn on **Scheduled restart** and pick your times, set up **Backups**, and connect **Discord**.
 
 ---
