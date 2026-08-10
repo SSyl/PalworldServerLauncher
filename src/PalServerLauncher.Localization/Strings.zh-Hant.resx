@@ -1509,7 +1509,7 @@
     <value>啟用 Palworld 自帶的世界備份（獨立於啟動器的備份）。啟用此項會增加磁碟負載。</value>
   </data>
   <data name="Cat_AutoSaveSpan_Label" xml:space="preserve">
-    <value>自動儲存間隔</value>
+    <value>自動保存間隔</value>
   </data>
   <data name="Cat_AutoSaveSpan_Desc" xml:space="preserve">
     <value>世界自動儲存的頻率（秒）。</value>
@@ -1653,7 +1653,7 @@
     <value>用戶端/單人遊戲的難度預設。它對專用伺服器沒有影響，因此請保持為“無”，並使用下方的各項單獨設定（或頂部的難度預設按鈕）來設定伺服器難度。</value>
   </data>
   <data name="Cat_bHardcore_Label" xml:space="preserve">
-    <value>硬核模式：玩家死亡後永久遺失進度</value>
+    <value>硬核模式：玩家死亡後永久丟失進度</value>
   </data>
   <data name="Cat_bHardcore_Desc" xml:space="preserve">
     <value>啟用硬核模式。死亡後將無法重生。</value>
@@ -2007,7 +2007,7 @@
     <value>可採集物品的生命值倍率。</value>
   </data>
   <data name="Cat_CollectionObjectRespawnSpeedRate_Label" xml:space="preserve">
-    <value>可採集物品重生間隔</value>
+    <value>可採集物品刷新間隔</value>
   </data>
   <data name="Cat_CollectionObjectRespawnSpeedRate_Desc" xml:space="preserve">
     <value>可採集物品的重生間隔倍率。</value>
@@ -2067,7 +2067,7 @@
     <value>死亡時會掉落的內容。可選擇：不掉落任何東西、掉落裝備以外的道具、掉落所有道具，或掉落所有道具及隊伍中的帕魯。</value>
   </data>
   <data name="Cat_bPalLost_Label" xml:space="preserve">
-    <value>硬核模式：死亡的帕魯將永久遺失</value>
+    <value>硬核模式：死亡的帕魯將永久丟失</value>
   </data>
   <data name="Cat_bPalLost_Desc" xml:space="preserve">
     <value>死亡時永久失去帕魯。</value>
