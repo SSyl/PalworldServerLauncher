@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Start_Button" xml:space="preserve">
-    <value>Start</value>
+    <value>Starten</value>
   </data>
   <data name="FirstRun_Prompt" xml:space="preserve">
     <value>Wählen Sie Ihre Sprache. Sie können dies später über die Zahnrad-Schaltfläche oben rechts ändern.</value>
@@ -1396,6 +1396,7 @@ Diese Änderungen übernehmen und speichern?</value>
   </data>
   <data name="Settings_CategoryPerformance" xml:space="preserve">
     <value>Performance</value>
+    <comment>reviewed, German uses Performance, matching Gameplay and Admin in the same tab strip</comment>
   </data>
   <data name="Settings_CategoryGameplay" xml:space="preserve">
     <value>Gameplay</value>
