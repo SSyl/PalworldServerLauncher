@@ -145,6 +145,7 @@ $script:ExitFindings = 1
 $script:ExitUsage = 2
 $script:ExitRolledBack = 3
 $script:ExitCode = 0
+$script:RolledBack = $false
 
 function Resolve-Lang {
     param([Parameter(Mandatory)][string] $Name)
@@ -504,15 +505,17 @@ function Set-ResxContentVerified {
         # would otherwise surface as a bare File.Copy error and bury the reason the write was rejected.
         $reason = $_.Exception.Message
         $name = [System.IO.Path]::GetFileName($LiteralPath)
+        $restoredCleanly = 'the file was restored unchanged'
         try {
             [System.IO.File]::Copy($backup, $LiteralPath, $true)
-            $outcome = 'the file was restored unchanged'
+            $outcome = $restoredCleanly
         } catch {
             $outcome = "the file could NOT be restored ($($_.Exception.Message)), a copy of the original is at $backup"
             $backup = $null
         } finally {
             if ($backup) { Remove-Item -LiteralPath $backup -Force -ErrorAction SilentlyContinue }
         }
+        $script:RolledBack = $outcome -eq $restoredCleanly
         throw [System.Management.Automation.RuntimeException]::new("$name : verification failed, $outcome. $reason")
     }
 
@@ -659,6 +662,10 @@ function Invoke-Set {
 
     $target = Get-LangPath $langKey
     $before = Get-ResxDocument -LiteralPath $target
+    # Load English before writing anything. The post-write placeholder check needs it, and failing here
+    # rather than there is the difference between a clean abort and a satellite written with its reviewed
+    # marker stranded on a value nobody confirmed.
+    $english = if ($langKey -eq 'default') { $null } else { Get-LangDocument 'default' }
 
     if (-not $before.Index.ContainsKey($Key)) {
         throw "$file has no key '$Key'. Use 'add' to create it in all ten files."
@@ -696,7 +703,6 @@ function Invoke-Set {
     # two and would otherwise be the one lost.
     # An extra-key in a satellite has no English counterpart to compare against, which validate reports
     # separately, so there is simply nothing to check here.
-    $english = if ($langKey -eq 'default') { $null } else { Get-LangDocument 'default' }
     $hasReference = $langKey -eq 'default' -or $english.Index.ContainsKey($Key)
     if ($hasReference) {
         $expected = Get-PlaceholderIndices $(if ($langKey -eq 'default') { $entry.Value } else { $english.Index[$Key].Value })
@@ -900,6 +906,7 @@ function Invoke-Get {
 
     if ($Format -eq 'json') {
         Write-Json ([pscustomobject]@{ Key = $Key; Languages = $rows })
+        if (-not ($rows | Where-Object { $_.Present })) { $script:ExitCode = $script:ExitFindings }
         return
     }
 
@@ -925,7 +932,13 @@ function Invoke-Find {
     $langKeys = @(if ($Lang) { Resolve-Lang $Lang } else { $script:LangFiles.Keys })
     $options = if ($CaseSensitive) { [System.Text.RegularExpressions.RegexOptions]::None } else { [System.Text.RegularExpressions.RegexOptions]::IgnoreCase }
     $pattern = if ($Regex) { $Text } else { [regex]::Escape($Text) }
-    $matcher = [regex]::new($pattern, $options)
+    try {
+        # The pattern is user-supplied, so a catastrophic-backtracking one would otherwise hang with no
+        # way to tell it apart from a slow search.
+        $matcher = [regex]::new($pattern, $options, [TimeSpan]::FromSeconds(5))
+    } catch [ArgumentException] {
+        throw "-Text is not a valid regular expression: $($_.Exception.Message)"
+    }
 
     $hits = [System.Collections.Generic.List[object]]::new()
     foreach ($langKey in $langKeys) {
@@ -1270,8 +1283,13 @@ function Get-ExportPath {
 function Get-WorldSettingRows {
     param([Parameter(Mandatory)][string] $LiteralPath)
 
+    # These are hand-extracted by each developer and never version-controlled, so they are the likeliest
+    # thing in the system to be malformed. A bad one must skip its culture, never take down the command.
     $json = Get-Content -Raw -LiteralPath $LiteralPath | ConvertFrom-Json
     $table = if ($json -is [array]) { $json[0] } else { $json }
+    if ($null -eq $table -or -not $table.PSObject.Properties['Rows']) {
+        throw "no Rows table in $LiteralPath"
+    }
     $rows = @{}
     foreach ($property in $table.Rows.PSObject.Properties) {
         if ($property.Name -like '*_TextData') { continue }
@@ -1291,16 +1309,22 @@ function Get-CatalogCheckResult {
         return [pscustomobject]@{
             Available = $false
             Note      = "No Exports folder next to the repo. Pass -ExportsPath to point at the FModel extraction."
-            Mapped    = 0; Labels = 0; Mapping = @{}; Cultures = @(); Mismatches = @(); Reworded = @(); Skipped = @()
+            Unattributed = 0; Mapped = 0; Labels = 0; Mapping = @{}; Cultures = @(); Mismatches = @(); Reworded = @(); Skipped = @()
         }
     }
 
     $englishExport = Get-ExportPath -Root $root -LangKey 'default'
-    if (-not (Test-Path -LiteralPath $englishExport -PathType Leaf)) {
+    $englishUnreadable = $null
+    if (Test-Path -LiteralPath $englishExport -PathType Leaf) {
+        try { [void](Get-WorldSettingRows -LiteralPath $englishExport) } catch { $englishUnreadable = $_.Exception.Message }
+    } else {
+        $englishUnreadable = 'the file is not there'
+    }
+    if ($englishUnreadable) {
         return [pscustomobject]@{
             Available = $false
-            Note      = "The English export is missing at '$englishExport', so no mapping can be derived."
-            Mapped    = 0; Labels = 0; Mapping = @{}; Cultures = @(); Mismatches = @(); Reworded = @(); Skipped = @()
+            Note      = "The English export at '$englishExport' cannot be read ($englishUnreadable), so no mapping can be derived."
+            Unattributed = 0; Mapped = 0; Labels = 0; Mapping = @{}; Cultures = @(); Mismatches = @(); Reworded = @(); Skipped = @()
         }
     }
 
@@ -1315,7 +1339,12 @@ function Get-CatalogCheckResult {
             $skipped.Add([pscustomobject]@{ Lang = $langKey; Reason = "no export at $exportPath" })
             continue
         }
-        $cultureRows[$langKey] = Get-WorldSettingRows -LiteralPath $exportPath
+        try {
+            $cultureRows[$langKey] = Get-WorldSettingRows -LiteralPath $exportPath
+        } catch {
+            $skipped.Add([pscustomobject]@{ Lang = $langKey; Reason = "unreadable export, $($_.Exception.Message)" })
+            continue
+        }
         $cultureIndex[$langKey] = Get-LangDocument $langKey
     }
 
@@ -1398,7 +1427,8 @@ function Get-CatalogCheckResult {
             if (-not $rows.ContainsKey($rowName)) {
                 $mismatches.Add([pscustomobject]@{
                         Lang = $langKey; Key = $catKey; Row = $rowName
-                        Expected = '(row missing from this export)'; Actual = ''
+                        Expected = '(row missing from this export)'
+                        Actual = if ($doc.Index.ContainsKey($catKey)) { Get-NormalizedValue $doc.Index[$catKey].Value } else { $null }
                     })
                 continue
             }
@@ -1413,9 +1443,13 @@ function Get-CatalogCheckResult {
         $cultures.Add([pscustomobject]@{ Lang = $langKey; Matched = $matched; Mapped = $mapping.Count })
     }
 
+    $attributed = @($reworded | ForEach-Object { $_.Key })
+    $unattributed = @($unmapped | Where-Object { $attributed -notcontains $_.Key }).Count
+
     return [pscustomobject]@{
         Available  = $true
         Note       = ''
+        Unattributed = $unattributed
         Mapped     = $mapping.Count
         Labels     = $labels.Count
         Mapping    = $mapping
@@ -1442,7 +1476,7 @@ function Invoke-CatalogCheck {
     }
 
     Write-Output "Auto-mapped $($result.Mapped) of $($result.Labels) Cat_*_Label keys to WORLDSSETTING rows by exact English text."
-    Write-Output 'The rest are our own admin labels or deliberately reworded, and are out of scope.'
+    Write-Output "$($result.Unattributed) of the rest match no game row in any culture, so they are our own admin labels and are out of scope."
     Write-Output ''
     foreach ($culture in $result.Cultures) {
         # English defines the mapping, so its row can never fail. Labelling it 'ok' implies a check happened.
@@ -1568,6 +1602,6 @@ try {
 } catch {
     [Console]::Error.WriteLine("localization.ps1: $($_.Exception.Message)")
     if ($VerbosePreference -ne 'SilentlyContinue') { [Console]::Error.WriteLine($_.ScriptStackTrace) }
-    if ($_.Exception.Message -like '*was restored unchanged*') { exit $script:ExitRolledBack }
+    if ($script:RolledBack) { exit $script:ExitRolledBack }
     exit $script:ExitUsage
 }
