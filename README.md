@@ -158,8 +158,7 @@ need the **.NET 10 SDK**, see **[docs/building.md](docs/building.md)**.
 > Palworld's REST API and RCON aren't built to face the internet. Keep those ports (8212 and 25575) on your
 > local network or behind a firewall, and only forward the game ports your players actually need.
 
-The launcher runs on your machine and never phones home. No telemetry, no analytics. It makes network
-connections only to:
+The launcher runs on your machine and has no telemetry or analytics. It makes network connections only to:
 
 - your own server, over `127.0.0.1`,
 - Steam, to download SteamCMD and to install or update the server,
