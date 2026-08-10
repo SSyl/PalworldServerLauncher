@@ -94,7 +94,7 @@
     <value>偵測到 WorldOption.sav</value>
   </data>
   <data name="WorldOpt_Message" xml:space="preserve">
-    <value>⚠ 此存檔資料夾中的 WorldOption.sav 會覆蓋你的 PalWorldSettings.ini，導致啟動器可能無法監控或控制伺服器。將它重新命名為 .bak 可解決此問題，且不會影響你的世界。</value>
+    <value>⚠ 此存檔資料夾中的 WorldOption.sav 會覆蓋您的 PalWorldSettings.ini，導致啟動器可能無法監控或控制伺服器。將它重新命名為 .bak 可解決此問題，且不會影響您的世界。</value>
   </data>
   <data name="WorldOpt_Rename" xml:space="preserve">
     <value>重新命名為 .bak（建議）</value>
@@ -151,7 +151,7 @@
     <value>強制關閉</value>
   </data>
   <data name="Main_PrimaryTip" xml:space="preserve">
-    <value>安裝伺服器，或在安裝後啟動 (▶) / 停止 (■)。啟動時會先檢查更新（當“啟動時更新”開啟時），然後再啟動。</value>
+    <value>安裝伺服器，或在安裝後啟動 (▶) / 停止 (■)。啟動時會先檢查更新（當「啟動時更新」開啟時），然後再啟動。</value>
   </data>
   <data name="Main_RestartTip" xml:space="preserve">
     <value>立即重啟：立即儲存並重啟伺服器，不向玩家顯示倒數計時。排程重啟和更新重啟會先向玩家發出警告。</value>
@@ -181,7 +181,7 @@
     <value>模組</value>
   </data>
   <data name="Main_ModsTip" xml:space="preserve">
-    <value>管理 Steam 創意工坊伺服器模組：新增創意工坊 ID 讓啟動器下載，或掃描你自己放入模組資料夾的模組。</value>
+    <value>管理 Steam 創意工坊伺服器模組：新增創意工坊 ID 讓啟動器下載，或掃描您自己放入模組資料夾的模組。</value>
   </data>
   <data name="Main_StatusLabel" xml:space="preserve">
     <value>狀態：</value>
@@ -193,19 +193,19 @@
     <value>公開 IP：</value>
   </data>
   <data name="Main_PublicIpTip" xml:space="preserve">
-    <value>你的公開 IP 和遊戲埠。點選眼睛圖示顯示，然後選取複製，或使用複製按鈕。</value>
+    <value>您的公開 IP 和遊戲埠。點選眼睛圖示顯示，然後選取複製，或使用複製按鈕。</value>
   </data>
   <data name="Main_RevealIpTip" xml:space="preserve">
-    <value>顯示或隱藏你的公開 IP</value>
+    <value>顯示或隱藏您的公開 IP</value>
   </data>
   <data name="Main_CopyIpTip" xml:space="preserve">
-    <value>將你的 IP:埠 複製到剪貼簿</value>
+    <value>將您的 IP:埠 複製到剪貼簿</value>
   </data>
   <data name="Main_PortCheck" xml:space="preserve">
     <value>埠檢測</value>
   </data>
   <data name="Main_PortCheckTip" xml:space="preserve">
-    <value>檢測你的埠能否從網際網路存取。伺服器必須處於停止狀態，啟動器才能測試這些埠。</value>
+    <value>檢測您的埠能否從網際網路存取。伺服器必須處於停止狀態，啟動器才能測試這些埠。</value>
   </data>
   <data name="Main_StatVersion" xml:space="preserve">
     <value>版本</value>
@@ -301,7 +301,7 @@
     <value>選擇備份時間</value>
   </data>
   <data name="Main_BackupRetentionTip" xml:space="preserve">
-    <value>自動備份（啟動/關閉/排程）的保留時長。手動備份以及你自己新增到備份資料夾中的任何檔案都不會被刪除。0 = 全部保留。</value>
+    <value>自動備份（啟動/關閉/排程）的保留時長。手動備份以及您自己新增到備份資料夾中的任何檔案都不會被刪除。0 = 全部保留。</value>
   </data>
   <data name="Main_KeepFor" xml:space="preserve">
     <value>保留</value>
@@ -325,13 +325,13 @@
     <value>自動更新伺服器</value>
   </data>
   <data name="Main_AutoUpdateTip" xml:space="preserve">
-    <value>發現新更新時自動重啟伺服器。如果有玩家線上，“重啟公告”設定會在重啟前增加延遲。</value>
+    <value>發現新更新時自動重啟伺服器。如果有玩家線上，「重啟公告」設定會在重啟前增加延遲。</value>
   </data>
   <data name="Main_UpdateOnStart" xml:space="preserve">
     <value>啟動/重啟時更新</value>
   </data>
   <data name="Main_UpdateOnStartTip" xml:space="preserve">
-    <value>每次伺服器啟動或重啟時都透過 SteamCMD 檢查更新。取消勾選後，啟動/重啟時不會自動下載更新。你仍可透過“檢查更新”手動更新。</value>
+    <value>每次伺服器啟動或重啟時都透過 SteamCMD 檢查更新。取消勾選後，啟動/重啟時不會自動下載更新。您仍可透過「檢查更新」手動更新。</value>
   </data>
   <data name="Main_CheckUpdateEvery" xml:space="preserve">
     <value>檢查更新間隔</value>
@@ -355,7 +355,7 @@
     <value>未回應重啟閾值</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
-    <value>當 REST API 連續這麼多次無法存取，或世界連續這麼多次保持凍結時，重啟伺服器。如果你的 REST API 不穩定，且你寧願它永不自動重啟，請關閉此項。</value>
+    <value>當 REST API 連續這麼多次無法存取，或世界連續這麼多次保持凍結時，重啟伺服器。如果您的 REST API 不穩定，且您寧願它永不自動重啟，請關閉此項。</value>
   </data>
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
     <value>連續多少次健康檢查失敗後，伺服器會被視為未回應並被強制重啟。</value>
@@ -418,7 +418,7 @@
     <value>伺服器已在執行</value>
   </data>
   <data name="Main_ServerRunningMessage" xml:space="preserve">
-    <value>從此資料夾啟動的 Palworld 伺服器已在執行，幾乎可以肯定是你上次工作階段留下的，因為啟動器只追蹤它在此處啟動的伺服器。
+    <value>從此資料夾啟動的 Palworld 伺服器已在執行，幾乎可以肯定是您上次工作階段留下的，因為啟動器只追蹤它在此處啟動的伺服器。
 
 重新連線可繼續透過 REST API 管理它（即時統計、排程重啟、備份，對於並非啟動器自己啟動的伺服器，伺服器日誌索引標籤將保持為空）。否則請將其關閉，或退出。</value>
   </data>
@@ -486,7 +486,7 @@
 
 啟用 REST API 嗎？它讓啟動器能夠控制伺服器：套用遊戲更新、正常儲存和關閉、排程重啟和備份，以及監控伺服器健康狀況。
 
-如果啟用，啟動器現在就會產生伺服器組態，並設定一個安全的隨機產生的管理員密碼（之後可在“伺服器設定”的“管理”索引標籤中檢視或修改）。你也可以跳過此步，稍後自行啟用。</value>
+如果啟用，啟動器現在就會產生伺服器組態，並設定一個安全的隨機產生的管理員密碼（之後可在「伺服器設定」的「管理」索引標籤中檢視或修改）。您也可以跳過此步，稍後自行啟用。</value>
   </data>
   <data name="Main_YesEnableRest" xml:space="preserve">
     <value>是，啟用</value>
@@ -517,10 +517,10 @@
     <value>無法啟用 REST</value>
   </data>
   <data name="Main_RestEnabledMessage" xml:space="preserve">
-    <value>完成，REST API 已開啟，並設定了一個新的隨機管理員密碼（可在“伺服器設定”的“管理”索引標籤中檢視或修改）。將在你下次啟動伺服器時生效。</value>
+    <value>完成，REST API 已開啟，並設定了一個新的隨機管理員密碼（可在「伺服器設定」的「管理」索引標籤中檢視或修改）。將在您下次啟動伺服器時生效。</value>
   </data>
   <data name="Main_RestFailedMessage" xml:space="preserve">
-    <value>無法寫入伺服器組態。請確保伺服器已安裝且已停止，然後在“伺服器設定”的“管理”索引標籤中手動設定。</value>
+    <value>無法寫入伺服器組態。請確保伺服器已安裝且已停止，然後在「伺服器設定」的「管理」索引標籤中手動設定。</value>
   </data>
   <data name="Main_ServerStillRunningTitle" xml:space="preserve">
     <value>伺服器仍在執行</value>
@@ -538,7 +538,7 @@
     <value>這將透過完全終止處理程序立即關閉伺服器，且不進行儲存。可能導致存檔資料遺失或損壞。除非伺服器已完全停止回應，否則不建議使用。</value>
   </data>
   <data name="Main_PortCheckConsentMessage" xml:space="preserve">
-    <value>你的公開 IP 位址將被發送到 check-host.cc（一個免費的外部服務），以檢測玩家能否從你的網路外部存取你的伺服器。除了你的公開 IP 和你測試的埠之外，不會向該服務傳送任何其他資訊。</value>
+    <value>您的公開 IP 位址將被發送到 check-host.cc（一個免費的外部服務），以檢測玩家能否從您的網路外部存取您的伺服器。除了您的公開 IP 和您測試的埠之外，不會向該服務傳送任何其他資訊。</value>
   </data>
   <data name="Main_UpdateAvailableTitle" xml:space="preserve">
     <value>有可用更新</value>
@@ -621,10 +621,10 @@
     <value>埠檢測</value>
   </data>
   <data name="PortCheck_Intro" xml:space="preserve">
-    <value>使用 check-host.cc 檢測你的埠能否從網際網路存取。請在伺服器停止時執行此項，以便啟動器能夠繫結並測試這些埠。</value>
+    <value>使用 check-host.cc 檢測您的埠能否從網際網路存取。請在伺服器停止時執行此項，以便啟動器能夠繫結並測試這些埠。</value>
   </data>
   <data name="PortCheck_YourPublicIp" xml:space="preserve">
-    <value>你的公開 IP</value>
+    <value>您的公開 IP</value>
   </data>
   <data name="PortCheck_Results" xml:space="preserve">
     <value>結果</value>
@@ -651,7 +651,7 @@
     <value>無公開 IP</value>
   </data>
   <data name="PortCheck_NoPublicIpMessage" xml:space="preserve">
-    <value>請先輸入你的公開 IP（通常會自動填入）。</value>
+    <value>請先輸入您的公開 IP（通常會自動填入）。</value>
   </data>
   <data name="PortCheck_Checking" xml:space="preserve">
     <value>檢測中...</value>
@@ -819,7 +819,7 @@
     <value>命令冷卻時間（秒）</value>
   </data>
   <data name="Discord_SecurityNote" xml:space="preserve">
-    <value>安全提示：設定一個命令頻道和/或一個所需身分組，機器人只有在你設定的每一道關卡都通過時才會執行操作（至少設定一個）。任何能在命令頻道發言、或擁有該身分組的人都能控制伺服器，因此請將其鎖定（一個私密的、僅管理員可見的頻道，和/或一個管理員身分組）。啟用 Discord 開發者模式，然後右鍵點選頻道或身分組 -&gt; 複製 ID。權杖儲存在本機的 launcher.json 中，且永不寫入日誌。</value>
+    <value>安全提示：設定一個命令頻道和/或一個所需身分組，機器人只有在您設定的每一道關卡都通過時才會執行操作（至少設定一個）。任何能在命令頻道發言、或擁有該身分組的人都能控制伺服器，因此請將其鎖定（一個私密的、僅管理員可見的頻道，和/或一個管理員身分組）。啟用 Discord 開發者模式，然後右鍵點選頻道或身分組 -&gt; 複製 ID。權杖儲存在本機的 launcher.json 中，且永不寫入日誌。</value>
   </data>
   <data name="Discord_CommandsExposedHeader" xml:space="preserve">
     <value>機器人開放的命令</value>
@@ -873,7 +873,7 @@
     <value>Steam 帳號</value>
   </data>
   <data name="Mods_SteamAccountNote" xml:space="preserve">
-    <value>僅在下載創意工坊模組時需要，手動放入的模組無需帳號。你的 Steam 密碼會直接傳給 SteamCMD 用於登入，永不儲存或寫入日誌，僅會記住你的使用者名稱。</value>
+    <value>僅在下載創意工坊模組時需要，手動放入的模組無需帳號。您的 Steam 密碼會直接傳給 SteamCMD 用於登入，永不儲存或寫入日誌，僅會記住您的使用者名稱。</value>
   </data>
   <data name="Mods_ConnectButton" xml:space="preserve">
     <value>連線 Steam 帳號</value>
@@ -906,13 +906,13 @@
     <value>透過 Steam 創意工坊 ID 或 URL 新增：</value>
   </data>
   <data name="Mods_NoAccountWarning" xml:space="preserve">
-    <value>你已啟用創意工坊模組，但未連線 Steam 帳號。請在上方連線一個帳號以下載它們，否則它們會在啟動時被跳過（手動放入的模組仍會載入）。</value>
+    <value>您已啟用創意工坊模組，但未連線 Steam 帳號。請在上方連線一個帳號以下載它們，否則它們會在啟動時被跳過（手動放入的模組仍會載入）。</value>
   </data>
   <data name="Mods_LoosePakHeader" xml:space="preserve">
     <value>獨立 .pak 模組</value>
   </data>
   <data name="Mods_LoosePakDescription" xml:space="preserve">
-    <value>如果你使用上面的 Steam 創意工坊，則不需要這一項。對於沒有 Info.json 的原始 .pak 模組（許多 NexusMods 下載的模組）：將它們放入獨立 .pak 資料夾，然後在此處切換它們。它們透過重新命名來啟用/停用（絕不刪除），並在下次伺服器啟動時載入。</value>
+    <value>如果您使用上面的 Steam 創意工坊，則不需要這一項。對於沒有 Info.json 的原始 .pak 模組（許多 NexusMods 下載的模組）：將它們放入獨立 .pak 資料夾，然後在此處切換它們。它們透過重新命名來啟用/停用（絕不刪除），並在下次伺服器啟動時載入。</value>
   </data>
   <data name="Mods_OpenLoosePaksFolderButton" xml:space="preserve">
     <value>開啟獨立 .pak 資料夾</value>
@@ -927,13 +927,13 @@
     <value>請輸入使用者名稱</value>
   </data>
   <data name="Mods_EnterUsernameBody" xml:space="preserve">
-    <value>請先輸入你的 Steam 帳號名稱，然後再連線。</value>
+    <value>請先輸入您的 Steam 帳號名稱，然後再連線。</value>
   </data>
   <data name="Mods_ConnectingButton" xml:space="preserve">
     <value>連線中...</value>
   </data>
   <data name="Mods_SteamCmdWindowOpened" xml:space="preserve">
-    <value>已開啟一個 SteamCMD 視窗以完成登入。如有提示，請在 Steam 手機應用程式中核准，或在該視窗中輸入你的 Steam Guard 驗證碼。</value>
+    <value>已開啟一個 SteamCMD 視窗以完成登入。如有提示，請在 Steam 手機應用程式中核准，或在該視窗中輸入您的 Steam Guard 驗證碼。</value>
   </data>
   <data name="Mods_ConfirmSignInFailed" xml:space="preserve">
     <value>無法確認登入，通常是密碼錯誤或 Steam Guard 步驟未完成。確切錯誤顯示在主視窗的 SteamCMD 日誌中。請重新連線以重試。</value>
@@ -942,7 +942,7 @@
     <value>登入失敗：{0}</value>
   </data>
   <data name="Mods_SavedSignInInvalid" xml:space="preserve">
-    <value>你儲存的登入已失效，請重新連線。</value>
+    <value>您儲存的登入已失效，請重新連線。</value>
   </data>
   <data name="Mods_CheckSignInFailed" xml:space="preserve">
     <value>無法檢查登入：{0}</value>
@@ -972,7 +972,7 @@
     <value>不是 Palworld 模組？</value>
   </data>
   <data name="Mods_NotPalworldBody" xml:space="preserve">
-    <value>此項目的 Steam 應用程式 ID 是 {0}，而不是 Palworld 的（{1}），因此它可能無法在你的伺服器上執行。仍要新增嗎？</value>
+    <value>此項目的 Steam 應用程式 ID 是 {0}，而不是 Palworld 的（{1}），因此它可能無法在您的伺服器上執行。仍要新增嗎？</value>
   </data>
   <data name="Mods_AddAnyway" xml:space="preserve">
     <value>仍然新增</value>
@@ -993,7 +993,7 @@
     <value>未連線 Steam 帳號</value>
   </data>
   <data name="Mods_NoAccountSaveBody" xml:space="preserve">
-    <value>你已啟用創意工坊模組，但未連線 Steam 帳號，因此無法下載它們，伺服器啟動時會跳過它們（手動放入的模組仍會載入）。仍要儲存嗎？</value>
+    <value>您已啟用創意工坊模組，但未連線 Steam 帳號，因此無法下載它們，伺服器啟動時會跳過它們（手動放入的模組仍會載入）。仍要儲存嗎？</value>
   </data>
   <data name="Mods_SaveAnyway" xml:space="preserve">
     <value>仍然儲存</value>
@@ -1020,7 +1020,7 @@
     <value>刪除模組</value>
   </data>
   <data name="Mods_DeleteBody" xml:space="preserve">
-    <value>這將刪除該模組的檔案，並將其從你的模組清單中移除。
+    <value>這將刪除該模組的檔案，並將其從您的模組清單中移除。
 
 {0}</value>
   </data>
@@ -1049,10 +1049,10 @@
     <value>無法更改模組</value>
   </data>
   <data name="Mods_EnablePakFailed" xml:space="preserve">
-    <value>無法啟用“{0}”：{1}</value>
+    <value>無法啟用「{0}」：{1}</value>
   </data>
   <data name="Mods_DisablePakFailed" xml:space="preserve">
-    <value>無法停用“{0}”：{1}</value>
+    <value>無法停用「{0}」：{1}</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledTitle" xml:space="preserve">
     <value>UE4SS 未安裝</value>
@@ -1124,10 +1124,10 @@
     <value>啟動器識別的設定</value>
   </data>
   <data name="Settings_UndocNewHeader" xml:space="preserve">
-    <value>你組態中的新設定（無法識別）</value>
+    <value>您組態中的新設定（無法識別）</value>
   </data>
   <data name="Settings_UndocNoneRecognized" xml:space="preserve">
-    <value>無，你組態中的每個鍵都能識別。</value>
+    <value>無，您組態中的每個鍵都能識別。</value>
   </data>
   <data name="Settings_NoEffectTitle" xml:space="preserve">
     <value>此設定在伺服器上無效</value>
@@ -1145,7 +1145,7 @@
     <value>{0} 預設</value>
   </data>
   <data name="Settings_PresetNoChanges" xml:space="preserve">
-    <value>你的設定已與 {0} 預設一致，無需更改。</value>
+    <value>您的設定已與 {0} 預設一致，無需更改。</value>
   </data>
   <data name="Settings_PresetConfirmMessage" xml:space="preserve">
     <value>以下是 Palworld 1.0 時的數值。此後某些設定可能已被新增或更改。
@@ -1171,7 +1171,7 @@
     <value>已套用 {0} 預設。更改並儲存了 {1} 項設定。</value>
   </data>
   <data name="Settings_LaunchArgsIntro" xml:space="preserve">
-    <value>用於啟動專用伺服器的完整命令列（下方即時重新產生）。當這裡的某個引數與 PalWorldSettings.ini 中的設定控制同一項內容時，以引數為準，留空、為 0 或保持預設值的欄位會被省略，從而改用 ini 中的值。大多數遊戲設定沒有對應引數，只存在於 ini 中（請在“伺服器設定”中編輯那些設定）。更改將在下次啟動時生效。</value>
+    <value>用於啟動專用伺服器的完整命令列（下方即時重新產生）。當這裡的某個引數與 PalWorldSettings.ini 中的設定控制同一項內容時，以引數為準，留空、為 0 或保持預設值的欄位會被省略，從而改用 ini 中的值。大多數遊戲設定沒有對應引數，只存在於 ini 中（請在「伺服器設定」中編輯那些設定）。更改將在下次啟動時生效。</value>
   </data>
   <data name="Settings_ListenPortTerm" xml:space="preserve">
     <value>監聽埠</value>
@@ -1258,13 +1258,13 @@
     <value>-logformat（Text 或 Json）。留空 = 不新增，採用 ini/預設值。</value>
   </data>
   <data name="Settings_ExtraArgsNote" xml:space="preserve">
-    <value>原樣追加到命令列末尾的原始引數（以空格或換行分隔）。某些 Unreal 伺服器可在此接受地圖/遊戲類的覆蓋設定。除非你清楚自己在做什麼，否則請勿更改。</value>
+    <value>原樣追加到命令列末尾的原始引數（以空格或換行分隔）。某些 Unreal 伺服器可在此接受地圖/遊戲類的覆蓋設定。除非您清楚自己在做什麼，否則請勿更改。</value>
   </data>
   <data name="Settings_AdvancedExpander" xml:space="preserve">
     <value>進階</value>
   </data>
   <data name="Settings_AdvancedIntro" xml:space="preserve">
-    <value>在伺服器處理程序啟動後套用於它的底層設定。在此使用錯誤的值可能會損害效能，除非你清楚自己在做什麼，否則請勿更改。將在下次啟動時生效。</value>
+    <value>在伺服器處理程序啟動後套用於它的底層設定。在此使用錯誤的值可能會損害效能，除非您清楚自己在做什麼，否則請勿更改。將在下次啟動時生效。</value>
   </data>
   <data name="Settings_PriorityAffinityHeader" xml:space="preserve">
     <value>處理程序優先順序和 CPU 關聯性</value>
@@ -1273,7 +1273,7 @@
     <value>處理程序優先順序</value>
   </data>
   <data name="Settings_TipPriority" xml:space="preserve">
-    <value>伺服器處理程序的 Windows 優先順序。“高於正常”/“高”在高負載下可能有幫助，但會擠佔其他應用程式的資源並損害效能，此處不提供“即時”（不安全）。</value>
+    <value>伺服器處理程序的 Windows 優先順序。「高於正常」/「高」在高負載下可能有幫助，但會擠佔其他應用程式的資源並損害效能，此處不提供「即時」（不安全）。</value>
   </data>
   <data name="Settings_CoreLabel" xml:space="preserve">
     <value>核心 {0}</value>
@@ -1285,7 +1285,7 @@
     <value>進階引數</value>
   </data>
   <data name="Settings_AdvancedArgsMessage" xml:space="preserve">
-    <value>你在“進階”框中填入了自訂引數。它們會原樣傳遞給伺服器，除非你清楚自己在做什麼，否則請勿保留。</value>
+    <value>您在「進階」框中填入了自訂引數。它們會原樣傳遞給伺服器，除非您清楚自己在做什麼，否則請勿保留。</value>
   </data>
   <data name="Settings_Accept" xml:space="preserve">
     <value>接受</value>
@@ -1308,7 +1308,7 @@
     <value>未儲存</value>
   </data>
   <data name="Settings_NotSavedMessage" xml:space="preserve">
-    <value>“{0}”的值會破壞組態格式（多餘的逗號、引號或不匹配的括號）。未儲存任何內容，請修正後重試。</value>
+    <value>「{0}」的值會破壞組態格式（多餘的逗號、引號或不匹配的括號）。未儲存任何內容，請修正後重試。</value>
   </data>
   <data name="Settings_ValidationError" xml:space="preserve">
     <value>{0} 無效。必須為 {1}。</value>
@@ -1323,7 +1323,7 @@
     <value>  · 未記錄</value>
   </data>
   <data name="Settings_ResetAllMessage" xml:space="preserve">
-    <value>將此面板中的每個欄位都重設為預設值嗎？你仍需點選“儲存”才能套用。</value>
+    <value>將此面板中的每個欄位都重設為預設值嗎？您仍需點選「儲存」才能套用。</value>
   </data>
   <data name="Settings_ResetAllButton" xml:space="preserve">
     <value>全部重設</value>
@@ -1542,7 +1542,7 @@
     <value>bIsMultiplay</value>
   </data>
   <data name="Cat_bIsMultiplay_Desc" xml:space="preserve">
-    <value>未記錄。可能是建立世界時遊戲用戶端顯示的“多人遊戲：是/否”選項，因此對專用伺服器沒有影響。預設為 False。</value>
+    <value>未記錄。可能是建立世界時遊戲用戶端顯示的「多人遊戲：是/否」選項，因此對專用伺服器沒有影響。預設為 False。</value>
   </data>
   <data name="Cat_Region_Label" xml:space="preserve">
     <value>Region</value>
@@ -1578,7 +1578,7 @@
     <value>BuildingNameDisplayCacheTTLSeconds</value>
   </data>
   <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Desc" xml:space="preserve">
-    <value>未記錄。可能是建築快取的顯示名稱（見“在建築上顯示建造者 ID”）在重新整理前保留的時長（秒）。</value>
+    <value>未記錄。可能是建築快取的顯示名稱（見「在建築上顯示建造者 ID」）在重新整理前保留的時長（秒）。</value>
   </data>
   <data name="Cat_BaseCampMaxNum_Label" xml:space="preserve">
     <value>最大據點數（世界）</value>
@@ -1650,7 +1650,7 @@
     <value>難度</value>
   </data>
   <data name="Cat_Difficulty_Desc" xml:space="preserve">
-    <value>用戶端/單人遊戲的難度預設。它對專用伺服器沒有影響，因此請保持為“無”，並使用下方的各項單獨設定（或頂部的難度預設按鈕）來設定伺服器難度。</value>
+    <value>用戶端/單人遊戲的難度預設。它對專用伺服器沒有影響，因此請保持為「無」，並使用下方的各項單獨設定（或頂部的難度預設按鈕）來設定伺服器難度。</value>
   </data>
   <data name="Cat_bHardcore_Label" xml:space="preserve">
     <value>硬核模式：玩家死亡後永久丟失進度</value>
@@ -1662,13 +1662,13 @@
     <value>重新建立角色（硬核）</value>
   </data>
   <data name="Cat_bCharacterRecreateInHardcore_Desc" xml:space="preserve">
-    <value>在硬核模式下死亡後是否可以重新建立你的角色。</value>
+    <value>在硬核模式下死亡後是否可以重新建立您的角色。</value>
   </data>
   <data name="Cat_bIsPvP_Label" xml:space="preserve">
     <value>PvP</value>
   </data>
   <data name="Cat_bIsPvP_Desc" xml:space="preserve">
-    <value>啟用 PvP。僅在同時開啟“玩家間傷害”和“對其他公會的據點防禦”時才生效。</value>
+    <value>啟用 PvP。僅在同時開啟「玩家間傷害」和「對其他公會的據點防禦」時才生效。</value>
   </data>
   <data name="Cat_bEnablePlayerToPlayerDamage_Label" xml:space="preserve">
     <value>玩家間傷害</value>
@@ -1692,7 +1692,7 @@
     <value>對其他公會的據點防禦</value>
   </data>
   <data name="Cat_bEnableDefenseOtherGuildPlayer_Desc" xml:space="preserve">
-    <value>據點的帕魯會攻擊擅自闖入你據點的敵對玩家。啟用 PvP 的三項設定之一。</value>
+    <value>據點的帕魯會攻擊擅自闖入您據點的敵對玩家。啟用 PvP 的三項設定之一。</value>
   </data>
   <data name="Cat_bEnableFastTravel_Label" xml:space="preserve">
     <value>能否使用快速傳送</value>
@@ -1746,7 +1746,7 @@
     <value>bEnableNonLoginPenalty</value>
   </data>
   <data name="Cat_bEnableNonLoginPenalty_Desc" xml:space="preserve">
-    <value>未記錄。可能與你未登入時帕魯是否會獲得減益有關。未經測試。</value>
+    <value>未記錄。可能與您未登入時帕魯是否會獲得減益有關。未經測試。</value>
   </data>
   <data name="Cat_bIsStartLocationSelectByMap_Label" xml:space="preserve">
     <value>選擇起始位置</value>
@@ -1824,7 +1824,7 @@
     <value>自動刪除公會設施的時限（小時）</value>
   </data>
   <data name="Cat_AutoResetGuildTimeNoOnlinePlayers_Desc" xml:space="preserve">
-    <value>閒置公會被自動重設前的離線時長（小時）。除非開啟“自動重設閒置公會”，否則忽略此項。</value>
+    <value>閒置公會被自動重設前的離線時長（小時）。除非開啟「自動重設閒置公會」，否則忽略此項。</value>
   </data>
   <data name="Cat_bDisplayPvPItemNumOnWorldMap_BaseCamp_Label" xml:space="preserve">
     <value>在地圖上顯示據點的 PvP 物品</value>
@@ -2118,13 +2118,13 @@
     <value>PvP 擊殺：物品 ID</value>
   </data>
   <data name="Cat_AdditionalDropItemWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
-    <value>PvP 擊殺時掉落物品的 ID（在開啟“PvP 擊殺：掉落物品”時使用）。</value>
+    <value>PvP 擊殺時掉落物品的 ID（在開啟「PvP 擊殺：掉落物品」時使用）。</value>
   </data>
   <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Label" xml:space="preserve">
     <value>PvP 擊殺：物品數量</value>
   </data>
   <data name="Cat_AdditionalDropItemNumWhenPlayerKillingInPvPMode_Desc" xml:space="preserve">
-    <value>PvP 擊殺時掉落物品的數量（在開啟“PvP 擊殺：掉落物品”時使用）。</value>
+    <value>PvP 擊殺時掉落物品的數量（在開啟「PvP 擊殺：掉落物品」時使用）。</value>
   </data>
   <data name="Cat_SupplyDropSpan_Label" xml:space="preserve">
     <value>隕石・補給物資的空投間隔(分)</value>
@@ -2199,7 +2199,7 @@
     <value>啟動器需要重啟以套用新語言（{0}）。現在就重啟嗎？</value>
   </data>
   <data name="LauncherSettings_RestartPromptRunning" xml:space="preserve">
-    <value>啟動器需要重啟以套用新語言（{0}）。你的 Palworld 伺服器會繼續執行，啟動器將重新連線到它。現在就重啟嗎？</value>
+    <value>啟動器需要重啟以套用新語言（{0}）。您的 Palworld 伺服器會繼續執行，啟動器將重新連線到它。現在就重啟嗎？</value>
   </data>
   <data name="LauncherSettings_RestartNow" xml:space="preserve">
     <value>立即重啟</value>
@@ -2292,13 +2292,13 @@
     <value>警告！</value>
   </data>
   <data name="UnknownServer_Intro" xml:space="preserve">
-    <value>啟動器偵測到此電腦上有其他 Palworld 伺服器正在執行。如果這並非你的本意，請點選下方的終止按鈕以關閉這些伺服器。</value>
+    <value>啟動器偵測到此電腦上有其他 Palworld 伺服器正在執行。如果這並非您的本意，請點選下方的終止按鈕以關閉這些伺服器。</value>
   </data>
   <data name="UnknownServer_Unreadable" xml:space="preserve">
     <value>一個啟動器無法識別的執行中伺服器（可能以管理員身分執行）</value>
   </data>
   <data name="UnknownServer_SettingsHint" xml:space="preserve">
-    <value>注意：你可以透過點選主視窗右上角的齒輪按鈕，在啟動器設定中停用此警告。</value>
+    <value>注意：您可以透過點選主視窗右上角的齒輪按鈕，在啟動器設定中停用此警告。</value>
   </data>
   <data name="UnknownServer_Terminate" xml:space="preserve">
     <value>終止</value>
@@ -2340,7 +2340,7 @@
     <value>無法連線至 {0} 的 RCON。伺服器是否已啟用 RCONEnabled=True，且 RCONPort 設定正確？</value>
   </data>
   <data name="ServerCmd_RconAuthFailed" xml:space="preserve">
-    <value>RCON 拒絕了該密碼。它使用你的 AdminPassword，請確認設定正確。</value>
+    <value>RCON 拒絕了該密碼。它使用您的 AdminPassword，請確認設定正確。</value>
   </data>
   <data name="ServerCmd_RconError" xml:space="preserve">
     <value>RCON 發生錯誤，詳情請檢視啟動器日誌。</value>
@@ -2443,12 +2443,12 @@
     <value>找到現有世界存檔</value>
   </data>
   <data name="WorldSel_SingleMessage" xml:space="preserve">
-    <value>⚠ 你的存檔資料夾中有一個世界存檔，但伺服器未設定要載入它。現在啟動會建立一個全新的空世界，該存檔仍會保留在磁碟上，但在遊戲中無法讀取。
+    <value>⚠ 您的存檔資料夾中有一個世界存檔，但伺服器未設定要載入它。現在啟動會建立一個全新的空世界，該存檔仍會保留在磁碟上，但在遊戲中無法讀取。
 
 磁碟上的存檔：{0}</value>
   </data>
   <data name="WorldSel_ManyMessage" xml:space="preserve">
-    <value>⚠ 你的存檔資料夾中有 {0} 個世界存檔，但伺服器未設定要載入其中任何一個。現在啟動會建立一個全新的空世界，這些存檔仍會保留在磁碟上，但在遊戲中無法讀取。
+    <value>⚠ 您的存檔資料夾中有 {0} 個世界存檔，但伺服器未設定要載入其中任何一個。現在啟動會建立一個全新的空世界，這些存檔仍會保留在磁碟上，但在遊戲中無法讀取。
 
 {1}
 
@@ -2467,7 +2467,7 @@
     <value>無法更新 GameUserSettings.ini：{0}</value>
   </data>
   <data name="Main_ImportLinuxMessage" xml:space="preserve">
-    <value>該資料夾內含 Linux 版伺服器，其執行檔無法在 Windows 上執行。啟動器可以透過 SteamCMD 下載 Windows 版專用伺服器（約 4 GB），並將世界和設定從“{0}”移轉過來。原始資料夾會保留不動。
+    <value>該資料夾內含 Linux 版伺服器，其執行檔無法在 Windows 上執行。啟動器可以透過 SteamCMD 下載 Windows 版專用伺服器（約 4 GB），並將世界和設定從「{0}」移轉過來。原始資料夾會保留不動。
 
 要以此方式匯入嗎？</value>
   </data>
@@ -2481,10 +2481,10 @@
     <value>手動啟動和重啟伺服器時清空日誌</value>
   </data>
   <data name="LauncherSettings_ClearLogsOnManualStartTip" xml:space="preserve">
-    <value>當你自己啟動或重啟伺服器時，先清空日誌索引標籤。排程重啟、更新重啟和當機恢復從不清空，因此你能保留那些說明伺服器為何啟動失敗的訊息。磁碟上的日誌檔案永不受影響。</value>
+    <value>當您自己啟動或重啟伺服器時，先清空日誌索引標籤。排程重啟、更新重啟和當機恢復從不清空，因此您能保留那些說明伺服器為何啟動失敗的訊息。磁碟上的日誌檔案永不受影響。</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledManual" xml:space="preserve">
-    <value>你也可以手動安裝 UE4SS。從 GitHub 或 NexusMods 取得它，並把它的 zip 解壓縮到 Pal\Binaries\Win64，使其中出現 ue4ss 資料夾和 dwmapi.dll。不要同時使用兩者，兩份 UE4SS 會讓伺服器當機。</value>
+    <value>您也可以手動安裝 UE4SS。從 GitHub 或 NexusMods 取得它，並把它的 zip 解壓縮到 Pal\Binaries\Win64，使其中出現 ue4ss 資料夾和 dwmapi.dll。不要同時使用兩者，兩份 UE4SS 會讓伺服器當機。</value>
   </data>
   <data name="Mods_Ue4ssConflictTitle" xml:space="preserve">
     <value>發現兩個 UE4SS 安裝</value>
