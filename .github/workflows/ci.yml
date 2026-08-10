@@ -21,3 +21,13 @@ jobs:
       - run: dotnet build --configuration Release
 
       - run: dotnet test --configuration Release --no-build
+
+      # A downloadable build from any commit, for testing a fix before committing to a version number.
+      # Not a release: release.yml is what produces the zip people actually download.
+      - run: dotnet publish src/PalServerLauncher -c Release
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: PalworldServerLauncher-${{ github.sha }}
+          path: src/PalServerLauncher/bin/Release/net10.0-windows/win-x64/publish/PalworldServerLauncher.exe
+          retention-days: 14
