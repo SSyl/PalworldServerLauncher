@@ -398,7 +398,7 @@ Les enregistrer quand même comme messages fixes ?</value>
     <value>Nombre de vérifications d'état consécutives en échec avant que le serveur soit considéré comme sans réponse et forcé à redémarrer.</value>
   </data>
   <data name="Main_ZombieNeedsRestTip" xml:space="preserve">
-    <value>Nécessite l'API REST. Sans elle, le launcher ne peut pas distinguer un serveur figé d'un serveur qui fonctionne normalement, donc cette vérification est indisponible. Activez RESTAPIEnabled dans Paramètres du serveur.</value>
+    <value>Nécessite l'API REST. Sans elle, le lanceur ne peut pas distinguer un serveur figé d'un serveur qui fonctionne normalement, donc cette vérification est indisponible. Activez RESTAPIEnabled dans Paramètres du serveur.</value>
   </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>vérif.</value>
@@ -2479,7 +2479,7 @@ Enregistrer ces changements ?</value>
     <value>Force le déploiement de ce mod sur le serveur même s'il ne déclare pas de compatibilité serveur. À utiliser avec prudence.</value>
   </data>
   <data name="Mods_ForceLocalTip" xml:space="preserve">
-    <value>L'installation forcée sur le serveur s'applique aux mods de l'Atelier téléchargés par le launcher. Pour un mod déposé manuellement, modifiez directement son Info.json.</value>
+    <value>L'installation forcée sur le serveur s'applique aux mods de l'Atelier téléchargés par le lanceur. Pour un mod déposé manuellement, modifiez directement son Info.json.</value>
   </data>
   <data name="Mods_ForceWarnTitle" xml:space="preserve">
     <value>Forcer l'installation sur le serveur ?</value>
