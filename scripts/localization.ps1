@@ -21,11 +21,11 @@
 
     Exit codes: 0 clean, 1 findings or failure, 2 usage error, 3 a write failed verification and was rolled back.
 
-    catalog-check needs an FModel extraction of the game. That extraction is Pocketpair's copyrighted content
-    and MUST NOT be committed or redistributed, not in whole and not as a trimmed subset, so it stays outside
-    this repo and every developer supplies their own. Point at it with -ExportsPath or the PALWORLD_EXPORTS
-    environment variable, or leave an 'Exports' folder next to the repo. Without one this command reports
-    itself skipped and every other command is unaffected.
+    catalog-check reads Palworld's own game assets, extracted from the shipped paks with FModel. Those assets
+    are Pocketpair's copyrighted work and MUST NOT be committed or redistributed, not in whole and not as a
+    trimmed subset, so they stay outside this repo and every developer extracts their own. Point at them with
+    -ExportsPath or the PALWORLD_EXPORTS environment variable, or leave an 'Exports' folder next to the repo.
+    Without them this command reports itself skipped and every other command is unaffected.
 
 .EXAMPLE
     pwsh scripts/localization.ps1 add -Key My_New_Key -En "English text"
@@ -832,10 +832,10 @@ function Invoke-Validate {
     return
 }
 
-# The exports are Pocketpair's copyrighted game content, so they can never be committed here and each
-# developer supplies their own. Resolution order is -ExportsPath, then $env:PALWORLD_EXPORTS, then a sibling
-# 'Exports' folder next to the repo. Returns null when none exists, which makes catalog-check report itself
-# skipped rather than fail, since it is the only command that needs them.
+# The exports are Palworld's own game assets and are Pocketpair's copyrighted work, so they can never be
+# committed here and each developer extracts their own. Resolution order is -ExportsPath, then
+# $env:PALWORLD_EXPORTS, then a sibling 'Exports' folder next to the repo. Returns null when none exists,
+# which makes catalog-check report itself skipped rather than fail, since it is the only command needing them.
 function Get-ExportRoot {
     if ($ExportsPath) {
         if (-not (Test-Path -LiteralPath $ExportsPath -PathType Container)) { throw "-ExportsPath '$ExportsPath' is not a folder." }
