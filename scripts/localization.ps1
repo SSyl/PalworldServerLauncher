@@ -1,4 +1,9 @@
 #!/usr/bin/env pwsh
+
+# Keep a blank line between this comment and the <# #> block. Any comment line sitting directly against it,
+# the shebang included, makes Get-Help ignore the comment-based help and return the bare syntax line, which
+# breaks the help command too.
+
 <#
 .SYNOPSIS
     Read, write, search, and audit the ten Strings resx files.
@@ -10,14 +15,20 @@
     and the file's encoding, line endings, and formatting are preserved.
 
     Commands:
-      add            Add one key to all ten files. Satellites default to the English text.
-      set            Change one value in one file.
-      get            Print one key's value in all ten languages.
-      find           Search value text.
-      untranslated   List satellite values that are still the English text.
-      validate       Key parity, duplicates, empty values, {N} placeholder parity. Exits non-zero on findings.
-      audit          validate plus per-language coverage and a catalog-check summary. Always exits zero.
-      catalog-check  Compare Cat_*_Label values against Palworld's own L10N export.
+      add               Add one key to all ten files. Satellites default to the English text.
+      set               Change one value in one file.
+      get               Print one key's value in all ten languages.
+      find              Search value text.
+      untranslated      List satellite values that are still the English text.
+      mark-invariant    Mark a key as the same in every language on purpose, so untranslated skips it.
+      unmark-invariant  Remove that marker.
+      validate          Key parity, duplicates, empty values, {N} placeholder parity. Non-zero on findings.
+      audit             validate plus per-language coverage and a catalog-check summary. Always exits zero.
+      catalog-check     Compare Cat_*_Label values against Palworld's own L10N export.
+
+    The invariant marker is a resx <comment> reading "invariant" (trailing text allowed, so
+    "invariant, brand name" counts), written to Strings.resx only because English is authoritative.
+    untranslated hides marked keys unless -IncludeInvariant.
 
     Exit codes: 0 clean, 1 findings or failure, 2 usage error, 3 a write failed verification and was rolled back.
 
@@ -43,23 +54,29 @@
     pwsh scripts/localization.ps1 find -Text "launcher" -Lang default
 
 .EXAMPLE
-    pwsh scripts/localization.ps1 untranslated -Lang ru -Format json
+    pwsh scripts/localization.ps1 untranslated -Lang ru
+
+.EXAMPLE
+    pwsh scripts/localization.ps1 mark-invariant -Key Common_AppName -Reason "brand name"
 
 .EXAMPLE
     pwsh scripts/localization.ps1 validate
 #>
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory, Position = 0)]
-    [ValidateSet('add', 'set', 'get', 'find', 'untranslated', 'validate', 'audit', 'catalog-check')]
-    [string] $Command,
+    [Parameter(Position = 0)]
+    [ValidateSet('add', 'set', 'get', 'find', 'untranslated', 'validate', 'audit', 'catalog-check',
+        'mark-invariant', 'unmark-invariant', 'help')]
+    [string] $Command = 'help',
 
     [string] $Key,
     [string] $Lang,
     [string] $Value,
     [string] $Text,
+    [string] $Reason,
     [switch] $Regex,
     [switch] $CaseSensitive,
+    [switch] $IncludeInvariant,
 
     [ValidateSet('table', 'json')]
     [string] $Format = 'table',
@@ -151,10 +168,13 @@ function Get-LangPath {
 # Neither XmlDocument nor the resource compiler normalizes line endings, so a multi-line value comes back
 # with whatever the file holds. Compare on LF and let each write use the target file's own newline, so a
 # CRLF file and an LF one never look like a difference in the value itself.
+#
+# Typed [object] rather than [string] because a [string] parameter coerces $null to '', which would make an
+# absent <comment> indistinguishable from an empty one.
 function Get-NormalizedValue {
-    param([string] $Value)
+    param([AllowNull()][object] $Value)
     if ($null -eq $Value) { return $null }
-    return $Value.Replace("`r`n", "`n").Replace("`r", "`n")
+    return ([string]$Value).Replace("`r`n", "`n").Replace("`r", "`n")
 }
 
 function ConvertTo-XmlText {
@@ -216,11 +236,44 @@ function Write-ResxText {
     [System.IO.File]::WriteAllText($LiteralPath, $Content, [System.Text.UTF8Encoding]::new($false))
 }
 
-# Locates every real <data> element and the character span of its <value> text, so a write can splice one
-# value without reserializing the document. An [xml] round-trip would reflow the whole file.
+# Locates every real <data> element and the character spans of its <value> and <comment> text, so a write
+# can splice one of them without reserializing the document. An [xml] round-trip would reflow the whole file.
 #
 # The scanning is left to the regex engine on purpose. An equivalent character-by-character walk in
 # PowerShell ran 2 seconds per resx against 20 ms here, and validate loads ten of them.
+# A resx <comment> of "invariant" marks a value that is the same in every language on purpose, which is what
+# ResXManager calls an invariant string. Trailing text is allowed so "invariant, brand name" still counts.
+function Test-InvariantComment {
+    param([string] $Comment)
+    if ([string]::IsNullOrWhiteSpace($Comment)) { return $false }
+    return $Comment.TrimStart() -match '^invariant\b'
+}
+
+function New-Span {
+    param(
+        [Parameter(Mandatory)][string] $Name,
+        [int] $ValueStart = -1,
+        [int] $ValueEnd = -1,
+        [AllowNull()][object] $RawValue,
+        [int] $CommentStart = -1,
+        [int] $CommentEnd = -1,
+        [AllowNull()][object] $RawComment,
+        [int] $AfterValue = -1,
+        [string] $Indent = '    '
+    )
+    return [pscustomobject]@{
+        Name         = $Name
+        ValueStart   = $ValueStart
+        ValueEnd     = $ValueEnd
+        RawValue     = $RawValue
+        CommentStart = $CommentStart
+        CommentEnd   = $CommentEnd
+        RawComment   = $RawComment
+        AfterValue   = $AfterValue
+        Indent       = $Indent
+    }
+}
+
 function Get-ValueSpans {
     param([Parameter(Mandatory)][string] $Content)
 
@@ -250,7 +303,7 @@ function Get-ValueSpans {
         $name = ConvertFrom-XmlText $nameMatch.Groups['n'].Value
 
         if ($tag.Value.EndsWith('/>')) {
-            $spans.Add([pscustomobject]@{ Name = $name; ValueStart = -1; ValueEnd = -1; RawValue = $null })
+            $spans.Add((New-Span -Name $name))
             continue
         }
 
@@ -260,19 +313,30 @@ function Get-ValueSpans {
 
         $valueOpen = $Content.IndexOf('<value>', $tagEnd, $ordinal)
         if ($valueOpen -lt 0 -or $valueOpen -gt $dataEnd) {
-            $spans.Add([pscustomobject]@{ Name = $name; ValueStart = -1; ValueEnd = -1; RawValue = $null })
+            $spans.Add((New-Span -Name $name))
             continue
         }
         $valueStart = $valueOpen + 7
         $valueEnd = $Content.IndexOf('</value>', $valueStart, $ordinal)
         if ($valueEnd -lt 0 -or $valueEnd -gt $dataEnd) { throw "The <value> of '$name' is never closed." }
 
-        $spans.Add([pscustomobject]@{
-                Name       = $name
-                ValueStart = $valueStart
-                ValueEnd   = $valueEnd
-                RawValue   = $Content.Substring($valueStart, $valueEnd - $valueStart)
-            })
+        # A value cannot hold a literal '<', so a <comment> found inside the element is always the real one.
+        $commentStart = -1
+        $commentEnd = -1
+        $rawComment = $null
+        $commentOpen = $Content.IndexOf('<comment>', $tagEnd, $ordinal)
+        if ($commentOpen -ge 0 -and $commentOpen -lt $dataEnd) {
+            $commentStart = $commentOpen + 9
+            $commentEnd = $Content.IndexOf('</comment>', $commentStart, $ordinal)
+            if ($commentEnd -lt 0 -or $commentEnd -gt $dataEnd) { throw "The <comment> of '$name' is never closed." }
+            $rawComment = $Content.Substring($commentStart, $commentEnd - $commentStart)
+        }
+
+        $lineStart = $Content.LastIndexOf("`n", $valueOpen) + 1
+        $spans.Add((New-Span -Name $name -ValueStart $valueStart -ValueEnd $valueEnd `
+                    -RawValue $Content.Substring($valueStart, $valueEnd - $valueStart) `
+                    -CommentStart $commentStart -CommentEnd $commentEnd -RawComment $rawComment `
+                    -AfterValue ($valueEnd + 8) -Indent $Content.Substring($lineStart, $valueOpen - $lineStart)))
     }
 
     return $spans
@@ -289,9 +353,11 @@ function Get-ResxDocument {
 
     $parsed = @(foreach ($node in $xml.SelectNodes('/root/data')) {
             $valueNode = $node.SelectSingleNode('value')
+            $commentNode = $node.SelectSingleNode('comment')
             [pscustomobject]@{
-                Name  = $node.GetAttribute('name')
-                Value = if ($null -eq $valueNode) { $null } else { $valueNode.InnerText }
+                Name    = $node.GetAttribute('name')
+                Value   = if ($null -eq $valueNode) { $null } else { $valueNode.InnerText }
+                Comment = if ($null -eq $commentNode) { $null } else { $commentNode.InnerText }
             }
         })
 
@@ -314,12 +380,23 @@ function Get-ResxDocument {
                 throw "$LiteralPath : the scanner and the XML parser disagree on the value of '$($parsed[$i].Name)'."
             }
         }
+        $comment = Get-NormalizedValue $parsed[$i].Comment
+        $scannedComment = if ($null -eq $spans[$i].RawComment) { $null } else { Get-NormalizedValue (ConvertFrom-XmlText $spans[$i].RawComment) }
+        if ($scannedComment -cne $comment) {
+            throw "$LiteralPath : the scanner and the XML parser disagree on the comment of '$($parsed[$i].Name)'."
+        }
         $entries.Add([pscustomobject]@{
-                Name       = $parsed[$i].Name
-                Value      = $value
-                ValueStart = $spans[$i].ValueStart
-                ValueEnd   = $spans[$i].ValueEnd
-                RawValue   = $spans[$i].RawValue
+                Name         = $parsed[$i].Name
+                Value        = $value
+                Comment      = $comment
+                Invariant    = Test-InvariantComment $comment
+                ValueStart   = $spans[$i].ValueStart
+                ValueEnd     = $spans[$i].ValueEnd
+                RawValue     = $spans[$i].RawValue
+                CommentStart = $spans[$i].CommentStart
+                CommentEnd   = $spans[$i].CommentEnd
+                AfterValue   = $spans[$i].AfterValue
+                Indent       = $spans[$i].Indent
             })
     }
 
@@ -420,7 +497,8 @@ function Assert-UnchangedExcept {
         [Parameter(Mandatory)][object] $Before,
         [Parameter(Mandatory)][object] $After,
         [string[]] $Added = @(),
-        [string[]] $Changed = @()
+        [string[]] $Changed = @(),
+        [string[]] $CommentChanged = @()
     )
 
     $expectedNames = @($Before.Names) + @($Added)
@@ -430,6 +508,14 @@ function Assert-UnchangedExcept {
     for ($i = 0; $i -lt $expectedNames.Count; $i++) {
         if ($After.Names[$i] -cne $expectedNames[$i]) {
             throw "key order changed at position $i : '$($expectedNames[$i])' became '$($After.Names[$i])'."
+        }
+    }
+    # A dropped <comment> would silently unmark an invariant key, so a value write has to keep every one of
+    # them, including on the key it is changing.
+    foreach ($name in $Before.Names) {
+        if ($CommentChanged -contains $name) { continue }
+        if ($After.Index[$name].Comment -cne $Before.Index[$name].Comment) {
+            throw "the comment on '$name' changed but should not have."
         }
     }
     foreach ($name in $Before.Names) {
@@ -578,6 +664,85 @@ function Invoke-Set {
     return
 }
 
+# Both markers live in Strings.resx only. English is authoritative, and a per-satellite marker would be nine
+# times the upkeep for nothing.
+function Set-InvariantMarker {
+    param(
+        [Parameter(Mandatory)][string] $KeyName,
+        [AllowNull()][object] $CommentText
+    )
+
+    if ($RequireClean) { Assert-CleanTree -Directory (Get-LocalizationDir) }
+    $target = Get-LangPath 'default'
+    $before = Get-ResxDocument -LiteralPath $target
+    $file = $script:LangFiles['default']
+
+    if (-not $before.Index.ContainsKey($KeyName)) { throw "$file has no key '$KeyName'." }
+    if ($before.Duplicates -contains $KeyName) { throw "$file holds '$KeyName' more than once. Fix that by hand first." }
+    $entry = $before.Index[$KeyName]
+
+    # An empty <comment></comment> carries nothing, so it is safe to rewrite. A real note is not.
+    if (-not [string]::IsNullOrWhiteSpace($entry.Comment) -and -not $entry.Invariant) {
+        throw "'$KeyName' already carries a comment that is not an invariant marker: [$(Format-Inline $entry.Comment 120)]. Refusing to overwrite it."
+    }
+    if ($entry.Comment -ceq $CommentText) {
+        Write-Output "$file : '$KeyName' already reads $(if ($null -eq $CommentText) { 'unmarked' } else { "[$CommentText]" }), nothing written."
+        return
+    }
+    if ($entry.ValueStart -lt 0) { throw "'$KeyName' in $file has no <value> element." }
+
+    if ($null -eq $CommentText) {
+        $newContent = $before.Content.Substring(0, $entry.AfterValue) + $before.Content.Substring($entry.CommentEnd + 10)
+    } elseif ($entry.CommentStart -ge 0) {
+        $newContent = $before.Content.Substring(0, $entry.CommentStart) + (ConvertTo-XmlText $CommentText) + $before.Content.Substring($entry.CommentEnd)
+    } else {
+        $element = "$($before.Newline)$($entry.Indent)<comment>$(ConvertTo-XmlText $CommentText)</comment>"
+        $newContent = $before.Content.Substring(0, $entry.AfterValue) + $element + $before.Content.Substring($entry.AfterValue)
+    }
+
+    Set-ResxContentVerified -LiteralPath $target -NewContent $newContent -Verify {
+        param($after)
+        Assert-UnchangedExcept -Before $before -After $after -CommentChanged @($KeyName)
+        if ($after.Index[$KeyName].Comment -cne $CommentText) {
+            throw "'$KeyName' comment did not round-trip. Wanted [$CommentText], got [$($after.Index[$KeyName].Comment)]."
+        }
+        if ($after.Duplicates.Count -ne 0) { throw "the write introduced duplicate keys: $($after.Duplicates -join ', ')." }
+    }
+
+    if ($null -eq $CommentText) { Write-Output "$file : '$KeyName' is no longer marked invariant." }
+    else { Write-Output "$file : '$KeyName' marked [$CommentText]." }
+}
+
+# Reads the comment-based help above rather than repeating it, so the two cannot drift apart.
+function Invoke-Help {
+    $help = Get-Help $PSCommandPath
+    Write-Output ''
+    Write-Output $help.Synopsis.Trim()
+    Write-Output ''
+    foreach ($block in $help.Description) { Write-Output $block.Text }
+    if ($help.Examples) {
+        Write-Output 'Examples:'
+        foreach ($example in $help.Examples.Example) { Write-Output "  $($example.Code.Trim())" }
+    }
+    Write-Output ''
+    Write-Output "Full parameter reference: Get-Help '$PSCommandPath' -Full"
+    Write-Output ''
+    return
+}
+
+function Invoke-MarkInvariant {
+    if (-not $Key) { throw 'mark-invariant needs -Key.' }
+    $text = if ($Reason) { "invariant, $Reason" } else { 'invariant' }
+    Set-InvariantMarker -KeyName $Key -CommentText $text
+    return
+}
+
+function Invoke-UnmarkInvariant {
+    if (-not $Key) { throw 'unmark-invariant needs -Key.' }
+    Set-InvariantMarker -KeyName $Key -CommentText $null
+    return
+}
+
 function Invoke-Get {
     if (-not $Key) { throw 'get needs -Key.' }
 
@@ -655,65 +820,111 @@ function Invoke-Find {
     return
 }
 
-function Get-UntranslatedRows {
-    param([string[]] $LangKeys)
+# Every key that at least one satellite leaves at the English text, with the languages split into those that
+# match English and those that translate it. All nine satellites are always inspected, whatever -Lang asks
+# for, because "translated in 8 others" is the whole point and it cannot be known from one file.
+function Get-UntranslatedKeys {
+    param([switch] $WithInvariant)
 
     $english = Get-LangDocument 'default'
-    $rows = [System.Collections.Generic.List[object]]::new()
-    foreach ($langKey in $LangKeys) {
-        if ($langKey -eq 'default') { continue }
-        $doc = Get-LangDocument $langKey
-        foreach ($entry in $doc.Entries) {
-            if (-not $english.Index.ContainsKey($entry.Name)) { continue }
-            $englishValue = Get-NormalizedValue $english.Index[$entry.Name].Value
-            if ((Get-NormalizedValue $entry.Value) -ceq $englishValue) {
-                $rows.Add([pscustomobject]@{ Lang = $langKey; Key = $entry.Name; Value = $englishValue })
-            }
+    $satellites = @($script:LangFiles.Keys | Where-Object { $_ -ne 'default' })
+    $docs = [ordered]@{}
+    foreach ($langKey in $satellites) { $docs[$langKey] = Get-LangDocument $langKey }
+
+    $keys = [System.Collections.Generic.List[object]]::new()
+    foreach ($entry in $english.Entries) {
+        if ($entry.Invariant -and -not $WithInvariant) { continue }
+
+        $matching = [System.Collections.Generic.List[string]]::new()
+        $translated = [System.Collections.Generic.List[string]]::new()
+        foreach ($langKey in $satellites) {
+            $doc = $docs[$langKey]
+            if (-not $doc.Index.ContainsKey($entry.Name)) { continue }
+            if ($doc.Index[$entry.Name].Value -ceq $entry.Value) { $matching.Add($langKey) }
+            else { $translated.Add($langKey) }
         }
+        if ($matching.Count -eq 0) { continue }
+
+        $keys.Add([pscustomobject]@{
+                Key        = $entry.Name
+                Value      = $entry.Value
+                Matching   = @($matching)
+                Translated = @($translated)
+                Everywhere = $translated.Count -eq 0
+                Invariant  = $entry.Invariant
+            })
     }
-    return $rows
+    return $keys
 }
 
 function Invoke-Untranslated {
-    $langKeys = @(if ($Lang) { Resolve-Lang $Lang } else { $script:LangFiles.Keys })
-    if ($langKeys.Count -eq 1 -and $langKeys[0] -eq 'default') {
+    $only = if ($Lang) { Resolve-Lang $Lang } else { $null }
+    if ($only -eq 'default') {
         throw "'default' is the English source, so it is never untranslated. Pass a satellite language or no -Lang at all."
     }
 
     $english = Get-LangDocument 'default'
     $total = $english.Entries.Count
-    $rows = @(Get-UntranslatedRows -LangKeys $langKeys)
+    $satellites = @($script:LangFiles.Keys | Where-Object { $_ -ne 'default' })
+    $all = @(Get-UntranslatedKeys -WithInvariant:$IncludeInvariant)
+    $invariantHidden = @($english.Entries | Where-Object { $_.Invariant }).Count
 
-    $summary = foreach ($langKey in $langKeys) {
-        if ($langKey -eq 'default') { continue }
-        $count = @($rows | Where-Object { $_.Lang -eq $langKey }).Count
+    $gaps = @($all | Where-Object { -not $_.Everywhere })
+    $everywhere = @($all | Where-Object { $_.Everywhere })
+    if ($only) { $gaps = @($gaps | Where-Object { $_.Matching -contains $only }) }
+
+    $summary = foreach ($langKey in $(if ($only) { @($only) } else { $satellites })) {
+        $gapCount = @($gaps | Where-Object { $_.Matching -contains $langKey }).Count
+        $everywhereCount = @($everywhere | Where-Object { $_.Matching -contains $langKey }).Count
         [pscustomobject]@{
-            Lang         = $langKey
-            Untranslated = $count
-            Translated   = $total - $count
-            Total        = $total
-            Coverage     = [Math]::Round((($total - $count) / $total) * 100, 1)
+            Lang              = $langKey
+            Gaps              = $gapCount
+            IdenticalNoGap    = $everywhereCount
+            MatchingEnglish   = $gapCount + $everywhereCount
+            Total             = $total
+            Coverage          = [Math]::Round((($total - $gapCount - $everywhereCount) / $total) * 100, 1)
         }
     }
 
     if ($Format -eq 'json') {
-        Write-Json ([pscustomobject]@{ Summary = @($summary); Keys = @($rows) })
+        Write-Json ([pscustomobject]@{
+                Summary             = @($summary)
+                TranslatedElsewhere = $gaps
+                IdenticalEverywhere = $everywhere
+                InvariantHidden     = $(if ($IncludeInvariant) { 0 } else { $invariantHidden })
+            })
         return
     }
 
-    if ($rows.Count -gt 0) {
-        $langWidth = ($rows | ForEach-Object { $_.Lang.Length } | Measure-Object -Maximum).Maximum
-        $keyWidth = [Math]::Min(46, ($rows | ForEach-Object { $_.Key.Length } | Measure-Object -Maximum).Maximum)
-        foreach ($row in $rows) {
-            Write-Output ("{0}  {1}  {2}" -f $row.Lang.PadRight($langWidth), $row.Key.PadRight($keyWidth), (Format-Inline $row.Value 90))
+    if ($gaps.Count -gt 0) {
+        Write-Output 'Still English here, translated in other languages. This is the actionable list.'
+        $keyWidth = [Math]::Min(50, ($gaps | ForEach-Object { $_.Key.Length } | Measure-Object -Maximum).Maximum)
+        foreach ($item in $gaps) {
+            $langs = if ($only) { @($only) } else { $item.Matching }
+            Write-Output ("  {0}  {1}" -f $item.Key.PadRight($keyWidth), "$($langs -join ' ') still English, translated in $($item.Translated -join ' ')")
         }
+    } else {
+        Write-Output 'Still English here, translated in other languages: none.'
+    }
+
+    if ($everywhere.Count -gt 0) {
         Write-Output ''
+        Write-Output "Identical in all ten files ($($everywhere.Count)). Likely intentional, consider mark-invariant."
+        $keyWidth = [Math]::Min(50, ($everywhere | ForEach-Object { $_.Key.Length } | Measure-Object -Maximum).Maximum)
+        foreach ($item in $everywhere) {
+            $flag = if ($item.Invariant) { ' [invariant]' } else { '' }
+            Write-Output ("  {0}  {1}{2}" -f $item.Key.PadRight($keyWidth), (Format-Inline $item.Value 70), $flag)
+        }
     }
-    foreach ($item in $summary) {
-        Write-Output ("{0,-8} {1,4} of {2} still English ({3}% translated)" -f $item.Lang, $item.Untranslated, $item.Total, $item.Coverage)
-    }
+
     Write-Output ''
-    Write-Output 'A value that matches English may be a real translation (product names, "OK", numbers). Read the list, do not just count it.'
+    foreach ($item in $summary) {
+        Write-Output ("{0,-8} {1,4} to translate, {2,3} identical everywhere, {3}% translated" -f $item.Lang, $item.Gaps, $item.IdenticalNoGap, $item.Coverage)
+    }
+    if ($invariantHidden -gt 0 -and -not $IncludeInvariant) {
+        Write-Output ''
+        Write-Output "$invariantHidden key(s) marked invariant are hidden. Pass -IncludeInvariant to show them."
+    }
     return
 }
 
@@ -1083,26 +1294,30 @@ function Invoke-Audit {
     $english = Get-LangDocument 'default'
     $total = $english.Entries.Count
     $satellites = @($script:LangFiles.Keys | Where-Object { $_ -ne 'default' })
-    $untranslated = @(Get-UntranslatedRows -LangKeys $satellites)
+    $untranslated = @(Get-UntranslatedKeys)
+    $invariantHidden = @($english.Entries | Where-Object { $_.Invariant }).Count
 
     $coverage = foreach ($langKey in $satellites) {
-        $count = @($untranslated | Where-Object { $_.Lang -eq $langKey }).Count
+        $gaps = @($untranslated | Where-Object { -not $_.Everywhere -and $_.Matching -contains $langKey }).Count
+        $everywhere = @($untranslated | Where-Object { $_.Everywhere -and $_.Matching -contains $langKey }).Count
         [pscustomobject]@{
             Lang         = $langKey
-            Untranslated = $count
+            Untranslated = $gaps
+            Everywhere   = $everywhere
             Total        = $total
-            Coverage     = [Math]::Round((($total - $count) / $total) * 100, 1)
+            Coverage     = [Math]::Round((($total - $gaps - $everywhere) / $total) * 100, 1)
         }
     }
     $catalog = Get-CatalogCheckResult
 
     if ($Format -eq 'json') {
         Write-Json ([pscustomobject]@{
-                Keys         = $total
-                Files        = $script:LangFiles.Count
-                Findings     = @($findings)
-                Coverage     = @($coverage)
-                CatalogCheck = $catalog
+                Keys            = $total
+                Files           = $script:LangFiles.Count
+                Findings        = @($findings)
+                Coverage        = @($coverage)
+                InvariantMarked = $invariantHidden
+                CatalogCheck    = $catalog
             })
         return
     }
@@ -1116,9 +1331,9 @@ function Invoke-Audit {
         foreach ($finding in $findings) { Write-Output "  $($finding.Lang) $($finding.Issue) $($finding.Key) - $($finding.Detail)" }
     }
     Write-Output ''
-    Write-Output 'coverage         (a value equal to English counts as untranslated)'
+    Write-Output "coverage         ($invariantHidden key(s) marked invariant are excluded)"
     foreach ($item in $coverage) {
-        Write-Output ("  {0,-8} {1,5}% translated, {2} still English" -f $item.Lang, $item.Coverage, $item.Untranslated)
+        Write-Output ("  {0,-8} {1,5}% translated, {2} to translate, {3} identical everywhere" -f $item.Lang, $item.Coverage, $item.Untranslated, $item.Everywhere)
     }
     Write-Output ''
     if (-not $catalog.Available) {
@@ -1143,6 +1358,9 @@ try {
         'validate' { Invoke-Validate }
         'audit' { Invoke-Audit }
         'catalog-check' { Invoke-CatalogCheck }
+        'mark-invariant' { Invoke-MarkInvariant }
+        'unmark-invariant' { Invoke-UnmarkInvariant }
+        'help' { Invoke-Help }
     }
     exit $script:ExitCode
 } catch {
