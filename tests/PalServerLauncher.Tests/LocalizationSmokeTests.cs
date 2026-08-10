@@ -3,9 +3,9 @@ using PalServerLauncher.Localization;
 
 namespace PalServerLauncher.Tests;
 
-// Proof-of-concept coverage for GitHub issue #1 (Chinese translation). Strings.resx/Strings.zh-Hans.resx
-// currently hold a handful of placeholder keys, not a real extraction, this just proves the resx + MSBuild
-// strongly-typed-class mechanism actually resolves both languages before the real feature is built on top of it.
+// Guards the resx + MSBuild strongly-typed-class mechanism itself: that satellites resolve, and that key sets
+// and {N} placeholders stay in parity across all ten languages. It does NOT check translation quality, so a
+// satellite holding the English text passes every test here.
 public class LocalizationSmokeTests
 {
     [Fact]
@@ -15,11 +15,15 @@ public class LocalizationSmokeTests
         Assert.Equal("Start", Strings.Start_Button);
     }
 
+    // Both Chinese tests assert "resolved and not English" rather than a literal translation. Pinning the
+    // translated text made them fail on legitimate rewordings, which says nothing about resolution.
     [Fact]
     public void Chinese_satellite_resolves_via_explicit_culture()
     {
         var zhHans = CultureInfo.GetCultureInfo("zh-Hans");
-        Assert.Equal("启动", Strings.ResourceManager.GetString("Start_Button", zhHans));
+        var chinese = Strings.ResourceManager.GetString("Start_Button", zhHans);
+        Assert.False(string.IsNullOrWhiteSpace(chinese));
+        Assert.NotEqual(Strings.ResourceManager.GetString("Start_Button", CultureInfo.InvariantCulture), chinese);
     }
 
     [Fact]
@@ -28,7 +32,9 @@ public class LocalizationSmokeTests
         var zhHans = CultureInfo.GetCultureInfo("zh-Hans");
         var resourceSet = Strings.ResourceManager.GetResourceSet(zhHans, createIfNotExists: true, tryParents: false);
         Assert.NotNull(resourceSet);
-        Assert.Equal("立即重新启动", resourceSet!.GetString("LauncherSettings_RestartNow"));
+        var chinese = resourceSet!.GetString("LauncherSettings_RestartNow");
+        Assert.False(string.IsNullOrWhiteSpace(chinese));
+        Assert.NotEqual(Strings.ResourceManager.GetString("LauncherSettings_RestartNow", CultureInfo.InvariantCulture), chinese);
     }
 
     [Fact]
