@@ -118,13 +118,13 @@
     <value>公告</value>
   </data>
   <data name="Announcements_Intro" xml:space="preserve">
-    <value>重启前向玩家显示。在需要显示倒计时的位置放置 {minutes}（它会替换为剩余分钟数）。删除它则显示不带时间的固定消息。</value>
+    <value>重新启动前向玩家显示。在需要显示倒计时的位置放置 {minutes}（它会替换为剩余分钟数）。删除它则显示不带时间的固定消息。</value>
   </data>
   <data name="Announcements_RestartLabel" xml:space="preserve">
-    <value>计划 / 手动重启</value>
+    <value>计划 / 手动重新启动</value>
   </data>
   <data name="Announcements_UpdateLabel" xml:space="preserve">
-    <value>更新重启</value>
+    <value>更新重新启动</value>
   </data>
   <data name="Announcements_EmptyTitle" xml:space="preserve">
     <value>公告不能为空</value>
@@ -154,10 +154,10 @@
     <value>安装服务器，或在安装后启动 (▶) / 停止 (■)。启动时会先检查更新（当“启动时更新”开启时），然后再启动。</value>
   </data>
   <data name="Main_RestartTip" xml:space="preserve">
-    <value>立即重启：立即保存并重启服务器，不向玩家显示倒计时。定时重启和更新重启会先向玩家发出警告。</value>
+    <value>立即重新启动：立即保存并重新启动服务器，不向玩家显示倒计时。定时重新启动和更新重新启动会先向玩家发出警告。</value>
   </data>
   <data name="Main_ForceShutdownTip" xml:space="preserve">
-    <value>立即终止服务器进程，不进行保存。当启动、停止或重启操作卡住一段时间后才会出现。仅在服务器停止响应时使用。</value>
+    <value>立即终止服务器进程，不进行保存。当启动、停止或重新启动操作卡住一段时间后才会出现。仅在服务器停止响应时使用。</value>
   </data>
   <data name="Main_CheckForUpdate" xml:space="preserve">
     <value>检查更新</value>
@@ -226,37 +226,37 @@
     <value>运行时间</value>
   </data>
   <data name="Main_StatNextRestart" xml:space="preserve">
-    <value>下次重启</value>
+    <value>下次重新启动</value>
   </data>
   <data name="Main_CollapseTip" xml:space="preserve">
-    <value>显示或隐藏设置区块（重启、备份、杂项）</value>
+    <value>显示或隐藏设置区块（重新启动、备份、杂项）</value>
   </data>
   <data name="Main_RestartsHeader" xml:space="preserve">
-    <value>重启</value>
+    <value>重新启动</value>
   </data>
   <data name="Main_ScheduledRestartAt" xml:space="preserve">
-    <value>定时重启于</value>
+    <value>定时重新启动于</value>
   </data>
   <data name="Main_ScheduledRestartTip" xml:space="preserve">
-    <value>在所列时间自动重启服务器。如果服务器运行时间未达到下方的最短运行时间，则跳过该次重启。</value>
+    <value>在所列时间自动重新启动服务器。如果服务器运行时间未达到下方的最短运行时间，则跳过该次重新启动。</value>
   </data>
   <data name="Main_ChooseRestartTimes" xml:space="preserve">
-    <value>选择重启时间</value>
+    <value>选择重新启动时间</value>
   </data>
   <data name="Main_MinUptime" xml:space="preserve">
-    <value>重启前最短运行时间</value>
+    <value>重新启动前最短运行时间</value>
   </data>
   <data name="Main_HourSuffix" xml:space="preserve">
     <value>小时</value>
   </data>
   <data name="Main_AnnounceRestarts" xml:space="preserve">
-    <value>重启公告</value>
+    <value>重新启动公告</value>
   </data>
   <data name="Main_AnnounceRestartsTip" xml:space="preserve">
-    <value>在定时重启或更新重启前，按右侧设置的分钟节点在游戏内向玩家发出警告。无人在线时跳过。</value>
+    <value>在定时重新启动或更新重新启动前，按右侧设置的分钟节点在游戏内向玩家发出警告。无人在线时跳过。</value>
   </data>
   <data name="Main_AnnounceLeadTip" xml:space="preserve">
-    <value>重启前多少分钟发出公告（留空 = 关闭）</value>
+    <value>重新启动前多少分钟发出公告（留空 = 关闭）</value>
   </data>
   <data name="Main_MinuteSuffix" xml:space="preserve">
     <value>分钟</value>
@@ -265,13 +265,13 @@
     <value>编辑公告</value>
   </data>
   <data name="Main_EditAnnouncementsTip" xml:space="preserve">
-    <value>编辑重启前玩家在游戏内看到的消息。</value>
+    <value>编辑重新启动前玩家在游戏内看到的消息。</value>
   </data>
   <data name="Main_ValidateOnRestart" xml:space="preserve">
-    <value>重启时校验文件</value>
+    <value>重新启动时校验文件</value>
   </data>
   <data name="Main_ValidateOnRestartTip" xml:space="preserve">
-    <value>在启动/重启时对更新进行完整的完整性校验（较慢）</value>
+    <value>在启动/重新启动时对更新进行完整的完整性校验（较慢）</value>
   </data>
   <data name="Main_BackupsHeader" xml:space="preserve">
     <value>备份</value>
@@ -289,7 +289,7 @@
     <value>关闭时</value>
   </data>
   <data name="Main_BackupShutdownTip" xml:space="preserve">
-    <value>在服务器停止或重启时进行备份（会先保存世界）。</value>
+    <value>在服务器停止或重新启动时进行备份（会先保存世界）。</value>
   </data>
   <data name="Main_BackupScheduled" xml:space="preserve">
     <value>定时</value>
@@ -325,13 +325,13 @@
     <value>自动更新服务器</value>
   </data>
   <data name="Main_AutoUpdateTip" xml:space="preserve">
-    <value>发现新更新时自动重启服务器。如果有玩家在线，“重启公告”设置会在重启前增加延迟。</value>
+    <value>发现新更新时自动重新启动服务器。如果有玩家在线，“重新启动公告”设置会在重新启动前增加延迟。</value>
   </data>
   <data name="Main_UpdateOnStart" xml:space="preserve">
-    <value>启动/重启时更新</value>
+    <value>启动/重新启动时更新</value>
   </data>
   <data name="Main_UpdateOnStartTip" xml:space="preserve">
-    <value>每次服务器启动或重启时都通过 SteamCMD 检查更新。取消勾选后，启动/重启时不会自动下载更新。您仍可通过“检查更新”手动更新。</value>
+    <value>每次服务器启动或重新启动时都通过 SteamCMD 检查更新。取消勾选后，启动/重新启动时不会自动下载更新。您仍可通过“检查更新”手动更新。</value>
   </data>
   <data name="Main_CheckUpdateEvery" xml:space="preserve">
     <value>检查更新间隔</value>
@@ -352,13 +352,13 @@
     <value>每 30 秒向日志写入一行服务器统计信息（FPS、玩家数、运行时间、内存）。从终端运行时很方便，否则会给日志增加干扰。</value>
   </data>
   <data name="Main_ZombieCheck" xml:space="preserve">
-    <value>未响应重启阈值</value>
+    <value>未响应重新启动阈值</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
-    <value>当 REST API 连续这么多次无法访问，或世界连续这么多次保持冻结时，重启服务器。如果您的 REST API 不稳定，且您宁愿它永不自动重启，请关闭此项。</value>
+    <value>当 REST API 连续这么多次无法访问，或世界连续这么多次保持冻结时，重新启动服务器。如果您的 REST API 不稳定，且您宁愿它永不自动重新启动，请关闭此项。</value>
   </data>
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
-    <value>连续多少次健康检查失败后，服务器会被视为未响应并被强制重启。</value>
+    <value>连续多少次健康检查失败后，服务器会被视为未响应并被强制重新启动。</value>
   </data>
   <data name="Main_ZombieNeedsRestTip" xml:space="preserve">
     <value>需要 REST API。没有它，启动器无法区分服务器是已冻结还是正常运行，因此此检查不可用。在服务器设置中开启 RESTAPIEnabled。</value>
@@ -420,7 +420,7 @@
   <data name="Main_ServerRunningMessage" xml:space="preserve">
     <value>从此文件夹启动的 Palworld 服务器已在运行，几乎可以肯定是您上次会话留下的，因为启动器只跟踪它在此处启动的服务器。
 
-重新连接可继续通过 REST API 管理它（实时统计、定时重启、备份，对于并非启动器自己启动的服务器，服务器日志选项卡将保持为空）。否则请将其关闭，或退出。</value>
+重新连接可继续通过 REST API 管理它（实时统计、定时重新启动、备份，对于并非启动器自己启动的服务器，服务器日志选项卡将保持为空）。否则请将其关闭，或退出。</value>
   </data>
   <data name="Main_Reconnect" xml:space="preserve">
     <value>重新连接</value>
@@ -484,7 +484,7 @@
   <data name="Main_ServerInstalledMessage" xml:space="preserve">
     <value>服务器安装成功。
 
-启用 REST API 吗？它让启动器能够控制服务器：应用游戏更新、正常保存和关闭、定时重启和备份，以及监控服务器健康状况。
+启用 REST API 吗？它让启动器能够控制服务器：应用游戏更新、正常保存和关闭、定时重新启动和备份，以及监控服务器健康状况。
 
 如果启用，启动器现在就会生成服务器配置，并设置一个安全的随机生成的管理员密码（之后可在“服务器设置”的“管理”选项卡中查看或修改）。您也可以跳过此步，稍后自行启用。</value>
   </data>
@@ -498,9 +498,9 @@
     <value>启用 REST API？</value>
   </data>
   <data name="Main_EnableRestMessage" xml:space="preserve">
-    <value>此启动器围绕 Palworld 的 REST API 构建，几乎所有功能都依赖它：正常保存并关闭、最新备份、实时健康监控、自动重启，以及玩家加入/离开的记录。
+    <value>此启动器围绕 Palworld 的 REST API 构建，几乎所有功能都依赖它：正常保存并关闭、最新备份、实时健康监控、自动重新启动，以及玩家加入/离开的记录。
 
-此服务器尚未启用 REST API，因此这些功能会受到限制：关闭将退而使用强制终止，备份可能不是最新的，也没有自动重启。
+此服务器尚未启用 REST API，因此这些功能会受到限制：关闭将退而使用强制终止，备份可能不是最新的，也没有自动重新启动。
 
 现在就用一个安全的随机生成的管理员密码启用它吗？</value>
   </data>
@@ -544,10 +544,10 @@
     <value>有可用更新</value>
   </data>
   <data name="Main_UpdateRunningMessage" xml:space="preserve">
-    <value>有更新的服务器版本（{0}）可用。现在就更新并重启服务器吗？玩家会收到常规的重启警告。</value>
+    <value>有更新的服务器版本（{0}）可用。现在就更新并重新启动服务器吗？玩家会收到常规的重新启动警告。</value>
   </data>
   <data name="Main_UpdateRestart" xml:space="preserve">
-    <value>更新并重启</value>
+    <value>更新并重新启动</value>
   </data>
   <data name="Main_UpdateStoppedMessage" xml:space="preserve">
     <value>有更新的服务器版本（{0}）可用。现在就下载并应用吗？</value>
@@ -567,10 +567,10 @@
 {1}</value>
   </data>
   <data name="Times_RestartTitle" xml:space="preserve">
-    <value>重启时间</value>
+    <value>重新启动时间</value>
   </data>
   <data name="Times_RestartHeader" xml:space="preserve">
-    <value>重启时间</value>
+    <value>重新启动时间</value>
   </data>
   <data name="Times_BackupTitle" xml:space="preserve">
     <value>备份时间</value>
@@ -1398,10 +1398,10 @@
     <value>停止中</value>
   </data>
   <data name="State_Restarting" xml:space="preserve">
-    <value>重启中</value>
+    <value>重新启动中</value>
   </data>
   <data name="State_Backoff" xml:space="preserve">
-    <value>重启暂停</value>
+    <value>重新启动暂停</value>
   </data>
   <data name="Update_AutoUpdateOff" xml:space="preserve">
     <value>自动更新已关闭 · {0}</value>
@@ -1413,7 +1413,7 @@
     <value>更新检查失败 · {0}</value>
   </data>
   <data name="Update_Found" xml:space="preserve">
-    <value>发现新构建 {0}，正在重启</value>
+    <value>发现新构建 {0}，正在重新启动</value>
   </data>
   <data name="Update_UpToDate" xml:space="preserve">
     <value>已是最新 · {0}</value>
@@ -2196,13 +2196,13 @@
     <value>硬核</value>
   </data>
   <data name="LauncherSettings_RestartPrompt" xml:space="preserve">
-    <value>启动器需要重启以应用新语言（{0}）。现在就重启吗？</value>
+    <value>启动器需要重新启动以应用新语言（{0}）。现在就重新启动吗？</value>
   </data>
   <data name="LauncherSettings_RestartPromptRunning" xml:space="preserve">
-    <value>启动器需要重启以应用新语言（{0}）。您的 Palworld 服务器会继续运行，启动器将重新连接到它。现在就重启吗？</value>
+    <value>启动器需要重新启动以应用新语言（{0}）。您的 Palworld 服务器会继续运行，启动器将重新连接到它。现在就重新启动吗？</value>
   </data>
   <data name="LauncherSettings_RestartNow" xml:space="preserve">
-    <value>立即重启</value>
+    <value>立即重新启动</value>
   </data>
   <data name="LauncherSettings_Copyright" xml:space="preserve">
     <value>© 2026 Syl S. · GPLv3</value>
@@ -2478,10 +2478,10 @@
     <value>清空所有日志选项卡。仅清除屏幕上的文本，磁盘上的日志文件不受影响。</value>
   </data>
   <data name="LauncherSettings_ClearLogsOnManualStart" xml:space="preserve">
-    <value>手动启动和重启服务器时清空日志</value>
+    <value>手动启动和重新启动服务器时清空日志</value>
   </data>
   <data name="LauncherSettings_ClearLogsOnManualStartTip" xml:space="preserve">
-    <value>当您自己启动或重启服务器时，先清空日志选项卡。定时重启、更新重启和崩溃恢复从不清空，因此您能保留那些说明服务器为何启动失败的消息。磁盘上的日志文件永不受影响。</value>
+    <value>当您自己启动或重新启动服务器时，先清空日志选项卡。定时重新启动、更新重新启动和崩溃恢复从不清空，因此您能保留那些说明服务器为何启动失败的消息。磁盘上的日志文件永不受影响。</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledManual" xml:space="preserve">
     <value>您也可以手动安装 UE4SS。从 GitHub 或 NexusMods 获取它，并把它的 zip 解压到 Pal\Binaries\Win64，使其中出现 ue4ss 文件夹和 dwmapi.dll。不要同时使用两者，两份 UE4SS 会让服务器崩溃。</value>
