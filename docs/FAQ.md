@@ -90,6 +90,10 @@ Yes, as of v0.4.0. Use the **Import server** button on the main window, point it
 folder (the one containing PalServer.exe), and it copies it into the launcher so it can manage it. Your
 original is left where it is until you've confirmed the managed copy works.
 
+The button only appears when the launcher doesn't already have a server. To bring in a different one, delete
+the current install at `PalworldServerLauncher\PalServer` first (or `palworlddedicatedserver` if the launcher
+set it up before v1.1.0).
+
 *(On an older version without Import: click Install to let it set up a fresh server, close the launcher, then
 copy your existing server files over the top of the generated `PalworldServerLauncher\PalServer` folder, or
 `palworlddedicatedserver` on installs made before v1.1.0.)*

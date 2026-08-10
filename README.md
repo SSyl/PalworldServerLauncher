@@ -28,71 +28,54 @@ Chinese, Traditional Chinese, and Korean. See [Languages](#languages).
 ## Features
 
 ### Install and update
-- Installs SteamCMD and the server for you. **Start** checks for an update first (can be turned off).
-- **Auto-updates when a new build drops**, restarting gracefully to apply it. Version-agnostic, so it keeps
-  working across game updates without needing to be told about them.
-- **Pin the server to its current build** to hold it there and pause updates, handy if a game update breaks
-  something until you're ready for it.
+- Installs SteamCMD and the server for you, and **Start** checks for an update first (can be turned off).
+- **Auto-updates when a new build drops** and restarts gracefully to apply it, with no version to configure.
+- **Pin the server to its current build** to pause updates when a game update breaks something.
 - **Check for Update** (safe while running) and **Validate Files** buttons.
-- **Import an existing server** you installed elsewhere: it's copied into the launcher so it can manage it,
-  and your original is left where it was. Import only shows when the launcher doesn't already have a server; to
-  bring in a different one, delete the current install at `PalworldServerLauncher\PalServer` first (or
-  `palworlddedicatedserver` if the launcher set it up before v1.1.0).
+- **Import an existing server** from elsewhere, copied in so the launcher can manage it, original left alone.
 
 ### Restarts and recovery
-- **Scheduled restarts** at the times you set, with a minimum-uptime guard so a server that just came up
-  won't get bounced.
-- **In-game warnings** before a restart, at whatever marks you choose, skipped when nobody's online.
-- **Crash and hang recovery.** Restarts automatically on a crash, and also catches a server that's
-  technically running but unresponsive (REST stopped answering, or the world stopped advancing). A safety
-  cutoff stops it from looping forever if the server keeps dying. When a crash does happen, the log reports
-  how long the server had been up, the exit code, and the reason Palworld recorded in its own crash report.
+- **Scheduled restarts** at times you set, with a minimum-uptime guard so a fresh server isn't bounced.
+- **In-game warnings** before a restart, at marks you choose, skipped when nobody is online.
+- **Crash and hang recovery**, catching a server that runs but stops responding, with a cutoff to stop loops.
+- Crash lines report how long the server was up, the exit code, and Palworld's own crash reason.
 
 ### Backups
-- Zips the world save and config, timestamped. Runs on startup, shutdown, a schedule, or on demand.
-- Triggers a fresh in-game save first when the REST API is on, so the backup is actually current. Old
-  automatic backups age out after a set number of days, manual ones are left alone.
-- Save backups to a folder of your choice, or keep the default next to the launcher.
+- Zips the world save and config, timestamped, on startup, shutdown, a schedule, or on demand.
+- Saves the world in-game first when the REST API is on, so the backup is actually current.
+- Automatic backups age out after a set number of days. Manual ones are left alone.
+- Keep them next to the launcher or in a folder of your choice.
 
 ### Keeping an eye on things
-- Live tiles for FPS, players, uptime, memory, version, and when the next restart and backup are due.
-- Player joins and leaves show up in the log as they happen.
-- **Port Check**: tests whether your game port is reachable from outside your network, and warns if your
-  REST or RCON ports are exposed to the internet. Asks first, since it sends your public IP to an external
-  checking service to run the test.
+- Live tiles for FPS, players, uptime, memory, version, and the next restart and backup.
+- Player joins and leaves appear in the log as they happen.
+- **Port Check** tests whether your game port is reachable from outside, and warns if REST or RCON are exposed.
 
 ### Settings
-- A full **Server Settings** editor for `PalWorldSettings.ini`, tabbed (World Settings / Admin /
-  Undocumented), labeled with the game's own wording where it has one. **Search** filters the settings as you
-  type, matching a setting's name, label, or description. Only writes what you changed, and shows a preview
-  before saving.
+- A tabbed **Server Settings** editor for `PalWorldSettings.ini`, in the game's own wording where it has one.
+- **Search** filters the settings as you type, by name, label, or description.
+- Writes only the keys you changed, and previews them before saving.
 - **Difficulty presets**: Casual, Normal, Hard, or Hardcore in one click, previewed first.
 - A **Launch Arguments** editor with a live preview of the exact command line.
-- **Advanced**: set the server's process priority and pin it to specific CPU cores, re-applied automatically
-  since Unreal resets affinity on launch.
+- Set process priority and pin the server to CPU cores, re-applied because Unreal resets affinity on launch.
 
 ### Background and logs
-- Runs the server quietly in the background, no console window. Survives the launcher closing or crashing,
-  and offers to pick the server back up next time you open it, or does it automatically if you turn that on.
-- **Start at login** (optional): opens the launcher and starts the server when you sign into Windows, so
-  restarts, backups, and recovery keep running without you.
-- Logs from the launcher, SteamCMD, and the server show up in-app and to a rotating log file (last ten kept).
-  `--debug` and `--console` give more detail, see [Command-line options](docs/advanced-usage.md#command-line-options).
+- Runs the server hidden, with no console window, and it survives the launcher closing or crashing.
+- Offers to pick a running server back up next launch, or does it automatically if you turn that on.
+- **Start at login** (optional) opens the launcher and starts the server when you sign into Windows.
+- Launcher, SteamCMD, and server logs appear in-app and in a rotating log file (last ten kept).
+- `--debug` and `--console` add detail, see [Command-line options](docs/advanced-usage.md#command-line-options).
 
 ### Discord (optional)
-- **Webhook** notifications when the server comes up, goes down, updates, crashes, or players come and go.
-- A **control bot**: `/status`, `/players`, `/save`, `/backup`, `/update`, `/start`, `/restart`, `/stop` from
-  a locked-down channel and/or role. Restart and stop confirm first. Setup guide:
-  [docs/discord-bot-setup.md](docs/discord-bot-setup.md).
+- **Webhook** notifications for the server coming up, going down, updating, crashing, and players coming and going.
+- A **control bot**: `/status`, `/players`, `/save`, `/backup`, `/update`, `/start`, `/restart`, `/stop`.
+- The bot is locked to a channel and/or role, and restart and stop confirm first.
+- Setup guide: [docs/discord-bot-setup.md](docs/discord-bot-setup.md).
 
 ### Languages
-- Available in **English**, **German** (Deutsch), **Spanish** (Español), **French** (Français),
-  **Brazilian Portuguese** (Português (Brasil)), **Russian** (Русский), **Japanese** (日本語),
-  **Simplified Chinese** (简体中文), **Traditional Chinese** (繁體中文), and **Korean** (한국어). Pick your
-  language on first run, or any time from Launcher Settings (the gear icon in the top-right), then it restarts
-  to apply.
-- Every language except English is machine-translated (the in-game setting names come from Palworld's own
-  translations), so if something reads oddly, corrections via an issue or pull request are welcome.
+- Ten languages: English, Deutsch, Español, Français, Português (Brasil), Русский, 日本語, 简体中文, 繁體中文, 한국어.
+- Pick one on first run or from Launcher Settings (the gear icon, top-right), then it restarts to apply.
+- Everything but English is machine-translated, so corrections via an issue or pull request are welcome.
 
 ---
 
