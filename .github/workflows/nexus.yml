@@ -38,8 +38,10 @@ jobs:
       - uses: Nexus-Mods/upload-action@v1.0.0-beta.10
         with:
           api_key: ${{ secrets.NEXUSMODS_API_KEY }}
-          file_id: ${{ vars.NEXUSMODS_FILE_ID }}
-          # From v3/games/palworld/mods/3786, the `id` field. Needed for the changelog input.
+          # Both public and fixed, so they live here rather than in repo variables.
+          # file_id is the `id` from v3/mods/26040386719434/files, shown as "Group ID" on the mod page.
+          # mod_id is the `id` from v3/games/palworld/mods/3786, needed for the changelog input.
+          file_id: '7661768'
           mod_id: '26040386719434'
           filename: ${{ env.ZIP }}
           version: ${{ env.VERSION }}
