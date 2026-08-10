@@ -1,0 +1,74 @@
+name: Release
+
+# Manual only. Pushing never triggers a build.
+# Produces a DRAFT release so the exe can be smoke-tested before anyone can download it.
+# Publishing that draft is what triggers nexus.yml.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release, without the v (for example 1.3.0). Must match <Version> in the csproj.'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  draft:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.x'
+
+      # The mistake that ships silently: tagging a release the binary itself doesn't claim to be.
+      - name: Check the version matches the csproj
+        shell: pwsh
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          $csproj = [xml](Get-Content src/PalServerLauncher/PalServerLauncher.csproj)
+          $inProject = @($csproj.Project.PropertyGroup.Version | Where-Object { $_ })[0]
+          if ($inProject -ne $env:VERSION) {
+            throw "csproj <Version> is '$inProject' but you asked to release '$($env:VERSION)'. Bump the csproj first."
+          }
+
+      - run: dotnet test --configuration Release
+
+      - run: dotnet publish src/PalServerLauncher -c Release
+
+      - name: Zip the exe
+        shell: pwsh
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          $exe = 'src/PalServerLauncher/bin/Release/net10.0-windows/win-x64/publish/PalworldServerLauncher.exe'
+          if (-not (Test-Path $exe)) { throw "No published exe at $exe" }
+          Compress-Archive -Path $exe -DestinationPath "PalworldServerLauncher-v$($env:VERSION).zip"
+
+      - name: Take this version's section out of the changelog
+        shell: pwsh
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          $text = Get-Content CHANGELOG.md -Raw
+          $v = [regex]::Escape($env:VERSION)
+          $match = [regex]::Match($text, "(?ms)^## \[$v\][^\r\n]*\r?\n(.*?)(?=^## \[|\z)")
+          if (-not $match.Success) { throw "CHANGELOG.md has no '## [$($env:VERSION)]' section." }
+          $match.Groups[1].Value.Trim() | Set-Content notes.md -Encoding utf8
+
+      - name: Create the draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+        shell: pwsh
+        run: |
+          gh release create "v$($env:VERSION)" `
+            --draft `
+            --target ${{ github.sha }} `
+            --title "v$($env:VERSION) Palworld Server Launcher" `
+            --notes-file notes.md `
+            "PalworldServerLauncher-v$($env:VERSION).zip"

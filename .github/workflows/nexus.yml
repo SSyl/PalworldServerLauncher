@@ -1,0 +1,49 @@
+name: Publish to Nexus Mods
+
+# Fires when a GitHub release is published, so clicking Publish on the draft from release.yml
+# is the gate. Nothing reaches Nexus until the build has been smoke-tested.
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Download the zip from the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: gh release download "$TAG" --pattern '*.zip' --dir .
+
+      - name: Read the version and changelog out of the release
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          VERSION="${TAG#v}"
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "ZIP=PalworldServerLauncher-$TAG.zip" >> "$GITHUB_ENV"
+          {
+            echo 'CHANGELOG<<NEXUS_EOF'
+            awk -v want="## [$VERSION]" 'index($0, want) == 1 { found = 1; next } found && /^## \[/ { exit } found' CHANGELOG.md
+            echo 'NEXUS_EOF'
+          } >> "$GITHUB_ENV"
+
+      - uses: Nexus-Mods/upload-action@v1.0.0-beta.10
+        with:
+          api_key: ${{ secrets.NEXUSMODS_API_KEY }}
+          file_id: ${{ vars.NEXUSMODS_FILE_ID }}
+          # From v3/games/palworld/mods/3786, the `id` field. Needed for the changelog input.
+          mod_id: '26040386719434'
+          filename: ${{ env.ZIP }}
+          version: ${{ env.VERSION }}
+          display_name: Palworld Server Launcher ${{ github.event.release.tag_name }}
+          changelog: ${{ env.CHANGELOG }}
+          update_mod_version: true
+          archive_existing_version: true

@@ -81,9 +81,9 @@ You need **Windows 10 or 11 (64-bit)** and about 6 GB of disk space for the serv
 launcher itself is light, but the Palworld server it runs needs a lot of RAM, so check Palworld's
 [official requirements](https://docs.palworldgame.com/getting-started/requirements/) before you host.
 
-**Download** the latest `PalworldServerLauncher.exe` from the
-[releases page](https://github.com/SSyl/PalworldServerLauncher/releases/latest). It's a single file with no
-installer, so drop it wherever you want the server to live.
+**Download** the latest zip from the
+[releases page](https://github.com/SSyl/PalworldServerLauncher/releases/latest) and extract it. Inside is a
+single exe with no installer, so put it wherever you want the server to live.
 
 > [!NOTE]
 > The first time you run it, Windows may show a blue "Windows protected your PC" box, because the app isn't
