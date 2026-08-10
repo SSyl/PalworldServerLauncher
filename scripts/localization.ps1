@@ -21,6 +21,11 @@
 
     Exit codes: 0 clean, 1 findings or failure, 2 usage error, 3 a write failed verification and was rolled back.
 
+    catalog-check needs an FModel extraction of the game, which is far too large to commit and so is not in
+    this repo. Point at it with -ExportsPath or the PALWORLD_EXPORTS environment variable, or leave an
+    'Exports' folder next to the repo. Without one it reports itself skipped and every other command is
+    unaffected.
+
 .EXAMPLE
     pwsh scripts/localization.ps1 add -Key My_New_Key -En "English text"
 
@@ -826,10 +831,20 @@ function Invoke-Validate {
     return
 }
 
+# The exports are an FModel extraction of the game, far too large to commit, so they live outside the repo
+# and catalog-check is the only command that needs them. Resolution order is -ExportsPath, then
+# $env:PALWORLD_EXPORTS, then a sibling 'Exports' folder next to the repo. Returns null when none exists,
+# which makes catalog-check report itself skipped instead of failing.
 function Get-ExportRoot {
     if ($ExportsPath) {
         if (-not (Test-Path -LiteralPath $ExportsPath -PathType Container)) { throw "-ExportsPath '$ExportsPath' is not a folder." }
         return (Resolve-Path -LiteralPath $ExportsPath).ProviderPath
+    }
+    if ($env:PALWORLD_EXPORTS) {
+        if (-not (Test-Path -LiteralPath $env:PALWORLD_EXPORTS -PathType Container)) {
+            throw "PALWORLD_EXPORTS points at '$($env:PALWORLD_EXPORTS)', which is not a folder."
+        }
+        return (Resolve-Path -LiteralPath $env:PALWORLD_EXPORTS).ProviderPath
     }
     $candidate = Join-Path $PSScriptRoot '..' '..' 'Exports'
     if (-not (Test-Path -LiteralPath $candidate -PathType Container)) { return $null }
