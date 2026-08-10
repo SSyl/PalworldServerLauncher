@@ -141,6 +141,18 @@ mods enabled.
 </details>
 
 <details>
+<summary><strong>How do I change the language?</strong></summary>
+
+Pick one the first time you run the launcher, or change it later in Launcher Settings, under the gear icon in
+the top-right. The launcher restarts to apply it.
+
+Ten are available: English, Deutsch, Español, Français, Português (Brasil), Русский, 日本語, 简体中文, 繁體中文,
+and 한국어. Everything except English is machine-translated, so corrections via an issue or pull request are
+welcome.
+
+</details>
+
+<details>
 <summary><strong>Can I use a world I made in-game (a co-op session), not from a dedicated server?</strong></summary>
 
 Not directly. A dedicated server's save is a different format from the one Palworld creates for an in-game

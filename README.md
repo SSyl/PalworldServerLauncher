@@ -51,19 +51,17 @@ Traditional Chinese, and Korean. See [Languages](#languages).
 - **Port Check** tests whether your game port is reachable from outside, and warns if REST or RCON are exposed.
 
 ### Settings
-- A tabbed editor for `PalWorldSettings.ini`, using the game's own wording for each setting where it has one.
-- Search filters the settings as you type, by name, label, or description.
+- A searchable tabbed editor for `PalWorldSettings.ini`, using the game's own wording for each setting.
 - Only the keys you changed get written, and you see them before saving.
 - Difficulty presets for Casual, Normal, Hard, and Hardcore, previewed before they apply.
 - A launch arguments editor showing the exact command line it will use.
 - Set the server's process priority and pin it to CPU cores. Unreal resets affinity on launch, so it reapplies.
 
 ### Background and logs
-- The server runs hidden, with no console window, and survives the launcher closing or crashing.
+- The server runs without its own window, and keeps running if the launcher closes or crashes.
 - Next time you open the launcher it offers to pick that server back up, or does it on its own if you prefer.
 - **Start at login** opens the launcher and starts the server when you sign into Windows.
 - Launcher, SteamCMD, and server logs appear in-app and in a rotating log file, keeping the last ten.
-- `--debug` and `--console` add detail, see [Command-line options](docs/advanced-usage.md#command-line-options).
 
 ### Discord (optional)
 - Webhook notifications when the server starts, stops, updates, or crashes, and when players join or leave.
@@ -73,7 +71,6 @@ Traditional Chinese, and Korean. See [Languages](#languages).
 
 ### Languages
 - Ten languages: English, Deutsch, Español, Français, Português (Brasil), Русский, 日本語, 简体中文, 繁體中文, 한국어.
-- Pick one on first run, or later from Launcher Settings under the gear icon. It restarts to apply.
 - Everything but English is machine-translated, so corrections via an issue or pull request are welcome.
 
 ---
