@@ -29,9 +29,13 @@ jobs:
           VERSION="${TAG#v}"
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
           echo "ZIP=PalworldServerLauncher-$TAG.zip" >> "$GITHUB_ENV"
+          # Nexus wants one change per line prefixed with its section, so the markdown headings
+          # become "Added: ", "Changed: " and so on, and bold, backticks and links are flattened.
           {
             echo 'CHANGELOG<<NEXUS_EOF'
-            awk -v want="## [$VERSION]" 'index($0, want) == 1 { found = 1; next } found && /^## \[/ { exit } found' CHANGELOG.md
+            awk -v want="## [$VERSION]" 'index($0, want) == 1 { found = 1; next } found && /^## \[/ { exit } found' CHANGELOG.md \
+              | awk '/^### / { section = substr($0, 5); next } /^- / { print section ": " substr($0, 3) }' \
+              | sed -E 's/\*\*//g; s/`//g; s/\[([^]]*)\]\([^)]*\)/\1/g'
             echo 'NEXUS_EOF'
           } >> "$GITHUB_ENV"
 
@@ -48,4 +52,6 @@ jobs:
           display_name: Palworld Server Launcher ${{ github.event.release.tag_name }}
           changelog: ${{ env.CHANGELOG }}
           update_mod_version: true
-          archive_existing_version: true
+          # Old versions stay listed so people can still downgrade. Archiving also left the archived
+          # version holding the default-download tag, a state the website will not let you create.
+          archive_existing_version: false
