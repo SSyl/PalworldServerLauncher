@@ -96,47 +96,6 @@ Chinese, Traditional Chinese, and Korean. See [Languages](#languages).
 
 ---
 
-## Screenshots
-
-**The settings editor.** One tabbed window for every `PalWorldSettings.ini` value, labeled with the game's own wording.
-
-![Game settings editor](docs/images/app-screenshots/game-settings.png)
-
-**Difficulty presets.** Apply a Casual / Normal / Hard / Hardcore set of values, with a preview of exactly what changes.
-
-![Difficulty presets](docs/images/app-screenshots/difficulty-preset.png)
-
-**Launch arguments**, with a live preview of the exact command line.
-
-![Launch arguments](docs/images/app-screenshots/launch-args.png)
-
-**CPU affinity and priority.** Set the server process priority and pin it to specific CPU cores.
-
-![CPU affinity and priority](docs/images/app-screenshots/cpu-affinity-priority.png)
-
-**Picking restart and backup times.**
-
-![Restart and backup time picker](docs/images/app-screenshots/schedules.png)
-
-**Customizable in-game restart announcements.**
-
-![Announcements editor](docs/images/app-screenshots/announcements.png)
-
-**Live server commands.** Announce a message, kick, ban, or unban a player, and save the world, all while the server is running.
-
-![Live server commands](docs/images/app-screenshots/server-rest-commands.png)
-
-**Discord.** Optional webhook notifications and a locked-down control bot, with a checklist of exactly which slash commands it may run.
-
-![Discord settings](docs/images/app-screenshots/discord-bot-settings.png)
-
-**Available in several languages.** English, German, Spanish, French, Brazilian Portuguese, Russian, Japanese,
-Simplified Chinese (shown here), Traditional Chinese, and Korean.
-
-![The main window in Simplified Chinese](docs/images/app-screenshots/main-window-simplified-chinese.png)
-
----
-
 ## Getting started
 
 You'll need **Windows 10 or 11 (64-bit)**, plus room and bandwidth for the server install (a full install with
@@ -166,6 +125,44 @@ installer, so drop it wherever you'd like the server to live.
    the stats, graceful restarts, backups, and health checks. Without it the server still runs, but the
    launcher has to force-stop it instead of shutting it down cleanly.
 5. Optional: turn on **Scheduled restart** and pick your times, set up **Backups**, and connect **Discord**.
+
+---
+
+## Screenshots
+
+| Settings editor | Difficulty presets |
+| :-: | :-: |
+| ![Game settings editor](docs/images/app-screenshots/game-settings.png) | ![Difficulty presets](docs/images/app-screenshots/difficulty-preset.png) |
+
+Every `PalWorldSettings.ini` value in one tabbed window, labeled with the game's own wording, and presets that
+preview exactly what they change before you apply them.
+
+| Launch arguments | CPU affinity and priority |
+| :-: | :-: |
+| ![Launch arguments](docs/images/app-screenshots/launch-args.png) | ![CPU affinity and priority](docs/images/app-screenshots/cpu-affinity-priority.png) |
+
+| Mods | Port accessibility check |
+| :-: | :-: |
+| ![Steam Workshop and loose-pak mods](docs/images/app-screenshots/mods-window.png) | ![Port check](docs/images/app-screenshots/port-check-window.png) |
+
+Steam Workshop and dropped-in mods, and a check that tells you whether your ports are actually reachable from
+outside your network before your friends try to join.
+
+| Live server commands | Discord |
+| :-: | :-: |
+| ![Live server commands](docs/images/app-screenshots/server-rest-commands.png) | ![Discord settings](docs/images/app-screenshots/discord-bot-settings.png) |
+
+Announce, kick, ban, unban, and save while the server runs. Discord gets optional webhook notifications and a
+locked-down control bot, with a checklist of exactly which slash commands it may use.
+
+| Restart and backup times | In-game announcements |
+| :-: | :-: |
+| ![Restart and backup time picker](docs/images/app-screenshots/schedules.png) | ![Announcements editor](docs/images/app-screenshots/announcements.png) |
+
+**Available in ten languages.** English, German, Spanish, French, Brazilian Portuguese, Russian, Japanese,
+Simplified Chinese (shown here), Traditional Chinese, and Korean.
+
+![The main window in Simplified Chinese](docs/images/app-screenshots/main-window-simplified-chinese.png)
 
 ## FAQ and troubleshooting
 
