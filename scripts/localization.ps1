@@ -500,10 +500,20 @@ function Set-ResxContentVerified {
         # [void] so a verify block that ever writes to the pipeline cannot leak into a caller's return value.
         [void](& $Verify $reloaded)
     } catch {
-        [System.IO.File]::Copy($backup, $LiteralPath, $true)
-        Remove-Item -LiteralPath $backup -Force -ErrorAction SilentlyContinue
-        throw [System.Management.Automation.RuntimeException]::new(
-            "$([System.IO.Path]::GetFileName($LiteralPath)): verification failed, the file was restored unchanged. $($_.Exception.Message)")
+        # Keep the original failure even if the restore itself fails, since a read-only or locked target
+        # would otherwise surface as a bare File.Copy error and bury the reason the write was rejected.
+        $reason = $_.Exception.Message
+        $name = [System.IO.Path]::GetFileName($LiteralPath)
+        try {
+            [System.IO.File]::Copy($backup, $LiteralPath, $true)
+            $outcome = 'the file was restored unchanged'
+        } catch {
+            $outcome = "the file could NOT be restored ($($_.Exception.Message)), a copy of the original is at $backup"
+            $backup = $null
+        } finally {
+            if ($backup) { Remove-Item -LiteralPath $backup -Force -ErrorAction SilentlyContinue }
+        }
+        throw [System.Management.Automation.RuntimeException]::new("$name : verification failed, $outcome. $reason")
     }
 
     Remove-Item -LiteralPath $backup -Force -ErrorAction SilentlyContinue
@@ -616,7 +626,7 @@ function Invoke-Add {
                 if ($after.Index[$Key].Value -cne (Get-NormalizedValue $wanted)) {
                     throw "'$Key' did not round-trip. Wanted [$(Format-Inline $wanted)], got [$(Format-Inline $after.Index[$Key].Value)]."
                 }
-                $newDuplicates = @($after.Duplicates | Where-Object { $before.Duplicates -notcontains $_ })
+                $newDuplicates = @($after.Duplicates | Where-Object { $before.Duplicates -cnotcontains $_ })
                 if ($newDuplicates.Count -ne 0) { throw "the write introduced duplicate keys: $($newDuplicates -join ', ')." }
             }
 
@@ -674,13 +684,37 @@ function Invoke-Set {
         if ($after.Index[$Key].Value -cne $wanted) {
             throw "'$Key' did not round-trip. Wanted [$(Format-Inline $wanted)], got [$(Format-Inline $after.Index[$Key].Value)]."
         }
-        $newDuplicates = @($after.Duplicates | Where-Object { $before.Duplicates -notcontains $_ })
+        $newDuplicates = @($after.Duplicates | Where-Object { $before.Duplicates -cnotcontains $_ })
         if ($newDuplicates.Count -ne 0) { throw "the write introduced duplicate keys: $($newDuplicates -join ', ')." }
     }
 
     Write-Output "$file : set '$Key'."
     Write-Output "  was: $(Format-Inline $entry.Value 160)"
     Write-Output "  now: $(Format-Inline $wanted 160)"
+
+    # Warn before clearing markers. If the clearing throws, the placeholder warning is the more urgent of the
+    # two and would otherwise be the one lost.
+    # An extra-key in a satellite has no English counterpart to compare against, which validate reports
+    # separately, so there is simply nothing to check here.
+    $english = if ($langKey -eq 'default') { $null } else { Get-LangDocument 'default' }
+    $hasReference = $langKey -eq 'default' -or $english.Index.ContainsKey($Key)
+    if ($hasReference) {
+        $expected = Get-PlaceholderIndices $(if ($langKey -eq 'default') { $entry.Value } else { $english.Index[$Key].Value })
+        $actual = Get-PlaceholderIndices $wanted
+        if (($expected -join ',') -ne ($actual -join ',')) {
+            if ($langKey -eq 'default') {
+                # Changing the English placeholder set breaks every satellite at once, which is the direction
+                # that actually takes the app down, so it warns louder than the one-language case.
+                $stale = @($script:LangFiles.Keys | Where-Object { $_ -ne 'default' } | Where-Object {
+                        $doc = Get-LangDocument $_
+                        $doc.Index.ContainsKey($Key) -and ((Get-PlaceholderIndices $doc.Index[$Key].Value) -join ',') -ne ($actual -join ',')
+                    })
+                Write-Warning ("'$Key' English placeholders changed from {{{0}}} to {{{1}}}. {2} satellite(s) now mismatch and will throw FormatException at runtime: {3}." -f ($expected -join ','), ($actual -join ','), $stale.Count, ($stale -join ' '))
+            } else {
+                Write-Warning ("'$Key' placeholders now differ from English: en={{{0}}} {1}={{{2}}}. This throws FormatException at runtime." -f ($expected -join ','), $langKey, ($actual -join ','))
+            }
+        }
+    }
 
     if ($langKey -eq 'default') {
         $cleared = @(Clear-ReviewedForKey -KeyName $Key)
@@ -691,23 +725,6 @@ function Invoke-Set {
         # The marker confirmed the value this write just replaced, so it no longer describes anything.
         Set-CommentMarker -LangKey $langKey -KeyName $Key -Word 'reviewed' -CommentText $null -Quiet
         Write-Output "  cleared the reviewed marker, it confirmed the previous value."
-    }
-
-    $placeholderReference = if ($langKey -eq 'default') { $entry.Value } else { (Get-LangDocument 'default').Index[$Key].Value }
-    $expected = Get-PlaceholderIndices $placeholderReference
-    $actual = Get-PlaceholderIndices $wanted
-    if (($expected -join ',') -ne ($actual -join ',')) {
-        if ($langKey -eq 'default') {
-            # Changing the English placeholder set breaks every satellite at once, which is the direction
-            # that actually takes the app down, so it warns louder than the one-language case.
-            $stale = @($script:LangFiles.Keys | Where-Object { $_ -ne 'default' } | Where-Object {
-                    $doc = Get-LangDocument $_
-                    $doc.Index.ContainsKey($Key) -and ((Get-PlaceholderIndices $doc.Index[$Key].Value) -join ',') -ne ($actual -join ',')
-                })
-            Write-Warning ("'$Key' English placeholders changed from {{{0}}} to {{{1}}}. {2} satellite(s) now mismatch and will throw FormatException at runtime: {3}." -f ($expected -join ','), ($actual -join ','), $stale.Count, ($stale -join ' '))
-        } else {
-            Write-Warning ("'$Key' placeholders now differ from English: en={{{0}}} {1}={{{2}}}. This throws FormatException at runtime." -f ($expected -join ','), $langKey, ($actual -join ','))
-        }
     }
     return
 }
@@ -768,7 +785,7 @@ function Set-CommentMarker {
         if ($after.Index[$KeyName].Comment -cne $wantedComment) {
             throw "'$KeyName' comment did not round-trip. Wanted [$(Format-Inline $wantedComment 120)], got [$(Format-Inline $after.Index[$KeyName].Comment 120)]."
         }
-        $newDuplicates = @($after.Duplicates | Where-Object { $before.Duplicates -notcontains $_ })
+        $newDuplicates = @($after.Duplicates | Where-Object { $before.Duplicates -cnotcontains $_ })
         if ($newDuplicates.Count -ne 0) { throw "the write introduced duplicate keys: $($newDuplicates -join ', ')." }
     }
 
