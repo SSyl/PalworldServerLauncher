@@ -1103,7 +1103,7 @@ Detalhes completos em:
     <value>UE4SS Não Instalado</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
-    <value>O UE4SS ainda não está instalado. Adicione um mod UE4SS da Oficina e inicie o servidor uma vez, depois a pasta de mods dele vai aparecer aqui.</value>
+    <value>O UE4SS ainda não está instalado. Instale-o pela Oficina Steam e inicie o servidor uma vez, depois a pasta de mods dele vai aparecer aqui.</value>
   </data>
   <data name="Mods_ColOn" xml:space="preserve">
     <value>Ativo</value>
@@ -2546,5 +2546,29 @@ Para carregar um deles, defina o DedicatedServerName no GameUserSettings.ini com
     <value>Essa pasta contém um servidor Linux, cujos binários não podem ser executados no Windows. O launcher pode baixar o servidor dedicado do Windows com o SteamCMD, cerca de 4 GB, e trazer o mundo e as configurações de '{0}'. O original permanece no lugar.
 
 Importar dessa forma?</value>
+  </data>
+  <data name="Main_ClearLogs" xml:space="preserve">
+    <value>Limpar Logs</value>
+  </data>
+  <data name="Main_ClearLogsTip" xml:space="preserve">
+    <value>Limpa todas as abas de log. Só o texto na tela é apagado, o arquivo de log no disco não é alterado.</value>
+  </data>
+  <data name="LauncherSettings_ClearLogsOnManualStart" xml:space="preserve">
+    <value>Limpar os logs ao iniciar e reiniciar o servidor manualmente</value>
+  </data>
+  <data name="LauncherSettings_ClearLogsOnManualStartTip" xml:space="preserve">
+    <value>Quando você mesmo inicia ou reinicia o servidor, as abas de log são limpas antes. Reinícios agendados, reinícios por atualização e a recuperação de travamento nunca limpam, então você mantém as mensagens que explicam um servidor que não está conseguindo iniciar. O arquivo de log no disco nunca é alterado.</value>
+  </data>
+  <data name="Mods_Ue4ssNotInstalledManual" xml:space="preserve">
+    <value>Você também pode instalar o UE4SS manualmente. Baixe-o do GitHub ou do NexusMods e extraia o zip dele em Pal\Binaries\Win64, de modo que fiquem ali uma pasta ue4ss e o dwmapi.dll. Não use os dois ao mesmo tempo, duas cópias do UE4SS travam o servidor.</value>
+  </data>
+  <data name="Mods_Ue4ssConflictTitle" xml:space="preserve">
+    <value>Duas Instalações do UE4SS Encontradas</value>
+  </data>
+  <data name="Mods_Ue4ssConflictBody" xml:space="preserve">
+    <value>O UE4SS está instalado duas vezes: uma pela Oficina Steam (Mods\NativeMods\UE4SS) e outra manualmente (Pal\Binaries\Win64\ue4ss). O servidor trava ao iniciar quando carrega duas cópias do UE4SS. Remova uma delas, ou desative a instalada manualmente renomeando Pal\Binaries\Win64\dwmapi.dll para dwmapi.dll.bak.</value>
+  </data>
+  <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
+    <value>O UE4SS está instalado manualmente em Pal\Binaries\Win64\ue4ss. Os mods da Oficina que rodam sob o UE4SS são instalados em Mods\NativeMods\UE4SS\Mods, que um UE4SS instalado manualmente não lê, então eles não vão carregar. Os mods só de .pak continuam funcionando. Em vez disso, instale o UE4SS pela Oficina Steam para que o launcher os gerencie.</value>
   </data>
 </root>

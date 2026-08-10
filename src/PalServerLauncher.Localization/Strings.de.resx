@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Start_Button" xml:space="preserve">
-    <value>Start</value>
+    <value>Starten</value>
   </data>
   <data name="FirstRun_Prompt" xml:space="preserve">
     <value>Wählen Sie Ihre Sprache. Sie können dies später über die Zahnrad-Schaltfläche oben rechts ändern.</value>
@@ -148,6 +148,7 @@
   </data>
   <data name="Common_OK" xml:space="preserve">
     <value>OK</value>
+    <comment>reviewed, same word in German</comment>
   </data>
   <data name="Common_ForceShutdown" xml:space="preserve">
     <value>Erzwungenes Herunterfahren</value>
@@ -216,15 +217,18 @@ Trotzdem als feste Nachrichten speichern?</value>
   </data>
   <data name="Main_Mods" xml:space="preserve">
     <value>Mods</value>
+    <comment>reviewed, same word in German</comment>
   </data>
   <data name="Main_ModsTip" xml:space="preserve">
     <value>Verwaltet Server-Mods aus dem Steam Workshop: Fügen Sie Workshop-IDs hinzu, die der Launcher herunterladen soll, oder suchen Sie nach Mods, die Sie selbst in den Mods-Ordner gelegt haben.</value>
   </data>
   <data name="Main_StatusLabel" xml:space="preserve">
     <value>Status:</value>
+    <comment>reviewed, same word in German</comment>
   </data>
   <data name="Main_UpdateLabel" xml:space="preserve">
     <value>Update:</value>
+    <comment>reviewed, same word in German</comment>
   </data>
   <data name="Main_PublicIpLabel" xml:space="preserve">
     <value>Öffentliche IP:</value>
@@ -246,6 +250,7 @@ Trotzdem als feste Nachrichten speichern?</value>
   </data>
   <data name="Main_StatVersion" xml:space="preserve">
     <value>Version</value>
+    <comment>reviewed, same word in German</comment>
   </data>
   <data name="Main_StatFps" xml:space="preserve">
     <value>FPS</value>
@@ -285,6 +290,7 @@ Trotzdem als feste Nachrichten speichern?</value>
   </data>
   <data name="Main_HourSuffix" xml:space="preserve">
     <value>h</value>
+    <comment>reviewed, format or punctuation</comment>
   </data>
   <data name="Main_AnnounceRestarts" xml:space="preserve">
     <value>Ankündigen:</value>
@@ -297,6 +303,7 @@ Trotzdem als feste Nachrichten speichern?</value>
   </data>
   <data name="Main_MinuteSuffix" xml:space="preserve">
     <value>min</value>
+    <comment>reviewed, format or punctuation</comment>
   </data>
   <data name="Main_EditAnnouncements" xml:space="preserve">
     <value>Ankündigungen bearbeiten</value>
@@ -411,6 +418,7 @@ Trotzdem als feste Nachrichten speichern?</value>
   </data>
   <data name="Main_SecondsSuffix" xml:space="preserve">
     <value>s</value>
+    <comment>reviewed, format or punctuation</comment>
   </data>
   <data name="Main_DiscordBot" xml:space="preserve">
     <value>Discord-Bot</value>
@@ -426,6 +434,7 @@ Trotzdem als feste Nachrichten speichern?</value>
   </data>
   <data name="Main_TabChat" xml:space="preserve">
     <value>Chat</value>
+    <comment>reviewed, same word in German</comment>
   </data>
   <data name="Main_TabPlayers" xml:space="preserve">
     <value>Spieler</value>
@@ -700,6 +709,7 @@ Alle Details unter:
   </data>
   <data name="PortCheck_ServiceOnlineStatus" xml:space="preserve">
     <value>Online.</value>
+    <comment>reviewed, same word in German</comment>
   </data>
   <data name="PortCheck_ServiceUnavailable" xml:space="preserve">
     <value>Nicht verfügbar, check-host.cc ist momentan nicht erreichbar.</value>
@@ -743,6 +753,7 @@ Alle Details unter:
   </data>
   <data name="ServerCmd_HeaderServer" xml:space="preserve">
     <value>Server</value>
+    <comment>reviewed, same word in German</comment>
   </data>
   <data name="ServerCmd_SaveWorld" xml:space="preserve">
     <value>Welt speichern</value>
@@ -840,6 +851,7 @@ Alle Details unter:
   </data>
   <data name="Discord_BlurbLinkText" xml:space="preserve">
     <value>Discord Developer Portal</value>
+    <comment>reviewed, format or punctuation</comment>
   </data>
   <data name="Discord_BlurbSuffix" xml:space="preserve">
     <value> (fügen Sie einen Bot hinzu und laden Sie ihn anschließend mit den Scopes bot + applications.commands ein).</value>
@@ -907,6 +919,7 @@ Alle Details unter:
   <!-- ModsDialog -->
   <data name="Mods_Title" xml:space="preserve">
     <value>Mods</value>
+    <comment>reviewed, same word in German</comment>
   </data>
   <data name="Mods_Disclaimer" xml:space="preserve">
     <value>Hier funktionieren nur Mods, die für den Serverbetrieb ausgelegt sind. Viele Mods sind reine Client-Mods und können oder sollten nicht auf dem Server installiert werden. Prüfen Sie daher die Beschreibung eines Mods, bevor Sie ihn laden. Die Nutzung von Mods erfolgt auf eigenes Risiko, sie können zu beschädigten Speicherdaten oder Abstürzen führen.</value>
@@ -934,9 +947,11 @@ Alle Details unter:
   </data>
   <data name="Mods_BrowseLinkText" xml:space="preserve">
     <value>Palworld Steam Workshop</value>
+    <comment>reviewed, format or punctuation</comment>
   </data>
   <data name="Mods_BrowseSuffix" xml:space="preserve">
     <value>.</value>
+    <comment>reviewed, format or punctuation</comment>
   </data>
   <data name="Mods_AddButton" xml:space="preserve">
     <value>Hinzufügen</value>
@@ -1103,13 +1118,14 @@ Alle Details unter:
     <value>UE4SS nicht installiert</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
-    <value>UE4SS ist noch nicht installiert. Fügen Sie einen UE4SS-Mod aus dem Workshop hinzu und starten Sie den Server einmal, danach erscheint dessen Mods-Ordner hier.</value>
+    <value>UE4SS ist noch nicht installiert. Installieren Sie es aus dem Steam Workshop und starten Sie den Server einmal, danach erscheint dessen Mods-Ordner hier.</value>
   </data>
   <data name="Mods_ColOn" xml:space="preserve">
     <value>An</value>
   </data>
   <data name="Mods_ColName" xml:space="preserve">
     <value>Name</value>
+    <comment>reviewed, same word in German</comment>
   </data>
   <data name="Mods_ColId" xml:space="preserve">
     <value>ID</value>
@@ -1147,6 +1163,7 @@ Alle Details unter:
   </data>
   <data name="Settings_TabAdmin" xml:space="preserve">
     <value>Admin</value>
+    <comment>reviewed, same word in German</comment>
   </data>
   <data name="Settings_TabUndocumented" xml:space="preserve">
     <value>Undokumentiert</value>
@@ -1379,9 +1396,11 @@ Diese Änderungen übernehmen und speichern?</value>
   </data>
   <data name="Settings_CategoryPerformance" xml:space="preserve">
     <value>Performance</value>
+    <comment>reviewed, German uses Performance, matching Gameplay and Admin in the same tab strip</comment>
   </data>
   <data name="Settings_CategoryGameplay" xml:space="preserve">
     <value>Gameplay</value>
+    <comment>reviewed, same word in German</comment>
   </data>
   <data name="Settings_CategoryGameBalance" xml:space="preserve">
     <value>Spielbalance</value>
@@ -1402,6 +1421,7 @@ Diese Änderungen übernehmen und speichern?</value>
   </data>
   <data name="Settings_PriorityNormal" xml:space="preserve">
     <value>Normal</value>
+    <comment>reviewed, Windows' own German wording</comment>
   </data>
   <data name="Settings_PriorityAboveNormal" xml:space="preserve">
     <value>Höher als normal</value>
@@ -1475,9 +1495,11 @@ Diese Änderungen übernehmen und speichern?</value>
   </data>
   <data name="Sched_UntilHM" xml:space="preserve">
     <value>{0}h {1}m</value>
+    <comment>reviewed, format or punctuation</comment>
   </data>
   <data name="Sched_UntilMS" xml:space="preserve">
     <value>{0}m {1}s</value>
+    <comment>reviewed, format or punctuation</comment>
   </data>
   <data name="Cat_ServerName_Label" xml:space="preserve">
     <value>Weltname</value>
@@ -2207,6 +2229,7 @@ Diese Änderungen übernehmen und speichern?</value>
   </data>
   <data name="Cat_Difficulty_Opt_Normal" xml:space="preserve">
     <value>Normal</value>
+    <comment>reviewed, Palworld's own German term</comment>
   </data>
   <data name="Cat_Difficulty_Opt_Hard" xml:space="preserve">
     <value>Schwer</value>
@@ -2237,12 +2260,14 @@ Diese Änderungen übernehmen und speichern?</value>
   </data>
   <data name="Settings_PresetNormal" xml:space="preserve">
     <value>Normal</value>
+    <comment>reviewed, Palworld's own German term</comment>
   </data>
   <data name="Settings_PresetHard" xml:space="preserve">
     <value>Schwer</value>
   </data>
   <data name="Settings_PresetHardcore" xml:space="preserve">
     <value>Hardcore</value>
+    <comment>reviewed, Palworld's own German term</comment>
   </data>
   <data name="LauncherSettings_RestartPrompt" xml:space="preserve">
     <value>Der Launcher muss neu gestartet werden, um die neue Sprache ({0}) zu übernehmen. Jetzt neu starten?</value>
@@ -2546,5 +2571,29 @@ Um einen davon zu laden, setzen Sie DedicatedServerName in GameUserSettings.ini 
     <value>Dieser Ordner enthält einen Linux-Server, dessen Binärdateien nicht unter Windows laufen. Der Launcher kann den dedizierten Windows-Server mit SteamCMD herunterladen (ca. 4 GB) und die Welt sowie die Einstellungen aus „{0}“ übernehmen. Das Original bleibt erhalten.
 
 So importieren?</value>
+  </data>
+  <data name="Main_ClearLogs" xml:space="preserve">
+    <value>Protokolle leeren</value>
+  </data>
+  <data name="Main_ClearLogsTip" xml:space="preserve">
+    <value>Leert alle Protokoll-Tabs. Nur der angezeigte Text wird geleert, die Protokolldatei auf der Festplatte bleibt unangetastet.</value>
+  </data>
+  <data name="LauncherSettings_ClearLogsOnManualStart" xml:space="preserve">
+    <value>Protokolle beim manuellen Starten und Neustarten des Servers leeren</value>
+  </data>
+  <data name="LauncherSettings_ClearLogsOnManualStartTip" xml:space="preserve">
+    <value>Wenn Sie den Server selbst starten oder neu starten, werden zuerst die Protokoll-Tabs geleert. Bei geplanten Neustarts, Update-Neustarts und der Absturz-Wiederherstellung wird nie geleert, damit die Meldungen erhalten bleiben, die erklären, warum ein Server nicht startet. Die Protokolldatei auf der Festplatte wird nie angetastet.</value>
+  </data>
+  <data name="Mods_Ue4ssNotInstalledManual" xml:space="preserve">
+    <value>Sie können UE4SS auch manuell installieren. Laden Sie es von GitHub oder NexusMods herunter und entpacken Sie die zip nach Pal\Binaries\Win64, sodass dort ein Ordner ue4ss und dwmapi.dll liegen. Verwenden Sie nicht beide Installationen gleichzeitig, zwei Kopien von UE4SS lassen den Server abstürzen.</value>
+  </data>
+  <data name="Mods_Ue4ssConflictTitle" xml:space="preserve">
+    <value>Zwei UE4SS-Installationen gefunden</value>
+  </data>
+  <data name="Mods_Ue4ssConflictBody" xml:space="preserve">
+    <value>UE4SS ist zweimal installiert: einmal aus dem Steam Workshop (Mods\NativeMods\UE4SS) und einmal manuell (Pal\Binaries\Win64\ue4ss). Der Server stürzt beim Start ab, wenn er zwei Kopien von UE4SS lädt. Entfernen Sie eine davon, oder deaktivieren Sie die manuelle Installation, indem Sie Pal\Binaries\Win64\dwmapi.dll in dwmapi.dll.bak umbenennen.</value>
+  </data>
+  <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
+    <value>UE4SS ist manuell in Pal\Binaries\Win64\ue4ss installiert. Workshop-Mods, die unter UE4SS laufen, werden in Mods\NativeMods\UE4SS\Mods installiert. Ein manuell installiertes UE4SS liest diesen Ordner nicht, sie werden also nicht geladen. Reine .pak-Mods funktionieren weiterhin. Installieren Sie UE4SS stattdessen aus dem Steam Workshop, damit der Launcher sie verwaltet.</value>
   </data>
 </root>

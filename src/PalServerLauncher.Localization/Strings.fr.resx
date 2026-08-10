@@ -398,7 +398,7 @@ Les enregistrer quand même comme messages fixes ?</value>
     <value>Nombre de vérifications d'état consécutives en échec avant que le serveur soit considéré comme sans réponse et forcé à redémarrer.</value>
   </data>
   <data name="Main_ZombieNeedsRestTip" xml:space="preserve">
-    <value>Nécessite l'API REST. Sans elle, le launcher ne peut pas distinguer un serveur figé d'un serveur qui fonctionne normalement, donc cette vérification est indisponible. Activez RESTAPIEnabled dans Paramètres du serveur.</value>
+    <value>Nécessite l'API REST. Sans elle, le lanceur ne peut pas distinguer un serveur figé d'un serveur qui fonctionne normalement, donc cette vérification est indisponible. Activez RESTAPIEnabled dans Paramètres du serveur.</value>
   </data>
   <data name="Main_ChecksSuffix" xml:space="preserve">
     <value>vérif.</value>
@@ -1103,7 +1103,7 @@ Détails complets dans :
     <value>UE4SS non installé</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
-    <value>UE4SS n'est pas encore installé. Ajoutez un mod UE4SS depuis l'Atelier et démarrez le serveur une fois, son dossier de mods apparaîtra alors ici.</value>
+    <value>UE4SS n'est pas encore installé. Installez-le depuis l'Atelier Steam et démarrez le serveur une fois, son dossier de mods apparaîtra alors ici.</value>
   </data>
   <data name="Mods_ColOn" xml:space="preserve">
     <value>Actif</value>
@@ -2479,7 +2479,7 @@ Enregistrer ces changements ?</value>
     <value>Force le déploiement de ce mod sur le serveur même s'il ne déclare pas de compatibilité serveur. À utiliser avec prudence.</value>
   </data>
   <data name="Mods_ForceLocalTip" xml:space="preserve">
-    <value>L'installation forcée sur le serveur s'applique aux mods de l'Atelier téléchargés par le launcher. Pour un mod déposé manuellement, modifiez directement son Info.json.</value>
+    <value>L'installation forcée sur le serveur s'applique aux mods de l'Atelier téléchargés par le lanceur. Pour un mod déposé manuellement, modifiez directement son Info.json.</value>
   </data>
   <data name="Mods_ForceWarnTitle" xml:space="preserve">
     <value>Forcer l'installation sur le serveur ?</value>
@@ -2546,5 +2546,29 @@ Pour en charger une, définissez DedicatedServerName dans GameUserSettings.ini s
     <value>Ce dossier contient un serveur Linux, dont les binaires ne peuvent pas s'exécuter sous Windows. Le lanceur peut télécharger le serveur dédié Windows avec SteamCMD, environ 4 Go, et transférer le monde et les paramètres depuis « {0} ». L'original reste en place.
 
 L'importer de cette façon ?</value>
+  </data>
+  <data name="Main_ClearLogs" xml:space="preserve">
+    <value>Effacer les journaux</value>
+  </data>
+  <data name="Main_ClearLogsTip" xml:space="preserve">
+    <value>Efface tous les onglets de journal. Seul le texte affiché est effacé, le fichier journal sur le disque n'est pas touché.</value>
+  </data>
+  <data name="LauncherSettings_ClearLogsOnManualStart" xml:space="preserve">
+    <value>Effacer les journaux au démarrage et au redémarrage manuels du serveur</value>
+  </data>
+  <data name="LauncherSettings_ClearLogsOnManualStartTip" xml:space="preserve">
+    <value>Lorsque vous démarrez ou redémarrez le serveur vous-même, les onglets de journal sont d'abord effacés. Les redémarrages planifiés, ceux liés aux mises à jour et la récupération après plantage n'effacent jamais rien, vous conservez ainsi les messages qui expliquent pourquoi un serveur ne démarre pas. Le fichier journal sur le disque n'est jamais touché.</value>
+  </data>
+  <data name="Mods_Ue4ssNotInstalledManual" xml:space="preserve">
+    <value>Vous pouvez aussi installer UE4SS manuellement. Récupérez-le sur GitHub ou NexusMods et extrayez son zip dans Pal\Binaries\Win64, afin d'y obtenir un dossier ue4ss et dwmapi.dll. N'utilisez pas les deux installations à la fois, deux copies d'UE4SS font planter le serveur.</value>
+  </data>
+  <data name="Mods_Ue4ssConflictTitle" xml:space="preserve">
+    <value>Deux installations d'UE4SS détectées</value>
+  </data>
+  <data name="Mods_Ue4ssConflictBody" xml:space="preserve">
+    <value>UE4SS est installé deux fois : une fois depuis l'Atelier Steam (Mods\NativeMods\UE4SS) et une fois manuellement (Pal\Binaries\Win64\ue4ss). Le serveur plante au démarrage lorsqu'il charge deux copies d'UE4SS. Supprimez-en une, ou désactivez l'installation manuelle en renommant Pal\Binaries\Win64\dwmapi.dll en dwmapi.dll.bak.</value>
+  </data>
+  <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
+    <value>UE4SS est installé manuellement dans Pal\Binaries\Win64\ue4ss. Les mods de l'Atelier qui fonctionnent avec UE4SS s'installent dans Mods\NativeMods\UE4SS\Mods. Un UE4SS installé manuellement ne lit pas ce dossier, ils ne se chargeront donc pas. Les mods uniquement .pak continuent de fonctionner. Installez plutôt UE4SS depuis l'Atelier Steam pour que le lanceur les gère.</value>
   </data>
 </root>

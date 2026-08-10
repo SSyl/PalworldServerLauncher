@@ -566,6 +566,17 @@ public partial class MainWindow : Window
     {
         collection.CollectionChanged += (_, e) =>
         {
+            // Clear Logs empties the list, so the view is at the bottom by definition and following the tail
+            // again. HookLogScroll can't work this out on its own: it ignores extent changes, and emptying a
+            // full log is nothing but an extent change, so a user who had scrolled up would stay latched to
+            // "not following" over an empty log and never auto-scroll again.
+            if (e.Action == NotifyCollectionChangedAction.Reset)
+            {
+                _followingTail[list] = true;
+                if (ReferenceEquals(list, CurrentLog()))
+                    UpdateJumpButton();
+                return;
+            }
             if (e.Action != NotifyCollectionChangedAction.Add)
                 return;
             // Leave the user where they are if they've scrolled up to read history.

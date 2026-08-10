@@ -174,8 +174,58 @@ public sealed class ModService
     /// mod) keeps its Lua mods. Only exists once a UE4SS mod has been deployed.</summary>
     public string Ue4ssModsDir => Path.Combine(LauncherConfig.ServerDir(_serverRoot), "Mods", "NativeMods", "UE4SS", "Mods");
 
-    /// <summary>True once UE4SS has been deployed (its mods folder exists).</summary>
-    public bool Ue4ssInstalled => Directory.Exists(Ue4ssModsDir);
+    /// <summary>Root of a hand-installed UE4SS: <c>Pal\Binaries\Win64\ue4ss</c>. This is where the UE4SS zips
+    /// extract to, alongside the dwmapi.dll proxy that loads them, entirely outside Palworld's own mod system.</summary>
+    public string CustomUe4ssDir => Path.Combine(LauncherConfig.ServerDir(_serverRoot), "Pal", "Binaries", "Win64", "ue4ss");
+
+    /// <summary>Script-mods folder of a hand-installed UE4SS: <c>Pal\Binaries\Win64\ue4ss\Mods</c>.</summary>
+    public string CustomUe4ssModsDir => Path.Combine(CustomUe4ssDir, "Mods");
+
+    /// <summary>The proxy DLL that loads a hand-installed UE4SS: <c>Pal\Binaries\Win64\dwmapi.dll</c>. Nothing
+    /// loads UE4SS without it, and renaming it is the documented way to turn a hand install off, so its presence
+    /// (not the folder's) is what decides whether a second copy is actually going to load.</summary>
+    public string CustomUe4ssLoaderPath => Path.Combine(LauncherConfig.ServerDir(_serverRoot), "Pal", "Binaries", "Win64", "dwmapi.dll");
+
+    /// <summary>True once the server has deployed a Workshop UE4SS (its mods folder exists).</summary>
+    public bool Ue4ssDeployed => Directory.Exists(Ue4ssModsDir);
+
+    /// <summary>True when the Workshop side will supply UE4SS: either the server already deployed it, or a mod
+    /// source folder holds its DLL and the next start will. The staged half is what makes a conflict detectable
+    /// before it bites, since adding UE4SS from the Workshop creates the conflict but the server only deploys it
+    /// (and crashes) on the next start.</summary>
+    public bool WorkshopUe4ssPresent => Ue4ssDeployed || StagedWorkshopUe4ss();
+
+    /// <summary>Look for UE4SS.dll in the Workshop mod sources. Keyed on the DLL rather than a package name, which
+    /// varies by who published the UE4SS item.</summary>
+    private bool StagedWorkshopUe4ss() =>
+        Directory.Exists(WorkshopDir)
+        && Directory.EnumerateDirectories(WorkshopDir).Any(dir => File.Exists(Path.Combine(dir, "UE4SS.dll")));
+
+    /// <summary>True when a hand-installed UE4SS is present. Keyed on the <c>ue4ss</c> folder rather than its Mods
+    /// subfolder, so a fresh install with no mods in it yet still counts.</summary>
+    public bool CustomUe4ssInstalled => Directory.Exists(CustomUe4ssDir);
+
+    /// <summary>True when a hand-installed UE4SS will actually load, meaning its proxy DLL is still in place.</summary>
+    public bool CustomUe4ssLoads => File.Exists(CustomUe4ssLoaderPath);
+
+    /// <summary>Which UE4SS installs are on disk right now.</summary>
+    public Ue4ssInstall DetectUe4ss() => Classify(WorkshopUe4ssPresent, CustomUe4ssInstalled, CustomUe4ssLoads);
+
+    /// <summary>
+    /// Pure classifier over the two install locations, split out so the four-way outcome (including the crashing
+    /// <see cref="Ue4ssInstall.Both"/>) is unit-testable without a server folder. A hand install whose proxy DLL
+    /// has been renamed away does NOT count as a conflict: that rename is the documented way to disable it, so
+    /// treating the leftover folder as a conflict would make the warning impossible to clear by following its own
+    /// advice. The folder still counts for <see cref="Ue4ssInstall.Custom"/>, since a disabled install is the one
+    /// whose mods folder the user most likely wants to open.
+    /// </summary>
+    public static Ue4ssInstall Classify(bool workshopPresent, bool customPresent, bool customLoads) => (workshopPresent, customPresent) switch
+    {
+        (true, true) => customLoads ? Ue4ssInstall.Both : Ue4ssInstall.Workshop,
+        (true, false) => Ue4ssInstall.Workshop,
+        (false, true) => Ue4ssInstall.Custom,
+        _ => Ue4ssInstall.None,
+    };
 
     /// <summary>Open the server's <c>Mods\Workshop</c> folder in Explorer (creating it first), for the
     /// "drop your own mods here" workflow.</summary>
@@ -184,9 +234,21 @@ public sealed class ModService
     /// <summary>Open the loose-paks folder (creating it first), for raw .pak mods that aren't Workshop-packaged.</summary>
     public void OpenLoosePaksFolder() => OpenFolder(LoosePaksDir);
 
-    /// <summary>Open the UE4SS script-mods folder if UE4SS is installed. Doesn't create it (that would fake an
-    /// install), so it's a no-op when UE4SS isn't there, the caller checks <see cref="Ue4ssInstalled"/>.</summary>
-    public void OpenUe4ssModsFolder() => OpenFolder(Ue4ssModsDir, create: false);
+    /// <summary>Open the mods folder of whichever UE4SS is on disk, preferring the deployed Workshop one since
+    /// that's the side the launcher manages. Returns false when there's nothing to open, which covers both no
+    /// UE4SS at all and a Workshop UE4SS that's staged but not deployed yet, so the caller can say which.</summary>
+    public bool OpenUe4ssModsFolder()
+    {
+        if (Ue4ssDeployed)
+            OpenFolder(Ue4ssModsDir, create: false);
+        else if (CustomUe4ssInstalled)
+            // UE4SS is genuinely there, so creating its Mods folder isn't faking an install. The zips ship one,
+            // this only covers a trimmed install that dropped it.
+            OpenFolder(CustomUe4ssModsDir);
+        else
+            return false;
+        return true;
+    }
 
     /// <summary>Delete a mod's source folder under <c>Mods\Workshop</c>. No-op if the name is blank or the folder
     /// is already gone. The server clears its own deployed copy on the next restart (the mod leaves ActiveModList).
