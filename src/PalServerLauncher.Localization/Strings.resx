@@ -139,6 +139,7 @@
   <!-- Shared across dialogs (dedupe: one key reused everywhere the word appears) -->
   <data name="Common_AppName" xml:space="preserve">
     <value>Palworld Server Launcher</value>
+    <comment>invariant, brand or acronym</comment>
   </data>
   <data name="Common_Save" xml:space="preserve">
     <value>Save</value>
@@ -273,9 +274,11 @@ Save them as fixed messages anyway?</value>
   </data>
   <data name="Main_StatFps" xml:space="preserve">
     <value>FPS</value>
+    <comment>invariant, brand or acronym</comment>
   </data>
   <data name="Main_StatCpu" xml:space="preserve">
     <value>CPU</value>
+    <comment>invariant, brand or acronym</comment>
   </data>
   <data name="Main_StatMemory" xml:space="preserve">
     <value>Memory</value>
@@ -456,6 +459,7 @@ Save them as fixed messages anyway?</value>
   </data>
   <data name="Main_TabSteamCmd" xml:space="preserve">
     <value>SteamCMD</value>
+    <comment>invariant, brand or acronym</comment>
   </data>
   <data name="Main_ServerCommands" xml:space="preserve">
     <value>Server Commands</value>
@@ -703,6 +707,7 @@ Full details in:
   </data>
   <data name="PortCheck_PortRowLabel" xml:space="preserve">
     <value>{0} ({1})</value>
+    <comment>invariant, brand or acronym</comment>
   </data>
   <data name="PortCheck_FirewallNote" xml:space="preserve">
     <value>This test binds a temporary listener on the launcher. If Windows Firewall prompts, allow it, otherwise ports can falsely show as unreachable. REST and RCON are admin ports: they should normally NOT be reachable from the internet, so a green result there is a warning, not a pass.</value>
@@ -858,6 +863,7 @@ Full details in:
   <!-- DiscordDialog -->
   <data name="Discord_Title" xml:space="preserve">
     <value>Discord</value>
+    <comment>invariant, brand or acronym</comment>
   </data>
   <data name="Discord_BlurbPrefix" xml:space="preserve">
     <value>Control the server from Discord with slash commands, and/or post lifecycle notifications to a channel. Create a bot and copy its token from the</value>
@@ -1137,6 +1143,7 @@ Full details in:
   </data>
   <data name="Mods_ColId" xml:space="preserve">
     <value>ID</value>
+    <comment>invariant, brand or acronym</comment>
   </data>
   <data name="Mods_ColNote" xml:space="preserve">
     <value>Note</value>
@@ -1538,6 +1545,7 @@ Save these changes?</value>
   </data>
   <data name="Cat_CoopPlayerMaxNum_Label" xml:space="preserve">
     <value>CoopPlayerMaxNum</value>
+    <comment>invariant, undocumented ini key, raw English by rule</comment>
   </data>
   <data name="Cat_CoopPlayerMaxNum_Desc" xml:space="preserve">
     <value>Undocumented. Community guesses a cooperative-play party size, but this may be an internal value that has no effect on a dedicated server.</value>
@@ -1568,12 +1576,14 @@ Save these changes?</value>
   </data>
   <data name="Cat_bUseAuth_Label" xml:space="preserve">
     <value>bUseAuth</value>
+    <comment>invariant, undocumented ini key, raw English by rule</comment>
   </data>
   <data name="Cat_bUseAuth_Desc" xml:space="preserve">
     <value>Undocumented. Defaults to True.</value>
   </data>
   <data name="Cat_BanListURL_Label" xml:space="preserve">
     <value>BanListURL</value>
+    <comment>invariant, undocumented ini key, raw English by rule</comment>
   </data>
   <data name="Cat_BanListURL_Desc" xml:space="preserve">
     <value>Undocumented. Likely the ban list the server checks against, but the exact format and behavior are unconfirmed.</value>
@@ -1616,12 +1626,14 @@ Save these changes?</value>
   </data>
   <data name="Cat_bIsMultiplay_Label" xml:space="preserve">
     <value>bIsMultiplay</value>
+    <comment>invariant, undocumented ini key, raw English by rule</comment>
   </data>
   <data name="Cat_bIsMultiplay_Desc" xml:space="preserve">
     <value>Undocumented. Likely the game client's 'Multiplayer: Yes/No' option shown when creating a world, so it has no effect on a dedicated server. False by default.</value>
   </data>
   <data name="Cat_Region_Label" xml:space="preserve">
     <value>Region</value>
+    <comment>invariant, undocumented ini key, raw English by rule</comment>
   </data>
   <data name="Cat_Region_Desc" xml:space="preserve">
     <value>Undocumented. A region code of some kind, but the expected format (NA, US, a number?) and its purpose (matchmaking, server browser, or neither) are both unknown. Blank by default.</value>
@@ -1652,6 +1664,7 @@ Save these changes?</value>
   </data>
   <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Label" xml:space="preserve">
     <value>BuildingNameDisplayCacheTTLSeconds</value>
+    <comment>invariant, undocumented ini key, raw English by rule</comment>
   </data>
   <data name="Cat_BuildingNameDisplayCacheTTLSeconds_Desc" xml:space="preserve">
     <value>Undocumented. Likely how long a building's cached display name (see 'Show builder ID on structures') is kept before refreshing (seconds).</value>
@@ -1694,6 +1707,7 @@ Save these changes?</value>
   </data>
   <data name="Cat_DropItemMaxNum_UNKO_Label" xml:space="preserve">
     <value>DropItemMaxNum_UNKO</value>
+    <comment>invariant, undocumented ini key, raw English by rule</comment>
   </data>
   <data name="Cat_DropItemMaxNum_UNKO_Desc" xml:space="preserve">
     <value>Undocumented. Appears unused, likely deadweight or an unimplemented feature.</value>
@@ -1712,12 +1726,14 @@ Save these changes?</value>
   </data>
   <data name="Cat_MaxGuildsPerFrame_Label" xml:space="preserve">
     <value>MaxGuildsPerFrame</value>
+    <comment>invariant, undocumented ini key, raw English by rule</comment>
   </data>
   <data name="Cat_MaxGuildsPerFrame_Desc" xml:space="preserve">
     <value>Undocumented. Likely a per-frame cap on how many guilds the server processes each tick, a performance lever.</value>
   </data>
   <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Label" xml:space="preserve">
     <value>PlayerDataPalStorageUpdateCheckTickInterval</value>
+    <comment>invariant, undocumented ini key, raw English by rule</comment>
   </data>
   <data name="Cat_PlayerDataPalStorageUpdateCheckTickInterval_Desc" xml:space="preserve">
     <value>Undocumented. Likely how often the server checks player Pal Box/storage data for changes to sync (seconds).</value>
@@ -1742,6 +1758,7 @@ Save these changes?</value>
   </data>
   <data name="Cat_bIsPvP_Label" xml:space="preserve">
     <value>PvP</value>
+    <comment>invariant, undocumented ini key, raw English by rule</comment>
   </data>
   <data name="Cat_bIsPvP_Desc" xml:space="preserve">
     <value>Enable PvP. Only takes effect with Player-vs-player damage and Base defense vs. other guilds also on.</value>
@@ -1820,6 +1837,7 @@ Save these changes?</value>
   </data>
   <data name="Cat_bEnableNonLoginPenalty_Label" xml:space="preserve">
     <value>bEnableNonLoginPenalty</value>
+    <comment>invariant, undocumented ini key, raw English by rule</comment>
   </data>
   <data name="Cat_bEnableNonLoginPenalty_Desc" xml:space="preserve">
     <value>Undocumented. May relate to whether your Pals get debuffs when you haven't logged in. Untested.</value>
@@ -1832,6 +1850,7 @@ Save these changes?</value>
   </data>
   <data name="Cat_bActiveUNKO_Label" xml:space="preserve">
     <value>bActiveUNKO</value>
+    <comment>invariant, undocumented ini key, raw English by rule</comment>
   </data>
   <data name="Cat_bActiveUNKO_Desc" xml:space="preserve">
     <value>Undocumented. Appears unused, likely deadweight or an unimplemented feature.</value>
@@ -2210,21 +2229,25 @@ Save these changes?</value>
   </data>
   <data name="Cat_AutoTransferMasterCheckIntervalSeconds_Label" xml:space="preserve">
     <value>AutoTransferMasterCheckIntervalSeconds</value>
+    <comment>invariant, undocumented ini key, raw English by rule</comment>
   </data>
   <data name="Cat_AutoTransferMasterCheckIntervalSeconds_Desc" xml:space="preserve">
     <value>Undocumented. Likely how often the server checks whether guild/base ownership should auto-transfer from an inactive master (seconds).</value>
   </data>
   <data name="Cat_AutoTransferMasterThresholdDays_Label" xml:space="preserve">
     <value>AutoTransferMasterThresholdDays</value>
+    <comment>invariant, undocumented ini key, raw English by rule</comment>
   </data>
   <data name="Cat_AutoTransferMasterThresholdDays_Desc" xml:space="preserve">
     <value>Undocumented. Likely the days a guild/base master must be inactive before ownership auto-transfers.</value>
   </data>
   <data name="Cat_LogFormatType_Opt_Text" xml:space="preserve">
     <value>Text</value>
+    <comment>invariant, config value stays English</comment>
   </data>
   <data name="Cat_LogFormatType_Opt_Json" xml:space="preserve">
     <value>Json</value>
+    <comment>invariant, config value stays English</comment>
   </data>
   <data name="Cat_Difficulty_Opt_None" xml:space="preserve">
     <value>None</value>
@@ -2282,6 +2305,7 @@ Save these changes?</value>
   </data>
   <data name="LauncherSettings_Copyright" xml:space="preserve">
     <value>© 2026 Syl S. · GPLv3</value>
+    <comment>invariant, brand or acronym</comment>
   </data>
   <data name="Settings_TabGameSettings" xml:space="preserve">
     <value>Game Settings</value>
@@ -2396,9 +2420,11 @@ Save these changes?</value>
   </data>
   <data name="ServerCmd_TabRest" xml:space="preserve">
     <value>REST</value>
+    <comment>invariant, brand or acronym</comment>
   </data>
   <data name="ServerCmd_TabRcon" xml:space="preserve">
     <value>RCON</value>
+    <comment>invariant, brand or acronym</comment>
   </data>
   <data name="ServerCmd_RconDeprecated" xml:space="preserve">
     <value>Palworld has officially deprecated RCON and has said it will be removed in a future update. You should use the REST API instead when possible.</value>
