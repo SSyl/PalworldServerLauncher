@@ -130,39 +130,20 @@ installer, so drop it wherever you'd like the server to live.
 
 ## Screenshots
 
-| Settings editor | Difficulty presets |
+|  |  |
 | :-: | :-: |
 | ![Game settings editor](docs/images/app-screenshots/game-settings.png) | ![Difficulty presets](docs/images/app-screenshots/difficulty-preset.png) |
-
-Every `PalWorldSettings.ini` value in one tabbed window, labeled with the game's own wording, and presets that
-preview exactly what they change before you apply them.
-
-| Launch arguments | CPU affinity and priority |
-| :-: | :-: |
 | ![Launch arguments](docs/images/app-screenshots/launch-args.png) | ![CPU affinity and priority](docs/images/app-screenshots/cpu-affinity-priority.png) |
-
-| Mods | Port accessibility check |
-| :-: | :-: |
-| ![Steam Workshop and loose-pak mods](docs/images/app-screenshots/mods-window.png) | ![Port check](docs/images/app-screenshots/port-check-window.png) |
-
-Steam Workshop and dropped-in mods, and a check that tells you whether your ports are actually reachable from
-outside your network before your friends try to join.
-
-| Live server commands | Discord |
-| :-: | :-: |
+| ![Mods](docs/images/app-screenshots/mods-window.png) | ![Port accessibility check](docs/images/app-screenshots/port-check-window.png) |
 | ![Live server commands](docs/images/app-screenshots/server-rest-commands.png) | ![Discord settings](docs/images/app-screenshots/discord-bot-settings.png) |
-
-Announce, kick, ban, unban, and save while the server runs. Discord gets optional webhook notifications and a
-locked-down control bot, with a checklist of exactly which slash commands it may use.
-
-| Restart and backup times | In-game announcements |
-| :-: | :-: |
-| ![Restart and backup time picker](docs/images/app-screenshots/schedules.png) | ![Announcements editor](docs/images/app-screenshots/announcements.png) |
+| ![Restart and backup times](docs/images/app-screenshots/schedules.png) | ![In-game announcements](docs/images/app-screenshots/announcements.png) |
 
 **Available in ten languages.** English, German, Spanish, French, Brazilian Portuguese, Russian, Japanese,
 Simplified Chinese (shown here), Traditional Chinese, and Korean.
 
 ![The main window in Simplified Chinese](docs/images/app-screenshots/main-window-simplified-chinese.png)
+
+---
 
 ## FAQ and troubleshooting
 
