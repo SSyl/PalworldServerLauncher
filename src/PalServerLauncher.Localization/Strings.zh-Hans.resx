@@ -94,7 +94,7 @@
     <value>检测到 WorldOption.sav</value>
   </data>
   <data name="WorldOpt_Message" xml:space="preserve">
-    <value>⚠ 此存档文件夹中的 WorldOption.sav 会覆盖你的 PalWorldSettings.ini，导致启动器可能无法监控或控制服务器。将其重命名为 .bak 即可解决此问题，且不会影响你的世界。</value>
+    <value>⚠ 此存档文件夹中的 WorldOption.sav 会覆盖您的 PalWorldSettings.ini，导致启动器可能无法监控或控制服务器。将其重命名为 .bak 即可解决此问题，且不会影响您的世界。</value>
   </data>
   <data name="WorldOpt_Rename" xml:space="preserve">
     <value>重命名为 .bak（推荐）</value>
@@ -181,7 +181,7 @@
     <value>模组</value>
   </data>
   <data name="Main_ModsTip" xml:space="preserve">
-    <value>管理 Steam 创意工坊服务器模组：添加创意工坊 ID 让启动器下载，或扫描你自己放入模组文件夹的模组。</value>
+    <value>管理 Steam 创意工坊服务器模组：添加创意工坊 ID 让启动器下载，或扫描您自己放入模组文件夹的模组。</value>
   </data>
   <data name="Main_StatusLabel" xml:space="preserve">
     <value>状态：</value>
@@ -193,19 +193,19 @@
     <value>公网 IP：</value>
   </data>
   <data name="Main_PublicIpTip" xml:space="preserve">
-    <value>你的公网 IP 和游戏端口。点击眼睛图标显示，然后选中复制，或使用复制按钮。</value>
+    <value>您的公网 IP 和游戏端口。点击眼睛图标显示，然后选中复制，或使用复制按钮。</value>
   </data>
   <data name="Main_RevealIpTip" xml:space="preserve">
-    <value>显示或隐藏你的公网 IP</value>
+    <value>显示或隐藏您的公网 IP</value>
   </data>
   <data name="Main_CopyIpTip" xml:space="preserve">
-    <value>将你的 IP:端口 复制到剪贴板</value>
+    <value>将您的 IP:端口 复制到剪贴板</value>
   </data>
   <data name="Main_PortCheck" xml:space="preserve">
     <value>端口检测</value>
   </data>
   <data name="Main_PortCheckTip" xml:space="preserve">
-    <value>检测你的端口能否从互联网访问。服务器必须处于停止状态，启动器才能测试这些端口。</value>
+    <value>检测您的端口能否从互联网访问。服务器必须处于停止状态，启动器才能测试这些端口。</value>
   </data>
   <data name="Main_StatVersion" xml:space="preserve">
     <value>版本</value>
@@ -301,7 +301,7 @@
     <value>选择备份时间</value>
   </data>
   <data name="Main_BackupRetentionTip" xml:space="preserve">
-    <value>自动备份（启动/关闭/定时）的保留时长。手动备份以及你自己添加到备份文件夹中的任何文件都不会被删除。0 = 全部保留。</value>
+    <value>自动备份（启动/关闭/定时）的保留时长。手动备份以及您自己添加到备份文件夹中的任何文件都不会被删除。0 = 全部保留。</value>
   </data>
   <data name="Main_KeepFor" xml:space="preserve">
     <value>保留</value>
@@ -331,7 +331,7 @@
     <value>启动/重启时更新</value>
   </data>
   <data name="Main_UpdateOnStartTip" xml:space="preserve">
-    <value>每次服务器启动或重启时都通过 SteamCMD 检查更新。取消勾选后，启动/重启时不会自动下载更新。你仍可通过“检查更新”手动更新。</value>
+    <value>每次服务器启动或重启时都通过 SteamCMD 检查更新。取消勾选后，启动/重启时不会自动下载更新。您仍可通过“检查更新”手动更新。</value>
   </data>
   <data name="Main_CheckUpdateEvery" xml:space="preserve">
     <value>检查更新间隔</value>
@@ -355,7 +355,7 @@
     <value>未响应重启阈值</value>
   </data>
   <data name="Main_ZombieCheckTip" xml:space="preserve">
-    <value>当 REST API 连续这么多次无法访问，或世界连续这么多次保持冻结时，重启服务器。如果你的 REST API 不稳定，且你宁愿它永不自动重启，请关闭此项。</value>
+    <value>当 REST API 连续这么多次无法访问，或世界连续这么多次保持冻结时，重启服务器。如果您的 REST API 不稳定，且您宁愿它永不自动重启，请关闭此项。</value>
   </data>
   <data name="Main_ZombieThresholdTip" xml:space="preserve">
     <value>连续多少次健康检查失败后，服务器会被视为未响应并被强制重启。</value>
@@ -418,7 +418,7 @@
     <value>服务器已在运行</value>
   </data>
   <data name="Main_ServerRunningMessage" xml:space="preserve">
-    <value>从此文件夹启动的 Palworld 服务器已在运行，几乎可以肯定是你上次会话留下的，因为启动器只跟踪它在此处启动的服务器。
+    <value>从此文件夹启动的 Palworld 服务器已在运行，几乎可以肯定是您上次会话留下的，因为启动器只跟踪它在此处启动的服务器。
 
 重新连接可继续通过 REST API 管理它（实时统计、定时重启、备份，对于并非启动器自己启动的服务器，服务器日志选项卡将保持为空）。否则请将其关闭，或退出。</value>
   </data>
@@ -486,7 +486,7 @@
 
 启用 REST API 吗？它让启动器能够控制服务器：应用游戏更新、正常保存和关闭、定时重启和备份，以及监控服务器健康状况。
 
-如果启用，启动器现在就会生成服务器配置，并设置一个安全的随机生成的管理员密码（之后可在“服务器设置”的“管理”选项卡中查看或修改）。你也可以跳过此步，稍后自行启用。</value>
+如果启用，启动器现在就会生成服务器配置，并设置一个安全的随机生成的管理员密码（之后可在“服务器设置”的“管理”选项卡中查看或修改）。您也可以跳过此步，稍后自行启用。</value>
   </data>
   <data name="Main_YesEnableRest" xml:space="preserve">
     <value>是，启用</value>
@@ -517,7 +517,7 @@
     <value>无法启用 REST</value>
   </data>
   <data name="Main_RestEnabledMessage" xml:space="preserve">
-    <value>完成，REST API 已开启，并设置了一个新的随机管理员密码（可在“服务器设置”的“管理”选项卡中查看或修改）。将在你下次启动服务器时生效。</value>
+    <value>完成，REST API 已开启，并设置了一个新的随机管理员密码（可在“服务器设置”的“管理”选项卡中查看或修改）。将在您下次启动服务器时生效。</value>
   </data>
   <data name="Main_RestFailedMessage" xml:space="preserve">
     <value>无法写入服务器配置。请确保服务器已安装且已停止，然后在“服务器设置”的“管理”选项卡中手动设置。</value>
@@ -538,7 +538,7 @@
     <value>这将通过完全终止进程立即关闭服务器，且不进行保存。可能导致存档数据丢失或损坏。除非服务器已完全停止响应，否则不建议使用。</value>
   </data>
   <data name="Main_PortCheckConsentMessage" xml:space="preserve">
-    <value>你的公网 IP 地址将被发送到 check-host.cc（一个免费的外部服务），以检测玩家能否从你的网络外部访问你的服务器。除了你的公网 IP 和你测试的端口之外，不会向该服务发送任何其他信息。</value>
+    <value>您的公网 IP 地址将被发送到 check-host.cc（一个免费的外部服务），以检测玩家能否从您的网络外部访问您的服务器。除了您的公网 IP 和您测试的端口之外，不会向该服务发送任何其他信息。</value>
   </data>
   <data name="Main_UpdateAvailableTitle" xml:space="preserve">
     <value>有可用更新</value>
@@ -621,10 +621,10 @@
     <value>端口检测</value>
   </data>
   <data name="PortCheck_Intro" xml:space="preserve">
-    <value>使用 check-host.cc 检测你的端口能否从互联网访问。请在服务器停止时运行此项，以便启动器能够绑定并测试这些端口。</value>
+    <value>使用 check-host.cc 检测您的端口能否从互联网访问。请在服务器停止时运行此项，以便启动器能够绑定并测试这些端口。</value>
   </data>
   <data name="PortCheck_YourPublicIp" xml:space="preserve">
-    <value>你的公网 IP</value>
+    <value>您的公网 IP</value>
   </data>
   <data name="PortCheck_Results" xml:space="preserve">
     <value>结果</value>
@@ -651,7 +651,7 @@
     <value>无公网 IP</value>
   </data>
   <data name="PortCheck_NoPublicIpMessage" xml:space="preserve">
-    <value>请先输入你的公网 IP（通常会自动填入）。</value>
+    <value>请先输入您的公网 IP（通常会自动填入）。</value>
   </data>
   <data name="PortCheck_Checking" xml:space="preserve">
     <value>检测中...</value>
@@ -819,7 +819,7 @@
     <value>命令冷却时间（秒）</value>
   </data>
   <data name="Discord_SecurityNote" xml:space="preserve">
-    <value>安全提示：设置一个命令频道和/或一个所需身份组，机器人只有在你设置的每一道关卡都通过时才会执行操作（至少设置一个）。任何能在命令频道发言、或拥有该身份组的人都能控制服务器，因此请将其锁定（一个私密的、仅管理员可见的频道，和/或一个管理员身份组）。启用 Discord 开发者模式，然后右键点击频道或身份组 -&gt; 复制 ID。令牌保存在本地的 launcher.json 中，且永不写入日志。</value>
+    <value>安全提示：设置一个命令频道和/或一个所需身份组，机器人只有在您设置的每一道关卡都通过时才会执行操作（至少设置一个）。任何能在命令频道发言、或拥有该身份组的人都能控制服务器，因此请将其锁定（一个私密的、仅管理员可见的频道，和/或一个管理员身份组）。启用 Discord 开发者模式，然后右键点击频道或身份组 -&gt; 复制 ID。令牌保存在本地的 launcher.json 中，且永不写入日志。</value>
   </data>
   <data name="Discord_CommandsExposedHeader" xml:space="preserve">
     <value>机器人开放的命令</value>
@@ -873,7 +873,7 @@
     <value>Steam 账户</value>
   </data>
   <data name="Mods_SteamAccountNote" xml:space="preserve">
-    <value>仅在下载创意工坊模组时需要，手动放入的模组无需账户。你的 Steam 密码会直接传给 SteamCMD 登录，不会被保存或记录，只有用户名会被记住。</value>
+    <value>仅在下载创意工坊模组时需要，手动放入的模组无需账户。您的 Steam 密码会直接传给 SteamCMD 登录，不会被保存或记录，只有用户名会被记住。</value>
   </data>
   <data name="Mods_ConnectButton" xml:space="preserve">
     <value>连接 Steam 账户</value>
@@ -906,13 +906,13 @@
     <value>通过 Steam 创意工坊 ID 或 URL 添加：</value>
   </data>
   <data name="Mods_NoAccountWarning" xml:space="preserve">
-    <value>你已启用创意工坊模组，但未连接 Steam 账户。请在上方连接一个账户以下载它们，否则它们会在启动时被跳过（手动放入的模组仍会加载）。</value>
+    <value>您已启用创意工坊模组，但未连接 Steam 账户。请在上方连接一个账户以下载它们，否则它们会在启动时被跳过（手动放入的模组仍会加载）。</value>
   </data>
   <data name="Mods_LoosePakHeader" xml:space="preserve">
     <value>独立 .pak 模组</value>
   </data>
   <data name="Mods_LoosePakDescription" xml:space="preserve">
-    <value>如果你使用上面的 Steam 创意工坊，则不需要这一项。对于没有 Info.json 的原始 .pak 模组（许多 NexusMods 下载的模组）：将它们放入独立 .pak 文件夹，然后在此处切换它们。它们通过重命名来启用/禁用（绝不删除），并在下次服务器启动时加载。</value>
+    <value>如果您使用上面的 Steam 创意工坊，则不需要这一项。对于没有 Info.json 的原始 .pak 模组（许多 NexusMods 下载的模组）：将它们放入独立 .pak 文件夹，然后在此处切换它们。它们通过重命名来启用/禁用（绝不删除），并在下次服务器启动时加载。</value>
   </data>
   <data name="Mods_OpenLoosePaksFolderButton" xml:space="preserve">
     <value>打开独立 .pak 文件夹</value>
@@ -927,7 +927,7 @@
     <value>请输入用户名</value>
   </data>
   <data name="Mods_EnterUsernameBody" xml:space="preserve">
-    <value>请先输入你的 Steam 账户名，然后再连接。</value>
+    <value>请先输入您的 Steam 账户名，然后再连接。</value>
   </data>
   <data name="Mods_ConnectingButton" xml:space="preserve">
     <value>连接中...</value>
@@ -942,7 +942,7 @@
     <value>登录失败：{0}</value>
   </data>
   <data name="Mods_SavedSignInInvalid" xml:space="preserve">
-    <value>你保存的登录已失效，请重新连接。</value>
+    <value>您保存的登录已失效，请重新连接。</value>
   </data>
   <data name="Mods_CheckSignInFailed" xml:space="preserve">
     <value>无法检查登录：{0}</value>
@@ -972,7 +972,7 @@
     <value>不是 Palworld 模组？</value>
   </data>
   <data name="Mods_NotPalworldBody" xml:space="preserve">
-    <value>此项目的 Steam 应用 ID 是 {0}，而不是 Palworld 的（{1}），因此它可能无法在你的服务器上运行。仍要添加吗？</value>
+    <value>此项目的 Steam 应用 ID 是 {0}，而不是 Palworld 的（{1}），因此它可能无法在您的服务器上运行。仍要添加吗？</value>
   </data>
   <data name="Mods_AddAnyway" xml:space="preserve">
     <value>仍然添加</value>
@@ -993,7 +993,7 @@
     <value>未连接 Steam 账户</value>
   </data>
   <data name="Mods_NoAccountSaveBody" xml:space="preserve">
-    <value>你已启用创意工坊模组，但未连接 Steam 账户，因此无法下载它们，服务器启动时会跳过它们（手动放入的模组仍会加载）。仍要保存吗？</value>
+    <value>您已启用创意工坊模组，但未连接 Steam 账户，因此无法下载它们，服务器启动时会跳过它们（手动放入的模组仍会加载）。仍要保存吗？</value>
   </data>
   <data name="Mods_SaveAnyway" xml:space="preserve">
     <value>仍然保存</value>
@@ -1020,7 +1020,7 @@
     <value>删除模组</value>
   </data>
   <data name="Mods_DeleteBody" xml:space="preserve">
-    <value>这将删除该模组的文件，并将其从你的模组列表中移除。
+    <value>这将删除该模组的文件，并将其从您的模组列表中移除。
 
 {0}</value>
   </data>
@@ -1124,10 +1124,10 @@
     <value>启动器识别的设置</value>
   </data>
   <data name="Settings_UndocNewHeader" xml:space="preserve">
-    <value>你配置中的新设置（无法识别）</value>
+    <value>您配置中的新设置（无法识别）</value>
   </data>
   <data name="Settings_UndocNoneRecognized" xml:space="preserve">
-    <value>无，你配置中的每个键都能识别。</value>
+    <value>无，您配置中的每个键都能识别。</value>
   </data>
   <data name="Settings_NoEffectTitle" xml:space="preserve">
     <value>此设置在服务器上无效</value>
@@ -1145,7 +1145,7 @@
     <value>{0} 预设</value>
   </data>
   <data name="Settings_PresetNoChanges" xml:space="preserve">
-    <value>你的设置已与 {0} 预设一致，无需更改。</value>
+    <value>您的设置已与 {0} 预设一致，无需更改。</value>
   </data>
   <data name="Settings_PresetConfirmMessage" xml:space="preserve">
     <value>以下是 Palworld 1.0 时的数值。此后某些设置可能已被添加或更改。
@@ -1258,13 +1258,13 @@
     <value>-logformat（Text 或 Json）。留空 = 不添加，采用 ini/默认值。</value>
   </data>
   <data name="Settings_ExtraArgsNote" xml:space="preserve">
-    <value>原样追加到命令行末尾的原始参数（以空格或换行分隔）。某些 Unreal 服务器可在此接受地图/游戏类的覆盖设置。除非你清楚自己在做什么，否则请勿更改。</value>
+    <value>原样追加到命令行末尾的原始参数（以空格或换行分隔）。某些 Unreal 服务器可在此接受地图/游戏类的覆盖设置。除非您清楚自己在做什么，否则请勿更改。</value>
   </data>
   <data name="Settings_AdvancedExpander" xml:space="preserve">
     <value>高级</value>
   </data>
   <data name="Settings_AdvancedIntro" xml:space="preserve">
-    <value>在服务器进程启动后应用于它的底层设置。在此使用错误的值可能会损害性能，除非你清楚自己在做什么，否则请勿更改。将在下次启动时生效。</value>
+    <value>在服务器进程启动后应用于它的底层设置。在此使用错误的值可能会损害性能，除非您清楚自己在做什么，否则请勿更改。将在下次启动时生效。</value>
   </data>
   <data name="Settings_PriorityAffinityHeader" xml:space="preserve">
     <value>进程优先级和 CPU 亲和性</value>
@@ -1285,7 +1285,7 @@
     <value>高级参数</value>
   </data>
   <data name="Settings_AdvancedArgsMessage" xml:space="preserve">
-    <value>你在“高级”框中填入了自定义参数。它们会原样传递给服务器，除非你清楚自己在做什么，否则请勿保留。</value>
+    <value>您在“高级”框中填入了自定义参数。它们会原样传递给服务器，除非您清楚自己在做什么，否则请勿保留。</value>
   </data>
   <data name="Settings_Accept" xml:space="preserve">
     <value>接受</value>
@@ -1323,7 +1323,7 @@
     <value>  · 未记录</value>
   </data>
   <data name="Settings_ResetAllMessage" xml:space="preserve">
-    <value>将此面板中的每个字段都重置为默认值吗？你仍需点击“保存”才能应用。</value>
+    <value>将此面板中的每个字段都重置为默认值吗？您仍需点击“保存”才能应用。</value>
   </data>
   <data name="Settings_ResetAllButton" xml:space="preserve">
     <value>全部重置</value>
@@ -1662,7 +1662,7 @@
     <value>重新创建角色（硬核）</value>
   </data>
   <data name="Cat_bCharacterRecreateInHardcore_Desc" xml:space="preserve">
-    <value>在硬核模式下死亡后是否可以重新创建你的角色。</value>
+    <value>在硬核模式下死亡后是否可以重新创建您的角色。</value>
   </data>
   <data name="Cat_bIsPvP_Label" xml:space="preserve">
     <value>PvP</value>
@@ -1692,7 +1692,7 @@
     <value>对其他公会的据点防御</value>
   </data>
   <data name="Cat_bEnableDefenseOtherGuildPlayer_Desc" xml:space="preserve">
-    <value>据点的帕鲁会攻击擅自闯入你据点的敌对玩家。启用 PvP 的三项设置之一。</value>
+    <value>据点的帕鲁会攻击擅自闯入您据点的敌对玩家。启用 PvP 的三项设置之一。</value>
   </data>
   <data name="Cat_bEnableFastTravel_Label" xml:space="preserve">
     <value>能否使用快速传送</value>
@@ -1746,7 +1746,7 @@
     <value>bEnableNonLoginPenalty</value>
   </data>
   <data name="Cat_bEnableNonLoginPenalty_Desc" xml:space="preserve">
-    <value>未记录。可能与你未登录时帕鲁是否会获得减益有关。未经测试。</value>
+    <value>未记录。可能与您未登录时帕鲁是否会获得减益有关。未经测试。</value>
   </data>
   <data name="Cat_bIsStartLocationSelectByMap_Label" xml:space="preserve">
     <value>选择起始位置</value>
@@ -2199,7 +2199,7 @@
     <value>启动器需要重启以应用新语言（{0}）。现在就重启吗？</value>
   </data>
   <data name="LauncherSettings_RestartPromptRunning" xml:space="preserve">
-    <value>启动器需要重启以应用新语言（{0}）。你的 Palworld 服务器会继续运行，启动器将重新连接到它。现在就重启吗？</value>
+    <value>启动器需要重启以应用新语言（{0}）。您的 Palworld 服务器会继续运行，启动器将重新连接到它。现在就重启吗？</value>
   </data>
   <data name="LauncherSettings_RestartNow" xml:space="preserve">
     <value>立即重启</value>
@@ -2298,7 +2298,7 @@
     <value>启动器无法识别的正在运行的服务器（可能以管理员身份运行）</value>
   </data>
   <data name="UnknownServer_SettingsHint" xml:space="preserve">
-    <value>提示：你可以点击主窗口右上角的齿轮按钮，在“启动器设置”中关闭此警告。</value>
+    <value>提示：您可以点击主窗口右上角的齿轮按钮，在“启动器设置”中关闭此警告。</value>
   </data>
   <data name="UnknownServer_Terminate" xml:space="preserve">
     <value>终止</value>
@@ -2340,7 +2340,7 @@
     <value>无法连接到 {0} 的 RCON。请确认服务器已启用 RCONEnabled=True，且 RCONPort 设置正确。</value>
   </data>
   <data name="ServerCmd_RconAuthFailed" xml:space="preserve">
-    <value>RCON 拒绝了该密码。它使用的是你的 AdminPassword，请检查该设置是否正确。</value>
+    <value>RCON 拒绝了该密码。它使用的是您的 AdminPassword，请检查该设置是否正确。</value>
   </data>
   <data name="ServerCmd_RconError" xml:space="preserve">
     <value>RCON 出错，请查看启动器日志以获取详细信息。</value>
@@ -2382,7 +2382,7 @@
     <value>备份现在将保存到：</value>
   </data>
   <data name="BackupLoc_ExistingNote" xml:space="preserve">
-    <value>你现有的备份仍保留在 {0} 中，不会被自动删除。</value>
+    <value>您现有的备份仍保留在 {0} 中，不会被自动删除。</value>
   </data>
   <data name="BackupLoc_FailedTitle" xml:space="preserve">
     <value>无法更改备份位置</value>
@@ -2443,12 +2443,12 @@
     <value>检测到现有世界存档</value>
   </data>
   <data name="WorldSel_SingleMessage" xml:space="preserve">
-    <value>⚠ 你的存档文件夹中有一个世界存档，但服务器未设置为加载它。现在启动会开始一个全新的空世界，该存档仍会保留在磁盘上，但在游戏中无法访问。
+    <value>⚠ 您的存档文件夹中有一个世界存档，但服务器未设置为加载它。现在启动会开始一个全新的空世界，该存档仍会保留在磁盘上，但在游戏中无法访问。
 
 磁盘上的存档：{0}</value>
   </data>
   <data name="WorldSel_ManyMessage" xml:space="preserve">
-    <value>⚠ 你的存档文件夹中有 {0} 个世界存档，但服务器未设置加载其中任何一个。现在启动会开始一个全新的空世界，这些存档仍会保留在磁盘上，但在游戏中无法访问。
+    <value>⚠ 您的存档文件夹中有 {0} 个世界存档，但服务器未设置加载其中任何一个。现在启动会开始一个全新的空世界，这些存档仍会保留在磁盘上，但在游戏中无法访问。
 
 {1}
 
@@ -2481,10 +2481,10 @@
     <value>手动启动和重启服务器时清空日志</value>
   </data>
   <data name="LauncherSettings_ClearLogsOnManualStartTip" xml:space="preserve">
-    <value>当你自己启动或重启服务器时，先清空日志选项卡。定时重启、更新重启和崩溃恢复从不清空，因此你能保留那些说明服务器为何启动失败的消息。磁盘上的日志文件永不受影响。</value>
+    <value>当您自己启动或重启服务器时，先清空日志选项卡。定时重启、更新重启和崩溃恢复从不清空，因此您能保留那些说明服务器为何启动失败的消息。磁盘上的日志文件永不受影响。</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledManual" xml:space="preserve">
-    <value>你也可以手动安装 UE4SS。从 GitHub 或 NexusMods 获取它，并把它的 zip 解压到 Pal\Binaries\Win64，使其中出现 ue4ss 文件夹和 dwmapi.dll。不要同时使用两者，两份 UE4SS 会让服务器崩溃。</value>
+    <value>您也可以手动安装 UE4SS。从 GitHub 或 NexusMods 获取它，并把它的 zip 解压到 Pal\Binaries\Win64，使其中出现 ue4ss 文件夹和 dwmapi.dll。不要同时使用两者，两份 UE4SS 会让服务器崩溃。</value>
   </data>
   <data name="Mods_Ue4ssConflictTitle" xml:space="preserve">
     <value>发现两个 UE4SS 安装</value>
