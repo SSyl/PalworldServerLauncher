@@ -139,13 +139,6 @@ versions, importing a server you already have, modding, and where your files liv
 **[docs/advanced-usage.md](docs/advanced-usage.md)** covers running more than one server on a machine, and the
 command-line options (`--console`, `--start-server`, `--install-server`, `--stop-server`, and more).
 
-## Upcoming features
-
-- A system-tray icon.
-- A fuller headless mode. `--install-server`, `--start-server`, and `--stop-server` already exist (see
-  [Command-line options](docs/advanced-usage.md#command-line-options)), and a small PowerShell script can run
-  the launcher hidden in the meantime.
-
 ## Building from source
 
 Most people don't need this, just grab a pre-built `.exe` from the
