@@ -149,8 +149,8 @@ function Get-LangPath {
 }
 
 # Neither XmlDocument nor the resource compiler normalizes line endings, so a multi-line value comes back
-# with whatever the file holds. Strings.resx already mixes CRLF and LF (add-string.ps1 inserted LF), so every
-# comparison here runs on LF and every write uses the target file's own newline.
+# with whatever the file holds. Compare on LF and let each write use the target file's own newline, so a
+# CRLF file and an LF one never look like a difference in the value itself.
 function Get-NormalizedValue {
     param([string] $Value)
     if ($null -eq $Value) { return $null }
