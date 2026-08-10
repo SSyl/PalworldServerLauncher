@@ -1103,7 +1103,7 @@ Détails complets dans :
     <value>UE4SS non installé</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
-    <value>UE4SS n'est pas encore installé. Ajoutez un mod UE4SS depuis l'Atelier et démarrez le serveur une fois, son dossier de mods apparaîtra alors ici.</value>
+    <value>UE4SS n'est pas encore installé. Installez-le depuis l'Atelier Steam et démarrez le serveur une fois, son dossier de mods apparaîtra alors ici.</value>
   </data>
   <data name="Mods_ColOn" xml:space="preserve">
     <value>Actif</value>
@@ -2548,27 +2548,27 @@ Pour en charger une, définissez DedicatedServerName dans GameUserSettings.ini s
 L'importer de cette façon ?</value>
   </data>
   <data name="Main_ClearLogs" xml:space="preserve">
-    <value>Clear Logs</value>
+    <value>Effacer les journaux</value>
   </data>
   <data name="Main_ClearLogsTip" xml:space="preserve">
-    <value>Clear every log tab. Only the on-screen text is cleared, the log file on disk is not touched.</value>
+    <value>Efface tous les onglets de journal. Seul le texte affiché est effacé, le fichier journal sur le disque n'est pas touché.</value>
   </data>
   <data name="LauncherSettings_ClearLogsOnManualStart" xml:space="preserve">
-    <value>Clear logs on manual server start and restart</value>
+    <value>Effacer les journaux au démarrage et au redémarrage manuels du serveur</value>
   </data>
   <data name="LauncherSettings_ClearLogsOnManualStartTip" xml:space="preserve">
-    <value>When you start or restart the server yourself, wipe the log tabs first. Scheduled restarts, update restarts, and crash recovery never clear, so you keep the messages that explain a server that is failing to start. The log file on disk is never touched.</value>
+    <value>Lorsque vous démarrez ou redémarrez le serveur vous-même, les onglets de journal sont d'abord effacés. Les redémarrages planifiés, ceux liés aux mises à jour et la récupération après plantage n'effacent jamais rien, vous conservez ainsi les messages qui expliquent pourquoi un serveur ne démarre pas. Le fichier journal sur le disque n'est jamais touché.</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledManual" xml:space="preserve">
-    <value>You can also install UE4SS by hand. Get it from GitHub or NexusMods and extract its zip into Pal\Binaries\Win64 so you get a ue4ss folder and dwmapi.dll there. Do not use both at once, two copies of UE4SS crash the server.</value>
+    <value>Vous pouvez aussi installer UE4SS manuellement. Récupérez-le sur GitHub ou NexusMods et extrayez son zip dans Pal\Binaries\Win64, afin d'y obtenir un dossier ue4ss et dwmapi.dll. N'utilisez pas les deux installations à la fois, deux copies d'UE4SS font planter le serveur.</value>
   </data>
   <data name="Mods_Ue4ssConflictTitle" xml:space="preserve">
-    <value>Two UE4SS Installs Found</value>
+    <value>Deux installations d'UE4SS détectées</value>
   </data>
   <data name="Mods_Ue4ssConflictBody" xml:space="preserve">
-    <value>UE4SS is installed twice: once from the Steam Workshop (Mods\NativeMods\UE4SS) and once by hand (Pal\Binaries\Win64\ue4ss). The server crashes on launch when it loads two copies of UE4SS. Remove one of them, or disable the hand-installed one by renaming Pal\Binaries\Win64\dwmapi.dll to dwmapi.dll.bak.</value>
+    <value>UE4SS est installé deux fois : une fois depuis l'Atelier Steam (Mods\NativeMods\UE4SS) et une fois manuellement (Pal\Binaries\Win64\ue4ss). Le serveur plante au démarrage lorsqu'il charge deux copies d'UE4SS. Supprimez-en une, ou désactivez l'installation manuelle en renommant Pal\Binaries\Win64\dwmapi.dll en dwmapi.dll.bak.</value>
   </data>
   <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
-    <value>UE4SS is installed by hand in Pal\Binaries\Win64\ue4ss. Workshop mods that run under UE4SS install into Mods\NativeMods\UE4SS\Mods, which a hand-installed UE4SS does not read, so they will not load. Pak-only mods still work. Install UE4SS from the Steam Workshop instead to have the launcher manage them.</value>
+    <value>UE4SS est installé manuellement dans Pal\Binaries\Win64\ue4ss. Les mods de l'Atelier qui fonctionnent avec UE4SS s'installent dans Mods\NativeMods\UE4SS\Mods. Un UE4SS installé manuellement ne lit pas ce dossier, ils ne se chargeront donc pas. Les mods uniquement .pak continuent de fonctionner. Installez plutôt UE4SS depuis l'Atelier Steam pour que le lanceur les gère.</value>
   </data>
 </root>

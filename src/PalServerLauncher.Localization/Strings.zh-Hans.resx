@@ -1058,7 +1058,7 @@
     <value>UE4SS 未安装</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
-    <value>UE4SS 尚未安装。请从创意工坊添加一个 UE4SS 模组并启动一次服务器，之后它的模组文件夹就会出现在这里。</value>
+    <value>UE4SS 尚未安装。请从 Steam 创意工坊安装它并启动一次服务器，之后它的模组文件夹就会出现在这里。</value>
   </data>
   <data name="Mods_ColOn" xml:space="preserve">
     <value>开</value>
@@ -2472,27 +2472,27 @@
 以这种方式导入吗？</value>
   </data>
   <data name="Main_ClearLogs" xml:space="preserve">
-    <value>Clear Logs</value>
+    <value>清空日志</value>
   </data>
   <data name="Main_ClearLogsTip" xml:space="preserve">
-    <value>Clear every log tab. Only the on-screen text is cleared, the log file on disk is not touched.</value>
+    <value>清空所有日志选项卡。仅清除屏幕上的文本，磁盘上的日志文件不受影响。</value>
   </data>
   <data name="LauncherSettings_ClearLogsOnManualStart" xml:space="preserve">
-    <value>Clear logs on manual server start and restart</value>
+    <value>手动启动和重启服务器时清空日志</value>
   </data>
   <data name="LauncherSettings_ClearLogsOnManualStartTip" xml:space="preserve">
-    <value>When you start or restart the server yourself, wipe the log tabs first. Scheduled restarts, update restarts, and crash recovery never clear, so you keep the messages that explain a server that is failing to start. The log file on disk is never touched.</value>
+    <value>当你自己启动或重启服务器时，先清空日志选项卡。定时重启、更新重启和崩溃恢复从不清空，因此你能保留那些说明服务器为何启动失败的消息。磁盘上的日志文件永不受影响。</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledManual" xml:space="preserve">
-    <value>You can also install UE4SS by hand. Get it from GitHub or NexusMods and extract its zip into Pal\Binaries\Win64 so you get a ue4ss folder and dwmapi.dll there. Do not use both at once, two copies of UE4SS crash the server.</value>
+    <value>你也可以手动安装 UE4SS。从 GitHub 或 NexusMods 获取它，并把它的 zip 解压到 Pal\Binaries\Win64，使其中出现 ue4ss 文件夹和 dwmapi.dll。不要同时使用两者，两份 UE4SS 会让服务器崩溃。</value>
   </data>
   <data name="Mods_Ue4ssConflictTitle" xml:space="preserve">
-    <value>Two UE4SS Installs Found</value>
+    <value>发现两个 UE4SS 安装</value>
   </data>
   <data name="Mods_Ue4ssConflictBody" xml:space="preserve">
-    <value>UE4SS is installed twice: once from the Steam Workshop (Mods\NativeMods\UE4SS) and once by hand (Pal\Binaries\Win64\ue4ss). The server crashes on launch when it loads two copies of UE4SS. Remove one of them, or disable the hand-installed one by renaming Pal\Binaries\Win64\dwmapi.dll to dwmapi.dll.bak.</value>
+    <value>UE4SS 安装了两份：一份来自 Steam 创意工坊（Mods\NativeMods\UE4SS），一份是手动安装的（Pal\Binaries\Win64\ue4ss）。服务器加载两份 UE4SS 时会在启动时崩溃。请删除其中一份，或把 Pal\Binaries\Win64\dwmapi.dll 重命名为 dwmapi.dll.bak 来禁用手动安装的那一份。</value>
   </data>
   <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
-    <value>UE4SS is installed by hand in Pal\Binaries\Win64\ue4ss. Workshop mods that run under UE4SS install into Mods\NativeMods\UE4SS\Mods, which a hand-installed UE4SS does not read, so they will not load. Pak-only mods still work. Install UE4SS from the Steam Workshop instead to have the launcher manage them.</value>
+    <value>UE4SS 是手动安装在 Pal\Binaries\Win64\ue4ss 的。在 UE4SS 下运行的创意工坊模组会安装到 Mods\NativeMods\UE4SS\Mods，而手动安装的 UE4SS 不会读取该位置，因此它们不会加载。仅 .pak 的模组仍然可用。请改为从 Steam 创意工坊安装 UE4SS，以便由启动器管理它们。</value>
   </data>
 </root>

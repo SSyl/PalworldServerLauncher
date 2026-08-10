@@ -1057,7 +1057,7 @@ REST API を有効にしますか？ランチャーはこれを使用してサ�
     <value>UE4SS 未インストール</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
-    <value>UE4SS はまだインストールされていません。ワークショップから UE4SS Mod を追加してサーバーを一度起動すると、その Mod フォルダーがここに表示されます。</value>
+    <value>UE4SS はまだインストールされていません。Steam ワークショップからインストールしてサーバーを一度起動すると、その Mod フォルダーがここに表示されます。</value>
   </data>
   <data name="Mods_ColOn" xml:space="preserve">
     <value>オン</value>
@@ -2481,27 +2481,27 @@ Mod が本当にサーバーに対応していない場合、重大な問題（�
 この方法でインポートしますか？</value>
   </data>
   <data name="Main_ClearLogs" xml:space="preserve">
-    <value>Clear Logs</value>
+    <value>ログをクリア</value>
   </data>
   <data name="Main_ClearLogsTip" xml:space="preserve">
-    <value>Clear every log tab. Only the on-screen text is cleared, the log file on disk is not touched.</value>
+    <value>すべてのログタブをクリアします。クリアされるのは画面上の表示のみで、ディスク上のログファイルには影響しません。</value>
   </data>
   <data name="LauncherSettings_ClearLogsOnManualStart" xml:space="preserve">
-    <value>Clear logs on manual server start and restart</value>
+    <value>手動でのサーバー起動・再起動時にログをクリアする</value>
   </data>
   <data name="LauncherSettings_ClearLogsOnManualStartTip" xml:space="preserve">
-    <value>When you start or restart the server yourself, wipe the log tabs first. Scheduled restarts, update restarts, and crash recovery never clear, so you keep the messages that explain a server that is failing to start. The log file on disk is never touched.</value>
+    <value>自分でサーバーを起動または再起動したときに、まずログタブをクリアします。スケジュール再起動、アップデートによる再起動、クラッシュ後の自動復旧ではクリアされないため、起動に失敗しているサーバーの原因を示すメッセージは残ります。ディスク上のログファイルには一切影響しません。</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledManual" xml:space="preserve">
-    <value>You can also install UE4SS by hand. Get it from GitHub or NexusMods and extract its zip into Pal\Binaries\Win64 so you get a ue4ss folder and dwmapi.dll there. Do not use both at once, two copies of UE4SS crash the server.</value>
+    <value>UE4SS は手動でインストールすることもできます。GitHub または NexusMods から入手し、zip を Pal\Binaries\Win64 に展開して、そこに ue4ss フォルダーと dwmapi.dll が配置されるようにします。両方を同時に使用しないでください。UE4SS が 2 つあるとサーバーがクラッシュします。</value>
   </data>
   <data name="Mods_Ue4ssConflictTitle" xml:space="preserve">
-    <value>Two UE4SS Installs Found</value>
+    <value>UE4SS が 2 か所にインストール済み</value>
   </data>
   <data name="Mods_Ue4ssConflictBody" xml:space="preserve">
-    <value>UE4SS is installed twice: once from the Steam Workshop (Mods\NativeMods\UE4SS) and once by hand (Pal\Binaries\Win64\ue4ss). The server crashes on launch when it loads two copies of UE4SS. Remove one of them, or disable the hand-installed one by renaming Pal\Binaries\Win64\dwmapi.dll to dwmapi.dll.bak.</value>
+    <value>UE4SS が 2 つインストールされています：Steam ワークショップ経由（Mods\NativeMods\UE4SS）と手動（Pal\Binaries\Win64\ue4ss）です。UE4SS を 2 つ読み込むと、サーバーは起動時にクラッシュします。どちらか一方を削除するか、Pal\Binaries\Win64\dwmapi.dll を dwmapi.dll.bak にリネームして手動インストール側を無効にしてください。</value>
   </data>
   <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
-    <value>UE4SS is installed by hand in Pal\Binaries\Win64\ue4ss. Workshop mods that run under UE4SS install into Mods\NativeMods\UE4SS\Mods, which a hand-installed UE4SS does not read, so they will not load. Pak-only mods still work. Install UE4SS from the Steam Workshop instead to have the launcher manage them.</value>
+    <value>UE4SS が Pal\Binaries\Win64\ue4ss に手動でインストールされています。UE4SS 上で動作するワークショップ Mod は Mods\NativeMods\UE4SS\Mods にインストールされますが、手動インストールの UE4SS はこの場所を読み込まないため、それらは読み込まれません。.pak のみの Mod は引き続き動作します。ランチャーに管理させるには、代わりに Steam ワークショップから UE4SS をインストールしてください。</value>
   </data>
 </root>

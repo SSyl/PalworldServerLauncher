@@ -1103,7 +1103,7 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>UE4SS가 설치되지 않음</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
-    <value>UE4SS가 아직 설치되지 않았습니다. 창작마당에서 UE4SS 모드를 추가하고 서버를 한 번 시작하면 이곳에 모드 폴더가 표시됩니다.</value>
+    <value>UE4SS가 아직 설치되지 않았습니다. Steam 창작마당에서 설치한 뒤 서버를 한 번 시작하십시오. 그러면 이곳에 모드 폴더가 표시됩니다.</value>
   </data>
   <data name="Mods_ColOn" xml:space="preserve">
     <value>켬</value>
@@ -2548,27 +2548,27 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
 이 방식으로 가져오시겠습니까?</value>
   </data>
   <data name="Main_ClearLogs" xml:space="preserve">
-    <value>Clear Logs</value>
+    <value>로그 지우기</value>
   </data>
   <data name="Main_ClearLogsTip" xml:space="preserve">
-    <value>Clear every log tab. Only the on-screen text is cleared, the log file on disk is not touched.</value>
+    <value>모든 로그 탭을 지웁니다. 화면에 표시된 내용만 지워지며, 디스크의 로그 파일은 건드리지 않습니다.</value>
   </data>
   <data name="LauncherSettings_ClearLogsOnManualStart" xml:space="preserve">
-    <value>Clear logs on manual server start and restart</value>
+    <value>수동으로 서버를 시작하거나 재시작할 때 로그 지우기</value>
   </data>
   <data name="LauncherSettings_ClearLogsOnManualStartTip" xml:space="preserve">
-    <value>When you start or restart the server yourself, wipe the log tabs first. Scheduled restarts, update restarts, and crash recovery never clear, so you keep the messages that explain a server that is failing to start. The log file on disk is never touched.</value>
+    <value>직접 서버를 시작하거나 재시작할 때 로그 탭을 먼저 지웁니다. 예약 재시작, 업데이트로 인한 재시작, 충돌 복구에서는 지우지 않으므로 서버가 시작되지 않는 원인을 알려 주는 메시지가 남습니다. 디스크의 로그 파일은 절대 건드리지 않습니다.</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledManual" xml:space="preserve">
-    <value>You can also install UE4SS by hand. Get it from GitHub or NexusMods and extract its zip into Pal\Binaries\Win64 so you get a ue4ss folder and dwmapi.dll there. Do not use both at once, two copies of UE4SS crash the server.</value>
+    <value>UE4SS는 직접 설치할 수도 있습니다. GitHub 또는 NexusMods에서 받은 zip을 Pal\Binaries\Win64에 풀어 그 안에 ue4ss 폴더와 dwmapi.dll이 생기도록 하십시오. 두 방식을 동시에 사용하지 마십시오. UE4SS가 두 개 있으면 서버가 충돌합니다.</value>
   </data>
   <data name="Mods_Ue4ssConflictTitle" xml:space="preserve">
-    <value>Two UE4SS Installs Found</value>
+    <value>UE4SS가 두 곳에 설치됨</value>
   </data>
   <data name="Mods_Ue4ssConflictBody" xml:space="preserve">
-    <value>UE4SS is installed twice: once from the Steam Workshop (Mods\NativeMods\UE4SS) and once by hand (Pal\Binaries\Win64\ue4ss). The server crashes on launch when it loads two copies of UE4SS. Remove one of them, or disable the hand-installed one by renaming Pal\Binaries\Win64\dwmapi.dll to dwmapi.dll.bak.</value>
+    <value>UE4SS가 두 번 설치되어 있습니다. 하나는 Steam 창작마당(Mods\NativeMods\UE4SS)에서, 다른 하나는 직접(Pal\Binaries\Win64\ue4ss) 설치되었습니다. UE4SS를 두 개 불러오면 서버가 시작할 때 충돌합니다. 둘 중 하나를 삭제하거나, Pal\Binaries\Win64\dwmapi.dll의 이름을 dwmapi.dll.bak으로 바꿔 직접 설치한 쪽을 비활성화하십시오.</value>
   </data>
   <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
-    <value>UE4SS is installed by hand in Pal\Binaries\Win64\ue4ss. Workshop mods that run under UE4SS install into Mods\NativeMods\UE4SS\Mods, which a hand-installed UE4SS does not read, so they will not load. Pak-only mods still work. Install UE4SS from the Steam Workshop instead to have the launcher manage them.</value>
+    <value>UE4SS가 Pal\Binaries\Win64\ue4ss에 직접 설치되어 있습니다. UE4SS로 실행되는 창작마당 모드는 Mods\NativeMods\UE4SS\Mods에 설치되는데, 직접 설치한 UE4SS는 이 경로를 읽지 않으므로 해당 모드는 불러와지지 않습니다. .pak만 있는 모드는 그대로 작동합니다. 런처가 관리하도록 하려면 대신 Steam 창작마당에서 UE4SS를 설치하십시오.</value>
   </data>
 </root>

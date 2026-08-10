@@ -1103,7 +1103,7 @@ REST API на этом сервере пока не включён, поэтом
     <value>UE4SS не установлен</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
-    <value>UE4SS пока не установлен. Добавьте мод UE4SS из Мастерской и один раз запустите сервер, после этого здесь появится его папка модов.</value>
+    <value>UE4SS пока не установлен. Установите его из Мастерской Steam и один раз запустите сервер, после этого здесь появится его папка модов.</value>
   </data>
   <data name="Mods_ColOn" xml:space="preserve">
     <value>Вкл</value>
@@ -2548,27 +2548,27 @@ REST API на этом сервере пока не включён, поэтом
 Импортировать таким способом?</value>
   </data>
   <data name="Main_ClearLogs" xml:space="preserve">
-    <value>Clear Logs</value>
+    <value>Очистить журналы</value>
   </data>
   <data name="Main_ClearLogsTip" xml:space="preserve">
-    <value>Clear every log tab. Only the on-screen text is cleared, the log file on disk is not touched.</value>
+    <value>Очистка всех вкладок журналов. Очищается только текст на экране, файл журнала на диске не затрагивается.</value>
   </data>
   <data name="LauncherSettings_ClearLogsOnManualStart" xml:space="preserve">
-    <value>Clear logs on manual server start and restart</value>
+    <value>Очищать журналы при ручном запуске и перезапуске сервера</value>
   </data>
   <data name="LauncherSettings_ClearLogsOnManualStartTip" xml:space="preserve">
-    <value>When you start or restart the server yourself, wipe the log tabs first. Scheduled restarts, update restarts, and crash recovery never clear, so you keep the messages that explain a server that is failing to start. The log file on disk is never touched.</value>
+    <value>Когда вы сами запускаете или перезапускаете сервер, вкладки журналов сначала очищаются. Плановые перезапуски, перезапуски после обновления и восстановление после сбоя журналы не очищают, поэтому сообщения о причинах того, что сервер не запускается, сохраняются. Файл журнала на диске не затрагивается никогда.</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledManual" xml:space="preserve">
-    <value>You can also install UE4SS by hand. Get it from GitHub or NexusMods and extract its zip into Pal\Binaries\Win64 so you get a ue4ss folder and dwmapi.dll there. Do not use both at once, two copies of UE4SS crash the server.</value>
+    <value>UE4SS можно установить и вручную. Скачайте его с GitHub или NexusMods и распакуйте zip в Pal\Binaries\Win64, чтобы там появились папка ue4ss и dwmapi.dll. Не используйте оба способа одновременно, две копии UE4SS вызывают сбой сервера.</value>
   </data>
   <data name="Mods_Ue4ssConflictTitle" xml:space="preserve">
-    <value>Two UE4SS Installs Found</value>
+    <value>Найдены две установки UE4SS</value>
   </data>
   <data name="Mods_Ue4ssConflictBody" xml:space="preserve">
-    <value>UE4SS is installed twice: once from the Steam Workshop (Mods\NativeMods\UE4SS) and once by hand (Pal\Binaries\Win64\ue4ss). The server crashes on launch when it loads two copies of UE4SS. Remove one of them, or disable the hand-installed one by renaming Pal\Binaries\Win64\dwmapi.dll to dwmapi.dll.bak.</value>
+    <value>UE4SS установлен дважды: один раз из Мастерской Steam (Mods\NativeMods\UE4SS) и один раз вручную (Pal\Binaries\Win64\ue4ss). Когда сервер загружает две копии UE4SS, он даёт сбой при запуске. Удалите одну из них или отключите установленную вручную, переименовав Pal\Binaries\Win64\dwmapi.dll в dwmapi.dll.bak.</value>
   </data>
   <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
-    <value>UE4SS is installed by hand in Pal\Binaries\Win64\ue4ss. Workshop mods that run under UE4SS install into Mods\NativeMods\UE4SS\Mods, which a hand-installed UE4SS does not read, so they will not load. Pak-only mods still work. Install UE4SS from the Steam Workshop instead to have the launcher manage them.</value>
+    <value>UE4SS установлен вручную в Pal\Binaries\Win64\ue4ss. Моды из Мастерской, работающие через UE4SS, устанавливаются в Mods\NativeMods\UE4SS\Mods, а установленный вручную UE4SS эту папку не читает, поэтому они не загрузятся. Моды только из .pak по-прежнему работают. Чтобы ими управлял лаунчер, установите UE4SS из Мастерской Steam.</value>
   </data>
 </root>

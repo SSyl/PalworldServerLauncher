@@ -1103,7 +1103,7 @@ Detalhes completos em:
     <value>UE4SS Não Instalado</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledBody" xml:space="preserve">
-    <value>O UE4SS ainda não está instalado. Adicione um mod UE4SS da Oficina e inicie o servidor uma vez, depois a pasta de mods dele vai aparecer aqui.</value>
+    <value>O UE4SS ainda não está instalado. Instale-o pela Oficina Steam e inicie o servidor uma vez, depois a pasta de mods dele vai aparecer aqui.</value>
   </data>
   <data name="Mods_ColOn" xml:space="preserve">
     <value>Ativo</value>
@@ -2548,27 +2548,27 @@ Para carregar um deles, defina o DedicatedServerName no GameUserSettings.ini com
 Importar dessa forma?</value>
   </data>
   <data name="Main_ClearLogs" xml:space="preserve">
-    <value>Clear Logs</value>
+    <value>Limpar Logs</value>
   </data>
   <data name="Main_ClearLogsTip" xml:space="preserve">
-    <value>Clear every log tab. Only the on-screen text is cleared, the log file on disk is not touched.</value>
+    <value>Limpa todas as abas de log. Só o texto na tela é apagado, o arquivo de log no disco não é alterado.</value>
   </data>
   <data name="LauncherSettings_ClearLogsOnManualStart" xml:space="preserve">
-    <value>Clear logs on manual server start and restart</value>
+    <value>Limpar os logs ao iniciar e reiniciar o servidor manualmente</value>
   </data>
   <data name="LauncherSettings_ClearLogsOnManualStartTip" xml:space="preserve">
-    <value>When you start or restart the server yourself, wipe the log tabs first. Scheduled restarts, update restarts, and crash recovery never clear, so you keep the messages that explain a server that is failing to start. The log file on disk is never touched.</value>
+    <value>Quando você mesmo inicia ou reinicia o servidor, as abas de log são limpas antes. Reinícios agendados, reinícios por atualização e a recuperação de travamento nunca limpam, então você mantém as mensagens que explicam um servidor que não está conseguindo iniciar. O arquivo de log no disco nunca é alterado.</value>
   </data>
   <data name="Mods_Ue4ssNotInstalledManual" xml:space="preserve">
-    <value>You can also install UE4SS by hand. Get it from GitHub or NexusMods and extract its zip into Pal\Binaries\Win64 so you get a ue4ss folder and dwmapi.dll there. Do not use both at once, two copies of UE4SS crash the server.</value>
+    <value>Você também pode instalar o UE4SS manualmente. Baixe-o do GitHub ou do NexusMods e extraia o zip dele em Pal\Binaries\Win64, de modo que fiquem ali uma pasta ue4ss e o dwmapi.dll. Não use os dois ao mesmo tempo, duas cópias do UE4SS travam o servidor.</value>
   </data>
   <data name="Mods_Ue4ssConflictTitle" xml:space="preserve">
-    <value>Two UE4SS Installs Found</value>
+    <value>Duas Instalações do UE4SS Encontradas</value>
   </data>
   <data name="Mods_Ue4ssConflictBody" xml:space="preserve">
-    <value>UE4SS is installed twice: once from the Steam Workshop (Mods\NativeMods\UE4SS) and once by hand (Pal\Binaries\Win64\ue4ss). The server crashes on launch when it loads two copies of UE4SS. Remove one of them, or disable the hand-installed one by renaming Pal\Binaries\Win64\dwmapi.dll to dwmapi.dll.bak.</value>
+    <value>O UE4SS está instalado duas vezes: uma pela Oficina Steam (Mods\NativeMods\UE4SS) e outra manualmente (Pal\Binaries\Win64\ue4ss). O servidor trava ao iniciar quando carrega duas cópias do UE4SS. Remova uma delas, ou desative a instalada manualmente renomeando Pal\Binaries\Win64\dwmapi.dll para dwmapi.dll.bak.</value>
   </data>
   <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
-    <value>UE4SS is installed by hand in Pal\Binaries\Win64\ue4ss. Workshop mods that run under UE4SS install into Mods\NativeMods\UE4SS\Mods, which a hand-installed UE4SS does not read, so they will not load. Pak-only mods still work. Install UE4SS from the Steam Workshop instead to have the launcher manage them.</value>
+    <value>O UE4SS está instalado manualmente em Pal\Binaries\Win64\ue4ss. Os mods da Oficina que rodam sob o UE4SS são instalados em Mods\NativeMods\UE4SS\Mods, que um UE4SS instalado manualmente não lê, então eles não vão carregar. Os mods só de .pak continuam funcionando. Em vez disso, instale o UE4SS pela Oficina Steam para que o launcher os gerencie.</value>
   </data>
 </root>
