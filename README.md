@@ -1,6 +1,6 @@
 # Palworld Server Launcher
 
-[![Latest release](https://img.shields.io/github/v/release/SSyl/PalworldServerLauncher?include_prereleases&style=for-the-badge&color=green)](https://github.com/SSyl/PalworldServerLauncher/releases/latest) [![License: GPLv3](https://img.shields.io/github/license/SSyl/PalworldServerLauncher?color=blue&style=for-the-badge)](LICENSE) [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8X4237D8A)
+[![Latest release](https://img.shields.io/github/v/release/SSyl/PalworldServerLauncher?include_prereleases&style=for-the-badge&color=green)](https://github.com/SSyl/PalworldServerLauncher/releases/latest) [![License: GPLv3](https://img.shields.io/github/license/SSyl/PalworldServerLauncher?color=blue&style=for-the-badge)](LICENSE)
 
 A Windows app that runs a **Palworld dedicated server** for you. It installs the server, keeps it updated,
 runs scheduled restarts and backups, and restarts it when it crashes or stops responding. Native C# / WPF in a
@@ -154,6 +154,16 @@ The launcher runs on your machine and has no telemetry or analytics. It makes ne
 
 Your settings, logs, backups, and tokens stay on your PC in the launcher's folder, and the Discord bot token
 is never written to the logs. Lock the control bot down to a private channel and an admin-only role.
+
+---
+
+## Feedback
+
+Found a bug, or want something changed? Open an
+[issue](https://github.com/SSyl/PalworldServerLauncher/issues). If the launcher is useful to you, a star helps
+other people find it.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8X4237D8A)
 
 ---
 
