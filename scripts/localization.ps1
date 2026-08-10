@@ -234,7 +234,14 @@ function Read-ResxText {
     if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
         throw "$LiteralPath starts with a UTF-8 BOM. These files are BOM-less, refusing to rewrite one."
     }
-    return [System.Text.Encoding]::UTF8.GetString($bytes)
+    # Throwing rather than the default replacing decoder. A file saved as Windows-1252 would otherwise decode
+    # every accented character to U+FFFD, and because the verify step re-reads through this same decoder the
+    # damage compares equal to itself and the write reports success. One edit would flatten the whole file.
+    try {
+        return [System.Text.UTF8Encoding]::new($false, $true).GetString($bytes)
+    } catch [System.Text.DecoderFallbackException] {
+        throw "$LiteralPath is not valid UTF-8 (first bad byte at offset $($_.Exception.Index)). Re-save it as UTF-8 without a BOM."
+    }
 }
 
 function Write-ResxText {
@@ -440,7 +447,7 @@ function Get-LangDocument {
 # Same rule as LocalizationSmokeTests.PlaceholderIndices, so the two agree on what counts as a mismatch.
 function Get-PlaceholderIndices {
     param([string] $Value)
-    if ([string]::IsNullOrEmpty($Value)) { return @() }
+    if ([string]::IsNullOrEmpty($Value)) { return , [int[]]@() }
     $cleaned = $Value.Replace('{{', '').Replace('}}', '')
     $found = [System.Collections.Generic.SortedSet[int]]::new()
     foreach ($m in [regex]::Matches($cleaned, '\{(\d+)')) { [void]$found.Add([int]$m.Groups[1].Value) }
@@ -490,7 +497,8 @@ function Set-ResxContentVerified {
         }
 
         $reloaded = Get-ResxDocument -LiteralPath $LiteralPath
-        & $Verify $reloaded
+        # [void] so a verify block that ever writes to the pipeline cannot leak into a caller's return value.
+        [void](& $Verify $reloaded)
     } catch {
         [System.IO.File]::Copy($backup, $LiteralPath, $true)
         Remove-Item -LiteralPath $backup -Force -ErrorAction SilentlyContinue
@@ -573,47 +581,60 @@ function Invoke-Add {
         'zh-Hant' = $ZhHant
     }
 
-    $added = 0
+    # Load all ten before writing any. This command cannot be atomic across files, so the next best thing is
+    # to fail before the first write rather than in the middle, and a BOM, malformed XML, a missing file or a
+    # bad encoding all surface here.
+    $docs = [ordered]@{}
+    foreach ($langKey in $supplied.Keys) { $docs[$langKey] = Get-ResxDocument -LiteralPath (Get-LangPath $langKey) }
+
+    $added = [System.Collections.Generic.List[string]]::new()
     $skipped = 0
-    foreach ($langKey in $supplied.Keys) {
-        $file = $script:LangFiles[$langKey]
-        $target = Get-LangPath $langKey
-        $before = Get-ResxDocument -LiteralPath $target
+    try {
+        foreach ($langKey in $supplied.Keys) {
+            $file = $script:LangFiles[$langKey]
+            $before = $docs[$langKey]
 
-        if ($before.Index.ContainsKey($Key)) {
-            Write-Warning "$file : key '$Key' already present, skipping."
-            $skipped++
-            continue
-        }
-
-        $wanted = if ([string]::IsNullOrEmpty($supplied[$langKey])) { $En } else { $supplied[$langKey] }
-        $newline = $before.Newline
-        $encoded = ConvertTo-XmlText ($wanted -replace "`r`n", "`n" -replace "`n", $newline)
-        $entry = "  <data name=`"$Key`" xml:space=`"preserve`">$newline    <value>$encoded</value>$newline  </data>$newline"
-
-        $rootClose = $before.Content.LastIndexOf('</root>', [System.StringComparison]::Ordinal)
-        if ($rootClose -lt 0) { throw "$file has no closing </root>." }
-        $newContent = $before.Content.Substring(0, $rootClose) + $entry + $before.Content.Substring($rootClose)
-
-        Set-ResxContentVerified -LiteralPath $target -NewContent $newContent -Verify {
-            param($after)
-            Assert-UnchangedExcept -Before $before -After $after -Added @($Key)
-            if (-not $after.Index.ContainsKey($Key)) { throw "'$Key' is not in the reloaded file." }
-            if ($after.Index[$Key].Value -cne (Get-NormalizedValue $wanted)) {
-                throw "'$Key' did not round-trip. Wanted [$(Format-Inline $wanted)], got [$(Format-Inline $after.Index[$Key].Value)]."
+            if ($before.Index.ContainsKey($Key)) {
+                Write-Warning "$file : key '$Key' already present, skipping."
+                $skipped++
+                continue
             }
-            if ($after.Duplicates.Count -ne 0) { throw "the write introduced duplicate keys: $($after.Duplicates -join ', ')." }
+
+            $wanted = if ([string]::IsNullOrEmpty($supplied[$langKey])) { $En } else { $supplied[$langKey] }
+            $newline = $before.Newline
+            $encoded = ConvertTo-XmlText ($wanted -replace "`r`n", "`n" -replace "`n", $newline)
+            $entry = "  <data name=`"$Key`" xml:space=`"preserve`">$newline    <value>$encoded</value>$newline  </data>$newline"
+
+            $rootClose = $before.Content.LastIndexOf('</root>', [System.StringComparison]::Ordinal)
+            if ($rootClose -lt 0) { throw "$file has no closing </root>." }
+            $newContent = $before.Content.Substring(0, $rootClose) + $entry + $before.Content.Substring($rootClose)
+
+            Set-ResxContentVerified -LiteralPath $before.Path -NewContent $newContent -Verify {
+                param($after)
+                Assert-UnchangedExcept -Before $before -After $after -Added @($Key)
+                if (-not $after.Index.ContainsKey($Key)) { throw "'$Key' is not in the reloaded file." }
+                if ($after.Index[$Key].Value -cne (Get-NormalizedValue $wanted)) {
+                    throw "'$Key' did not round-trip. Wanted [$(Format-Inline $wanted)], got [$(Format-Inline $after.Index[$Key].Value)]."
+                }
+                $newDuplicates = @($after.Duplicates | Where-Object { $before.Duplicates -notcontains $_ })
+                if ($newDuplicates.Count -ne 0) { throw "the write introduced duplicate keys: $($newDuplicates -join ', ')." }
+            }
+
+            Write-Output "$file : added '$Key'."
+            $added.Add($file)
         }
-
-        Write-Output "$file : added '$Key'."
-        $added++
+    } catch {
+        if ($added.Count -gt 0) {
+            Write-Warning "'$Key' was already written to $($added -join ', ') before this failed. Those files still hold it, so the ten are out of parity until you finish or revert."
+        }
+        throw
     }
 
-    if ($added -gt 0) {
+    if ($added.Count -gt 0) {
         Write-Output ''
-        Write-Output "Added to $added file(s). Run 'dotnet test --filter LocalizationSmokeTests' to confirm key parity."
+        Write-Output "Added to $($added.Count) file(s). Run 'dotnet test --filter LocalizationSmokeTests' to confirm key parity."
     }
-    if ($added -eq 0 -and $skipped -gt 0) { $script:ExitCode = $script:ExitFindings }
+    if ($added.Count -eq 0 -and $skipped -gt 0) { $script:ExitCode = $script:ExitFindings }
     return
 }
 
@@ -653,7 +674,8 @@ function Invoke-Set {
         if ($after.Index[$Key].Value -cne $wanted) {
             throw "'$Key' did not round-trip. Wanted [$(Format-Inline $wanted)], got [$(Format-Inline $after.Index[$Key].Value)]."
         }
-        if ($after.Duplicates.Count -ne 0) { throw "the write introduced duplicate keys: $($after.Duplicates -join ', ')." }
+        $newDuplicates = @($after.Duplicates | Where-Object { $before.Duplicates -notcontains $_ })
+        if ($newDuplicates.Count -ne 0) { throw "the write introduced duplicate keys: $($newDuplicates -join ', ')." }
     }
 
     Write-Output "$file : set '$Key'."
@@ -665,16 +687,26 @@ function Invoke-Set {
         if ($cleared.Count -gt 0) {
             Write-Output "  cleared the reviewed marker on $($cleared -join ' '), the English wording they confirmed has changed."
         }
+    } elseif ($entry.Reviewed) {
+        # The marker confirmed the value this write just replaced, so it no longer describes anything.
+        Set-CommentMarker -LangKey $langKey -KeyName $Key -Word 'reviewed' -CommentText $null -Quiet
+        Write-Output "  cleared the reviewed marker, it confirmed the previous value."
     }
 
-    if ($langKey -ne 'default') {
-        $english = Get-LangDocument 'default'
-        if ($english.Index.ContainsKey($Key)) {
-            $expected = Get-PlaceholderIndices $english.Index[$Key].Value
-            $actual = Get-PlaceholderIndices $wanted
-            if (($expected -join ',') -ne ($actual -join ',')) {
-                Write-Warning ("'$Key' placeholders now differ from English: en={{{0}}} {1}={{{2}}}. This throws FormatException at runtime." -f ($expected -join ','), $langKey, ($actual -join ','))
-            }
+    $placeholderReference = if ($langKey -eq 'default') { $entry.Value } else { (Get-LangDocument 'default').Index[$Key].Value }
+    $expected = Get-PlaceholderIndices $placeholderReference
+    $actual = Get-PlaceholderIndices $wanted
+    if (($expected -join ',') -ne ($actual -join ',')) {
+        if ($langKey -eq 'default') {
+            # Changing the English placeholder set breaks every satellite at once, which is the direction
+            # that actually takes the app down, so it warns louder than the one-language case.
+            $stale = @($script:LangFiles.Keys | Where-Object { $_ -ne 'default' } | Where-Object {
+                    $doc = Get-LangDocument $_
+                    $doc.Index.ContainsKey($Key) -and ((Get-PlaceholderIndices $doc.Index[$Key].Value) -join ',') -ne ($actual -join ',')
+                })
+            Write-Warning ("'$Key' English placeholders changed from {{{0}}} to {{{1}}}. {2} satellite(s) now mismatch and will throw FormatException at runtime: {3}." -f ($expected -join ','), ($actual -join ','), $stale.Count, ($stale -join ' '))
+        } else {
+            Write-Warning ("'$Key' placeholders now differ from English: en={{{0}}} {1}={{{2}}}. This throws FormatException at runtime." -f ($expected -join ','), $langKey, ($actual -join ','))
         }
     }
     return
@@ -694,7 +726,9 @@ function Set-CommentMarker {
         [switch] $Quiet
     )
 
-    if ($RequireClean) { Assert-CleanTree -Directory (Get-LocalizationDir) }
+    # No -RequireClean check here. This runs mid-command from Invoke-Set, which has already dirtied the tree
+    # itself, so re-checking would abort the reviewed-clearing half of a set and leave it half applied. The
+    # gate belongs at command entry only.
     $target = Get-LangPath $LangKey
     $before = Get-ResxDocument -LiteralPath $target
     $file = $script:LangFiles[$LangKey]
@@ -707,7 +741,8 @@ function Set-CommentMarker {
     if (-not [string]::IsNullOrWhiteSpace($entry.Comment) -and -not (Test-MarkerComment $entry.Comment $Word)) {
         throw "'$KeyName' in $file already carries a comment that is not a '$Word' marker: [$(Format-Inline $entry.Comment 120)]. Refusing to overwrite it."
     }
-    if ($entry.Comment -ceq $CommentText) {
+    $wantedComment = Get-NormalizedValue $CommentText
+    if ($entry.Comment -ceq $wantedComment) {
         if (-not $Quiet) {
             Write-Output "$file : '$KeyName' already reads $(if ($null -eq $CommentText) { 'unmarked' } else { "[$CommentText]" }), nothing written."
         }
@@ -717,20 +752,24 @@ function Set-CommentMarker {
 
     if ($null -eq $CommentText) {
         $newContent = $before.Content.Substring(0, $entry.AfterValue) + $before.Content.Substring($entry.CommentEnd + 10)
-    } elseif ($entry.CommentStart -ge 0) {
-        $newContent = $before.Content.Substring(0, $entry.CommentStart) + (ConvertTo-XmlText $CommentText) + $before.Content.Substring($entry.CommentEnd)
     } else {
-        $element = "$($before.Newline)$($entry.Indent)<comment>$(ConvertTo-XmlText $CommentText)</comment>"
-        $newContent = $before.Content.Substring(0, $entry.AfterValue) + $element + $before.Content.Substring($entry.AfterValue)
+        $encoded = ConvertTo-XmlText ($wantedComment -replace "`n", $before.Newline)
+        if ($entry.CommentStart -ge 0) {
+            $newContent = $before.Content.Substring(0, $entry.CommentStart) + $encoded + $before.Content.Substring($entry.CommentEnd)
+        } else {
+            $element = "$($before.Newline)$($entry.Indent)<comment>$encoded</comment>"
+            $newContent = $before.Content.Substring(0, $entry.AfterValue) + $element + $before.Content.Substring($entry.AfterValue)
+        }
     }
 
     Set-ResxContentVerified -LiteralPath $target -NewContent $newContent -Verify {
         param($after)
         Assert-UnchangedExcept -Before $before -After $after -CommentChanged @($KeyName)
-        if ($after.Index[$KeyName].Comment -cne $CommentText) {
-            throw "'$KeyName' comment did not round-trip. Wanted [$CommentText], got [$($after.Index[$KeyName].Comment)]."
+        if ($after.Index[$KeyName].Comment -cne $wantedComment) {
+            throw "'$KeyName' comment did not round-trip. Wanted [$(Format-Inline $wantedComment 120)], got [$(Format-Inline $after.Index[$KeyName].Comment 120)]."
         }
-        if ($after.Duplicates.Count -ne 0) { throw "the write introduced duplicate keys: $($after.Duplicates -join ', ')." }
+        $newDuplicates = @($after.Duplicates | Where-Object { $before.Duplicates -notcontains $_ })
+        if ($newDuplicates.Count -ne 0) { throw "the write introduced duplicate keys: $($newDuplicates -join ', ')." }
     }
 
     if (-not $Quiet) {
@@ -758,6 +797,7 @@ function Invoke-Help {
 
 function Invoke-MarkInvariant {
     if (-not $Key) { throw 'mark-invariant needs -Key.' }
+    if ($RequireClean) { Assert-CleanTree -Directory (Get-LocalizationDir) }
     $text = if ($Reason) { "invariant, $Reason" } else { 'invariant' }
     Set-CommentMarker -LangKey 'default' -KeyName $Key -Word 'invariant' -CommentText $text
     return
@@ -765,6 +805,7 @@ function Invoke-MarkInvariant {
 
 function Invoke-UnmarkInvariant {
     if (-not $Key) { throw 'unmark-invariant needs -Key.' }
+    if ($RequireClean) { Assert-CleanTree -Directory (Get-LocalizationDir) }
     Set-CommentMarker -LangKey 'default' -KeyName $Key -Word 'invariant' -CommentText $null
     return
 }
@@ -782,6 +823,7 @@ function Resolve-ReviewLang {
 function Invoke-MarkReviewed {
     if (-not $Key) { throw 'mark-reviewed needs -Key.' }
     $langKey = Resolve-ReviewLang 'mark-reviewed'
+    if ($RequireClean) { Assert-CleanTree -Directory (Get-LocalizationDir) }
     $text = if ($Reason) { "reviewed, $Reason" } else { 'reviewed' }
     Set-CommentMarker -LangKey $langKey -KeyName $Key -Word 'reviewed' -CommentText $text
     return
@@ -790,6 +832,7 @@ function Invoke-MarkReviewed {
 function Invoke-UnmarkReviewed {
     if (-not $Key) { throw 'unmark-reviewed needs -Key.' }
     $langKey = Resolve-ReviewLang 'unmark-reviewed'
+    if ($RequireClean) { Assert-CleanTree -Directory (Get-LocalizationDir) }
     Set-CommentMarker -LangKey $langKey -KeyName $Key -Word 'reviewed' -CommentText $null
     return
 }
@@ -799,14 +842,27 @@ function Invoke-UnmarkReviewed {
 function Clear-ReviewedForKey {
     param([Parameter(Mandatory)][string] $KeyName)
 
-    $cleared = [System.Collections.Generic.List[string]]::new()
+    # Same pre-flight reasoning as add: read all nine, then write, so a file that cannot be loaded stops this
+    # before it has half-cleared the set.
+    $targets = [System.Collections.Generic.List[string]]::new()
     foreach ($langKey in $script:LangFiles.Keys) {
         if ($langKey -eq 'default') { continue }
         $doc = Get-LangDocument $langKey
         if (-not $doc.Index.ContainsKey($KeyName)) { continue }
-        if (-not $doc.Index[$KeyName].Reviewed) { continue }
-        Set-CommentMarker -LangKey $langKey -KeyName $KeyName -Word 'reviewed' -CommentText $null -Quiet
-        $cleared.Add($langKey)
+        if ($doc.Index[$KeyName].Reviewed) { $targets.Add($langKey) }
+    }
+
+    $cleared = [System.Collections.Generic.List[string]]::new()
+    try {
+        foreach ($langKey in $targets) {
+            Set-CommentMarker -LangKey $langKey -KeyName $KeyName -Word 'reviewed' -CommentText $null -Quiet
+            $cleared.Add($langKey)
+        }
+    } catch {
+        if ($cleared.Count -gt 0) {
+            Write-Warning "Cleared the reviewed marker on $($cleared -join ' ') before this failed. $(@($targets | Where-Object { $cleared -notcontains $_ }) -join ' ') still carry a marker for an English value that has changed."
+        }
+        throw
     }
     return $cleared
 }
@@ -929,6 +985,20 @@ function Get-UntranslatedKeys {
     return $keys
 }
 
+# Keys present in Strings.resx and absent from a satellite. Coverage has to subtract these or a deleted key
+# reads as translated, which is the opposite of the truth. validate reports them properly, this is only so
+# the percentage does not contradict it.
+function Get-MissingCounts {
+    $english = Get-LangDocument 'default'
+    $counts = @{}
+    foreach ($langKey in $script:LangFiles.Keys) {
+        if ($langKey -eq 'default') { continue }
+        $doc = Get-LangDocument $langKey
+        $counts[$langKey] = @($english.Names | Where-Object { -not $doc.Index.ContainsKey($_) }).Count
+    }
+    return $counts
+}
+
 # Key-language pairs a reviewed marker is hiding, counted independently so a marker cannot quietly swallow
 # a real gap.
 function Get-ReviewedHiddenCount {
@@ -940,6 +1010,9 @@ function Get-ReviewedHiddenCount {
         foreach ($entry in $doc.Entries) {
             if (-not $entry.Reviewed) { continue }
             if (-not $english.Index.ContainsKey($entry.Name)) { continue }
+            # An invariant key is already hidden by the source-side marker, so counting it here too would
+            # report the same pair twice across the two hidden totals.
+            if ($english.Index[$entry.Name].Invariant) { continue }
             if ($english.Index[$entry.Name].Value -ceq $entry.Value) { $count++ }
         }
     }
@@ -961,18 +1034,24 @@ function Invoke-Untranslated {
 
     $gaps = @($all | Where-Object { -not $_.Everywhere })
     $everywhere = @($all | Where-Object { $_.Everywhere })
-    if ($only) { $gaps = @($gaps | Where-Object { $_.Matching -contains $only }) }
+    if ($only) {
+        $gaps = @($gaps | Where-Object { $_.Matching -contains $only })
+        $everywhere = @($everywhere | Where-Object { $_.Matching -contains $only })
+    }
 
+    $missing = Get-MissingCounts
     $summary = foreach ($langKey in $(if ($only) { @($only) } else { $satellites })) {
         $gapCount = @($gaps | Where-Object { $_.Matching -contains $langKey }).Count
         $everywhereCount = @($everywhere | Where-Object { $_.Matching -contains $langKey }).Count
+        $missingCount = $missing[$langKey]
         [pscustomobject]@{
             Lang              = $langKey
             Gaps              = $gapCount
             IdenticalNoGap    = $everywhereCount
+            Missing           = $missingCount
             MatchingEnglish   = $gapCount + $everywhereCount
             Total             = $total
-            Coverage          = [Math]::Round((($total - $gapCount - $everywhereCount) / $total) * 100, 1)
+            Coverage          = [Math]::Round((($total - $gapCount - $everywhereCount - $missingCount) / $total) * 100, 1)
         }
     }
 
@@ -1010,7 +1089,8 @@ function Invoke-Untranslated {
 
     Write-Output ''
     foreach ($item in $summary) {
-        Write-Output ("{0,-8} {1,4} to translate, {2,3} identical everywhere, {3}% translated" -f $item.Lang, $item.Gaps, $item.IdenticalNoGap, $item.Coverage)
+        $missingNote = if ($item.Missing -gt 0) { ", $($item.Missing) MISSING" } else { '' }
+        Write-Output ("{0,-8} {1,4} to translate, {2,3} identical everywhere{3}, {4}% translated" -f $item.Lang, $item.Gaps, $item.IdenticalNoGap, $missingNote, $item.Coverage)
     }
     $notes = [System.Collections.Generic.List[string]]::new()
     if ($invariantHidden -gt 0 -and -not $IncludeInvariant) {
@@ -1348,7 +1428,9 @@ function Invoke-CatalogCheck {
     Write-Output 'The rest are our own admin labels or deliberately reworded, and are out of scope.'
     Write-Output ''
     foreach ($culture in $result.Cultures) {
-        $flag = if ($culture.Matched -eq $culture.Mapped) { 'ok' } else { 'DRIFT' }
+        # English defines the mapping, so its row can never fail. Labelling it 'ok' implies a check happened.
+        $flag = if ($culture.Lang -eq 'default') { 'source, defines the mapping' }
+        elseif ($culture.Matched -eq $culture.Mapped) { 'ok' } else { 'DRIFT' }
         Write-Output ("  {0,-8} {1,3} of {2,-3} {3}" -f $culture.Lang, $culture.Matched, $culture.Mapped, $flag)
     }
     foreach ($skip in $result.Skipped) { Write-Warning "catalog-check skipped $($skip.Lang): $($skip.Reason)" }
@@ -1395,6 +1477,7 @@ function Invoke-Audit {
     $untranslated = @(Get-UntranslatedKeys)
     $invariantHidden = @($english.Entries | Where-Object { $_.Invariant }).Count
 
+    $missing = Get-MissingCounts
     $coverage = foreach ($langKey in $satellites) {
         $gaps = @($untranslated | Where-Object { -not $_.Everywhere -and $_.Matching -contains $langKey }).Count
         $everywhere = @($untranslated | Where-Object { $_.Everywhere -and $_.Matching -contains $langKey }).Count
@@ -1402,8 +1485,9 @@ function Invoke-Audit {
             Lang         = $langKey
             Untranslated = $gaps
             Everywhere   = $everywhere
+            Missing      = $missing[$langKey]
             Total        = $total
-            Coverage     = [Math]::Round((($total - $gaps - $everywhere) / $total) * 100, 1)
+            Coverage     = [Math]::Round((($total - $gaps - $everywhere - $missing[$langKey]) / $total) * 100, 1)
         }
     }
     $catalog = Get-CatalogCheckResult
@@ -1431,7 +1515,8 @@ function Invoke-Audit {
     Write-Output ''
     Write-Output "coverage         ($invariantHidden key(s) marked invariant are excluded)"
     foreach ($item in $coverage) {
-        Write-Output ("  {0,-8} {1,5}% translated, {2} to translate, {3} identical everywhere" -f $item.Lang, $item.Coverage, $item.Untranslated, $item.Everywhere)
+        $missingNote = if ($item.Missing -gt 0) { ", $($item.Missing) MISSING" } else { '' }
+        Write-Output ("  {0,-8} {1,5}% translated, {2} to translate, {3} identical everywhere{4}" -f $item.Lang, $item.Coverage, $item.Untranslated, $item.Everywhere, $missingNote)
     }
     Write-Output ''
     if (-not $catalog.Available) {
