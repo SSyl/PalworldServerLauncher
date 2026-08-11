@@ -2,6 +2,14 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [1.3.1] - 2026-08-11
+
+### Fixed
+- **"Open the launcher and start the server at Windows login" could get stuck off for good.** Windows keeps its own on/off switch for Startup entries, and switching it off in Task Manager left the option looking enabled while nothing happened at login. Unticking and reticking it never cleared that switch. Ticking the option now clears it, and the option reads as off for as long as Windows is blocking it. (#13)
+
+### Changed
+- **The log now records how the launcher was started and whether its login shortcut is in place**, so an autostart that doesn't fire can be worked out from the log file.
+
 ## [1.3.0] - 2026-08-10
 
 ### Added
