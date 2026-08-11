@@ -44,6 +44,26 @@ public static class LoginShortcut
         }
     }
 
+    /// <summary>
+    /// Drop Windows' off-switch for this shortcut. The StartupApproved value is keyed by the shortcut's filename,
+    /// which is stable per install, so a disable made in Task Manager > Startup apps survives deleting and
+    /// recreating the file: without this, unticking and reticking the box leaves it permanently inert. Deleting
+    /// beats writing an enabled value, because Windows reads a missing entry as enabled and writes its own the
+    /// next time the switch is used.
+    /// </summary>
+    private static void ClearWindowsDisable(string exePath)
+    {
+        try
+        {
+            using var key = Registry.CurrentUser.OpenSubKey(StartupApprovedKey, writable: true);
+            key?.DeleteValue(Path.GetFileName(ShortcutPath(exePath)), throwOnMissingValue: false);
+        }
+        catch (Exception ex) when (ex is System.Security.SecurityException or UnauthorizedAccessException or IOException)
+        {
+            // Best effort. The shortcut is created either way, and the startup log reports the disabled state.
+        }
+    }
+
     /// <summary>Decode a StartupApproved value. Windows sets bit 0 of the first byte to disable an entry (02 -> 03
     /// for Startup-folder items) and appends a FILETIME of when it happened. Undocumented but stable since
     /// Windows 8. A missing value means enabled, since Windows only writes one once the switch is used.</summary>
@@ -61,7 +81,11 @@ public static class LoginShortcut
             "$lnk.Arguments = '--start-server'\n" +
             $"$lnk.WorkingDirectory = {PsLiteral(workingDir)}\n" +
             "$lnk.Save()\n";
-        return RunPowerShell(script) && File.Exists(lnk);
+        if (!RunPowerShell(script) || !File.Exists(lnk))
+            return false;
+
+        ClearWindowsDisable(exePath);
+        return true;
     }
 
     /// <summary>Remove the login shortcut (a direct file delete, no elevation).</summary>
