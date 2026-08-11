@@ -52,11 +52,11 @@ public static class LoginShortcut
     /// <summary>
     /// Drop Windows' off-switch for this shortcut. The StartupApproved value is keyed by the shortcut's filename,
     /// which is stable per install, so a disable made in Task Manager > Startup apps survives deleting and
-    /// recreating the file: without this, unticking and reticking the box leaves it permanently inert. Deleting
+    /// recreating the file. Without this, unticking and reticking the box leaves it permanently inert. Deleting
     /// beats writing an enabled value, because Windows reads a missing entry as enabled and writes its own the
-    /// next time the switch is used.
+    /// next time the switch is used. Returns false when the disable is still in place afterward.
     /// </summary>
-    private static void ClearWindowsDisable(string exePath)
+    private static bool ClearWindowsDisable(string exePath)
     {
         try
         {
@@ -65,8 +65,9 @@ public static class LoginShortcut
         }
         catch (Exception ex) when (ex is System.Security.SecurityException or UnauthorizedAccessException or IOException)
         {
-            // Best effort. The shortcut is created either way, and the startup log reports the disabled state.
+            // Fall through to the read, which decides whether the shortcut can actually run.
         }
+        return !IsDisabledByWindows(exePath);
     }
 
     /// <summary>Decode a StartupApproved value. Windows sets bit 0 of the first byte to disable an entry (02 -> 03
@@ -89,8 +90,9 @@ public static class LoginShortcut
         if (!RunPowerShell(script) || !File.Exists(lnk))
             return false;
 
-        ClearWindowsDisable(exePath);
-        return true;
+        // A shortcut Windows is still refusing to run is not a working autostart, so report that instead of
+        // leaving the box ticked over a dead file. The file stays, since fixing the switch by hand revives it.
+        return ClearWindowsDisable(exePath);
     }
 
     /// <summary>Remove the login shortcut (a direct file delete, no elevation).</summary>

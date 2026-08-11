@@ -70,7 +70,11 @@ public sealed class LauncherSettingsDialog : Window
 
         // Login autostart: a Startup shortcut that opens the launcher with --start-server at login, which starts
         // the server and manages it. No elevation, so it applies immediately on click, not deferred to Save.
-        _loginOpen = Check(Strings.LauncherSettings_LoginOpen, LoginShortcut.Exists(Environment.ProcessPath ?? ""), checkGap);
+        // A shortcut Windows has switched off in Task Manager > Startup apps reads as unchecked, because it never
+        // runs. Showing it checked is how this got stuck, since ticking the box is what clears the switch.
+        var exePath = Environment.ProcessPath ?? "";
+        _loginOpen = Check(Strings.LauncherSettings_LoginOpen,
+            LoginShortcut.Exists(exePath) && !LoginShortcut.IsDisabledByWindows(exePath), checkGap);
         _loginOpen.ToolTip = Strings.LauncherSettings_LoginOpenTip;
         _loginOpen.Click += OnToggleLoginOpen;
         root.Children.Add(_loginOpen);
