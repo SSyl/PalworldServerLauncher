@@ -1,3 +1,4 @@
+using System.IO;
 using PalServerLauncher.Core;
 
 namespace PalServerLauncher.Tests;
@@ -42,6 +43,23 @@ public class LoginShortcutTests
     {
         Assert.Equal(LoginShortcut.ShortcutPath(@"C:\Games\A\PalworldServerLauncher.exe"),
             LoginShortcut.ShortcutPath(variant));
+    }
+
+    [Fact]
+    public void The_shortcut_filename_keeps_the_shape_the_windows_switch_is_keyed_by()
+    {
+        // Windows keys its Startup-apps on/off switch by this exact filename. Changing the format orphans every
+        // existing install's shortcut and its saved switch state at once, with nothing else to catch it.
+        Assert.Matches(@"^Palworld Server Launcher \([0-9A-F]{8}\)\.lnk$",
+            LoginShortcut.ApprovalValueName(@"C:\Games\A\PalworldServerLauncher.exe"));
+    }
+
+    [Fact]
+    public void The_registry_value_name_is_the_shortcut_filename()
+    {
+        // Dropping the extension here would match no value, so the read reports enabled and the delete no-ops.
+        var exe = @"C:\Games\A\PalworldServerLauncher.exe";
+        Assert.Equal(Path.GetFileName(LoginShortcut.ShortcutPath(exe)), LoginShortcut.ApprovalValueName(exe));
     }
 
     [Fact]

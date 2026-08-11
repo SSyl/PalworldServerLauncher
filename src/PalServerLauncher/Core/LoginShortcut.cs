@@ -26,6 +26,11 @@ public static class LoginShortcut
     private const string StartupApprovedKey =
         @"Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\StartupFolder";
 
+    /// <summary>The StartupApproved value name for this install. Windows keys its on/off switch by the shortcut's
+    /// filename rather than by target, so this has to track <see cref="ShortcutPath"/> exactly, extension
+    /// included. A name without the <c>.lnk</c> matches nothing and both the read and the delete no-op.</summary>
+    public static string ApprovalValueName(string exePath) => Path.GetFileName(ShortcutPath(exePath));
+
     /// <summary>
     /// True when Windows has this install's shortcut switched off in Settings > Startup apps (the same switch as
     /// the Task Manager Startup tab). The shortcut file stays on disk when that happens, so <see cref="Exists"/>
@@ -36,7 +41,7 @@ public static class LoginShortcut
         try
         {
             using var key = Registry.CurrentUser.OpenSubKey(StartupApprovedKey);
-            return IsDisabledValue(key?.GetValue(Path.GetFileName(ShortcutPath(exePath))) as byte[]);
+            return IsDisabledValue(key?.GetValue(ApprovalValueName(exePath)) as byte[]);
         }
         catch (Exception ex) when (ex is System.Security.SecurityException or UnauthorizedAccessException or IOException)
         {
@@ -56,7 +61,7 @@ public static class LoginShortcut
         try
         {
             using var key = Registry.CurrentUser.OpenSubKey(StartupApprovedKey, writable: true);
-            key?.DeleteValue(Path.GetFileName(ShortcutPath(exePath)), throwOnMissingValue: false);
+            key?.DeleteValue(ApprovalValueName(exePath), throwOnMissingValue: false);
         }
         catch (Exception ex) when (ex is System.Security.SecurityException or UnauthorizedAccessException or IOException)
         {
