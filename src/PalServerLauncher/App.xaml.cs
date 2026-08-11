@@ -52,6 +52,9 @@ public partial class App : Application
         var migrated = LauncherConfig.MigrateLegacyLayout();
 
         _logger = new Logger(verbose, echoToConsole: console);
+        // Logged unconditionally. "No flags" is the answer to most autostart reports, so a submitted log has to
+        // show whether --start-server actually reached the process. No launcher flag carries a secret.
+        _logger.Info(e.Args.Length > 0 ? $"Command line: {string.Join(" ", e.Args)}" : "Command line: (no flags)");
         if (migrated.Count > 0)
             _logger.Info($"Moved existing data into {LauncherConfig.DataRoot}: {string.Join(", ", migrated)}");
 
@@ -139,6 +142,17 @@ public partial class App : Application
             config.Save();
         }
         ApplyUiCulture(config.Language);
+
+        // The login-autostart checkbox is just File.Exists on this shortcut, so record what's on disk and where.
+        // A shortcut the user made by hand lives elsewhere and carries no --start-server, which reads as the
+        // toggle being ignored.
+        if (Environment.ProcessPath is { } exePath)
+        {
+            var state = !LoginShortcut.Exists(exePath) ? "absent"
+                : LoginShortcut.IsDisabledByWindows(exePath) ? "present but switched off in Windows Startup apps"
+                : "present";
+            _logger.Info($"Login shortcut {state}: {LoginShortcut.ShortcutPath(exePath)}");
+        }
 
         new MainWindow(_logger, config, startServer, ignoreRestApi).Show();
         ShutdownMode = ShutdownMode.OnLastWindowClose;

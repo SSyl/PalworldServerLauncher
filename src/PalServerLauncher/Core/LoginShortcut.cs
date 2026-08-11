@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.Win32;
 
 namespace PalServerLauncher.Core;
 
@@ -21,6 +22,32 @@ public static class LoginShortcut
 
     /// <summary>True when this install's login shortcut is present.</summary>
     public static bool Exists(string exePath) => File.Exists(ShortcutPath(exePath));
+
+    private const string StartupApprovedKey =
+        @"Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\StartupFolder";
+
+    /// <summary>
+    /// True when Windows has this install's shortcut switched off in Settings > Startup apps (the same switch as
+    /// the Task Manager Startup tab). The shortcut file stays on disk when that happens, so <see cref="Exists"/>
+    /// keeps reporting true while nothing launches at login. False whenever the key or value can't be read.
+    /// </summary>
+    public static bool IsDisabledByWindows(string exePath)
+    {
+        try
+        {
+            using var key = Registry.CurrentUser.OpenSubKey(StartupApprovedKey);
+            return IsDisabledValue(key?.GetValue(Path.GetFileName(ShortcutPath(exePath))) as byte[]);
+        }
+        catch (Exception ex) when (ex is System.Security.SecurityException or UnauthorizedAccessException or IOException)
+        {
+            return false;
+        }
+    }
+
+    /// <summary>Decode a StartupApproved value. Windows sets bit 0 of the first byte to disable an entry (02 -> 03
+    /// for Startup-folder items) and appends a FILETIME of when it happened. Undocumented but stable since
+    /// Windows 8. A missing value means enabled, since Windows only writes one once the switch is used.</summary>
+    public static bool IsDisabledValue(byte[]? value) => value is { Length: > 0 } && (value[0] & 1) != 0;
 
     /// <summary>Create the login shortcut targeting the exe with <c>--start-server</c>. No elevation.</summary>
     public static bool Create(string exePath)
