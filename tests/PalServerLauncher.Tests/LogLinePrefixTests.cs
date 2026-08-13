@@ -48,11 +48,28 @@ public class LogLinePrefixTests
     }
 
     [Theory]
+    // Real PalDefender 1.8.3 lines. Its clock goes, its level stays: that is all that marks a cheat
+    // detection apart from a crafting line.
+    [InlineData("[04:22:56][warning] 'SSyl' (UserId=steam_765, IP=127.0.0.1) is a cheater! Reason: used /imcheater command",
+                "[warning] 'SSyl' (UserId=steam_765, IP=127.0.0.1) is a cheater! Reason: used /imcheater command")]
+    [InlineData("[04:21:18][info] PalDefender Anti Cheat v1.8.3 loaded!", "[info] PalDefender Anti Cheat v1.8.3 loaded!")]
+    [InlineData("[04:07:10][d3d9][info] Loading 'PalDefender.dll'...", "[d3d9][info] Loading 'PalDefender.dll'...")]
+    public void A_bare_clock_is_dropped_because_it_carries_no_date(string line, string expected)
+    {
+        var (time, rest) = LogLinePrefix.Split(line);
+
+        Assert.Null(time);
+        Assert.Equal(expected, rest);
+    }
+
+    [Theory]
     [InlineData("Setting breakpad minidump AppID = 1623730")]
     [InlineData("REST API started on port 8212")]
     [InlineData("")]
     [InlineData("[not a timestamp] text")]
     [InlineData("[2026-08-12 14:57:42 unterminated")]
+    [InlineData("[24:00:00] out of range")]
+    [InlineData("[4:22:56] not zero padded")]
     public void Anything_else_is_returned_untouched(string line)
     {
         var (time, rest) = LogLinePrefix.Split(line);

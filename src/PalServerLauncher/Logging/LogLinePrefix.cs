@@ -7,7 +7,8 @@ namespace PalServerLauncher.Logging;
 /// SteamCMD and Palworld both write <c>[2026-08-12 14:57:39]</c>, and Palworld's is worth keeping, because its
 /// player and chat lines reach us in bursts up to a minute late, so its own stamp is the real event time while
 /// ours is only when we read the line. Unreal's <c>[2026.08.12-19.57.56:668][436]</c> is UTC and matched our
-/// local time exactly once converted, so that one is dropped rather than parsed.
+/// local time exactly once converted, so that one is dropped rather than parsed. A bare <c>[04:22:56]</c>, what
+/// spdlog-based console mods write, is dropped for lack of a date.
 /// </summary>
 public static class LogLinePrefix
 {
@@ -30,6 +31,10 @@ public static class LogLinePrefix
         if (DateTime.TryParseExact(inner, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture,
                 DateTimeStyles.None, out var stamped))
             return (stamped, text[(close + 1)..].TrimStart());
+
+        // No date, so a session running past midnight would date the line wrong. Dropped rather than used.
+        if (TimeOnly.TryParseExact(inner, "HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+            return (null, text[(close + 1)..].TrimStart());
 
         // Unreal's own prefix, always followed by a [frame] counter. Dropped without its time, which is UTC.
         if (DateTime.TryParseExact(inner, "yyyy.MM.dd-HH.mm.ss:fff", CultureInfo.InvariantCulture,
@@ -82,6 +87,8 @@ public static class LogLinePrefix
         token.Equals("CHAT", StringComparison.OrdinalIgnoreCase) ||
         token.Equals("info", StringComparison.OrdinalIgnoreCase) ||
         token.Equals("warn", StringComparison.OrdinalIgnoreCase) ||
+        // spdlog's level name is "warning", not "warn".
+        token.Equals("warning", StringComparison.OrdinalIgnoreCase) ||
         token.Equals("error", StringComparison.OrdinalIgnoreCase) ||
         TimeOnly.TryParseExact(token, "HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
 }
