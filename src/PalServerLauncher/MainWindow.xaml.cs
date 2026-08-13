@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows;
@@ -40,13 +40,15 @@ public partial class MainWindow : Window
 
         // Follow-the-tail per log: auto-scroll to the newest line, but stop once the user scrolls up so they can
         // read history, and surface a jump-to-latest button for the current tab while it's scrolled up.
-        _logLists = [GeneralList, ServerList, ChatList, PlayersList, SteamCmdList];
+        _logLists = [GeneralList, LauncherList, ServerList, ChatList, PlayersList, SteamCmdList];
         foreach (var logList in _logLists)
         {
             _followingTail[logList] = true;
             logList.Loaded += (_, _) => HookLogScroll(logList);
+            HookLogCopy(logList);
         }
         HookAutoScroll(_viewModel.LogGeneral, GeneralList);
+        HookAutoScroll(_viewModel.LogLauncher, LauncherList);
         HookAutoScroll(_viewModel.LogServer, ServerList);
         HookAutoScroll(_viewModel.LogChat, ChatList);
         HookAutoScroll(_viewModel.LogPlayerJoin, PlayersList);
@@ -63,6 +65,7 @@ public partial class MainWindow : Window
         _viewModel.ShowWorldSelectionFailure = ShowWorldSelectionFailure;
         _viewModel.ConfirmUnknownServers = PromptUnknownServers;
         _viewModel.ShowTerminateFailure = ShowTerminateFailure;
+        _viewModel.ConfirmSteamCmdFailure = ConfirmSteamCmdFailure;
 
         Loaded += OnLoaded;
         Closing += OnClosing;
@@ -87,9 +90,8 @@ public partial class MainWindow : Window
             PromptRestSetupIfNeeded();
     }
 
-    /// <summary>--start-server: bring the server up on load. If we adopted an already-running one above, do
-    /// nothing. Otherwise auto-configure the REST API (with a random admin password) unless --ignore-rest-api
-    /// was passed, then start. StartServerAsync no-ops with a log if the server isn't installed.</summary>
+    /// <summary>--start-server: bring the server up on load, enabling the REST API with a random admin password
+    /// first unless --ignore-rest-api was passed. No-ops when one was already adopted above.</summary>
     private async Task AutoStartServerAsync()
     {
         if (_viewModel.IsServerRunning)
@@ -103,12 +105,8 @@ public partial class MainWindow : Window
         await _viewModel.StartServerAsync();
     }
 
-    /// <summary>
-    /// A managed server was DETECTED at startup (not yet adopted). Only servers launched from THIS folder are
-    /// found, so it's almost certainly ours from a previous session, offer to reconnect (adopt and keep managing
-    /// it), shut it down, or exit. Adopting happens here, per the choice, so the launcher never starts monitoring
-    /// a server the user chose to shut down or leave. Returns false only when the launcher is exiting.
-    /// </summary>
+    /// <summary>A managed server was detected at startup but not yet adopted, so the user picks first and
+    /// adoption follows the choice. Only servers launched from THIS folder are found. False means exiting.</summary>
     private async Task<bool> HandleAlreadyRunningAsync()
     {
         var count = _viewModel.RunningInstanceCount;
@@ -154,6 +152,18 @@ public partial class MainWindow : Window
                 _viewModel.Attach();
                 return true;
         }
+    }
+
+    /// <summary>A SteamCMD run the user asked for failed. Text and buttons both come from the report, and
+    /// dismissing the dialog takes the last button.</summary>
+    private SteamCmdFailureChoice ConfirmSteamCmdFailure(SteamCmdFailure failure)
+    {
+        var buttons = SteamCmdFailureText.Buttons(failure);
+        var clicked = ChoiceDialog.ShowWithDetail(this, Strings.SteamCmd_FailedTitle,
+            SteamCmdFailureText.Message(failure), SteamCmdFailureText.Detail(failure),
+            SteamCmdFailureText.Footer(failure), buttons.Select(b => b.Label).ToArray());
+
+        return clicked >= 0 ? buttons[clicked].Choice : buttons[^1].Choice;
     }
 
     /// <summary>Confirm the first install (a multi-GB SteamCMD download) before it starts.</summary>
@@ -527,6 +537,21 @@ public partial class MainWindow : Window
     private async void OnCheckForUpdate(object sender, RoutedEventArgs e)
     {
         var (result, latest) = await _viewModel.CheckForUpdateAsync();
+
+        if (result == ServerController.UpdateCheckResult.InstalledBuildUnknown)
+        {
+            // Validate rebuilds the manifest by checksumming what's there, downloading nothing (measured with
+            // the manifest missing and again with it corrupt). It refuses to run while the server is up.
+            if (!_viewModel.UpdateActionsEnabled)
+                ChoiceDialog.Show(this, Strings.Main_BuildUnknownTitle,
+                    Strings.Main_BuildUnknownMessage + Environment.NewLine + Environment.NewLine + Strings.Main_BuildUnknownStopFirst,
+                    Strings.Common_OK);
+            else if (ChoiceDialog.Show(this, Strings.Main_BuildUnknownTitle, Strings.Main_BuildUnknownMessage,
+                    Strings.Main_ValidateFiles, Strings.Main_NotNow) == 0)
+                await _viewModel.ValidateFilesCommand.ExecuteAsync(null);
+            return;
+        }
+
         if (result != ServerController.UpdateCheckResult.UpdateAvailable)
             return; // the Update status line already shows up-to-date / check-failed
 
@@ -562,7 +587,36 @@ public partial class MainWindow : Window
                 if (!char.IsAsciiDigit(c)) { e.CancelCommand(); return; }
     }
 
-    private void HookAutoScroll(ObservableCollection<string> collection, ListBox list)
+    /// <summary>Ctrl+C and the context menu on a log tab. A ListBox handles neither on its own.</summary>
+    private void HookLogCopy(ListBox list)
+    {
+        list.CommandBindings.Add(new CommandBinding(ApplicationCommands.Copy,
+            (_, _) => CopyLogLines(list),
+            (_, e) => e.CanExecute = list.SelectedItems.Count > 0));
+        list.CommandBindings.Add(new CommandBinding(ApplicationCommands.SelectAll,
+            (_, _) => list.SelectAll(),
+            (_, e) => e.CanExecute = list.Items.Count > 0));
+    }
+
+    /// <summary>Copy the selected lines exactly as they read on screen, in list order rather than the order they
+    /// were clicked. Reference comparison, since two log entries with the same text inside one clock tick are
+    /// equal by value and one would otherwise drag the other along.</summary>
+    private void CopyLogLines(ListBox list)
+    {
+        var selected = list.SelectedItems.Cast<object>().ToList();
+        var withTag = ReferenceEquals(list, GeneralList);
+        var lines = list.Items.Cast<LogEntry>()
+            .Where(entry => selected.Any(item => ReferenceEquals(item, entry)))
+            .Select(entry => entry.Render(_viewModel.ShowLogDate, withTag));
+
+        var text = string.Join(Environment.NewLine, lines);
+        if (text.Length == 0)
+            return;
+        try { Clipboard.SetText(text); }
+        catch (System.Runtime.InteropServices.COMException) { /* clipboard busy, ignore */ }
+    }
+
+    private void HookAutoScroll(ObservableCollection<LogEntry> collection, ListBox list)
     {
         collection.CollectionChanged += (_, e) =>
         {
@@ -583,12 +637,17 @@ public partial class MainWindow : Window
             if (!(_followingTail.TryGetValue(list, out var following) && following))
                 return;
 
-            // Defer the scroll: calling ScrollIntoView synchronously inside CollectionChanged forces a
-            // layout pass mid-notification, which under rapid streaming adds throws
-            // "ItemsControl is inconsistent with its items source". Background priority lets it settle.
+            // Deferred: called synchronously inside CollectionChanged this forces a layout pass mid-notification,
+            // which under rapid streaming throws "ItemsControl is inconsistent with its items source".
+            // Scrolls by position, since ScrollIntoView resolves by equality and LogEntry is a record, so two
+            // identical lines in one second would scroll to the first match and land the view at the top. The
+            // fallback only runs for a tab never shown, which has no realized ScrollViewer to cache yet and
+            // renders nothing, so the equality path can't be seen there.
             Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
             {
-                if (list.Items.Count > 0)
+                if (_logScrollers.TryGetValue(list, out var scroller))
+                    scroller.ScrollToBottom();
+                else if (list.Items.Count > 0)
                     list.ScrollIntoView(list.Items[^1]);
             }));
         };

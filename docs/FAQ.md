@@ -100,6 +100,18 @@ recovery. None of those happen while it's closed. If you want them without keepi
 </details>
 
 <details>
+<summary><strong>The Server and Chat tabs are empty after reconnecting to a running server</strong></summary>
+
+The launcher can only read the output of a server it started itself. Windows makes that connection when the
+program launches and there's no way to add it afterward, so a server that was already running keeps its output
+to itself. Palworld writes no log file either, so there's nothing else to read it from.
+
+Everything that comes through the REST API carries on working, including the players list, the live stats,
+scheduled restarts, backups, and crash recovery. Restart the server from the launcher and both tabs fill again.
+
+</details>
+
+<details>
 <summary><strong>Do I need the REST API?</strong></summary>
 
 The server runs without it, but the launcher loses most of what makes it useful. With the REST API off there
@@ -118,6 +130,18 @@ for you. Keep its port off the public internet.
 Everything the launcher manages, its own `launcher.json` settings, the server install, backups, and logs,
 lives in a `PalworldServerLauncher` folder next to the exe. The game's own settings live in
 `PalWorldSettings.ini`, editable from the launcher (Server Settings and Launch Arguments) or by hand.
+
+</details>
+
+<details>
+<summary><strong>Why are some log lines out of order, or showing an older time?</strong></summary>
+
+Palworld doesn't hand its player and chat lines over as they happen. It holds them and releases them in
+bursts, sometimes a minute later. The launcher shows the time Palworld recorded for the event, not the moment
+the line arrived, so a chat message carries the time it was actually sent. A line can therefore sit below one
+with a later timestamp.
+
+The log file on disk keeps both times, so nothing is lost.
 
 </details>
 

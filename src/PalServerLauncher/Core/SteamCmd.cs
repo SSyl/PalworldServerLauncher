@@ -1,8 +1,11 @@
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using PalServerLauncher.Config;
@@ -36,6 +39,160 @@ public sealed class SteamCmd
 
     /// <summary>SteamCMD's own console log, tailed into the SteamCMD tab while it runs in its window.</summary>
     public string ConsoleLogPath => Path.Combine(SteamCmdDir, "logs", "console_log.txt");
+
+    /// <summary>SteamCMD's content log. A failed update reports only "state is 0x6 after update job" on the
+    /// console we capture, while the actual cause (a refused manifest, a disk error) is written here.</summary>
+    public string ContentLogPath => Path.Combine(SteamCmdDir, "logs", "content_log.txt");
+
+    /// <summary>Noise SteamCMD prints on every run, which LinuxGSM documents as safe to ignore.</summary>
+    private static readonly string[] BenignFailures =
+    [
+        "SteamAPI_Init",
+        "SteamAPI_IsSteamRunning",
+        "CWorkThreadPool",
+        "Failed to set thread priority",
+        "SDL not found",
+    ];
+
+    /// <summary>The lines from SteamCMD's content log explaining a failed update, oldest first. Shown verbatim
+    /// and logged, never branched on, so the matching stays loose.</summary>
+    public static IReadOnlyList<string> ExtractFailureReasons(IEnumerable<string> contentLog, string appId, DateTime since, int keep = 3)
+    {
+        // Every line must name our app. The Steamworks redistributable updates alongside the server and failed
+        // in issue #15's run, so a looser match reports its failure as ours.
+        var hits = contentLog
+            .Where(line => IsAtOrAfter(line, since))
+            .Where(line => line.Contains(appId, StringComparison.Ordinal))
+            // A successful run ends "(result No Error, state 0x0)", so it matches on Error without this.
+            .Where(line => !line.Contains("No Error", StringComparison.OrdinalIgnoreCase))
+            .Where(line => line.Contains("Failed", StringComparison.OrdinalIgnoreCase)
+                        || line.Contains("canceled", StringComparison.OrdinalIgnoreCase)
+                        || line.Contains("Error", StringComparison.OrdinalIgnoreCase))
+            .Where(line => !BenignFailures.Any(noise => line.Contains(noise, StringComparison.OrdinalIgnoreCase)))
+            .Select(line => Logging.LogLinePrefix.Split(line).Text)
+            .ToList();
+        return hits.Count <= keep ? hits : hits[^keep..];
+    }
+
+    /// <summary>The state SteamCMD printed (<c>0x6</c>), or null when no update job ran. Undocumented by Valve,
+    /// so it is also the token a user will search for.</summary>
+    public static string? ExtractUpdateState(IEnumerable<string> consoleLog, string appId, DateTime since)
+    {
+        var line = LastStateLine(consoleLog, appId, since);
+        if (line is null)
+            return null;
+
+        var marker = StateMarker(appId);
+        var state = line[(line.IndexOf(marker, StringComparison.Ordinal) + marker.Length)..].TrimStart();
+        var end = state.IndexOf(' ');
+        return end < 0 ? state : state[..end];
+    }
+
+    /// <summary>True when SteamCMD got as far as an update job, which only happens once it reached Steam. Gates
+    /// the redownload offer, since a run that never connected can't be helped by one.</summary>
+    public static bool RanUpdateJob(IEnumerable<string> consoleLog, string appId, DateTime since) =>
+        LastStateLine(consoleLog, appId, since) is not null;
+
+    /// <summary>The newest state line of this run. steamconsole.dll holds exactly one format string for it,
+    /// <c>Error! App '%u' state is 0x%X after update job.</c>, which always names the app. LinuxGSM documents an
+    /// app-less variant; it does not exist in SteamCMD 1785799152.</summary>
+    private static string? LastStateLine(IEnumerable<string> consoleLog, string appId, DateTime since) =>
+        consoleLog.LastOrDefault(line =>
+            IsAtOrAfter(line, since) && line.Contains(StateMarker(appId), StringComparison.Ordinal));
+
+    private static string StateMarker(string appId) => $"App '{appId}' state is ";
+
+    /// <summary>
+    /// The state is a bitfield of what the app WAS when SteamCMD gave up, not why. Measured: 0x6 was a refused
+    /// manifest request on a connected session, 0x602 a locked file, both causes in the content log and neither
+    /// in the state. Files Missing and Files Corrupt are the exception, describing the install rather than the
+    /// attempt.
+    /// </summary>
+    public static SteamCmdProblem ClassifyUpdateState(string? state) =>
+        TryParseState(state) is { } bits && (bits & (StateFilesMissing | StateFilesCorrupt)) != 0
+            ? SteamCmdProblem.DamagedFiles
+            : SteamCmdProblem.Unknown;
+
+    /// <summary>Whether the run had started changing the install, or null when the state can't be read. Of the
+    /// states LinuxGSM documents, only 0x6 comes back false.</summary>
+    public static bool? StateChangedFiles(string? state) =>
+        TryParseState(state) is { } bits
+            ? (bits & (StateUpdateRunning | StateUpdatePaused | StateUpdateStarted | StateStaging | StateCommitting)) != 0
+            : null;
+
+    // Valve documents none of these. LinuxGSM's flag list, confirmed against content_log.txt, which names the
+    // bits in the line that reports the hex: a locked-file run logged "Update Required,Update Paused,Update
+    // Started," alongside state 0x602, which is 0x2 | 0x200 | 0x400.
+    private const int StateFilesMissing = 0x20;
+    private const int StateFilesCorrupt = 0x80;
+    private const int StateUpdateRunning = 0x100;
+    private const int StateUpdatePaused = 0x200;
+    private const int StateUpdateStarted = 0x400;
+    private const int StateStaging = 0x200000;
+    private const int StateCommitting = 0x400000;
+
+    /// <summary>The state as a number, or null when it isn't the <c>0x...</c> form SteamCMD prints.</summary>
+    public static int? TryParseState(string? state) =>
+        state is not null
+        && state.StartsWith("0x", StringComparison.OrdinalIgnoreCase)
+        && int.TryParse(state.AsSpan(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var bits)
+            ? bits
+            : null;
+
+    /// <summary>Free bytes on the drive holding the server, or null when it can't be read (a UNC path has no
+    /// drive to ask). Used to confirm a reported out-of-space state instead of trusting the table.</summary>
+    public long? FreeSpaceOnInstallDrive()
+    {
+        try
+        {
+            var root = Path.GetPathRoot(Path.GetFullPath(InstallDir));
+            return string.IsNullOrEmpty(root) ? null : new DriveInfo(root).AvailableFreeSpace;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or ArgumentException)
+        {
+            return null;
+        }
+    }
+
+    /// <summary>True when the server folder takes a write. Confirms a reported disk-write state, which otherwise
+    /// rests on one community table entry.</summary>
+    public bool InstallDirIsWritable()
+    {
+        try
+        {
+            var probe = Path.Combine(InstallDir, ".pslauncher-writetest.tmp");
+            File.WriteAllText(probe, "");
+            File.Delete(probe);
+            return true;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            return false;
+        }
+    }
+
+    /// <summary>SteamCMD appends to its logs across runs, so a line only counts when it belongs to this run.
+    /// Lines it writes without its own timestamp are kept, since they can't be placed either way.</summary>
+    private static bool IsAtOrAfter(string line, DateTime since) =>
+        Logging.LogLinePrefix.Split(line).Time is not { } stamped || stamped >= since;
+
+    /// <summary>
+    /// The server's install size in bytes from the app manifest, or null when it can't be read. Used to size the
+    /// re-download offered after a failed update, so the figure tracks the game instead of going stale in a
+    /// translated string.
+    /// </summary>
+    public long? ReadInstalledSizeOnDisk()
+    {
+        try
+        {
+            var match = Regex.Match(File.ReadAllText(AppManifestPath), @"""SizeOnDisk""\s+""(\d+)""");
+            return match.Success && long.TryParse(match.Groups[1].Value, out var bytes) ? bytes : null;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or ArgumentException)
+        {
+            return null;
+        }
+    }
 
     /// <summary>Where <c>workshop_download_item</c> lands a mod, before the launcher copies it into the server's Mods\Workshop.</summary>
     public string WorkshopContentDir(string workshopId) =>
@@ -239,10 +396,28 @@ public sealed class SteamCmd
         {
             if (!_buildIdCached)
             {
-                _cachedBuildId = File.Exists(AppManifestPath) ? ParseBuildId(File.ReadAllText(AppManifestPath)) : null;
+                _cachedBuildId = ReadBuildIdFromManifest();
                 _buildIdCached = true;
             }
             return _cachedBuildId;
+        }
+    }
+
+    /// <summary>An unreadable manifest reads as not installed. A throw here would escape the update monitor's
+    /// timer loop and silently end update checking for the rest of the process.</summary>
+    private string? ReadBuildIdFromManifest()
+    {
+        try
+        {
+            if (!File.Exists(AppManifestPath))
+                return null;
+            var buildId = ParseBuildId(File.ReadAllText(AppManifestPath));
+            // A part-failed run writes buildid 0, SteamCMD's placeholder for nothing installed (measured).
+            return buildId == "0" ? null : buildId;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            return null;
         }
     }
 

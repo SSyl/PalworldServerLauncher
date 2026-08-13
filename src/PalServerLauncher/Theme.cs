@@ -66,4 +66,20 @@ public static class Theme
     public static readonly SolidColorBrush Discord = Frozen(0x58, 0x65, 0xF2);     // Discord brand
     public static readonly SolidColorBrush DiscordHover = Frozen(0x47, 0x52, 0xC4);
     public static readonly SolidColorBrush LogText = Frozen(0xC8, 0xC8, 0xC8);     // monospace log text
+    public static readonly SolidColorBrush LogDim = Frozen(0x8A, 0x8A, 0x8A);      // server / SteamCMD / debug
+    public static readonly SolidColorBrush LogEvent = Frozen(0x9C, 0xD0, 0x9C);    // chat and player join/leave
+
+    /// <summary>The color for one log line. Server and SteamCMD output was 134 of 249 lines in a real session
+    /// and is background nearly all the time, so it recedes and the lines a user acts on stand out.</summary>
+    public static SolidColorBrush ForLog(Logging.LogChannel channel, Logging.LogLevel level) => channel switch
+    {
+        Logging.LogChannel.Chat or Logging.LogChannel.PlayerJoin => LogEvent,
+        Logging.LogChannel.Server or Logging.LogChannel.SteamCmd => LogDim,
+        _ => level switch
+        {
+            Logging.LogLevel.Error => Error,
+            Logging.LogLevel.Debug => LogDim,
+            _ => LogText,
+        },
+    };
 }

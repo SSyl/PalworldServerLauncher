@@ -155,6 +155,48 @@
             </Setter>
         </Style>
 
+        <!-- A glyph button that stays visibly pressed while it's on. Mirrors the Button template above so it sits
+             in a row of ordinary buttons without looking like a different kind of control. -->
+        <Style x:Key="IconToggleButton" TargetType="ToggleButton">
+            <Setter Property="Background" Value="{x:Static local:Theme.Button}"/>
+            <Setter Property="Foreground" Value="{x:Static local:Theme.Text}"/>
+            <Setter Property="BorderBrush" Value="{x:Static local:Theme.ButtonBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="MinHeight" Value="{x:Static local:Metrics.ControlHeight}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="9,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{x:Static local:Metrics.Radius}" SnapsToDevicePixels="True">
+                            <Grid>
+                                <Border x:Name="overlay" CornerRadius="{x:Static local:Metrics.Radius}" Background="White" Opacity="0"/>
+                                <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="overlay" Property="Opacity" Value="0.08"/>
+                                <Setter TargetName="bd" Property="BorderBrush" Value="{x:Static local:Theme.Accent}"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="{x:Static local:Theme.Accent}"/>
+                                <Setter TargetName="bd" Property="BorderBrush" Value="{x:Static local:Theme.AccentBorder}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="overlay" Property="Background" Value="Black"/>
+                                <Setter TargetName="overlay" Property="Opacity" Value="0.22"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <!-- Dark text box, app-wide. Retemplated (square, radius token) so the hover / focus border is OUR Accent:
              the default template ships its own lighter-blue hover trigger that wins over a style-level BorderBrush
              setter, mismatching the combo / checkbox hovers. Scrollbar visibility is bound through so the multiline

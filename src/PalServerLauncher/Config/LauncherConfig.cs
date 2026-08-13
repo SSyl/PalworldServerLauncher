@@ -178,6 +178,16 @@ public sealed class LauncherConfig
     /// installed build the cached version is stale and ignored.</summary>
     public string LastKnownVersionBuild { get; set; } = "";
 
+    /// <summary>The server's install size the last time Steam's app manifest could be read. Kept because a repair
+    /// deletes that manifest, and the size is wanted precisely when it's missing, to size the next redownload
+    /// offer. Zero when never read.</summary>
+    public long LastKnownServerSizeBytes { get; set; }
+
+    /// <summary>The build the last update tried and failed to reach, or empty when the last attempt worked. The
+    /// update monitor won't re-offer this build, which is what stops a failing update from re-prompting every
+    /// interval forever (issue #15). Persisted so closing the launcher doesn't rearm the loop.</summary>
+    public string FailedUpdateBuildId { get; set; } = "";
+
     // --- Backup ---
     public bool BackupOnStartup { get; set; } = true;
     public bool BackupOnShutdown { get; set; } = true;
@@ -211,6 +221,10 @@ public sealed class LauncherConfig
     /// restarts, update restarts, and crash / zombie recovery never clear, so a failing server keeps its history
     /// on screen. Only the displayed buffers are cleared, the log file on disk is untouched.</summary>
     public bool ClearLogsOnManualStart { get; set; } = false;
+
+    /// <summary>Show the full date on every line in the log tabs, for a server that has been up for days. Off by
+    /// default, since a single session reads better with just the time. The log file always carries the date.</summary>
+    public bool ShowLogDate { get; set; } = false;
 
     // --- Discord webhook notifications (off by default) ---
     public bool DiscordEnabled { get; set; } = false;

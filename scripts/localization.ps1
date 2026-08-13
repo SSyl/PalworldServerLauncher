@@ -16,6 +16,7 @@
 
     Commands:
       add               Add one key to all ten files. Satellites default to the English text.
+      remove            Delete one key from all ten files. For a key renamed or dropped before release.
       set               Change one value in one file.
       get               Print one key's value in all ten languages.
       find              Search value text.
@@ -53,6 +54,9 @@
     pwsh scripts/localization.ps1 add -Key My_New_Key -En "English" -De "Deutsch" -Fr "Francais"
 
 .EXAMPLE
+    pwsh scripts/localization.ps1 remove -Key My_Old_Key
+
+.EXAMPLE
     pwsh scripts/localization.ps1 set -Key Start_Button -Lang de -Value "Starten"
 
 .EXAMPLE
@@ -73,7 +77,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Position = 0)]
-    [ValidateSet('add', 'set', 'get', 'find', 'untranslated', 'validate', 'audit', 'catalog-check',
+    [ValidateSet('add', 'remove', 'set', 'get', 'find', 'untranslated', 'validate', 'audit', 'catalog-check',
         'mark-invariant', 'unmark-invariant', 'mark-reviewed', 'unmark-reviewed', 'help')]
     [string] $Command = 'help',
 
@@ -358,6 +362,56 @@ function Get-ValueSpans {
     return $spans
 }
 
+# The character range one <data> element occupies, indent and trailing newline included, so cutting it leaves
+# no blank line behind. Get-ValueSpans deliberately tracks only the <value> and <comment> interiors, which is
+# everything a write needs but not enough to delete the element around them.
+function Get-DataElementSpan {
+    param(
+        [Parameter(Mandatory)][string] $Content,
+        [Parameter(Mandatory)][string] $Name
+    )
+
+    $ordinal = [System.StringComparison]::Ordinal
+
+    $commentSpans = [System.Collections.Generic.List[object]]::new()
+    foreach ($comment in [regex]::Matches($Content, '<!--.*?-->', 'Singleline')) {
+        $commentSpans.Add([pscustomobject]@{ Start = $comment.Index; End = $comment.Index + $comment.Length })
+    }
+
+    foreach ($tag in [regex]::Matches($Content, '<data\b[^>]*>')) {
+        $tagStart = $tag.Index
+        $skip = $false
+        foreach ($span in $commentSpans) {
+            if ($tagStart -ge $span.Start -and $tagStart -lt $span.End) { $skip = $true; break }
+        }
+        if ($skip) { continue }
+
+        $nameMatch = [regex]::Match($tag.Value, '\bname\s*=\s*(["''])(?<n>.*?)\1')
+        if (-not $nameMatch.Success) { continue }
+        if ((ConvertFrom-XmlText $nameMatch.Groups['n'].Value) -cne $Name) { continue }
+
+        $tagEnd = $tagStart + $tag.Length
+        if ($tag.Value.EndsWith('/>')) {
+            $end = $tagEnd
+        } else {
+            $close = $Content.IndexOf('</data>', $tagEnd, $ordinal)
+            if ($close -lt 0) { throw "The <data name=`"$Name`"> element is never closed." }
+            $end = $close + 7
+        }
+
+        # Back up over the indent only when nothing else shares the line, which keeps a hand-formatted file that
+        # puts two elements on one line from losing the neighbour.
+        $start = $Content.LastIndexOf("`n", $tagStart) + 1
+        if ($Content.Substring($start, $tagStart - $start).Trim().Length -ne 0) { $start = $tagStart }
+        if ($end -lt $Content.Length -and $Content[$end] -eq "`r") { $end++ }
+        if ($end -lt $Content.Length -and $Content[$end] -eq "`n") { $end++ }
+
+        return [pscustomobject]@{ Start = $start; End = $end }
+    }
+
+    return $null
+}
+
 function Get-ResxDocument {
     param([Parameter(Mandatory)][string] $LiteralPath)
 
@@ -527,11 +581,12 @@ function Assert-UnchangedExcept {
         [Parameter(Mandatory)][object] $Before,
         [Parameter(Mandatory)][object] $After,
         [string[]] $Added = @(),
+        [string[]] $Removed = @(),
         [string[]] $Changed = @(),
         [string[]] $CommentChanged = @()
     )
 
-    $expectedNames = @($Before.Names) + @($Added)
+    $expectedNames = @(@($Before.Names) | Where-Object { $Removed -notcontains $_ }) + @($Added)
     if ($After.Names.Count -ne $expectedNames.Count) {
         throw "key count went from $($Before.Names.Count) to $($After.Names.Count), expected $($expectedNames.Count)."
     }
@@ -543,13 +598,13 @@ function Assert-UnchangedExcept {
     # A dropped <comment> would silently unmark an invariant key, so a value write has to keep every one of
     # them, including on the key it is changing.
     foreach ($name in $Before.Names) {
-        if ($CommentChanged -contains $name) { continue }
+        if ($CommentChanged -contains $name -or $Removed -contains $name) { continue }
         if ($After.Index[$name].Comment -cne $Before.Index[$name].Comment) {
             throw "the comment on '$name' changed but should not have."
         }
     }
     foreach ($name in $Before.Names) {
-        if ($Changed -contains $name) { continue }
+        if ($Changed -contains $name -or $Removed -contains $name) { continue }
         if ((Get-NormalizedValue $After.Index[$name].Value) -cne (Get-NormalizedValue $Before.Index[$name].Value)) {
             throw "the value of '$name' changed but should not have."
         }
@@ -648,6 +703,55 @@ function Invoke-Add {
         Write-Output "Added to $($added.Count) file(s). Run 'dotnet test --filter LocalizationSmokeTests' to confirm key parity."
     }
     if ($added.Count -eq 0 -and $skipped -gt 0) { $script:ExitCode = $script:ExitFindings }
+    return
+}
+
+function Invoke-Remove {
+    if (-not $Key) { throw 'remove needs -Key.' }
+    if ($RequireClean) { Assert-CleanTree -Directory (Get-LocalizationDir) }
+
+    # Same all-or-nothing load as add: fail before the first write rather than partway through the ten.
+    $docs = [ordered]@{}
+    foreach ($langKey in $script:LangFiles.Keys) { $docs[$langKey] = Get-ResxDocument -LiteralPath (Get-LangPath $langKey) }
+
+    $removed = [System.Collections.Generic.List[string]]::new()
+    $absent = 0
+    try {
+        foreach ($langKey in $script:LangFiles.Keys) {
+            $file = $script:LangFiles[$langKey]
+            $before = $docs[$langKey]
+
+            if (-not $before.Index.ContainsKey($Key)) {
+                Write-Warning "$file : key '$Key' is not there, skipping."
+                $absent++
+                continue
+            }
+
+            $span = Get-DataElementSpan -Content $before.Content -Name $Key
+            if ($null -eq $span) { throw "$file : '$Key' parses as present but its <data> element could not be located." }
+            $newContent = $before.Content.Substring(0, $span.Start) + $before.Content.Substring($span.End)
+
+            Set-ResxContentVerified -LiteralPath $before.Path -NewContent $newContent -Verify {
+                param($after)
+                Assert-UnchangedExcept -Before $before -After $after -Removed @($Key)
+                if ($after.Index.ContainsKey($Key)) { throw "'$Key' is still in the reloaded file." }
+            }
+
+            Write-Output "$file : removed '$Key'."
+            $removed.Add($file)
+        }
+    } catch {
+        if ($removed.Count -gt 0) {
+            Write-Warning "'$Key' was already removed from $($removed -join ', ') before this failed. Those files no longer hold it, so the ten are out of parity until you finish or revert."
+        }
+        throw
+    }
+
+    if ($removed.Count -gt 0) {
+        Write-Output ''
+        Write-Output "Removed from $($removed.Count) file(s). Run 'dotnet test --filter LocalizationSmokeTests' to confirm key parity."
+    }
+    if ($removed.Count -eq 0 -and $absent -gt 0) { $script:ExitCode = $script:ExitFindings }
     return
 }
 
@@ -1585,6 +1689,7 @@ function Invoke-Audit {
 try {
     switch ($Command) {
         'add' { Invoke-Add }
+        'remove' { Invoke-Remove }
         'set' { Invoke-Set }
         'get' { Invoke-Get }
         'find' { Invoke-Find }

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -40,6 +40,10 @@ public sealed class ServerController : IDisposable
     private readonly LauncherIpcServer _ipc;
     private ServerState _lastNotifiedState = ServerState.Stopped;
     private readonly SemaphoreSlim _steamGate = new(1, 1); // serialize all SteamCMD runs - never two at once
+
+    /// <summary>The build the pending update is chasing, or null for a plain start where nothing specific was
+    /// aimed at. Consumed by the update that acts on it.</summary>
+    private string? _targetBuildId;
 
     /// <summary>Read/write access to PalWorldSettings.ini game settings (used by the settings editor; gated to stopped).</summary>
     public GameSettingsService GameSettings { get; }
@@ -148,11 +152,8 @@ public sealed class ServerController : IDisposable
     public static bool ShouldLatchRelaunchGate(CliStopVerdict verdict) =>
         verdict is CliStopVerdict.Proceed or CliStopVerdict.NothingToStop;
 
-    /// <summary>
-    /// Serve a stop asked for from the command line. Routes to the very methods the Stop button uses, so the
-    /// relaunch latch is set and the exit is never mistaken for a crash. Runs on the pipe's thread, the same way
-    /// the Discord bot's commands do.
-    /// </summary>
+    /// <summary>Serve a stop asked for from the command line, through the same methods the Stop button uses so
+    /// the relaunch latch is set and the exit is never mistaken for a crash. Runs on the pipe's thread.</summary>
     private async Task<StopOutcome> HandleCliStopAsync(StopRequest request, Action<string> report)
     {
         Process? process;
@@ -161,9 +162,8 @@ public sealed class ServerController : IDisposable
 
         var adopted = process is { HasExited: false };
 
-        // Only scan when nothing is bound: the listener is up from the controller's constructor, but adoption
-        // happens later in MainWindow and can sit behind a modal prompt, so "no process bound" does not mean
-        // "no server running". Reporting success there would tell a script the server is down while it is up.
+        // Adoption happens later than the listener and can sit behind a modal prompt, so "no process bound"
+        // does not mean "no server running", and reporting success would tell a script the server is down.
         using var unadopted = adopted ? null : ProcessScanner.FindManagedServer(_config.ServerRoot);
 
         var verdict = ResolveCliStop(request.Kind, adopted, anyServerRunning: unadopted is not null, RestClient is not null);
@@ -231,10 +231,10 @@ public sealed class ServerController : IDisposable
             default:
                 // A graceful stop can run for minutes (the shutdown backup zips SaveGames first), so mirror the
                 // launcher's own log to the waiting CLI rather than leaving it staring at one line.
-                void Forward(LogChannel channel, string text)
+                void Forward(LogEntry entry)
                 {
-                    if (channel == LogChannel.General)
-                        report(text);
+                    if (entry.Channel == LogChannel.General)
+                        report(entry.Text);
                 }
 
                 _logger.LineForUi += Forward;
@@ -378,7 +378,7 @@ public sealed class ServerController : IDisposable
         // Unattended start, can't prompt; warn like the headless path does.
         WarnIfWorldOptionPresent();
         WarnIfWorldMissing();
-        FireAndForget(() => StartAsync(), "Discord start");
+        FireAndForget(() => StartAsync(attended: false), "Discord start");
         return Task.FromResult("Starting the server (updating first if needed)...");
     }
 
@@ -447,6 +447,10 @@ public sealed class ServerController : IDisposable
     public event Action<string>? NextRestartTextChanged;
     public event Action<string>? NextBackupTextChanged;
     public event Action<string>? UpdateStatusChanged;
+
+    /// <summary>Asked when a SteamCMD run the user started fails. Set by the view model, which routes it to a
+    /// dialog. Null outside the GUI.</summary>
+    public Func<ViewModels.SteamCmdFailure, ViewModels.SteamCmdFailureChoice>? ConfirmSteamCmdFailure { get; set; }
     /// <summary>A timed shutdown's countdown began (the total seconds) or ended (null), for the mirror countdown / Shutdown Now button.</summary>
     public event Action<int?>? TimedShutdownChanged;
 
@@ -705,6 +709,10 @@ public sealed class ServerController : IDisposable
         _logger.Info(all.Count == 1
             ? $"Startup scan: detected 1 running server ({pidList}), adopted so it can be controlled."
             : $"Startup scan: detected {all.Count} running server instances ({pidList}), adopted PID {existing.Id}; use Shut Down All to stop them.");
+        // Stdout can only be redirected at process start, so an adopted server's output is gone for good.
+        // Without this the two empty tabs read as the capture being broken.
+        _logger.Info("Server was already running at launcher start, so its output cannot be captured. " +
+                     "The Server and Chat tabs stay empty until it is restarted from here.");
         State = ServerState.Starting; // health monitor promotes to Healthy once REST responds
         return true;
     }
@@ -786,12 +794,28 @@ public sealed class ServerController : IDisposable
     public static string GenerateAdminPassword() =>
         RandomNumberGenerator.GetString("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", 20);
 
+    /// <summary>Install the server for the first time. Validates.</summary>
+    public Task InstallAsync(CancellationToken ct = default) =>
+        RunSteamCmdAsync(SteamCmdOperation.Install, ct);
+
+    /// <summary>Check the installed files against Steam's and repair what fails. The Validate Files button.</summary>
+    public Task ValidateFilesAsync(CancellationToken ct = default) =>
+        RunSteamCmdAsync(SteamCmdOperation.Validate, ct);
+
+    /// <summary>Apply a build already known to be newer. Skips validation, since the update overwrites anyway.</summary>
+    public Task DownloadUpdateAsync(CancellationToken ct = default) =>
+        RunSteamCmdAsync(SteamCmdOperation.Update, ct);
+
     /// <summary>
-    /// Install (first run) or update + validate the server via SteamCMD. This is an explicit,
-    /// user-triggered action, it never runs implicitly from <see cref="StartAsync"/>, so a plain
-    /// "Start" can never surprise the user with a multi-GB download. Refuses while running (locked files).
+    /// Install, validate or update the server via SteamCMD. Always user-triggered, never reached from
+    /// <see cref="StartAsync"/>, so a plain Start can't surprise anyone with a multi-GB download. Refuses
+    /// while the server runs, since its files are locked.
+    ///
+    /// Private so callers go through the three named entry points above. app_update is the same command for
+    /// all of them, so a wrong operation in an argument list reads like working code. Validate Files reported
+    /// "couldn't update the server" for a commit that way.
     /// </summary>
-    public async Task InstallOrUpdateAsync(bool validate = true, CancellationToken ct = default)
+    private async Task RunSteamCmdAsync(SteamCmdOperation requested, CancellationToken ct = default)
     {
         if (IsRunning())
         {
@@ -803,9 +827,17 @@ public sealed class ServerController : IDisposable
             ? "Installing / updating server via SteamCMD (live log in the SteamCMD tab)..."
             : "Installing / updating server via SteamCMD (a console window will open; live log in the SteamCMD tab)...");
 
+        // Read before the run: a part-failed first install can still answer IsInstalled afterward.
+        var operation = ResolveOperation(requested, IsInstalled);
+        var validate = ValidatesFiles(operation);
+        var target = _targetBuildId;
+        _targetBuildId = null;
         var steamLog = new Progress<string>(line => _logger.SteamCmd(line));
         // Mirror SteamCMD's own console log into the SteamCMD tab while it runs.
         using var tail = new FileTailer(_steamCmd.ConsoleLogPath, _logger.SteamCmd, fromStart: false);
+        // SteamCMD appends to its logs across runs, so anything read back afterward is filtered to this one.
+        // Second resolution, matching its timestamps, and a second early rather than late.
+        var runStarted = DateTime.Now.AddSeconds(-1);
 
         await _steamGate.WaitAsync(ct).ConfigureAwait(false);
         try
@@ -814,9 +846,29 @@ public sealed class ServerController : IDisposable
             var exit = await _steamCmd.InstallOrUpdateServerAsync(
                 validate: validate, visible: !_config.HideSteamCmdWindow, steamLog, ct).ConfigureAwait(false);
 
-            _logger.Info(exit == 0
-                ? $"Install/update complete (build {_steamCmd.ReadInstalledBuildId() ?? "?"})."
-                : $"SteamCMD exited with code {exit}. Check the SteamCMD tab.");
+            var buildId = _steamCmd.ReadInstalledBuildId() ?? "?";
+            if (exit == 0 && ReachedTarget(target, buildId))
+            {
+                RecordUpdateOutcome(failedBuild: null);
+                _logger.Info($"Install/update complete (build {buildId}).");
+                return;
+            }
+
+            _logger.Error(exit == 0
+                ? $"SteamCMD reported success, but the server is on build {buildId}, not {target}."
+                : $"SteamCMD couldn't {OperationVerb(operation)} the server (exit code {exit}).");
+            if (target is not null)
+                RecordUpdateOutcome(failedBuild: target);
+
+            // Built before the retry so it describes this run rather than the retry's, see UpdateInPlaceAsync.
+            var failure = BuildSteamCmdFailure(operation, exit, runStarted, launchPending: false);
+            // A first install has no build to report against, and the tile is about updates.
+            if (operation != SteamCmdOperation.Install)
+                UpdateStatusChanged?.Invoke(string.Format(Strings.Update_Failed, BuildDisplay(buildId)));
+
+            if (AskAboutSteamCmdFailure(failure, userInitiated: true) == ViewModels.SteamCmdFailureChoice.ValidateAndRetry
+                && (await RepairInstallAndUpdateAsync(target, steamLog, ct).ConfigureAwait(false)).Succeeded)
+                RecordUpdateOutcome(failedBuild: null);
         }
         finally
         {
@@ -915,7 +967,7 @@ public sealed class ServerController : IDisposable
         try
         {
             _logger.Info($"Importing a Linux server from {sourceDir}. Installing the Windows server first, its Linux binaries can't run here.");
-            await InstallOrUpdateAsync(ct: ct).ConfigureAwait(false); // same validated first install the Install button runs
+            await InstallAsync(ct).ConfigureAwait(false);
             if (!IsInstalled)
             {
                 _logger.Error("Import stopped: the Windows server didn't install, so there's nothing to copy the world into. Check the SteamCMD tab.");
@@ -983,7 +1035,15 @@ public sealed class ServerController : IDisposable
     }
 
     /// <summary>Outcome of a read-only manual update check (the "Check for Update" button).</summary>
-    public enum UpdateCheckResult { UpToDate, UpdateAvailable, CheckFailed }
+    public enum UpdateCheckResult
+    {
+        UpToDate,
+        UpdateAvailable,
+        CheckFailed,
+        /// <summary>Steam's app manifest is missing or unreadable, so there's no installed build to compare
+        /// against. Distinct from UpToDate, which this used to be reported as.</summary>
+        InstalledBuildUnknown,
+    }
 
     /// <summary>
     /// Read-only manual update check: compares the installed build id to the latest published one via
@@ -1001,8 +1061,20 @@ public sealed class ServerController : IDisposable
             UpdateStatusChanged?.Invoke(string.Format(Strings.Update_CheckFailed, BuildDisplay(installed)));
             return (UpdateCheckResult.CheckFailed, null);
         }
+        // Without a readable manifest there's nothing to compare, and reporting that as up to date is a lie
+        // that hides the real problem. Validate rebuilds the manifest from the files already on disk.
+        if (string.IsNullOrWhiteSpace(installed))
+        {
+            _logger.Info("Steam's app manifest is missing or unreadable. Installed build unknown.");
+            UpdateStatusChanged?.Invoke(Strings.Update_BuildUnknown);
+            return (UpdateCheckResult.InstalledBuildUnknown, latest);
+        }
         if (UpdateMonitor.IsUpdateAvailable(installed, latest))
         {
+            // Whatever the user does next is aimed at this build, so the update that follows can tell whether it
+            // landed. Deliberately IsUpdateAvailable rather than ShouldOfferUpdate: a build being held after a
+            // failed attempt is exactly what someone pressing Check for Update is asking to try again.
+            _targetBuildId = latest.Trim();
             UpdateStatusChanged?.Invoke(string.Format(Strings.Update_Available, latest));
             return (UpdateCheckResult.UpdateAvailable, latest);
         }
@@ -1020,7 +1092,7 @@ public sealed class ServerController : IDisposable
     /// Shutdown during the restart stays in effect, so the restart's own relaunch is suppressed and the server
     /// stays down until a user Start).
     /// </summary>
-    public async Task StartAsync(bool forceUpdate = false, bool userInitiated = true, CancellationToken ct = default)
+    public async Task StartAsync(bool forceUpdate = false, bool userInitiated = true, CancellationToken ct = default, bool? attended = null)
     {
         if (IsRunning())
         {
@@ -1050,7 +1122,15 @@ public sealed class ServerController : IDisposable
         // The per-start update respects the version pin (blocks all updates) and the Update-on-start toggle. An
         // explicit update-restart (forceUpdate) overrides Update-on-start being off but never the pin. See UpdatePolicy.
         if (UpdatePolicy.ShouldUpdateBeforeLaunch(forceUpdate, _config.VersionPinEnabled, _config.UpdateOnStart))
-            await UpdateInPlaceAsync(ct).ConfigureAwait(false);
+        {
+            // A plain Start is attended by definition. A restart has to say so explicitly.
+            if (!await UpdateInPlaceAsync(attended ?? userInitiated, ct).ConfigureAwait(false))
+            {
+                _logger.Info("Start cancelled. Server was not updated.");
+                State = ServerState.Stopped;
+                return;
+            }
+        }
         else
         {
             var skipReason = _config.VersionPinEnabled
@@ -1234,12 +1314,253 @@ public sealed class ServerController : IDisposable
             UpdateStatusChanged?.Invoke("-");
     }
 
-    /// <summary>Run SteamCMD app_update in place before launch (the "always current on boot" step).</summary>
-    private async Task UpdateInPlaceAsync(CancellationToken ct)
+    /// <summary>Why the last run failed, from SteamCMD's content log. The console we capture only says
+    /// "state is 0x... after update job", so issue #15's reporter had to go find this file himself.</summary>
+    private IReadOnlyList<string> ReadSteamCmdFailureReasons(DateTime since)
+    {
+        try
+        {
+            return SteamCmd.ExtractFailureReasons(File.ReadLines(_steamCmd.ContentLogPath), SteamCmd.AppId, since);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            return [];
+        }
+    }
+
+    /// <summary>
+    /// Record and log what a failed run said. SteamCMD appends to both logs across runs, so this must happen
+    /// before anything else runs or it describes the wrong attempt. The disk is measured separately, see
+    /// <see cref="WithCurrentDiskState"/>.
+    /// </summary>
+    private ViewModels.SteamCmdFailure BuildSteamCmdFailure(
+        SteamCmdOperation operation, int exit, DateTime since, bool launchPending, bool log = true)
+    {
+        var state = ReadUpdateState(since);
+        var reasons = ReadSteamCmdFailureReasons(since);
+        var reachedApp = UpdateJobRan(since);
+
+        if (log)
+        {
+            foreach (var reason in reasons)
+                _logger.Error($"SteamCMD: {reason}");
+            if (state is not null)
+                _logger.Info($"SteamCMD exited with state {state}. Update did not apply.");
+
+            // Nothing in the content log names the server when SteamCMD stopped before reaching it, so the
+            // failure would otherwise be one bare exit code. No dialog is shown for this except after a repair
+            // the user asked for, see AskAboutSteamCmdFailure.
+            if (!reachedApp)
+                _logger.Error("SteamCMD stopped before checking the server. Its output is in the SteamCMD tab.");
+        }
+
+        return new ViewModels.SteamCmdFailure(
+            operation, exit, SteamCmd.ClassifyUpdateState(state), state,
+            SteamCmd.StateChangedFiles(state), reachedApp, launchPending, reasons,
+            RepairSpaceGb: null, FreeSpace: null);
+    }
+
+    /// <summary>
+    /// Fill in the disk answers, measured now rather than when the failure was recorded: a repair can stage
+    /// several GB onto the same drive in between. Checked on every failure rather than when a state suggests
+    /// it, since it is the one thing we can settle ourselves.
+    /// </summary>
+    private ViewModels.SteamCmdFailure WithCurrentDiskState(ViewModels.SteamCmdFailure failure)
+    {
+        var bytes = RememberServerSize();
+        var free = _steamCmd.FreeSpaceOnInstallDrive();
+
+        // Measured against the install size, not the compressed download: SteamCMD stages into
+        // steamapps/downloading before committing, so a full repair wants room for the install again on top of
+        // the one already there. A failed run took the folder from 5.9 GB to 11 GB.
+        var problem = failure.Problem;
+        if (!_steamCmd.InstallDirIsWritable())
+            problem = SteamCmdProblem.DiskWrite;
+        else if (free is { } f && bytes > 0 && f < bytes)
+            problem = SteamCmdProblem.DiskSpace;
+
+        return failure with
+        {
+            Problem = problem,
+            RepairSpaceGb = bytes > 0 ? bytes / (1024.0 * 1024 * 1024) : null,
+            FreeSpace = free is { } bytesFree ? FormatBytes(bytesFree) : null,
+        };
+    }
+
+    /// <summary>
+    /// Ask what to do about a failure already described. Only for a run the user started, and normally only
+    /// once SteamCMD reached the server: before that a modal would block the launch over a transient Steam
+    /// outage, so it goes to the log instead. <paramref name="answering"/> overrides that for the ask
+    /// following a repair the user requested, where they are waiting on an answer.
+    /// </summary>
+    private ViewModels.SteamCmdFailureChoice AskAboutSteamCmdFailure(
+        ViewModels.SteamCmdFailure failure, bool userInitiated, bool answering = false) =>
+        userInitiated && (failure.ReachedApp || answering) && ConfirmSteamCmdFailure is { } confirm
+            ? confirm(WithCurrentDiskState(failure))
+            : ViewModels.SteamCmdFailureChoice.Leave;
+
+    private static string FormatBytes(long bytes) =>
+        bytes >= 1024L * 1024 * 1024
+            ? $"{bytes / (1024.0 * 1024 * 1024):0.#} GB"
+            : $"{bytes / (1024.0 * 1024):0} MB";
+
+    private string? ReadUpdateState(DateTime since)
+    {
+        try
+        {
+            return SteamCmd.ExtractUpdateState(File.ReadLines(_steamCmd.ConsoleLogPath), SteamCmd.AppId, since);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            return null;
+        }
+    }
+
+    /// <summary>True when SteamCMD reached Steam and the app update itself failed, which is the only case the
+    /// repair can fix. Offline runs fail before any update job and are left alone.</summary>
+    private bool UpdateJobRan(DateTime since)
+    {
+        try
+        {
+            return SteamCmd.RanUpdateJob(File.ReadLines(_steamCmd.ConsoleLogPath), SteamCmd.AppId, since);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            return false;
+        }
+    }
+
+    private void TryDelete(string path)
+    {
+        try { File.Delete(path); }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            _logger.Debug($"Couldn't remove {path}: {ex.Message}");
+        }
+    }
+
+    /// <summary>The server's install size in bytes, cached in config as a side effect. A repair moves the app
+    /// manifest this comes from, so without the cache the second offer can never state a size.</summary>
+    private long RememberServerSize()
+    {
+        if (_steamCmd.ReadInstalledSizeOnDisk() is not { } bytes || bytes <= 0)
+            return _config.LastKnownServerSizeBytes;
+
+        if (bytes != _config.LastKnownServerSizeBytes)
+        {
+            _config.LastKnownServerSizeBytes = bytes;
+            _config.Save();
+        }
+        return bytes;
+    }
+
+    /// <summary>
+    /// Set Steam's record of what's installed aside and update again with validation, so SteamCMD resolves
+    /// the app from scratch instead of trusting a manifest it won't act on. Measured with the manifest absent:
+    /// validate rebuilt it and fetched nothing in 13 seconds, where the same run without validate re-downloads
+    /// 4.9 GB. Prompted rather than automatic, since a damaged install can still pull the lot. Runs inside the
+    /// caller's <see cref="_steamGate"/> hold, so it must not take it.
+    /// </summary>
+    private async Task<(bool Succeeded, int Exit, DateTime Started)> RepairInstallAndUpdateAsync(
+        string? target, IProgress<string> steamLog, CancellationToken ct)
+    {
+        var repairStarted = DateTime.Now.AddSeconds(-1);
+        // Moved aside rather than deleted, so a retry that fails costs the user nothing.
+        var manifest = _steamCmd.AppManifestPath;
+        var stashed = manifest + ".bak";
+        // An absent manifest is what a redownload produces, not a reason to refuse one. Issue #15's reporter
+        // deleted his by hand, which is exactly when he needed this.
+        var stashedIt = File.Exists(manifest);
+        if (stashedIt)
+        {
+            try
+            {
+                File.Move(manifest, stashed, overwrite: true);
+                _logger.Info("Set the Steam app manifest aside. Validating and updating.");
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            {
+                _logger.Error($"Couldn't move the Steam app manifest at {manifest}", ex);
+                return (false, 0, repairStarted);
+            }
+        }
+        else
+            _logger.Info("No Steam app manifest to set aside. Validating and updating.");
+
+        var succeeded = false;
+        var exit = 0;
+        try
+        {
+            exit = await _steamCmd.InstallOrUpdateServerAsync(
+                validate: true, visible: !_config.HideSteamCmdWindow, steamLog, ct).ConfigureAwait(false);
+            var buildId = _steamCmd.ReadInstalledBuildId() ?? "?";
+            // Exit 0 is not enough: SteamCMD reports success having installed the build we were already on.
+            succeeded = exit == 0 && ReachedTarget(target, buildId);
+            if (succeeded)
+            {
+                _logger.Info($"Repair succeeded (build {buildId}).");
+                UpdateStatusChanged?.Invoke(string.Format(Strings.Update_UpToDate, BuildDisplay(buildId)));
+                return (true, exit, repairStarted);
+            }
+
+            _logger.Error(exit == 0
+                ? $"Repair reported success, but the server is on build {buildId}, not {target}."
+                : $"SteamCMD exited with code {exit} during repair.");
+            foreach (var reason in ReadSteamCmdFailureReasons(repairStarted))
+                _logger.Error($"SteamCMD: {reason}");
+            // Logged here rather than left to the rebuilt failure record, which passes log: false to avoid
+            // repeating the reasons above. The state is the token worth searching for and is not a duplicate.
+            if (ReadUpdateState(repairStarted) is { } repairState)
+                _logger.Info($"SteamCMD exited with state {repairState}. Update did not apply.");
+            return (false, exit, repairStarted);
+        }
+        finally
+        {
+            // Also on cancel or throw, which would otherwise strand the manifest at .bak. Keyed on usable
+            // rather than on-target: validating rebuilds the manifest, so a run can leave a good one while
+            // settling on the wrong build.
+            if (stashedIt)
+                RestoreManifestUnlessUsable(manifest, stashed);
+        }
+    }
+
+    /// <summary>Put the stashed manifest back unless the run left a readable one. A part-failed run writes a
+    /// manifest with buildid 0 (measured), which reads as null, so the file existing is not enough to discard
+    /// the original. Getting this wrong leaves the install with no build id and update checking dead.</summary>
+    private void RestoreManifestUnlessUsable(string manifest, string stashed)
+    {
+        // The manifest was moved aside, so anything there now is one this run wrote. Readable is enough.
+        if (_steamCmd.ReadInstalledBuildId() is not null)
+        {
+            TryDelete(stashed);
+            return;
+        }
+
+        try
+        {
+            File.Move(stashed, manifest, overwrite: true);
+            _steamCmd.InvalidateBuildIdCache();
+            _logger.Info("Put the Steam app manifest back.");
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            _logger.Error($"Couldn't restore the Steam app manifest, it is at {stashed}", ex);
+        }
+    }
+
+    /// <summary>Run SteamCMD app_update in place before launch (the "always current on boot" step). False when
+    /// the user answered a failed update with Cancel, which stops the start rather than launching the old build.</summary>
+    private async Task<bool> UpdateInPlaceAsync(bool userInitiated, CancellationToken ct)
     {
         _logger.Info("Checking for a server update before launch...");
         var steamLog = new Progress<string>(_logger.SteamCmd);
         using var tail = new FileTailer(_steamCmd.ConsoleLogPath, _logger.SteamCmd, fromStart: false);
+        // SteamCMD appends to its logs across runs, so anything read back afterward is filtered to this one.
+        // Second resolution, matching its timestamps, and a second early rather than late.
+        var runStarted = DateTime.Now.AddSeconds(-1);
+        // Consumed here: a later plain start aims at nothing and must not be judged against a stale target.
+        var target = _targetBuildId;
+        _targetBuildId = null;
 
         await _steamGate.WaitAsync(ct).ConfigureAwait(false);
         try
@@ -1249,20 +1570,101 @@ public sealed class ServerController : IDisposable
             var exit = await _steamCmd.InstallOrUpdateServerAsync(
                 validate: _config.VerifyOnUpdate, visible: !_config.HideSteamCmdWindow, steamLog, ct).ConfigureAwait(false);
             var buildId = _steamCmd.ReadInstalledBuildId() ?? "?";
-            if (exit == 0)
+
+            // Exit 0 doesn't mean it landed: a stale appinfo.vdf has SteamCMD apply nothing and report success,
+            // which is a silent version of the same loop. Judge on the build id.
+            if (exit == 0 && ReachedTarget(target, buildId))
             {
+                RecordUpdateOutcome(failedBuild: null);
                 _logger.Info($"Server up to date (build {buildId}).");
                 UpdateStatusChanged?.Invoke(string.Format(Strings.Update_UpToDate, BuildDisplay(buildId)));
             }
             else
             {
-                _logger.Info($"SteamCMD update exited with code {exit}, launching the installed build anyway.");
+                // "Couldn't verify or update" rather than "the update failed": app_update runs on every start
+                // and usually has nothing to apply, so this means the build is unconfirmed, not out of date.
+                var installed = buildId == "?" ? "the installed build" : $"the installed build (build {buildId})";
+                _logger.Error(exit == 0
+                    ? $"SteamCMD reported success, but the server is on {installed}, not {target}."
+                    : $"SteamCMD couldn't verify or update the server (exit code {exit}).");
+                if (target is not null)
+                    RecordUpdateOutcome(failedBuild: target);
+                UpdateStatusChanged?.Invoke(string.Format(Strings.Update_Failed, BuildDisplay(buildId)));
+
+                // A known target means a specific newer build was being applied. Without one, app_update was
+                // only confirming the server is current.
+                // Built before the repair, which appends to both logs and would otherwise be what gets read.
+                var operation = target is null ? SteamCmdOperation.VerifyOrUpdate : SteamCmdOperation.Update;
+                var failure = BuildSteamCmdFailure(operation, exit, runStarted, launchPending: true);
+
+                // Asked while the server is still stopped, the only cheap moment to redownload it. Never taken
+                // automatically: clearing the manifest costs a measured 4.9 GB.
+                var choice = AskAboutSteamCmdFailure(failure, userInitiated);
+                if (choice == ViewModels.SteamCmdFailureChoice.ValidateAndRetry)
+                {
+                    var repair = await RepairInstallAndUpdateAsync(target, steamLog, ct).ConfigureAwait(false);
+                    if (repair.Succeeded)
+                    {
+                        RecordUpdateOutcome(failedBuild: null);
+                        return true;
+                    }
+                    // The repair was the fix on offer. Launching now would act on a choice the user didn't
+                    // make, so ask again with it spent. Rebuilt from the repair's own window, since that is
+                    // the run this dialog is about. Already logged by the repair, so not logged twice.
+                    choice = AskAboutSteamCmdFailure(
+                        BuildSteamCmdFailure(operation, repair.Exit, repair.Started, launchPending: true, log: false)
+                            with { RepairFailed = true },
+                        userInitiated, answering: true);
+                }
+
+                if (choice == ViewModels.SteamCmdFailureChoice.Cancel)
+                    return false;
             }
         }
         finally
         {
             _steamGate.Release();
         }
+        return true;
+    }
+
+    /// <summary>What SteamCMD is actually being asked to do. app_update is the same command for every button,
+    /// so the caller's intent is the only source, and nothing can be verified or updated before a first install
+    /// exists.</summary>
+    public static SteamCmdOperation ResolveOperation(SteamCmdOperation requested, bool isInstalled) =>
+        isInstalled ? requested : SteamCmdOperation.Install;
+
+    /// <summary>Whether the run passes validate. Only applying a build already known to be newer skips it,
+    /// since there is nothing to check that the update is not about to overwrite.</summary>
+    public static bool ValidatesFiles(SteamCmdOperation operation) => operation != SteamCmdOperation.Update;
+
+    private static string OperationVerb(SteamCmdOperation operation) => operation switch
+    {
+        SteamCmdOperation.Install => "install",
+        SteamCmdOperation.Validate => "verify",
+        _ => "update",
+    };
+
+    /// <summary>
+    /// Whether the install reached the build the attempt was aiming at. No target means the exit code is all
+    /// there is. Landing PAST it counts: a target can be minutes old, and Steam publishing a newer build in
+    /// between is a success.
+    /// </summary>
+    public static bool ReachedTarget(string? target, string installed) =>
+        string.IsNullOrWhiteSpace(target)
+        || string.Equals(target, installed, StringComparison.Ordinal)
+        || (long.TryParse(target, out var wanted) && long.TryParse(installed, out var got) && got > wanted);
+
+    /// <summary>Remember the build an update failed to reach so the monitor stops offering it, or clear it once
+    /// one lands. Only written when it changes, since this runs on every start.</summary>
+    private void RecordUpdateOutcome(string? failedBuild)
+    {
+        var value = failedBuild ?? "";
+        if (_config.FailedUpdateBuildId == value)
+            return;
+
+        _config.FailedUpdateBuildId = value;
+        _config.Save();
     }
 
     /// <summary>
@@ -1778,17 +2180,20 @@ public sealed class ServerController : IDisposable
     /// update restart warns players with the staged broadcast countdown first, then restarts. Scheduled
     /// restarts don't come through here, the scheduler drives them so the shutdown lands on the chosen time.
     /// </summary>
-    public Task RestartAsync(RestartReason reason, CancellationToken ct = default) =>
+    /// <param name="attended">True when a user just asked for this and is waiting on it, which is the only
+    /// case a failure is allowed to open a dialog. An unattended restart must never block on one: the server is
+    /// already stopped by then, and nobody would be there to dismiss it.</param>
+    public Task RestartAsync(RestartReason reason, CancellationToken ct = default, bool attended = false) =>
         reason == RestartReason.Manual
             ? RestartNowAsync(reason, ct)                          // manual = immediate, like a plain Stop
-            : RestartAsync(reason, DateTime.Now + MaxLead(), ct);  // update = staged broadcast countdown
+            : RestartAsync(reason, DateTime.Now + MaxLead(), ct, attended);  // update = staged broadcast countdown
 
     /// <summary>
     /// The one restart path shared by update / scheduled / manual restarts: warn players with staged
     /// broadcasts, wait until <paramref name="restartAt"/>, then graceful stop -> start (Start applies
     /// any pending update). Re-entrant restarts are ignored; a user Stop during the countdown aborts it.
     /// </summary>
-    public async Task RestartAsync(RestartReason reason, DateTime restartAt, CancellationToken ct = default)
+    public async Task RestartAsync(RestartReason reason, DateTime restartAt, CancellationToken ct = default, bool attended = false)
     {
         CancellationTokenSource restartCts;
         lock (_gate)
@@ -1819,7 +2224,9 @@ public sealed class ServerController : IDisposable
             // An update-restart forces the SteamCMD update even if "Update on start" is off.
             await StopCoreAsync(graceful: true, shutdownWaitSeconds: 0, restarting: true, ct).ConfigureAwait(false);
             State = ServerState.Restarting; // hold "Restarting" across the update + relaunch (not "Stopped")
-            await StartAsync(forceUpdate: reason == RestartReason.Update, userInitiated: false, ct: ct).ConfigureAwait(false);
+            // userInitiated stays false so the relaunch can't clear a deliberate stop. Whether a failure may ask
+            // the user is a separate question, which is what attended answers.
+            await StartAsync(forceUpdate: reason == RestartReason.Update, userInitiated: false, ct: ct, attended: attended).ConfigureAwait(false);
         }
         finally
         {
@@ -2051,8 +2458,9 @@ public sealed class ServerController : IDisposable
         }
     }
 
-    private void HandleUpdateFound()
+    private void HandleUpdateFound(string buildId)
     {
+        _targetBuildId = buildId;
         if (_config.DiscordNotifyLifecycle)
             _discord.Notify("⬆️ A new Palworld server build was found, updating and restarting.");
         FireAndForget(() => RestartAsync(RestartReason.Update), "Update restart");
@@ -2304,9 +2712,9 @@ public sealed class ServerController : IDisposable
     }
 
     /// <summary>
-    /// Build the server command line from config. The stdout-capture args (`-log -stdout
-    /// -FullStdOutLogOutput -UTF8Output`) are always included (that's how the Server Log tab is fed -
-    /// Palworld writes no log file). Optional args are omitted when at their "unset" value so they
+    /// Build the server command line from config. The stdout-capture args (`-stdout -FullStdOutLogOutput
+    /// -UTF8Output`) are always included, that's how the Server tab is fed, since Palworld writes no log
+    /// file. Optional args are omitted when at their "unset" value so they
     /// don't override the ini (e.g. MaxPlayers=0 defers to ServerPlayerMaxNum). Pure/static = testable.
     /// </summary>
     public static IReadOnlyList<string> BuildLaunchArgs(LauncherConfig config, int queryPort)
@@ -2320,7 +2728,13 @@ public sealed class ServerController : IDisposable
                 args.Add($"-NumberOfWorkerThreadsServer={config.WorkerThreads}");
         }
 
-        args.AddRange(["-log", "-stdout", "-FullStdOutLogOutput", "-UTF8Output"]);
+        // -stdout and -FullStdOutLogOutput only produce output as a pair. Either alone yields a single line, and
+        // dropping -FullStdOutLogOutput loses "Game version" and "REST API started" along with the engine spam,
+        // so neither is noise to trim. -log used to be passed too and was dropped after measuring a vanilla
+        // server with a real player, where chat and the "[LOG] joined the server" lines both arrived without
+        // it. That measurement says nothing about UE4SS plugins such as PalDefender, which write chat through
+        // their own sink. Testing any of this needs a fresh launch, since an adopted server has no stdout.
+        args.AddRange(["-stdout", "-FullStdOutLogOutput", "-UTF8Output"]);
         args.Add($"-port={config.ServerPort}");
         args.Add($"-QueryPort={queryPort}");
 

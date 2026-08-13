@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PalServerLauncher"
+        xmlns:views="clr-namespace:PalServerLauncher.Views"
         xmlns:vm="clr-namespace:PalServerLauncher.ViewModels"
         xmlns:loc="clr-namespace:PalServerLauncher.Localization;assembly=PalServerLauncher.Localization"
         mc:Ignorable="d"
@@ -15,6 +16,7 @@
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <views:LogLineConverter x:Key="LogLine"/>
         <!-- Reuses the app-wide Button style (App.xaml, Theme-driven fill/border/hover), only adding the row
              gap. No duplicate template: change the button look in App.xaml and it applies here too. -->
         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
@@ -317,7 +319,19 @@
         <TabControl x:Name="LogTabs" Background="{x:Static local:Theme.Window}" BorderThickness="0" Padding="0,8,0,0">
             <TabControl.Resources>
                 <Style TargetType="TabItem" BasedOn="{StaticResource DarkTabItem}"/>
+                <!-- x:Shared="False" so each log tab gets its own menu instance rather than six ListBoxes
+                     fighting over one. CommandTarget routes to the ListBox the menu opened on, which is where
+                     the Copy and SelectAll bindings live (MainWindow.xaml.cs). -->
+                <ContextMenu x:Key="LogContextMenu" x:Shared="False">
+                    <MenuItem Header="{x:Static loc:Strings.Main_LogCopy}" Command="ApplicationCommands.Copy"
+                              CommandTarget="{Binding PlacementTarget, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                    <MenuItem Header="{x:Static loc:Strings.Main_LogSelectAll}" Command="ApplicationCommands.SelectAll"
+                              CommandTarget="{Binding PlacementTarget, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                </ContextMenu>
+
                 <Style TargetType="ListBox" x:Key="LogListStyle">
+                    <Setter Property="SelectionMode" Value="Extended"/>
+                    <Setter Property="ContextMenu" Value="{StaticResource LogContextMenu}"/>
                     <Setter Property="Background" Value="{x:Static local:Theme.Sunken}"/>
                     <Setter Property="BorderThickness" Value="0"/>
                     <Setter Property="Foreground" Value="{x:Static local:Theme.LogText}"/>
@@ -330,7 +344,14 @@
                     <Setter Property="ItemTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
+                                <TextBlock TextWrapping="Wrap" Foreground="{Binding Brush}">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource LogLine}">
+                                            <Binding/>
+                                            <Binding Path="DataContext.ShowLogDate" RelativeSource="{RelativeSource AncestorType=Window}"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>
@@ -346,7 +367,24 @@
                 </Style>
             </TabControl.Resources>
             <TabItem Header="{x:Static loc:Strings.Main_TabGeneral}">
-                <ListBox x:Name="GeneralList" ItemsSource="{Binding LogGeneral}" Style="{StaticResource LogListStyle}"/>
+                <!-- General mixes every source, so it alone carries the tag. The filtered tabs would just repeat one. -->
+                <ListBox x:Name="GeneralList" ItemsSource="{Binding LogGeneral}" Style="{StaticResource LogListStyle}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock TextWrapping="Wrap" Foreground="{Binding Brush}">
+                                <TextBlock.Text>
+                                    <MultiBinding Converter="{StaticResource LogLine}" ConverterParameter="tag">
+                                        <Binding/>
+                                        <Binding Path="DataContext.ShowLogDate" RelativeSource="{RelativeSource AncestorType=Window}"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </TabItem>
+            <TabItem Header="{x:Static loc:Strings.Main_TabLauncher}">
+                <ListBox x:Name="LauncherList" ItemsSource="{Binding LogLauncher}" Style="{StaticResource LogListStyle}"/>
             </TabItem>
             <TabItem Header="{x:Static loc:Strings.Main_TabServerLog}">
                 <ListBox x:Name="ServerList" ItemsSource="{Binding LogServer}" Style="{StaticResource LogListStyle}"/>
@@ -362,6 +400,9 @@
             </TabItem>
         </TabControl>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <!-- Margin matches the window's Button style, which the keyed ToggleButton style doesn't inherit. -->
+                <ToggleButton IsChecked="{Binding ShowLogDate}" Style="{StaticResource IconToggleButton}"
+                              Margin="0,0,8,0" Content="&#xE787;" ToolTip="{x:Static loc:Strings.Main_ShowLogDate}"/>
                 <Button Content="{x:Static loc:Strings.Main_ClearLogs}" Command="{Binding ClearLogsCommand}"
                         ToolTip="{x:Static loc:Strings.Main_ClearLogsTip}"/>
                 <Button Content="{x:Static loc:Strings.Main_ServerCommands}" Click="OnOpenServerCommands" IsEnabled="{Binding CanUseServerCommands}"

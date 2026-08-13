@@ -13,6 +13,9 @@ public class LaunchArgsTests
         Assert.Contains("-useperfthreads", args);
         Assert.Contains("-stdout", args);
         Assert.Contains("-FullStdOutLogOutput", args);
+        // Measured to do nothing on a vanilla server, so it went. Asserted absent because a revert would
+        // otherwise restore it silently.
+        Assert.DoesNotContain("-log", args);
         Assert.Contains("-port=8211", args);
         Assert.Contains("-QueryPort=27015", args);
         // Optional args omitted at their unset values -> don't override the ini.
