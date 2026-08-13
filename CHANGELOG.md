@@ -28,7 +28,7 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
 - **A failed repair no longer leaves the install without a build id.** Steam's app manifest is put back unless the run left a usable one.
 - **The Server and Chat tabs explain themselves after reconnecting** to a server the launcher didn't start, instead of sitting empty with no reason given.
 - **A log file that can't be written no longer silences `--console` as well.** The file and the console are written independently, so one failing doesn't take the other with it.
-- **The admin password is no longer written to the log.** Logging in as an admin in-game types the password into chat and the server echoes it back, so it reached the log file people attach to bug reports. It is now replaced with `***` in the log file, the log tabs, and `--console`.
+- **The admin password is replaced with `***` in the log.** Logging in as an admin in-game types the password into chat and the server echoes it back, so it reached the log file people attach to bug reports. It is masked in the log file, the log tabs, and `--console`. Passwords under 8 characters are left alone, since a short one occurs in ordinary log text and cutting it would take real content with it.
 - **Server output that stamps its own clock no longer shows two.** PalDefender and other console mods prefix every line with their own time, which the launcher printed alongside its own. (#14)
 
 ## [1.3.1] - 2026-08-11

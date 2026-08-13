@@ -658,8 +658,8 @@ public partial class MainWindow : Window
     }
 
     /// <summary>Point the log filter box at every tab. The default views are what the ListBox bindings already
-    /// read, so nothing is re-bound and new lines are matched as they arrive. One query drives all six, since a
-    /// per-tab query would leave a tab filtered after the user switched away and forgot.</summary>
+    /// read, so nothing is re-bound and new lines match as they arrive. One query drives all six, since a per-tab
+    /// query would leave a tab filtered after the user switched away.</summary>
     private void HookLogFilter(params ObservableCollection<LogEntry>[] collections)
     {
         foreach (var collection in collections)
@@ -684,12 +684,19 @@ public partial class MainWindow : Window
         foreach (var view in _logViews)
             view.Refresh();
 
-        // Deferred: the refresh regenerates containers, so the ScrollViewer reports the old extent until layout runs.
+        // A filter change replaces the content under the user, so every tab follows the tail again rather than
+        // holding a position in lines that may not have survived. Unvisited tabs are absent from _logScrollers
+        // and already follow. The defer matches HookAutoScroll, which needs it. This doesn't.
         Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
         {
             foreach (var (list, scroller) in _logScrollers)
-                if (_followingTail.TryGetValue(list, out var following) && following)
-                    scroller.ScrollToBottom();
+            {
+                _followingTail[list] = true;
+                scroller.ScrollToBottom();
+            }
+            // Not redundant with HookLogScroll. A list the filter left too short to scroll moves nothing, so no
+            // ScrollChanged fires and the button would sit over nowhere to jump to.
+            UpdateJumpButton();
         }));
     }
 

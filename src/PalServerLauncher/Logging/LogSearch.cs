@@ -5,7 +5,7 @@ namespace PalServerLauncher.Logging;
 /// <summary>
 /// Matcher for the log filter box. Token-AND over the line's text and its source tag, the same rule as
 /// <see cref="Config.SettingsSearch"/>. The tag is searched so "error" or "chat" filters by source. The
-/// timestamp is not: it prefixes every line, so "1" would match nearly all of them.
+/// timestamp is not, since it prefixes every line.
 /// </summary>
 public static class LogSearch
 {

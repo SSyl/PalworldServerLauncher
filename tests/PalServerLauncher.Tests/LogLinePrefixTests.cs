@@ -48,8 +48,8 @@ public class LogLinePrefixTests
     }
 
     [Theory]
-    // Real PalDefender 1.8.3 lines. Its clock goes, its level stays: that is all that marks a cheat
-    // detection apart from a crafting line.
+    // Real PalDefender 1.8.3 lines. Its clock goes and its level stays, since the level is all that
+    // separates a cheat detection from a crafting line.
     [InlineData("[04:22:56][warning] 'SSyl' (UserId=steam_765, IP=127.0.0.1) is a cheater! Reason: used /imcheater command",
                 "[warning] 'SSyl' (UserId=steam_765, IP=127.0.0.1) is a cheater! Reason: used /imcheater command")]
     [InlineData("[04:21:18][info] PalDefender Anti Cheat v1.8.3 loaded!", "[info] PalDefender Anti Cheat v1.8.3 loaded!")]
@@ -95,6 +95,17 @@ public class LogLinePrefixTests
 
         Assert.Equal($"[{scope}] ['SSyl' (UserId=abc, IP=192.168.50.1)]: Test",
             LogLinePrefix.StripChatMarkers(line));
+    }
+
+    [Theory]
+    [InlineData("info")]
+    [InlineData("warn")]
+    [InlineData("warning")]  // spdlog's own spelling
+    [InlineData("error")]
+    public void Every_level_spelling_a_source_might_use_is_stripped_from_chat(string level)
+    {
+        Assert.Equal("[Global] ['SSyl' (UserId=abc)]: Test",
+            LogLinePrefix.StripChatMarkers($"[20:03:50][{level}] [Chat::Global]['SSyl' (UserId=abc)]: Test"));
     }
 
     [Fact]

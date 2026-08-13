@@ -32,7 +32,7 @@ public static class LogLinePrefix
                 DateTimeStyles.None, out var stamped))
             return (stamped, text[(close + 1)..].TrimStart());
 
-        // No date, so a session running past midnight would date the line wrong. Dropped rather than used.
+        // No date, so a session past midnight would date the line wrong.
         if (TimeOnly.TryParseExact(inner, "HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
             return (null, text[(close + 1)..].TrimStart());
 
