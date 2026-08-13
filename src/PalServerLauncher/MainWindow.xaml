@@ -1,4 +1,4 @@
-<Window x:Class="PalServerLauncher.MainWindow"
+﻿<Window x:Class="PalServerLauncher.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -179,12 +179,12 @@
         <Border Grid.Row="4" BorderBrush="{x:Static local:Theme.Divider}" BorderThickness="0,1,0,0" Padding="0,4,0,0" Margin="0,4,0,0">
         <DockPanel LastChildFill="False">
         <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center">
-            <StackPanel Orientation="Horizontal" Margin="0,0,24,0"><TextBlock Text="{x:Static loc:Strings.Main_StatVersion}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Version}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,24,0"><TextBlock Text="{x:Static loc:Strings.Main_StatFps}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Fps}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,24,0"><TextBlock Text="{x:Static loc:Strings.Main_StatCpu}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Cpu}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,24,0"><TextBlock Text="{x:Static loc:Strings.Main_StatMemory}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Memory}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,24,0"><TextBlock Text="{x:Static loc:Strings.Main_StatPlayers}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Players}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,0,24,0"><TextBlock Text="{x:Static loc:Strings.Main_StatUptime}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Uptime}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,16,0" ToolTip="{Binding VersionDetail}"><TextBlock Text="{x:Static loc:Strings.Main_StatVersion}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Version}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,16,0"><TextBlock Text="{x:Static loc:Strings.Main_StatFps}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Fps}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,16,0"><TextBlock Text="{x:Static loc:Strings.Main_StatCpu}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Cpu}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,16,0"><TextBlock Text="{x:Static loc:Strings.Main_StatMemory}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Memory}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,16,0"><TextBlock Text="{x:Static loc:Strings.Main_StatPlayers}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Players}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,16,0"><TextBlock Text="{x:Static loc:Strings.Main_StatUptime}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Uptime}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
             <StackPanel Orientation="Horizontal"><TextBlock Text="{x:Static loc:Strings.Main_StatNextRestart}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding NextRestart}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
         </StackPanel>
 
@@ -286,17 +286,19 @@
                         <TextBox Text="{Binding BackupRetentionDays}" Style="{StaticResource NumericField}" Width="{x:Static local:Metrics.NumericFieldNarrow}" VerticalAlignment="Center"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_DaysSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
+                    <!-- WrapPanel, not StackPanel: a horizontal one clips, and the label plus the button run past
+                         a third of the window in fr, es and ru. The button drops to its own line instead. -->
+                    <WrapPanel>
                         <TextBlock Text="{x:Static loc:Strings.Main_NextBackupLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                         <TextBlock Text="{Binding NextBackup}" Foreground="{x:Static local:Theme.Text}" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                        <Button Content="{x:Static loc:Strings.Main_BackupNow}" Command="{Binding BackupNowCommand}" Margin="0"
+                        <Button Content="{x:Static loc:Strings.Main_BackupNow}" Command="{Binding BackupNowCommand}" Margin="0,2,0,0"
                                 ToolTip="{x:Static loc:Strings.Main_BackupNowTip}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                    </WrapPanel>
+                    <WrapPanel Margin="0,6,0,0">
                         <TextBlock Text="{x:Static loc:Strings.Main_BackupLocationLabel}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                        <Button Content="{Binding BackupLocationLabel}" Click="OnBackupLocation" Margin="0"
+                        <Button Content="{Binding BackupLocationLabel}" Click="OnBackupLocation" Margin="0,2,0,0"
                                 ToolTip="{x:Static loc:Strings.Main_BackupLocationTip}"/>
-                    </StackPanel>
+                    </WrapPanel>
                 </StackPanel>
             </Border>
 

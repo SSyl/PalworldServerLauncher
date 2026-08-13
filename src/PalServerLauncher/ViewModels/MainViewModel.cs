@@ -55,6 +55,8 @@ public partial class MainViewModel : ObservableObject
     private bool _isBusy;
 
     [ObservableProperty] private string _version = "-";
+    /// <summary>The version tile's tooltip, carrying the build id the tile itself drops for width.</summary>
+    [ObservableProperty] private string _versionDetail = "-";
     [ObservableProperty] private string _fps = "-";
     [ObservableProperty] private string _cpu = "-";
     [ObservableProperty] private string _memory = "-";
@@ -1102,7 +1104,7 @@ public partial class MainViewModel : ObservableObject
 
     private void OnHealthUpdated(HealthSample s) => _dispatcher.BeginInvoke(() =>
     {
-        Version = FormatVersionTile(s.Version);
+        (Version, VersionDetail) = FormatVersionTile(s.Version);
         Fps = s.Fps;
         Cpu = s.Cpu;
         Players = s.Players;
@@ -1113,20 +1115,21 @@ public partial class MainViewModel : ObservableObject
         OnPropertyChanged(nameof(PinnedBuildDisplay));
     });
 
-    /// <summary>The Version tile text: "v1.0.1 (24181105)" (short version + installed build) when REST reports a
-    /// version, else the raw sample text (e.g. the "-" / "REST off" sentinels).</summary>
-    private string FormatVersionTile(string rawVersion)
+    /// <summary>The Version tile and its tooltip: "v1.0.1" on the tile, "v1.0.1 (24181105)" on hover. The build
+    /// is off the tile because it is 8 digits in a row that has to fit seven stats, and the update status line
+    /// above already shows it. Both fall back to the raw sample text for the "-" / "REST off" sentinels.</summary>
+    private (string Tile, string Detail) FormatVersionTile(string rawVersion)
     {
         var shortVersion = VersionFormat.ShortVersion(rawVersion);
         if (shortVersion is null)
-            return rawVersion;
+            return (rawVersion, rawVersion);
         var build = _controller.InstalledBuildId;
-        return string.IsNullOrEmpty(build) ? shortVersion : $"{shortVersion} ({build})";
+        return (shortVersion, string.IsNullOrEmpty(build) ? shortVersion : $"{shortVersion} ({build})");
     }
 
     private void ResetTiles()
     {
-        Version = Fps = Cpu = Memory = Players = Uptime = NextRestart = NextBackup = "-";
+        Version = VersionDetail = Fps = Cpu = Memory = Players = Uptime = NextRestart = NextBackup = "-";
     }
 
     // Logger lines arrive on background threads, marshal to the UI before touching the collections.
