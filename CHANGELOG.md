@@ -2,6 +2,31 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [Unreleased]
+
+### Added
+- **A Launcher tab**, so the launcher's own messages can be read without the server's output mixed in. The All tab still shows everything.
+- **Select and copy from any log tab**, by mouse, Ctrl+A and Ctrl+C, or the right-click menu.
+- **An optional date on log timestamps**, off by default, for a server that has been up for days.
+- **A failed SteamCMD run now says what SteamCMD said**, showing the reason from its own content log instead of one line with an exit code. (#15)
+- **A Repair option after a failed update.** It sets Steam's app manifest aside and revalidates, which recovers an install SteamCMD otherwise refuses to update. Nothing is downloaded unless a file is missing or damaged, and it never runs without being asked.
+- **Check for Update now says when the installed build can't be read**, and offers to rebuild it by validating the files, rather than reporting the server as up to date.
+
+### Changed
+- **The Server Log tab is now Server, and General is now All.**
+- **Log lines are colored by where they came from**, and player and chat lines carry the time Palworld recorded rather than the moment the launcher read them.
+- **Log files are named `launcher-2026-08-13_00.52.29.log`** and record milliseconds. The old name sorted newer files above older ones.
+- **A failed update is logged as an error, not information**, with SteamCMD's own reason lines beneath it.
+- **A failure that never reached Steam no longer claims the update failed**, since SteamCMD can stop before it looks at the server at all.
+- **`-log` is no longer passed to the server.** Measured against a live server with a real player, chat and join lines arrive without it.
+
+### Fixed
+- **The update prompt no longer returns every check after an update fails.** The launcher remembers the build it failed to reach and stops offering it until Steam publishes a newer one or you ask again. (#15)
+- **An update that reports success without installing anything is now treated as a failure**, by comparing the installed build against the one being applied.
+- **A published build older than the installed one is no longer offered as an update**, which could otherwise restart the server for an update that did not exist.
+- **A failed repair no longer leaves the install without a build id.** Steam's app manifest is put back unless the run left a usable one.
+- **The Server and Chat tabs explain themselves after reconnecting** to a server the launcher didn't start, instead of sitting empty with no reason given.
+
 ## [1.3.1] - 2026-08-11
 
 ### Fixed
