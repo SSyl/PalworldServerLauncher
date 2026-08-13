@@ -382,10 +382,10 @@
     <value>Discord 控制機器人 + webhook 通知</value>
   </data>
   <data name="Main_TabGeneral" xml:space="preserve">
-    <value>常規</value>
+    <value>全部</value>
   </data>
   <data name="Main_TabServerLog" xml:space="preserve">
-    <value>伺服器日誌</value>
+    <value>伺服器</value>
   </data>
   <data name="Main_TabChat" xml:space="preserve">
     <value>聊天</value>
@@ -2494,5 +2494,98 @@
   </data>
   <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
     <value>UE4SS 是手動安裝在 Pal\Binaries\Win64\ue4ss 的。在 UE4SS 下執行的創意工坊模組會安裝到 Mods\NativeMods\UE4SS\Mods，而手動安裝的 UE4SS 不會讀取該位置，因此它們不會載入。僅 .pak 的模組仍然可用。請改為從 Steam 創意工坊安裝 UE4SS，以便由啟動器管理它們。</value>
+  </data>
+  <data name="Main_ShowLogDate" xml:space="preserve">
+    <value>顯示每行日誌的完整日期</value>
+  </data>
+  <data name="Main_TabLauncher" xml:space="preserve">
+    <value>啟動器</value>
+  </data>
+  <data name="Main_LogCopy" xml:space="preserve">
+    <value>複製</value>
+  </data>
+  <data name="Main_LogSelectAll" xml:space="preserve">
+    <value>全選</value>
+  </data>
+  <data name="Update_Failed" xml:space="preserve">
+    <value>更新失敗 · {0}</value>
+  </data>
+  <data name="SteamCmd_FailedTitle" xml:space="preserve">
+    <value>SteamCMD 失敗</value>
+  </data>
+  <data name="SteamCmd_CouldntInstall" xml:space="preserve">
+    <value>SteamCMD 無法安裝伺服器（{0}）。</value>
+  </data>
+  <data name="SteamCmd_CouldntUpdate" xml:space="preserve">
+    <value>SteamCMD 無法更新伺服器（{0}）。</value>
+  </data>
+  <data name="SteamCmd_CodesBoth" xml:space="preserve">
+    <value>結束代碼 {0}，狀態 {1}</value>
+  </data>
+  <data name="SteamCmd_CodesExit" xml:space="preserve">
+    <value>結束代碼 {0}</value>
+  </data>
+  <data name="SteamCmd_Reported" xml:space="preserve">
+    <value>SteamCMD 報告：</value>
+  </data>
+  <data name="SteamCmd_NoReason" xml:space="preserve">
+    <value>SteamCMD 未報告原因。完整輸出見 SteamCMD 索引標籤。</value>
+  </data>
+  <data name="SteamCmd_DiskSpace" xml:space="preserve">
+    <value>磁碟空間較低：{0} 可用。完全修復可能需要約 {1:0.#} GB。</value>
+  </data>
+  <data name="SteamCmd_DiskWrite" xml:space="preserve">
+    <value>無法寫入伺服器資料夾。請檢查資料夾權限和防毒軟體。</value>
+  </data>
+  <data name="SteamCmd_Damaged" xml:space="preserve">
+    <value>部分伺服器檔案遺失或損壞。</value>
+  </data>
+  <data name="SteamCmd_StartAnyway" xml:space="preserve">
+    <value>仍要啟動</value>
+  </data>
+  <data name="SteamCmd_Close" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="SteamCmd_Untouched" xml:space="preserve">
+    <value>沒有檔案被更改。已安裝的伺服器完好無損。</value>
+  </data>
+  <data name="Update_BuildUnknown" xml:space="preserve">
+    <value>建構未知</value>
+  </data>
+  <data name="Main_BuildUnknownTitle" xml:space="preserve">
+    <value>已安裝的建構未知</value>
+  </data>
+  <data name="Main_BuildUnknownMessage" xml:space="preserve">
+    <value>Steam 的應用程式清單遺失或無法讀取，因此已安裝的建構無法與最新建構比對。驗證檔案會根據磁碟上的檔案重新產生清單，不會下載任何內容，可能需要幾分鐘。</value>
+  </data>
+  <data name="Main_BuildUnknownStopFirst" xml:space="preserve">
+    <value>請先停止伺服器，再使用驗證檔案。</value>
+  </data>
+  <data name="SteamCmd_StoppedEarly" xml:space="preserve">
+    <value>SteamCMD 在檢查伺服器之前就停止了（{0}）。</value>
+  </data>
+  <data name="SteamCmd_ValidateOffer" xml:space="preserve">
+    <value>要透過驗證檔案來修復安裝嗎？這會下載遺失或損壞的伺服器檔案。</value>
+  </data>
+  <data name="SteamCmd_ValidateRetry" xml:space="preserve">
+    <value>修復</value>
+  </data>
+  <data name="SteamCmd_ValidateFailed" xml:space="preserve">
+    <value>修復安裝並未解決問題。</value>
+  </data>
+  <data name="SteamCmd_CouldntVerify" xml:space="preserve">
+    <value>SteamCMD 無法驗證伺服器檔案（{0}）。</value>
+  </data>
+  <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
+    <value>SteamCMD 無法驗證或更新伺服器（{0}）。</value>
+  </data>
+  <data name="Main_LogFilter" xml:space="preserve">
+    <value>篩選日誌...</value>
+  </data>
+  <data name="Main_LogFilterTip" xml:space="preserve">
+    <value>僅顯示包含所輸入全部字詞的日誌行。對所有索引標籤生效。</value>
+  </data>
+  <data name="Main_LogFilterClear" xml:space="preserve">
+    <value>清除篩選</value>
   </data>
 </root>

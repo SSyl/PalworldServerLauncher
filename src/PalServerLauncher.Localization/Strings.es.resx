@@ -419,10 +419,10 @@
     <value>Bot de control de Discord + notificaciones por webhook</value>
   </data>
   <data name="Main_TabGeneral" xml:space="preserve">
-    <value>General</value>
+    <value>Todo</value>
   </data>
   <data name="Main_TabServerLog" xml:space="preserve">
-    <value>Registro del servidor</value>
+    <value>Servidor</value>
   </data>
   <data name="Main_TabChat" xml:space="preserve">
     <value>Chat</value>
@@ -2570,5 +2570,98 @@ Para cargar una de ellas, en GameUserSettings.ini establezca DedicatedServerName
   </data>
   <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
     <value>UE4SS está instalado manualmente en Pal\Binaries\Win64\ue4ss. Los mods del Taller que funcionan con UE4SS se instalan en Mods\NativeMods\UE4SS\Mods. Un UE4SS instalado manualmente no lee esa carpeta, así que no se cargarán. Los mods que solo usan .pak siguen funcionando. Instale UE4SS desde el Taller de Steam para que el launcher los administre.</value>
+  </data>
+  <data name="Main_ShowLogDate" xml:space="preserve">
+    <value>Mostrar la fecha completa en cada línea del registro</value>
+  </data>
+  <data name="Main_TabLauncher" xml:space="preserve">
+    <value>Launcher</value>
+  </data>
+  <data name="Main_LogCopy" xml:space="preserve">
+    <value>Copiar</value>
+  </data>
+  <data name="Main_LogSelectAll" xml:space="preserve">
+    <value>Seleccionar todo</value>
+  </data>
+  <data name="Update_Failed" xml:space="preserve">
+    <value>Error al actualizar · {0}</value>
+  </data>
+  <data name="SteamCmd_FailedTitle" xml:space="preserve">
+    <value>Error de SteamCMD</value>
+  </data>
+  <data name="SteamCmd_CouldntInstall" xml:space="preserve">
+    <value>No se pudo instalar el servidor ({0}).</value>
+  </data>
+  <data name="SteamCmd_CouldntUpdate" xml:space="preserve">
+    <value>No se pudo actualizar el servidor ({0}).</value>
+  </data>
+  <data name="SteamCmd_CodesBoth" xml:space="preserve">
+    <value>código de salida {0}, estado {1}</value>
+  </data>
+  <data name="SteamCmd_CodesExit" xml:space="preserve">
+    <value>código de salida {0}</value>
+  </data>
+  <data name="SteamCmd_Reported" xml:space="preserve">
+    <value>SteamCMD informó:</value>
+  </data>
+  <data name="SteamCmd_NoReason" xml:space="preserve">
+    <value>SteamCMD no informó ningún motivo. La salida completa está en la pestaña de SteamCMD.</value>
+  </data>
+  <data name="SteamCmd_DiskSpace" xml:space="preserve">
+    <value>Poco espacio en disco: {0} libres. Una reparación completa podría necesitar unos {1:0.#} GB.</value>
+  </data>
+  <data name="SteamCmd_DiskWrite" xml:space="preserve">
+    <value>No se puede escribir en la carpeta del servidor. Compruebe los permisos de la carpeta y el antivirus.</value>
+  </data>
+  <data name="SteamCmd_Damaged" xml:space="preserve">
+    <value>Algunos archivos del servidor faltan o están dañados.</value>
+  </data>
+  <data name="SteamCmd_StartAnyway" xml:space="preserve">
+    <value>Iniciar de todos modos</value>
+  </data>
+  <data name="SteamCmd_Close" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
+  <data name="SteamCmd_Untouched" xml:space="preserve">
+    <value>No se cambió ningún archivo. El servidor instalado está intacto.</value>
+  </data>
+  <data name="Update_BuildUnknown" xml:space="preserve">
+    <value>Build desconocida</value>
+  </data>
+  <data name="Main_BuildUnknownTitle" xml:space="preserve">
+    <value>Build instalada desconocida</value>
+  </data>
+  <data name="Main_BuildUnknownMessage" xml:space="preserve">
+    <value>El manifiesto de la aplicación de Steam falta o no se puede leer, por lo que la build instalada no se puede comparar con la más reciente. Validar reconstruye el manifiesto a partir de los archivos en el disco. No se descarga nada. Esto puede tardar unos minutos.</value>
+  </data>
+  <data name="Main_BuildUnknownStopFirst" xml:space="preserve">
+    <value>Detenga primero el servidor y luego use Validar archivos.</value>
+  </data>
+  <data name="SteamCmd_StoppedEarly" xml:space="preserve">
+    <value>SteamCMD se detuvo antes de validar el servidor ({0}).</value>
+  </data>
+  <data name="SteamCmd_ValidateOffer" xml:space="preserve">
+    <value>¿Desea reparar la instalación validando los archivos? Esto descargará los archivos del servidor que falten o estén dañados.</value>
+  </data>
+  <data name="SteamCmd_ValidateRetry" xml:space="preserve">
+    <value>Reparar</value>
+  </data>
+  <data name="SteamCmd_ValidateFailed" xml:space="preserve">
+    <value>Reparar la instalación no solucionó el problema.</value>
+  </data>
+  <data name="SteamCmd_CouldntVerify" xml:space="preserve">
+    <value>No se pudieron validar los archivos del servidor ({0}).</value>
+  </data>
+  <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
+    <value>No se pudo validar ni actualizar el servidor ({0}).</value>
+  </data>
+  <data name="Main_LogFilter" xml:space="preserve">
+    <value>Filtrar registro...</value>
+  </data>
+  <data name="Main_LogFilterTip" xml:space="preserve">
+    <value>Muestra solo las líneas de registro que contienen todas las palabras que escriba. Se aplica a todas las pestañas.</value>
+  </data>
+  <data name="Main_LogFilterClear" xml:space="preserve">
+    <value>Borrar filtro</value>
   </data>
 </root>

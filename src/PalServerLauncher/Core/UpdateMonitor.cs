@@ -25,9 +25,11 @@ public sealed class UpdateMonitor : IDisposable
     private readonly Logger _logger;
     private readonly CancellationTokenSource _cts = new();
     private bool _fired;
+    private bool _heldAnnounced;
     private bool _disposed;
 
-    public event Action? UpdateFound;
+    /// <summary>Carries the build being offered, so the update that follows can tell whether it got there.</summary>
+    public event Action<string>? UpdateFound;
     public event Action<string>? StatusChanged;
 
     public UpdateMonitor(
@@ -44,10 +46,37 @@ public sealed class UpdateMonitor : IDisposable
         _logger = logger;
     }
 
-    /// <summary>Whether a build id difference means an update is available (ignores nulls / whitespace).</summary>
-    public static bool IsUpdateAvailable(string? installed, string? latest) =>
-        !string.IsNullOrWhiteSpace(installed) && !string.IsNullOrWhiteSpace(latest) &&
-        !string.Equals(installed.Trim(), latest.Trim(), StringComparison.Ordinal);
+    /// <summary>
+    /// Whether a build id difference means an update is available (ignores nulls / whitespace). Steam build ids
+    /// climb, so a remote id BEHIND the installed one is not an update, and acting on it spends a broadcast
+    /// countdown and a restart on an app_update that correctly does nothing. LinuxGSM documents SteamCMD
+    /// reporting stale info from its appinfo cache, which is how that arises. Ids that don't parse fall back to
+    /// inequality.
+    /// </summary>
+    public static bool IsUpdateAvailable(string? installed, string? latest)
+    {
+        if (string.IsNullOrWhiteSpace(installed) || string.IsNullOrWhiteSpace(latest))
+            return false;
+
+        installed = installed.Trim();
+        latest = latest.Trim();
+        return long.TryParse(installed, out var have) && long.TryParse(latest, out var published)
+            ? published > have
+            : !string.Equals(installed, latest, StringComparison.Ordinal);
+    }
+
+    /// <summary>
+    /// Whether to offer <paramref name="latest"/>, given a build a previous attempt failed to reach. Retrying
+    /// the same build on a timer is issue #15's loop: the attempt fails, the installed build doesn't move, the
+    /// restart builds a fresh monitor, and it fires again an interval later.
+    ///
+    /// Keys on whether the installed build reached the target, which makes it independent of why the attempt
+    /// failed. That matters because SteamCMD can exit zero having applied nothing, and a stale appinfo.vdf can
+    /// report a build that was never published, neither of which reports an error anywhere.
+    /// </summary>
+    public static bool ShouldOfferUpdate(string? installed, string? latest, string? failedBuildId) =>
+        IsUpdateAvailable(installed, latest) &&
+        !string.Equals(latest?.Trim(), failedBuildId?.Trim(), StringComparison.Ordinal);
 
     public void Start() => _ = LoopAsync(_cts.Token);
 
@@ -97,12 +126,24 @@ public sealed class UpdateMonitor : IDisposable
             return;
         }
 
-        if (IsUpdateAvailable(installed, latest))
+        if (ShouldOfferUpdate(installed, latest, _config.FailedUpdateBuildId))
         {
             _fired = true;
             _logger.Info($"New server build {latest} found (installed {installed}), starting update restart.");
             StatusChanged?.Invoke(string.Format(Strings.Update_Found, latest));
-            UpdateFound?.Invoke();
+            UpdateFound?.Invoke(latest.Trim());
+        }
+        else if (IsUpdateAvailable(installed, latest))
+        {
+            // Only the log line is suppressed, not the polling: latching _fired here would disable update
+            // checking for the rest of the server's uptime, missing any build published after this one.
+            if (!_heldAnnounced)
+            {
+                _heldAnnounced = true;
+                _logger.Info($"Build {latest} available, installed {installed}. The last update to it failed, " +
+                             $"so it will not be retried automatically. Use Check for Update to retry.");
+            }
+            StatusChanged?.Invoke(string.Format(Strings.Update_Failed, _buildDisplay(latest)));
         }
         else
         {

@@ -24,6 +24,9 @@ public class LauncherConfigTests
         Assert.False(cfg.VerifyOnUpdate);
         Assert.False(cfg.LogHealthStats);
         Assert.False(cfg.ClearLogsOnManualStart);
+        Assert.False(cfg.ShowLogDate);
+        Assert.Equal(0, cfg.LastKnownServerSizeBytes);
+        Assert.Equal("", cfg.FailedUpdateBuildId);
         Assert.True(cfg.ZombieCheckEnabled);
         Assert.Equal(10, cfg.ZombieFailureThreshold);
 

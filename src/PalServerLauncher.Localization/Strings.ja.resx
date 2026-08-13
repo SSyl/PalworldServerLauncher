@@ -381,10 +381,10 @@
     <value>Discord 操作ボット + webhook 通知</value>
   </data>
   <data name="Main_TabGeneral" xml:space="preserve">
-    <value>全般</value>
+    <value>すべて</value>
   </data>
   <data name="Main_TabServerLog" xml:space="preserve">
-    <value>サーバーログ</value>
+    <value>サーバー</value>
   </data>
   <data name="Main_TabChat" xml:space="preserve">
     <value>チャット</value>
@@ -2503,5 +2503,98 @@ Mod が本当にサーバーに対応していない場合、重大な問題（�
   </data>
   <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
     <value>UE4SS が Pal\Binaries\Win64\ue4ss に手動でインストールされています。UE4SS 上で動作するワークショップ Mod は Mods\NativeMods\UE4SS\Mods にインストールされますが、手動インストールの UE4SS はこの場所を読み込まないため、それらは読み込まれません。.pak のみの Mod は引き続き動作します。ランチャーに管理させるには、代わりに Steam ワークショップから UE4SS をインストールしてください。</value>
+  </data>
+  <data name="Main_ShowLogDate" xml:space="preserve">
+    <value>すべてのログ行に完全な日付を表示します</value>
+  </data>
+  <data name="Main_TabLauncher" xml:space="preserve">
+    <value>ランチャー</value>
+  </data>
+  <data name="Main_LogCopy" xml:space="preserve">
+    <value>コピー</value>
+  </data>
+  <data name="Main_LogSelectAll" xml:space="preserve">
+    <value>すべて選択</value>
+  </data>
+  <data name="Update_Failed" xml:space="preserve">
+    <value>アップデートに失敗 · {0}</value>
+  </data>
+  <data name="SteamCmd_FailedTitle" xml:space="preserve">
+    <value>SteamCMD が失敗しました</value>
+  </data>
+  <data name="SteamCmd_CouldntInstall" xml:space="preserve">
+    <value>サーバーをインストールできませんでした（{0}）。</value>
+  </data>
+  <data name="SteamCmd_CouldntUpdate" xml:space="preserve">
+    <value>サーバーをアップデートできませんでした（{0}）。</value>
+  </data>
+  <data name="SteamCmd_CodesBoth" xml:space="preserve">
+    <value>終了コード {0}、状態 {1}</value>
+  </data>
+  <data name="SteamCmd_CodesExit" xml:space="preserve">
+    <value>終了コード {0}</value>
+  </data>
+  <data name="SteamCmd_Reported" xml:space="preserve">
+    <value>SteamCMD の報告：</value>
+  </data>
+  <data name="SteamCmd_NoReason" xml:space="preserve">
+    <value>SteamCMD は理由を報告しませんでした。完全な出力は SteamCMD タブにあります。</value>
+  </data>
+  <data name="SteamCmd_DiskSpace" xml:space="preserve">
+    <value>空き容量が少なくなっています({0})。完全な修復には約 {1:0.#} GB が必要になる場合があります。</value>
+  </data>
+  <data name="SteamCmd_DiskWrite" xml:space="preserve">
+    <value>サーバーフォルダーに書き込めません。フォルダーの権限とウイルス対策ソフトを確認してください。</value>
+  </data>
+  <data name="SteamCmd_Damaged" xml:space="preserve">
+    <value>一部のサーバーファイルが見つからないか、破損しています。</value>
+  </data>
+  <data name="SteamCmd_StartAnyway" xml:space="preserve">
+    <value>それでも起動</value>
+  </data>
+  <data name="SteamCmd_Close" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="SteamCmd_Untouched" xml:space="preserve">
+    <value>ファイルは変更されていません。インストール済みのサーバーは無傷です。</value>
+  </data>
+  <data name="Update_BuildUnknown" xml:space="preserve">
+    <value>ビルド不明</value>
+  </data>
+  <data name="Main_BuildUnknownTitle" xml:space="preserve">
+    <value>インストール済みビルドが不明です</value>
+  </data>
+  <data name="Main_BuildUnknownMessage" xml:space="preserve">
+    <value>Steam のアプリマニフェストが見つからないか読み取れないため、インストール済みビルドを最新と比較できません。検証を行うと、ディスク上のファイルからマニフェストが再構築されます。ダウンロードは行われません。数分かかる場合があります。</value>
+  </data>
+  <data name="Main_BuildUnknownStopFirst" xml:space="preserve">
+    <value>先にサーバーを停止してから、「ファイルを検証」を使用してください。</value>
+  </data>
+  <data name="SteamCmd_StoppedEarly" xml:space="preserve">
+    <value>SteamCMD はサーバーを検証する前に停止しました（{0}）。</value>
+  </data>
+  <data name="SteamCmd_ValidateOffer" xml:space="preserve">
+    <value>ファイルを検証してインストールを修復しますか？見つからないか破損しているサーバーファイルがあればダウンロードされます。</value>
+  </data>
+  <data name="SteamCmd_ValidateRetry" xml:space="preserve">
+    <value>修復</value>
+  </data>
+  <data name="SteamCmd_ValidateFailed" xml:space="preserve">
+    <value>インストールを修復しても解決しませんでした。</value>
+  </data>
+  <data name="SteamCmd_CouldntVerify" xml:space="preserve">
+    <value>サーバーファイルを検証できませんでした（{0}）。</value>
+  </data>
+  <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
+    <value>サーバーを検証またはアップデートできませんでした（{0}）。</value>
+  </data>
+  <data name="Main_LogFilter" xml:space="preserve">
+    <value>ログをフィルター...</value>
+  </data>
+  <data name="Main_LogFilterTip" xml:space="preserve">
+    <value>入力したすべての単語を含むログ行のみを表示します。すべてのタブに適用されます。</value>
+  </data>
+  <data name="Main_LogFilterClear" xml:space="preserve">
+    <value>フィルターをクリア</value>
   </data>
 </root>

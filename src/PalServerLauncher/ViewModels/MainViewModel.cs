@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
@@ -84,12 +84,14 @@ public partial class MainViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(PublicIpDisplay))]
     private bool _isIpRevealed;
 
-    /// <summary>General tab: every line. The Server / Chat / Players / SteamCmd tabs each show only their channel.</summary>
-    public ObservableCollection<string> LogGeneral { get; } = new();
-    public ObservableCollection<string> LogServer { get; } = new();
-    public ObservableCollection<string> LogChat { get; } = new();
-    public ObservableCollection<string> LogPlayerJoin { get; } = new();
-    public ObservableCollection<string> LogSteamCmd { get; } = new();
+    /// <summary>LogGeneral backs the All tab and holds every line. The other five each hold one channel, where
+    /// LogLauncher is the launcher's own output (<see cref="LogChannel.General"/>).</summary>
+    public ObservableCollection<LogEntry> LogGeneral { get; } = new();
+    public ObservableCollection<LogEntry> LogLauncher { get; } = new();
+    public ObservableCollection<LogEntry> LogServer { get; } = new();
+    public ObservableCollection<LogEntry> LogChat { get; } = new();
+    public ObservableCollection<LogEntry> LogPlayerJoin { get; } = new();
+    public ObservableCollection<LogEntry> LogSteamCmd { get; } = new();
 
     /// <summary>Raised on the UI thread after a genuine first install (server went from absent to present),
     /// so the View can offer to enable the REST API. Not raised by re-validate / update on an existing install.</summary>
@@ -127,6 +129,10 @@ public partial class MainViewModel : ObservableObject
 
     /// <summary>Set by the View: report which unmanaged servers couldn't be terminated (e.g. running elevated).</summary>
     public Action<IReadOnlyList<string>>? ShowTerminateFailure { get; set; }
+
+    /// <summary>Set by the View: a SteamCMD run the user asked for failed. Reports what SteamCMD said and
+    /// returns what to do about it.</summary>
+    public Func<SteamCmdFailure, SteamCmdFailureChoice>? ConfirmSteamCmdFailure { get; set; }
 
     /// <summary>Label for the multi-state primary button, with an animated ellipsis while busy or transitioning
     /// (Starting/Stopping/Restarting) so it's clearly not frozen.</summary>
@@ -182,6 +188,11 @@ public partial class MainViewModel : ObservableObject
         _controller.NextBackupTextChanged += t => _dispatcher.BeginInvoke(() => NextBackup = t);
         _controller.UpdateStatusChanged += t => _dispatcher.BeginInvoke(() => UpdateStatus = t);
         _controller.TimedShutdownChanged += total => _dispatcher.BeginInvoke(() => OnTimedShutdownChanged(total));
+        // SteamCMD runs on a background thread, so the dialog has to be marshalled and waited on. Invoke rather
+        // than BeginInvoke: the answer decides whether the caller continues into a redownload.
+        _controller.ConfirmSteamCmdFailure = failure =>
+            _dispatcher.Invoke(() => ConfirmSteamCmdFailure?.Invoke(failure) ?? SteamCmdFailureChoice.Leave);
+
         _logger.LineForUi += OnLoggerLine;
 
         _busyAnimationTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(400) };
@@ -593,6 +604,14 @@ public partial class MainViewModel : ObservableObject
         set { _config.HealthProbeInterval = TimeSpan.FromSeconds(Math.Max(1, value)); _config.Save(); OnPropertyChanged(); }
     }
 
+    /// <summary>Every rendered log row binds this alongside its entry, so flipping it re-renders the lines
+    /// already on screen rather than only the ones that arrive afterward.</summary>
+    public bool ShowLogDate
+    {
+        get => _config.ShowLogDate;
+        set { _config.ShowLogDate = value; _config.Save(); OnPropertyChanged(); }
+    }
+
     // --- Backup settings ---
     public bool BackupOnStartup
     {
@@ -755,7 +774,7 @@ public partial class MainViewModel : ObservableObject
     {
         if (ConfirmInstall is { } confirm && !confirm())
             return Task.CompletedTask;
-        return InstallOrUpdateCoreAsync();
+        return InstallOrUpdateCoreAsync(_controller.InstallAsync);
     }
 
     private bool CanPrimaryAction() => PrimaryButton.CanExecute(IsInstalled, IsBusy, State, ShutdownRemainingSeconds);
@@ -810,7 +829,7 @@ public partial class MainViewModel : ObservableObject
     private Task ValidateFiles()
     {
         _logger.Info("File validation requested.");
-        return Guard(() => InstallOrUpdateCoreAsync(validate: true));
+        return Guard(() => InstallOrUpdateCoreAsync(_controller.ValidateFilesAsync));
     }
 
     private bool CanValidateFiles() => UpdateActionsEnabled;
@@ -825,10 +844,11 @@ public partial class MainViewModel : ObservableObject
     }
 
     /// <summary>Download + apply the latest build on a stopped server (after the Check-for-Update prompt).</summary>
-    public Task DownloadUpdateAsync() => Guard(() => InstallOrUpdateCoreAsync(validate: false));
+    public Task DownloadUpdateAsync() => Guard(() => InstallOrUpdateCoreAsync(_controller.DownloadUpdateAsync));
 
-    /// <summary>Apply an update via a graceful update-restart (when one is found while the server is running).</summary>
-    public Task UpdateAndRestartAsync() => Guard(() => _controller.RestartAsync(RestartReason.Update));
+    /// <summary>Apply an update via a graceful update-restart (when one is found while the server is running).
+    /// Attended: the user just clicked this, so a failure gets to ask them what to do about it.</summary>
+    public Task UpdateAndRestartAsync() => Guard(() => _controller.RestartAsync(RestartReason.Update, attended: true));
 
     /// <summary>Take a backup on demand (zip the world + config; fresh /save when the server is up with REST).</summary>
     [RelayCommand(CanExecute = nameof(CanBackupNow))]
@@ -845,13 +865,13 @@ public partial class MainViewModel : ObservableObject
 
     private bool CanBackupNow() => IsInstalled && !IsBusy;
 
-    private async Task InstallOrUpdateCoreAsync(bool validate = true)
+    private async Task InstallOrUpdateCoreAsync(Func<CancellationToken, Task> run)
     {
         var wasInstalled = IsInstalled;
         IsBusy = true;
         try
         {
-            await _controller.InstallOrUpdateAsync(validate);
+            await run(CancellationToken.None);
         }
         finally
         {
@@ -930,7 +950,9 @@ public partial class MainViewModel : ObservableObject
         IsBusy = true;
         try
         {
-            await _controller.StartAsync();
+            // interactive is also what decides whether a failed update may open a dialog. --start-server has
+            // nobody to answer one, and the ask happens while the SteamCMD gate is held.
+            await _controller.StartAsync(attended: interactive);
         }
         finally
         {
@@ -1107,9 +1129,8 @@ public partial class MainViewModel : ObservableObject
         Version = Fps = Cpu = Memory = Players = Uptime = NextRestart = NextBackup = "-";
     }
 
-    // Logger lines arrive on background threads; marshal to the UI before touching the collections.
-    private void OnLoggerLine(LogChannel channel, string message) =>
-        _dispatcher.BeginInvoke(() => AppendLine(channel, message));
+    // Logger lines arrive on background threads, marshal to the UI before touching the collections.
+    private void OnLoggerLine(LogEntry entry) => _dispatcher.BeginInvoke(() => AppendLine(entry));
 
     private const int MaxLogLines = 1000;
 
@@ -1118,6 +1139,7 @@ public partial class MainViewModel : ObservableObject
     private void ClearLogs()
     {
         LogGeneral.Clear();
+        LogLauncher.Clear();
         LogServer.Clear();
         LogChat.Clear();
         LogPlayerJoin.Clear();
@@ -1134,22 +1156,22 @@ public partial class MainViewModel : ObservableObject
             ClearLogs();
     }
 
-    private void AppendLine(LogChannel channel, string message)
+    private void AppendLine(LogEntry entry)
     {
-        var stamped = $"[{DateTime.Now:HH:mm:ss}] {message}";
-        AddCapped(LogGeneral, stamped); // General shows everything
-        switch (channel)
+        AddCapped(LogGeneral, entry); // General shows everything
+        switch (entry.Channel)
         {
-            case LogChannel.SteamCmd: AddCapped(LogSteamCmd, stamped); break;
-            case LogChannel.Server: AddCapped(LogServer, stamped); break;
-            case LogChannel.Chat: AddCapped(LogChat, stamped); break;
-            case LogChannel.PlayerJoin: AddCapped(LogPlayerJoin, stamped); break;
+            case LogChannel.General: AddCapped(LogLauncher, entry); break;
+            case LogChannel.SteamCmd: AddCapped(LogSteamCmd, entry); break;
+            case LogChannel.Server: AddCapped(LogServer, entry); break;
+            case LogChannel.Chat: AddCapped(LogChat, entry); break;
+            case LogChannel.PlayerJoin: AddCapped(LogPlayerJoin, entry); break;
         }
     }
 
-    private static void AddCapped(ObservableCollection<string> log, string line)
+    private static void AddCapped(ObservableCollection<LogEntry> log, LogEntry entry)
     {
-        log.Add(line);
+        log.Add(entry);
         while (log.Count > MaxLogLines)
             log.RemoveAt(0);
     }

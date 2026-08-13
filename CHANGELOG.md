@@ -2,6 +2,35 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [1.4.0] - 2026-08-13
+
+### Added
+- **A Launcher tab**, so the launcher's own messages can be read without the server's output mixed in. The All tab still shows everything.
+- **Select and copy from any log tab**, by mouse, Ctrl+A and Ctrl+C, or the right-click menu.
+- **An optional date on log timestamps**, off by default, for a server that has been up for days.
+- **A failed SteamCMD run now says what SteamCMD said**, showing the reason from its own content log instead of one line with an exit code. (#15)
+- **A Repair option after a failed update.** It sets Steam's app manifest aside and revalidates, which recovers an install SteamCMD otherwise refuses to update. Nothing is downloaded unless a file is missing or damaged, and it never runs without being asked.
+- **Check for Update now says when the installed build can't be read**, and offers to rebuild it by validating the files, rather than reporting the server as up to date.
+- **A filter box above the log tabs.** Type words to show only the lines containing all of them, matched against the text and the source, so `error` or `chat` narrows by where a line came from. Ctrl+F focuses it, Escape clears it, and it applies to every tab at once. (#14)
+
+### Changed
+- **The Server Log tab is now Server, and General is now All.**
+- **Log lines are colored by where they came from**, and player and chat lines carry the time Palworld recorded rather than the moment the launcher read them.
+- **Log files are named `launcher-2026-08-13_00.52.29.log`** and record milliseconds. The old name sorted newer files above older ones.
+- **A failed update is logged as an error, not information**, with SteamCMD's own reason lines beneath it.
+- **A failure that never reached Steam no longer claims the update failed**, since SteamCMD can stop before it looks at the server at all.
+- **`-log` is no longer passed to the server.** Measured against a live server with a real player, chat and join lines arrive without it.
+
+### Fixed
+- **The update prompt no longer returns every check after an update fails.** The launcher remembers the build it failed to reach and stops offering it until Steam publishes a newer one or you ask again. (#15)
+- **An update that reports success without installing anything is now treated as a failure**, by comparing the installed build against the one being applied.
+- **A stale build id from Steam no longer triggers a pointless update restart.** SteamCMD sometimes reports an older build than the one installed, and any difference used to count as an update.
+- **A failed repair no longer leaves the install without a build id.** Steam's app manifest is put back unless the run left a usable one.
+- **The Server and Chat tabs explain themselves after reconnecting** to a server the launcher didn't start, instead of sitting empty with no reason given.
+- **A log file that can't be written no longer silences `--console` as well.** The file and the console are written independently, so one failing doesn't take the other with it.
+- **The admin password is replaced with `***` in the log.** Logging in as an admin in-game types the password into chat and the server echoes it back, so it reached the log file people attach to bug reports. It is masked in the log file, the log tabs, and `--console`. Passwords under 8 characters are left alone, since a short one occurs in ordinary log text and cutting it would take real content with it.
+- **Server output that stamps its own clock no longer shows two.** PalDefender and other console mods prefix every line with their own time, which the launcher printed alongside its own. (#14)
+
 ## [1.3.1] - 2026-08-11
 
 ### Fixed

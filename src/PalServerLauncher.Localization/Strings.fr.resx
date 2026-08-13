@@ -419,10 +419,10 @@ Les enregistrer quand même comme messages fixes ?</value>
     <value>Bot de contrôle Discord + notifications par webhook</value>
   </data>
   <data name="Main_TabGeneral" xml:space="preserve">
-    <value>Général</value>
+    <value>Tout</value>
   </data>
   <data name="Main_TabServerLog" xml:space="preserve">
-    <value>Journal du serveur</value>
+    <value>Serveur</value>
   </data>
   <data name="Main_TabChat" xml:space="preserve">
     <value>Chat</value>
@@ -2570,5 +2570,98 @@ L'importer de cette façon ?</value>
   </data>
   <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
     <value>UE4SS est installé manuellement dans Pal\Binaries\Win64\ue4ss. Les mods de l'Atelier qui fonctionnent avec UE4SS s'installent dans Mods\NativeMods\UE4SS\Mods. Un UE4SS installé manuellement ne lit pas ce dossier, ils ne se chargeront donc pas. Les mods uniquement .pak continuent de fonctionner. Installez plutôt UE4SS depuis l'Atelier Steam pour que le lanceur les gère.</value>
+  </data>
+  <data name="Main_ShowLogDate" xml:space="preserve">
+    <value>Afficher la date complète sur chaque ligne du journal</value>
+  </data>
+  <data name="Main_TabLauncher" xml:space="preserve">
+    <value>Lanceur</value>
+  </data>
+  <data name="Main_LogCopy" xml:space="preserve">
+    <value>Copier</value>
+  </data>
+  <data name="Main_LogSelectAll" xml:space="preserve">
+    <value>Tout sélectionner</value>
+  </data>
+  <data name="Update_Failed" xml:space="preserve">
+    <value>Échec de la mise à jour · {0}</value>
+  </data>
+  <data name="SteamCmd_FailedTitle" xml:space="preserve">
+    <value>Échec de SteamCMD</value>
+  </data>
+  <data name="SteamCmd_CouldntInstall" xml:space="preserve">
+    <value>Impossible d'installer le serveur ({0}).</value>
+  </data>
+  <data name="SteamCmd_CouldntUpdate" xml:space="preserve">
+    <value>Impossible de mettre à jour le serveur ({0}).</value>
+  </data>
+  <data name="SteamCmd_CodesBoth" xml:space="preserve">
+    <value>code de sortie {0}, état {1}</value>
+  </data>
+  <data name="SteamCmd_CodesExit" xml:space="preserve">
+    <value>code de sortie {0}</value>
+  </data>
+  <data name="SteamCmd_Reported" xml:space="preserve">
+    <value>SteamCMD a indiqué :</value>
+  </data>
+  <data name="SteamCmd_NoReason" xml:space="preserve">
+    <value>SteamCMD n'a indiqué aucune raison. La sortie complète se trouve dans l'onglet SteamCMD.</value>
+  </data>
+  <data name="SteamCmd_DiskSpace" xml:space="preserve">
+    <value>Espace disque faible : {0} libres. Une réparation complète pourrait nécessiter environ {1:0.#} Go.</value>
+  </data>
+  <data name="SteamCmd_DiskWrite" xml:space="preserve">
+    <value>Impossible d'écrire dans le dossier du serveur. Vérifiez les droits d'accès au dossier et l'antivirus.</value>
+  </data>
+  <data name="SteamCmd_Damaged" xml:space="preserve">
+    <value>Certains fichiers du serveur sont manquants ou endommagés.</value>
+  </data>
+  <data name="SteamCmd_StartAnyway" xml:space="preserve">
+    <value>Démarrer quand même</value>
+  </data>
+  <data name="SteamCmd_Close" xml:space="preserve">
+    <value>Fermer</value>
+  </data>
+  <data name="SteamCmd_Untouched" xml:space="preserve">
+    <value>Aucun fichier n'a été modifié. Le serveur installé est intact.</value>
+  </data>
+  <data name="Update_BuildUnknown" xml:space="preserve">
+    <value>Version inconnue</value>
+  </data>
+  <data name="Main_BuildUnknownTitle" xml:space="preserve">
+    <value>Version installée inconnue</value>
+  </data>
+  <data name="Main_BuildUnknownMessage" xml:space="preserve">
+    <value>Le manifeste d'application de Steam est manquant ou illisible, la version installée ne peut donc pas être comparée à la dernière. La validation reconstruit le manifeste à partir des fichiers sur le disque. Rien n'est téléchargé. Cela peut prendre quelques minutes.</value>
+  </data>
+  <data name="Main_BuildUnknownStopFirst" xml:space="preserve">
+    <value>Arrêtez d'abord le serveur, puis utilisez Valider les fichiers.</value>
+  </data>
+  <data name="SteamCmd_StoppedEarly" xml:space="preserve">
+    <value>SteamCMD s'est arrêté avant de pouvoir valider le serveur ({0}).</value>
+  </data>
+  <data name="SteamCmd_ValidateOffer" xml:space="preserve">
+    <value>Voulez-vous réparer l'installation en validant les fichiers ? Cela téléchargera tous les fichiers du serveur manquants ou endommagés.</value>
+  </data>
+  <data name="SteamCmd_ValidateRetry" xml:space="preserve">
+    <value>Réparer</value>
+  </data>
+  <data name="SteamCmd_ValidateFailed" xml:space="preserve">
+    <value>La réparation de l'installation n'a pas résolu le problème.</value>
+  </data>
+  <data name="SteamCmd_CouldntVerify" xml:space="preserve">
+    <value>Impossible de valider les fichiers du serveur ({0}).</value>
+  </data>
+  <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
+    <value>Impossible de valider ou de mettre à jour le serveur ({0}).</value>
+  </data>
+  <data name="Main_LogFilter" xml:space="preserve">
+    <value>Filtrer le journal...</value>
+  </data>
+  <data name="Main_LogFilterTip" xml:space="preserve">
+    <value>Affiche uniquement les lignes de journal contenant tous les mots saisis. S'applique à tous les onglets.</value>
+  </data>
+  <data name="Main_LogFilterClear" xml:space="preserve">
+    <value>Effacer le filtre</value>
   </data>
 </root>
