@@ -11,10 +11,12 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
 - **A failed SteamCMD run now says what SteamCMD said**, showing the reason from its own content log instead of one line with an exit code. (#15)
 - **A Repair option after a failed update.** It sets Steam's app manifest aside and revalidates, which recovers an install SteamCMD otherwise refuses to update. Nothing is downloaded unless a file is missing or damaged, and it never runs without being asked.
 - **Check for Update now says when the installed build can't be read**, and offers to rebuild it by validating the files, rather than reporting the server as up to date.
-- **A filter box above the log tabs.** Type words to show only the lines containing all of them, matched against the text and the source, so `error` or `chat` narrows by where a line came from. Ctrl+F focuses it, Escape clears it, and it applies to every tab at once. (#14)
+- **A filter box in the footer.** Type words to show only the lines containing all of them, matched against the text and the source, so `error` or `chat` narrows by where a line came from. Ctrl+F focuses it, Escape clears it, and it applies to every tab at once. (#14)
 
 ### Changed
 - **The Server Log tab is now Server, and General is now All.**
+- **The log controls moved into the footer**, beside the server stats, so nothing sits over the tab strip. Server Commands moved into the Misc box.
+- **The footer stat labels are shorter in several languages**, and Next restart is now just Restart. French was running past the width the row has.
 - **Log lines are colored by where they came from**, and player and chat lines carry the time Palworld recorded rather than the moment the launcher read them.
 - **Log files are named `launcher-2026-08-13_00.52.29.log`** and record milliseconds. The old name sorted newer files above older ones.
 - **A failed update is logged as an error, not information**, with SteamCMD's own reason lines beneath it.
