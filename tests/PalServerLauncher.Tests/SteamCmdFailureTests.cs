@@ -427,7 +427,7 @@ public class SteamCmdFailureTests
         var headlines = Enum.GetValues<SteamCmdOperation>()
             .ToDictionary(op => op, op => SteamCmdFailureText.Message(Failure(op)));
 
-        Assert.Single(headlines.Where(pair => pair.Value == headlines[operation]));
+        Assert.Single(headlines, pair => pair.Value == headlines[operation]);
     }
 
     [Fact]
