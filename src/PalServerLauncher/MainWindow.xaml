@@ -406,9 +406,11 @@
                     <TextBox x:Name="LogFilterBox" Width="{x:Static local:Metrics.LogFilterWidth}"
                              MinHeight="{x:Static local:Metrics.ControlHeight}" Padding="6,0,22,0"
                              TextChanged="OnLogFilterChanged" PreviewKeyDown="OnLogFilterKeyDown"/>
+                    <!-- 16 = the box's 6px left padding, where the caret sits, plus the 10px clearance the
+                         Server Settings search box measured. -->
                     <TextBlock x:Name="LogFilterPlaceholder" Text="{x:Static loc:Strings.Main_LogFilter}"
                                Foreground="{x:Static local:Theme.TextCaption}" IsHitTestVisible="False"
-                               VerticalAlignment="Center" Margin="8,0,0,0"/>
+                               VerticalAlignment="Center" Margin="16,0,0,0"/>
                     <Button x:Name="LogFilterClear" Click="OnClearLogFilter" Visibility="Collapsed"
                             HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,2,0"
                             FontFamily="Segoe MDL2 Assets" Content="&#xE711;" FontSize="9"
