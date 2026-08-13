@@ -259,7 +259,7 @@ Trotzdem als feste Nachrichten speichern?</value>
     <value>CPU</value>
   </data>
   <data name="Main_StatMemory" xml:space="preserve">
-    <value>Arbeitsspeicher</value>
+    <value>RAM</value>
   </data>
   <data name="Main_StatPlayers" xml:space="preserve">
     <value>Spieler</value>
@@ -268,7 +268,7 @@ Trotzdem als feste Nachrichten speichern?</value>
     <value>Laufzeit</value>
   </data>
   <data name="Main_StatNextRestart" xml:space="preserve">
-    <value>Nächster Neustart</value>
+    <value>Neustart</value>
   </data>
   <data name="Main_CollapseTip" xml:space="preserve">
     <value>Einstellungsbereiche ein-/ausblenden (Neustarts, Sicherungen, Sonstiges)</value>

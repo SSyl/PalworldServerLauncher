@@ -290,7 +290,7 @@ Save them as fixed messages anyway?</value>
     <value>Uptime</value>
   </data>
   <data name="Main_StatNextRestart" xml:space="preserve">
-    <value>Next restart</value>
+    <value>Restart</value>
   </data>
   <data name="Main_CollapseTip" xml:space="preserve">
     <value>Show or hide the settings sections (Restarts, Backups, Misc)</value>

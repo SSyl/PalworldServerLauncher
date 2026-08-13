@@ -254,16 +254,16 @@ Salvar mesmo assim como mensagens fixas?</value>
     <value>CPU</value>
   </data>
   <data name="Main_StatMemory" xml:space="preserve">
-    <value>Memória</value>
+    <value>Mem.</value>
   </data>
   <data name="Main_StatPlayers" xml:space="preserve">
     <value>Jogadores</value>
   </data>
   <data name="Main_StatUptime" xml:space="preserve">
-    <value>Tempo Ativo</value>
+    <value>Ativo</value>
   </data>
   <data name="Main_StatNextRestart" xml:space="preserve">
-    <value>Próximo reinício</value>
+    <value>Reinício</value>
   </data>
   <data name="Main_CollapseTip" xml:space="preserve">
     <value>Mostrar ou ocultar as seções de configurações (Reinícios, Backups, Diversos)</value>

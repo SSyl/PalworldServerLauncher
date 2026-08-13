@@ -254,16 +254,16 @@
     <value>CPU</value>
   </data>
   <data name="Main_StatMemory" xml:space="preserve">
-    <value>Memoria</value>
+    <value>Mem.</value>
   </data>
   <data name="Main_StatPlayers" xml:space="preserve">
     <value>Jugadores</value>
   </data>
   <data name="Main_StatUptime" xml:space="preserve">
-    <value>Tiempo activo</value>
+    <value>Activo</value>
   </data>
   <data name="Main_StatNextRestart" xml:space="preserve">
-    <value>Próximo reinicio</value>
+    <value>Reinicio</value>
   </data>
   <data name="Main_CollapseTip" xml:space="preserve">
     <value>Mostrar u ocultar las secciones de configuración (Reinicios, Copias de seguridad, Varios)</value>

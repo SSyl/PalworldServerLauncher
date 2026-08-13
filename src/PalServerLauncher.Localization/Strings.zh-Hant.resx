@@ -226,7 +226,7 @@
     <value>執行時間</value>
   </data>
   <data name="Main_StatNextRestart" xml:space="preserve">
-    <value>下次重新啟動</value>
+    <value>重新啟動</value>
   </data>
   <data name="Main_CollapseTip" xml:space="preserve">
     <value>顯示或隱藏設定區塊（重新啟動、備份、雜項）</value>

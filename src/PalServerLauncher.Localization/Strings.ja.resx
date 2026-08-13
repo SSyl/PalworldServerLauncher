@@ -225,7 +225,7 @@
     <value>稼働時間</value>
   </data>
   <data name="Main_StatNextRestart" xml:space="preserve">
-    <value>次回の再起動</value>
+    <value>再起動</value>
   </data>
   <data name="Main_CollapseTip" xml:space="preserve">
     <value>設定セクション（再起動、バックアップ、その他）の表示・非表示を切り替えます</value>
