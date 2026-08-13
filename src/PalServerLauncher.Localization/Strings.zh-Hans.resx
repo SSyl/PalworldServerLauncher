@@ -382,10 +382,10 @@
     <value>Discord 控制机器人 + webhook 通知</value>
   </data>
   <data name="Main_TabGeneral" xml:space="preserve">
-    <value>常规</value>
+    <value>全部</value>
   </data>
   <data name="Main_TabServerLog" xml:space="preserve">
-    <value>服务器日志</value>
+    <value>服务器</value>
   </data>
   <data name="Main_TabChat" xml:space="preserve">
     <value>聊天</value>
@@ -2494,5 +2494,89 @@
   </data>
   <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
     <value>UE4SS 是手动安装在 Pal\Binaries\Win64\ue4ss 的。在 UE4SS 下运行的创意工坊模组会安装到 Mods\NativeMods\UE4SS\Mods，而手动安装的 UE4SS 不会读取该位置，因此它们不会加载。仅 .pak 的模组仍然可用。请改为从 Steam 创意工坊安装 UE4SS，以便由启动器管理它们。</value>
+  </data>
+  <data name="Main_ShowLogDate" xml:space="preserve">
+    <value>显示每行日志的完整日期</value>
+  </data>
+  <data name="Main_TabLauncher" xml:space="preserve">
+    <value>启动器</value>
+  </data>
+  <data name="Main_LogCopy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="Main_LogSelectAll" xml:space="preserve">
+    <value>全选</value>
+  </data>
+  <data name="Update_Failed" xml:space="preserve">
+    <value>更新失败 · {0}</value>
+  </data>
+  <data name="SteamCmd_FailedTitle" xml:space="preserve">
+    <value>SteamCMD 失败</value>
+  </data>
+  <data name="SteamCmd_CouldntInstall" xml:space="preserve">
+    <value>SteamCMD 无法安装服务器（{0}）。</value>
+  </data>
+  <data name="SteamCmd_CouldntUpdate" xml:space="preserve">
+    <value>SteamCMD 无法更新服务器（{0}）。</value>
+  </data>
+  <data name="SteamCmd_CodesBoth" xml:space="preserve">
+    <value>退出代码 {0}，状态 {1}</value>
+  </data>
+  <data name="SteamCmd_CodesExit" xml:space="preserve">
+    <value>退出代码 {0}</value>
+  </data>
+  <data name="SteamCmd_Reported" xml:space="preserve">
+    <value>SteamCMD 报告：</value>
+  </data>
+  <data name="SteamCmd_NoReason" xml:space="preserve">
+    <value>SteamCMD 未报告原因。完整输出见 SteamCMD 选项卡。</value>
+  </data>
+  <data name="SteamCmd_DiskSpace" xml:space="preserve">
+    <value>磁盘空间较低：{0} 可用。完全修复可能需要约 {1:0.#} GB。</value>
+  </data>
+  <data name="SteamCmd_DiskWrite" xml:space="preserve">
+    <value>无法写入服务器文件夹。请检查文件夹权限和杀毒软件。</value>
+  </data>
+  <data name="SteamCmd_Damaged" xml:space="preserve">
+    <value>部分服务器文件缺失或损坏。</value>
+  </data>
+  <data name="SteamCmd_StartAnyway" xml:space="preserve">
+    <value>仍要启动</value>
+  </data>
+  <data name="SteamCmd_Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="SteamCmd_Untouched" xml:space="preserve">
+    <value>没有文件被更改。已安装的服务器完好无损。</value>
+  </data>
+  <data name="Update_BuildUnknown" xml:space="preserve">
+    <value>构建未知</value>
+  </data>
+  <data name="Main_BuildUnknownTitle" xml:space="preserve">
+    <value>已安装的构建未知</value>
+  </data>
+  <data name="Main_BuildUnknownMessage" xml:space="preserve">
+    <value>Steam 的应用清单缺失或无法读取，因此已安装的构建无法与最新构建比较。校验文件会根据磁盘上的文件重新生成清单，不会下载任何内容，可能需要几分钟。</value>
+  </data>
+  <data name="Main_BuildUnknownStopFirst" xml:space="preserve">
+    <value>请先停止服务器，再使用校验文件。</value>
+  </data>
+  <data name="SteamCmd_StoppedEarly" xml:space="preserve">
+    <value>SteamCMD 在检查服务器之前就停止了（{0}）。</value>
+  </data>
+  <data name="SteamCmd_ValidateOffer" xml:space="preserve">
+    <value>要通过校验文件来修复安装吗？这会下载缺失或损坏的服务器文件。</value>
+  </data>
+  <data name="SteamCmd_ValidateRetry" xml:space="preserve">
+    <value>修复</value>
+  </data>
+  <data name="SteamCmd_ValidateFailed" xml:space="preserve">
+    <value>修复安装并未解决问题。</value>
+  </data>
+  <data name="SteamCmd_CouldntVerify" xml:space="preserve">
+    <value>SteamCMD 无法校验服务器文件（{0}）。</value>
+  </data>
+  <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
+    <value>SteamCMD 无法校验或更新服务器（{0}）。</value>
   </data>
 </root>

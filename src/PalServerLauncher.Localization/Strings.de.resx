@@ -427,10 +427,10 @@ Trotzdem als feste Nachrichten speichern?</value>
     <value>Discord-Steuerungsbot und Webhook-Benachrichtigungen</value>
   </data>
   <data name="Main_TabGeneral" xml:space="preserve">
-    <value>Allgemein</value>
+    <value>Alle</value>
   </data>
   <data name="Main_TabServerLog" xml:space="preserve">
-    <value>Server-Protokoll</value>
+    <value>Server</value>
   </data>
   <data name="Main_TabChat" xml:space="preserve">
     <value>Chat</value>
@@ -2595,5 +2595,89 @@ So importieren?</value>
   </data>
   <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
     <value>UE4SS ist manuell in Pal\Binaries\Win64\ue4ss installiert. Workshop-Mods, die unter UE4SS laufen, werden in Mods\NativeMods\UE4SS\Mods installiert. Ein manuell installiertes UE4SS liest diesen Ordner nicht, sie werden also nicht geladen. Reine .pak-Mods funktionieren weiterhin. Installieren Sie UE4SS stattdessen aus dem Steam Workshop, damit der Launcher sie verwaltet.</value>
+  </data>
+  <data name="Main_ShowLogDate" xml:space="preserve">
+    <value>Vollständiges Datum in jeder Protokollzeile anzeigen</value>
+  </data>
+  <data name="Main_TabLauncher" xml:space="preserve">
+    <value>Launcher</value>
+  </data>
+  <data name="Main_LogCopy" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
+  <data name="Main_LogSelectAll" xml:space="preserve">
+    <value>Alles auswählen</value>
+  </data>
+  <data name="Update_Failed" xml:space="preserve">
+    <value>Update fehlgeschlagen · {0}</value>
+  </data>
+  <data name="SteamCmd_FailedTitle" xml:space="preserve">
+    <value>SteamCMD fehlgeschlagen</value>
+  </data>
+  <data name="SteamCmd_CouldntInstall" xml:space="preserve">
+    <value>Der Server konnte nicht installiert werden ({0}).</value>
+  </data>
+  <data name="SteamCmd_CouldntUpdate" xml:space="preserve">
+    <value>Der Server konnte nicht aktualisiert werden ({0}).</value>
+  </data>
+  <data name="SteamCmd_CodesBoth" xml:space="preserve">
+    <value>Exit-Code {0}, Status {1}</value>
+  </data>
+  <data name="SteamCmd_CodesExit" xml:space="preserve">
+    <value>Exit-Code {0}</value>
+  </data>
+  <data name="SteamCmd_Reported" xml:space="preserve">
+    <value>SteamCMD meldete:</value>
+  </data>
+  <data name="SteamCmd_NoReason" xml:space="preserve">
+    <value>SteamCMD hat keinen Grund angegeben. Die vollständige Ausgabe finden Sie im SteamCMD-Tab.</value>
+  </data>
+  <data name="SteamCmd_DiskSpace" xml:space="preserve">
+    <value>Wenig Speicherplatz: {0} frei. Eine vollständige Reparatur könnte ca. {1:0.#} GB benötigen.</value>
+  </data>
+  <data name="SteamCmd_DiskWrite" xml:space="preserve">
+    <value>In den Serverordner kann nicht geschrieben werden. Prüfen Sie die Ordnerberechtigungen und das Antivirenprogramm.</value>
+  </data>
+  <data name="SteamCmd_Damaged" xml:space="preserve">
+    <value>Einige Serverdateien fehlen oder sind beschädigt.</value>
+  </data>
+  <data name="SteamCmd_StartAnyway" xml:space="preserve">
+    <value>Trotzdem starten</value>
+  </data>
+  <data name="SteamCmd_Close" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="SteamCmd_Untouched" xml:space="preserve">
+    <value>Es wurden keine Dateien geändert. Der installierte Server ist intakt.</value>
+  </data>
+  <data name="Update_BuildUnknown" xml:space="preserve">
+    <value>Version unbekannt</value>
+  </data>
+  <data name="Main_BuildUnknownTitle" xml:space="preserve">
+    <value>Installierte Version unbekannt</value>
+  </data>
+  <data name="Main_BuildUnknownMessage" xml:space="preserve">
+    <value>Steams App-Manifest fehlt oder ist nicht lesbar, daher kann die installierte Version nicht mit der neuesten verglichen werden. Das Überprüfen baut das Manifest aus den Dateien auf der Festplatte neu auf. Es wird nichts heruntergeladen. Dies kann einige Minuten dauern.</value>
+  </data>
+  <data name="Main_BuildUnknownStopFirst" xml:space="preserve">
+    <value>Stoppen Sie zuerst den Server, dann verwenden Sie Dateien überprüfen.</value>
+  </data>
+  <data name="SteamCmd_StoppedEarly" xml:space="preserve">
+    <value>SteamCMD wurde beendet, bevor der Server überprüft werden konnte ({0}).</value>
+  </data>
+  <data name="SteamCmd_ValidateOffer" xml:space="preserve">
+    <value>Möchten Sie die Installation reparieren, indem die Dateien überprüft werden? Dabei werden alle fehlenden oder beschädigten Serverdateien heruntergeladen.</value>
+  </data>
+  <data name="SteamCmd_ValidateRetry" xml:space="preserve">
+    <value>Reparieren</value>
+  </data>
+  <data name="SteamCmd_ValidateFailed" xml:space="preserve">
+    <value>Das Reparieren der Installation hat das Problem nicht behoben.</value>
+  </data>
+  <data name="SteamCmd_CouldntVerify" xml:space="preserve">
+    <value>Die Serverdateien konnten nicht überprüft werden ({0}).</value>
+  </data>
+  <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
+    <value>Der Server konnte nicht überprüft oder aktualisiert werden ({0}).</value>
   </data>
 </root>

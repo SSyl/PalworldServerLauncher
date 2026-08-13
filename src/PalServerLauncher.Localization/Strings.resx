@@ -446,10 +446,10 @@ Save them as fixed messages anyway?</value>
     <value>Discord control bot + webhook notifications</value>
   </data>
   <data name="Main_TabGeneral" xml:space="preserve">
-    <value>General</value>
+    <value>All</value>
   </data>
   <data name="Main_TabServerLog" xml:space="preserve">
-    <value>Server Log</value>
+    <value>Server</value>
   </data>
   <data name="Main_TabChat" xml:space="preserve">
     <value>Chat</value>
@@ -2596,5 +2596,89 @@ Import it that way?</value>
   </data>
   <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
     <value>UE4SS is installed by hand in Pal\Binaries\Win64\ue4ss. Workshop mods that run under UE4SS install into Mods\NativeMods\UE4SS\Mods, which a hand-installed UE4SS does not read, so they will not load. Pak-only mods still work. Install UE4SS from the Steam Workshop instead to have the launcher manage them.</value>
+  </data>
+  <data name="Main_ShowLogDate" xml:space="preserve">
+    <value>Show the full date on every log line</value>
+  </data>
+  <data name="Main_TabLauncher" xml:space="preserve">
+    <value>Launcher</value>
+  </data>
+  <data name="Main_LogCopy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Main_LogSelectAll" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="Update_Failed" xml:space="preserve">
+    <value>Couldn't update · {0}</value>
+  </data>
+  <data name="SteamCmd_FailedTitle" xml:space="preserve">
+    <value>SteamCMD failed</value>
+  </data>
+  <data name="SteamCmd_CouldntInstall" xml:space="preserve">
+    <value>SteamCMD couldn't install the server ({0}).</value>
+  </data>
+  <data name="SteamCmd_CouldntUpdate" xml:space="preserve">
+    <value>SteamCMD couldn't update the server ({0}).</value>
+  </data>
+  <data name="SteamCmd_CodesBoth" xml:space="preserve">
+    <value>exit code {0}, state {1}</value>
+  </data>
+  <data name="SteamCmd_CodesExit" xml:space="preserve">
+    <value>exit code {0}</value>
+  </data>
+  <data name="SteamCmd_Reported" xml:space="preserve">
+    <value>SteamCMD reported:</value>
+  </data>
+  <data name="SteamCmd_NoReason" xml:space="preserve">
+    <value>SteamCMD reported no reason. Full output is in the SteamCMD tab.</value>
+  </data>
+  <data name="SteamCmd_DiskSpace" xml:space="preserve">
+    <value>Low disk space: {0} free. A full repair could need about {1:0.#} GB.</value>
+  </data>
+  <data name="SteamCmd_DiskWrite" xml:space="preserve">
+    <value>Cannot write to the server folder. Check folder permissions and antivirus.</value>
+  </data>
+  <data name="SteamCmd_Damaged" xml:space="preserve">
+    <value>Some server files are missing or damaged.</value>
+  </data>
+  <data name="SteamCmd_StartAnyway" xml:space="preserve">
+    <value>Start anyway</value>
+  </data>
+  <data name="SteamCmd_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="SteamCmd_Untouched" xml:space="preserve">
+    <value>No files were changed. The installed server is intact.</value>
+  </data>
+  <data name="Update_BuildUnknown" xml:space="preserve">
+    <value>Build unknown</value>
+  </data>
+  <data name="Main_BuildUnknownTitle" xml:space="preserve">
+    <value>Installed Build Unknown</value>
+  </data>
+  <data name="Main_BuildUnknownMessage" xml:space="preserve">
+    <value>Steam's app manifest is missing or unreadable, so the installed build cannot be compared against the latest. Validating rebuilds the manifest from the files on disk. Nothing is downloaded. This may take a few minutes.</value>
+  </data>
+  <data name="Main_BuildUnknownStopFirst" xml:space="preserve">
+    <value>Stop the server first, then use Validate Files.</value>
+  </data>
+  <data name="SteamCmd_StoppedEarly" xml:space="preserve">
+    <value>SteamCMD stopped before checking the server ({0}).</value>
+  </data>
+  <data name="SteamCmd_ValidateOffer" xml:space="preserve">
+    <value>Do you want to repair the install by validating the files? This will download any server files that are missing or damaged.</value>
+  </data>
+  <data name="SteamCmd_ValidateRetry" xml:space="preserve">
+    <value>Repair</value>
+  </data>
+  <data name="SteamCmd_ValidateFailed" xml:space="preserve">
+    <value>Repairing the install did not fix it.</value>
+  </data>
+  <data name="SteamCmd_CouldntVerify" xml:space="preserve">
+    <value>SteamCMD couldn't verify the server files ({0}).</value>
+  </data>
+  <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
+    <value>SteamCMD couldn't verify or update the server ({0}).</value>
   </data>
 </root>

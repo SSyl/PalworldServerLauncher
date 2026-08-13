@@ -419,10 +419,10 @@
     <value>Discord-бот управления и уведомления через вебхук</value>
   </data>
   <data name="Main_TabGeneral" xml:space="preserve">
-    <value>Общее</value>
+    <value>Все</value>
   </data>
   <data name="Main_TabServerLog" xml:space="preserve">
-    <value>Журнал сервера</value>
+    <value>Сервер</value>
   </data>
   <data name="Main_TabChat" xml:space="preserve">
     <value>Чат</value>
@@ -2570,5 +2570,89 @@ REST API на этом сервере пока не включён, поэтом
   </data>
   <data name="Mods_CustomUe4ssWarning" xml:space="preserve">
     <value>UE4SS установлен вручную в Pal\Binaries\Win64\ue4ss. Моды из Мастерской, работающие через UE4SS, устанавливаются в Mods\NativeMods\UE4SS\Mods, а установленный вручную UE4SS эту папку не читает, поэтому они не загрузятся. Моды только из .pak по-прежнему работают. Чтобы ими управлял лаунчер, установите UE4SS из Мастерской Steam.</value>
+  </data>
+  <data name="Main_ShowLogDate" xml:space="preserve">
+    <value>Показывать полную дату в каждой строке журнала</value>
+  </data>
+  <data name="Main_TabLauncher" xml:space="preserve">
+    <value>Лаунчер</value>
+  </data>
+  <data name="Main_LogCopy" xml:space="preserve">
+    <value>Копировать</value>
+  </data>
+  <data name="Main_LogSelectAll" xml:space="preserve">
+    <value>Выделить всё</value>
+  </data>
+  <data name="Update_Failed" xml:space="preserve">
+    <value>Ошибка обновления · {0}</value>
+  </data>
+  <data name="SteamCmd_FailedTitle" xml:space="preserve">
+    <value>Ошибка SteamCMD</value>
+  </data>
+  <data name="SteamCmd_CouldntInstall" xml:space="preserve">
+    <value>SteamCMD не смог установить сервер ({0}).</value>
+  </data>
+  <data name="SteamCmd_CouldntUpdate" xml:space="preserve">
+    <value>SteamCMD не смог обновить сервер ({0}).</value>
+  </data>
+  <data name="SteamCmd_CodesBoth" xml:space="preserve">
+    <value>код выхода {0}, состояние {1}</value>
+  </data>
+  <data name="SteamCmd_CodesExit" xml:space="preserve">
+    <value>код выхода {0}</value>
+  </data>
+  <data name="SteamCmd_Reported" xml:space="preserve">
+    <value>SteamCMD сообщил:</value>
+  </data>
+  <data name="SteamCmd_NoReason" xml:space="preserve">
+    <value>SteamCMD не сообщил причину. Полный вывод находится на вкладке SteamCMD.</value>
+  </data>
+  <data name="SteamCmd_DiskSpace" xml:space="preserve">
+    <value>Мало места на диске: {0} свободно. Полное восстановление может потребовать около {1:0.#} ГБ.</value>
+  </data>
+  <data name="SteamCmd_DiskWrite" xml:space="preserve">
+    <value>Не удаётся записать в папку сервера. Проверьте права доступа к папке и антивирус.</value>
+  </data>
+  <data name="SteamCmd_Damaged" xml:space="preserve">
+    <value>Некоторые файлы сервера отсутствуют или повреждены.</value>
+  </data>
+  <data name="SteamCmd_StartAnyway" xml:space="preserve">
+    <value>Всё равно запустить</value>
+  </data>
+  <data name="SteamCmd_Close" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="SteamCmd_Untouched" xml:space="preserve">
+    <value>Файлы не были изменены. Установленный сервер не повреждён.</value>
+  </data>
+  <data name="Update_BuildUnknown" xml:space="preserve">
+    <value>Сборка неизвестна</value>
+  </data>
+  <data name="Main_BuildUnknownTitle" xml:space="preserve">
+    <value>Установленная сборка неизвестна</value>
+  </data>
+  <data name="Main_BuildUnknownMessage" xml:space="preserve">
+    <value>Манифест приложения Steam отсутствует или не может быть прочитан, поэтому установленную сборку нельзя сравнить с последней. Проверка файлов заново создаёт манифест на основе файлов на диске. Ничего не скачивается. Это может занять несколько минут.</value>
+  </data>
+  <data name="Main_BuildUnknownStopFirst" xml:space="preserve">
+    <value>Сначала остановите сервер, затем используйте «Проверить файлы».</value>
+  </data>
+  <data name="SteamCmd_StoppedEarly" xml:space="preserve">
+    <value>SteamCMD остановился, не успев проверить сервер ({0}).</value>
+  </data>
+  <data name="SteamCmd_ValidateOffer" xml:space="preserve">
+    <value>Восстановить установку, проверив файлы? Это скачает все отсутствующие или повреждённые файлы сервера.</value>
+  </data>
+  <data name="SteamCmd_ValidateRetry" xml:space="preserve">
+    <value>Восстановить</value>
+  </data>
+  <data name="SteamCmd_ValidateFailed" xml:space="preserve">
+    <value>Восстановление установки не помогло.</value>
+  </data>
+  <data name="SteamCmd_CouldntVerify" xml:space="preserve">
+    <value>SteamCMD не смог проверить файлы сервера ({0}).</value>
+  </data>
+  <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
+    <value>SteamCMD не смог проверить или обновить сервер ({0}).</value>
   </data>
 </root>
