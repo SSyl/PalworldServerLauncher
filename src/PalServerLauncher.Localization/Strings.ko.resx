@@ -263,7 +263,7 @@
     <value>가동 시간</value>
   </data>
   <data name="Main_StatNextRestart" xml:space="preserve">
-    <value>다음 재시작</value>
+    <value>재시작</value>
   </data>
   <data name="Main_CollapseTip" xml:space="preserve">
     <value>설정 섹션(재시작, 백업, 기타) 표시/숨기기</value>

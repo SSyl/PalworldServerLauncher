@@ -254,16 +254,16 @@ Les enregistrer quand même comme messages fixes ?</value>
     <value>CPU</value>
   </data>
   <data name="Main_StatMemory" xml:space="preserve">
-    <value>Mémoire</value>
+    <value>Mém.</value>
   </data>
   <data name="Main_StatPlayers" xml:space="preserve">
     <value>Joueurs</value>
   </data>
   <data name="Main_StatUptime" xml:space="preserve">
-    <value>Temps de fonctionnement</value>
+    <value>Actif</value>
   </data>
   <data name="Main_StatNextRestart" xml:space="preserve">
-    <value>Prochain redémarrage</value>
+    <value>Redémarrage</value>
   </data>
   <data name="Main_CollapseTip" xml:space="preserve">
     <value>Afficher ou masquer les sections de paramètres (Redémarrages, Sauvegardes, Divers)</value>

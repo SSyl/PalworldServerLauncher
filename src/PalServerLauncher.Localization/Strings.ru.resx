@@ -260,10 +260,10 @@
     <value>Игроки</value>
   </data>
   <data name="Main_StatUptime" xml:space="preserve">
-    <value>Время работы</value>
+    <value>Аптайм</value>
   </data>
   <data name="Main_StatNextRestart" xml:space="preserve">
-    <value>Следующий перезапуск</value>
+    <value>Перезапуск</value>
   </data>
   <data name="Main_CollapseTip" xml:space="preserve">
     <value>Показать или скрыть разделы настроек (Перезапуски, Резервные копии, Разное)</value>
