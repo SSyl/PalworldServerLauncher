@@ -16,7 +16,8 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
 ### Changed
 - **The Server Log tab is now Server, and General is now All.**
 - **The log controls moved into the footer**, beside the server stats, so nothing sits over the tab strip. Server Commands moved into the Misc box.
-- **The footer stat labels are shorter in several languages**, and Next restart is now just Restart. French was running past the width the row has.
+- **The Version stat shows just the version**, with the full build id on hover. The update line above it already spells out both.
+- **Shorter labels and buttons in several languages**, and Next restart is now just Restart. French, Spanish and Portuguese were running past the space they had, and some buttons were cut off or pushed off the row entirely.
 - **Log lines are colored by where they came from**, and player and chat lines carry the time Palworld recorded rather than the moment the launcher read them.
 - **Log files are named `launcher-2026-08-13_00.52.29.log`** and record milliseconds. The old name sorted newer files above older ones.
 - **A failed update is logged as an error, not information**, with SteamCMD's own reason lines beneath it.
