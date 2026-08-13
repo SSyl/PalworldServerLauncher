@@ -30,6 +30,8 @@ public sealed class ServerController : IDisposable
     private readonly object _gate = new();
 
     private Process? _process;
+    // Set on the launching thread, read by the stdout/stderr callbacks on the thread pool.
+    private volatile string? _captureSecret;
     private HealthMonitor? _health;
     private UpdateMonitor? _updateMonitor;
     private readonly RestartScheduler _scheduler;
@@ -1927,6 +1929,8 @@ public sealed class ServerController : IDisposable
         // PalWorldSettings.ini until the server generates one on first boot). We just lose
         // stats/health/graceful-shutdown until the user enables it.
         var settings = IniReader.ReadFile(PalWorldSettingsPath);
+        // Set before the output handlers are wired, so the first captured line is already redacted.
+        _captureSecret = settings.AdminPassword;
         if (!settings.RestApiUsable)
         {
             _logger.Info(File.Exists(PalWorldSettingsPath)
@@ -2054,16 +2058,32 @@ public sealed class ServerController : IDisposable
     /// empty Chat tab and all their chat in the Server Log (issue #8).</summary>
     public static bool IsChatLine(string line) => line.Contains("[Chat", StringComparison.OrdinalIgnoreCase);
 
-    /// <summary>Route a captured server-output line: drop noise via <see cref="ShouldLogServerLine"/>, send chat
-    /// to the Chat log, and everything else to the Server Log, so the Server Log stays focused on server events.</summary>
+    /// <summary>Shortest password worth redacting. Below this it occurs in ordinary log text, and eating real
+    /// content is worse than the leak. <see cref="GenerateAdminPassword"/> makes 20.</summary>
+    public const int MinRedactableSecret = 8;
+
+    /// <summary>Blank the admin password anywhere it appears in a captured line. Admins authenticate by typing it
+    /// into chat (Palworld's <c>/AdminPassword</c>, PalDefender's <c>/adminlogin</c>) and the server echoes the
+    /// line back to its console. Keyed on the VALUE, not on a command name, so it covers a mod the launcher has
+    /// never heard of and needs no list. Ordinal because the password matches exactly as the ini holds it.</summary>
+    public static string Redact(string line, string? secret) =>
+        string.IsNullOrEmpty(secret) || secret.Length < MinRedactableSecret
+            ? line
+            : line.Replace(secret, "***", StringComparison.Ordinal);
+
+    /// <summary>Route a captured server-output line: drop noise via <see cref="ShouldLogServerLine"/>, redact the
+    /// admin password, send chat to the Chat log, and everything else to the Server Log. Redacting here covers the
+    /// log file, the tabs, and the --console echo at once, since <see cref="Logger"/> builds all three from the
+    /// string it is handed.</summary>
     private void LogServerOutput(string? data)
     {
         if (!ShouldLogServerLine(data))
             return;
-        if (IsChatLine(data!))
-            _logger.Chat(data!);
+        var line = Redact(data!, _captureSecret);
+        if (IsChatLine(line))
+            _logger.Chat(line);
         else
-            _logger.Server(data!);
+            _logger.Server(line);
     }
 
     /// <summary>

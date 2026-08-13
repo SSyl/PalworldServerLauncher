@@ -120,4 +120,51 @@ public class ServerControllerTests
     {
         Assert.False(ServerController.IsChatLine(line));
     }
+
+    [Fact]
+    public void Redact_blanks_the_admin_password_whatever_command_carried_it()
+    {
+        const string password = "AUzACTZuMsCznh0it2Xi";
+
+        // Matching on the value, so every spelling of the command goes the same way.
+        Assert.Equal("[04:22:51][info] [Chat::Global]['SSyl' (UserId=steam_765)]: /adminlogin ***",
+            ServerController.Redact(
+                $"[04:22:51][info] [Chat::Global]['SSyl' (UserId=steam_765)]: /adminlogin {password}", password));
+        Assert.Equal("[CHAT] <SSyl> /AdminPassword ***",
+            ServerController.Redact($"[CHAT] <SSyl> /AdminPassword {password}", password));
+        Assert.Equal("/moderator *** please",
+            ServerController.Redact($"/moderator {password} please", password));
+    }
+
+    [Fact]
+    public void Redact_blanks_every_occurrence_in_one_line()
+    {
+        Assert.Equal("*** and ***", ServerController.Redact("hunter2hunter2 and hunter2hunter2", "hunter2hunter2"));
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("short")]    // under MinRedactableSecret
+    [InlineData("1234567")]  // one under
+    public void Redact_leaves_the_line_alone_when_there_is_no_usable_secret(string? secret)
+    {
+        const string line = "Server started, short 1234567 password";
+
+        Assert.Equal(line, ServerController.Redact(line, secret));
+    }
+
+    [Fact]
+    public void Redact_is_case_sensitive_because_the_password_is()
+    {
+        Assert.Equal("login PASSWORD1", ServerController.Redact("login PASSWORD1", "password1"));
+    }
+
+    [Fact]
+    public void Redact_leaves_a_line_that_never_held_the_secret()
+    {
+        const string line = "[04:22:56][warning] 'SSyl' (UserId=steam_765) is a cheater! Reason: used /imcheater command";
+
+        Assert.Equal(line, ServerController.Redact(line, "AUzACTZuMsCznh0it2Xi"));
+    }
 }
