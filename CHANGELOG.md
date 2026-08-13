@@ -2,7 +2,7 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
-## [Unreleased]
+## [1.4.0] - 2026-08-13
 
 ### Added
 - **A Launcher tab**, so the launcher's own messages can be read without the server's output mixed in. The All tab still shows everything.
