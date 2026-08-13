@@ -50,13 +50,15 @@
         </Style>
     </Window.Resources>
 
-    <Grid Margin="16">
+    <!-- Tighter at the bottom than the other three edges: the footer now carries 28px controls, so a full
+         edge inset under them read heavy. -->
+    <Grid Margin="16,16,16,8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>   <!-- action buttons -->
             <RowDefinition Height="Auto"/>   <!-- status / update + public IP -->
             <RowDefinition Height="Auto"/>   <!-- settings sections (collapsible) -->
             <RowDefinition Height="*"/>      <!-- log tabs -->
-            <RowDefinition Height="Auto"/>   <!-- bottom stats bar -->
+            <RowDefinition Height="Auto"/>   <!-- footer: server stats + log controls -->
         </Grid.RowDefinitions>
 
         <!-- Row 0: action buttons (left) + settings dialogs (right) -->
@@ -174,9 +176,10 @@
             </StackPanel>
         </DockPanel>
 
-        <!-- Bottom status bar: live server stats, under the log terminal -->
-        <Border Grid.Row="4" BorderBrush="{x:Static local:Theme.Divider}" BorderThickness="0,1,0,0" Padding="0,8,0,0" Margin="0,8,0,0">
-        <StackPanel Orientation="Horizontal">
+        <!-- Footer: live server stats on the left, log controls on the right. -->
+        <Border Grid.Row="4" BorderBrush="{x:Static local:Theme.Divider}" BorderThickness="0,1,0,0" Padding="0,4,0,0" Margin="0,4,0,0">
+        <DockPanel LastChildFill="False">
+        <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal" Margin="0,0,24,0"><TextBlock Text="{x:Static loc:Strings.Main_StatVersion}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Version}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,24,0"><TextBlock Text="{x:Static loc:Strings.Main_StatFps}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Fps}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,24,0"><TextBlock Text="{x:Static loc:Strings.Main_StatCpu}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Cpu}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
@@ -185,9 +188,39 @@
             <StackPanel Orientation="Horizontal" Margin="0,0,24,0"><TextBlock Text="{x:Static loc:Strings.Main_StatUptime}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding Uptime}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
             <StackPanel Orientation="Horizontal"><TextBlock Text="{x:Static loc:Strings.Main_StatNextRestart}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBlock Text="{Binding NextRestart}" Style="{StaticResource StatValue}" VerticalAlignment="Center"/></StackPanel>
         </StackPanel>
+
+            <!-- Docked right in reverse visual order, so they read filter, date, Clear Logs. -->
+            <!-- Explicit height on both: each style otherwise sizes to content above the shared MinHeight, and an
+                 MDL2 glyph's line box is shorter than 13pt text, so the toggle came out under the button. Vertical
+                 padding goes with it, since 28 minus the border leaves less than the style's 6+6 plus a text line. -->
+            <Button DockPanel.Dock="Right" Content="{x:Static loc:Strings.Main_ClearLogs}" Command="{Binding ClearLogsCommand}"
+                    Margin="0" Height="{x:Static local:Metrics.ControlHeight}" Padding="12,0" VerticalAlignment="Center"
+                    ToolTip="{x:Static loc:Strings.Main_ClearLogsTip}"/>
+            <!-- Margin matches the window's Button style, which the keyed ToggleButton style doesn't inherit. -->
+            <ToggleButton DockPanel.Dock="Right" IsChecked="{Binding ShowLogDate}" Style="{StaticResource IconToggleButton}"
+                          Margin="0,0,8,0" Height="{x:Static local:Metrics.ControlHeight}" Padding="9,0" VerticalAlignment="Center"
+                          Content="&#xE787;" ToolTip="{x:Static loc:Strings.Main_ShowLogDate}"/>
+            <!-- Filters every log tab at once. The placeholder is a sibling TextBlock so it takes the theme's
+                 muted color. -->
+            <Grid DockPanel.Dock="Right" Margin="0,0,8,0" VerticalAlignment="Center" ToolTip="{x:Static loc:Strings.Main_LogFilterTip}">
+                <TextBox x:Name="LogFilterBox" Width="{x:Static local:Metrics.LogFilterWidth}"
+                         MinHeight="{x:Static local:Metrics.ControlHeight}" Padding="6,0,22,0"
+                         TextChanged="OnLogFilterChanged" PreviewKeyDown="OnLogFilterKeyDown"/>
+                <!-- 16 clears the caret, which sits at the box's 1px border plus 6px padding. -->
+                <TextBlock x:Name="LogFilterPlaceholder" Text="{x:Static loc:Strings.Main_LogFilter}"
+                           Foreground="{x:Static local:Theme.TextCaption}" IsHitTestVisible="False"
+                           VerticalAlignment="Center" Margin="16,0,0,0"/>
+                <Button x:Name="LogFilterClear" Click="OnClearLogFilter" Visibility="Collapsed"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,2,0"
+                        FontFamily="Segoe MDL2 Assets" Content="&#xE711;" FontSize="9"
+                        Width="18" Height="18" Padding="0" MinWidth="0" MinHeight="0"
+                        Background="Transparent" BorderThickness="0" Foreground="{x:Static local:Theme.TextMuted}"
+                        ToolTip="{x:Static loc:Strings.Main_LogFilterClear}"/>
+            </Grid>
+        </DockPanel>
         </Border>
 
-        <!-- Settings sections (Restarts / Backups / Misc) with a collapse bar; hidden in Compact mode -->
+        <!-- Settings sections (Restarts / Backups / Misc) with a collapse bar, hidden in Compact mode -->
         <StackPanel Grid.Row="2" Margin="0,0,0,12">
             <DockPanel Margin="0,0,0,8">
                 <ToggleButton DockPanel.Dock="Left" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding CompactMode}"
@@ -310,12 +343,14 @@
                                  ToolTip="{x:Static loc:Strings.Main_RestCheckEveryTip}"/>
                         <TextBlock Text="{x:Static loc:Strings.Main_SecondsSuffix}" Style="{StaticResource Caption}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                     </StackPanel>
+                    <Button Content="{x:Static loc:Strings.Main_ServerCommands}" Click="OnOpenServerCommands" IsEnabled="{Binding CanUseServerCommands}"
+                            HorizontalAlignment="Left" Margin="0,6,0,0" ToolTipService.ShowOnDisabled="True"
+                            ToolTip="{x:Static loc:Strings.Main_ServerCommandsTip}"/>
                 </StackPanel>
             </Border>
         </Grid>
         </StackPanel>
 
-        <!-- Log tabs, with Clear Logs and Server Commands docked to the far right of the tab strip -->
         <Grid Grid.Row="3">
         <TabControl x:Name="LogTabs" Background="{x:Static local:Theme.Window}" BorderThickness="0" Padding="0,8,0,0">
             <TabControl.Resources>
@@ -400,33 +435,6 @@
                 <ListBox x:Name="SteamCmdList" ItemsSource="{Binding LogSteamCmd}" Style="{StaticResource LogListStyle}"/>
             </TabItem>
         </TabControl>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                <!-- Filters every log tab at once. The placeholder is a sibling TextBlock so it takes the theme's
-                     muted color. -->
-                <Grid Margin="0,0,8,0" VerticalAlignment="Center" ToolTip="{x:Static loc:Strings.Main_LogFilterTip}">
-                    <TextBox x:Name="LogFilterBox" Width="{x:Static local:Metrics.LogFilterWidth}"
-                             MinHeight="{x:Static local:Metrics.ControlHeight}" Padding="6,0,22,0"
-                             TextChanged="OnLogFilterChanged" PreviewKeyDown="OnLogFilterKeyDown"/>
-                    <!-- 16 clears the caret, which sits at the box's 1px border plus 6px padding. -->
-                    <TextBlock x:Name="LogFilterPlaceholder" Text="{x:Static loc:Strings.Main_LogFilter}"
-                               Foreground="{x:Static local:Theme.TextCaption}" IsHitTestVisible="False"
-                               VerticalAlignment="Center" Margin="16,0,0,0"/>
-                    <Button x:Name="LogFilterClear" Click="OnClearLogFilter" Visibility="Collapsed"
-                            HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,2,0"
-                            FontFamily="Segoe MDL2 Assets" Content="&#xE711;" FontSize="9"
-                            Width="18" Height="18" Padding="0" MinWidth="0" MinHeight="0"
-                            Background="Transparent" BorderThickness="0" Foreground="{x:Static local:Theme.TextMuted}"
-                            ToolTip="{x:Static loc:Strings.Main_LogFilterClear}"/>
-                </Grid>
-                <!-- Margin matches the window's Button style, which the keyed ToggleButton style doesn't inherit. -->
-                <ToggleButton IsChecked="{Binding ShowLogDate}" Style="{StaticResource IconToggleButton}"
-                              Margin="0,0,8,0" Content="&#xE787;" ToolTip="{x:Static loc:Strings.Main_ShowLogDate}"/>
-                <Button Content="{x:Static loc:Strings.Main_ClearLogs}" Command="{Binding ClearLogsCommand}"
-                        ToolTip="{x:Static loc:Strings.Main_ClearLogsTip}"/>
-                <Button Content="{x:Static loc:Strings.Main_ServerCommands}" Click="OnOpenServerCommands" IsEnabled="{Binding CanUseServerCommands}"
-                        Margin="0" ToolTipService.ShowOnDisabled="True"
-                        ToolTip="{x:Static loc:Strings.Main_ServerCommandsTip}"/>
-            </StackPanel>
             <!-- Appears bottom-right of the log once you've scrolled up; clicking jumps back to the newest line. -->
             <Button x:Name="JumpToLatestButton" Click="OnJumpToLatest" Visibility="Collapsed"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,22,14"
