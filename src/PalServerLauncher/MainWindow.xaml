@@ -9,7 +9,6 @@
         xmlns:loc="clr-namespace:PalServerLauncher.Localization;assembly=PalServerLauncher.Localization"
         mc:Ignorable="d"
         Title="{x:Static loc:Strings.Common_AppName}" Height="656" Width="1000"
-        MinWidth="1000"
         Icon="logo.png"
         Background="{x:Static local:Theme.Window}" Foreground="{x:Static local:Theme.Text}"
         FontFamily="Segoe UI" FontSize="{x:Static local:Metrics.FontBody}"
