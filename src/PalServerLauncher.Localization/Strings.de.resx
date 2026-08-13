@@ -204,13 +204,13 @@ Trotzdem als feste Nachrichten speichern?</value>
     <value>Prüft über SteamCMD auf eine neuere Version (nur lesend, auch im laufenden Betrieb)</value>
   </data>
   <data name="Main_ValidateFiles" xml:space="preserve">
-    <value>Dateien überprüfen</value>
+    <value>Dateien prüfen</value>
   </data>
   <data name="Main_ValidateFilesTip" xml:space="preserve">
     <value>Vollständige Integritätsprüfung der installierten Dateien über SteamCMD</value>
   </data>
   <data name="Main_ServerSettings" xml:space="preserve">
-    <value>Servereinstellungen</value>
+    <value>Einstellungen</value>
   </data>
   <data name="Main_ServerSettingsTip" xml:space="preserve">
     <value>Bearbeitet den Server in einem Editor mit mehreren Tabs: Spieleinstellungen (die Gameplay-, Balance- und Admin-Schlüssel der PalWorldSettings.ini als Unterregisterkarten), Startargumente (die Befehlszeile: Listen-Port, Spielerlimit, Performance-Threads, Community-Eintrag) sowie CPU-Affinität/Priorität (Prozesspriorität und CPU-Zuordnung).</value>

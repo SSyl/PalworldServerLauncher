@@ -197,19 +197,19 @@ Les enregistrer quand même comme messages fixes ?</value>
     <value>Termine immédiatement le processus du serveur, sans sauvegarde. Apparaît lorsqu'un démarrage, un arrêt ou un redémarrage reste bloqué un moment. À utiliser uniquement lorsque le serveur ne répond plus.</value>
   </data>
   <data name="Main_CheckForUpdate" xml:space="preserve">
-    <value>Vérifier les mises à jour</value>
+    <value>Mises à jour</value>
   </data>
   <data name="Main_CheckForUpdateTip" xml:space="preserve">
     <value>Recherche une version plus récente via SteamCMD (lecture seule, fonctionne pendant l'exécution)</value>
   </data>
   <data name="Main_ValidateFiles" xml:space="preserve">
-    <value>Valider les fichiers</value>
+    <value>Vérifier fichiers</value>
   </data>
   <data name="Main_ValidateFilesTip" xml:space="preserve">
     <value>Contrôle d'intégrité complet des fichiers installés via SteamCMD</value>
   </data>
   <data name="Main_ServerSettings" xml:space="preserve">
-    <value>Paramètres du serveur</value>
+    <value>Paramètres</value>
   </data>
   <data name="Main_ServerSettingsTip" xml:space="preserve">
     <value>Modifiez le serveur dans un éditeur à onglets unique : Paramètres du jeu (les sous-onglets de gameplay, d'équilibrage et d'administration du fichier PalWorldSettings.ini), Arguments de lancement (la ligne de commande : port d'écoute, nombre maximal de joueurs, threads de performance, référencement communautaire) et Affinité/Priorité CPU (priorité du processus et attribution des cœurs).</value>
@@ -2302,7 +2302,7 @@ Enregistrer ces changements ?</value>
     <value>Lorsqu'un seul serveur géré est trouvé en cours d'exécution au démarrage, il est adopté sans demande de confirmation. Si plusieurs sont trouvés, une confirmation vous sera tout de même demandée.</value>
   </data>
   <data name="Main_ImportServer" xml:space="preserve">
-    <value>Importer un serveur</value>
+    <value>Importer</value>
   </data>
   <data name="Main_ImportServerTip" xml:space="preserve">
     <value>Copie un serveur dédié Palworld existant, installé ailleurs, dans ce lanceur. L'original reste intact.</value>

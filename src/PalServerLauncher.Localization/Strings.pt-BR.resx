@@ -197,7 +197,7 @@ Salvar mesmo assim como mensagens fixas?</value>
     <value>Encerra o processo do servidor imediatamente, sem salvar. Aparece quando um início, parada ou reinício ficou travado por um tempo. Use somente quando o servidor parar de responder.</value>
   </data>
   <data name="Main_CheckForUpdate" xml:space="preserve">
-    <value>Verificar Atualização</value>
+    <value>Atualizações</value>
   </data>
   <data name="Main_CheckForUpdateTip" xml:space="preserve">
     <value>Verifica no SteamCMD se há uma build mais recente (somente leitura; funciona com o servidor em execução)</value>
@@ -209,7 +209,7 @@ Salvar mesmo assim como mensagens fixas?</value>
     <value>Verificação completa de integridade dos arquivos instalados pelo SteamCMD</value>
   </data>
   <data name="Main_ServerSettings" xml:space="preserve">
-    <value>Configurações do Servidor</value>
+    <value>Configurações</value>
   </data>
   <data name="Main_ServerSettingsTip" xml:space="preserve">
     <value>Edite o servidor em um único editor com abas: Configurações do Jogo (as chaves de jogabilidade, balanceamento e administração do PalWorldSettings.ini, em subabas), Argumentos de Inicialização (a linha de comando: porta de escuta, limite de jogadores, threads de desempenho, listagem na comunidade) e Afinidade/Prioridade de CPU (prioridade do processo e fixação de núcleos de CPU).</value>
@@ -2302,7 +2302,7 @@ Salvar essas alterações?</value>
     <value>Quando exatamente um servidor gerenciado é encontrado em execução na inicialização, ele é adotado sem perguntar. Se vários forem encontrados, você ainda será questionado.</value>
   </data>
   <data name="Main_ImportServer" xml:space="preserve">
-    <value>Importar servidor</value>
+    <value>Importar</value>
   </data>
   <data name="Main_ImportServerTip" xml:space="preserve">
     <value>Copia um servidor dedicado do Palworld já instalado em outro lugar para este launcher. O original permanece intacto.</value>

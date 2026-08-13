@@ -197,7 +197,7 @@
     <value>Termina de inmediato el proceso del servidor, sin guardar. Aparece cuando un inicio, detención o reinicio lleva un tiempo atascado. Úselo solo cuando el servidor haya dejado de responder.</value>
   </data>
   <data name="Main_CheckForUpdate" xml:space="preserve">
-    <value>Buscar actualización</value>
+    <value>Actualizaciones</value>
   </data>
   <data name="Main_CheckForUpdateTip" xml:space="preserve">
     <value>Consulta SteamCMD en busca de una build más reciente (solo lectura, funciona mientras se ejecuta)</value>
@@ -209,7 +209,7 @@
     <value>Comprobación completa de integridad de los archivos instalados con SteamCMD</value>
   </data>
   <data name="Main_ServerSettings" xml:space="preserve">
-    <value>Configuración del servidor</value>
+    <value>Configuración</value>
   </data>
   <data name="Main_ServerSettingsTip" xml:space="preserve">
     <value>Edite el servidor en un único editor con pestañas: Configuración del juego (las claves de jugabilidad, balance y administración de PalWorldSettings.ini, en subpestañas), Argumentos de inicio (la línea de comandos: puerto de escucha, límite de jugadores, hilos de rendimiento, listado en la comunidad) y Afinidad/Prioridad de CPU (prioridad del proceso y asignación de núcleos de CPU).</value>
@@ -2302,7 +2302,7 @@ Cualquier valor no listado arriba permanecerá igual.
     <value>Cuando se encuentra exactamente un servidor administrado en ejecución al iniciar, se adopta sin preguntar. Si se encuentran varios, igualmente se le preguntará.</value>
   </data>
   <data name="Main_ImportServer" xml:space="preserve">
-    <value>Importar servidor</value>
+    <value>Importar</value>
   </data>
   <data name="Main_ImportServerTip" xml:space="preserve">
     <value>Copie a este launcher un servidor dedicado de Palworld ya instalado en otro lugar. El original queda intacto.</value>
