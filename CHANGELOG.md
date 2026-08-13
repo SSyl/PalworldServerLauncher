@@ -23,9 +23,10 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
 ### Fixed
 - **The update prompt no longer returns every check after an update fails.** The launcher remembers the build it failed to reach and stops offering it until Steam publishes a newer one or you ask again. (#15)
 - **An update that reports success without installing anything is now treated as a failure**, by comparing the installed build against the one being applied.
-- **A published build older than the installed one is no longer offered as an update**, which could otherwise restart the server for an update that did not exist.
+- **A stale build id from Steam no longer triggers a pointless update restart.** SteamCMD sometimes reports an older build than the one installed, and any difference used to count as an update.
 - **A failed repair no longer leaves the install without a build id.** Steam's app manifest is put back unless the run left a usable one.
 - **The Server and Chat tabs explain themselves after reconnecting** to a server the launcher didn't start, instead of sitting empty with no reason given.
+- **A log file that can't be written no longer silences `--console` as well.** The file and the console are written independently, so one failing doesn't take the other with it.
 
 ## [1.3.1] - 2026-08-11
 

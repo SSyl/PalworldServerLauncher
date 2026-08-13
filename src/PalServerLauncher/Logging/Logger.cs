@@ -92,15 +92,14 @@ public sealed class Logger
         var line = FileLine(now, channel, level, fileText);
         lock (_sync)
         {
-            try
+            // Two independent sinks, so a locked or unwritable log file doesn't also silence --console.
+            try { File.AppendAllText(FilePath, line + Environment.NewLine); }
+            catch { /* Never let a logging failure crash the app. */ }
+
+            if (_echoToConsole)
             {
-                File.AppendAllText(FilePath, line + Environment.NewLine);
-                if (_echoToConsole)
-                    Console.Out.WriteLine(line);
-            }
-            catch
-            {
-                // Never let a logging failure crash the app.
+                try { Console.Out.WriteLine(line); }
+                catch { }
             }
         }
         if (UiEntry(now, channel, level, uiText) is { } entry)
