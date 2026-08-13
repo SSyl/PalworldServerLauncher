@@ -11,6 +11,7 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
 - **A failed SteamCMD run now says what SteamCMD said**, showing the reason from its own content log instead of one line with an exit code. (#15)
 - **A Repair option after a failed update.** It sets Steam's app manifest aside and revalidates, which recovers an install SteamCMD otherwise refuses to update. Nothing is downloaded unless a file is missing or damaged, and it never runs without being asked.
 - **Check for Update now says when the installed build can't be read**, and offers to rebuild it by validating the files, rather than reporting the server as up to date.
+- **A filter box above the log tabs.** Type words to show only the lines containing all of them, matched against the text and the source, so `error` or `chat` narrows by where a line came from. Ctrl+F focuses it, Escape clears it, and it applies to every tab at once. (#14)
 
 ### Changed
 - **The Server Log tab is now Server, and General is now All.**
@@ -27,6 +28,8 @@ Notable, user-facing changes to the Palworld Server Launcher. Headline features 
 - **A failed repair no longer leaves the install without a build id.** Steam's app manifest is put back unless the run left a usable one.
 - **The Server and Chat tabs explain themselves after reconnecting** to a server the launcher didn't start, instead of sitting empty with no reason given.
 - **A log file that can't be written no longer silences `--console` as well.** The file and the console are written independently, so one failing doesn't take the other with it.
+- **The admin password is no longer written to the log.** Logging in as an admin in-game types the password into chat and the server echoes it back, so it reached the log file people attach to bug reports. It is now replaced with `***` in the log file, the log tabs, and `--console`.
+- **Server output that stamps its own clock no longer shows two.** PalDefender and other console mods prefix every line with their own time, which the launcher printed alongside its own. (#14)
 
 ## [1.3.1] - 2026-08-11
 
