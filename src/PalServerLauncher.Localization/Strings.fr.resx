@@ -2655,4 +2655,13 @@ L'importer de cette façon ?</value>
   <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
     <value>Impossible de valider ou de mettre à jour le serveur ({0}).</value>
   </data>
+  <data name="Main_LogFilter" xml:space="preserve">
+    <value>Filtrer le journal...</value>
+  </data>
+  <data name="Main_LogFilterTip" xml:space="preserve">
+    <value>Affiche uniquement les lignes de journal contenant tous les mots saisis. S'applique à tous les onglets.</value>
+  </data>
+  <data name="Main_LogFilterClear" xml:space="preserve">
+    <value>Effacer le filtre</value>
+  </data>
 </root>

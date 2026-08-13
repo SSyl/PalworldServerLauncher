@@ -2579,4 +2579,13 @@
   <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
     <value>SteamCMD 無法驗證或更新伺服器（{0}）。</value>
   </data>
+  <data name="Main_LogFilter" xml:space="preserve">
+    <value>篩選日誌...</value>
+  </data>
+  <data name="Main_LogFilterTip" xml:space="preserve">
+    <value>僅顯示包含所輸入全部字詞的日誌行。對所有索引標籤生效。</value>
+  </data>
+  <data name="Main_LogFilterClear" xml:space="preserve">
+    <value>清除篩選</value>
+  </data>
 </root>

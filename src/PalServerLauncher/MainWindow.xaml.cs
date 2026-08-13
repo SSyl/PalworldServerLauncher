@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -28,6 +29,7 @@ public partial class MainWindow : Window
     private readonly Dictionary<ListBox, ScrollViewer> _logScrollers = new();
     private readonly Dictionary<ListBox, bool> _followingTail = new();
     private ListBox[] _logLists = [];
+    private readonly List<ICollectionView> _logViews = new();
 
     public MainWindow(Logger logger, LauncherConfig config, bool startServer = false, bool ignoreRestApi = false)
     {
@@ -53,6 +55,8 @@ public partial class MainWindow : Window
         HookAutoScroll(_viewModel.LogChat, ChatList);
         HookAutoScroll(_viewModel.LogPlayerJoin, PlayersList);
         HookAutoScroll(_viewModel.LogSteamCmd, SteamCmdList);
+        HookLogFilter(_viewModel.LogGeneral, _viewModel.LogLauncher, _viewModel.LogServer,
+                      _viewModel.LogChat, _viewModel.LogPlayerJoin, _viewModel.LogSteamCmd);
         LogTabs.SelectionChanged += (_, _) => UpdateJumpButton();
 
         _viewModel.InstallFinished += OnInstallFinished;
@@ -651,6 +655,56 @@ public partial class MainWindow : Window
                     list.ScrollIntoView(list.Items[^1]);
             }));
         };
+    }
+
+    /// <summary>Point the log filter box at every tab. The default views are what the ListBox bindings already
+    /// read, so nothing is re-bound and new lines are matched as they arrive. One query drives all six, since a
+    /// per-tab query would leave a tab filtered after the user switched away and forgot.</summary>
+    private void HookLogFilter(params ObservableCollection<LogEntry>[] collections)
+    {
+        foreach (var collection in collections)
+        {
+            var view = CollectionViewSource.GetDefaultView(collection);
+            view.Filter = item => LogSearch.Matches(LogFilterBox.Text, (LogEntry)item);
+            _logViews.Add(view);
+        }
+        CommandBindings.Add(new CommandBinding(ApplicationCommands.Find, (_, _) =>
+        {
+            LogFilterBox.Focus();
+            LogFilterBox.SelectAll();
+        }));
+    }
+
+    private void OnLogFilterChanged(object sender, TextChangedEventArgs e)
+    {
+        var hasText = LogFilterBox.Text.Length > 0;
+        LogFilterPlaceholder.Visibility = hasText ? Visibility.Collapsed : Visibility.Visible;
+        LogFilterClear.Visibility = hasText ? Visibility.Visible : Visibility.Collapsed;
+
+        foreach (var view in _logViews)
+            view.Refresh();
+
+        // Deferred: the refresh regenerates containers, so the ScrollViewer reports the old extent until layout runs.
+        Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+        {
+            foreach (var (list, scroller) in _logScrollers)
+                if (_followingTail.TryGetValue(list, out var following) && following)
+                    scroller.ScrollToBottom();
+        }));
+    }
+
+    private void OnLogFilterKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key != Key.Escape || LogFilterBox.Text.Length == 0)
+            return;
+        LogFilterBox.Clear();
+        e.Handled = true;
+    }
+
+    private void OnClearLogFilter(object sender, RoutedEventArgs e)
+    {
+        LogFilterBox.Clear();
+        LogFilterBox.Focus();
     }
 
     /// <summary>Hook a log ListBox's ScrollViewer (once it's in the visual tree) so scrolling away from the

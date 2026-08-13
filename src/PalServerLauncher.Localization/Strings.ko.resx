@@ -2655,4 +2655,13 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
   <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
     <value>SteamCMD가 서버를 검증하거나 업데이트하지 못했습니다({0}).</value>
   </data>
+  <data name="Main_LogFilter" xml:space="preserve">
+    <value>로그 필터링...</value>
+  </data>
+  <data name="Main_LogFilterTip" xml:space="preserve">
+    <value>입력한 모든 단어가 포함된 로그 줄만 표시합니다. 모든 탭에 적용됩니다.</value>
+  </data>
+  <data name="Main_LogFilterClear" xml:space="preserve">
+    <value>필터 지우기</value>
+  </data>
 </root>

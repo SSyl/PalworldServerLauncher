@@ -2655,4 +2655,13 @@ Para cargar una de ellas, en GameUserSettings.ini establezca DedicatedServerName
   <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
     <value>No se pudo validar ni actualizar el servidor ({0}).</value>
   </data>
+  <data name="Main_LogFilter" xml:space="preserve">
+    <value>Filtrar registro...</value>
+  </data>
+  <data name="Main_LogFilterTip" xml:space="preserve">
+    <value>Muestra solo las líneas de registro que contienen todas las palabras que escriba. Se aplica a todas las pestañas.</value>
+  </data>
+  <data name="Main_LogFilterClear" xml:space="preserve">
+    <value>Borrar filtro</value>
+  </data>
 </root>

@@ -2588,4 +2588,13 @@ Mod が本当にサーバーに対応していない場合、重大な問題（�
   <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
     <value>サーバーを検証またはアップデートできませんでした（{0}）。</value>
   </data>
+  <data name="Main_LogFilter" xml:space="preserve">
+    <value>ログをフィルター...</value>
+  </data>
+  <data name="Main_LogFilterTip" xml:space="preserve">
+    <value>入力したすべての単語を含むログ行のみを表示します。すべてのタブに適用されます。</value>
+  </data>
+  <data name="Main_LogFilterClear" xml:space="preserve">
+    <value>フィルターをクリア</value>
+  </data>
 </root>

@@ -2680,4 +2680,13 @@ So importieren?</value>
   <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
     <value>Der Server konnte nicht überprüft oder aktualisiert werden ({0}).</value>
   </data>
+  <data name="Main_LogFilter" xml:space="preserve">
+    <value>Protokoll filtern...</value>
+  </data>
+  <data name="Main_LogFilterTip" xml:space="preserve">
+    <value>Zeigt nur die Protokollzeilen, die jedes eingegebene Wort enthalten. Gilt für alle Tabs.</value>
+  </data>
+  <data name="Main_LogFilterClear" xml:space="preserve">
+    <value>Filter zurücksetzen</value>
+  </data>
 </root>

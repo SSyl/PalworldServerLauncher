@@ -2681,4 +2681,13 @@ Import it that way?</value>
   <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
     <value>SteamCMD couldn't verify or update the server ({0}).</value>
   </data>
+  <data name="Main_LogFilter" xml:space="preserve">
+    <value>Filter log...</value>
+  </data>
+  <data name="Main_LogFilterTip" xml:space="preserve">
+    <value>Show only the log lines that contain every word you type. Applies to every tab.</value>
+  </data>
+  <data name="Main_LogFilterClear" xml:space="preserve">
+    <value>Clear filter</value>
+  </data>
 </root>

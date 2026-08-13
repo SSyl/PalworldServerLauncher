@@ -400,6 +400,22 @@
             </TabItem>
         </TabControl>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <!-- Filters every log tab at once. The placeholder is a sibling TextBlock so it takes the theme's
+                     muted color. -->
+                <Grid Margin="0,0,8,0" VerticalAlignment="Center" ToolTip="{x:Static loc:Strings.Main_LogFilterTip}">
+                    <TextBox x:Name="LogFilterBox" Width="{x:Static local:Metrics.LogFilterWidth}"
+                             MinHeight="{x:Static local:Metrics.ControlHeight}" Padding="6,0,22,0"
+                             TextChanged="OnLogFilterChanged" PreviewKeyDown="OnLogFilterKeyDown"/>
+                    <TextBlock x:Name="LogFilterPlaceholder" Text="{x:Static loc:Strings.Main_LogFilter}"
+                               Foreground="{x:Static local:Theme.TextCaption}" IsHitTestVisible="False"
+                               VerticalAlignment="Center" Margin="8,0,0,0"/>
+                    <Button x:Name="LogFilterClear" Click="OnClearLogFilter" Visibility="Collapsed"
+                            HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,2,0"
+                            FontFamily="Segoe MDL2 Assets" Content="&#xE711;" FontSize="9"
+                            Width="18" Height="18" Padding="0" MinWidth="0" MinHeight="0"
+                            Background="Transparent" BorderThickness="0" Foreground="{x:Static local:Theme.TextMuted}"
+                            ToolTip="{x:Static loc:Strings.Main_LogFilterClear}"/>
+                </Grid>
                 <!-- Margin matches the window's Button style, which the keyed ToggleButton style doesn't inherit. -->
                 <ToggleButton IsChecked="{Binding ShowLogDate}" Style="{StaticResource IconToggleButton}"
                               Margin="0,0,8,0" Content="&#xE787;" ToolTip="{x:Static loc:Strings.Main_ShowLogDate}"/>

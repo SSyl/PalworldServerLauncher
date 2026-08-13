@@ -2579,4 +2579,13 @@
   <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
     <value>SteamCMD 无法校验或更新服务器（{0}）。</value>
   </data>
+  <data name="Main_LogFilter" xml:space="preserve">
+    <value>筛选日志...</value>
+  </data>
+  <data name="Main_LogFilterTip" xml:space="preserve">
+    <value>仅显示包含所输入全部字词的日志行。对所有选项卡生效。</value>
+  </data>
+  <data name="Main_LogFilterClear" xml:space="preserve">
+    <value>清除筛选</value>
+  </data>
 </root>

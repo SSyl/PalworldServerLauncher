@@ -2655,4 +2655,13 @@ REST API на этом сервере пока не включён, поэтом
   <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
     <value>SteamCMD не смог проверить или обновить сервер ({0}).</value>
   </data>
+  <data name="Main_LogFilter" xml:space="preserve">
+    <value>Фильтр журнала...</value>
+  </data>
+  <data name="Main_LogFilterTip" xml:space="preserve">
+    <value>Показывать только строки журнала, содержащие все введённые слова. Применяется ко всем вкладкам.</value>
+  </data>
+  <data name="Main_LogFilterClear" xml:space="preserve">
+    <value>Очистить фильтр</value>
+  </data>
 </root>

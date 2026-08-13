@@ -2655,4 +2655,13 @@ Importar dessa forma?</value>
   <data name="SteamCmd_CouldntVerifyOrUpdate" xml:space="preserve">
     <value>O SteamCMD não conseguiu validar ou atualizar o servidor ({0}).</value>
   </data>
+  <data name="Main_LogFilter" xml:space="preserve">
+    <value>Filtrar log...</value>
+  </data>
+  <data name="Main_LogFilterTip" xml:space="preserve">
+    <value>Mostra só as linhas de log que contêm todas as palavras digitadas. Vale para todas as abas.</value>
+  </data>
+  <data name="Main_LogFilterClear" xml:space="preserve">
+    <value>Limpar filtro</value>
+  </data>
 </root>
