@@ -2588,4 +2588,10 @@
   <data name="Main_LogFilterClear" xml:space="preserve">
     <value>清除篩選</value>
   </data>
+  <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Label" xml:space="preserve">
+    <value>據點附近生成敵方據點</value>
+  </data>
+  <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Desc" xml:space="preserve">
+    <value>是否允許在玩家據點附近生成敵方據點。</value>
+  </data>
 </root>

@@ -2664,4 +2664,10 @@ REST API на этом сервере пока не включён, поэтом
   <data name="Main_LogFilterClear" xml:space="preserve">
     <value>Очистить фильтр</value>
   </data>
+  <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Label" xml:space="preserve">
+    <value>Лагеря врагов рядом с базами</value>
+  </data>
+  <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Desc" xml:space="preserve">
+    <value>Определяет, могут ли вражеские лагеря появляться рядом с базами игроков.</value>
+  </data>
 </root>

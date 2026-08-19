@@ -2664,4 +2664,10 @@ Para cargar una de ellas, en GameUserSettings.ini establezca DedicatedServerName
   <data name="Main_LogFilterClear" xml:space="preserve">
     <value>Borrar filtro</value>
   </data>
+  <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Label" xml:space="preserve">
+    <value>Campamentos enemigos cerca de bases</value>
+  </data>
+  <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Desc" xml:space="preserve">
+    <value>Determina si los campamentos enemigos pueden aparecer cerca de las bases de los jugadores.</value>
+  </data>
 </root>

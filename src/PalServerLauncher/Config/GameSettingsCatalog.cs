@@ -192,6 +192,8 @@ public static class GameSettingsCatalog
             "Restrict fast travel to between bases only."),
         new("bEnableInvaderEnemy", "Enable Raid Events", SettingCategory.Gameplay, SettingType.Bool,
             "Enable Invaders (raid events)."),
+        new("bAllowEnemyCampSpawnNearBaseCamp", "Enemy camps near bases", SettingCategory.Gameplay, SettingType.Bool,
+            "Whether to allow enemy bases to spawn near player bases."),
         new("EnablePredatorBossPal", "Enable Predator Pals", SettingCategory.Gameplay, SettingType.Bool,
             "Allows Predator Pals to spawn in the world."),
         new("bBuildAreaLimit", "Build area limit", SettingCategory.Gameplay, SettingType.Bool,

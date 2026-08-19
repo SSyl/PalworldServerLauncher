@@ -7,25 +7,24 @@ namespace PalServerLauncher.Tests;
 
 public class GameSettingsCatalogTests
 {
-    // A verbatim copy of a real Palworld 1.0 DefaultPalWorldSettings.ini (119 keys), copied to the test
-    // output. It's the source of truth for the coverage guard below: refresh it from a new default ini when
+    // A verbatim copy of a real Palworld 1.0.3 DefaultPalWorldSettings.ini (120 keys), copied to the test
+    // output. It is the source of truth for the coverage guard below. Refresh it from a new default ini when
     // the game version changes, and update the catalog until this passes again.
-    private static string Load10DefaultIni() =>
-        File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "TestData", "DefaultPalWorldSettings-1.0.ini"));
+    private static string LoadDefaultIni() =>
+        File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "TestData", "DefaultPalWorldSettings-1.0.3.ini"));
 
     [Fact]
-    public void Catalog_covers_every_key_in_a_fresh_1_0_default_ini()
+    public void Catalog_covers_every_key_in_a_fresh_default_ini()
     {
-        // Guards the promise that the Undocumented tab's "new in your config" section stays empty on a normal
-        // 1.0 install: a game update that adds a key we haven't cataloged (or a catalog key that drifts from
-        // the default ini) fails here instead of quietly surfacing as an unrecognized setting in the UI.
-        var blob = OptionSettingsBlob.Load(Load10DefaultIni());
+        // Guards the promise that the Undocumented tab's "New or Unrecognized" section stays empty on a normal
+        // install. A game update that adds an uncataloged key fails here instead of surfacing in the UI.
+        var blob = OptionSettingsBlob.Load(LoadDefaultIni());
         Assert.True(blob.HasOptionSettings);
 
         var catalogKeys = GameSettingsCatalog.All.Select(s => s.Key).ToHashSet(StringComparer.OrdinalIgnoreCase);
         var missing = blob.Keys.Where(k => !catalogKeys.Contains(k)).ToList();
 
-        Assert.True(missing.Count == 0, $"Catalog is missing 1.0 default keys: {string.Join(", ", missing)}");
+        Assert.True(missing.Count == 0, $"Catalog is missing default ini keys: {string.Join(", ", missing)}");
     }
 
     [Fact]

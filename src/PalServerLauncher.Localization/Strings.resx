@@ -2690,4 +2690,10 @@ Import it that way?</value>
   <data name="Main_LogFilterClear" xml:space="preserve">
     <value>Clear filter</value>
   </data>
+  <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Label" xml:space="preserve">
+    <value>Enemy camps near bases</value>
+  </data>
+  <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Desc" xml:space="preserve">
+    <value>Whether to allow enemy bases to spawn near player bases.</value>
+  </data>
 </root>
