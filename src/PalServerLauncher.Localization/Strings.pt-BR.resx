@@ -1170,10 +1170,10 @@ Detalhes completos em:
     <value>Conhecidas pelo Launcher</value>
   </data>
   <data name="Settings_UndocNewHeader" xml:space="preserve">
-    <value>Novas na Sua Configuração (Não Reconhecidas)</value>
+    <value>Configurações Novas ou Não Reconhecidas</value>
   </data>
   <data name="Settings_UndocNoneRecognized" xml:space="preserve">
-    <value>Nenhuma, todas as chaves da sua configuração são reconhecidas.</value>
+    <value>Nenhuma, todas as configurações encontradas são reconhecidas.</value>
   </data>
   <data name="Settings_NoEffectTitle" xml:space="preserve">
     <value>Esta configuração não tem efeito em um servidor</value>

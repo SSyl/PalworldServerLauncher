@@ -1170,10 +1170,10 @@ REST API на этом сервере пока не включён, поэтом
     <value>Известные лаунчеру</value>
   </data>
   <data name="Settings_UndocNewHeader" xml:space="preserve">
-    <value>Новые в вашей конфигурации (не распознаны)</value>
+    <value>Новые или нераспознанные настройки</value>
   </data>
   <data name="Settings_UndocNoneRecognized" xml:space="preserve">
-    <value>Таких нет, все ключи в вашей конфигурации распознаны.</value>
+    <value>Таких нет, все найденные настройки распознаны.</value>
   </data>
   <data name="Settings_NoEffectTitle" xml:space="preserve">
     <value>Эта настройка не действует на сервере</value>

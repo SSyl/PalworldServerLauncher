@@ -1187,10 +1187,10 @@ Alle Details unter:
     <value>Dem Launcher bekannt</value>
   </data>
   <data name="Settings_UndocNewHeader" xml:space="preserve">
-    <value>Neu in Ihrer Konfiguration (nicht erkannt)</value>
+    <value>Neue oder unbekannte Einstellungen</value>
   </data>
   <data name="Settings_UndocNoneRecognized" xml:space="preserve">
-    <value>Keine, alle Schlüssel in Ihrer Konfiguration sind erkannt.</value>
+    <value>Keine, alle gefundenen Einstellungen sind erkannt.</value>
   </data>
   <data name="Settings_NoEffectTitle" xml:space="preserve">
     <value>Diese Einstellung hat auf einem Server keine Wirkung</value>

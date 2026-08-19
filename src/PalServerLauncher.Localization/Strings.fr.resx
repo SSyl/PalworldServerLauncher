@@ -1170,10 +1170,10 @@ Détails complets dans :
     <value>Connus du lanceur</value>
   </data>
   <data name="Settings_UndocNewHeader" xml:space="preserve">
-    <value>Nouveaux dans votre configuration (non reconnus)</value>
+    <value>Paramètres nouveaux ou non reconnus</value>
   </data>
   <data name="Settings_UndocNoneRecognized" xml:space="preserve">
-    <value>Aucun, toutes les clés de votre configuration sont reconnues.</value>
+    <value>Aucun, tous les paramètres trouvés sont reconnus.</value>
   </data>
   <data name="Settings_NoEffectTitle" xml:space="preserve">
     <value>Ce paramètre n'a aucun effet sur un serveur</value>

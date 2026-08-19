@@ -1123,10 +1123,10 @@ REST API を有効にしますか？ランチャーはこれを使用してサ�
     <value>ランチャーが認識している設定</value>
   </data>
   <data name="Settings_UndocNewHeader" xml:space="preserve">
-    <value>設定内の新しい項目（認識されません）</value>
+    <value>新規または未認識の設定</value>
   </data>
   <data name="Settings_UndocNoneRecognized" xml:space="preserve">
-    <value>なし。設定内のすべての項目が認識されています。</value>
+    <value>なし。見つかったすべての設定が認識されています。</value>
   </data>
   <data name="Settings_NoEffectTitle" xml:space="preserve">
     <value>この設定はサーバーでは効果がありません</value>

@@ -1201,10 +1201,10 @@ Full details in:
     <value>Known to the Launcher</value>
   </data>
   <data name="Settings_UndocNewHeader" xml:space="preserve">
-    <value>New in Your Config (Not Recognized)</value>
+    <value>New or Unrecognized Settings</value>
   </data>
   <data name="Settings_UndocNoneRecognized" xml:space="preserve">
-    <value>None, every key in your config is recognized.</value>
+    <value>None, every setting the launcher found is recognized.</value>
   </data>
   <data name="Settings_NoEffectTitle" xml:space="preserve">
     <value>This setting does nothing on a server</value>

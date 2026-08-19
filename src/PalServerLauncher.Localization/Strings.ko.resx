@@ -1170,10 +1170,10 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>런처가 인식하는 설정</value>
   </data>
   <data name="Settings_UndocNewHeader" xml:space="preserve">
-    <value>설정 파일에 새로 추가됨(인식되지 않음)</value>
+    <value>새로 추가되었거나 인식되지 않는 설정</value>
   </data>
   <data name="Settings_UndocNoneRecognized" xml:space="preserve">
-    <value>없음, 설정 파일의 모든 키를 인식합니다.</value>
+    <value>없음, 찾은 모든 설정을 인식합니다.</value>
   </data>
   <data name="Settings_NoEffectTitle" xml:space="preserve">
     <value>이 설정은 서버에 영향을 주지 않습니다</value>

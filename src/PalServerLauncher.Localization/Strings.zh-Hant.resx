@@ -1124,10 +1124,10 @@
     <value>啟動器識別的設定</value>
   </data>
   <data name="Settings_UndocNewHeader" xml:space="preserve">
-    <value>您組態中的新設定（無法識別）</value>
+    <value>新增或無法識別的設定</value>
   </data>
   <data name="Settings_UndocNoneRecognized" xml:space="preserve">
-    <value>無，您組態中的每個鍵都能識別。</value>
+    <value>無，找到的每個設定都能識別。</value>
   </data>
   <data name="Settings_NoEffectTitle" xml:space="preserve">
     <value>此設定在伺服器上無效</value>
