@@ -2,6 +2,14 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [1.5.0] - Unreleased
+
+### Added
+- **The setting Palworld added in 1.0.3**, whether enemy camps may spawn near your bases, is now in Server Settings under Gameplay. (#17)
+
+### Fixed
+- **Settings a game update adds now show up on their own.** The Undocumented tab reads the game's own default config as well as yours, so a key added after your PalWorldSettings.ini was written is listed at its default value and is saved into your config the moment you change it. Before, only keys already in your file were listed. (#17)
+
 ## [1.4.0] - 2026-08-13
 
 ### Added
