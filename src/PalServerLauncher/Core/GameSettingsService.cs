@@ -64,7 +64,8 @@ public sealed class GameSettingsService
         return result;
     }
 
-    /// <summary>Current unquoted values for the catalog keys (null when a key isn't present in the file).</summary>
+    /// <summary>Current unquoted values for the catalog keys. A key the ini doesn't mention falls back to the
+    /// default template, the value the server itself applies for it.</summary>
     public IReadOnlyDictionary<string, string?> Load()
     {
         var result = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
@@ -72,11 +73,24 @@ public sealed class GameSettingsService
             return result;
 
         var blob = OptionSettingsBlob.Load(ReadOrEmpty(SettingsPath));
+        var template = LoadTemplate();
         foreach (var setting in GameSettingsCatalog.All)
-            result[setting.Key] = setting.Type == SettingType.Raw
-                ? blob.GetRaw(setting.Key)?.Trim() // tuples/lists are edited verbatim, not unquoted
-                : blob.GetValue(setting.Key);
+            result[setting.Key] = TypedValue(blob, setting)
+                ?? (template is null ? null : TypedValue(template, setting));
         return result;
+    }
+
+    /// <summary>Raw (tuple/list) keys keep their exact text, everything else is unquoted.</summary>
+    private static string? TypedValue(OptionSettingsBlob blob, GameSetting setting) =>
+        setting.Type == SettingType.Raw ? blob.GetRaw(setting.Key)?.Trim() : blob.GetValue(setting.Key);
+
+    /// <summary>The default template's blob, or null when the server isn't installed.</summary>
+    private OptionSettingsBlob? LoadTemplate()
+    {
+        if (!File.Exists(DefaultTemplatePath))
+            return null;
+        var blob = OptionSettingsBlob.Load(ReadOrEmpty(DefaultTemplatePath));
+        return blob.HasOptionSettings ? blob : null;
     }
 
     /// <summary>
@@ -144,9 +158,9 @@ public sealed class GameSettingsService
     public readonly record struct ExtraSetting(string Key, string Value);
 
     /// <summary>
-    /// Keys present in PalWorldSettings.ini's OptionSettings blob that <see cref="GameSettingsCatalog"/>
-    /// doesn't cover, including any params a future game update adds. Surfaced so new settings are editable
-    /// without a code change (the Extra Settings panel).
+    /// Keys <see cref="GameSettingsCatalog"/> doesn't cover, from PalWorldSettings.ini and from the default
+    /// template. The game never adds new keys to an existing ini, so a param added by an update is only in
+    /// the template. Those carry the default value and reach the file when edited.
     /// </summary>
     public IReadOnlyList<ExtraSetting> LoadExtras()
     {
@@ -155,10 +169,17 @@ public sealed class GameSettingsService
 
         var blob = OptionSettingsBlob.Load(ReadOrEmpty(SettingsPath));
         var known = GameSettingsCatalog.All.Select(s => s.Key).ToHashSet(StringComparer.OrdinalIgnoreCase);
-        return blob.Keys
+        var extras = blob.Keys
             .Where(k => !known.Contains(k))
             .Select(k => new ExtraSetting(k, blob.GetValue(k) ?? ""))
             .ToList();
+
+        var inFile = blob.Keys.ToHashSet(StringComparer.OrdinalIgnoreCase);
+        if (LoadTemplate() is { } template)
+            extras.AddRange(template.Keys
+                .Where(k => !known.Contains(k) && !inFile.Contains(k))
+                .Select(k => new ExtraSetting(k, template.GetValue(k) ?? "")));
+        return extras;
     }
 
     /// <summary>
@@ -186,11 +207,13 @@ public sealed class GameSettingsService
             return false;
 
         var known = GameSettingsCatalog.All.Select(s => s.Key).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var template = LoadTemplate();
         var applied = new List<string>();
         foreach (var (key, value) in edits)
         {
-            if (known.Contains(key) || blob.GetRaw(key) is not { } raw)
-                continue; // only touch existing, non-catalog keys
+            // A key only the template has was added by a game update after this ini was written, SetRaw appends it.
+            if (known.Contains(key) || (blob.GetRaw(key) ?? template?.GetRaw(key)) is not { } raw)
+                continue; // only touch non-catalog keys one of the two files knows
             if (raw.TrimStart().StartsWith('"'))
                 blob.SetString(key, value); // was a quoted string -> keep it quoted
             else

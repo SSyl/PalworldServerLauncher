@@ -19,6 +19,11 @@ public class GameSettingsServiceTests
         return root;
     }
 
+    /// <summary>Write DefaultPalWorldSettings.ini, the template a server install ships and an update refreshes.</summary>
+    private static void WriteTemplate(string root, string optionSettingsInner) =>
+        File.WriteAllText(Path.Combine(LauncherConfig.ServerDir(root), "DefaultPalWorldSettings.ini"),
+            "[/Script/Pal.PalGameWorldSettings]\r\nOptionSettings=(" + optionSettingsInner + ")\r\n");
+
     [Fact]
     public void LoadExtras_returns_only_non_catalog_keys()
     {
@@ -114,6 +119,70 @@ public class GameSettingsServiceTests
             Assert.Equal("42", svc.LoadExtras().First(x => x.Key == "SomeModSetting").Value); // custom key intact
             Assert.Equal("2.000000", svc.Load()["ExpRate"]);   // our edit applied
             Assert.Equal("Home", svc.Load()["ServerName"]);    // the other neighbor untouched
+        }
+        finally { Directory.Delete(root, recursive: true); }
+    }
+
+    [Fact]
+    public void LoadExtras_surfaces_a_key_only_the_default_template_has()
+    {
+        // An ini written before the update that added the param never gains the key on its own.
+        var root = WriteIni("ExpRate=1.000000,FutureParam=5");
+        try
+        {
+            WriteTemplate(root, "ExpRate=1.000000,FutureParam=5,bBrandNewSetting=False");
+            var extras = new GameSettingsService(root, new Logger(verbose: false)).LoadExtras();
+
+            Assert.Equal("False", extras.First(x => x.Key == "bBrandNewSetting").Value); // shown at its default
+            Assert.Equal("5", extras.First(x => x.Key == "FutureParam").Value);
+            Assert.DoesNotContain("ExpRate", extras.Select(x => x.Key)); // cataloged, so not extra
+        }
+        finally { Directory.Delete(root, recursive: true); }
+    }
+
+    [Fact]
+    public void SaveExtras_appends_a_template_only_key_the_user_edits()
+    {
+        var root = WriteIni("ExpRate=1.000000");
+        try
+        {
+            WriteTemplate(root, "ExpRate=1.000000,bBrandNewSetting=False");
+            var svc = new GameSettingsService(root, new Logger(verbose: false));
+            Assert.True(svc.SaveExtras(new Dictionary<string, string> { ["bBrandNewSetting"] = "True" }, serverRunning: false));
+
+            Assert.Equal("True", svc.LoadExtras().First(x => x.Key == "bBrandNewSetting").Value);
+            Assert.Equal("1.000000", svc.Load()["ExpRate"]); // neighbour untouched
+        }
+        finally { Directory.Delete(root, recursive: true); }
+    }
+
+    [Fact]
+    public void SaveExtras_ignores_a_key_neither_the_ini_nor_the_template_has()
+    {
+        var root = WriteIni("ExpRate=1.000000");
+        try
+        {
+            WriteTemplate(root, "ExpRate=1.000000");
+            var svc = new GameSettingsService(root, new Logger(verbose: false));
+            Assert.True(svc.SaveExtras(new Dictionary<string, string> { ["MadeUpKey"] = "1" }, serverRunning: false));
+
+            Assert.DoesNotContain("MadeUpKey", svc.LoadExtras().Select(x => x.Key));
+        }
+        finally { Directory.Delete(root, recursive: true); }
+    }
+
+    [Fact]
+    public void Load_falls_back_to_the_template_for_a_catalog_key_the_ini_lacks()
+    {
+        // Same drift on a cataloged key. The editor must show the value the server actually applies.
+        var root = WriteIni("ExpRate=2.000000");
+        try
+        {
+            WriteTemplate(root, "ExpRate=1.000000,DeathPenalty=All");
+            var current = new GameSettingsService(root, new Logger(verbose: false)).Load();
+
+            Assert.Equal("All", current["DeathPenalty"]); // absent from the ini, taken from the template
+            Assert.Equal("2.000000", current["ExpRate"]); // present in the ini, the ini wins
         }
         finally { Directory.Delete(root, recursive: true); }
     }
