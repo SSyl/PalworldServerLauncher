@@ -264,7 +264,7 @@
     <value>アナウンスを編集</value>
   </data>
   <data name="Main_EditAnnouncementsTip" xml:space="preserve">
-    <value>再起動前にプレイヤーがゲーム内で見るメッセージを編集します。</value>
+    <value>再起動前にプレイヤーがゲーム内で見るメッセージと、稼働中に繰り返すメッセージを編集します。</value>
   </data>
   <data name="Main_ValidateOnRestart" xml:space="preserve">
     <value>再起動時にファイルを検証</value>
@@ -2602,5 +2602,17 @@ Mod が本当にサーバーに対応していない場合、重大な問題（�
   </data>
   <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Desc" xml:space="preserve">
     <value>プレイヤーの拠点付近に敵の拠点が出現するのを許可するかどうか。</value>
+  </data>
+  <data name="Announcements_RepeatEnable" xml:space="preserve">
+    <value>サーバー稼働中にメッセージを繰り返す</value>
+  </data>
+  <data name="Announcements_RepeatIntro" xml:space="preserve">
+    <value>オンラインの全員に、下の間隔で送信されます。サーバーに誰もいない間と、再起動のカウントダウン中は送信されません。</value>
+  </data>
+  <data name="Announcements_RepeatLabel" xml:space="preserve">
+    <value>繰り返しメッセージ</value>
+  </data>
+  <data name="Announcements_RepeatIntervalLabel" xml:space="preserve">
+    <value>繰り返し間隔（分）</value>
   </data>
 </root>

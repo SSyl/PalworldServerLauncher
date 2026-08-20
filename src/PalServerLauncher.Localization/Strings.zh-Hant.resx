@@ -265,7 +265,7 @@
     <value>編輯公告</value>
   </data>
   <data name="Main_EditAnnouncementsTip" xml:space="preserve">
-    <value>編輯重新啟動前玩家在遊戲內看到的訊息。</value>
+    <value>編輯重新啟動前玩家在遊戲內看到的訊息，以及伺服器執行時循環發送的訊息。</value>
   </data>
   <data name="Main_ValidateOnRestart" xml:space="preserve">
     <value>重新啟動時驗證檔案</value>
@@ -2593,5 +2593,17 @@
   </data>
   <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Desc" xml:space="preserve">
     <value>是否允許在玩家據點附近生成敵方據點。</value>
+  </data>
+  <data name="Announcements_RepeatEnable" xml:space="preserve">
+    <value>伺服器執行時循環發送訊息</value>
+  </data>
+  <data name="Announcements_RepeatIntro" xml:space="preserve">
+    <value>按下方的間隔發送給所有在線玩家。伺服器無人或重新啟動倒數計時期間不發送。</value>
+  </data>
+  <data name="Announcements_RepeatLabel" xml:space="preserve">
+    <value>循環訊息</value>
+  </data>
+  <data name="Announcements_RepeatIntervalLabel" xml:space="preserve">
+    <value>重複間隔（分鐘）</value>
   </data>
 </root>

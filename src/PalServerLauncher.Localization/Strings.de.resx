@@ -309,7 +309,7 @@ Trotzdem als feste Nachrichten speichern?</value>
     <value>Ankündigungen bearbeiten</value>
   </data>
   <data name="Main_EditAnnouncementsTip" xml:space="preserve">
-    <value>Bearbeitet die Nachrichten, die Spieler im Spiel vor einem Neustart sehen.</value>
+    <value>Bearbeitet die Nachrichten, die Spieler im Spiel vor einem Neustart sehen, und die Nachricht, die im laufenden Betrieb wiederholt wird.</value>
   </data>
   <data name="Main_ValidateOnRestart" xml:space="preserve">
     <value>Dateien bei Neustart überprüfen</value>
@@ -2694,5 +2694,17 @@ So importieren?</value>
   </data>
   <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Desc" xml:space="preserve">
     <value>Legt fest, ob feindliche Lager nahe den Lagern von Spielern entstehen dürfen.</value>
+  </data>
+  <data name="Announcements_RepeatEnable" xml:space="preserve">
+    <value>Eine Nachricht während des Serverbetriebs wiederholen</value>
+  </data>
+  <data name="Announcements_RepeatIntro" xml:space="preserve">
+    <value>Wird allen Spielern im angegebenen Abstand gesendet. Entfällt, solange niemand auf dem Server ist oder ein Neustart-Countdown läuft.</value>
+  </data>
+  <data name="Announcements_RepeatLabel" xml:space="preserve">
+    <value>Wiederholte Nachricht</value>
+  </data>
+  <data name="Announcements_RepeatIntervalLabel" xml:space="preserve">
+    <value>Wiederholen alle (Minuten)</value>
   </data>
 </root>

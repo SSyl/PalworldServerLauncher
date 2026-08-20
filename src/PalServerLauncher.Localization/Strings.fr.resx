@@ -302,7 +302,7 @@ Les enregistrer quand même comme messages fixes ?</value>
     <value>Modifier les annonces</value>
   </data>
   <data name="Main_EditAnnouncementsTip" xml:space="preserve">
-    <value>Modifiez les messages en jeu que voient les joueurs avant un redémarrage.</value>
+    <value>Modifiez les messages en jeu que voient les joueurs avant un redémarrage, et celui qui se répète pendant que le serveur tourne.</value>
   </data>
   <data name="Main_ValidateOnRestart" xml:space="preserve">
     <value>Valider les fichiers au redémarrage</value>
@@ -2669,5 +2669,17 @@ L'importer de cette façon ?</value>
   </data>
   <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Desc" xml:space="preserve">
     <value>Détermine si des camps ennemis peuvent apparaître près des bases des joueurs.</value>
+  </data>
+  <data name="Announcements_RepeatEnable" xml:space="preserve">
+    <value>Répéter un message pendant que le serveur tourne</value>
+  </data>
+  <data name="Announcements_RepeatIntro" xml:space="preserve">
+    <value>Envoyé à tous les joueurs connectés selon l'intervalle ci-dessous. Ignoré tant que le serveur est vide ou qu'un compte à rebours de redémarrage est en cours.</value>
+  </data>
+  <data name="Announcements_RepeatLabel" xml:space="preserve">
+    <value>Message répété</value>
+  </data>
+  <data name="Announcements_RepeatIntervalLabel" xml:space="preserve">
+    <value>Répéter toutes les (minutes)</value>
   </data>
 </root>

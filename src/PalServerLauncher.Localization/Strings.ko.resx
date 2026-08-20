@@ -302,7 +302,7 @@
     <value>공지 편집</value>
   </data>
   <data name="Main_EditAnnouncementsTip" xml:space="preserve">
-    <value>재시작 전 플레이어에게 표시되는 게임 내 메시지를 편집합니다.</value>
+    <value>재시작 전 플레이어에게 표시되는 게임 내 메시지와 서버 실행 중 반복되는 메시지를 편집합니다.</value>
   </data>
   <data name="Main_ValidateOnRestart" xml:space="preserve">
     <value>재시작 시 파일 검증</value>
@@ -2669,5 +2669,17 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
   </data>
   <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Desc" xml:space="preserve">
     <value>플레이어 거점 근처에 적 거점이 생성되도록 허용할지 여부입니다.</value>
+  </data>
+  <data name="Announcements_RepeatEnable" xml:space="preserve">
+    <value>서버 실행 중 메시지 반복</value>
+  </data>
+  <data name="Announcements_RepeatIntro" xml:space="preserve">
+    <value>접속 중인 모든 플레이어에게 아래 간격으로 전송됩니다. 서버에 아무도 없거나 재시작 카운트다운이 진행 중이면 건너뜁니다.</value>
+  </data>
+  <data name="Announcements_RepeatLabel" xml:space="preserve">
+    <value>반복 메시지</value>
+  </data>
+  <data name="Announcements_RepeatIntervalLabel" xml:space="preserve">
+    <value>반복 간격(분)</value>
   </data>
 </root>

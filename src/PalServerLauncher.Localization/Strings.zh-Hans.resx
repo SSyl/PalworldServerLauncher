@@ -265,7 +265,7 @@
     <value>编辑公告</value>
   </data>
   <data name="Main_EditAnnouncementsTip" xml:space="preserve">
-    <value>编辑重新启动前玩家在游戏内看到的消息。</value>
+    <value>编辑重新启动前玩家在游戏内看到的消息，以及服务器运行时循环发送的消息。</value>
   </data>
   <data name="Main_ValidateOnRestart" xml:space="preserve">
     <value>重新启动时校验文件</value>
@@ -2593,5 +2593,17 @@
   </data>
   <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Desc" xml:space="preserve">
     <value>是否允许在玩家据点附近生成敌方据点。</value>
+  </data>
+  <data name="Announcements_RepeatEnable" xml:space="preserve">
+    <value>服务器运行时循环发送消息</value>
+  </data>
+  <data name="Announcements_RepeatIntro" xml:space="preserve">
+    <value>按下方的间隔发送给所有在线玩家。服务器无人或重新启动倒计时期间不发送。</value>
+  </data>
+  <data name="Announcements_RepeatLabel" xml:space="preserve">
+    <value>循环消息</value>
+  </data>
+  <data name="Announcements_RepeatIntervalLabel" xml:space="preserve">
+    <value>重复间隔（分钟）</value>
   </data>
 </root>

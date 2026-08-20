@@ -302,7 +302,7 @@
     <value>Editar anuncios</value>
   </data>
   <data name="Main_EditAnnouncementsTip" xml:space="preserve">
-    <value>Edite los mensajes dentro del juego que ven los jugadores antes de un reinicio.</value>
+    <value>Edite los mensajes dentro del juego que ven los jugadores antes de un reinicio y el que se repite mientras el servidor está en marcha.</value>
   </data>
   <data name="Main_ValidateOnRestart" xml:space="preserve">
     <value>Validar archivos al reiniciar</value>
@@ -2669,5 +2669,17 @@ Para cargar una de ellas, en GameUserSettings.ini establezca DedicatedServerName
   </data>
   <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Desc" xml:space="preserve">
     <value>Determina si los campamentos enemigos pueden aparecer cerca de las bases de los jugadores.</value>
+  </data>
+  <data name="Announcements_RepeatEnable" xml:space="preserve">
+    <value>Repetir un mensaje mientras el servidor está en marcha</value>
+  </data>
+  <data name="Announcements_RepeatIntro" xml:space="preserve">
+    <value>Se envía a todos los jugadores conectados en el intervalo indicado. Se omite mientras no haya nadie en el servidor o haya una cuenta regresiva de reinicio en curso.</value>
+  </data>
+  <data name="Announcements_RepeatLabel" xml:space="preserve">
+    <value>Mensaje repetido</value>
+  </data>
+  <data name="Announcements_RepeatIntervalLabel" xml:space="preserve">
+    <value>Repetir cada (minutos)</value>
   </data>
 </root>

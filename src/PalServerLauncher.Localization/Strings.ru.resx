@@ -302,7 +302,7 @@
     <value>Изменить объявления</value>
   </data>
   <data name="Main_EditAnnouncementsTip" xml:space="preserve">
-    <value>Изменение внутриигровых сообщений, которые видят игроки перед перезапуском.</value>
+    <value>Изменение внутриигровых сообщений, которые видят игроки перед перезапуском, и сообщения, повторяемого во время работы сервера.</value>
   </data>
   <data name="Main_ValidateOnRestart" xml:space="preserve">
     <value>Проверять файлы при перезапуске</value>
@@ -2669,5 +2669,17 @@ REST API на этом сервере пока не включён, поэтом
   </data>
   <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Desc" xml:space="preserve">
     <value>Определяет, могут ли вражеские лагеря появляться рядом с базами игроков.</value>
+  </data>
+  <data name="Announcements_RepeatEnable" xml:space="preserve">
+    <value>Повторять сообщение во время работы сервера</value>
+  </data>
+  <data name="Announcements_RepeatIntro" xml:space="preserve">
+    <value>Отправляется всем игрокам онлайн с указанным интервалом. Пропускается, пока на сервере никого нет или идёт обратный отсчёт перезапуска.</value>
+  </data>
+  <data name="Announcements_RepeatLabel" xml:space="preserve">
+    <value>Повторяемое сообщение</value>
+  </data>
+  <data name="Announcements_RepeatIntervalLabel" xml:space="preserve">
+    <value>Повторять каждые (мин.)</value>
   </data>
 </root>

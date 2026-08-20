@@ -329,7 +329,7 @@ Save them as fixed messages anyway?</value>
     <value>Edit Announcements</value>
   </data>
   <data name="Main_EditAnnouncementsTip" xml:space="preserve">
-    <value>Edit the in-game messages players see before a restart.</value>
+    <value>Edit the in-game messages players see before a restart, and the one repeated while the server runs.</value>
   </data>
   <data name="Main_ValidateOnRestart" xml:space="preserve">
     <value>Validate files on restart</value>
@@ -2695,5 +2695,17 @@ Import it that way?</value>
   </data>
   <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Desc" xml:space="preserve">
     <value>Whether to allow enemy bases to spawn near player bases.</value>
+  </data>
+  <data name="Announcements_RepeatEnable" xml:space="preserve">
+    <value>Repeat a message while the server runs</value>
+  </data>
+  <data name="Announcements_RepeatIntro" xml:space="preserve">
+    <value>Sent to everyone online, on the interval below. Skipped while nobody is on the server, and while a restart countdown is running.</value>
+  </data>
+  <data name="Announcements_RepeatLabel" xml:space="preserve">
+    <value>Repeating message</value>
+  </data>
+  <data name="Announcements_RepeatIntervalLabel" xml:space="preserve">
+    <value>Repeat every (minutes)</value>
   </data>
 </root>

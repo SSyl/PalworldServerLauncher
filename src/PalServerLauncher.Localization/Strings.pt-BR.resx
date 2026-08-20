@@ -302,7 +302,7 @@ Salvar mesmo assim como mensagens fixas?</value>
     <value>Editar Avisos</value>
   </data>
   <data name="Main_EditAnnouncementsTip" xml:space="preserve">
-    <value>Edite as mensagens dentro do jogo que os jogadores veem antes de um reinício.</value>
+    <value>Edite as mensagens dentro do jogo que os jogadores veem antes de um reinício e a que se repete enquanto o servidor está em execução.</value>
   </data>
   <data name="Main_ValidateOnRestart" xml:space="preserve">
     <value>Validar arquivos ao reiniciar</value>
@@ -2669,5 +2669,17 @@ Importar dessa forma?</value>
   </data>
   <data name="Cat_bAllowEnemyCampSpawnNearBaseCamp_Desc" xml:space="preserve">
     <value>Determina se acampamentos inimigos podem surgir perto das bases dos jogadores.</value>
+  </data>
+  <data name="Announcements_RepeatEnable" xml:space="preserve">
+    <value>Repetir uma mensagem enquanto o servidor estiver em execução</value>
+  </data>
+  <data name="Announcements_RepeatIntro" xml:space="preserve">
+    <value>Enviada a todos os jogadores conectados no intervalo abaixo. Ignorada enquanto ninguém estiver no servidor ou houver uma contagem regressiva de reinício em andamento.</value>
+  </data>
+  <data name="Announcements_RepeatLabel" xml:space="preserve">
+    <value>Mensagem repetida</value>
+  </data>
+  <data name="Announcements_RepeatIntervalLabel" xml:space="preserve">
+    <value>Repetir a cada (minutos)</value>
   </data>
 </root>
