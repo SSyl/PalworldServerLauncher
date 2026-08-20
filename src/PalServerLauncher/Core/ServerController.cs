@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -37,6 +37,7 @@ public sealed class ServerController : IDisposable
     private readonly RestartScheduler _scheduler;
     private readonly BackupService _backup;
     private readonly BackupScheduler _backupScheduler;
+    private readonly AnnounceScheduler _announceScheduler;
     private readonly DiscordNotifier _discord;
     private readonly DiscordBotService _discordBot;
     private readonly LauncherIpcServer _ipc;
@@ -90,6 +91,11 @@ public sealed class ServerController : IDisposable
             triggerBackup: () => _backup.BackupNowAsync(BackupReason.Scheduled, RestClient, IsRunning()));
         _backupScheduler.NextBackupTextChanged += t => NextBackupTextChanged?.Invoke(t);
         _backupScheduler.Start();
+
+        _announceScheduler = new AnnounceScheduler(config,
+            isRunning: () => IsServerRunning,
+            announce: AnnounceRecurringAsync);
+        _announceScheduler.Start();
 
         _discordBot = new DiscordBotService(config, logger, new DiscordBotService.DiscordCommands(
             Status: DiscordStatusAsync,
@@ -2305,6 +2311,27 @@ public sealed class ServerController : IDisposable
         await rest.AnnounceAsync(message).ConfigureAwait(false);
     }
 
+    /// <summary>Send the repeating message, when REST is up, someone is online, and no restart countdown is
+    /// running (its warnings own the chat at that point).</summary>
+    private async Task AnnounceRecurringAsync()
+    {
+        var rest = RestClient;
+        var message = _config.RecurringAnnounceMessage.Trim();
+        if (rest is null || message.Length == 0)
+            return;
+        lock (_gate)
+        {
+            if (_restartInProgress)
+                return;
+        }
+
+        var metrics = await rest.GetMetricsAsync().ConfigureAwait(false);
+        if (metrics is not { CurrentPlayerNum: > 0 })
+            return;
+
+        await AnnounceAsync(message).ConfigureAwait(false);
+    }
+
     private async Task BroadcastAndWaitAsync(RestartReason reason, DateTime restartAt, CancellationToken ct)
     {
         var rest = RestClient;
@@ -2796,6 +2823,7 @@ public sealed class ServerController : IDisposable
         _disposed = true;
         _scheduler.Dispose();
         _backupScheduler.Dispose();
+        _announceScheduler.Dispose();
         _discord.Dispose();
         _discordBot.Dispose();
         _ipc.Dispose();

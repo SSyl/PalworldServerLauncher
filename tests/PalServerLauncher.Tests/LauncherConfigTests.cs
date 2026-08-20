@@ -37,6 +37,9 @@ public class LauncherConfigTests
 
         Assert.Equal("Server restart in {minutes} minutes", cfg.RestartAnnounceMessage);
         Assert.Equal("Server update available. Restarting server in {minutes} minutes", cfg.UpdateAnnounceMessage);
+        Assert.False(cfg.RecurringAnnounceEnabled);
+        Assert.Equal("", cfg.RecurringAnnounceMessage);
+        Assert.Equal(60, cfg.RecurringAnnounceIntervalMinutes);
 
         Assert.Equal("en", cfg.Language);
         Assert.False(cfg.AutoReconnectSingleInstance);

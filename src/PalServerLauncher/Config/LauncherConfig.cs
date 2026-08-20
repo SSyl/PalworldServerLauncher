@@ -142,6 +142,15 @@ public sealed class LauncherConfig
     /// minutes remaining before shutdown; remove it for a fixed message.</summary>
     public string UpdateAnnounceMessage { get; set; } = "Server update available. Restarting server in {minutes} minutes";
 
+    /// <summary>Repeat one in-game message while the server runs.</summary>
+    public bool RecurringAnnounceEnabled { get; set; } = false;
+
+    /// <summary>The message repeated every <see cref="RecurringAnnounceIntervalMinutes"/>.</summary>
+    public string RecurringAnnounceMessage { get; set; } = "";
+
+    /// <summary>Minutes between repeats, clamped to <see cref="Core.RecurringAnnouncer"/>'s bounds when it runs.</summary>
+    public int RecurringAnnounceIntervalMinutes { get; set; } = 60;
+
     // --- Update ---
     /// <summary>Run the SteamCMD app_update on every Start / restart to stay current on boot. Off = never
     /// download updates on start/restart (an explicit "Update &amp; restart" and auto-update-while-running still apply).</summary>
