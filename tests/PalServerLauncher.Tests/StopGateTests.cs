@@ -148,15 +148,22 @@ public class StopGateTests
         var release = new TaskCompletionSource();
         var runs = 0;
         var start = new TaskCompletionSource();
+        var allPastTheGate = new TaskCompletionSource();
+        var stillToArrive = 16;
 
         var callers = Enumerable.Range(0, 16).Select(_ => Task.Run(async () =>
         {
             await start.Task;
-            await gate.RunOrJoin(() => { Interlocked.Increment(ref runs); return release.Task; });
+            var ladder = gate.RunOrJoin(() => { Interlocked.Increment(ref runs); return release.Task; });
+            // After RunOrJoin returns, so every caller is through the gate's lock before the release
+            // below. A fixed delay let a loaded runner release first, and stragglers then ran own ladders.
+            if (Interlocked.Decrement(ref stillToArrive) == 0)
+                allPastTheGate.TrySetResult();
+            await ladder;
         })).ToArray();
 
         start.SetResult();
-        await Task.Delay(50);
+        await allPastTheGate.Task.WaitAsync(TimeSpan.FromSeconds(10));
         release.SetResult();
         await Task.WhenAll(callers).WaitAsync(TimeSpan.FromSeconds(10));
 
