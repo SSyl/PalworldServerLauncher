@@ -67,7 +67,7 @@ public sealed class AnnouncementsDialog : Window
         stack.Children.Add(_repeat);
 
         _interval = Field(_config.RecurringAnnounceIntervalMinutes.ToString(CultureInfo.InvariantCulture));
-        _interval.Width = 90;
+        _interval.Width = 66;
         _interval.HorizontalAlignment = HorizontalAlignment.Left;
         DigitsOnly(_interval);
         stack.Children.Add(Row(Strings.Announcements_RepeatIntervalLabel, _interval));
