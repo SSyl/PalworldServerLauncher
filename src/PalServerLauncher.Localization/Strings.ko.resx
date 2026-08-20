@@ -2674,7 +2674,7 @@ REST API를 활성화하시겠습니까? 이는 런처가 서버를 제어하는
     <value>서버 실행 중 메시지 반복</value>
   </data>
   <data name="Announcements_RepeatIntro" xml:space="preserve">
-    <value>접속 중인 모든 플레이어에게 아래 간격으로 전송됩니다. 서버에 아무도 없거나 재시작 카운트다운이 진행 중이면 건너뜁니다.</value>
+    <value>접속 중인 모든 플레이어에게 아래 간격으로 전송됩니다. 타이머는 서버가 시작될 때 시작되며 재시작할 때마다 초기화됩니다. 서버에 아무도 없으면 건너뜁니다.</value>
   </data>
   <data name="Announcements_RepeatLabel" xml:space="preserve">
     <value>반복 메시지</value>

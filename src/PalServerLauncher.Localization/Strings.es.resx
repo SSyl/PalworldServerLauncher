@@ -2674,7 +2674,7 @@ Para cargar una de ellas, en GameUserSettings.ini establezca DedicatedServerName
     <value>Repetir un mensaje mientras el servidor está en marcha</value>
   </data>
   <data name="Announcements_RepeatIntro" xml:space="preserve">
-    <value>Se envía a todos los jugadores conectados en el intervalo indicado. Se omite mientras no haya nadie en el servidor o haya una cuenta regresiva de reinicio en curso.</value>
+    <value>Se envía a todos los jugadores conectados en el intervalo indicado. El temporizador empieza al iniciarse el servidor y se reinicia con cada reinicio. Se omite mientras no haya nadie en el servidor.</value>
   </data>
   <data name="Announcements_RepeatLabel" xml:space="preserve">
     <value>Mensaje repetido</value>

@@ -2674,7 +2674,7 @@ L'importer de cette façon ?</value>
     <value>Répéter un message pendant que le serveur tourne</value>
   </data>
   <data name="Announcements_RepeatIntro" xml:space="preserve">
-    <value>Envoyé à tous les joueurs connectés selon l'intervalle ci-dessous. Ignoré tant que le serveur est vide ou qu'un compte à rebours de redémarrage est en cours.</value>
+    <value>Envoyé à tous les joueurs connectés selon l'intervalle ci-dessous. Le minuteur démarre avec le serveur et repart à zéro à chaque redémarrage. Ignoré tant que le serveur est vide.</value>
   </data>
   <data name="Announcements_RepeatLabel" xml:space="preserve">
     <value>Message répété</value>

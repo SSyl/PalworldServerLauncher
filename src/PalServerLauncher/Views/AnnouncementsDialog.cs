@@ -136,8 +136,8 @@ public sealed class AnnouncementsDialog : Window
         Close();
     }
 
-    /// <summary>The typed interval, clamped to the bounds the scheduler enforces anyway (an empty or 0 box
-    /// becomes the minimum rather than a silent no-repeat).</summary>
+    /// <summary>The typed interval, clamped to the scheduler's bounds. An unreadable or empty box keeps the
+    /// saved value.</summary>
     private int ParsedInterval()
     {
         var minutes = int.TryParse(_interval.Text.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, out var n)

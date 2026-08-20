@@ -2699,7 +2699,7 @@ So importieren?</value>
     <value>Eine Nachricht während des Serverbetriebs wiederholen</value>
   </data>
   <data name="Announcements_RepeatIntro" xml:space="preserve">
-    <value>Wird allen Spielern im angegebenen Abstand gesendet. Entfällt, solange niemand auf dem Server ist oder ein Neustart-Countdown läuft.</value>
+    <value>Wird allen Spielern im angegebenen Abstand gesendet. Der Timer startet mit dem Server und wird bei jedem Neustart zurückgesetzt. Entfällt, solange niemand auf dem Server ist.</value>
   </data>
   <data name="Announcements_RepeatLabel" xml:space="preserve">
     <value>Wiederholte Nachricht</value>

@@ -197,6 +197,11 @@ public partial class MainViewModel : ObservableObject
 
         _logger.LineForUi += OnLoggerLine;
 
+        // After the subscriptions above, so the schedulers' first tick reaches the UI. Nothing fails loudly
+        // without this line: scheduled restarts, scheduled backups, the repeating message, the CLI stop pipe
+        // and the Discord bot all just never run.
+        _controller.Start();
+
         _busyAnimationTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(400) };
         _busyAnimationTimer.Tick += (_, _) =>
         {

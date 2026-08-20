@@ -2598,7 +2598,7 @@
     <value>服务器运行时循环发送消息</value>
   </data>
   <data name="Announcements_RepeatIntro" xml:space="preserve">
-    <value>按下方的间隔发送给所有在线玩家。服务器无人或重新启动倒计时期间不发送。</value>
+    <value>按下方的间隔发送给所有在线玩家。计时从服务器启动时开始，每次重新启动都会重置。服务器无人时不发送。</value>
   </data>
   <data name="Announcements_RepeatLabel" xml:space="preserve">
     <value>循环消息</value>

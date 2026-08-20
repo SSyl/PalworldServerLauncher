@@ -2700,7 +2700,7 @@ Import it that way?</value>
     <value>Repeat a message while the server runs</value>
   </data>
   <data name="Announcements_RepeatIntro" xml:space="preserve">
-    <value>Sent to everyone online, on the interval below. Skipped while nobody is on the server, and while a restart countdown is running.</value>
+    <value>Sent to everyone online, on the interval below. The timer starts when the server does and resets on every restart. Skipped while nobody is on the server.</value>
   </data>
   <data name="Announcements_RepeatLabel" xml:space="preserve">
     <value>Repeating message</value>

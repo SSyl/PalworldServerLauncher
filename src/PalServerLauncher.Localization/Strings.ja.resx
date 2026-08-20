@@ -2607,7 +2607,7 @@ Mod が本当にサーバーに対応していない場合、重大な問題（�
     <value>サーバー稼働中にメッセージを繰り返す</value>
   </data>
   <data name="Announcements_RepeatIntro" xml:space="preserve">
-    <value>オンラインの全員に、下の間隔で送信されます。サーバーに誰もいない間と、再起動のカウントダウン中は送信されません。</value>
+    <value>オンラインの全員に、下の間隔で送信されます。タイマーはサーバーの起動時に始まり、再起動のたびにリセットされます。サーバーに誰もいない間は送信されません。</value>
   </data>
   <data name="Announcements_RepeatLabel" xml:space="preserve">
     <value>繰り返しメッセージ</value>

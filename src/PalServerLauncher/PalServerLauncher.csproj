@@ -21,6 +21,10 @@
     <ApplicationIcon>..\..\logo.ico</ApplicationIcon>
   </PropertyGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="PalServerLauncher.Tests" />
+  </ItemGroup>
+
   <!-- Same logo as a WPF resource for the running window's title-bar / taskbar icon. -->
   <ItemGroup>
     <Resource Include="..\..\logo.png" Link="logo.png" />

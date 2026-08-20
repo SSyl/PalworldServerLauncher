@@ -84,18 +84,15 @@ public sealed class ServerController : IDisposable
             announce: AnnounceScheduledRestartAsync,
             restartNow: () => RestartNowAsync(RestartReason.Scheduled));
         _scheduler.NextRestartTextChanged += t => NextRestartTextChanged?.Invoke(t);
-        _scheduler.Start();
 
         _backupScheduler = new BackupScheduler(config, logger,
             isRunning: () => IsServerRunning,
             triggerBackup: () => _backup.BackupNowAsync(BackupReason.Scheduled, RestClient, IsRunning()));
         _backupScheduler.NextBackupTextChanged += t => NextBackupTextChanged?.Invoke(t);
-        _backupScheduler.Start();
 
         _announceScheduler = new AnnounceScheduler(config,
             isRunning: () => IsServerRunning,
             announce: AnnounceRecurringAsync);
-        _announceScheduler.Start();
 
         _discordBot = new DiscordBotService(config, logger, new DiscordBotService.DiscordCommands(
             Status: DiscordStatusAsync,
@@ -111,13 +108,25 @@ public sealed class ServerController : IDisposable
             Ban: DiscordBanAsync,
             Unban: DiscordUnbanAsync,
             ResolvePlayerName: ResolvePlayerDisplayNameAsync));
-        if (config.DiscordBotEnabled)
-            FireAndForget(_discordBot.StartAsync, "Discord bot start");
-
         // Let a second copy of the exe (--stop-server) ask US to stop, instead of killing the process behind our
         // back, which OnProcessExited would read as a crash and relaunch.
         _ipc = new LauncherIpcServer(LauncherIpc.PipeNameFor(LauncherConfig.DataRoot), HandleCliStopAsync, _logger.Info);
+    }
+
+    /// <summary>
+    /// Start the timers, the IPC pipe and the Discord bot. Separate from the constructor so callers can
+    /// subscribe first, otherwise the schedulers' first tick fires before anyone is listening, and so a test
+    /// can build a controller without three timers and a named pipe coming up with it. Every caller that
+    /// wants those five things running must call this, and nothing enforces it.
+    /// </summary>
+    public void Start()
+    {
+        _scheduler.Start();
+        _backupScheduler.Start();
+        _announceScheduler.Start();
         _ipc.Start();
+        if (_config.DiscordBotEnabled)
+            FireAndForget(_discordBot.StartAsync, "Discord bot start");
     }
 
     /// <summary>What a CLI stop resolves to, before anything is actually done.</summary>
@@ -2311,8 +2320,7 @@ public sealed class ServerController : IDisposable
         await rest.AnnounceAsync(message).ConfigureAwait(false);
     }
 
-    /// <summary>Send the repeating message, when REST is up, someone is online, and no restart countdown is
-    /// running (its warnings own the chat at that point).</summary>
+    /// <summary>Send the repeating message, when REST is up, someone is online, and no restart is running.</summary>
     private async Task AnnounceRecurringAsync()
     {
         var rest = RestClient;

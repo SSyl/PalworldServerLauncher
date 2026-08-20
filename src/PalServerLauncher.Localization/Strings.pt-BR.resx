@@ -2674,7 +2674,7 @@ Importar dessa forma?</value>
     <value>Repetir uma mensagem enquanto o servidor estiver em execução</value>
   </data>
   <data name="Announcements_RepeatIntro" xml:space="preserve">
-    <value>Enviada a todos os jogadores conectados no intervalo abaixo. Ignorada enquanto ninguém estiver no servidor ou houver uma contagem regressiva de reinício em andamento.</value>
+    <value>Enviada a todos os jogadores conectados no intervalo abaixo. O temporizador começa quando o servidor inicia e reinicia a cada reinício. Ignorada enquanto ninguém estiver no servidor.</value>
   </data>
   <data name="Announcements_RepeatLabel" xml:space="preserve">
     <value>Mensagem repetida</value>

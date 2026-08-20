@@ -15,20 +15,29 @@ public sealed class AnnounceScheduler : IDisposable
     private readonly Func<bool> _isRunning;
     private readonly Func<Task> _announce;
     private readonly CancellationTokenSource _cts = new();
-    private DateTime _anchor;
+    private readonly Func<long> _nowMs;
+    private long _anchor;
 
-    public AnnounceScheduler(LauncherConfig config, Func<bool> isRunning, Func<Task> announce)
+    internal long AnchorForTests => _anchor;
+
+    /// <param name="nowMs">Monotonic milliseconds. A wall clock would stall the message for the length of
+    /// any backward jump, so the default is the one source that cannot jump backwards.</param>
+    public AnnounceScheduler(LauncherConfig config, Func<bool> isRunning, Func<Task> announce, Func<long>? nowMs = null)
     {
         _config = config;
         _isRunning = isRunning;
         _announce = announce;
+        _nowMs = nowMs ?? (() => Environment.TickCount64);
     }
 
     public void Start()
     {
-        _anchor = DateTime.Now;
+        Arm();
         _ = LoopAsync(_cts.Token);
     }
+
+    /// <summary>Set the anchor without starting the timer, so a test can drive Tick by hand.</summary>
+    internal void Arm() => _anchor = _nowMs();
 
     private async Task LoopAsync(CancellationToken ct)
     {
@@ -43,23 +52,16 @@ public sealed class AnnounceScheduler : IDisposable
         }
     }
 
-    private void Tick()
+    internal void Tick()
     {
-        var now = DateTime.Now;
+        var now = _nowMs();
         var active = _isRunning() && _config.RecurringAnnounceEnabled
             && !string.IsNullOrWhiteSpace(_config.RecurringAnnounceMessage);
-        if (!active)
-        {
-            _anchor = now;
-            return;
-        }
-
         var interval = RecurringAnnouncer.Interval(_config.RecurringAnnounceIntervalMinutes);
-        if (!RecurringAnnouncer.IsDue(_anchor, now, interval))
-            return;
-
-        _anchor = RecurringAnnouncer.Advance(_anchor, now, interval);
-        _ = _announce();
+        var (anchor, send) = RecurringAnnouncer.Tick(active, _anchor, now, interval);
+        _anchor = anchor;
+        if (send)
+            _ = _announce();
     }
 
     public void Dispose()

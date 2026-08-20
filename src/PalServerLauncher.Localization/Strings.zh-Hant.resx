@@ -2598,7 +2598,7 @@
     <value>伺服器執行時循環發送訊息</value>
   </data>
   <data name="Announcements_RepeatIntro" xml:space="preserve">
-    <value>按下方的間隔發送給所有在線玩家。伺服器無人或重新啟動倒數計時期間不發送。</value>
+    <value>按下方的間隔發送給所有在線玩家。計時從伺服器啟動時開始，每次重新啟動都會重設。伺服器無人時不發送。</value>
   </data>
   <data name="Announcements_RepeatLabel" xml:space="preserve">
     <value>循環訊息</value>

@@ -65,7 +65,7 @@ public sealed class GameSettingsService
     }
 
     /// <summary>Current unquoted values for the catalog keys. A key the ini doesn't mention falls back to the
-    /// default template, the value the server itself applies for it.</summary>
+    /// default template, which ships the value the server is assumed to apply for it.</summary>
     public IReadOnlyDictionary<string, string?> Load()
     {
         var result = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);

@@ -2,6 +2,16 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
+## [1.5.1] - Unreleased
+
+### Fixed
+- **Backups no longer hold the world save against the server.** The archive kept each file open in a way that blocked Palworld from replacing it, so a save landing during a backup could fail. (#18)
+- **A file the launcher can't read is left out of the backup instead of archived as zero bytes**, and the log names it rather than staying silent about it.
+- **A backup that fails partway no longer leaves a zip behind.** The half-written archive opened cleanly and sat in the folder looking like a real backup, so a restore could pick it.
+- **The repeating message keeps its interval across a clock change.** It was paced on the wall clock, so daylight saving or a time correction stalled it for the length of the jump.
+- **A backup that can't read a file partway through is discarded** instead of keeping a half-copied file the log reported as left out.
+- **A config file that isn't there is named in the log**, since restoring without GameUserSettings.ini boots an empty world.
+
 ## [1.5.0] - 2026-08-19
 
 ### Added
