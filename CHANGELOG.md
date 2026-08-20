@@ -2,7 +2,7 @@
 
 Notable, user-facing changes to the Palworld Server Launcher. Headline features and fixes, not every commit.
 
-## [1.5.0] - Unreleased
+## [1.5.0] - 2026-08-19
 
 ### Added
 - **A repeating in-game message.** Edit Announcements now has a message you can send to everyone online every so often, from once a minute to once a day, for a Discord link or a server rule. It is skipped while nobody is on the server and while a restart countdown is running.
